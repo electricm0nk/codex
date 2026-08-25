@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Enveloping Void",
     "name": "Enveloping Void",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman curses one creature with the dark void. As a standard action, the shaman can cause one enemy within 30 feet to treat the light level as two steps lower: bright light becomes dim light, normal light becomes darkness, and areas of dim light and darkness become supernaturally dark (like darkness, but even creatures with darkvision cannot see). This effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanEnvelopingVoidDuration|ShamanEnvelopingVoidDC",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

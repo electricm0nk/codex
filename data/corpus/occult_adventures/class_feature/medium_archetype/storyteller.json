@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Medium Archetype ~ Storyteller",
     "name": "Storyteller",
-    "class": "Medium Archetype",
+    "class": "Medium",
     "description": "While all mediums connect to legendary spirits, storyteller mediums take their obsession with legends to the extreme, suffusing their lives with epic tales at the cost of some of their spiritual power.",
     "raw_tokens": [
       {
@@ -155,5 +155,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

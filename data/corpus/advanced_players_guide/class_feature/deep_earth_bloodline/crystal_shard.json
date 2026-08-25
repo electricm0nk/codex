@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Deep Earth Bloodline ~ Crystal Shard",
     "name": "Crystal Shard",
-    "class": "Deep Earth Bloodline",
+    "class": "Sorcerer",
     "description": "You can touch a metal or stone weapon (or up to 50 pieces of ammunition) as a standard action, giving it the bane property against any creature with the earth subtype, oozes, or constructs made of stone or metal, for 1 minute.",
     "raw_tokens": [
       {
@@ -96,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

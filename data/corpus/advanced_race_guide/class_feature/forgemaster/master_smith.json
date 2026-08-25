@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Forgemaster ~ Master Smith",
+    "name": "Master Smith",
+    "class": "Cleric",
+    "description": ".CLEAR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgemaster ~ Master Smith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "The forgemaster gains Skill Focus (Craft (Blacksmithing)) as a bonus feat at 5th level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Skill Focus (Craft (Blacksmithing))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/_pfs/pfs_arg_abilities_class.lst",
+    "sha256": "ba03f876154af522e64531714ab356218ba64481ffd031b7b8bc48d6bb047e73",
+    "line": 17,
+    "record_key": "Forgemaster ~ Master Smith"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

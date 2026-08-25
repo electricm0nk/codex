@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner ~ Standard Class",
     "name": "Standard",
@@ -39,6 +39,70 @@
       {
         "key": "COST",
         "value": "1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Weapon and Armor Proficiency|PREVARGTEQ:Summoner_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Cantrips|PREVARGTEQ:Summoner_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Eidolon|PREVAREQ:Summoner_CF_Eidolon,0|PREVARGTEQ:Summoner_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Life Link|PREVAREQ:Summoner_CF_LifeLink,0|PREVARGTEQ:Summoner_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Summon Monster|PREVAREQ:Summoner_CF_SummonMonster,0|PREVARGTEQ:Summoner_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Bond Senses|PREVAREQ:Summoner_CF_BondSenses,0|PREVARGTEQ:Summoner_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Shield Ally|PREMULT:2,[PREVARLT:Summoner_CFP_Level,12],[PREVAREQ:Summoner_CF_ShieldAlly,0]|PREVARGTEQ:Summoner_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Maker's Call|PREVAREQ:Summoner_CF_MakersCall,0|PREVARGTEQ:Summoner_CFP_Level,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Transposition|PREVAREQ:Summoner_CF_Transposition,0|PREVARGTEQ:Summoner_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Aspect|PREVARGTEQ:Summoner_CFP_Level,10|PREVARLT:Summoner_CFP_Level,18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Greater Shield Ally|PREVAREQ:Summoner_CF_GreaterShieldAlly,0|PREVARGTEQ:Summoner_CFP_Level,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Life Bond|PREVAREQ:Summoner_CF_LifeBond,0|PREVARGTEQ:Summoner_CFP_Level,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Merge Forms|PREVAREQ:Summoner_CF_MergeForms,0|PREVARGTEQ:Summoner_CFP_Level,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Greater Aspect|PREVARGTEQ:Summoner_CFP_Level,18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Gate|PREVAREQ:Summoner_CF_SummonMonster,0|PREVARGTEQ:Summoner_CFP_Level,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Summoner Class Feature|AUTOMATIC|Summoner ~ Twin Eidolon|PREVARGTEQ:Summoner_CFP_Level,20"
       }
     ]
   },
@@ -55,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Artifice Blessing ~ Transfer Magic",
     "name": "Transfer Magic",
-    "class": "Artifice Blessing",
+    "class": "Warpriest",
     "description": "You can temporarily transfer a weapon special ability from one weapon to another. The bearers of each of the weapons must be willing, and you must be touching both weapons to activate this ability. You can transfer a weapon special ability with a base price modifier of +1 or +2. If you are using this ability on a double weapon, only one end of the double weapon is affected. The transfer lasts for 1 minute, after which the transferred weapon special ability automatically returns to the source weapon. You can use this ability multiple times on the same weapon or weapons. Alternatively, you can use transfer magic to move a +1 or +2 armor special ability from one touched suit of armor to another, or move a +1 or +2 armor or weapon enhancement bonus to another armor or weapon.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

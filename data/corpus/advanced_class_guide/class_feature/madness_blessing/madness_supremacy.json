@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Madness Blessing ~ Madness Supremacy",
     "name": "Madness Supremacy",
-    "class": "Madness Blessing",
+    "class": "Warpriest",
     "description": "As a swift action you can target a creature within 30 feet that has the cowering, frightened, panicked, or paralyzed condition. That condition is suspended for 1 round, and the chosen creature gains the confused condition instead. The confused creature rerolls any result other than \"attack self\" or \"attack nearest creature.\" The round spent confused counts toward the duration of the suspended effect. At the end of the confused round, the suspended condition resumes.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

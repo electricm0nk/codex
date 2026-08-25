@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Artillery Team",
+    "category": "Combat",
+    "name": "Artillery Team",
+    "description": "Together, you and an ally can operate an oversized and unwieldy weapon. When you're adjacent to an ally who also has this feat, together you count as being Large for the purpose of using Large light crossbows, Large heavy crossbows, and Large muskets. Firing such a weapon this way requires your ally to support the barrel or bow of the weapon. You must be able to trace a line from your space to the target's space in such a way that the line passes through the ally's sace. The ally doesn't provide soft cover to your target. Your ally uses her actions to load the weapon, and you use your actions to make attacks. Similarly, your ally's feats and abilities apply to reloading, while your feats and abilities apply to making attacks. This feat does not allow you and your ally to act simultaneously on the same initiative.",
+    "prerequisites": [
+      "PREMULT:1,[PRESIZEEQ:S],[PRESIZEEQ:M]",
+      "PRETEXT:Proficiency with light crossbow, heavy crossbow, or musket; size Small or Medium.",
+      "PREWEAPONPROF:1,Crossbow (Light),Crossbow (Heavy),Musket"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 16,
+    "record_key": "Artillery Team"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

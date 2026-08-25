@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Corruption ~ Hive",
+    "name": "Hive",
+    "description": "You were infested with hive larvae (likely from a hive larva swarm; see page 236), but your body has metabolized the larvae and mutated you into something new. A hive infestation increases over time as your body adapts. Each month, your infestation surges at unpredictable intervals a number of times equal to your manifestation level. Each episode lasts about an hour, during which you're racked by pain and must attempt a Fortitude save (DC %1). On a success, you weather the episode. If you fail, your corruption progresses to the next stage, but you don't need to attempt any further saves until the next month.|15+HiveManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Corruption ~ Hive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CorruptionType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HiveCorruptionResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "DESC",
+        "value": "You were infested with hive larvae (likely from a hive larva swarm; see page 236), but your body has metabolized the larvae and mutated you into something new. A hive infestation increases over time as your body adapts. Each month, your infestation surges at unpredictable intervals a number of times equal to your manifestation level. Each episode lasts about an hour, during which you're racked by pain and must attempt a Fortitude save (DC %1). On a success, you weather the episode. If you fail, your corruption progresses to the next stage, but you don't need to attempt any further saves until the next month.|15+HiveManifestationLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 circumstance bonus on saving throws related to the corruption progressing.|HiveCorruptionResistance|PREVARGTEQ:HiveCorruptionResistance,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Hive Corruption Counter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 372,
+    "record_key": "Corruption ~ Hive"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

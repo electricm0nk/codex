@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Mummified Creature",
+    "name": "Mummified Creature",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "DR",
+        "value": "5/-"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Mummified Creature Weakness ~ Electricity Vulnerability|Mummified Creature Weakness ~ Acid Vulnerability|Mummified Creature Weakness ~ Fire Vulnerability|Mummified Creature Weakness ~ Cold Vulnerability|Mummified Creature Weakness ~ Sonic Vulnerability"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "197"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|INT|1"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Incorporeal"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Undead,RACETYPE=Construct"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|CHA-CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.All|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|-(Maneuverability-1)"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Climb|Disguise|Fly|Intimidate|Knowledge (arcana)|Knowledge (religion)|Perception|Sense Motive|Spellcraft|Stealth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mummified Creature ~ Powerful Attacks|Mummified Creature ~ Burst of Vengeance|Mummified Creature ~ Dust Stroke|Mummified Creature ~ Fail-Safe|Mummified Creature ~ Frightful Presence"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Toughness"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE|LE|NE"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 149,
+    "record_key": "Mummified Creature"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

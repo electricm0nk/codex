@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Clairsentience Power List",
+    "name": "Clairsentience Power List",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Psion=1|Destiny Dissonance,Precognition,Psychic Tracking,True Terror|Psion=2|Clairvoyant Sense,False Future,Object Reading,Sensitivity to Psychic Impressions|Psion=3|Escape Detection,Fate Link|Psion=4|Anchored Navigation,Remote Viewing|Psion=5|Clairtangent Hand,Second Chance|Psion=6|Precognition (Greater)|Psion=7|Fate of One|Psion=8|Hypercognition|Psion=9|Metafaculty"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1977,
+    "record_key": "Clairsentience Power List"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

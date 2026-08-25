@@ -158,6 +158,7 @@ use std::sync::OnceLock;
 
 use serde_json::Value;
 
+use super::bonus_stack_reader;
 use super::formula_interpreter::PcgenFormulaEvaluator;
 use super::formula_reproduction_harness::FormulaEvaluator as _;
 use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
@@ -194,10 +195,22 @@ fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
 /// straight from `data/class_feature_grants/<book>/<class-slug>.json`
 /// (`cache_gen::class_feature_grants.rs`'s own output shape). `class` and
 /// `key` are the module's own resolved fields, never re-derived here.
+///
+/// `gate` (added for T7/D12, see [`resolvable_grants`]'s doc comment) is the
+/// row's own `"gate"` field verbatim (`"preclass"` / `"mod_row_gated"` /
+/// `"mod_row_ungated"`) -- `cache_gen::class_feature_grants.rs`'s own
+/// documented invariant (mirrored in this file's earlier doc comment) is
+/// that ONLY the bare-`PRECLASS:` resolution path can EVER be
+/// archetype-sourced, so this is the one signal this module can read,
+/// without re-parsing corpus text, to tell "a row this shallow, single-hop
+/// `granted_via_archetype` check could plausibly have missed" apart from
+/// "a row that structurally cannot be archetype-sourced at all".
+#[derive(Debug)]
 struct RawGrantFact {
     key: String,
     class: String,
     level: u8,
+    gate: String,
 }
 
 /// Reproduced from `v06_work_inventory.rs`'s own `CLASS_FEATURE_POOLS`
@@ -379,7 +392,8 @@ fn load_raw_grant_facts() -> Vec<RawGrantFact> {
                 if row["granted_via_archetype"].as_bool().unwrap_or(true) {
                     continue;
                 }
-                out.push(RawGrantFact { key: key.to_string(), class: class.to_string(), level });
+                let gate = row["gate"].as_str().unwrap_or("").to_string();
+                out.push(RawGrantFact { key: key.to_string(), class: class.to_string(), level, gate });
             }
         }
     }
@@ -387,27 +401,76 @@ fn load_raw_grant_facts() -> Vec<RawGrantFact> {
 }
 
 /// `(class.to_lowercase(), key)` -> the granted-at level, for every grant
-/// fact that resolves WITHOUT a cross-book disagreement. See this module's
-/// doc comment, section 1, for why disagreeing pairs are dropped rather than
-/// resolved by picking one side.
+/// fact that resolves WITHOUT a cross-book disagreement AND (T7/D12, below)
+/// is not a bare-`PRECLASS:`-only fact with no corroborating non-`PRECLASS:`
+/// fact for the same pair. See this module's doc comment, section 1, for why
+/// disagreeing pairs are dropped rather than resolved by picking one side.
+///
+/// **T7/D12 -- shallow, single-hop `granted_via_archetype` traversal
+/// (`docs/release/SD-31-corpus-closure-grind/todo/defects.md` D12).**
+/// `granted_via_archetype` (`load_raw_grant_facts`'s own filter, above) reads
+/// only the ONE row that carries the `ABILITY:` grant token's OWN `CATEGORY`
+/// field -- a single hop. It cannot see a grant token nested INSIDE another
+/// ability's definition row, where the archetype-ness lives one hop further
+/// out, on the CONTAINING row (confirmed live:
+/// `ultimate_combat/uc_abilities_class.lst:1970`'s "Guns Everywhere" optional
+/// -rule row, `CATEGORY:Internal`, embeds `ABILITY:...|Gunslinger ~ Gun
+/// Training|...|PRECLASS:1,Gunslinger=1` -- the embedded grant's own row
+/// context is never archetype-flagged because the row that OWNS the grant
+/// token is not itself the class's base definition; same shape at
+/// `ultimate_combat/uc_abilities_class.lst:584`'s Evangelist "Sermonic
+/// Performance" row for `Cleric ~ Channel Energy`, and
+/// `ultimate_intrigue/ui_abilities_class.lst:587`'s Paladin analogue).
+///
+/// This module's own documented invariant (mirrored from
+/// `cache_gen::class_feature_grants.rs`, this file's earlier doc comment,
+/// "Only the bare-`PRECLASS:` resolution path... can EVER be
+/// archetype-sourced") is the one lever available here without re-parsing
+/// corpus text: a `.MOD`-row-gated fact (`gate` = `mod_row_gated` /
+/// `mod_row_ungated`) can never be this shape, so it is always trusted at
+/// face value; a bare-`PRECLASS:`-gated fact (`gate` = `preclass`) is the
+/// ONLY shape this defect can hide in. Re-deriving the corpus census
+/// (`t7_census.py`, cited in the cycle receipt) over the live merged data
+/// found exactly one `(class, key)` pair, corpus-wide, whose SURVIVING
+/// (non-archetype-flagged) facts are ALL `gate == "preclass"` with no
+/// `mod_row_*` fact to corroborate them: `("gunslinger", "Gunslinger ~ Gun
+/// Training")`. The other three D12-named pairs (`Cleric ~ Channel Energy`,
+/// `Druid ~ Wild Shape`, `Paladin ~ Smite Evil`) already carry a genuine
+/// `mod_row_gated` base-class fact at a DIFFERENT level, so they were already
+/// refused by the cross-book-conflict rule above -- but only by that
+/// incidental level disagreement, not by anything that reads `gate` at all
+/// (defects.md D12's own finding). Refusing every uncorroborated
+/// bare-`PRECLASS:` pair closes the whole shape structurally: it no longer
+/// matters whether a future corpus edit happens to make the levels agree,
+/// because the missing `mod_row_*` corroboration is what is actually being
+/// checked now, not a level coincidence.
 fn resolvable_grants() -> &'static BTreeMap<(String, String), u8> {
     static TABLE: OnceLock<BTreeMap<(String, String), u8>> = OnceLock::new();
     TABLE.get_or_init(|| {
         let mut levels_seen: BTreeMap<(String, String), BTreeMap<u8, ()>> = BTreeMap::new();
+        let mut gates_seen: BTreeMap<(String, String), std::collections::BTreeSet<String>> =
+            BTreeMap::new();
         for fact in load_raw_grant_facts() {
             let pair = (fact.class.to_lowercase(), fact.key);
-            levels_seen.entry(pair).or_default().insert(fact.level, ());
+            levels_seen.entry(pair.clone()).or_default().insert(fact.level, ());
+            gates_seen.entry(pair).or_default().insert(fact.gate);
         }
         levels_seen
             .into_iter()
             .filter_map(|(pair, levels)| {
-                if levels.len() == 1 {
-                    levels.into_keys().next().map(|level| (pair, level))
-                } else {
+                if levels.len() != 1 {
                     // Cross-book conflict: refuse the whole pair rather than
                     // guess which book wins.
-                    None
+                    return None;
                 }
+                let gates = gates_seen.get(&pair).cloned().unwrap_or_default();
+                if gates.len() == 1 && gates.contains("preclass") {
+                    // T7/D12: a bare-PRECLASS:-only pair with no mod_row_*
+                    // corroboration -- refuse structurally rather than trust
+                    // the single-hop `granted_via_archetype` derivation.
+                    return None;
+                }
+                levels.into_keys().next().map(|level| (pair, level))
             })
             .collect()
     })
@@ -597,13 +660,116 @@ pub(crate) struct ClassFeatureRecordTokens {
     pub(crate) bonus_vars: BTreeMap<String, String>,
 }
 
-/// Parses every `BONUS:VAR|<name[,name2,...]>|<formula>[|<extra qualifiers>]` row out of one
-/// record's `raw_tokens` array, keyed by target name. A row whose formula segment is itself
-/// followed by further `|`-delimited PRE-gate qualifiers keeps only the formula (the text before
-/// the next `|`) -- this resolver does not evaluate PRE-gates, the same restriction
-/// `extract_formula_field` (`formula_interpreter.rs`) documents for its own positional heuristic.
-fn parse_bonus_var_tokens(raw_tokens: &[Value]) -> BTreeMap<String, String> {
-    let mut bonus_vars = BTreeMap::new();
+/// Every `data/corpus/*/class_feature/**/*.json` record that carries a real (non-empty,
+/// non-`.CLEAR`, non-PI-marker) description, keyed by corpus `KEY:`, regardless of whether that
+/// description carries an unresolved `%N` -- the strictly WIDER sibling of
+/// `corpus_records_with_real_description` above, which additionally requires the description to
+/// already render clean with no character context. First book (alphabetically) wins a duplicate
+/// key, mirroring that function's own convention.
+///
+/// SD-32 T12 row 21 cycle 2: this is now a thin alias for
+/// [`class_feature_record_tokens_pre_gate_safe`] rather than a second, independently-built table.
+/// Before row 21 cycle 1 restored the corpus's real `.MOD`-appended `BONUS:VAR` rows, every
+/// record this table covered carried at most one raw row per target name, so the now-deleted
+/// `parse_bonus_var_tokens`'s last-write-wins behaviour and `parse_bonus_var_tokens_pre_gate_safe`'s
+/// PRE-gate-aware summation agreed on every record and the duplication was harmless. Restoring
+/// those dropped rows exposed the disagreement for real: `core_rulebook:class_feature:
+/// barbarian_damage_reduction` now carries multiple same-named, PRE-gated `BONUS:VAR|BarbarianDR|`
+/// rows, and last-write-wins silently picked the WRONG one (`resolve_pcgen_var_chain` bound
+/// `BarbarianDR=-1` at level 7 where the pinned upstream `.lst` states `+1` --
+/// `tests/derived_evaluator_fixture_check.rs::
+/// engine_evaluator_output_equals_the_corpus_derived_expected_value`). The PRE-gate-safe sibling
+/// parser (built for `resolve_pool_member_sole_magnitude`, see its own doc above) already exists
+/// and already proves this shape safe generically; reusing it here -- rather than writing a third
+/// parser or patching the deleted one to also understand PRE-gates -- is Decision `§17`'s generic-
+/// pass requirement, not a per-record special case.
+pub(crate) fn class_feature_record_tokens() -> &'static BTreeMap<String, ClassFeatureRecordTokens> {
+    class_feature_record_tokens_pre_gate_safe()
+}
+
+/// A stricter sibling of [`parse_bonus_var_tokens`] (SD-32 T12 Epic 8,
+/// `epic-2-cause-closure` row 18: pool-shaped class features). Refuses
+/// (drops the target entirely, never guesses) any `BONUS:VAR` target name
+/// that carries MORE THAN ONE raw row for the same record, or whose
+/// formula segment is followed by a further `|`-delimited PRE-gate
+/// qualifier (`PREVAREQ:`/`PREVARGTEQ:`/...) -- both shapes
+/// [`parse_bonus_var_tokens`] silently resolves by keeping only the LAST
+/// row, which is safe for the handful of records SD-32 Epic 1's callers
+/// hand-picked and independently verified one at a time, but NOT safe for
+/// a generic pass over an unverified population: silently picking the
+/// wrong PRE-gated variant (e.g. `advanced_players_guide`'s Force Bomb
+/// discovery, `BONUS:VAR|ForceBombDieSize|3|PREVAREQ:...,1` vs
+/// `BONUS:VAR|ForceBombDieSize|4|PREVAREQ:...,0`) would ship a genuinely
+/// wrong number as a real computed value -- exactly the failure
+/// `decisions.md §1a` exists to prevent. `formula_interpreter.rs`'s own
+/// module doc names the real PRE-gate-aware summation mechanism
+/// (`bonus_stack_reader`, a sibling module elsewhere) as out of scope for
+/// this generic resolver; refusing is correct here, not merely expedient.
+/// SD-32 T12 Epic 8 row 18 cycle 6: widened to correctly RESOLVE two shapes this function used
+/// to unconditionally drop (module doc above still describes the original refusal; both
+/// widenings below only ADD a verified-safe path -- neither removes the original refusal for any
+/// shape it does not understand).
+///
+/// **Widening 1 -- `TYPE=<bonustype>` trailing fields are stripped, never treated as a gate.**
+/// `TYPE=` (`BONUS:VAR|<target>|<formula>|TYPE=<bonustype>`, e.g. this corpus's own
+/// `AC_Natural_Armor|2|TYPE=Base`, `Craft (Alchemy)|4|TYPE=Insight`, `DomainAirLVL|DomainLVL|
+/// TYPE=Domain`) is PCGen's real bonus-STACKING classification -- it governs whether two
+/// DIFFERENT bonus sources of the same type stack with each other, never whether THIS record's
+/// own contribution applies to this character at all. Every hand-modelled function elsewhere in
+/// this file that grounds a `TYPE=`-tagged token (cited throughout `mod.rs`, e.g. `AC_Natural_
+/// Armor|2|TYPE=Base`) already treats the formula as unconditional, confirming this is real
+/// oracle semantics, not a guess. Stripping it (rather than refusing on an unrecognised trailing
+/// field, as before) is therefore strictly safe.
+///
+/// **Widening 2 -- multi-row `PREVARGTEQ`-gated targets now resolve, via `bonus_stack_reader`.**
+/// `bonus_stack_reader` (SD-31 wave 26, `super::bonus_stack_reader`) already reads and proves
+/// exactly this shape: multiple `BONUS:VAR` rows sharing one target, each independently gated by
+/// its own `PREVARGTEQ:<var>,<threshold>` (real oracle semantics, `PreVariableTester.java` +
+/// `BonusManager.sumActiveBonusMap` -- summed, only the currently-qualifying rows -- both cited in
+/// that module's own doc). For each target name found on this record (after widening 1 strips
+/// any `TYPE=` field), `bonus_stack_reader::extract_addends` is tried; if it succeeds (every row
+/// is now either ungated or carries exactly one well-formed `PREVARGTEQ` field), the addends are
+/// re-expressed as a single formula string this module's OWN existing evaluator already parses --
+/// `if(<gate var>>=<threshold>,(<formula>),0)` per gated row, summed with `+` -- reusing the
+/// `if(...)`/`Cmp` grammar `formula_interpreter.rs` already implements (wave 26 shape closure)
+/// rather than adding a second evaluation path. A target whose rows still carry any OTHER shape
+/// (more than one non-`TYPE=` PRE-tag field, a non-`PREVARGTEQ`/non-`TYPE=` tag such as
+/// `PREABILITY`/`PREMULT`) still fails `extract_addends` -- widening 3 below then decides what
+/// happens next, rather than the whole target being silently dropped as before.
+///
+/// **Widening 3 -- when `extract_addends` refuses, fall back to the target's own sole UNGATED
+/// row, if it has exactly one.** Found live: SD-32 T12 row 21 cycle 2, `core_rulebook:
+/// class_feature:barbarian_damage_reduction`. Its real corpus record (only visible once row 21
+/// cycle 1 restored the `.MOD`-appended rows this function reads) carries ONE unconditional row
+/// (`BONUS:VAR|BarbarianDR|(BarbarianDRLVL-4)/3`) plus five rows each gated by BOTH a
+/// `PREVARGTEQ` AND a `PREVAREQ` tag (a rage-power-selection offset,
+/// `PREVAREQ:Barbarian_CF_DamageReduction<N>,1`) -- two PRE-tag kinds on one row, a shape
+/// `bonus_stack_reader` correctly refuses (its own module doc: "Recognises exactly one PRE-tag
+/// kind, `PREVARGTEQ`"). `PREVAREQ` gates on a feat/rage-power SELECTION, not a value this module
+/// has ever modelled (`ability_modifier_seed_vars` seeds only ability scores and class level) --
+/// there is no live binding this resolver could evaluate that gate against even if a fourth
+/// parser were built for it, so refusing to evaluate those five rows is correct, not merely
+/// expedient. What is NOT correct is discarding the target's own unconditional row along with
+/// them: a character who has selected none of those rage powers (the common case, and the exact
+/// case `derived_evaluator_fixture_check`'s pinned fixture -- re-derived independently from the
+/// upstream `.lst`'s single base row, which is the ONLY row that script's own single-line reader
+/// sees -- covers) still has a real, fully-determined `BarbarianDR` from the base formula alone.
+/// This widening returns that base formula ONLY when the target carries exactly one row with no
+/// PRE-tag tail at all (after widening 1 strips any `TYPE=`); a target with zero ungated rows, or
+/// more than one (which would itself be an ambiguous shape), still refuses entirely, unchanged.
+fn parse_bonus_var_tokens_pre_gate_safe(raw_tokens: &[Value]) -> BTreeMap<String, String> {
+    // Re-expand comma-joined `VAR|Name1,Name2|formula|PRE...` rows into one synthetic
+    // `"VAR|<name>|formula|PRE..."` value per name, exactly the shape `bonus_stack_reader::
+    // extract_addends` expects (one target name per token) -- mirrors the name-splitting the
+    // original version of this function already did before discarding it into a bare formula.
+    // Any `TYPE=...` trailing field is dropped here (widening 1, see doc above) before the value
+    // ever reaches `extract_addends`, so a `PREVARGTEQ`-only remainder is left recognisable.
+    let mut expanded: Vec<(String, String)> = Vec::new();
+    let mut target_order: Vec<String> = Vec::new();
+    let mut seen_targets: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
+    // Widening 3's own bookkeeping: every UNGATED (no PRE-tag tail at all, post-`TYPE=`-strip)
+    // row's formula, per target name -- judged on the target's OWN rows, not the reader's.
+    let mut ungated_formulas: BTreeMap<String, std::collections::BTreeSet<String>> = BTreeMap::new();
     for token in raw_tokens {
         if token["key"].as_str() != Some("BONUS") {
             continue;
@@ -614,27 +780,138 @@ fn parse_bonus_var_tokens(raw_tokens: &[Value]) -> BTreeMap<String, String> {
         let (Some(names), Some(formula_and_tail)) = (parts.next(), parts.next()) else {
             continue;
         };
-        let formula = formula_and_tail.split('|').next().unwrap_or(formula_and_tail);
+        let mut tail_fields: Vec<&str> = formula_and_tail.split('|').collect();
+        let formula = tail_fields.remove(0);
+        tail_fields.retain(|field| !field.starts_with("TYPE="));
+        let rebuilt = if tail_fields.is_empty() {
+            formula.to_string()
+        } else {
+            format!("{formula}|{}", tail_fields.join("|"))
+        };
         for name in names.split(',') {
             let name = name.trim();
-            if !name.is_empty() {
-                bonus_vars.insert(name.to_string(), formula.to_string());
+            if name.is_empty() {
+                continue;
+            }
+            if seen_targets.insert(name.to_string()) {
+                target_order.push(name.to_string());
+            }
+            if tail_fields.is_empty() {
+                ungated_formulas.entry(name.to_string()).or_default().insert(formula.to_string());
+            }
+            expanded.push(("BONUS".to_string(), format!("VAR|{name}|{rebuilt}")));
+        }
+    }
+    let borrowed: Vec<(&str, &str)> =
+        expanded.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect();
+    let mut out = BTreeMap::new();
+    for name in target_order {
+        let Ok(addends) = bonus_stack_reader::extract_addends(&name, borrowed.iter().copied())
+        else {
+            // Widening 3: an unrecognised PRE-tag shape refuses `extract_addends`'s summed
+            // result, but a lone ungated row for this same target is still a real,
+            // unconditional fact -- use it rather than dropping the target outright.
+            if let Some(formulas) = ungated_formulas.get(&name) {
+                if let [only] = formulas.iter().collect::<Vec<_>>().as_slice() {
+                    out.insert(name, (*only).clone());
+                }
+            }
+            continue;
+        };
+        match addends.as_slice() {
+            [] => {}
+            [only] if only.gate.is_none() => {
+                out.insert(name, only.formula.clone());
+            }
+            _ => {
+                let synthesized = addends
+                    .iter()
+                    .map(|addend| match &addend.gate {
+                        None => format!("({})", addend.formula),
+                        Some(gate) => {
+                            format!("if({}>={},({}),0)", gate.variable, gate.threshold, addend.formula)
+                        }
+                    })
+                    .collect::<Vec<_>>()
+                    .join("+");
+                out.insert(name, synthesized);
             }
         }
     }
-    bonus_vars
+    out
 }
 
-/// Every `data/corpus/*/class_feature/**/*.json` record that carries a real (non-empty,
-/// non-`.CLEAR`, non-PI-marker) description, keyed by corpus `KEY:`, regardless of whether that
-/// description carries an unresolved `%N` -- the strictly WIDER sibling of
-/// `corpus_records_with_real_description` above, which additionally requires the description to
-/// already render clean with no character context. First book (alphabetically) wins a duplicate
-/// key, mirroring that function's own convention.
-pub(crate) fn class_feature_record_tokens() -> &'static BTreeMap<String, ClassFeatureRecordTokens> {
+/// SD-32 T12 Epic 8 row 18 cycle 10: the ONE per-target merge policy both
+/// `class_feature_bonus_vars_any_record` (cycle 8, header-side) and
+/// `class_feature_record_tokens_pre_gate_safe` (this cycle, member-side)
+/// now share -- never overwrite an already-bound target name, so the FIRST
+/// book (alphabetical walk order) to define a given `BONUS:VAR` target
+/// wins for that target specifically, while every OTHER target either side
+/// contributes still merges in. Factored out so the two cross-book merges
+/// cannot drift into two different collision policies the way the header
+/// and member tables' own WHOLE-RECORD `or_insert_with` calls silently did
+/// before cycle 8/10 fixed them one at a time.
+pub(crate) fn merge_bonus_var_target_map_never_overwriting(
+    into: &mut BTreeMap<String, String>,
+    from: BTreeMap<String, String>,
+) {
+    for (target, formula) in from {
+        into.entry(target).or_insert(formula);
+    }
+}
+
+/// A PRE-gate-safe sibling of [`class_feature_record_tokens`], identical in
+/// every respect except its `bonus_vars` field is built via
+/// [`parse_bonus_var_tokens_pre_gate_safe`] rather than
+/// [`parse_bonus_var_tokens`] -- see that function's own doc comment for
+/// why a generic, per-record-unverified consumer (SD-32 T12 Epic 8's
+/// [`super::resolve_pool_member_sole_magnitude`]) must use this table
+/// instead of the original.
+///
+/// SD-32 T12 Epic 8 row 18 cycle 10: MERGED across every book carrying the
+/// SAME bare `KEY:`, never first-book-wins -- the member-side twin of
+/// `class_feature_bonus_vars_any_record`'s own cross-book merge (cycle 8),
+/// same root cause and same fix, applied to this table instead of skipped
+/// as a "narrower/riskier" scope call (cycle 8's own receipt; the `class`
+/// field this table's `owned_by_class` census check reads IS load-bearing,
+/// see below, so this merge preserves first-seen `class`/`name`/
+/// `raw_description` exactly as before and only widens `bonus_vars`).
+/// Confirmed live: this table's own description gate (`is_real_description_
+/// value`) means most of the header-only 155 bare-key duplicates
+/// `class_feature_bonus_vars_any_record`'s own doc names never reach this
+/// table at all (a header record with `description: null` is filtered out
+/// upstream, before `or_insert_with` even runs) -- but any MEMBER record
+/// sharing a bare key across books (a book reprinting the same named
+/// bloodline/domain/order power) previously kept only the alphabetically-
+/// first book's own `bonus_vars`, silently discarding a later book's
+/// `.MOD`-restored rows for a target the first book's copy never carried.
+/// Per-target `.or_insert` (never overwriting an already-bound target,
+/// identical policy to the header-side table) means a genuine cross-book
+/// disagreement on the SAME target name still keeps whichever book's row
+/// was seen first, unchanged from this table's own pre-existing single-
+/// record collision policy -- this only extends "one record" to "one key,
+/// merged across books", exactly as cycle 8 phrased it for the header
+/// table.
+///
+/// **`§17a` re-derivation result: this merge closes ZERO new pool groups.**
+/// Independently re-derived corpus-wide (every real `class_feature`
+/// key carrying a non-null description that appears in more than one
+/// book): 81 such keys exist, and for every one of them the union of
+/// `BONUS:VAR` target names across all contributing books is IDENTICAL to
+/// the alphabetically-first book's own target set alone -- no book
+/// contributes a target its sibling copies lack. The defect this cycle
+/// fixes is real (a future corpus update that DOES diverge would have
+/// silently lost data under the old whole-record `or_insert_with`), but it
+/// has not yet manifested for any key currently in this table. A predicted
+/// change that does not reproduce is itself a finding (`decisions.md
+/// §17a`), not a wasted cycle: `pool_group_closure_census_across_all_six_
+/// pools`'s six baselines are unchanged by this fix, confirmed by re-
+/// running that test after landing it.
+pub(crate) fn class_feature_record_tokens_pre_gate_safe() -> &'static BTreeMap<String, ClassFeatureRecordTokens>
+{
     static TABLE: OnceLock<BTreeMap<String, ClassFeatureRecordTokens>> = OnceLock::new();
     TABLE.get_or_init(|| {
-        let mut out = BTreeMap::new();
+        let mut out: BTreeMap<String, ClassFeatureRecordTokens> = BTreeMap::new();
         let corpus_root = repo_root().join("data/corpus");
         let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
         let mut book_dirs: Vec<_> = books.flatten().collect();
@@ -655,20 +932,320 @@ pub(crate) fn class_feature_record_tokens() -> &'static BTreeMap<String, ClassFe
                 else {
                     continue;
                 };
-                let Some(raw_desc) = data["description"].as_str() else { continue };
-                if !is_real_description_value(raw_desc) {
-                    continue;
-                }
+                // SD-32 T12 Epic 8 row 18 cycle 18 (`§27b`): `description: null` is now ADMITTED
+                // (as an empty `raw_description`, never fabricated text) rather than skipped
+                // outright -- confirmed live, `data/corpus/ultimate_magic/class_feature/
+                // jungle_domain/trap_sense.json` (`VISIBLE:NO`, a real, invisible, purely
+                // mechanical sub-ability: `BONUS:VAR|TrapSenseBonus|DomainJungleLVL/3`, no
+                // description text at all) was refused by `resolve_pool_member_sole_magnitude`
+                // purely because this table's OLD `description.as_str()?` gate dropped the
+                // record before its real `bonus_vars` chain was ever read -- the exact same
+                // "header record with `description: null`" shape `class_feature_bonus_vars_any_
+                // record`'s own doc above already names and already admits for HEADER lookups;
+                // this widening applies the identical reasoning to MEMBER lookups. Safe for every
+                // existing consumer: `resolved_description_for`/`resolved_description_for_formula_
+                // only_desc_argument` both already refuse cleanly (return `None`, never render) on
+                // an empty `raw_description` -- `render_pcgen_desc_with_values("", ...).text.
+                // is_empty()` and `desc_token_arguments("").is_empty()` respectively -- so no
+                // caller anywhere gains a new, empty, fabricated rendering; only
+                // `resolve_pool_member_sole_magnitude`'s `BONUS:VAR`-only path (which never reads
+                // `raw_description` at all) gains real, previously-invisible magnitude-bearing
+                // records. A record whose description IS present but carries a REAL bad value
+                // (`.CLEAR`/`.CLEARALL`/a PI-redaction marker) is still refused exactly as before
+                // -- `is_real_description_value` only ever ran on a `Some` description, so this
+                // widening changes NOTHING about that PI-safety gate (`§15`).
+                let raw_desc = match data["description"].as_str() {
+                    Some(s) => {
+                        if !is_real_description_value(s) {
+                            continue;
+                        }
+                        s.to_string()
+                    }
+                    None => String::new(),
+                };
                 let bonus_vars = data["raw_tokens"]
                     .as_array()
-                    .map(|tokens| parse_bonus_var_tokens(tokens))
+                    .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
                     .unwrap_or_default();
-                out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
+                let entry = out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
                     name: name.to_string(),
                     class: class.to_string(),
-                    raw_description: raw_desc.to_string(),
-                    bonus_vars,
+                    raw_description: raw_desc,
+                    bonus_vars: BTreeMap::new(),
                 });
+                merge_bonus_var_target_map_never_overwriting(&mut entry.bonus_vars, bonus_vars);
+            }
+        }
+        out
+    })
+}
+
+/// Every corpus `class_feature` record's own PRE-gate-safe `BONUS:VAR`
+/// chain, keyed by `KEY:` -- WITHOUT [`class_feature_record_tokens_pre_gate_
+/// safe`]'s `data.description` requirement (SD-32 T12 Epic 8). A pool's own
+/// HEADER record (`"Alchemist ~ Discovery"`, `"Witch ~ Hex"`, ...) very
+/// often defines the pool-specific level variable individual members scale
+/// on (`AlchemistDiscoveryLVL|AlchemistLVL`) but carries `description:
+/// null` in this corpus (confirmed live,
+/// `advanced_players_guide/class_feature/alchemist/discovery.json`) -- the
+/// sibling table's description gate would silently exclude it, starving
+/// `super::resolve_pool_member_sole_magnitude`'s header-chain merge of
+/// exactly the variable it exists to supply. This table's own consumer
+/// never renders `raw_description` (it is a real corpus record's own field,
+/// kept `.to_string()`-of-empty rather than `Option` only to reuse
+/// [`ClassFeatureRecordTokens`]'s existing shape without a second struct).
+pub(crate) fn class_feature_bonus_vars_any_record() -> &'static BTreeMap<String, ClassFeatureRecordTokens> {
+    static TABLE: OnceLock<BTreeMap<String, ClassFeatureRecordTokens>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let cf_dir = book_entry.path().join("class_feature");
+            if !cf_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&cf_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let (Some(key), Some(name)) = (data["key"].as_str(), data["name"].as_str()) else {
+                    continue;
+                };
+                // SD-32 T12 Epic 8 row 18 cycle 8: `class` tolerated as absent/`null` here (kept
+                // `""`, never a fabricated class name) -- confirmed live across every real
+                // per-bloodline HEADER record this corpus carries (`data/corpus/*/class_feature/
+                // <bloodline>/<bloodline>.json`, e.g. `"Marid Bloodline"`, `"Draconic Bloodline"`,
+                // `"Aberrant Bloodline"`; every single one of the 53 real Sorcerer Bloodline groups'
+                // own header ingests with `class: null` even after row 21's `.MOD`-token restoral
+                // put their real `BONUS:VAR|Sorcerer_<X>_BloodlineLVL|BloodlineLVL`-shaped chain
+                // rows back). This table exists ONLY to feed `pool_header_record_by_normalized_
+                // suffix`'s header-var MERGE (never rendered, never treated as a member's own
+                // ownership signal -- `resolve_pool_member_sole_magnitude`'s member lookup still
+                // goes through the DESCRIPTION-gated, class-`Some`-required sibling table
+                // unchanged), so an unowned header contributes vars but can never itself pass an
+                // ownership check anywhere in this file.
+                let class = data["class"].as_str().unwrap_or("");
+                let raw_desc = data["description"].as_str().unwrap_or("").to_string();
+                let bonus_vars = data["raw_tokens"]
+                    .as_array()
+                    .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
+                    .unwrap_or_default();
+                // SD-32 T12 Epic 8 row 18 cycle 8: MERGED across every book carrying the SAME bare
+                // key, never first-book-wins. Confirmed live: `"Bloodline Tracker"` alone (the
+                // shared `BloodlineLVL`/`BloodlineCasterLVL`/`BloodlineProgressionLVL` var chain
+                // every one of the 53 real Sorcerer Bloodline groups' own per-bloodline header
+                // chains through) is real-ingested from 8 SEPARATE book files (`core_rulebook`,
+                // `advanced_class_guide`, `advanced_players_guide`, `advanced_race_guide`,
+                // `occult_adventures`, `ultimate_combat`, `ultimate_magic`, `monster_codex`), and
+                // 154 more bare `class_feature` keys carry this exact shape too (e.g. `"Verdant
+                // Bloodline"` alone in 4 books, `"Celestial Bloodline"` in 3) -- each book's own
+                // ingested copy carries a DIFFERENT subset of that one real ability's `.MOD`-
+                // appended rows (the same per-book `.MOD`-collision shape row 21 fixed at the
+                // per-FILE level; this is the same defect surviving at the per-KEY,
+                // cross-file level). The prior `or_insert_with` kept only whichever book sorted
+                // FIRST alphabetically (`"advanced_class_guide"` before `"core_rulebook"`) --
+                // silently discarding `core_rulebook`'s own COMPLETE 308-token `"Bloodline
+                // Tracker"` copy in favour of `advanced_class_guide`'s single leftover `DEFINE`.
+                // `.or_insert` per target name (never overwriting an already-bound target) means
+                // every book's own real rows contribute, and a genuine cross-book disagreement on
+                // the SAME target name keeps whichever book's row was seen first -- unchanged from
+                // this table's own pre-existing single-record collision policy (`parse_bonus_var_
+                // tokens_pre_gate_safe` already refuses an ambiguous multi-row target within one
+                // record; this only extends "one record" to "one key, merged across books").
+                let entry = out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
+                    name: name.to_string(),
+                    class: class.to_string(),
+                    raw_description: raw_desc.clone(),
+                    bonus_vars: BTreeMap::new(),
+                });
+                if entry.class.is_empty() && !class.is_empty() {
+                    entry.class = class.to_string();
+                }
+                if entry.raw_description.is_empty() && !raw_desc.is_empty() {
+                    entry.raw_description = raw_desc;
+                }
+                merge_bonus_var_target_map_never_overwriting(&mut entry.bonus_vars, bonus_vars);
+            }
+        }
+        out
+    })
+}
+
+/// SD-32 T12 Epic 8 row 18 cycle 21 (`§27b`): every `class_feature/wildblooded/*.json` record's
+/// own declared PARENT bloodline pool-group name, keyed by the VARIANT's own pool-group name
+/// (`"Bedrock Bloodline"` -> `"Deep Earth Bloodline"`).
+///
+/// Real corpus fact, confirmed live (`data/corpus/ultimate_magic/class_feature/wildblooded/
+/// bedrock.json`): a "Wildblooded" bloodline variant (PF1e RAW -- Ultimate Magic p.68, a Sorcerer
+/// swaps their bloodline's normal 1st-level power and bloodline arcana for a themed alternate)
+/// is corpus-KEYED as if it were its OWN pool group (`"Bedrock Bloodline ~ Bloodline Arcana"`,
+/// same `"<PoolGroup> ~ <Member>"` shape as every real bloodline), which is why
+/// `real_groups_owned_by` correctly counts it as a real, distinct, selectable group -- but its
+/// own `PREABILITY` token (`"1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Deep Earth"`) proves
+/// selecting it REQUIRES the character to already hold a real, different, named bloodline (`"Deep
+/// Earth Bloodline"`) as a level-1 prerequisite -- so that parent's own header vars
+/// (`Sorcerer_DeepEarth_BloodlinePowerNLVL`, ...) are, by corpus-declared construction, always
+/// genuinely bound whenever a Wildblooded variant's own member records reference them (cycle
+/// 17/19's own oracle-proven "cross-bloodline" refusal shape does NOT apply here -- that shape is
+/// a genuinely UNRELATED bloodline with no prerequisite link; this is a variant's own declared
+/// PARENT). All 20 real Wildblooded records checked (18 previously refused this way, `Empyreal`/
+/// `Sage` already resolving via another path): every one names its parent via this exact
+/// `PREABILITY:...,Sorcerer Bloodline ~ <Parent>` shape, none any other.
+///
+/// Parsing is deliberately narrow and corpus-literal: the LAST comma-separated segment of the
+/// FIRST real `PREABILITY` token, split on `" ~ "`, its own last segment -- never a guess, never a
+/// transform of the variant's own name (proven live against all 20 files above).
+pub(crate) fn wildblooded_variant_parent_pool_group() -> &'static BTreeMap<String, String> {
+    static TABLE: OnceLock<BTreeMap<String, String>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let wb_dir = book_entry.path().join("class_feature").join("wildblooded");
+            if !wb_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&wb_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let Some(name) = data["name"].as_str() else { continue };
+                let Some(tokens) = data["raw_tokens"].as_array() else { continue };
+                let Some(preability) = tokens
+                    .iter()
+                    .find(|t| t["key"].as_str() == Some("PREABILITY"))
+                    .and_then(|t| t["value"].as_str())
+                else {
+                    continue;
+                };
+                let Some(last_segment) = preability.rsplit(',').next() else { continue };
+                let Some(parent) = last_segment.rsplit(" ~ ").next() else { continue };
+                if parent == last_segment {
+                    // no " ~ " separator -- not the expected shape, skip rather than guess.
+                    continue;
+                }
+                out.entry(format!("{name} Bloodline")).or_insert_with(|| format!("{parent} Bloodline"));
+            }
+        }
+        out
+    })
+}
+
+/// Every corpus `data/corpus/*/class/*.json` CLASS record's own PRE-gate-safe `BONUS:VAR` chain,
+/// keyed by `class_id` (SD-32 T12 Epic 8 row 18 cycle 8). Real corpus fact, confirmed live:
+/// Cleric's own `DomainLVL` (`BONUS:VAR|DomainLVL|ClericLVL`, real PCGen source `cr_classes.lst`)
+/// binds on the CLASS record itself, `core_rulebook/class/cleric.json`, NOT on any `class_feature`
+/// record -- every one of the 67 real, never-hand-modelled Cleric Domain groups' own members needs
+/// this exact binding and none of them can ever supply it themselves (cycle 7's own receipt named
+/// this as a second, separate, larger gap than the Bloodline family's per-book `.MOD`-collision
+/// one). Row 21 restored `raw_tokens` onto every one of the 168 real class records (previously
+/// absent entirely) -- this table is the missing READ side, mirroring `class_feature_bonus_vars_
+/// any_record`'s own shape one dir level up. `class_id` is the record's plain display name
+/// (`"Cleric"`, confirmed live -- never a `"class:"`-prefixed id), so this table's own keys line up
+/// directly with every `owning_class`/`class` string this module already threads. One real class
+/// record per book-and-name pair observed so far (no cross-book duplication like the `class_
+/// feature` family's own "Tracker" shape), so first-insert-wins is safe here; a future duplicate
+/// would still merge safely via the same `.or_insert`-per-target policy `class_feature_bonus_vars_
+/// any_record` already uses, kept identical for consistency rather than re-derived per table.
+pub(crate) fn class_record_bonus_vars() -> &'static BTreeMap<String, BTreeMap<String, String>> {
+    static TABLE: OnceLock<BTreeMap<String, BTreeMap<String, String>>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out: BTreeMap<String, BTreeMap<String, String>> = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let class_dir = book_entry.path().join("class");
+            if !class_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&class_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let Some(class_id) = data["class_id"].as_str() else { continue };
+                let bonus_vars = data["raw_tokens"]
+                    .as_array()
+                    .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
+                    .unwrap_or_default();
+                let entry = out.entry(class_id.to_string()).or_default();
+                for (target, formula) in bonus_vars {
+                    entry.entry(target).or_insert(formula);
+                }
+            }
+        }
+        out
+    })
+}
+
+/// Every corpus `data/corpus/*/domain/*.json` DOMAIN record's own PRE-gate-safe `BONUS:VAR` chain,
+/// keyed by the domain's own bare `KEY:` (e.g. `"Cave"`, `"Aquatic"` -- never `"Cave Domain"`, the
+/// `class_feature` sibling family's own naming shape) (SD-32 T12 Epic 8 row 18 cycle 18, `§27b`).
+///
+/// Real corpus fact, confirmed live by direct inspection
+/// (`data/corpus/ultimate_magic/domain/cave.json`): a `domain`-kind record ALREADY carries the
+/// real, resolvable `BONUS:VAR|DomainCaveLVL|DomainLVL|TYPE=Domain`, `BONUS:VAR|DomainCaveDC|
+/// 10+(DomainCaveLVL/2)+WIS|TYPE=Domain`, `BONUS:VAR|DomainCaveTimes|DomainPowerTimes|TYPE=Domain`
+/// chain every one of that domain's `class_feature` MEMBER records (`"Cave Domain ~ Cavesight"`,
+/// ...) needs -- the exact same convention `pool_header_record_by_normalized_suffix`'s cycle-5
+/// widening already merges for domains whose header happens to live under `class_feature`
+/// (`"Air Domain"`, bare key, `data/corpus/core_rulebook/class_feature/air/air.json`). Neither
+/// `class_feature_bonus_vars_any_record` nor any other existing table ever reads this `domain`
+/// subdirectory at all -- every domain whose ONLY real header record lives here (23 of the
+/// cycle-18 census's 197 unresolved groups sampled this cycle: Aquatic, Arctic, Eagle, Frog,
+/// Jungle, Monkey, Mountain, Plains, Serpent, Swamp, Cave, Desert, ...) was refused purely for
+/// want of this read path, not for want of real data -- a genuine engine gap this cycle closes,
+/// not a data gap (`§27b` distinguishes the two; only a hard impossibility, never "no consumer
+/// reaches it", excuses a unit).
+///
+/// `data.class` is genuinely absent on this record shape (confirmed: the domain schema carries no
+/// `class` field at all, gated instead by a `PRECLASS:` token this table does not need to read --
+/// the domain-header convention is inherently class-independent the same way `"Domains"`'s own bare
+/// `DomainPowerTimes` chain already is, per that clause's own doc above). Merged across books
+/// exactly like every sibling table here (`.or_insert` per target name, never overwriting an
+/// already-bound target), so a genuine cross-book disagreement on the same target name keeps
+/// whichever book's row was seen first.
+pub(crate) fn domain_kind_bonus_vars_any_record() -> &'static BTreeMap<String, BTreeMap<String, String>> {
+    static TABLE: OnceLock<BTreeMap<String, BTreeMap<String, String>>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out: BTreeMap<String, BTreeMap<String, String>> = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let domain_dir = book_entry.path().join("domain");
+            if !domain_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&domain_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let Some(key) = data["key"].as_str() else { continue };
+                let bonus_vars = data["raw_tokens"]
+                    .as_array()
+                    .map(|tokens| parse_bonus_var_tokens_pre_gate_safe(tokens))
+                    .unwrap_or_default();
+                let entry = out.entry(key.to_string()).or_default();
+                for (target, formula) in bonus_vars {
+                    entry.entry(target).or_insert(formula);
+                }
             }
         }
         out
@@ -725,6 +1302,38 @@ fn ability_modifier_seed_vars(ability_modifiers: &AbilityModifiers) -> BTreeMap<
 /// [`resolved_description_for`]'s own downstream `render_pcgen_desc_with_values` call then drops
 /// (and reports) any `%N` that still names it, exactly the way it already treats any other
 /// unresolved argument.
+///
+/// **SD-32 T12 Epic 8 row 18 cycle 17 -- why refusing an identifier bound only on an unrelated
+/// (cross-class or non-granting-source) record is the ORACLE-CORRECT behaviour, not merely a
+/// conservative guess, established by reading the real engine rather than assuming.** Real
+/// PCGen's variable read path, `PlayerCharacter.getVariable` (`code/src/java/pcgen/core/
+/// PlayerCharacter.java:2090`), sums `getTotalBonusTo("VAR", variableString)` -- EVERY
+/// `BONUS:VAR` contribution to that exact variable name from EVERY source the character actually
+/// possesses, character-wide, with no per-class scoping at all. This confirmed, on inspection,
+/// that this module's guard is not merely refusing to guess a class boundary the oracle also
+/// respects -- the oracle has NO class boundary here; it is genuinely global. But that global sum
+/// is only ever nonzero for a variable name a given character's OWN held sources actually bonus:
+/// re-derived for Bloodrager's remaining 7 single-terminal `Bloodline` members (row 18 cycle 13's
+/// own finding, re-verified cycle 16/17): each chains to a per-bloodline `Bloodrager_<X>_
+/// BloodlineLVL` identifier bound by exactly TWO real corpus records, NEITHER a plain Bloodrager
+/// who merely picked that bloodline through the class's own bloodline-choice mechanism would
+/// hold -- (a) `data/corpus/advanced_class_guide/ability/*_bloodline.json`, an ABILITY record
+/// under `CATEGORY:"Raging Blood Feat Bloodline"`, PREMULT-gated on holding a DIFFERENT, already-
+/// taken `Eldritch Heritage Bloodline` or `Sorcerer Bloodline` ability -- a feat a plain Bloodrager
+/// has no reason to hold, and (b) the `eldritch_scion_<x>_bloodline` class_feature record, `class:
+/// "Sorcerer"` (the cross-class archetype cycle 13 named). Confirmed exhaustively (`grep` across
+/// `data/corpus/**/*.json` for `<X>_BloodlineLVL|BloodragerLVL` or `<X>_BloodlineLVL|
+/// BloodragerBloodlineLVL`, any class): no THIRD record exists binding a plain Bloodrager's own
+/// per-bloodline `BloodlineLVL` to anything level-scaled. Importing either candidate's binding
+/// here would misrepresent EVERY Bloodrager as if they also held the Raging Blood feat or the
+/// Eldritch Scion archetype -- a live fabricated value, exactly the failure mode this bundle's
+/// own dispatch brief names as having already occurred once when a cross-record refusal like
+/// this one was loosened elsewhere. The guard therefore stays
+/// exactly as cycle 12 built it; this cycle's contribution is the oracle citation proving it is
+/// the correct model of the real engine's own semantics, not merely an unverified safety margin,
+/// and confirming (not merely repeating) that the remaining 7 are a genuine data/ingestion gap
+/// (no corpus record grants a plain Bloodrager's per-bloodline level at all) rather than a
+/// resolvable compute-shape gap this lane's own scope could close.
 pub(crate) fn resolve_pcgen_var_chain(
     bonus_vars: &BTreeMap<String, String>,
     class_level_var: &str,
@@ -734,6 +1343,18 @@ pub(crate) fn resolve_pcgen_var_chain(
     let evaluator = PcgenFormulaEvaluator;
     let mut vars: BTreeMap<String, i64> = ability_modifier_seed_vars(ability_modifiers);
     vars.insert(class_level_var.to_string(), i64::from(level));
+    // SD-32 T12 Epic 8 row 18 cycle 6: bind `classlevel("<ThisClass>")`'s own per-class key too
+    // (`formula_interpreter.rs`'s `Expr::ClassLevel` now looks up `CLASSLEVEL::<name>`, never a
+    // class-blind `__LEVEL__` slot). This caller only ever knows ONE class's real level -- the
+    // record's own granting class, recovered from `class_level_var` by stripping the trailing
+    // `LVL` PCGen's own auto-declared-variable convention always appends (`class_level_variable_
+    // name`'s own inverse) -- so only THAT class's key is bound; a formula naming any other class
+    // stays unbound and refuses, never fabricates (see `formula_interpreter.rs`'s own doc for why
+    // this is safe: same-class `classlevel(...)` now resolves correctly, genuinely-different-
+    // class arguments still refuse cleanly).
+    if let Some(class_name) = class_level_var.strip_suffix("LVL") {
+        vars.insert(format!("CLASSLEVEL::{class_name}"), i64::from(level));
+    }
     let mut progressed = true;
     let mut guard = 0;
     while progressed && guard < 16 {
@@ -749,7 +1370,174 @@ pub(crate) fn resolve_pcgen_var_chain(
             }
         }
     }
+    // SD-32 T12 Epic 8 row 18 cycle 12: PCGen's own real 0-default for a bare
+    // identifier this corpus never binds ANYWHERE, under ANY condition.
+    //
+    // Oracle trace, file:line (pinned PCGen commit `7f818006e371`):
+    // `PlayerCharacter.java:2090-2140` (`getVariable`) tries a modern, DECLARED
+    // `VariableKey` first; failing that (`hasVariable`, `:2430-2440`, false for
+    // any name never registered as one) it falls to `getVariableValue`, which
+    // is exactly the path a `BONUS:VAR|Target|Formula` RHS resolves through
+    // (`JEPFormula.resolve` -> `character.getVariableValue`,
+    // `code/src/java/pcgen/cdom/base/JEPFormula.java`). That method
+    // (`VariableProcessor.java:125-139`) tries the modern JEP parser first
+    // (`:151-182`, `processJepFormula` `:433-513`): JEP requires EVERY symbol
+    // in the expression to resolve via `lookupVariable` (`:532-561`) or it
+    // returns `null` outright -- "we could not get a value for all of the
+    // variables, so it must not have been a JEP function after all" (`:469`).
+    // `getVariableValue` then falls through to the LEGACY, `+`/`-`/`*`/`/`-
+    // delimited parser (`processBrokenParser`, `:215-421`): its own per-term
+    // loop (`:357-421`) calls `lookupVariable` for each term and, when that
+    // returns `null` (not `hasVariable`, no internal/export variable either --
+    // exactly what a globally-unbound identifier hits), leaves the term's raw
+    // text unchanged; `Float.parseFloat` on that text then throws
+    // `NumberFormatException`, caught silently and treated as `0.0` (`:394-
+    // 402`, own comment: "Don't care, as it's just zero"). Real PCGen genuinely
+    // computes 0 for this shape, not a refusal.
+    //
+    // Matched here NARROWLY, per `decisions.md §17a`'s "implement the
+    // condition, not the convenience": only a bare `Expr::Var` lookup miss
+    // (the interpreter's own distinct `"unbound variable {name:?}"` text,
+    // `formula_interpreter.rs`'s `eval_expr`) is retried with THAT identifier
+    // defaulted to 0 -- never `classlevel(...)`'s own separately-worded
+    // refusal, division-by-zero, an unknown function, or any other refused
+    // shape, all of which keep refusing exactly as before (they fail with
+    // different error text this loop never matches). And only when the
+    // identifier is ABSENT from `every_corpus_bound_bonus_var_target()` --
+    // the full corpus-wide union of every `BONUS:VAR` target name any
+    // class/class_feature record binds anywhere, PRE-gated or not. An
+    // identifier present in that set (e.g. one this record's own PRE-gate-
+    // safe parse dropped for genuine multi-row ambiguity) is a REAL,
+    // possibly-nonzero conditional PCGen value this module cannot safely
+    // guess -- it keeps refusing, unchanged from every prior cycle's own
+    // safety property (cycles 2 and 5's proofs this doc inherits).
+    //
+    // A name genuinely absent from that set may STILL carry a real, more
+    // precise corpus fact than a bare guessed `0`: `DEFINE:<name>|0` is
+    // PCGen's own standard idiom for declaring a `BONUS:VAR` target's
+    // baseline (`DefineLst.java`: registers a `VariableKey`, and its own
+    // deprecation warning literally reads "please use a DEFINE of 0 and an
+    // appropriate bonus" for any non-zero use) -- confirmed live for exactly
+    // this family: `data/corpus/advanced_class_guide/class_feature/
+    // bloodrager/bloodrager_bloodline_tracker.json` carries `DEFINE:
+    // BloodragerBloodlinePower1LVLBonus|0` (and the 4/8/12/16/20 siblings),
+    // and `grep` confirms no `BONUS:VAR` row anywhere ever targets that same
+    // name, so there is no possible conditional addend this fallback could
+    // be hiding. `corpus_define_literal_defaults()` reads exactly that
+    // literal, falling back to `0` (real PCGen's own catch-all, see above)
+    // only when the corpus never says anything about the name at all --
+    // e.g. Sorcerer/Cleric/Shaman's bare `<Pool>PowerNLVLBonus` family,
+    // which carries no `DEFINE` either.
+    let bound_anywhere = every_corpus_bound_bonus_var_target();
+    let define_defaults = corpus_define_literal_defaults();
+    let mut progressed_zero = true;
+    let mut guard_zero = 0;
+    while progressed_zero && guard_zero < 16 {
+        progressed_zero = false;
+        guard_zero += 1;
+        for (name, formula) in bonus_vars {
+            if vars.contains_key(name) {
+                continue;
+            }
+            match evaluator.evaluate(formula, &vars) {
+                Ok(value) => {
+                    vars.insert(name.clone(), value);
+                    progressed_zero = true;
+                }
+                Err(e) => {
+                    if let Some(missing) =
+                        e.0.strip_prefix("unbound variable \"").and_then(|s| s.strip_suffix('"'))
+                    {
+                        if !vars.contains_key(missing) && !bound_anywhere.contains(missing) {
+                            let default_value =
+                                define_defaults.get(missing).copied().unwrap_or(0);
+                            vars.insert(missing.to_string(), default_value);
+                            progressed_zero = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
     vars
+}
+
+/// Every `BONUS:VAR` target name ANY corpus `class_feature` or `class` record
+/// binds, ANYWHERE, under ANY PRE-condition (SD-32 T12 Epic 8 row 18 cycle 12)
+/// -- the set [`resolve_pcgen_var_chain`]'s own 0-default widening checks an
+/// identifier against before treating it as PCGen's real 0-default (see that
+/// function's doc for the oracle citation). Built from the SAME two
+/// corpus-wide, PRE-gate-safe tables the header/member merges already use
+/// (`class_feature_bonus_vars_any_record`, `class_record_bonus_vars`) rather
+/// than a third scan, so this can never disagree with what those tables
+/// actually ingested.
+fn every_corpus_bound_bonus_var_target() -> &'static std::collections::BTreeSet<String> {
+    static SET: OnceLock<std::collections::BTreeSet<String>> = OnceLock::new();
+    SET.get_or_init(|| {
+        let mut out = std::collections::BTreeSet::new();
+        for record in class_feature_bonus_vars_any_record().values() {
+            out.extend(record.bonus_vars.keys().cloned());
+        }
+        for vars in class_record_bonus_vars().values() {
+            out.extend(vars.keys().cloned());
+        }
+        out
+    })
+}
+
+/// Every `DEFINE:<name>|<literal integer>` corpus fact, ANY book, ANY
+/// `class_feature`/`class` record (SD-32 T12 Epic 8 row 18 cycle 12) -- read
+/// directly from `raw_tokens`, first-book-wins per name (this is a baseline
+/// declaration, not an addend; a genuine cross-book disagreement on the same
+/// name would be a corpus authoring defect this function is not the place to
+/// adjudicate). Only literal-integer DEFINE values are captured (PCGen's own
+/// documented idiom for a `BONUS:VAR` target's zero baseline, `DefineLst.
+/// java`'s deprecation warning: "please use a DEFINE of 0 and an appropriate
+/// bonus" for any non-zero use) -- a `DEFINE` whose formula is itself a
+/// non-literal expression is skipped here rather than guessed at (this
+/// module has no need for it: no corpus record currently references such a
+/// name as an unbound term inside a `BONUS:VAR` chain this resolver walks).
+fn corpus_define_literal_defaults() -> &'static BTreeMap<String, i64> {
+    static TABLE: OnceLock<BTreeMap<String, i64>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out: BTreeMap<String, i64> = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            for subdir_name in ["class_feature", "class"] {
+                let dir = book_entry.path().join(subdir_name);
+                if !dir.is_dir() {
+                    continue;
+                }
+                let mut files = Vec::new();
+                walk_json_files(&dir, &mut files);
+                for file in files {
+                    let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                    let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                    let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
+                    for token in tokens {
+                        if token["key"].as_str() != Some("DEFINE") {
+                            continue;
+                        }
+                        let Some(value) = token["value"].as_str() else { continue };
+                        let mut parts = value.splitn(2, '|');
+                        let (Some(name), Some(literal)) = (parts.next(), parts.next()) else {
+                            continue;
+                        };
+                        let name = name.trim();
+                        if name.is_empty() {
+                            continue;
+                        }
+                        let Ok(parsed) = literal.trim().parse::<i64>() else { continue };
+                        out.entry(name.to_string()).or_insert(parsed);
+                    }
+                }
+            }
+        }
+        out
+    })
 }
 
 /// This grant fact's real corpus `DESC:` description with THIS CHARACTER's own numbers
@@ -780,6 +1568,107 @@ pub(crate) fn resolved_description_for(
         return None;
     }
     Some(rendered.text)
+}
+
+/// A pool member's real `%N`-substituted `DESC:` formula resolved DIRECTLY (SD-32 T12 Epic 8
+/// row 18 cycle 15), for the corpus shape cycle 14's own `§16` finding named and refused to
+/// force through the wrong module: a record whose `bonus_vars` is EMPTY (so `resolve_pool_
+/// member_sole_magnitude` -- which only ever reads `bonus_vars` -- correctly returns `None` for
+/// it, per that function's own precondition) but whose `raw_description` carries a real `%N`
+/// argument that is itself a raw PCGen formula EXPRESSION (`"max(1,WarpriestLVL/2)"`,
+/// `"if(WarpriestLVL<19,1+((WarpriestLVL/2)-5),5)"`, a bare `"WarpriestLVL"`) rather than a
+/// bare variable name a `BONUS:VAR` chain would bind. `formula_interpreter.rs`'s own module doc
+/// scopes `%N` DESC-argument substitution OUT of that module and names this one
+/// (`pcgen_desc.rs`) as the real consumer; this is that consumer, extended only by WHERE an
+/// argument's value comes from when [`resolve_desc_argument`](crate::rules_core::pcgen_desc)'s
+/// own three narrow shapes (integer literal, exact named lookup, `<Name><+|-><integer>` offset)
+/// do not cover it -- evaluated directly through the SAME real [`PcgenFormulaEvaluator`] every
+/// other resolver in this module already uses, seeded with the SAME two facts (class level,
+/// ability modifiers), never a new evaluation mechanism.
+///
+/// Returns `None` (never a guess) unless the ENTIRE description renders clean -- every `%N`
+/// argument resolves to a value, `leaked_pcgen_syntax` finds nothing raw left over -- exactly
+/// [`resolved_description_for`]'s own "drop and report, never partially-render" contract, reused
+/// unchanged. On success, also returns `%1`'s own resolved value as the caller's single
+/// representative magnitude (every real member this cycle's own corpus scan found states its
+/// primary number as `%1` first; a member whose `%1` is itself unresolvable already returned
+/// `None` above, so this unwrap is only ever reached after `%1`'s formula has already evaluated).
+///
+/// Deliberately does NOT read `bonus_vars` at all, unlike [`resolved_description_for`] -- a
+/// record that DOES carry a real `BONUS:VAR` chain is `resolved_description_for`'s own business,
+/// not this function's; the two are mutually exclusive by construction (see the `bonus_vars.
+/// is_empty()` guard below) so a caller can safely try both without ever double-resolving the
+/// same record two different ways.
+///
+/// `header_vars`: SD-32 T12 Epic 8 row 18 cycle 19 -- the SAME "pool header chain" shape
+/// [`super::pool_header_record_by_normalized_suffix`] already merges for
+/// [`super::resolve_pool_member_sole_magnitude`]'s own `BONUS:VAR`-chain path, extended to this,
+/// the OTHER generic resolver. Cycle 18 named this precisely: `Mountain Domain ~ Foothold`'s `%1`
+/// argument is the bare identifier `DomainMountainTimes`, resolvable through Cleric's own
+/// class-record `BONUS:VAR|DomainPowerTimes|3+WIS` header chain (the SAME chain gap 1 in cycle
+/// 18's own Cleric Domain fix already wired for the bonus_vars-only resolver) -- but this
+/// resolver, unlike that one, never received it, because it evaluates each `%N` argument as a
+/// bare formula string against ONLY the ability-modifier and class-level seed, with no header
+/// merge step of its own. Resolved through the SAME [`resolve_pcgen_var_chain`] every other
+/// resolver in this module already uses (never a new evaluation mechanism, `§17`), then folded
+/// into `seed_vars` via `.entry().or_insert()` -- never overwriting the ability-modifier/
+/// class-level seeds already bound above, exactly the "never fabricate, never overwrite an
+/// already-bound identifier" policy every other merge in this module already follows. An empty
+/// `header_vars` map (both existing call sites before this cycle) makes this a true no-op --
+/// `resolve_pcgen_var_chain` on an empty map only ever re-derives the same ability-modifier/
+/// class-level seed this function was already computing, so prior behaviour is preserved exactly.
+pub(crate) fn resolved_description_for_formula_only_desc_argument(
+    key: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    header_vars: &BTreeMap<String, String>,
+) -> Option<(String, i64)> {
+    let record = class_feature_record_tokens_pre_gate_safe().get(key)?;
+    if !record.bonus_vars.is_empty() {
+        return None; // a real BONUS:VAR chain exists -- `resolved_description_for`'s business.
+    }
+    let args = crate::rules_core::pcgen_desc::desc_token_arguments(&record.raw_description);
+    if args.is_empty() {
+        return None; // no `%N` argument at all -- nothing this function grounds.
+    }
+    let class_level_var = class_level_variable_name(&record.class);
+    let evaluator = PcgenFormulaEvaluator;
+    let mut seed_vars = ability_modifier_seed_vars(ability_modifiers);
+    seed_vars.insert(class_level_var.clone(), i64::from(level));
+    if let Some(class_name) = class_level_var.strip_suffix("LVL") {
+        seed_vars.insert(format!("CLASSLEVEL::{class_name}"), i64::from(level));
+    }
+    if !header_vars.is_empty() {
+        let resolved_header =
+            resolve_pcgen_var_chain(header_vars, &class_level_var, level, ability_modifiers);
+        for (name, value) in &resolved_header {
+            seed_vars.entry(name.clone()).or_insert(*value);
+        }
+    }
+    let mut values = crate::rules_core::pcgen_desc::PcgenDisplayValues::new();
+    for arg in &args {
+        let trimmed = arg.trim();
+        if let Ok(value) = evaluator.evaluate(trimmed, &seed_vars) {
+            // Keyed under the exact argument text -- `resolve_desc_argument`'s own named-lookup
+            // shape (`values.get(arg)`) then finds it by that same exact text, with no change
+            // needed to that function or to `render_pcgen_desc_with_values` itself.
+            values.set(trimmed, value);
+        }
+        // An argument the interpreter refuses (an unbound identifier, a shape it does not
+        // implement) is simply never inserted -- `render_pcgen_desc_with_values` below then
+        // drops and reports it, exactly its existing no-fabrication contract for any other
+        // unresolved argument.
+    }
+    let rendered =
+        crate::rules_core::pcgen_desc::render_pcgen_desc_with_values(&record.raw_description, &values);
+    if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
+        return None;
+    }
+    if crate::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+        return None;
+    }
+    let primary_value = evaluator.evaluate(args[0].trim(), &seed_vars).ok()?;
+    Some((rendered.text, primary_value))
 }
 
 /// Pushes one `ComputationExplanation` (id
@@ -902,6 +1791,38 @@ pub(super) fn push_generic_class_feature_grant_records(
 mod tests {
     use super::*;
 
+    /// SD-32 T12 Epic 8 row 18 cycle 10. The shared merge policy both
+    /// cross-book tables now use: a target seen in an earlier book is never
+    /// overwritten by a later book's own value for the same target name,
+    /// but a target the earlier book never defined at all DOES get pulled
+    /// in from a later book -- proving the exact defect the old whole-
+    /// record `or_insert_with` (first book wins ENTIRELY, even for targets
+    /// it never carried) used to have, on both tables, before cycle 8/10.
+    #[test]
+    fn merge_bonus_var_target_map_pulls_in_new_targets_but_never_overwrites_a_seen_one() {
+        let mut into: BTreeMap<String, String> = BTreeMap::new();
+        into.insert("SharedTarget".to_string(), "first-book-formula".to_string());
+        into.insert("OnlyFirstBook".to_string(), "1".to_string());
+        let mut from: BTreeMap<String, String> = BTreeMap::new();
+        from.insert("SharedTarget".to_string(), "second-book-formula".to_string());
+        from.insert("OnlySecondBook".to_string(), "2".to_string());
+
+        merge_bonus_var_target_map_never_overwriting(&mut into, from);
+
+        assert_eq!(
+            into.get("SharedTarget").map(String::as_str),
+            Some("first-book-formula"),
+            "a target already bound by an earlier book must never be overwritten by a later one"
+        );
+        assert_eq!(into.get("OnlyFirstBook").map(String::as_str), Some("1"));
+        assert_eq!(
+            into.get("OnlySecondBook").map(String::as_str),
+            Some("2"),
+            "a target the earlier book never defined must still merge in from a later book -- \
+             this is the exact behaviour the old whole-record `or_insert_with` lacked"
+        );
+    }
+
     #[test]
     fn resolvable_grants_is_non_empty_against_the_live_merged_data() {
         let grants = resolvable_grants();
@@ -1000,6 +1921,45 @@ mod tests {
                 "{pair:?} has disagreeing cross-book levels and must not resolve"
             );
         }
+    }
+
+    /// T7/D12 (`docs/release/SD-31-corpus-closure-grind/todo/defects.md` D12,
+    /// `docs/release/SD-32-compute-library-and-cause-closure` card 11):
+    /// `("gunslinger", "Gunslinger ~ Gun Training")` is the one live,
+    /// reproducible D12 pair with NO cross-book level conflict at all (the
+    /// other three named pairs are already caught by
+    /// `cross_book_conflicting_pairs_are_dropped_not_guessed` above) -- its
+    /// sole surviving fact comes from `ultimate_combat/uc_abilities_class.lst
+    /// :1970`'s `CATEGORY:Internal` "Guns Everywhere" optional-rule row,
+    /// embedding a `PRECLASS:1,Gunslinger=1`-gated grant for the SAME key a
+    /// vanilla Gunslinger already has via a genuinely separate, hand-wired
+    /// chassis function (`class_ultimate_combat.rs::
+    /// gunslinger_gun_training_count`) -- so the single-hop
+    /// `granted_via_archetype` check on this row alone (`CATEGORY:Internal`,
+    /// not `CATEGORY:Archetype`) cannot see that the grant is embedded, not a
+    /// genuine top-level base-class declaration. Mutating the `gates.len() ==
+    /// 1 && gates.contains("preclass")` refusal in `resolvable_grants` to a
+    /// no-op turns this red (confirmed live, see cycle receipt).
+    #[test]
+    fn a_bare_preclass_only_pair_with_no_mod_row_corroboration_is_refused() {
+        let raw = load_raw_grant_facts();
+        let gunslinger_facts: Vec<&RawGrantFact> =
+            raw.iter().filter(|f| f.class.eq_ignore_ascii_case("gunslinger") && f.key == "Gunslinger ~ Gun Training").collect();
+        assert!(
+            !gunslinger_facts.is_empty(),
+            "expected load_raw_grant_facts to carry at least one live Gunslinger ~ Gun Training \
+             fact, to prove this test has real input to refuse"
+        );
+        assert!(
+            gunslinger_facts.iter().all(|f| f.gate == "preclass"),
+            "expected every live Gunslinger ~ Gun Training fact to be bare-PRECLASS:-gated \
+             (no mod_row_* corroboration): {gunslinger_facts:?}"
+        );
+        let grants = resolvable_grants();
+        assert!(
+            !grants.contains_key(&("gunslinger".to_string(), "Gunslinger ~ Gun Training".to_string())),
+            "an uncorroborated bare-PRECLASS: pair must never resolve -- T7/D12 regression"
+        );
     }
 
     #[test]
@@ -1275,21 +2235,78 @@ mod tests {
         }
     }
 
-    /// An identifier the chain can never reach (here: a made-up sibling-record variable name,
-    /// standing in for the real, currently-unsupported cross-record-alias case) is never bound --
-    /// no entry, no guessed `0`, no panic.
+    /// SD-32 T12 Epic 8 row 18 cycle 12 correction: this test's ORIGINAL body used a made-up,
+    /// not-in-the-corpus name (`SiblingRecordOwnVariable`) to stand in for "an identifier the
+    /// chain can never reach", asserting the whole formula stayed unbound. Reading the pinned
+    /// oracle's own `VariableProcessor.java`/`PlayerCharacter.java` (this cycle's own receipt)
+    /// proved that assumption wrong for a name genuinely absent from the corpus under every
+    /// condition: real PCGen's `getVariable` -> `getVariableValue` -> `processBrokenParser`
+    /// chain silently treats such a bare additive term as `0`, not a refusal. Corrected to prove
+    /// the REAL safety property this test was reaching for -- a name that DOES exist elsewhere in
+    /// the corpus as a `BONUS:VAR` target (here, `AssassinPoisonSaveBonus`, real record
+    /// `data/corpus/core_rulebook/class_feature/assassin/save_against_poisons.json`) but is not
+    /// reachable from THIS formula's own local `bonus_vars` map still refuses -- it is a REAL,
+    /// possibly-conditional PCGen value this resolver cannot see from here, and must never guess.
     #[test]
-    fn resolve_pcgen_var_chain_never_binds_an_unreachable_identifier() {
+    fn resolve_pcgen_var_chain_never_binds_an_identifier_bound_elsewhere_in_the_corpus() {
         let mut bonus_vars = BTreeMap::new();
-        bonus_vars.insert("SomeBonus".to_string(), "10+(SomeLVL/2)+SiblingRecordOwnVariable".to_string());
+        bonus_vars
+            .insert("SomeBonus".to_string(), "10+(SomeLVL/2)+AssassinPoisonSaveBonus".to_string());
         bonus_vars.insert("SomeLVL".to_string(), "RogueLVL".to_string());
         let vars =
             resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 10, &AbilityModifiers::default());
         assert_eq!(vars.get("SomeLVL"), Some(&10));
         assert!(
             vars.get("SomeBonus").is_none(),
-            "a formula referencing an unbound identifier (a sibling record's own variable) must \
-             never resolve to a guessed number: {vars:?}"
+            "a formula referencing an identifier bound elsewhere in the corpus (a sibling \
+             record's own real BONUS:VAR target) must never resolve to a guessed number: {vars:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 12: real PCGen's own 0-default for a bare identifier the
+    /// corpus never binds ANYWHERE, under ANY condition (this cycle's own receipt traces the
+    /// oracle's `VariableProcessor.java`/`PlayerCharacter.java` chain to it). `NeverBoundAnywhere`
+    /// is not a real corpus name and appears in no fixture -- standing in for the shape, proven
+    /// absent from `every_corpus_bound_bonus_var_target()`/`corpus_define_literal_defaults()` by
+    /// construction (a name this test file invents can never appear in either live-corpus table).
+    #[test]
+    fn resolve_pcgen_var_chain_defaults_a_corpus_wide_unbound_identifier_to_zero() {
+        let mut bonus_vars = BTreeMap::new();
+        bonus_vars.insert("SomeBonus".to_string(), "10+(SomeLVL/2)+NeverBoundAnywhere".to_string());
+        bonus_vars.insert("SomeLVL".to_string(), "RogueLVL".to_string());
+        let vars =
+            resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 10, &AbilityModifiers::default());
+        assert_eq!(vars.get("SomeLVL"), Some(&10));
+        assert_eq!(
+            vars.get("SomeBonus"),
+            Some(&15),
+            "10 + (10/2) + 0 = 15 -- a genuinely corpus-wide-unbound identifier is PCGen's own \
+             real 0, not a refusal: {vars:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 12: the concrete, real corpus case this cycle's fix targets
+    /// -- `data/corpus/advanced_class_guide/class_feature/bloodrager/bloodrager_bloodline_
+    /// tracker.json` carries `DEFINE:BloodragerBloodlinePower1LVLBonus|0` and no corpus
+    /// `BONUS:VAR` row ever targets that same name, so this resolves through the DEFINE-literal
+    /// path (`corpus_define_literal_defaults`), not the bare-0-fallback path -- both land on the
+    /// same real number here, but this proves the more precise mechanism actually fires.
+    #[test]
+    fn resolve_pcgen_var_chain_binds_a_real_corpus_define_zero_baseline() {
+        let mut bonus_vars = BTreeMap::new();
+        bonus_vars.insert(
+            "Bloodrager_Draconic_BloodlinePower1LVL".to_string(),
+            "Bloodrager_Draconic_BloodlineLVL+BloodragerBloodlinePower1LVLBonus".to_string(),
+        );
+        bonus_vars
+            .insert("Bloodrager_Draconic_BloodlineLVL".to_string(), "BloodragerLVL".to_string());
+        let vars =
+            resolve_pcgen_var_chain(&bonus_vars, "BloodragerLVL", 7, &AbilityModifiers::default());
+        assert_eq!(
+            vars.get("Bloodrager_Draconic_BloodlinePower1LVL"),
+            Some(&7),
+            "Bloodrager_Draconic_BloodlineLVL (7) + BloodragerBloodlinePower1LVLBonus (real \
+             corpus DEFINE, 0) = 7: {vars:?}"
         );
     }
 
@@ -1426,9 +2443,56 @@ mod tests {
         // them, never to make a test pass. If this assertion fails after touching
         // `resolve_pcgen_var_chain`/`resolved_description_for`, the new counts ARE the finding --
         // report them, don't silently update the pin without checking why they moved.
+        //
+        // `already_admitted` moved 137 -> 136 (T7/D12, SD-32 card 11): `resolvable_grants` now
+        // refuses `("gunslinger", "Gunslinger ~ Gun Training")`, an uncorroborated bare-PRECLASS:
+        // pair (see that function's own doc comment), so it no longer survives into
+        // `unambiguous_grants` at all. This is the intended effect of the fix, not a regression --
+        // the value was already suppressed downstream by `push_generic_class_feature_grant_records`'s
+        // own already-computed-slug guard (Gunslinger's real Gun Training magnitude is served by
+        // `class_ultimate_combat.rs`'s dedicated function), so no player-visible value changes.
+        // `newly_resolved` moved 15 -> 20, `chain_unresolvable` moved 14 -> 9 (SD-32 T12 Epic 8
+        // row 18 cycle 6): `classlevel("X")` now resolves correctly for the SAME-class case
+        // (`formula_interpreter.rs`'s `Expr::ClassLevel` widening) -- exactly the 5 Summoner
+        // records the new failure output names (Bond Senses, Maker's Call, Merge Forms, Summon
+        // Monster, Twin Eidolon), each of whose real corpus formula is a bare
+        // `classlevel("Summoner")` call this module could not bind before this cycle. Re-derive:
+        // `cargo test --locked --lib -- rules_core::pilot_compute::class_feature_grant_consumer::
+        // tests::the_live_scale_of_this_waves_widening_is_measured_and_pinned`.
+        //
+        // `newly_resolved` moved 20 -> 21, `chain_unresolvable` moved 9 -> 8 (SD-32 T12 Epic 8
+        // row 18 cycle 12): `resolve_pcgen_var_chain`'s new corpus-verified 0-default (see that
+        // function's own doc, oracle citation `VariableProcessor.java`/`PlayerCharacter.java`)
+        // resolves exactly ONE more record here -- `mystic theurge/Mystic Theurge ~ Combined
+        // Spells@1`. Its real corpus formula, `CombinedSpellsMaxLevel|(CombinedSpellsLVL+1)/2`,
+        // references `CombinedSpellsLVL`, which the SAME record carries only as `DEFINE:
+        // CombinedSpellsLVL|0` (no `BONUS:VAR` row anywhere ever targets it -- confirmed,
+        // `grep -rl "VAR|CombinedSpellsLVL" data/corpus/` -> 0 hits) -- exactly the "real corpus
+        // DEFINE zero baseline" shape `resolve_pcgen_var_chain_binds_a_real_corpus_define_zero_
+        // baseline` proves in isolation. `(0+1)/2 = 0` (integer division). Every other of the 20
+        // pre-existing `newly_resolved` records, and all 11/36 `class_excluded_otherwise_
+        // resolvable`/`no_record_at_all`, are unchanged -- confirmed by diffing this cycle's own
+        // full `newly_resolved_examples` list against the pre-cycle-12 one before landing.
+        //
+        // `no_record_at_all` moved 36 -> 1, `chain_unresolvable` moved 8 -> 43 (SD-32 T12 Epic 8
+        // row 18 cycle 18, `§27b`/`§17a` -- a RECLASSIFICATION, not a resolver improvement:
+        // `class_feature_record_tokens_pre_gate_safe`'s own `description: null` gate widened (see
+        // that function's own doc comment -- a genuine engine gap, `Jungle Domain ~ Trap Sense`'s
+        // `VISIBLE:NO`/`description: null` shape was invisible to `resolve_pool_member_sole_
+        // magnitude` for want of this read path, not for want of real data). 35 of these 36
+        // records DO have a real corpus record after the widening -- they were never truly
+        // "absent", only mis-bucketed by a gate this table's own OLD code applied one layer too
+        // early -- but their OWN `raw_description` is empty (no `%N` text at all), so
+        // `resolved_description_for` still correctly returns `None` for every one of them
+        // (`render_pcgen_desc_with_values("", ...).text.is_empty()`), landing them in
+        // `chain_unresolvable` instead: a MORE ACCURATE label ("a record exists but nothing
+        // renders") than the old "no record at all", never a fabricated render. `newly_resolved`
+        // and `class_excluded_otherwise_resolvable` are UNCHANGED -- confirmed by diffing this
+        // cycle's own `newly_resolved_examples` list against cycle 12's, identical. Exactly 1
+        // genuinely absent key remains.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (137, 15, 11, 14, 36),
+            (136, 21, 11, 43, 1),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \

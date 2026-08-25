@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian Archetype ~ Invulnerable Rager",
     "name": "Invulnerable Rager",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Some barbarians learn to take whatever comes their way, shrugging off mortal wounds with ease. These barbarians invite their enemies to attack them, and use pain to fuel their rage.",
     "raw_tokens": [
       {
@@ -83,6 +83,42 @@
       {
         "key": "FACT",
         "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Invulnerable Rager],[!PREFACT:1,ABILITIES,Barbarian_Archetype_UncannyDodge=True,Barbarian_Archetype_ImprovedUncannyDodge=True,Barbarian_Archetype_DamageReduction=True,Barbarian_Archetype_TrapSense=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
       }
     ]
   },
@@ -99,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

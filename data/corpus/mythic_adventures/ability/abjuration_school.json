@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Flexible School ~ Abjuration",
+    "name": "Abjuration School",
+    "description": "The abjurer uses magic against itself, and masters the art of defensive and warding magics.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flexible School ~ Abjuration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool.Flexible School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Abjuration School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Abjuration Opposition School"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_FlexibleSchool_AbjurationLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The abjurer uses magic against itself, and masters the art of defensive and warding magics."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flexible School Power ~ Abjuration ~ Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_FlexibleSchool_AbjurationLVL|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 445,
+    "record_key": "Flexible School ~ Abjuration"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

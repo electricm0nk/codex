@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Clean Blade",
+    "name": "Clean Blade",
+    "description": "Whenever you score a critical hit, as a free action you can make a ranged touch attack to fling the blood and gore at another opponent within 30 feet. If the touch attack hits, the foe is sickened for %1 rounds. If the touch attack is a critical hit, the foe is also blinded for the same duration. A blinded foe can spend a full-round action to remove the gore and end the blindness. At the GM's discretion, creatures that are immune to disease, those that live in filth (such as otyughs), or those that revel in bloodshed (such as demons) might be immune to the sickened effect of this ability.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Clean Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you score a critical hit, as a free action you can make a ranged touch attack to fling the blood and gore at another opponent within 30 feet. If the touch attack hits, the foe is sickened for %1 rounds. If the touch attack is a critical hit, the foe is also blinded for the same duration. A blinded foe can spend a full-round action to remove the gore and end the blindness. At the GM's discretion, creatures that are immune to disease, those that live in filth (such as otyughs), or those that revel in bloodshed (such as demons) might be immune to the sickened effect of this ability.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 131,
+    "record_key": "Mythic Path Ability ~ Clean Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

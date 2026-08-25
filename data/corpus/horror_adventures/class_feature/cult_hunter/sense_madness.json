@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cult Hunter ~ Sense Madness",
     "name": "Sense Madness",
@@ -35,6 +35,10 @@
       {
         "key": "BONUS",
         "value": "SITUATION|Sense Motive=Notice natural or magical insanity|max(1,InvestigatorLVL/2)"
+      },
+      {
+        "key": "DESC",
+        "value": "You can sense the presence of mental disturbance in creatures within range, focusing your detection on one creature each round. If the target is currently suffering from any form of madness (see page 182) or addiction (GameMastery Guide 236), has total sanity damage greater than or equal to its sanity edge (see page 12), or is under a magical compulsion that could be detected by detect magic, you can detect the presence of such a disturbance on the first round of concentration. If you concentrate on the same creature for an additional round, you learn if the creature's total sanity damage is greater than or equal to its sanity edge, and you can attempt a Sense Motive check against a DC equal to 10 + the save DC of the target's madness or addiction to determine the exact nature of a madness or addiction. Additionally, you can attempt a Spellcraft check with a DC equal to 11 + the caster level of the compulsion against each magical compulsion currently affecting the target that could be detected by detect magic. If successful, you can identify the specific spell affecting the target. You gain a +4 bonus on your Spellcraft check if the effect is confusion, insanity, or a similar effect that explicitly causes madness or insanity. If you successfully identify such an effect with sense madness, the insights provided by this spell grant you a +1 circumstance bonus on your next caster level check in the following 1 minute made to counter, dispel, or remove that specific effect. After attempting a check to identify a madness, addiction, or compulsion, you can't attempt that check against the same creature again, even if you concentrate on the creature again.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },
@@ -52,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

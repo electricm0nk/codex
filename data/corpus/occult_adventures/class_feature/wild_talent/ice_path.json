@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Ice Path",
     "name": "Ice Path",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element universal; Type utility (Sp); Level 5; Burn 1 You are able to suspend your body in a large mass of elemental matter. Until the next time your burn is removed, you can change your size to Large or shift back to your original size as a standard action. This doesn't change your ability scores in any way. At 16th level, you can accept 1 additional point of burn to instead change your size to Huge. You cannot use kinetic form to decrease your size.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

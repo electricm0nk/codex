@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Mad Rush",
     "name": "Mad Rush",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "Whenever the vigilante charges, he can make a full attack. Whenever he uses this ability, he takes a -4 penalty to his AC until the start of his next turn (in addition to the AC penalty for charging).",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

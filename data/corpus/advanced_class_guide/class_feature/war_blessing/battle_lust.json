@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "War Blessing ~ Battle Lust",
     "name": "Battle Lust",
-    "class": "War Blessing",
+    "class": "Warpriest",
     "description": "You can touch an ally and grant it a thirst for battle. All of the ally's melee attacks are treated as if they had the vicious weapon special ability, but the additional damage dealt to the ally from that special ability is nonlethal. In addition, the ally receives a +4 insight bonus on attack rolls made to confirm critical hits. These benefits last for 1 minute.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

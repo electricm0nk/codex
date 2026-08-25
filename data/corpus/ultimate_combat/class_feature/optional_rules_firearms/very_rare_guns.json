@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Optional Rules Firearms ~ Very Rare Guns",
+    "name": "Very Rare Guns",
+    "class": "Optional Rules Firearms",
+    "description": "Early firearms are rare; advanced firearms, the gunslinger class, the Amateur Gunslinger feat, and archetypes that use the firearm rules do not exist in this type of campaign. Firearms are treated more like magic items-things of wonder and mystery-rather than like things that are mass-produced. Few know the strange secrets of firearm creation. Only NPCs can take the Gunsmithing feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Optional Rules Firearms ~ Very Rare Guns"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules.FirearmsRule"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Internal,TYPE.FirearmsRule],[PREABILITY:1,CATEGORY=Internal,Optional Rules Firearms ~ Very Rare Guns]"
+      },
+      {
+        "key": "DESC",
+        "value": "Early firearms are rare; advanced firearms, the gunslinger class, the Amateur Gunslinger feat, and archetypes that use the firearm rules do not exist in this type of campaign. Firearms are treated more like magic items-things of wonder and mystery-rather than like things that are mass-produced. Few know the strange secrets of firearm creation. Only NPCs can take the Gunsmithing feat."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1967,
+    "record_key": "Optional Rules Firearms ~ Very Rare Guns"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

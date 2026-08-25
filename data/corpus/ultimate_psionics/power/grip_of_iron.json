@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "data": {
+    "key": "Grip of Iron",
+    "name": "Grip of Iron",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Gifted Blade,Psychic Warrior,Sighted Seeker=1"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychometabolism"
+      },
+      {
+        "key": "COMPS",
+        "value": "Vi"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 immediate action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "DESC",
+        "value": "Your iron grip gives +4 bonus on grapple checks."
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants grapple bonus"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMB_Grapple,CMD_Grapple|%CHOICE|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=4|MAX=15|TITLE=Choose grapple bonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a",
+    "line": 245,
+    "record_key": "Grip of Iron"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

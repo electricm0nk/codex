@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Dual-Cursed Oracle ~ Tongues",
     "name": "Tongues",
-    "class": "Dual-Cursed Oracle",
+    "class": "Oracle",
     "description": "In times of stress or unease, you speak in tongues.",
     "raw_tokens": [
       {
@@ -35,6 +35,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.44"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "WoodSchool"
       }
     ]
   },
@@ -51,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

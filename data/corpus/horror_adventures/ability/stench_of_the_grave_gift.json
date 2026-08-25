@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Stench of the Grave Gift",
+    "name": "Stench of the Grave Gift",
+    "description": "You exude an aura of decay. Creatures that begin their turns adjacent to you are sickened for 1d6 rounds unless they succeed at a Fortitude save (DC %1). A creature that succeeds can't be affected by your stench again for 24 hours.|10+TL/2+GhoulManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Stench of the Grave Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulStenchOfTheGraveGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "You exude an aura of decay. Creatures that begin their turns adjacent to you are sickened for 1d6 rounds unless they succeed at a Fortitude save (DC %1). A creature that succeeds can't be affected by your stench again for 24 hours.|10+TL/2+GhoulManifestationLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "This aura extends out to 10 feet.|PREVARGTEQ:GhoulManifestationLevel,5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 283,
+    "record_key": "Ghoul Corruption ~ Stench of the Grave Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

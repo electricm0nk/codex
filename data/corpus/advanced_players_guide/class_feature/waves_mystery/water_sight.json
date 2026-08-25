@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Waves Mystery ~ Water Sight",
     "name": "Water Sight",
-    "class": "Waves Mystery",
+    "class": "Oracle",
     "description": "You can see through fog and mist without penalty as long as there is enough light to allow you to see normal. At 7th level, you can use any calm pool of water at least 1 foot in diameter as a scrying device, as if using the scry spell. At 15th level, this functions like greater scrying. You can use the scrying abilities for %1 rounds per day, but these rounds do not need to be consecutive.|OracleWaterSightDuration",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

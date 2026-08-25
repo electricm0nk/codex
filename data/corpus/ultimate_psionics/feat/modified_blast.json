@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Modified Blast",
+    "category": "Psionic",
+    "name": "Modified Blast",
+    "description": "When you activate your surge blast, you gain the following augment options.  Like augmenting a power, augmenting a surge blast is limited to your manifester level.  You can also choose to invoke a wild surge when using your surge blast, using the power from the wild surge to pay for augments to the surge blast, but suffer the standard risk of psychic enervation for invoking a wild surge.  Augment: You can augment your surge blast in one of the following ways.  1. If you spend 2 additional power points, your surge blast deals splash damage.  2. If you spend 3 additional power points, your surge blast is instead a 5 ft. emanation centered on you and cratures in the affected area gain a Reflex save (DC %1) to take half damage.  3. If you spend 4 additional power points, your surge blast deals half damage, but damages all creatures in a 30 ft. line.  4. If you spend 4 additional power points, your surge blast is empowered, dealing 50%% additional damage.  5. If you spend 4 additional power points, your surge blast is a 15 ft. cone effect instead of a ranged touch attack, and creatures in the affected area gain a Reflex save (DC %1) to take half damage.  6.  If you spend 4 additional power points, your surge blast affects all creatures within a 10 ft. radius of the targeted creature and creatures in the affected area gain a Reflex save (DC %1) to take half damage.  7. If you spend 6 additional power points, your surge blast is instead a 10 ft. emanation centered on you and creatures in the affected area gain a Reflex save (DC %1) to take half damage.|ModifiedBlastDC",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Surge Blast",
+      "PREVARGTEQ:MaxManifesterLVL,3",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 214,
+    "record_key": "Modified Blast"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

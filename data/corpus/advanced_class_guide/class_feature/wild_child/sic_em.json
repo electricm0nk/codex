@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Child ~ Sic 'Em",
     "name": "Sic 'Em",
-    "class": "Wild Child",
+    "class": "Brawler",
     "description": "The wild child can use this trick as a swift action. His animal companion makes one melee attack against an adjacent creature. The animal companion must be able to see and hear the wild child to make this attack.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

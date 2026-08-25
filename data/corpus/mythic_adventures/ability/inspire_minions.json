@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Inspire Minions",
+    "name": "Inspire Minions",
+    "description": "When you use a spell, a bardic performance, or another class feature to grant a morale or competence bonus, the bonus increases by 2 for creatures with at least 4 Hit Dice fewer than you. For example, if you're a 6th-level bard using inspire courage, creatures with 2 Hit Dice or fewer receive a +4 morale bonus on fear saves and a +4 competence bonus on attack and weapon damage rolls instead of +2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Inspire Minions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use a spell, a bardic performance, or another class feature to grant a morale or competence bonus, the bonus increases by 2 for creatures with at least 4 Hit Dice fewer than you. For example, if you're a 6th-level bard using inspire courage, creatures with 2 Hit Dice or fewer receive a +4 morale bonus on fear saves and a +4 competence bonus on attack and weapon damage rolls instead of +2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40, 46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 190,
+    "record_key": "Mythic Path Ability ~ Inspire Minions"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

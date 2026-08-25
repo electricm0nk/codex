@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Imperious Bloodline ~ Feat Tracker",
+    "name": "Imperious Bloodline ~ Feat Tracker",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Diehard|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Endurance|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_HeroicDefiance|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_HeroicRecovery|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_ImprovedInitiative|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_LingeringSpell|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_MagicalAptitude|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_BloodlineFeat_Persuasive|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 15,
+    "record_key": "Imperious Bloodline ~ Feat Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

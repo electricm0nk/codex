@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Animal Speaker ~ Animal Friend Choice",
     "name": "Animal Friend",
-    "class": "Animal Speaker",
+    "class": "Animal",
     "description": "You select a particular kind of animal, such as apes, badgers, bears, boars, cats, snakes, and so on. You gain a +4 bonus on Handle Animal checks to influence animals of your chosen kind. Animals of this kind have a starting attitude of at least \"indifferent\" toward you and never attack you unless you attack them first. Animal companions and magically controlled animals of the bard's chosen kind can be directed to attack you if the controlling creature wins an opposed Charisma check against you (this check can be made once per round until it succeeds, after which no further checks are needed). Supernatural versions of animals (such as animals with the fiendish template) can attempt an opposed Charisma check against you with a +4 bonus on its roll to overcome this hesitation. This ability has no effect on creatures other than animals.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

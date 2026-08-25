@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Cave Druid ~ Tunnelrunner",
     "name": "Tunnelrunner",
-    "class": "Cave Druid",
+    "class": "Druid",
     "description": "At 2nd level, a cave druid can move through areas of rubble or narrow passages that require squeezing at her normal movement rate and without penalty. This ability replaces woodland stride.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

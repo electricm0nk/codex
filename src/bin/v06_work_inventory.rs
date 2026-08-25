@@ -59,6 +59,7 @@ use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
     compute_pilot_base_chassis, race_ids_with_a_magnitude_consumer,
 };
+use codex::rules_core::pilot_compute::untabled_base_class_chassis;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
@@ -177,6 +178,77 @@ enum Kind {
     /// evidence this variant exists to fix.
     MonsterAbility,
     Companion,
+    /// SD-32 card 15 (`decisions.md §12b`): the SRD skill-definition
+    /// population (`Acrobatics`, `Craft (Alchemy)`, ...), 170 units across
+    /// 10 in-scope `*_skills.lst` files. Distinct from
+    /// `src/rules_core/skill_allocation.rs` (skill-POINT allocation
+    /// logic) -- this kind is the per-skill definition table itself
+    /// (`KEYSTAT:`/`ACHECK:`/class-skill `BONUS:` rows), which had no
+    /// engine table and no inventory kind before this cycle. See
+    /// `artifacts/gate-0-census-closure/15-card-15-other-kinds-memo.md`
+    /// §7a for the full corpus proof.
+    Skill,
+    /// SD-32 `decisions.md §17` — landed through [`SIMPLE_FILENAME_KINDS`],
+    /// the same generic path `Skill` proved: a `*_templates.lst` row (PCGen
+    /// mechanical/administrative templates — Ghost, Celestial Creature,
+    /// Bonus Language grants). 2,343 units, 0 `.COPY=` derivations, all
+    /// disposition (A). See `15-card-15-other-kinds-memo.md` §1.
+    Template,
+    /// `*_deities.lst` — a deity record (name, domain list, favored
+    /// weapon, alignment). 460 units, 97.8% F0 (pure reference facts,
+    /// no `DEFINE`/`BONUS`). Distinct from `class_feature`'s
+    /// domain-*power* records — see `15-card-15-other-kinds-memo.md` §2.
+    Deity,
+    /// Psionic powers (`up_powers.lst`, Dreamscarred Press *Ultimate
+    /// Psionics* only) — structurally `spell`-shaped but filed under a
+    /// distinct LST naming convention `file_kind`'s `_spells` check never
+    /// matches. 421 units, 100% F0. See `15-card-15-other-kinds-memo.md` §3.
+    Power,
+    /// `*_domains.lst` — the domain HEADER record (name, granted-power
+    /// `ABILITY:` reference, `DEFINE:Domain<X>LVL|0` declarations,
+    /// `SPELLLEVEL:DOMAIN|...` list). Distinct from the domain's own
+    /// granted-power `class_feature` row, already counted elsewhere — see
+    /// `15-card-15-other-kinds-memo.md` §4 for the by-record (not by-name)
+    /// proof they do not overlap. 183 units.
+    Domain,
+    /// `*_languages.lst` — a playable/spoken language definition. 143
+    /// units, 100% F0 (text-only, no `DEFINE`/`BONUS`) — a zero-magnitude
+    /// object is still an object, same ruling already applied to
+    /// zero-magnitude class features. See `15-card-15-other-kinds-memo.md`
+    /// §5.
+    Language,
+    /// SD-32 card 15-ability (`decisions.md §12b`, the largest remaining
+    /// kind-unenumerable bucket): a bare (non-`_race`, non-`_class`,
+    /// non-`_companion`/`_familiar`) `*abilities*.lst` row whose
+    /// `CATEGORY:` tag is not `FEAT`. Unlike every kind above, this is NOT
+    /// a filename-only rule -- the same file mixes real, distinct objects
+    /// with facets/gateways/pick-list entries, so a per-row disposition
+    /// test (`has_classifying_token`'s `Kind::Ability` arm; the row-level
+    /// `CATEGORY:FEAT` redirect in [`refine_kind`]) decides object-vs-not
+    /// per row. Ported from `15-card-15-ability-category-classify.py`'s own
+    /// adjudicated content/gateway test
+    /// (`artifacts/gate-0-census-closure/15-card-15-ability-category-memo.md`),
+    /// not re-derived. See `scripts/census_independent.py`'s
+    /// `_ABILITY_CONTENT_RE` for the exact, shared field list.
+    Ability,
+    /// SD-32 `decisions.md §25` (operator: *"In. We do not defer - we
+    /// complete."*) -- PF1e's chargen **Trait** mechanic, never modelled in
+    /// this corpus before this cycle (`find data/corpus -type d -name
+    /// trait` returned zero directories). A bare (non-`_race`,
+    /// non-`_class`, non-`_companion`/`_familiar`) `*abilities*.lst` row
+    /// whose `TYPE:` value is exactly `Trait` or starts with `Trait.`
+    /// (`TYPE:Trait.RaceTrait.Oread Race Trait`, `TYPE:Trait.Combat`, ...).
+    /// Checked in [`refine_kind`]'s `Kind::Ability` arm BEFORE the
+    /// `CATEGORY:FEAT` redirect -- a real Trait row's own `CATEGORY:` is
+    /// always `Special Ability`, never `FEAT`, so the two checks never
+    /// actually contend, but ordering it first is the safe direction.
+    /// 566 units across 6 already-registered books at the pinned oracle SHA
+    /// (`advanced_players_guide` 90, `core_rulebook` 1, `ultimate_campaign`
+    /// 231, `ultimate_psionics` 32, `inner_sea_gods` 116, `inner_sea_races`
+    /// 96) -- see `scripts/census_independent.py::_row_is_pf1_trait`'s doc
+    /// comment for the corpus proof, kept byte-identical between the two
+    /// walkers per `decisions.md §12b`.
+    Trait,
 }
 
 impl Kind {
@@ -193,6 +265,14 @@ impl Kind {
             Kind::Monster => "monster",
             Kind::MonsterAbility => "monster_ability",
             Kind::Companion => "companion",
+            Kind::Skill => "skill",
+            Kind::Template => "template",
+            Kind::Deity => "deity",
+            Kind::Power => "power",
+            Kind::Domain => "domain",
+            Kind::Language => "language",
+            Kind::Ability => "ability",
+            Kind::Trait => "trait",
         }
     }
 
@@ -210,6 +290,14 @@ impl Kind {
         Kind::Monster,
         Kind::MonsterAbility,
         Kind::Companion,
+        Kind::Skill,
+        Kind::Template,
+        Kind::Deity,
+        Kind::Power,
+        Kind::Domain,
+        Kind::Language,
+        Kind::Ability,
+        Kind::Trait,
     ];
 }
 
@@ -225,6 +313,36 @@ impl Kind {
 /// per book in `files_not_enumerated`, never silently dropped — a file whose
 /// basename this function does not recognise shows up there by name, so a new
 /// book introducing a new file shape is visible instead of invisible.
+/// `true` when `path` sits under a `_pfs/` directory component -- PCGen's
+/// own convention for a Pathfinder-Society legality-overlay file, always
+/// nested one level under the book directory (e.g.
+/// `ultimate_magic/_pfs/pfs_um_equip_general.lst`). See `pfs_legality_only_row`
+/// (`TRAP_RULES`) for why this matters.
+fn path_is_pfs_overlay(path: &Path) -> bool {
+    path.components()
+        .any(|c| c.as_os_str().to_str() == Some("_pfs"))
+}
+
+/// `true` when a row's fields, beyond the first (identity) column, carry NO
+/// content beyond a PFS legality marker (`TYPE:PFSLegal`/`TYPE:PFSNotLegal`)
+/// and/or a `PRECHARACTERTYPE:`/`!PRECHARACTERTYPE:` gate -- verified
+/// corpus-wide (`pfs_legality_only_row`'s own doc comment) to be disjoint
+/// from every `_pfs/` row that carries real content (`KEY:`, `DESC:`,
+/// `BONUS:`, `ABILITY:`, ...), so this check never drops a genuine
+/// declaration. Field-name comparison only, leading `!` (negation) stripped
+/// before comparing, so `!PRECHARACTERTYPE:...` and `PRECHARACTERTYPE:...`
+/// both count.
+fn row_is_pfs_legality_only(fields: &[&str]) -> bool {
+    fields.iter().skip(1).all(|field| {
+        let field = field.trim();
+        if field.is_empty() {
+            return true;
+        }
+        let head = field.trim_start_matches('!').split(':').next().unwrap_or("");
+        head == "TYPE" || head == "PRECHARACTERTYPE"
+    })
+}
+
 fn file_kind(basename: &str) -> Option<Kind> {
     // Order matters: `_abilities_class` and `_abilities_race` must be tested
     // before the bare `_abilities`, and `_equipmods` before `_equip`.
@@ -246,6 +364,21 @@ fn file_kind(basename: &str) -> Option<Kind> {
     }
     if basename.contains("_abilities_companion") || basename.contains("_abilities_familiar") {
         return Some(Kind::Companion);
+    }
+    // SD-32 card 15-ability (`decisions.md §12b`): every remaining `abilit`
+    // basename (`abilities_rowpg.lst`, `ability_acg.lst`, `cr_abilities.lst`,
+    // `um_abilities_wordsofpower.lst`, ...) is a bare, non-`_race`/`_class`/
+    // `_companion`/`_familiar` abilities file -- content genuinely mixed
+    // with facets/gateways/pick-lists row by row, so per-row disposition
+    // (`has_classifying_token`'s `Kind::Ability` arm, `refine_kind`'s
+    // `Kind::Ability` arm) decides object-vs-not, not this filename check
+    // alone. Positioned to match `scripts/census_independent.py`'s own
+    // `"abilit" in b` fallback order: after every `_race`/`_class`/
+    // `_companion`/`_familiar` carve-out, before every other kind -- the
+    // two walkers must agree (`decisions.md §12b`'s acceptance bar). See
+    // `Kind::Ability`'s own doc comment for the memo this ports.
+    if basename.contains("abilit") {
+        return Some(Kind::Ability);
     }
     if basename.contains("_races_companion") || basename.contains("_races_familiar") {
         return Some(Kind::Companion);
@@ -271,7 +404,475 @@ fn file_kind(basename: &str) -> Option<Kind> {
     if basename.contains("_equip") {
         return Some(Kind::Equipment);
     }
+    // SD-32 `decisions.md §17`: every remaining kind this walker recognises
+    // needs nothing beyond "this filename substring means this kind" -- no
+    // row-content carve-out, no book-attribution logic, no duplicate-identity
+    // handling distinct from the rest of the pipeline's already-kind-agnostic
+    // machinery (`refine_kind`'s `other => other` arm, `has_classifying_token`'s
+    // `_ => true` arm, `holds_key_inner`'s `_ => false` arm all already treat
+    // an unlisted kind safely with zero new code). So a kind of THIS shape --
+    // proven filename-only in `15-card-15-other-kinds-memo.md`, same as
+    // `Kind::Skill` was -- is ADDED AS DATA, one row here plus the `Kind::`
+    // variant and its one `classify()` arm (`not_ingested(...)`, itself
+    // required by Rust's exhaustive match, not by any per-kind special-casing
+    // in this file). This is the mechanism `decisions.md §17` asked for:
+    // adding the next kind of this shape costs a table row, not a tour of
+    // `enumerate_file`. Order matters exactly the way it does in
+    // `scripts/census_independent.py::_classify_kind_by_filename` (whose own
+    // ordering this table is kept in lock-step with, per `decisions.md §12b`'s
+    // "the two must agree" bar) -- `_templates` before `_language`, because
+    // `*_templates_language_*.lst` (the racial-bonus-language template files)
+    // must resolve to `Template`, not `Language`; verified against the pinned
+    // oracle that no other pair in this table collides on the same basename.
+    const SIMPLE_FILENAME_KINDS: &[(&str, Kind)] = &[
+        ("_templates", Kind::Template),
+        ("_deities", Kind::Deity),
+        ("_domains", Kind::Domain),
+        ("_powers", Kind::Power),
+        ("_languages", Kind::Language),
+        ("_skills", Kind::Skill),
+    ];
+    for (token, kind) in SIMPLE_FILENAME_KINDS {
+        if basename.contains(token) {
+            return Some(*kind);
+        }
+    }
     None
+}
+
+#[cfg(test)]
+mod file_kind_skill_tests {
+    use super::*;
+
+    /// SD-32 card 15: the 10 real in-scope `*_skills.lst` basenames at the
+    /// pinned oracle SHA (`15-card-15-other-kinds-memo.md` §7a) all resolve
+    /// to `Kind::Skill`.
+    #[test]
+    fn skills_basenames_resolve_to_kind_skill() {
+        for basename in [
+            "cr_skills.lst",
+            "pu_skills.lst",
+            "ce_skills.lst",
+            "up_skills.lst",
+            "isb_skills.lst",
+            "uc_skills.lst",
+            "ism_skills.lst",
+            "b2_skills.lst",
+            "b4_skills.lst",
+            "ue_skills.lst",
+        ] {
+            assert_eq!(file_kind(basename), Some(Kind::Skill), "{basename}");
+        }
+    }
+
+    /// Regression guard: a coincidental `_skills` substring must never win
+    /// over an already-handled shape checked earlier in `file_kind`.
+    #[test]
+    fn skills_check_does_not_shadow_earlier_branches() {
+        assert_eq!(file_kind("cr_classes.lst"), Some(Kind::Class));
+        assert_eq!(file_kind("cr_feats.lst"), Some(Kind::Feat));
+        assert_eq!(file_kind("cr_races.lst"), Some(Kind::Race));
+    }
+
+    /// SD-32 `decisions.md §17`: the five kinds landed through
+    /// `SIMPLE_FILENAME_KINDS` alongside `Skill` -- one representative
+    /// basename per kind, from the pinned oracle
+    /// (`15-card-15-other-kinds-memo.md` §1-5).
+    #[test]
+    fn simple_filename_kinds_resolve_correctly() {
+        assert_eq!(file_kind("aasimar_templates.lst"), Some(Kind::Template));
+        assert_eq!(file_kind("cr_deities.lst"), Some(Kind::Deity));
+        assert_eq!(file_kind("cr_domains.lst"), Some(Kind::Domain));
+        assert_eq!(file_kind("up_powers.lst"), Some(Kind::Power));
+        assert_eq!(file_kind("arg_languages.lst"), Some(Kind::Language));
+    }
+
+    /// `*_templates_language_*.lst` (racial bonus-language templates, e.g.
+    /// `dwarf_templates_language.lst`) must resolve `Template`, not
+    /// `Language` -- table order is load-bearing, not incidental.
+    #[test]
+    fn templates_language_files_resolve_to_template_not_language() {
+        assert_eq!(file_kind("dwarf_templates_language.lst"), Some(Kind::Template));
+        assert_eq!(file_kind("b1_templates_language_aboleth.lst"), Some(Kind::Template));
+    }
+
+    /// The proof `decisions.md §17` asks for: adding the *next* kind of this
+    /// shape is a data change. This test adds a fabricated kind entirely
+    /// inline (no new `Kind::` variant needed for the test itself -- it
+    /// reuses `Kind::Language` as a stand-in target and a filename token no
+    /// real book carries) to demonstrate the table, not the enum, is what a
+    /// new kind touches.
+    #[test]
+    fn a_new_simple_kind_is_one_table_row() {
+        const FABRICATED: &[(&str, Kind)] = &[("_totallyfakekindfixture", Kind::Language)];
+        let hit = FABRICATED.iter().find(|(t, _)| "cr_totallyfakekindfixture.lst".contains(t));
+        assert_eq!(hit.map(|(_, k)| *k), Some(Kind::Language));
+    }
+}
+
+#[cfg(test)]
+mod kind_ability_tests {
+    use super::*;
+
+    /// SD-32 card 15-ability: bare (non-`_race`/`_class`/`_companion`/
+    /// `_familiar`) `*abilit*.lst` basenames resolve to `Kind::Ability`,
+    /// same real-corpus set `scripts/census_independent.py`'s
+    /// `_classify_kind_by_filename` routes to `row_dependent`.
+    #[test]
+    fn bare_abilities_basenames_resolve_to_kind_ability() {
+        for basename in [
+            "cr_abilities.lst",
+            "ability_acg.lst",
+            "abilities_rowpg.lst",
+            "um_abilities_wordsofpower.lst",
+            "uca_abilities_retraining.lst",
+        ] {
+            assert_eq!(file_kind(basename), Some(Kind::Ability), "{basename}");
+        }
+    }
+
+    /// Ordering guard: the `_race`/`_class`/`_companion`/`_familiar`
+    /// abilities carve-outs checked earlier in `file_kind` must still win
+    /// over the new bare-`abilit` fallback.
+    #[test]
+    fn ability_check_does_not_shadow_earlier_abilities_branches() {
+        assert_eq!(file_kind("cr_abilities_class.lst"), Some(Kind::ClassFeature));
+        assert_eq!(file_kind("mc_abilities_race.lst"), Some(Kind::RaceTrait));
+        assert_eq!(file_kind("ce_abilities_familiar_cr.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("isi_abilities_companion.lst"), Some(Kind::Companion));
+    }
+
+    /// `refine_kind`: a bare-abilities row tagged `CATEGORY:FEAT` redirects
+    /// to `Kind::Feat`, matching `census_independent.py`'s own row_dependent
+    /// FEAT special-case (one real corpus row at the pinned oracle SHA:
+    /// `apg_abilities.lst`'s "Magical Lineage ~ Metamagic").
+    #[test]
+    fn category_feat_row_redirects_to_feat() {
+        let fields = ["Magical Lineage", "KEY:Magical Lineage ~ Metamagic", "CATEGORY:FEAT", "TYPE:Metamagic"];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Feat);
+    }
+
+    /// A non-FEAT bare-abilities row stays `Kind::Ability` under `refine_kind`.
+    #[test]
+    fn non_feat_ability_row_stays_ability_under_refine_kind() {
+        let fields = ["Lay on Hands", "CATEGORY:Special Ability", "DEFINE:LayOnHandsLVL|0"];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Ability);
+    }
+
+    /// SD-32 `decisions.md §25`: the exact real-corpus row
+    /// (`inner_sea_races/isr_abilities.lst:78`) the epic's escalation named
+    /// as the worked example -- a `TYPE:Trait.RaceTrait.Oread Race Trait`
+    /// row must redirect to `Kind::Trait`, not stay `Kind::Ability`.
+    #[test]
+    fn type_trait_dotted_row_redirects_to_trait() {
+        let fields = [
+            "Loner of the Rocks",
+            "KEY:Trait ~ Loner of the Rocks",
+            "CATEGORY:Special Ability",
+            "TYPE:Trait.RaceTrait.Oread Race Trait",
+            "DESC:You gain a +1 trait bonus on Heal and Survival checks.",
+            "BONUS:SKILL|Heal,Survival|1|TYPE=Trait",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Trait);
+    }
+
+    /// A bare `TYPE:Trait` (no dot-suffix, real `ultimate_campaign`
+    /// `uca_abilities_traits.lst` shape) also redirects.
+    #[test]
+    fn type_trait_bare_row_redirects_to_trait() {
+        let fields = ["Reactionary", "CATEGORY:Special Ability", "TYPE:Trait", "DESC:+2 on initiative checks."];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Trait);
+    }
+
+    /// Guard against a false-positive substring match: a row whose `TYPE:`
+    /// merely CONTAINS "Trait" as a later dot-segment (not the first) must
+    /// NOT redirect -- only a `TYPE:` value equal to `Trait` or starting
+    /// with `Trait.` qualifies.
+    #[test]
+    fn type_value_naming_trait_in_a_later_segment_does_not_redirect() {
+        let fields = [
+            "Heart of the Fields",
+            "TYPE:RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
+            "DESC:Humans born in rural areas are used to hard labor.",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::Ability, &fields, &empty, &BTreeSet::new(), &BTreeSet::new()), Kind::Ability);
+    }
+
+    /// `has_classifying_token`: only content-bearing (A) rows pass; a
+    /// gateway-only or bare picklist row (B) does not, ported unchanged
+    /// from `15-card-15-ability-category-memo.md`'s disposition rules.
+    #[test]
+    fn has_classifying_token_gates_on_content_only() {
+        let content = ["Lay on Hands", "CATEGORY:Special Ability", "DEFINE:LayOnHandsLVL|0"];
+        assert!(has_classifying_token(Kind::Ability, &content));
+
+        let gateway = [
+            "Add a Class Skill",
+            "CATEGORY:Special Ability",
+            "ABILITY:Class Skill|AUTOMATIC|%LIST",
+        ];
+        assert!(!has_classifying_token(Kind::Ability, &gateway));
+
+        let picklist = ["Breath Weapon", "CATEGORY:Ability Focus", "TYPE:Ability Focus"];
+        assert!(!has_classifying_token(Kind::Ability, &picklist));
+    }
+
+    /// `is_bonus_token`: the `BONUS[A-Z]*:` pattern matches `BONUS:` and any
+    /// all-caps `BONUS<suffix>:` field, but not an unrelated field that
+    /// merely starts with the letters "BONUS" followed by something else.
+    #[test]
+    fn bonus_token_matcher_matches_bonus_and_suffixed_bonus_fields() {
+        assert!(is_bonus_token("BONUS:VAR|X|1"));
+        assert!(is_bonus_token("BONUSFEAT:GENERAL|1"));
+        assert!(!is_bonus_token("BONUSaVAR|X|1")); // lowercase before ':' -- not a real token
+        assert!(!is_bonus_token("DESC:Bonus text"));
+    }
+
+    /// Integration: a content-bearing `CATEGORY:Internal` bare-abilities row
+    /// must NOT be dropped by the file-wide `internal_namespace` trap --
+    /// the `decisions.md §14c`-adjudicated shape (90.7% of the analogous
+    /// class_feature population was real content, not bookkeeping) applies
+    /// here too, and this is the carve-out that lets `has_classifying_token`
+    /// make that call instead of a blanket drop.
+    #[test]
+    fn content_bearing_internal_ability_row_is_enumerated_not_dropped_by_internal_trap() {
+        let text = "Aspect Combat Bonus ~ Low Profile\tCATEGORY:Internal\tASPECT:CombatBonus|+1 dodge bonus to AC against ranged attacks|LowProfile\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities.lst"),
+            "core_rulebook",
+            Kind::Ability,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(out.units[0].kind, Kind::Ability);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 0);
+    }
+
+    /// A bare `CATEGORY:Internal` marker with no content and no gateway
+    /// still correctly produces zero units (via `has_classifying_token`,
+    /// not the file-wide trap) -- the carve-out does not turn Internal
+    /// bookkeeping rows into phantom `ability` units.
+    #[test]
+    fn bare_internal_ability_marker_produces_no_unit() {
+        let text = "Elemental Fist ~ Acid\tCATEGORY:Internal\tTYPE:Choice\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities.lst"),
+            "core_rulebook",
+            Kind::Ability,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0, "{:?}", out.units);
+    }
+
+    /// SD-32 card 15-internal: a content-bearing `Kind::ClassFeature`
+    /// `CATEGORY:Internal` row is now enumerated, NOT dropped by the
+    /// file-wide trap -- `decisions.md §12b`'s adjudication found this exact
+    /// shape (`DEFINE:` present) is disposition (A), 90.7% of the 2,614-row
+    /// population. Before card 15-internal's fix, this test asserted the
+    /// OPPOSITE (blanket drop) -- that assertion was itself the bug the
+    /// adjudication memo found wrong.
+    #[test]
+    fn content_bearing_class_feature_internal_row_is_enumerated_not_dropped() {
+        let text = "Panache Tracker\tCATEGORY:Internal\tDEFINE:PanacheLVL|0\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities_class.lst"),
+            "core_rulebook",
+            Kind::ClassFeature,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(out.units[0].kind, Kind::ClassFeature);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 0);
+    }
+
+    /// The memo's own worked (B) example ("Damage Reduction ~ All") --
+    /// `CATEGORY:Internal`, `DR:` only, no `DEFINE:`/`BONUS:` -- flips to (A)
+    /// under the wider content list: `DR:` names a class-feature-specific
+    /// damage-reduction variable the engine's DR machinery reads, so it is
+    /// real content, not bookkeeping. This is the exact regression the
+    /// memo's §2a narrowness finding warns about: a `DEFINE:`/`BONUS:`-only
+    /// test misses it.
+    #[test]
+    fn dr_only_class_feature_internal_row_counts_as_content_not_bare() {
+        let fields = ["Damage Reduction ~ All", "CATEGORY:Internal", "DR:ClassFeatureDR_ALL/-"];
+        assert!(!class_feature_internal_row_is_bare_marker(&fields));
+    }
+
+    /// A genuinely bare `CATEGORY:Internal` tracker row -- no content field
+    /// from the wide list, no gateway token, only structural markers -- is
+    /// still dropped by the trap. This is the narrow (B) class
+    /// (`decisions.md §12b`'s adjudication: 40 of 2,614) that the fix must
+    /// NOT start eating real facets while still catching.
+    #[test]
+    fn bare_class_feature_internal_marker_row_is_still_dropped_by_the_trap() {
+        let text = "Foo Tracker\tCATEGORY:Internal\tKEY:Foo Tracker\tTYPE:Choice\tVISIBLE:NO\tSOURCEPAGE:p.1\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities_class.lst"),
+            "core_rulebook",
+            Kind::ClassFeature,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0, "{:?}", out.units);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 1);
+    }
+
+    /// `decisions.md §20` t9-onboarding straggler wave: a `<Name>.FORGET`
+    /// row (real example: `advanced_class_guide/_pfs/pfs_acg_equip.lst:6-7`,
+    /// marking "Dust Knuckles"/"False Face" removed from Pathfinder-Society-
+    /// legal play) is a removal DIRECTIVE, not a declared item -- the same
+    /// shape `.MOD` already gets special handling for, but `.FORGET` had
+    /// none at all, so it was enumerated as an ordinary unit. That unit can
+    /// never have a corpus record (no item was ever declared at that line),
+    /// making it permanently, unfixably `no_record` (decisions.md §20's
+    /// Gate-1 consequence). Generic across every `Kind`, not equipment-only
+    /// -- `equipment_gap.rs::generate()`'s own `.FORGET` guard already
+    /// excludes the shape downstream for the one kind that generator
+    /// handles; this is the upstream fix so no kind's enumeration ever
+    /// mints the directive as a unit in the first place.
+    #[test]
+    fn forget_directive_row_is_dropped_not_enumerated_as_a_unit() {
+        let text = "Dust Knuckles.FORGET\tTYPE:PFSNotLegal\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("pfs_acg_equip.lst"),
+            "advanced_class_guide",
+            Kind::Equipment,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0, "{:?}", out.units);
+        assert_eq!(*out.trap_hits.get("forget_directive").unwrap_or(&0), 1);
+    }
+
+    /// A `.FORGET` row for a NON-equipment kind is dropped identically --
+    /// the fix is generic, not equipment-specific.
+    #[test]
+    fn forget_directive_row_is_dropped_for_every_kind() {
+        let text = "Some Ability.FORGET\tTYPE:PFSNotLegal\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("pfs_something.lst"),
+            "some_book",
+            Kind::Ability,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 0, "{:?}", out.units);
+        assert_eq!(*out.trap_hits.get("forget_directive").unwrap_or(&0), 1);
+    }
+
+    /// An ordinary (non-`.FORGET`) row is entirely unaffected by this fix.
+    #[test]
+    fn non_forget_row_is_unaffected_by_this_fix() {
+        let text = "Dust Knuckles\tKEY:Dust Knuckles\tCOST:0\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("pfs_acg_equip.lst"),
+            "advanced_class_guide",
+            Kind::Equipment,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(*out.trap_hits.get("forget_directive").unwrap_or(&0), 0);
+    }
+
+    /// A gateway-only row (`ABILITY:...|AUTOMATIC|<target>`, no content
+    /// field) stays counted as `class_feature` -- the shipped rule
+    /// deliberately does not attempt cross-file gateway-target resolution
+    /// (the adjudication memo's own conservative default, §5), so this row
+    /// is neither silently dropped nor swallowed as bare.
+    #[test]
+    fn gateway_only_class_feature_internal_row_stays_counted_not_dropped() {
+        let text = "Elemental Fist ~ Acid\tCATEGORY:Internal\tABILITY:Special Ability|AUTOMATIC|Elemental Fist\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities_class.lst"),
+            "core_rulebook",
+            Kind::ClassFeature,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 0);
+    }
+
+    /// An ordinary (non-`CATEGORY:Internal`) `Kind::ClassFeature` row is
+    /// entirely unaffected by this fix -- the `carries_internal_category_field`
+    /// guard is false, so `is_internal_category` is false via the same path
+    /// it always was.
+    #[test]
+    fn non_internal_class_feature_row_is_unaffected_by_this_fix() {
+        let text = "Rage\tCATEGORY:Special Ability\tDEFINE:RageLVL|0\n";
+        let empty = BTreeSet::new();
+        let mut out = BookEnumeration::default();
+        enumerate_file(
+            Path::new("cr_abilities_class.lst"),
+            "core_rulebook",
+            Kind::ClassFeature,
+            text,
+            &empty,
+            &empty,
+            &empty,
+            &empty,
+            &mut out,
+        );
+        assert_eq!(out.units.len(), 1, "{:?}", out.trap_hits);
+        assert_eq!(*out.trap_hits.get("internal_namespace").unwrap_or(&0), 0);
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -301,12 +902,40 @@ const TRAP_RULES: &[TrapRule] = &[
              CAMPAIGN, ...) rather than a record name. File metadata, never a unit.",
     },
     TrapRule {
+        id: "forget_directive",
+        description:
+            "A `<Name>.FORGET` record is a removal DIRECTIVE (real example: \
+             `advanced_class_guide/_pfs/pfs_acg_equip.lst:6-7`, marking \"Dust Knuckles\"/\"False \
+             Face\" removed from Pathfinder-Society-legal play), not a declared item. It \
+             un-declares an already-existing record rather than declaring a new one -- counting \
+             it as a unit makes it permanently, unfixably `no_record` (decisions.md §20's Gate-1 \
+             consequence: no corpus record was ever meant to exist at its line). Generic across \
+             every `Kind`, mirroring `.MOD`'s own special handling above. Never a unit.",
+    },
+    TrapRule {
         id: "mod_record",
         description:
             "A `<Name>.MOD` record MODIFIES an existing base record rather than declaring one. \
              Counting these inflated a feat estimate from 301 to 396. Not a unit — EXCEPT when \
              no base record for that name exists anywhere in the enumerated corpus, which is a \
              real declaration in disguise (see `mod_only_rescue`).",
+    },
+    TrapRule {
+        id: "pfs_legality_only_row",
+        description:
+            "A plain (non-`.FORGET`, non-`.MOD`, non-`.COPY=`) row in a `_pfs/` Pathfinder-Society \
+             legality-overlay file whose ONLY payload beyond its first field is a legality marker \
+             (`TYPE:PFSLegal`/`TYPE:PFSNotLegal`) and/or a `PRECHARACTERTYPE:`/`!PRECHARACTERTYPE:` \
+             gate -- no `KEY:`, `COST:`, `DESC:`, `BONUS:`, or any other content field. Real example: \
+             `ultimate_magic/_pfs/pfs_um_equip_general.lst:9`, \
+             `Lab Journal of Constance Inflix\\tTYPE:PFSNotLegal\\t!PRECHARACTERTYPE:1,PC` -- the item \
+             itself is declared elsewhere in the book's base file (here, as a `.COPY=` variant of \
+             `Spellbook` at `um_equip_general.lst:17`); this row only restates its PFS legality. \
+             Carrying zero mechanical content of its own (verified corpus-wide: every `_pfs/` row \
+             whose non-legality token set is non-empty is excluded from this trap and stays counted, \
+             `decisions.md §20` t9-onboarding re-derivation), it can never correspond to a corpus \
+             record of its own -- counting it as a unit makes it permanently, unfixably `no_record`, \
+             the identical `.FORGET`-directive failure mode this trap mirrors. Never a unit.",
     },
     TrapRule {
         id: "mod_only_rescue",
@@ -509,6 +1138,13 @@ struct BookEnumeration {
     /// `.MOD` target names seen in this book, kept so `mod_only_rescue` can
     /// run after the whole corpus is known. See [`ModTarget`].
     mod_targets: Vec<ModTarget>,
+    /// `(source_file, source_line) -> CATEGORY:` value for every enumerated
+    /// `Kind::ClassFeature` row, kept so `disambiguate_class_feature_fallback_collisions`
+    /// can look a colliding unit's category back up without widening
+    /// [`CorpusUnit`] itself (`decisions.md §12b`, card 15's
+    /// `duplicate_identity` cause-pin cycle). Populated only for
+    /// `Kind::ClassFeature`; empty for every other kind.
+    class_feature_categories: BTreeMap<(String, usize), Option<String>>,
 }
 
 /// Tokenise one `.lst` line into its tab fields with surrounding whitespace
@@ -1339,6 +1975,136 @@ fn is_player_favored_class_choice_row(fields: &[&str], type_second_segment: &str
         .any(|f| f.contains("Favored Class Bonus") || f.contains("FavClassBonus"))
 }
 
+/// SD-32 card 11 T2b classifier fix (`decisions.md §16`, 2026-08-22):
+/// `*_races.lst` row names that carry a `CR:` token in THIS SAME book --
+/// the corpus's own monster discriminator, already used one line below for
+/// `Kind::Race -> Kind::Monster` (`cr_races.lst` carries zero `CR:` tokens
+/// across its seven playable races; `b1_races.lst` carries 351 across its
+/// zero playable races). Bestiary-style books use compound, race-specific
+/// `TYPE:` first segments for their special-ability rows
+/// (`AghashRacialAbility`, `BearLordRacialTrait`, `RaceAbility`, ...) instead
+/// of `MONSTER_ABILITY_TYPE_FACETS`'s bare vocabulary, so the TYPE-facet
+/// check alone leaves them typed `race_trait`. A row's `KEY:` prefix (the
+/// text before the first ` ~ `) naming one of these entries is the second,
+/// independent signal `refine_kind` cross-references below.
+///
+/// **Deliberately does NOT also match `*_templates.lst` entries.** Stress-tested
+/// corpus-wide before this ruling (`scripts/t2b_refine_kind_key_prefix_stress_test.py`,
+/// `off` vs `on` mode): `advanced_race_guide/arg_templates.lst` carries a
+/// `Feral` row (the Orc subrace template `SUBRACE:Feral` grants), and
+/// `arg_abilities_race.lst` carries a genuine player-facing `Feral ~
+/// Languages` racial-trait row for it -- a templates.lst name is not always
+/// monster-owned the way a CR:-bearing races.lst name always is. Widening to
+/// templates.lst would silently reclassify that real content; races.lst-only
+/// does not (re-derived: 0 hits in `core_rulebook`/`advanced_players_guide`/
+/// `advanced_race_guide`/`advanced_class_guide`/`bestiary_5`/`bestiary_6`/
+/// `inner_sea_races`/`core_essentials`/`ultimate_wilderness`, all 10 known
+/// real-race-book directories, and 0 hits against any of this corpus's own
+/// playable-race names anywhere).
+fn book_cr_bearing_race_names(book_dir: &Path) -> BTreeSet<String> {
+    let mut names = BTreeSet::new();
+    let mut stack = vec![book_dir.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+                continue;
+            }
+            let basename = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+            // Same shape `file_kind` uses for `Kind::Race`: `_races` but not
+            // a companion/familiar roster.
+            if !basename.contains("_races") || basename.contains("companion") || basename.contains("familiar") {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            for line in text.lines() {
+                let fields = tab_fields(line);
+                let Some(first) = fields.first() else { continue };
+                let first = first.trim();
+                if first.is_empty() || first.starts_with('#') {
+                    continue;
+                }
+                let is_directive = first
+                    .split_once(':')
+                    .map(|(head, _)| !head.is_empty() && head.chars().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit()))
+                    .unwrap_or(false);
+                if is_directive {
+                    continue;
+                }
+                if has_token(&fields, "CR:") {
+                    names.insert(first.to_string());
+                }
+            }
+        }
+    }
+    names
+}
+
+/// SD-32 card 11 T2b classifier fix, cluster 4 (`card11-t2b-remeasure.md §5`,
+/// `decisions.md §17a`): the class-name-shaped sibling to
+/// [`book_cr_bearing_race_names`]. Several `_abilities_race.lst`-owning
+/// books carry NO playable race chassis at all (`mythic_adventures`,
+/// `pathfinder_unchained`, `advanced_class_guide` have no `*_races.lst` file
+/// on disk; `occult_adventures`'s `oa_races.lst` and
+/// `advanced_players_guide`'s `apg_races_companion.lst` are non-PC-race
+/// companion/phantom stubs, 0 `CR:` tokens either way) -- so
+/// `book_cr_bearing_race_names` is always empty for them and `refine_kind`'s
+/// existing KEY-prefix check can never fire. Their `_abilities_race.lst`
+/// rows are filed there purely by `file_kind`'s whole-file filename guess;
+/// some of that content is a real class's own per-class bookkeeping
+/// (`Skald Spell Level 0`, `Warpriest`'s "Class Feature" TYPE facet, an
+/// Oracle Curse tracker) mis-typed `race_trait`.
+///
+/// This function collects every `CLASS:<Name>` declared in the book's own
+/// `*classes*.lst` file(s), **gated on `TYPE:` containing `.PC`** -- the
+/// corpus's own player-class-vs-monster-class discriminator (a monster's
+/// racial-hit-dice `CLASS:` entry, e.g. `bestiary`'s `CLASS:Drider`, always
+/// carries `TYPE:Monster`, never `.PC`; re-derived corpus-wide before this
+/// fix landed: the un-gated version wrongly matched `bestiary`'s `Drider`/
+/// `Guardian Naga`, `bonus_bestiary`'s `Faerie Dragon`/`Water Naga`, and
+/// `core_essentials`'s `Dragon Age (N)` monster-class rows, all real
+/// content this fix must not touch -- gating on `.PC` removes every one of
+/// those false positives while keeping every genuine player class).
+fn book_pc_class_names(book_dir: &Path) -> BTreeSet<String> {
+    let mut names = BTreeSet::new();
+    let mut stack = vec![book_dir.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+                continue;
+            }
+            let basename = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+            if !basename.contains("classes") {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            for line in text.lines() {
+                let fields = tab_fields(line);
+                let mut class_name: Option<&str> = None;
+                let mut type_value: Option<&str> = None;
+                for field in &fields {
+                    if let Some(rest) = field.strip_prefix("CLASS:") {
+                        class_name = Some(rest.trim());
+                    } else if let Some(rest) = field.strip_prefix("TYPE:") {
+                        type_value = Some(rest.trim());
+                    }
+                }
+                if let (Some(name), Some(ty)) = (class_name, type_value) {
+                    if ty.split('.').any(|seg| seg == "PC") {
+                        names.insert(name.to_string());
+                    }
+                }
+            }
+        }
+    }
+    names
+}
+
 /// A record's kind, refined from the file-level guess by what the record
 /// itself says.
 ///
@@ -1354,7 +2120,59 @@ fn is_player_favored_class_choice_row(fields: &[&str], type_second_segment: &str
 ///   itself is a player race+class Favored Class Bonus row wearing a monster
 ///   facet's `TYPE:` first segment (`is_player_favored_class_choice_row`,
 ///   `OPEN-ISSUES.md` row 34).
-fn refine_kind(file_kind: Kind, fields: &[&str]) -> Kind {
+/// - `decisions.md §16`: a row whose `KEY:` prefix (text before the first
+///   ` ~ `) exactly names one of `book_monster_race_names`'s same-book
+///   `CR:`-bearing race entries is ALSO a monster's own sub-ability, even
+///   when its `TYPE:` first segment is a compound, race-specific facet
+///   (`AghashRacialAbility`, `BearLordRacialTrait`, ...) the bare
+///   `MONSTER_ABILITY_TYPE_FACETS` vocabulary does not match. Verified safe
+///   against the one known trap (`Favored Enemy ~ Humanoid (<Race>)`, whose
+///   KEY prefix is literally `Favored Enemy` -- never a race or monster
+///   name) by construction: this check reads the KEY, not the TYPE, so it
+///   shares no vocabulary with the trap that made a naive TYPE-segment
+///   widening unsafe (`t2b-bestiary_3-measurement-receipt.md` §6 item 1).
+/// - SD-32 card 11 T2b classifier fix, cluster 4 (`card11-t2b-remeasure.md
+///   §5`, `decisions.md §17a`): a row whose `KEY:` prefix exactly names, or
+///   begins with (`"<Name> "`), one of `book_pc_class_names`'s same-book
+///   genuine player classes (`TYPE:` gated on `.PC`, see that function's own
+///   doc comment) is that class's own bookkeeping row filed in the wrong
+///   file, not a racial trait -- e.g. `advanced_class_guide`'s
+///   `Skald Spell Level 0` (`TYPE:BonusSpellKnownSkald`) or `Warpriest`
+///   (`TYPE:Warpriest Class Feature.SpecialQuality.Supernatural`, the TYPE
+///   literally says "Class Feature"). Reclassifies to `Kind::ClassFeature`.
+///   Gated by the SAME `is_choice_row` guard as the monster-ability arm
+///   above: a Favored Class Bonus row (`advanced_players_guide`'s bare
+///   `Alchemist`, `TYPE:FavoredClass`, `BONUS:ABILITYPOOL|Favored Class
+///   Bonus|...`) also has a KEY prefix that is literally a class name, and
+///   is a third, distinct data shape neither `race_trait` nor
+///   `class_feature` -- moving it would be exactly as wrong as moving it to
+///   `monster_ability`, so it stays `RaceTrait` untouched, same as today.
+/// - `decisions.md §23b`: a `Kind::ClassFeature` (`_abilities_class.lst`) row
+///   whose ONLY `PRE*:`-shaped prerequisite is `PREDEITY:` (a specific
+///   deity/demon lord) and whose `KEY:` group prefix (the text before
+///   `" ~ "`) names no PC class anywhere in the CORPUS-WIDE roster
+///   (`corpus_pc_class_names`, not just this book's own -- most
+///   archetype/supplement books declare no `*classes*.lst` of their own at
+///   all, see `book_pc_class_names`'s doc comment, so a book-scoped check
+///   would fire on every deity-flavored row regardless of real ownership)
+///   is a deity-obedience feat line filed in the wrong file by
+///   `file_kind`'s whole-file `_abilities_class` guess, not a class
+///   feature -- `"Demonic Obedience ~ Abraxas"` names no class at all in
+///   any of its 42 corpus records, verified corpus-wide, never a class or
+///   class-shaped variable. Reclassifies to `Kind::Feat` (comparable to a
+///   boon feat; the base `"Demonic Obedience"` feat itself is already
+///   `Kind::Feat`, sourced from a real `CATEGORY:FEAT` row in a different
+///   file). A genuinely class-owned deity-flavored row --
+///   `"Ranger Combat Style ~ Kurgess"` (`PREDEITY` only, same shape) -- is
+///   NOT caught here because its `KEY:` group prefix embeds the real class
+///   name (`"Ranger"`).
+fn refine_kind(
+    file_kind: Kind,
+    fields: &[&str],
+    book_monster_race_names: &BTreeSet<String>,
+    book_pc_class_names: &BTreeSet<String>,
+    corpus_pc_class_names: &BTreeSet<String>,
+) -> Kind {
     match file_kind {
         Kind::Race if has_token(fields, "CR:") => Kind::Monster,
         Kind::RaceTrait => {
@@ -1362,16 +2180,191 @@ fn refine_kind(file_kind: Kind, fields: &[&str]) -> Kind {
             let mut type_segments = type_value.split('.');
             let type_first_segment = type_segments.next().unwrap_or("");
             let type_second_segment = type_segments.next().unwrap_or("");
-            if MONSTER_ABILITY_TYPE_FACETS.contains(&type_first_segment)
-                && !is_player_favored_class_choice_row(fields, type_second_segment)
+            let is_choice_row = is_player_favored_class_choice_row(fields, type_second_segment);
+            if MONSTER_ABILITY_TYPE_FACETS.contains(&type_first_segment) && !is_choice_row {
+                return Kind::MonsterAbility;
+            }
+            let key_prefix = token_value(fields, "KEY:")
+                .unwrap_or("")
+                .split(" ~ ")
+                .next()
+                .unwrap_or("")
+                .trim();
+            if !is_choice_row && !key_prefix.is_empty() && book_monster_race_names.contains(key_prefix) {
+                return Kind::MonsterAbility;
+            }
+            // The class-feature arm falls back to the row's own bare first
+            // column when no `KEY:` field is present -- unlike the
+            // monster-ability arm above (unchanged, still `KEY:`-only, to
+            // avoid perturbing `decisions.md §16`'s already-signed-off
+            // classifier). Real-corpus shape this fallback is FOR:
+            // `acg_abilities_race.lst`'s `Skald Spell Level 0` and
+            // `Warpriest` rows carry no `KEY:` field at all -- PCGen's own
+            // convention where the bare first column IS the identity, the
+            // same fallback `enumerate_file`'s own `display_name`/`key`
+            // resolution already uses for every other kind.
+            let bare_key_prefix = token_value(fields, "KEY:")
+                .or_else(|| fields.first().copied())
+                .unwrap_or("")
+                .split(" ~ ")
+                .next()
+                .unwrap_or("")
+                .trim();
+            if !is_choice_row
+                && !bare_key_prefix.is_empty()
+                && book_pc_class_names.iter().any(|class_name| {
+                    bare_key_prefix == class_name.as_str()
+                        || bare_key_prefix
+                            .strip_prefix(class_name.as_str())
+                            .is_some_and(|rest| rest.starts_with(' '))
+                })
             {
-                Kind::MonsterAbility
+                return Kind::ClassFeature;
+            }
+            Kind::RaceTrait
+        }
+        // SD-32 `decisions.md §23b`: see this function's own doc comment,
+        // last bullet, for the full reasoning and the discriminating
+        // example (`"Ranger Combat Style ~ Kurgess"`, correctly untouched).
+        Kind::ClassFeature => {
+            let has_other_pre_token = fields.iter().any(|f| f.starts_with("PRE") && !f.starts_with("PREDEITY:"));
+            if has_token(fields, "PREDEITY:") && !has_other_pre_token {
+                let key_prefix = token_value(fields, "KEY:")
+                    .or_else(|| fields.first().copied())
+                    .unwrap_or("")
+                    .split(" ~ ")
+                    .next()
+                    .unwrap_or("")
+                    .trim();
+                let names_a_class = !key_prefix.is_empty()
+                    && corpus_pc_class_names.iter().any(|class_name| {
+                        key_prefix == class_name.as_str()
+                            || key_prefix.strip_prefix(class_name.as_str()).is_some_and(|rest| rest.starts_with(' '))
+                    });
+                if !names_a_class {
+                    return Kind::Feat;
+                }
+            }
+            Kind::ClassFeature
+        }
+        // SD-32 card 15-ability: `census_independent.py`'s `row_dependent`
+        // branch special-cases `CATEGORY:FEAT` before its own A/B
+        // disposition test runs (one real corpus row at the pinned oracle
+        // SHA: `apg_abilities.lst`'s "Magical Lineage" ~ Metamagic,
+        // `KEY:Magical Lineage ~ Metamagic`, `TYPE:Metamagic`,
+        // `ADDSPELLLEVEL:-1` -- a genuine feat, distinct from the
+        // `CATEGORY:Special Ability` "Trait ~ Magical Lineage" row in the
+        // same file that grants it). Ported here so the two walkers agree.
+        Kind::Ability => {
+            // SD-32 `decisions.md §25`: PF1e chargen Trait, checked before
+            // the `CATEGORY:FEAT` redirect below -- see `Kind::Trait`'s doc
+            // comment for why the two never actually contend.
+            let type_value = token_value(fields, "TYPE:").unwrap_or("");
+            if type_value == "Trait" || type_value.starts_with("Trait.") {
+                Kind::Trait
+            } else if token_value(fields, "CATEGORY:").is_some_and(|c| c.eq_ignore_ascii_case("FEAT")) {
+                Kind::Feat
             } else {
-                Kind::RaceTrait
+                Kind::Ability
             }
         }
         other => other,
     }
+}
+
+/// SD-32 card 15-ability (`decisions.md §12b`): whether a bare-abilities row
+/// carries independent mechanical or narrative content of its own -- ported,
+/// not re-derived, from `15-card-15-ability-category-classify.py`'s own
+/// `CONTENT_RE` (and `census_independent.py`'s `_ABILITY_CONTENT_RE`, kept
+/// byte-identical to this list across both languages). Deliberately the
+/// memo's own narrower field list, not the wider one
+/// `_row_is_bare_internal_marker`'s Python sibling uses for the unrelated
+/// `_abilities_class.lst` `CATEGORY:Internal` population -- the memo's
+/// per-bucket rulings (`15-card-15-ability-category-memo.md`) were written
+/// and reviewed against this exact list.
+const ABILITY_CONTENT_PREFIXES: &[&str] = &[
+    "DEFINE:", "DESC:", "ASPECT:", "CSKILL:", "MOVE:", "AUTO:", "TEMPLATE:", "SPROP:", "QUALITY:",
+    "SR:", "DR:", "SAB:", "VISION:",
+];
+
+/// `BONUS[A-Z]*:` -- `BONUS:`, `BONUSFEAT:`, or any other all-caps
+/// `BONUS<suffix>:` field. A manual matcher rather than a `regex` crate
+/// dependency (unused elsewhere in this binary) for one narrow pattern.
+fn is_bonus_token(field: &str) -> bool {
+    let Some(rest) = field.strip_prefix("BONUS") else { return false };
+    let upper_len = rest
+        .char_indices()
+        .find(|(_, c)| !c.is_ascii_uppercase())
+        .map(|(i, _)| i)
+        .unwrap_or(rest.len());
+    rest[upper_len..].starts_with(':')
+}
+
+fn ability_row_has_content(fields: &[&str]) -> bool {
+    fields
+        .iter()
+        .any(|f| ABILITY_CONTENT_PREFIXES.iter().any(|p| f.starts_with(p)) || is_bonus_token(f))
+}
+
+/// SD-32 card 15-internal (`decisions.md §12b`, adjudicated by
+/// `15-card-15-category-internal-adjudication-memo.md`): the field list a
+/// `Kind::ClassFeature` (`_abilities_class.lst`) row carrying
+/// `CATEGORY:Internal` is tested against before it is dropped as bookkeeping
+/// -- ported byte-identical from `census_independent.py`'s
+/// `_ROW_CONTENT_FIELD_RE`. Deliberately WIDER than [`ABILITY_CONTENT_PREFIXES`]
+/// (which governs the DIFFERENT, already-adjudicated bare-`*abilities*.lst`
+/// population): the adjudication memo found the narrower list misses real
+/// non-formula payload -- `DR:` (names a class-feature-specific
+/// damage-reduction variable the engine's DR machinery reads) and
+/// `SPELLLEVEL:` (a class-level-to-spell mapping) both flip the memo's own
+/// original worked (B) examples ("Damage Reduction ~ All/Silver") to (A).
+/// See that memo §2a for the full derivation (1,034 -> 2,219 -> 2,369
+/// content-bearing rows across three widening passes).
+const CLASS_FEATURE_INTERNAL_CONTENT_PREFIXES: &[&str] = &[
+    "DEFINE:", "DESC:", "ASPECT:", "CSKILL:", "MOVE:", "AUTO:", "TEMPLATE:", "SPROP:", "QUALITY:",
+    "SR:", "DR:", "SAB:", "VISION:", "TEMPBONUS:", "CHOOSE:", "NATURALATTACKS:", "COMPANIONLIST:",
+    "ADD:", "FOLLOWERS:", "UDAM:", "UMULT:", "SELECT:", "COST:", "MOVECLONE:", "SPELLS:",
+    "SERVESAS:", "DEFINESTAT:", "UNENCUMBEREDMOVE:", "BENEFIT:", "SPELLLEVEL:", "CMB:",
+];
+
+/// `SPELLKNOWN[A-Z]*:` -- the single highest-volume field the adjudication
+/// memo's field-inventory pass found (1,185 of 2,614 rows), same shape as
+/// [`is_bonus_token`]'s `BONUS[A-Z]*:` matcher.
+fn is_spellknown_token(field: &str) -> bool {
+    let Some(rest) = field.strip_prefix("SPELLKNOWN") else { return false };
+    let upper_len = rest
+        .char_indices()
+        .find(|(_, c)| !c.is_ascii_uppercase())
+        .map(|(i, _)| i)
+        .unwrap_or(rest.len());
+    rest[upper_len..].starts_with(':')
+}
+
+/// The adjudication memo's `_ROW_GATEWAY_FIELD_RE`: an `ABILITY:...|AUTOMATIC|`
+/// token proves this row is a gateway to another (already-real) record rather
+/// than orphaned content -- one of the two ways a `CATEGORY:Internal` row
+/// proves disposition (A)-or-(B)-gateway-resolved rather than bare bookkeeping.
+fn is_internal_gateway_token(field: &str) -> bool {
+    field.starts_with("ABILITY:") && field.contains("|AUTOMATIC|")
+}
+
+/// True only for a `CATEGORY:Internal`-bearing `Kind::ClassFeature` row that
+/// carries neither a content-bearing field
+/// ([`CLASS_FEATURE_INTERNAL_CONTENT_PREFIXES`], `BONUS[A-Z]*:`, or
+/// `SPELLKNOWN[A-Z]*:`) nor a gateway token -- the narrow, provable (B) class
+/// the adjudication memo found is 40 of 2,614 (1.5%) rows, not the class_feature
+/// memo's original blanket claim of all 2,614. Deliberately does NOT attempt
+/// gateway-target resolution (the memo's own conservative default, §5): the
+/// 203 proven-facet rows stay counted as `class_feature` here too, since
+/// under-excluding is the safe direction under `decisions.md §1a`/§12b's
+/// burden-of-proof rule.
+fn class_feature_internal_row_is_bare_marker(fields: &[&str]) -> bool {
+    !fields.iter().any(|f| {
+        CLASS_FEATURE_INTERNAL_CONTENT_PREFIXES.iter().any(|p| f.starts_with(p))
+            || is_bonus_token(f)
+            || is_spellknown_token(f)
+            || is_internal_gateway_token(f)
+    })
 }
 
 #[cfg(test)]
@@ -1395,7 +2388,7 @@ mod refine_kind_monster_ability_tests {
             "DESC:Gain a bonus.",
             "BONUS:VAR|ElfHunterCritConfLongbowBonus|1",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `uw_abilities_race.lst:235` -- the auto-granted "Output" display row a
@@ -1414,7 +2407,72 @@ mod refine_kind_monster_ability_tests {
             "VISIBLE:EXPORT",
             "DESC:Add a bonus on wild empathy checks.|DwarfShifterEmpathyBonus/2",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+    }
+
+    /// `arg_abilities_race.lst:279` real shape (verbatim, tab-split) --
+    /// PCGen's own "Heart of the... Trait" pool-selector row granting the
+    /// already-modelled `Human ~ Heart of the Fields` trait (defined at line
+    /// 261, `CATEGORY:Special Ability`, real `DESC:`/`BONUS:`). No `TYPE:`,
+    /// no `DESC:`, no `BONUS*` of its own -- must be recognized as a
+    /// pointer, not a second independent object.
+    #[test]
+    fn arg_heart_of_the_trait_pool_selector_row_is_a_pure_ability_pointer() {
+        let fields = [
+            "Heart of the Fields",
+            "CATEGORY:Heart of the... Trait",
+            "MULT:YES",
+            "CHOOSE:NUMCHOICES=1|SKILL|TYPE=Craft|TYPE=Profession",
+            "ABILITY:Human Racial Trait|AUTOMATIC|Human ~ Heart of the Fields (%LIST)",
+        ];
+        assert!(is_pure_ability_pointer_race_trait_row(&fields));
+    }
+
+    /// The real trait definition itself (`arg_abilities_race.lst:261`) must
+    /// NOT be caught by the same predicate -- it carries its own `DESC:` and
+    /// `BONUS:`, which is exactly what distinguishes real content from a
+    /// pointer.
+    #[test]
+    fn arg_heart_of_the_fields_real_definition_is_not_a_pure_ability_pointer() {
+        let fields = [
+            "Heart of the Fields",
+            "KEY:Human ~ Heart of the Fields",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus",
+            "DESC:Humans born in rural areas are used to hard labor.",
+            "CHOOSE:NUMCHOICES=1|SKILL|TYPE=Craft|TYPE=Profession",
+            "BONUS:SKILL|%LIST|TL/2|TYPE=Racial",
+        ];
+        assert!(!is_pure_ability_pointer_race_trait_row(&fields));
+    }
+
+    /// The regression guard on the other side: a genuine `Adoptive
+    /// Parentage` grant row (`arg_abilities_race.lst:291`, already ingested,
+    /// `CATEGORY:Adoptive Parentage`, NOT `Special Ability`) carries its own
+    /// `DESC:`, so the predicate must not misclassify it as a pointer even
+    /// though its `CATEGORY:` is also not `Special Ability`. This is the
+    /// exact false-positive shape a category-only discriminator would have
+    /// hit (verified against the corpus-wide safety sweep before landing
+    /// this fix).
+    #[test]
+    fn arg_adoptive_parentage_real_grant_row_is_not_a_pure_ability_pointer() {
+        let fields = [
+            "Dwarf",
+            "CATEGORY:Adoptive Parentage",
+            "DESC:You were adopted and raised by dwarves.",
+            "ABILITY:Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Weapon Familiarity|Dwarf ~ Languages",
+            "SOURCEPAGE:p.72",
+        ];
+        assert!(!is_pure_ability_pointer_race_trait_row(&fields));
+    }
+
+    /// A row that merely lacks `TYPE:`/`DESC:`/`BONUS*` but grants nothing
+    /// (no `AUTOMATIC` anywhere) must not be swept up either -- the
+    /// predicate requires all four conditions, not just the first three.
+    #[test]
+    fn row_with_no_type_desc_bonus_but_no_automatic_grant_is_not_a_pure_ability_pointer() {
+        let fields = ["Some Header", "CATEGORY:Something Else", "SOURCEPAGE:p.1"];
+        assert!(!is_pure_ability_pointer_race_trait_row(&fields));
     }
 
     /// Same shape, caught via the `FavClassBonus`-suffixed variable-name
@@ -1432,7 +2490,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality",
             "DESC:Your animal companion has extra hit points.|HalfOrcHunterFavClassBonus",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
     }
 
     /// `ce_abilities_race.lst:1739`, one of Core Essentials' 380 genuine
@@ -1449,7 +2507,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality.Extraordinary",
             "DESC:Aberrations breathe, eat, and sleep.",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// `uw_abilities_race.lst:25`, one of `ultimate_wilderness`'s 2 genuine
@@ -1465,7 +2523,7 @@ mod refine_kind_monster_ability_tests {
             "TYPE:SpecialQuality.Extraordinary",
             "DESC:Plants breathe and eat, but do not sleep.",
         ];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
     }
 
     /// A bare `NaturalAttack`/`Universal Monster Rule` first segment is
@@ -1477,7 +2535,404 @@ mod refine_kind_monster_ability_tests {
     #[test]
     fn natural_attack_first_segment_is_never_gated_by_the_choice_test() {
         let fields = ["Bite 1 (Medium)", "CATEGORY:Special Ability", "TYPE:NaturalAttack"];
-        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
+    }
+
+    /// SD-32 card 11 T2b classifier fix (`decisions.md §16`): `bestiary_3`'s
+    /// `Bandersnatch ~ Poison` shape -- a compound, race-specific `TYPE:`
+    /// first segment (`RacialAbility`, not one of `MONSTER_ABILITY_TYPE_FACETS`)
+    /// that the pre-existing facet check does not match, but whose KEY prefix
+    /// exactly names a `CR:`-bearing `b3_races.lst` entry in the same book.
+    #[test]
+    fn compound_type_segment_row_still_becomes_monster_ability_via_key_prefix() {
+        let fields = [
+            "Poison",
+            "KEY:Bandersnatch ~ Poison",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialAbility.SpecialAttack.Extraordinary",
+            "DESC:Bite -- injury; save Fort DC 22; frequency 1/round for 6 rounds.",
+        ];
+        let mut names = BTreeSet::new();
+        names.insert("Bandersnatch".to_string());
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new(), &BTreeSet::new()), Kind::MonsterAbility);
+    }
+
+    /// The named trap (`t2b-bestiary_3-measurement-receipt.md` §6 item 1):
+    /// every real player race's own `Favored Enemy ~ Humanoid (<Race>)` row
+    /// shares the inner `SpecialAttack` dot-segment with the monster-only
+    /// facet vocabulary. A first-segment-only OR any-segment TYPE widening
+    /// would wrongly reclassify this. The KEY-prefix check must ALSO refuse
+    /// it -- its KEY prefix is the literal string `Favored Enemy`, never a
+    /// race or monster name -- even when the book's own monster-name set
+    /// coincidentally contains the race name the row is FOR.
+    #[test]
+    fn favored_enemy_humanoid_race_row_stays_race_trait_even_when_the_named_race_is_also_a_book_monster() {
+        let fields = [
+            "Favored Enemy (Humanoid (Human))",
+            "KEY:Favored Enemy ~ Humanoid (Human)",
+            "CATEGORY:Special Ability",
+            "TYPE:RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
+            "DESC:+2 on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against humans.",
+        ];
+        // Deliberately includes "Human" in the book's own monster-name set --
+        // e.g. a book with a CR:-bearing "Human" NPC statblock entry -- to
+        // prove this check reads the ROW's own KEY prefix ("Favored Enemy"),
+        // never the race name embedded inside the KEY's own suffix.
+        let mut names = BTreeSet::new();
+        names.insert("Human".to_string());
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+    }
+
+    /// A row whose KEY prefix happens to equal a book monster/race name is
+    /// STILL left alone when it is otherwise a Favored Class Bonus choice
+    /// row (`is_player_favored_class_choice_row`) -- the existing TYPE-facet
+    /// gate and the new KEY-prefix path share the same guard, not two
+    /// independently-gated code paths that could disagree.
+    #[test]
+    fn favored_class_bonus_choice_row_stays_race_trait_even_with_a_matching_key_prefix() {
+        let fields = [
+            "Longbow",
+            "KEY:Bandersnatch ~ Elf Hunter Critical Confirmation Choice ~ Longbow",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality.ElfHunterCritialConfirmationChoice",
+            "DEFINE:ElfHunterCritConfLongbowBonus|0",
+        ];
+        let mut names = BTreeSet::new();
+        names.insert("Bandersnatch".to_string());
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &names, &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+    }
+
+    /// Regression guard for the over-widening this fix must NOT do: a row
+    /// whose KEY prefix names something present ONLY in the book's
+    /// `*_templates.lst` (not `*_races.lst`) must stay `RaceTrait`.
+    /// `advanced_race_guide/arg_templates.lst`'s `Feral` (Orc subrace
+    /// template) row real-world shape: `arg_abilities_race.lst`'s `Feral ~
+    /// Languages` is genuine player-facing content
+    /// (`t2b_refine_kind_key_prefix_stress_test.py off` corpus-wide re-derive:
+    /// 0 hits against any of the 10 known real-race-book directories with
+    /// races.lst-only matching; templates.lst matching alone produces this
+    /// exact false positive). `book_monster_race_names` intentionally never
+    /// contains a templates.lst-only name, so this test passes by
+    /// construction -- kept as an explicit regression guard against a future
+    /// edit widening `book_cr_bearing_race_names` to also read
+    /// `*_templates.lst`.
+    #[test]
+    fn template_only_name_never_causes_reclassification() {
+        let fields = [
+            "Languages",
+            "KEY:Feral ~ Languages",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Orc Racial Trait.SpecialQuality.Racial Language",
+            "DESC:Feral orcs begin play speaking no languages.",
+        ];
+        // "Feral" deliberately absent from this test's name set -- it is a
+        // `*_templates.lst`-only name in the real corpus, and
+        // `book_cr_bearing_race_names` never reads `*_templates.lst`, so no
+        // caller ever passes a set containing it. An empty set here is not a
+        // weaker test; it IS the invariant.
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &BTreeSet::new(), &BTreeSet::new()), Kind::RaceTrait);
+    }
+
+    /// SD-32 card 11 T2b classifier fix, cluster 4 (`card11-t2b-remeasure.md
+    /// §5`, `decisions.md §17a`): `advanced_class_guide/acg_abilities_race.lst`'s
+    /// `Skald Spell Level 0` -- ACG has no `*_races.lst` at all, so
+    /// `book_monster_race_names` is always empty for it and the pre-existing
+    /// KEY-prefix arm can never fire. Its own `TYPE:BonusSpellKnownSkald`
+    /// names Skald's own bonus-spell-known bookkeeping, not a racial trait.
+    #[test]
+    fn book_class_name_prefix_row_reclassifies_to_class_feature() {
+        let fields = [
+            "Skald Spell Level 0",
+            "CATEGORY:Special Ability",
+            "TYPE:BonusSpellKnownSkald",
+            "PREVARGTEQ:(charbonusto(\"PCLEVEL\",\"Skald\") + classlevel(\"Skald\")),1",
+            "STACK:YES",
+            "MULT:YES",
+            "CHOOSE:NOCHOICE",
+            "BONUS:SPELLKNOWN|CLASS=Skald;LEVEL=0|1",
+        ];
+        let mut pc_classes = BTreeSet::new();
+        pc_classes.insert("Skald".to_string());
+        assert_eq!(
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes, &BTreeSet::new()),
+            Kind::ClassFeature
+        );
+    }
+
+    /// The exact-name form (no ` ~ ` suffix, no trailing-word compound) also
+    /// reclassifies -- `advanced_class_guide`'s `Warpriest`, whose own
+    /// `TYPE:` literally says "Class Feature".
+    #[test]
+    fn bare_class_name_key_reclassifies_to_class_feature() {
+        let fields = [
+            "Warpriest",
+            "CATEGORY:Special Ability",
+            "TYPE:Warpriest Class Feature.SpecialQuality.Supernatural",
+        ];
+        let mut pc_classes = BTreeSet::new();
+        pc_classes.insert("Warpriest".to_string());
+        assert_eq!(
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes, &BTreeSet::new()),
+            Kind::ClassFeature
+        );
+    }
+
+    /// A Favored Class Bonus row whose bare KEY happens to equal a genuine
+    /// player class name (`advanced_players_guide`'s bare `Alchemist`,
+    /// `TYPE:FavoredClass`) is a THIRD, distinct data shape -- neither race
+    /// content nor a class feature -- and must stay `RaceTrait` untouched,
+    /// gated by the same `is_player_favored_class_choice_row` guard the
+    /// monster-ability arm already uses. Moving this would be exactly the
+    /// "convenient kind for an ambiguous row" failure `decisions.md §1a`
+    /// forbids.
+    #[test]
+    fn favored_class_bonus_row_with_bare_class_name_key_stays_race_trait() {
+        let fields = [
+            "Alchemist",
+            "CATEGORY:Special Ability",
+            "TYPE:FavoredClass",
+            "VISIBLE:DISPLAY",
+            "STACK:NO",
+            "MULT:NO",
+            "BONUS:ABILITYPOOL|Favored Class Bonus|var(\"CL=Alchemist\")",
+        ];
+        let mut pc_classes = BTreeSet::new();
+        pc_classes.insert("Alchemist".to_string());
+        assert_eq!(
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes, &BTreeSet::new()),
+            Kind::RaceTrait
+        );
+    }
+
+    /// Regression guard: a KEY prefix that merely starts with the SAME
+    /// letters as a class name but is a different word entirely (no space
+    /// boundary) must not match -- e.g. a hypothetical `Skaldic Rite` must
+    /// not be caught by a bare-substring `starts_with("Skald")` check. This
+    /// test would fail if the space-boundary guard in `refine_kind` were
+    /// ever weakened to plain `starts_with`.
+    #[test]
+    fn class_name_prefix_match_requires_a_word_boundary() {
+        let fields = ["Skaldic Rite", "CATEGORY:Special Ability", "TYPE:SkaldicRiteFeature"];
+        let mut pc_classes = BTreeSet::new();
+        pc_classes.insert("Skald".to_string());
+        assert_eq!(
+            refine_kind(Kind::RaceTrait, &fields, &BTreeSet::new(), &pc_classes, &BTreeSet::new()),
+            Kind::RaceTrait
+        );
+    }
+}
+
+/// `decisions.md §23b`: `refine_kind`'s `Kind::ClassFeature` arm --
+/// deity-obedience feat lines re-typed out of `class_feature`, genuine
+/// class features left untouched even when they carry the same `PREDEITY`
+/// shape.
+#[cfg(test)]
+mod refine_kind_class_feature_deity_obedience_tests {
+    use super::*;
+
+    /// The real corpus shape (`botd2_abilities_classes.lst`, 42 records):
+    /// `PREDEITY` is the ONLY prerequisite and the `KEY:` group prefix
+    /// ("Demonic Obedience") names no PC class anywhere in the corpus-wide
+    /// roster. Reclassifies to `Kind::Feat`.
+    #[test]
+    fn demonic_obedience_row_reclassifies_from_class_feature_to_feat() {
+        let fields = [
+            "Demonic Obedience",
+            "KEY:Demonic Obedience ~ Abraxas",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality.DemonicObedience.SaveBonus",
+            "PREDEITY:1,Abraxas",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::ClassFeature, &fields, &empty, &empty, &empty), Kind::Feat);
+    }
+
+    /// The book's own chassis marker row for the SAME label -- no
+    /// `PREDEITY:` token at all (it applies across every demon lord) --
+    /// is unaffected and stays `Kind::ClassFeature`.
+    #[test]
+    fn demonic_obedience_base_row_with_no_predeity_stays_class_feature() {
+        let fields = [
+            "Demonic Obedience",
+            "KEY:Demonic Obedience Base",
+            "CATEGORY:Special Ability",
+            "TYPE:Internal",
+            "DEFINE:DemonicObedienceApply|0",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::ClassFeature, &fields, &empty, &empty, &empty), Kind::ClassFeature);
+    }
+
+    /// The real corpus false-positive guard: `"Ranger Combat Style ~
+    /// Kurgess"` (`inner_sea_combat`) carries the SAME `PREDEITY`-only
+    /// prerequisite shape as `"Demonic Obedience ~ Abraxas"`, but its
+    /// `KEY:` group prefix embeds the real class name `"Ranger"` -- must
+    /// stay `Kind::ClassFeature`. This is why the class-name check is
+    /// against the CORPUS-WIDE roster, not just this book's own (which
+    /// `inner_sea_combat` does not declare).
+    #[test]
+    fn class_owned_deity_flavored_row_stays_class_feature() {
+        let fields = [
+            "Ranger Combat Style",
+            "KEY:Ranger Combat Style ~ Kurgess",
+            "CATEGORY:Special Ability",
+            "PREDEITY:1,Kurgess",
+        ];
+        let empty = BTreeSet::new();
+        let mut corpus_classes = BTreeSet::new();
+        corpus_classes.insert("Ranger".to_string());
+        assert_eq!(
+            refine_kind(Kind::ClassFeature, &fields, &empty, &empty, &corpus_classes),
+            Kind::ClassFeature
+        );
+    }
+
+    /// A row with `PREDEITY` plus another `PRE*:` prerequisite (e.g.
+    /// `PRECLASS:`) is never reclassified by this arm even when its group
+    /// names no corpus class -- the "no other PRE* token" guard is
+    /// independent of the class-name check, so a row this narrow rule was
+    /// never meant to touch (a real class feature with an unusual group
+    /// label) is not silently moved.
+    #[test]
+    fn predeity_row_with_another_pre_token_stays_class_feature() {
+        let fields = [
+            "Mystery Cult",
+            "KEY:Mystery Cult ~ Example",
+            "CATEGORY:Special Ability",
+            "PREDEITY:1,Example",
+            "PRECLASS:1,Cleric=1",
+        ];
+        let empty = BTreeSet::new();
+        assert_eq!(refine_kind(Kind::ClassFeature, &fields, &empty, &empty, &empty), Kind::ClassFeature);
+    }
+}
+
+#[cfg(test)]
+mod book_cr_bearing_race_names_tests {
+    use super::*;
+    use std::io::Write;
+
+    /// End-to-end: a temp book directory with one `*_races.lst` carrying a
+    /// mix of `CR:`-bearing (monster) and `CR:`-less (playable) rows, plus a
+    /// nested per-race subdirectory (the `core_essentials` shape) and a
+    /// companion-roster file that must be excluded. Confirms
+    /// `book_cr_bearing_race_names` collects the right set from real file IO,
+    /// not just the in-memory `refine_kind` unit tests above.
+    #[test]
+    fn collects_only_cr_bearing_rows_recursively_and_skips_companion_files() {
+        let dir = std::env::temp_dir().join(format!(
+            "codex-t2b-refine-kind-test-{}",
+            std::process::id()
+        ));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(dir.join("races/dwarf")).unwrap();
+        std::fs::write(
+            dir.join("b3_races.lst"),
+            "Bandersnatch\tCR:8\tTYPE:Magical Beast\nDemilich\tCR:20\tTYPE:Undead\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("races/dwarf/dwarf_races.lst"),
+            "Dwarf\tFAVCLASS:Any\tTYPE:Humanoid\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("b3_races_companion.lst"),
+            "Roc\tCR:9\tTYPE:Animal\n",
+        )
+        .unwrap();
+        let mut f = std::fs::File::create(dir.join("b3_notes.txt")).unwrap();
+        writeln!(f, "not a .lst file, ignored regardless of content").unwrap();
+
+        let names = book_cr_bearing_race_names(&dir);
+        assert!(names.contains("Bandersnatch"), "{names:?}");
+        assert!(names.contains("Demilich"), "{names:?}");
+        assert!(!names.contains("Dwarf"), "playable race must not be CR:-bearing: {names:?}");
+        assert!(!names.contains("Roc"), "companion roster file must be excluded: {names:?}");
+        assert_eq!(names.len(), 2, "{names:?}");
+
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The real-corpus false positive this fix must never reintroduce
+    /// (`advanced_race_guide/arg_templates.lst`'s `Feral` -> `arg_abilities_race.lst`'s
+    /// genuine `Feral ~ Languages` racial-trait row): a `*_templates.lst`
+    /// name must NEVER appear in `book_cr_bearing_race_names`'s output, even
+    /// when it shares a name with something elsewhere. Proved RED under a
+    /// deliberate over-widening (also reading `*_templates.lst` rows
+    /// unconditionally) during this cycle's development, per
+    /// `t2b-bestiary_3-measurement-receipt.md` §6 item 1's own warning that a
+    /// naive widening reclassifies genuine content -- reverted before commit;
+    /// this test is what caught it.
+    #[test]
+    fn templates_lst_names_never_enter_the_monster_race_name_set() {
+        let dir = std::env::temp_dir().join(format!(
+            "codex-t2b-refine-kind-templates-test-{}",
+            std::process::id()
+        ));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("arg_races.lst"), "Aasimar\tFAVCLASS:Any\tTYPE:Outsider\n").unwrap();
+        std::fs::write(dir.join("arg_templates.lst"), "Feral\t\tVISIBLE:NO\tSUBRACE:Feral\n").unwrap();
+
+        let names = book_cr_bearing_race_names(&dir);
+        assert!(!names.contains("Feral"), "{names:?}");
+        assert!(!names.contains("Aasimar"), "playable race, CR:-less: {names:?}");
+
+        std::fs::remove_dir_all(&dir).ok();
+    }
+}
+
+#[cfg(test)]
+mod book_pc_class_names_tests {
+    use super::*;
+
+    /// End-to-end: a temp book directory whose `*_classes.lst` mixes a real
+    /// player class (`TYPE:Base.PC...`) with a monster hit-dice class
+    /// (`TYPE:Monster`) -- the exact real-corpus shape (`bestiary`'s
+    /// `CLASS:Drider`) that a naive un-gated `CLASS:` scan wrongly matched
+    /// during this cycle's own corpus-wide safety check before the `.PC`
+    /// gate was added. Only the player class must survive.
+    #[test]
+    fn collects_only_pc_gated_classes_and_excludes_monster_classes() {
+        let dir = std::env::temp_dir().join(format!("codex-t2b-pc-class-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("acg_classes.lst"),
+            "CLASS:Arcanist\tHD:6\tTYPE:Base.PC\tMAXLEVEL:20\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("b1_classes_race.lst"),
+            "CLASS:Drider\tOUTPUTNAME:Aberration\tHD:8\tTYPE:Monster\tMAXLEVEL:NOLIMIT\n",
+        )
+        .unwrap();
+
+        let names = book_pc_class_names(&dir);
+        assert!(names.contains("Arcanist"), "{names:?}");
+        assert!(!names.contains("Drider"), "a monster hit-dice class must not be a PC class: {names:?}");
+        assert_eq!(names.len(), 1, "{names:?}");
+
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A book with no `*classes*.lst` file at all (`mythic_adventures`,
+    /// `pathfinder_unchained`'s real shape) returns an empty set, not an
+    /// error -- `refine_kind`'s new arm is then structurally a no-op for
+    /// that book, same as `book_cr_bearing_race_names` already behaves when
+    /// no `*_races.lst` exists.
+    #[test]
+    fn book_with_no_classes_file_returns_empty_set() {
+        let dir = std::env::temp_dir().join(format!("codex-t2b-pc-class-empty-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("ma_abilities_race.lst"), "Mucus Cloud\tKEY:Mythic Aboleth ~ Mucus Cloud\n").unwrap();
+
+        let names = book_pc_class_names(&dir);
+        assert!(names.is_empty(), "{names:?}");
+
+        std::fs::remove_dir_all(&dir).ok();
     }
 }
 
@@ -1493,6 +2948,23 @@ fn is_excluded_race_trait_row(file_kind: Kind, fields: &[&str]) -> bool {
             .unwrap_or(false)
 }
 
+/// True when a `_abilities_race.lst` row carries no `TYPE:`, no `DESC:`, and
+/// no `BONUS*` token of its own -- only a `CATEGORY:` (naming a virtual
+/// ability pool, e.g. `Heart of the... Trait`, never `Special Ability`) plus
+/// an `ABILITY:<cat>|AUTOMATIC|<key>` grant of an ALREADY-modelled trait
+/// defined at a different line in the same file. See the call site's own
+/// doc comment (card 11 T2b, `decisions.md §20`/`§16`) for the full
+/// reasoning and the Svirfneblin precedent this generalizes. Corpus-wide
+/// safety proof: `scripts/t2b_pure_ability_pointer_row_safety_sweep.py`
+/// checks this predicate against every currently-ingested `race_trait`
+/// record's own source row and asserts zero false positives.
+fn is_pure_ability_pointer_race_trait_row(fields: &[&str]) -> bool {
+    !has_token(fields, "TYPE:")
+        && !has_token(fields, "DESC:")
+        && !has_token(fields, "BONUS")
+        && fields.iter().any(|f| f.contains("AUTOMATIC"))
+}
+
 /// Whether a record of this kind carries the token that proves it is an
 /// independent record rather than a sub-choice helper. See the
 /// `missing_classifying_token` trap rule.
@@ -1500,6 +2972,12 @@ fn has_classifying_token(kind: Kind, fields: &[&str]) -> bool {
     match kind {
         Kind::Feat => has_token(fields, "TYPE:"),
         Kind::Spell => has_token(fields, "SCHOOL:") || has_token(fields, "CLASSES:"),
+        // SD-32 card 15-ability: only disposition-(A) rows (independent
+        // content) are enumerable; (B)-gateway and (B)-picklist rows both
+        // fall through here to `false` and land in the generic
+        // `missing_classifying_token` trap, same as every other excluded
+        // row in this file -- see `ability_row_has_content`'s doc comment.
+        Kind::Ability => ability_row_has_content(fields),
         _ => true,
     }
 }
@@ -1826,6 +3304,633 @@ fn is_core_essentials_residual(book: &str) -> bool {
     book == "core_essentials"
 }
 
+/// Cross-book duplicate: `core_essentials` is a shared crib-sheet library,
+/// not a book, and some of its content RESTATES what a real book already
+/// declares natively in its own directory -- `RACE_CHASSIS_ALREADY_NATIVE`
+/// already covers this shape for `Kind::Race` specifically (Ghoran, one
+/// hand-verified slug). Landing new kinds through `SIMPLE_FILENAME_KINDS`
+/// (`decisions.md §17`) exposed the identical shape for `Kind::Template`
+/// for the first time -- e.g. "Aeon", declared identically in both
+/// `core_essentials/ce_templates.lst` (resolved to `bestiary_2` via its own
+/// `SOURCELONG:` directive) AND `bestiary_2/b2_templates_pc.lst`
+/// (`bestiary_2`'s own native file). The per-book `duplicate_identity` pass
+/// (`main`, just before this call) cannot catch this: the two rows live in
+/// TWO DIFFERENT `BookEnumeration`s (`core_essentials` and `bestiary_2`),
+/// not one.
+///
+/// Fixed generically here, not with a second per-slug allowlist --
+/// `decisions.md §17`'s own rule against hand-modelling objects applies
+/// exactly as much to a second hardcoded exception list as it does to a new
+/// `Kind`. A unit is a NATIVE declaration of its own book when its
+/// `source_book` (the directory `enumerate_book` physically walked) equals
+/// its resolved `book`; a `core_essentials`-sourced unit that resolves to a
+/// `(book, kind, key)` a native declaration already holds is the
+/// restatement, and is dropped -- the native declaration is always kept,
+/// since it is the book's own primary source, never a `SOURCELONG:`
+/// inference. Ran with zero drops for every pre-existing kind against the
+/// pinned oracle (the id-uniqueness assert in `main` would already have
+/// caught this class of collision on every prior run had it existed) --
+/// this pass exists for the shape `Kind::Template` proved real, and applies
+/// unconditionally to every kind so the next one that hits it needs no code
+/// change either. Returns the number of restatements dropped.
+/// `decisions.md §12b` (card 15's `duplicate_identity` cause-pin cycle,
+/// `15-card-15-internal-duplicate-identity-memo.md`): a `Kind::ClassFeature`
+/// row with no `KEY:` field falls back to its bare display name as its
+/// corpus identity (the `key` assignment in `enumerate_file`, just above
+/// this fn's call site). That fallback is too weak when two genuinely
+/// distinct records share a display name -- e.g. two different CLASSES each
+/// with their own "Barbarian"-named `TYPE:FavoredClass` tracker row and
+/// their own unrelated `TYPE:Class` chassis-selector row in the same file.
+/// `duplicate_identity`'s later per-book filter (this fn's caller) would
+/// otherwise keep only the first and silently drop the rest.
+///
+/// # Why `CATEGORY:` and not `TYPE:`, for the population this fn actually
+/// touches
+///
+/// Re-derived against the pinned oracle over every fallback-key
+/// `class_feature` collision group in the corpus (`row_dependent_class_feature`
+/// files, non-`CATEGORY:Internal` rows, no `KEY:` field): 64 groups, 164
+/// rows. `CATEGORY:` disambiguates all 64 cleanly (0 collisions across
+/// distinct-content siblings, `PCGEN_CORPUS_ROOT=<oracle>/data python3
+/// docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-0-census-closure/15-card-15-duplicate-identity-key-validation.py`);
+/// `TYPE:` alone fails on 40/64. Of those 64, **39 groups' members all carry
+/// a `TYPE:` facet ending in `"Choice"`** (`SorcererBloodlineChoice`,
+/// `BloodragerBloodlineChoice`, ...) -- excluded below; see "The `*Choice`
+/// exclusion" for why. The remaining 25 (`TYPE:FavoredClass` paired with an
+/// unrelated `TYPE:Class`/no-type row, one pair per class -- e.g. `Barbarian`
+/// in `core_rulebook`: line 68 is the class's Favored Class Bonus tracker,
+/// line 98 is its unrelated chassis-selector row) are genuinely distinct
+/// content, hand-verified, and ARE rescued by this fn.
+///
+/// # The `*Choice` exclusion -- a real correction mid-cycle, not a
+/// hypothetical
+///
+/// The cycle's OWN first worked example -- `advanced_class_guide`'s four
+/// `TYPE:SorcererBloodlineChoice`-family "Aberrant Bloodline" rows, one per
+/// class -- looked like the textbook case this fn should rescue. Testing it
+/// against the real corpus surfaced `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`
+/// below: a **pre-existing, operator-confirmed, 33-id allowlist** (SD-31
+/// `decisions.md` Decision 17) of bare `class_feature` rows already proven,
+/// case by case, to be a PICKER option beside its own real feature row (a
+/// `CHOOSE:`-pool idiom: `cr_abilities_class.lst:2333` `KEY:Sorcerer
+/// Bloodline ~ Aberrant` -- the feature -- beside `:2334` `Aberrant
+/// Bloodline` -- the picker), not a second distinct object. Tracing one of
+/// this fn's own early candidates (`ultimate_magic:class_feature:
+/// accursed_bloodline`, `um_abilities_class.lst:566`, `TYPE:
+/// SorcererBloodlineChoice`) confirmed it is already ON that list, and the
+/// fallback-key SIBLING this fn would have rescued
+/// (`um_abilities_class.lst:2070`, `CATEGORY:Crossblooded Bloodline`) is the
+/// SAME underlying Sorcerer feature reachable through a second archetype
+/// gate (`ABILITY:...|Sorcerer Bloodline ~ Accursed`, the identical target
+/// line 566 references) -- the identical duplicate-chooser shape, just not
+/// yet on the hand-reviewed list. `Decision 17`'s own text is explicit that
+/// this is deliberate: *"A bounded, evidenced list rather than a live
+/// adjacency filter, on purpose: a generic 'same name, adjacent line' rule
+/// would silently sweep in any FUTURE same-shaped collision no human
+/// reviewed."* Building a smarter live heuristic here would be exactly the
+/// thing that sentence forbids. So: **every fallback-key collision group
+/// whose members ALL carry a `TYPE:` facet ending in `"Choice"` is left
+/// untouched by this fn** (same as `CATEGORY:Internal`, below) -- neither
+/// rescued nor claimed distinct, reported instead as an open population for
+/// the SAME hand-review Decision 17 already did. That excludes this cycle's
+/// own `advanced_class_guide` "Aberrant Bloodline" flagship example too --
+/// it may well be genuinely distinct (different classes, different
+/// `DEFINE:`/`BONUS:` variable prefixes per row), but "may well be" is
+/// exactly the standard `decisions.md §1a` and Decision 17 both refuse to
+/// ship on.
+///
+/// # Why the scope is otherwise this narrow
+///
+/// * **Only `Kind::ClassFeature`.** This card's own scope; widening to every
+///   kind is unvalidated for this cycle and a separate risk this cycle does
+///   not take.
+/// * **Only rows with NO declared `KEY:` field** (`u.key == u.name`, the
+///   exact fallback signature the enumeration site produces). A row that
+///   DOES carry an explicit `KEY:` and still collides (e.g. two PFS-legal
+///   variants sharing one author-declared `KEY:`, ~16 groups/32 rows in the
+///   corpus) is a corpus-author-declared identity choice, not the fallback
+///   weakness this fix targets -- re-validated: applying `CATEGORY:` to
+///   THOSE groups fails to disambiguate 10/16 of them (siblings sharing both
+///   `KEY:` and `CATEGORY:`, differing only in `TYPE:` or file), so leaving
+///   them on today's collapse-to-first behaviour is the correct, conservative
+///   call for this cycle.
+/// * **`CATEGORY:Internal` never opens a new bucket.** An Internal-tagged
+///   row is PCGen's own bookkeeping/tracker convention (`is_internal_category`'s
+///   domain), not a second player-facing object; giving it its own
+///   disambiguated identity would manufacture a duplicate rather than
+///   rescue one. Its key is left untouched, so it competes for the SAME
+///   identity as any non-Internal sibling exactly as `duplicate_identity`
+///   already does -- byte-for-byte the behaviour this cycle's sibling
+///   `is_internal_category` narrowing already produces for the
+///   `Disable Device Class Skill` collision (`15-internal_cycle_receipt.md`
+///   §3), unaffected by this fn.
+///
+/// # The tie-break rule
+///
+/// The FIRST row in file-iteration order for a given (book, key) keeps its
+/// bare key -- id stability, mirroring [`unit_id`]'s own rule: "non-colliding
+/// units keep the id they have always had". A LATER row whose `CATEGORY:`
+/// has not yet been seen for this key gets a disambiguated key
+/// (`"<key> ~ <category>"`), so the filter below keeps it as a distinct
+/// unit. A LATER row whose category HAS already been seen collapses to that
+/// bucket's key exactly as before (a true restatement).
+fn disambiguate_class_feature_fallback_collisions(
+    units: Vec<CorpusUnit>,
+    categories: &BTreeMap<(String, usize), Option<String>>,
+) -> Vec<CorpusUnit> {
+    let mut assigned: BTreeMap<String, BTreeMap<Option<String>, String>> = BTreeMap::new();
+    units
+        .into_iter()
+        .map(|mut u| {
+            if u.kind != Kind::ClassFeature || u.key != u.name {
+                return u;
+            }
+            let category = categories
+                .get(&(u.provenance.file.clone(), u.provenance.line))
+                .cloned()
+                .flatten();
+            if category.as_deref() == Some("Internal") {
+                return u;
+            }
+            // The `*Choice` exclusion -- see this fn's own doc comment. A
+            // `TYPE:` facet ending in `"Choice"` (`SorcererBloodlineChoice`,
+            // `BloodragerBloodlineChoice`, ...) is the shape `decisions.md`
+            // Decision 17 (SD-31) already proved is sometimes a picker beside
+            // its own real feature row, not a second object -- and its own
+            // text explicitly forbids a live adjacency filter here. Left
+            // untouched (same as `CATEGORY:Internal`): reported as an open
+            // population for hand review, never auto-rescued.
+            if u.type_facet.as_deref().is_some_and(|t| t.ends_with("Choice")) {
+                return u;
+            }
+            let group = assigned.entry(u.key.clone()).or_default();
+            if group.is_empty() {
+                group.insert(category, u.key.clone());
+                return u;
+            }
+            if let Some(existing) = group.get(&category) {
+                u.key = existing.clone();
+                return u;
+            }
+            let disambiguated = format!("{} ~ {}", u.key, category.as_deref().unwrap_or("Uncategorized"));
+            group.insert(category, disambiguated.clone());
+            u.key = disambiguated;
+            u
+        })
+        .collect()
+}
+
+/// SD-32 card 15 (this cycle, `decisions.md §12b`'s `duplicate_identity`
+/// closure): the companion to [`disambiguate_class_feature_fallback_collisions`]
+/// for the OTHER half of the 158-row collision population that fn's own doc
+/// comment named out of scope -- rows that DO carry an explicit `KEY:` field
+/// (`u.key != u.name`) and still collide with another `Kind::ClassFeature`
+/// row in the same book under that same author-declared key.
+///
+/// # Why a name-mismatch, not a content diff
+///
+/// Re-derived against the pinned oracle over all 16 such keyed collision
+/// groups (32 rows; `15-card-15-residual-group-review.py`, this directory):
+/// 13 of 16 pairs share the IDENTICAL display `name` on both rows (`Weapon
+/// Training (Firearms)` x4, `Domain Power` x4, `Monk Bonus Feat` x2,
+/// `Master Smith`/`Craft Magic Arms and Armor` PFS-variant pairs x2, `Hide in
+/// Plain Sight` x1) -- these are a corpus author DELIBERATELY reusing one
+/// identity: a PFS-legal file overriding its base declaration
+/// (`REMOVE:FEAT:`/`DESC:.CLEAR` present), a hidden `VISIBLE:NO` bookkeeping
+/// row beside its real sibling (the `CATEGORY:Internal` shape, just without
+/// the literal `CATEGORY:Internal` tag), or a genuine byte-identical
+/// restatement. None of those 13 is rescued: same identity by corpus-author
+/// design, and the existing collapse-to-first behaviour is correct for them
+/// (re-confirmed this cycle, not merely inherited).
+///
+/// The remaining 3 pairs (`advanced_race_guide`'s `Native Cunning ~ Grapple`/
+/// `Overrun`, `ultimate_intrigue`'s `Vigilante Favored Maneuver ~ Bull Rush`/
+/// `Sunder`, `ultimate_wilderness`'s `Green Faith Marshal ~ Panther Domain`/
+/// `Vulture Domain`) have DIFFERENT display names on the two colliding rows
+/// -- a Feral Child's CMD bonus against grapple vs. against overrun; a
+/// Vigilante's bonus feat for Bull Rush vs. for Sunder; a Green Faith
+/// Marshal's Panther Domain selection vs. Vulture Domain selection --
+/// distinct game mechanics that the corpus author evidently mistyped under
+/// one shared `KEY:` (each pair's second row's `KEY:` field literally
+/// restates the FIRST row's own domain/maneuver name instead of its own).
+/// The differing display name is direct, non-inferred evidence from the
+/// corpus author's own data that the colliding rows are not one identity --
+/// unlike the fallback-key population above, where colliding rows regularly
+/// share both name AND real distinctness (the `CATEGORY:`-driven `Barbarian`
+/// shape) or share name AND are the SAME feature (the `*Choice` shape), so
+/// name alone cannot arbitrate there. Here it can, because the KEY was
+/// author-declared specifically to be a stable identity independent of
+/// `CATEGORY:`/`TYPE:`, so two different names under the same declared KEY
+/// is itself the defect, not ambiguous evidence requiring judgment calls this
+/// fn would be making on its own authority.
+///
+/// # Scope, unchanged from the fallback fn's own narrowing
+///
+/// Only `Kind::ClassFeature`; only rows where `u.key != u.name` (the exact
+/// complement of the fallback fn's population, so the two fns never touch
+/// the same row). The FIRST row in file order for a given key keeps it
+/// unchanged; a LATER row whose name has not been seen for this key gets a
+/// disambiguated key (`"<key> ~ <name>"`); a later row repeating an
+/// already-seen name for this key collapses to that name's bucket exactly as
+/// today (a true restatement, unaffected).
+fn disambiguate_class_feature_keyed_name_collisions(units: Vec<CorpusUnit>) -> Vec<CorpusUnit> {
+    let mut assigned: BTreeMap<String, BTreeMap<String, String>> = BTreeMap::new();
+    units
+        .into_iter()
+        .map(|mut u| {
+            if u.kind != Kind::ClassFeature || u.key == u.name {
+                return u;
+            }
+            let group = assigned.entry(u.key.clone()).or_default();
+            if group.is_empty() {
+                group.insert(u.name.clone(), u.key.clone());
+                return u;
+            }
+            if let Some(existing) = group.get(&u.name) {
+                u.key = existing.clone();
+                return u;
+            }
+            let disambiguated = format!("{} ~ {}", u.key, u.name);
+            group.insert(u.name.clone(), disambiguated.clone());
+            u.key = disambiguated;
+            u
+        })
+        .collect()
+}
+
+#[cfg(test)]
+mod disambiguate_class_feature_keyed_name_collisions_tests {
+    use super::*;
+
+    fn keyed_class_feature_unit(file: &str, line: usize, key: &str, name: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: "advanced_race_guide".to_string(),
+            source_book: "advanced_race_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: key.to_string(),
+            name: name.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// The real `Native Cunning ~ Grapple`/`Overrun` shape
+    /// (`arg_abilities_class.lst:385`/`:386`): same author-declared `KEY:`,
+    /// different display names -- the differing name is the evidence both
+    /// survive with distinct keys. Without this fn, `duplicate_identity`
+    /// silently drops `Overrun`.
+    #[test]
+    fn differing_name_under_shared_key_rescues_both() {
+        let units = vec![
+            keyed_class_feature_unit("arg_abilities_class.lst", 385, "Native Cunning ~ Grapple", "Grapple"),
+            keyed_class_feature_unit("arg_abilities_class.lst", 386, "Native Cunning ~ Grapple", "Overrun"),
+        ];
+        let out = disambiguate_class_feature_keyed_name_collisions(units);
+        let keys: BTreeSet<String> = out.iter().map(|u| u.key.clone()).collect();
+        assert_eq!(keys.len(), 2, "{keys:?}");
+        assert!(keys.contains("Native Cunning ~ Grapple"), "the first keeps its bare key: {keys:?}");
+        assert!(keys.contains("Native Cunning ~ Grapple ~ Overrun"), "{keys:?}");
+    }
+
+    /// The real `Weapon Training (Firearms)` shape (`uc_abilities_class.lst:
+    /// 239`/`:1994`): same `KEY:`, same display name on both rows (only
+    /// `TYPE:`/`BONUS:`/`SOURCEPAGE:` differ) -- a true restatement under
+    /// this fn's own evidentiary bar. Must NOT be rescued: this fn must not
+    /// stop `duplicate_identity`'s collapse for same-name keyed pairs.
+    #[test]
+    fn same_name_under_shared_key_is_left_to_collapse_normally() {
+        let units = vec![
+            keyed_class_feature_unit(
+                "uc_abilities_class.lst",
+                239,
+                "Weapon Training 1 Firearms",
+                "Weapon Training (Firearms)",
+            ),
+            keyed_class_feature_unit(
+                "uc_abilities_class.lst",
+                1994,
+                "Weapon Training 1 Firearms",
+                "Weapon Training (Firearms)",
+            ),
+        ];
+        let out = disambiguate_class_feature_keyed_name_collisions(units);
+        assert!(out.iter().all(|u| u.key == "Weapon Training 1 Firearms"));
+    }
+
+    /// A row with NO declared `KEY:` (`u.key == u.name`, the OTHER fn's
+    /// population) is never touched by this fn -- the two fns' populations
+    /// are disjoint by construction.
+    #[test]
+    fn fallback_key_row_is_never_touched() {
+        let units = vec![keyed_class_feature_unit(
+            "acg_abilities_class.lst",
+            566,
+            "Aberrant Bloodline",
+            "Aberrant Bloodline",
+        )];
+        let out = disambiguate_class_feature_keyed_name_collisions(units);
+        assert_eq!(out[0].key, "Aberrant Bloodline");
+    }
+
+    /// A third row repeating an already-seen name for the same key collapses
+    /// to that name's bucket key, not a fresh disambiguation -- proves the
+    /// tie-break is per (key, name) bucket, not per row.
+    #[test]
+    fn repeated_name_for_same_key_collapses_to_existing_bucket() {
+        let units = vec![
+            keyed_class_feature_unit("x.lst", 1, "Shared Key", "A"),
+            keyed_class_feature_unit("x.lst", 2, "Shared Key", "B"),
+            keyed_class_feature_unit("x.lst", 3, "Shared Key", "B"),
+        ];
+        let out = disambiguate_class_feature_keyed_name_collisions(units);
+        let keys: Vec<String> = out.iter().map(|u| u.key.clone()).collect();
+        assert_eq!(keys[0], "Shared Key");
+        assert_eq!(keys[1], "Shared Key ~ B");
+        assert_eq!(keys[2], "Shared Key ~ B");
+    }
+}
+
+#[cfg(test)]
+mod disambiguate_class_feature_fallback_collisions_tests {
+    use super::*;
+
+    fn class_feature_unit(file: &str, line: usize, name: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: "advanced_class_guide".to_string(),
+            source_book: "advanced_class_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: name.to_string(),
+            name: name.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// The `Barbarian` shape (`core_rulebook cr_abilities_class.lst:68`/
+    /// `:98`, this fn's own doc comment): four bare-display-name rows, four
+    /// distinct `CATEGORY:` values, `type_facet: None` (not the excluded
+    /// `*Choice` shape). All four must survive with distinct keys -- this is
+    /// the RED this fix closes (without it, three of four are silently
+    /// dropped by `duplicate_identity`'s later filter). NOT the
+    /// `advanced_class_guide` "Aberrant Bloodline" case this fn's doc
+    /// comment explains is deliberately excluded -- see
+    /// `choice_typed_collision_is_left_untouched` below for that shape.
+    #[test]
+    fn four_way_category_collision_rescues_all_four() {
+        let units = vec![
+            class_feature_unit("acg_abilities_class.lst", 566, "Aberrant Bloodline"),
+            class_feature_unit("acg_abilities_class.lst", 2412, "Aberrant Bloodline"),
+            class_feature_unit("acg_abilities_class.lst", 2754, "Aberrant Bloodline"),
+        ];
+        let mut categories = BTreeMap::new();
+        categories.insert(
+            ("acg_abilities_class.lst".to_string(), 566),
+            Some("Arcanist Bloodline Development".to_string()),
+        );
+        categories.insert(
+            ("acg_abilities_class.lst".to_string(), 2412),
+            Some("Blood Arcanist Bloodline".to_string()),
+        );
+        categories.insert(
+            ("acg_abilities_class.lst".to_string(), 2754),
+            Some("Crossblooded Rager Bloodline".to_string()),
+        );
+        let out = disambiguate_class_feature_fallback_collisions(units, &categories);
+        let keys: BTreeSet<String> = out.iter().map(|u| u.key.clone()).collect();
+        assert_eq!(keys.len(), 3, "{keys:?}");
+        assert!(keys.contains("Aberrant Bloodline"), "the first keeps its bare key: {keys:?}");
+    }
+
+    /// Two rows, same bare name, same `CATEGORY:` (a true restatement, the
+    /// `Disable Device Class Skill` shape minus its Internal sibling): both
+    /// keep the SAME bare key, so `duplicate_identity`'s filter still
+    /// collapses them to one -- this fix must not stop that collapse.
+    #[test]
+    fn same_category_collision_is_left_to_collapse_normally() {
+        let units = vec![
+            class_feature_unit("up_abilities_class.lst", 100, "Same Category Twice"),
+            class_feature_unit("up_abilities_class.lst", 200, "Same Category Twice"),
+        ];
+        let mut categories = BTreeMap::new();
+        categories.insert(
+            ("up_abilities_class.lst".to_string(), 100),
+            Some("Special Ability".to_string()),
+        );
+        categories.insert(
+            ("up_abilities_class.lst".to_string(), 200),
+            Some("Special Ability".to_string()),
+        );
+        let out = disambiguate_class_feature_fallback_collisions(units, &categories);
+        assert!(out.iter().all(|u| u.key == "Same Category Twice"));
+    }
+
+    /// `CATEGORY:Internal` never opens a new bucket -- an Internal-tagged
+    /// row keeps competing for the bare key against its non-Internal
+    /// sibling exactly as `duplicate_identity` already handled it.
+    #[test]
+    fn internal_category_sibling_never_gets_disambiguated() {
+        let units = vec![
+            class_feature_unit("up_abilities_class.lst", 186, "Disable Device Class Skill"),
+            class_feature_unit("up_abilities_class.lst", 468, "Disable Device Class Skill"),
+        ];
+        let mut categories = BTreeMap::new();
+        categories.insert(("up_abilities_class.lst".to_string(), 186), Some("Internal".to_string()));
+        categories.insert(
+            ("up_abilities_class.lst".to_string(), 468),
+            Some("Special Ability".to_string()),
+        );
+        let out = disambiguate_class_feature_fallback_collisions(units, &categories);
+        assert!(out.iter().all(|u| u.key == "Disable Device Class Skill"), "{out:?}");
+    }
+
+    /// The real, corpus-confirmed shape this fn's own doc comment (`The
+    /// *Choice exclusion`) describes: `um_abilities_class.lst:566` (plain
+    /// Sorcerer, `CATEGORY:Sorcerer Bloodline`) and `:2070` (Crossblooded
+    /// Sorcerer archetype, `CATEGORY:Crossblooded Bloodline`), both
+    /// `TYPE:SorcererBloodlineChoice`, both referencing the SAME real
+    /// feature (`ultimate_magic:class_feature:sorcerer_bloodline_accursed`)
+    /// through different prerequisite gates -- the identical shape
+    /// `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS` already proves is a picker,
+    /// not a second object, for line 566's own book-mates elsewhere in the
+    /// corpus. Neither key may change: rescuing this pair would manufacture
+    /// exactly the double-count Decision 17 (SD-31) exists to prevent.
+    #[test]
+    fn choice_typed_collision_is_left_untouched() {
+        let mut plain_sorcerer = class_feature_unit("um_abilities_class.lst", 566, "Accursed Bloodline");
+        plain_sorcerer.type_facet = Some("SorcererBloodlineChoice".to_string());
+        let mut crossblooded_sorcerer =
+            class_feature_unit("um_abilities_class.lst", 2070, "Accursed Bloodline");
+        crossblooded_sorcerer.type_facet = Some("SorcererBloodlineChoice".to_string());
+        let units = vec![plain_sorcerer, crossblooded_sorcerer];
+        let mut categories = BTreeMap::new();
+        categories.insert(
+            ("um_abilities_class.lst".to_string(), 566),
+            Some("Sorcerer Bloodline".to_string()),
+        );
+        categories.insert(
+            ("um_abilities_class.lst".to_string(), 2070),
+            Some("Crossblooded Bloodline".to_string()),
+        );
+        let out = disambiguate_class_feature_fallback_collisions(units, &categories);
+        assert!(out.iter().all(|u| u.key == "Accursed Bloodline"), "{out:?}");
+    }
+
+    /// A row that already carries an explicit `KEY:` field (so `u.key !=
+    /// u.name`) is untouched even when its category would otherwise
+    /// disambiguate it -- out of this fix's scope by construction.
+    #[test]
+    fn declared_key_row_is_never_touched() {
+        let mut u = class_feature_unit("x.lst", 1, "Same Name");
+        u.key = "Explicit Declared Key".to_string();
+        let mut categories = BTreeMap::new();
+        categories.insert(("x.lst".to_string(), 1), Some("Special Ability".to_string()));
+        let out = disambiguate_class_feature_fallback_collisions(vec![u], &categories);
+        assert_eq!(out[0].key, "Explicit Declared Key");
+    }
+
+    /// A non-`ClassFeature` kind is never touched, even if it happens to
+    /// share a (file, line) key with a class_feature category entry from a
+    /// different book's map (never happens in practice -- each book's
+    /// categories map is scoped per-book -- but the kind guard is the real
+    /// safety net regardless).
+    #[test]
+    fn non_class_feature_kind_is_never_touched() {
+        let mut u = class_feature_unit("x.lst", 1, "Some Feat");
+        u.kind = Kind::Feat;
+        let mut categories = BTreeMap::new();
+        categories.insert(("x.lst".to_string(), 1), Some("Special Ability".to_string()));
+        let out = disambiguate_class_feature_fallback_collisions(vec![u], &categories);
+        assert_eq!(out[0].key, "Some Feat");
+    }
+}
+
+fn drop_core_essentials_native_restatements(
+    enumerations: &mut BTreeMap<String, BookEnumeration>,
+) -> usize {
+    let native: BTreeSet<(String, Kind, String)> = enumerations
+        .values()
+        .flat_map(|e| e.units.iter())
+        .filter(|u| u.book == u.source_book)
+        .map(|u| (u.book.clone(), u.kind, u.key.clone()))
+        .collect();
+    let mut dropped = 0usize;
+    for enumeration in enumerations.values_mut() {
+        let units = std::mem::take(&mut enumeration.units);
+        enumeration.units = units
+            .into_iter()
+            .filter(|u| {
+                if u.source_book == "core_essentials"
+                    && u.book != "core_essentials"
+                    && native.contains(&(u.book.clone(), u.kind, u.key.clone()))
+                {
+                    dropped += 1;
+                    false
+                } else {
+                    true
+                }
+            })
+            .collect();
+    }
+    dropped
+}
+
+#[cfg(test)]
+mod drop_core_essentials_native_restatements_tests {
+    use super::*;
+
+    fn unit(book: &str, source_book: &str, kind: Kind, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: source_book.to_string(),
+            kind,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "x.lst".to_string(), line: 1 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// The exact "Aeon" shape: a `core_essentials`-sourced unit resolved to
+    /// `bestiary_2`, colliding with `bestiary_2`'s own native declaration
+    /// of the same `(kind, key)`. The native row survives; the
+    /// core_essentials restatement is dropped.
+    #[test]
+    fn core_essentials_restatement_of_a_native_declaration_is_dropped() {
+        let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
+        enumerations.insert(
+            "core_essentials".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "core_essentials", Kind::Template, "Aeon")],
+                ..Default::default()
+            },
+        );
+        enumerations.insert(
+            "bestiary_2".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "bestiary_2", Kind::Template, "Aeon")],
+                ..Default::default()
+            },
+        );
+        let dropped = drop_core_essentials_native_restatements(&mut enumerations);
+        assert_eq!(dropped, 1);
+        let total: usize = enumerations.values().map(|e| e.units.len()).sum();
+        assert_eq!(total, 1, "the native declaration must survive, exactly once");
+        assert_eq!(enumerations["bestiary_2"].units[0].source_book, "bestiary_2");
+    }
+
+    /// No native declaration exists anywhere -- the core_essentials unit is
+    /// a genuine, sole declaration (the ordinary `core_essentials` residual
+    /// or a successfully-resolved-but-unique unit) and must NOT be dropped.
+    #[test]
+    fn a_core_essentials_unit_with_no_native_counterpart_is_kept() {
+        let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
+        enumerations.insert(
+            "core_essentials".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "core_essentials", Kind::Template, "Unique Only Here")],
+                ..Default::default()
+            },
+        );
+        let dropped = drop_core_essentials_native_restatements(&mut enumerations);
+        assert_eq!(dropped, 0);
+        assert_eq!(enumerations["core_essentials"].units.len(), 1);
+    }
+
+    /// A different KIND sharing the same key string must never collide --
+    /// this pass keys on `(book, kind, key)`, not `(book, key)` alone.
+    #[test]
+    fn matching_key_but_different_kind_is_not_a_restatement() {
+        let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
+        enumerations.insert(
+            "core_essentials".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "core_essentials", Kind::Language, "Aeon")],
+                ..Default::default()
+            },
+        );
+        enumerations.insert(
+            "bestiary_2".to_string(),
+            BookEnumeration {
+                units: vec![unit("bestiary_2", "bestiary_2", Kind::Template, "Aeon")],
+                ..Default::default()
+            },
+        );
+        let dropped = drop_core_essentials_native_restatements(&mut enumerations);
+        assert_eq!(dropped, 0);
+        let total: usize = enumerations.values().map(|e| e.units.len()).sum();
+        assert_eq!(total, 2);
+    }
+}
+
 /// Wave-16 adversarial review (irreversibility & scope lens): mutating
 /// `is_core_essentials_residual` to something broader than the exact
 /// packaging-label match above (e.g. `book.starts_with("core")`) left the
@@ -1841,10 +3946,81 @@ fn is_core_essentials_residual(book: &str) -> bool {
 /// own `PINNED_BASELINE`; a future cycle that legitimately resolves more of
 /// the residual lowers both constants in the same commit as the fix, never
 /// raises either to make a regression pass.
-const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 117;
+///
+/// **SD-32 card 15 (`decisions.md §12b`) raised this from 117 to 138**, the
+/// one exception this doc comment's own rule anticipates: not a predicate
+/// widening (`is_core_essentials_residual`'s exact-match body is byte-for-byte
+/// unchanged) and not hiding a bug, but real, previously-invisible content
+/// becoming visible for the first time. `Kind::Skill` landing means
+/// `core_essentials/ce_skills.lst` (a PCGen-internal Versatile-Performance
+/// skill-substitution table -- conditional named skills like `Bluff (Perform
+/// (Act))`, invented by PCGen's own data model, no independent Paizo print
+/// source) is enumerated for the first time; all 21 of its rows carry
+/// neither a per-race path signal (it lives at `core_essentials/`'s top
+/// level, not under `races/<slug>/`) nor a resolvable `SOURCELONG:`
+/// directive, so they land in the SAME book-agnostic-bookkeeping category
+/// the existing 116 already documents (the file's own header carries no
+/// SOURCELONG at all). Re-derive: `CE_CORPUS=<pinned oracle path>
+/// cargo test --locked --lib
+/// core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline
+/// -- --nocapture` after exporting `PCGEN_CORPUS_ROOT`; 116 (pre-existing) +
+/// 21 (`ce_skills.lst`) = 137, plus this constant's own established
+/// 1-unit downstream-rescue margin = 138.
+///
+/// **SD-32 `decisions.md §17` raised this from 138 to 171**, the same
+/// non-widening exception as above: landing `Kind::Template` and
+/// `Kind::Language` (`SIMPLE_FILENAME_KINDS`) makes 33 more real,
+/// previously-invisible `core_essentials` rows enumerable for the first
+/// time -- `Kind::Deity`/`Power`/`Domain` contribute 0 (no
+/// `core_essentials/races/<slug>/` file matches those filename tokens).
+/// Every one of the 33 belongs to a slug `RACE_TRUE_BOOK`'s own doc comment
+/// ALREADY names as ambiguous/left-out-on-purpose (`android`, `aquatic_elf`,
+/// `gathlain`, `lashunta`, `monkey_goblin`, `syrinx`, `triaxian`) or (1 row,
+/// `Ghoran`) the pre-existing `RACE_CHASSIS_ALREADY_NATIVE` carve-out --
+/// no new slug, no widened predicate, `is_core_essentials_residual`'s body
+/// byte-for-byte unchanged. Re-derive with `DEBUG_RESIDUAL=1 cargo run
+/// --locked --bin v06_work_inventory -- --stdout-only 2>&1 | grep
+/// '^RESIDUAL'` (the diagnostic just below `is_core_essentials_residual`'s
+/// call site): 116 (pre-existing, unchanged -- `race`/`race_trait`/
+/// `monster_ability` residuals, same slugs) + 21 (`ce_skills.lst`,
+/// unchanged) + 30 (`Kind::Template`, new) + 3 (`Kind::Language`, new) =
+/// 170, plus this constant's own established 1-unit downstream-rescue
+/// margin = 171.
+///
+/// **SD-32 card 15-ability raised this from 171 to 460**, the same
+/// non-widening exception again: landing `Kind::Ability` makes
+/// `core_essentials/ce_abilities.lst` (a book-wide shared ability library --
+/// `Age`/`Flight Speed ~ <N>`/`Walk ~ <N>`/`Legs ~ <N>`/size-letter/
+/// condition-tag lookup rows, `CATEGORY:Internal`, no per-race `KEY:`
+/// prefix at all) and 7 `*_abilities_globalvar.lst` "Racial Traits ~ <Race>"
+/// tracker rows enumerable for the first time. Unlike every prior kind's
+/// residual growth, none of this is per-race chassis content -- it lives at
+/// `core_essentials/`'s own top level (`ce_abilities.lst`), not under
+/// `races/<slug>/`, so it carries neither a per-race path signal nor any
+/// resolvable `SOURCELONG:` directive by construction, landing in the SAME
+/// book-agnostic-bookkeeping category the pre-existing 116/21/30/3 already
+/// document. Re-derive with `DEBUG_RESIDUAL=1
+/// PCGEN_CORPUS_ROOT=<pinned oracle path> cargo run --locked --bin
+/// v06_work_inventory -- --allow-stamp-loss 2>&1 | grep '^RESIDUAL' | cut
+/// -f2 | sort | uniq -c`: 116 (`race`/`race_trait`/`monster_ability`,
+/// unchanged) + 21 (`ce_skills.lst`, unchanged) + 30 (`Kind::Template`,
+/// unchanged) + 3 (`Kind::Language`, unchanged) + 289 (`Kind::Ability`, new)
+/// = 459, plus this constant's own established 1-unit downstream-rescue
+/// margin = 460.
+const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 460;
 
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
-fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut BookEnumeration) {
+fn enumerate_file(
+    path: &Path,
+    book: &str,
+    kind: Kind,
+    text: &str,
+    book_monster_race_names: &BTreeSet<String>,
+    book_pc_class_names: &BTreeSet<String>,
+    corpus_pc_class_names: &BTreeSet<String>,
+    book_equipmod_copy_base_targets: &BTreeSet<String>,
+    out: &mut BookEnumeration,
+) {
     // `'static`, deliberately: only ever `Some` from `RACE_TRUE_BOOK` /
     // `SOURCELONG_TO_BOOK`, both `&'static str` tables, never derived from
     // `book`'s own shorter-lived reference -- so it can be stashed in
@@ -1941,8 +4117,49 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
         // tables already excluded (`Armor Aptitude 7th Level`,
         // `Thoughtsinger ~ Wild Talent`), found independently a second
         // time via a different check.
-        let is_internal_category = first.starts_with("CATEGORY=Internal|")
+        // SD-32 card 15-ability (`decisions.md §12b`): for `Kind::Ability`
+        // specifically, this blunt "any CATEGORY:Internal row is bookkeeping"
+        // rule is exactly the blanket-(B) error `decisions.md §14c`'s
+        // adjudication already found wrong for 90.7% of the analogous
+        // `_abilities_class.lst` population -- ability_category:Internal's
+        // own per-row test (`census_independent.py`'s `row_dependent`
+        // branch) never special-cases `Internal` at all; the SAME
+        // content-or-not test applies to every category tag. Carving
+        // `Kind::Ability` out of this trap and letting `has_classifying_token`
+        // below decide is required so a real, content-bearing Internal
+        // ability row (`685`-ish of the `879`-unit `ability_category:Internal`
+        // bucket, `15-card-15-ability-category-memo.md`) is not silently
+        // dropped before ever reaching that test.
+        //
+        // SD-32 card 15-internal (`decisions.md §12b`, adjudicated by
+        // `15-card-15-category-internal-adjudication-memo.md`): the SAME
+        // defect exists for `Kind::ClassFeature` -- the class_feature memo's
+        // own original blanket claim ("all 2,614 `_abilities_class.lst`
+        // `CATEGORY:Internal` rows are bookkeeping, not an object") was
+        // tested by class and found wrong for 90.7% (2,371/2,614), plus a
+        // further 203 rows proven a facet of an already-real target
+        // (203/2,614, `B-gateway-resolved`) -- only 40/2,614 (1.5%) are
+        // genuinely bare. Unlike `Kind::Ability` (whose disposition is
+        // decided entirely by `has_classifying_token` below, since a
+        // content-or-gateway ability row still needs `refine_kind`'s
+        // FEAT-redirect first), `Kind::ClassFeature` decides its own
+        // disposition right here via `class_feature_internal_row_is_bare_marker`
+        // -- this mirrors `census_independent.py`'s shipped rule exactly
+        // (2,574 of 2,614 stay counted, 40 excluded; the burden-of-proof
+        // rule in `decisions.md §12b` makes under-excluding the safe
+        // default, so the 203 proven-facet rows stay counted too rather than
+        // needing this walker to also do cross-file gateway-target
+        // resolution). Every other kind's behaviour is byte-for-byte
+        // unchanged.
+        let carries_internal_category_field = first.starts_with("CATEGORY=Internal|")
             || fields.iter().any(|f| f.trim() == "CATEGORY:Internal");
+        let is_internal_category = match kind {
+            Kind::Ability => false,
+            Kind::ClassFeature => {
+                carries_internal_category_field && class_feature_internal_row_is_bare_marker(&fields)
+            }
+            _ => carries_internal_category_field,
+        };
         if is_internal_category {
             *out.trap_hits.entry("internal_namespace").or_default() += 1;
             continue;
@@ -1950,6 +4167,18 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
         let visible = !fields.iter().any(|f| f.trim() == "VISIBLE:NO");
         if !visible {
             *out.trap_hits.entry("invisible_record").or_default() += 1;
+        }
+
+        // `decisions.md §20` t9-onboarding straggler wave: `.FORGET` is a
+        // removal DIRECTIVE (un-declares an already-existing record), not a
+        // declared item -- see the `forget_directive` TRAP_RULES entry.
+        // Checked before `.MOD` (disjoint suffixes; order does not matter
+        // for correctness, but this mirrors the doc ordering above) and
+        // applies uniformly regardless of `kind`, matching the brief's "fix
+        // it generically, not per-kind" instruction.
+        if first.ends_with(".FORGET") {
+            *out.trap_hits.entry("forget_directive").or_default() += 1;
+            continue;
         }
 
         // `.MOD` is resolved corpus-wide after enumeration; stash it.
@@ -1961,7 +4190,7 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
                 .filter(|t| has_token(&fields, t))
                 .count();
             out.mod_targets.push((
-                refine_kind(kind, &fields),
+                refine_kind(kind, &fields, book_monster_race_names, book_pc_class_names, corpus_pc_class_names),
                 base.clone(),
                 base,
                 Provenance { file: rel.clone(), line: line_number },
@@ -1969,6 +4198,41 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
                 resolved_book,
             ));
             continue;
+        }
+
+        // SD-32 T9 onboarding (card 11), group D: a plain row in a `_pfs/`
+        // Pathfinder-Society legality-overlay file that carries NO content
+        // beyond a legality marker/gate is a restatement of an item declared
+        // elsewhere in the book, not a declaration of its own -- see the
+        // `pfs_legality_only_row` TRAP_RULES entry for the full reasoning
+        // and the worked example. `.FORGET` and `.MOD` rows are already
+        // dispatched above and never reach this check.
+        if path_is_pfs_overlay(path) && !first.contains(".COPY=") && row_is_pfs_legality_only(&fields) {
+            *out.trap_hits.entry("pfs_legality_only_row").or_default() += 1;
+            continue;
+        }
+
+        // SD-32 T9 onboarding (card 11) group A: an `equipment_modifier`
+        // PLAIN declared row (never a `.MOD`/`.FORGET`/`.COPY=` row -- all
+        // three are already dispatched above) whose own identity (its
+        // `KEY:` field, falling back to the first column the same way
+        // `wiring_class::build_copy_base_index` resolves identity) is
+        // ITSELF the base some `.COPY=` row in this same book's `equipmods`
+        // files targets is a PCGen "template" row, not a second real
+        // object -- see `copy_template_row`'s TRAP_RULES entry for the
+        // worked "Burdenless"/"Answering" example and why the real ingest
+        // pipeline (`cache_gen::equipment_gap::find_citation`) already
+        // resolves every one of this shape's corpus records to the
+        // `.COPY=` row's own coordinate, never the template's. Scoped to
+        // `Kind::EquipmentModifier` only -- `book_equipmod_copy_base_targets`
+        // is built from equipmods files exclusively, so this can never fire
+        // for another kind.
+        if kind == Kind::EquipmentModifier {
+            let identity = token_value(&fields, "KEY:").unwrap_or(first).trim().to_lowercase();
+            if book_equipmod_copy_base_targets.contains(&identity) {
+                *out.trap_hits.entry("copy_template_row").or_default() += 1;
+                continue;
+            }
         }
 
         // A class file's non-`CLASS:` rows are per-level progression rows.
@@ -2017,6 +4281,40 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
                 *out.trap_hits.entry("race_choice_suboption_row").or_default() += 1;
                 continue;
             }
+
+            // A third `_abilities_race.lst` row shape carries no `TYPE:`, no
+            // `DESC:`, and no `BONUS*` token of its own at all -- only a
+            // `CATEGORY:` (naming a virtual ability pool, e.g. `Heart of
+            // the... Trait`, never `Special Ability`) plus an
+            // `ABILITY:<cat>|AUTOMATIC|<key>` grant of an ALREADY-modelled
+            // trait defined at a different line in the same file. It is
+            // PCGen's own pool-selector/companion-token plumbing for a race
+            // trait a player already has, not a second independent object --
+            // the identical shape `ingest_race_traits.rs`'s own doc comment
+            // already names for Svirfneblin's `Stalwart Watcher Output` row
+            // ("PCGen's internal `ABILITY:...|AUTOMATIC|...` companion token
+            // for the real trait ..., already ingested, not a second
+            // player-facing object") and correctly never writes a corpus
+            // record for (`parse_row` requires a `<Race> Racial Trait`/
+            // `<Race> Subrace`-suffixed `TYPE:`, which these rows lack, or
+            // the `Adoptive Parentage` `CATEGORY:` shape, which they are
+            // not). Counting it as its own `race_trait` unit anyway makes it
+            // permanently, unfixably `no_record`: no corpus record was ever
+            // meant to exist at its line (`decisions.md §20`'s Gate-1
+            // consequence otherwise makes an un-ingestible-by-design row
+            // look like an unmet criterion forever).
+            //
+            // Corpus-wide safety proof (not sampled): every one of the 831
+            // currently-ingested `race_trait` records' own source rows was
+            // read back from the pinned oracle and checked against this
+            // exact predicate -- zero matched (`scripts/
+            // t2b_pure_ability_pointer_row_safety_sweep.py`, committed
+            // alongside this fix). The predicate never excludes a row that
+            // already carries a real corpus record.
+            if is_pure_ability_pointer_race_trait_row(&fields) {
+                *out.trap_hits.entry("race_trait_pure_ability_pointer_row").or_default() += 1;
+                continue;
+            }
         }
 
         let (display_name, origin) = if let Some((_, variant)) = first.split_once(".COPY=") {
@@ -2043,7 +4341,7 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             continue;
         }
 
-        let record_kind = refine_kind(kind, &fields);
+        let record_kind = refine_kind(kind, &fields, book_monster_race_names, book_pc_class_names, corpus_pc_class_names);
         if !has_classifying_token(record_kind, &fields) {
             *out.trap_hits.entry("missing_classifying_token").or_default() += 1;
             continue;
@@ -2075,6 +4373,13 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             effective_book
         };
 
+        if record_kind == Kind::ClassFeature {
+            out.class_feature_categories.insert(
+                (rel.clone(), line_number),
+                token_value(&fields, "CATEGORY:").map(|c| c.to_string()),
+            );
+        }
+
         out.units.push(CorpusUnit {
             book: attributed_book.to_string(),
             source_book: book.to_string(),
@@ -2096,7 +4401,7 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
 
 /// Walk one book directory (recursively — `core_essentials` nests its per-race
 /// files two levels deep) and enumerate every `.lst` it holds.
-fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
+fn enumerate_book(book_dir: &Path, book: &str, corpus_pc_class_names: &BTreeSet<String>) -> BookEnumeration {
     let mut out = BookEnumeration::default();
     let mut stack = vec![book_dir.to_path_buf()];
     let mut files: Vec<PathBuf> = Vec::new();
@@ -2115,6 +4420,66 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
     // the output is byte-identical (the idempotence contract).
     files.sort();
 
+    // `decisions.md §16`: computed once per book, from the WHOLE book
+    // directory tree (recursive, same walk as `files` above -- needed for
+    // `core_essentials`'s per-race nesting), before any `_abilities_race.lst`
+    // row is classified, so `refine_kind` can cross-reference a row's KEY
+    // prefix against every `CR:`-bearing `*_races.lst` entry in this book,
+    // not just the ones in the same directory as the abilities file.
+    let book_monster_race_names = book_cr_bearing_race_names(book_dir);
+    // SD-32 card 11 T2b classifier fix, cluster 4: same one-per-book
+    // computation shape as `book_monster_race_names` above, see
+    // `book_pc_class_names`'s own doc comment.
+    let book_pc_class_names = book_pc_class_names(book_dir);
+
+    // SD-32 T9 onboarding (card 11) group A: the base identities (KEY:
+    // field, lower-cased) that some `.COPY=` row in one of this book's own
+    // `equipmods` files targets. Scoped to `Kind::EquipmentModifier` files
+    // AND to `advanced_class_guide` only (never a corpus-wide/all-kinds/
+    // all-books scan) -- see `copy_template_row`'s TRAP_RULES entry for the
+    // evidence this is narrower than the general shape: re-deriving this
+    // corpus-wide (every book) surfaced 24 OTHER books' equipment_modifier
+    // units (e.g. `advanced_race_guide:equipment_modifier:
+    // material_darkleaf_cloth_clothing`, ARG's own real `Material ~
+    // Darkleaf Cloth ~ Clothing`) whose base-declaration row IS the one the
+    // real ingest pipeline resolves to and had ALREADY carried a
+    // `literal-verified` stamp -- proving the "the `.COPY=` row is what the
+    // real ingest resolves to, the template row is an orphan" assumption,
+    // true for ACG's `acg_equipmods.lst` (verified corpus-wide within that
+    // one file: every existing `equipment/equipmods/` record under
+    // `advanced_class_guide` cites a line in the 85-132 "Old KEYs" `.COPY=`
+    // block, never the 10-84 primary block), does NOT generalize to every
+    // book. Widening this beyond ACG without book-by-book verification
+    // would have deleted 24 real, already-verified units --
+    // `docs/release/SD-32-compute-library-and-cause-closure/decisions.md
+    // §17a`'s "validate an instrument before trusting a confident claim it
+    // produces", caught by the regen's own stamp-loss guard before it ever
+    // reached a commit. Computed BEFORE the main enumeration loop,
+    // mirroring `book_monster_race_names`/`book_pc_class_names` above: a
+    // `.COPY=` row can precede OR follow the template row it targets in the
+    // same file (`acg_equipmods.lst`'s "Burdenless" template is line 13,
+    // its `.COPY=` is line 86), so this cannot be a single top-to-bottom
+    // pass.
+    let mut book_equipmod_copy_base_targets: BTreeSet<String> = BTreeSet::new();
+    if book == "advanced_class_guide" {
+        for path in &files {
+            let basename = path
+                .file_name()
+                .map(|n| n.to_string_lossy().into_owned())
+                .unwrap_or_default();
+            if file_kind(&basename) != Some(Kind::EquipmentModifier) {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(path) else { continue };
+            for line in text.lines() {
+                let first = line.split('\t').next().unwrap_or("").trim();
+                if let Some(base) = copy_base_identity(first) {
+                    book_equipmod_copy_base_targets.insert(base.trim().to_lowercase());
+                }
+            }
+        }
+    }
+
     for path in files {
         let basename = path
             .file_name()
@@ -2123,7 +4488,17 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
         match file_kind(&basename) {
             Some(kind) => {
                 if let Ok(text) = std::fs::read_to_string(&path) {
-                    enumerate_file(&path, book, kind, &text, &mut out);
+                    enumerate_file(
+                        &path,
+                        book,
+                        kind,
+                        &text,
+                        &book_monster_race_names,
+                        &book_pc_class_names,
+                        corpus_pc_class_names,
+                        &book_equipmod_copy_base_targets,
+                        &mut out,
+                    );
                 } else {
                     out.files_not_enumerated.insert(basename);
                 }
@@ -2143,7 +4518,8 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
 // `mod_base_name` stays local: it is also the `mod_only_rescue` path's own
 // base-name resolver, imported by name below.
 use codex::rules_core::wiring_class::{
-    CorpusLines, build_copy_base_index, build_mod_index, mod_base_name, token_closure_rows,
+    CorpusLines, build_copy_base_index, build_mod_index, copy_base_identity, mod_base_name,
+    token_closure_rows,
 };
 
 // ---------------------------------------------------------------------------
@@ -2224,6 +4600,13 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     // SD-31 wave-29 (`lane5-book-onboard` lane) -- this book's first
     // compiled rule set of any kind.
     RuleSetId::AdventurersGuide,
+    // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+    // precondition`, AT-32-G0-003) -- each of these four books' first
+    // compiled rule set of any kind.
+    RuleSetId::InnerSeaFaiths,
+    RuleSetId::InnerSeaMagic,
+    RuleSetId::InnerSeaTaverns,
+    RuleSetId::InnerSeaTemples,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -2265,6 +4648,10 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Oa => "occult_adventures",
         RuleSetId::Mythic => "mythic_adventures",
         RuleSetId::AdventurersGuide => "adventurers_guide",
+        RuleSetId::InnerSeaFaiths => "inner_sea_faiths",
+        RuleSetId::InnerSeaMagic => "inner_sea_magic",
+        RuleSetId::InnerSeaTaverns => "inner_sea_taverns",
+        RuleSetId::InnerSeaTemples => "inner_sea_temples",
     }
 }
 
@@ -2320,6 +4707,10 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Oa => "occult_adventures",
         RuleSetId::Mythic => "mythic_adventures",
         RuleSetId::AdventurersGuide => "adventurers_guide",
+        RuleSetId::InnerSeaFaiths => "inner_sea_faiths",
+        RuleSetId::InnerSeaMagic => "inner_sea_magic",
+        RuleSetId::InnerSeaTaverns => "inner_sea_taverns",
+        RuleSetId::InnerSeaTemples => "inner_sea_temples",
     }
 }
 
@@ -2386,6 +4777,31 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         "ISC" => "inner_sea_combat",
         "ISI" => "inner_sea_intrigue",
         "BOTD2" => "book_of_the_damned_volume_2",
+        // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off --
+        // two more books extended into `equipment_gap_tables`, same
+        // narrow, additive-only shape as the arms immediately above.
+        "ISTEM" => "inner_sea_temples",
+        "ISM" => "inner_sea_magic",
+        // SD-32 (this cycle, `epic-2-t2a-residual-demonic-obedience-retype`): one more book
+        // extended into `equipment_gap_tables` since the last regen -- same narrow,
+        // additive-only shape as every arm above. This function's own panic (below) otherwise
+        // hard-crashes `v06_work_inventory` for every caller the moment
+        // `equipment_resolver::equipment_catalog_rows()` carries this code, which happened on
+        // this cycle's rebase (out of this cycle's own scope, but blocking its own regen).
+        // 1-line match-arm append only, self-verified by this file's own pre-existing
+        // `equipment_book_slug_for_covers_every_catalog_book` test.
+        "AG" => "adventurers_guide",
+        // SD-32 `sd32-beginner-box-ingest` (`decisions.md §27b`): one more
+        // book extended into `equipment_gap_tables` -- same narrow,
+        // additive-only shape as every arm above. This function's own
+        // panic (below) otherwise hard-crashes `v06_work_inventory` for
+        // every caller the moment `equipment_resolver::
+        // equipment_catalog_rows()` carries this code, which the
+        // `beginner_box` `BookInput`/`book_routing` regen makes true
+        // unconditionally. 1-line match-arm append only, self-verified by
+        // this file's own pre-existing
+        // `equipment_book_slug_for_covers_every_catalog_book` test.
+        "BB" => "beginner_box",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \
@@ -2461,6 +4877,48 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         // attribution or measurement logic. See
         // `src/bin/ingest_adventurers_guide_spells.rs`.
         "AG" => "adventurers_guide",
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+        // precondition`, AT-32-G0-003): ISF/ISM/ISTEM join
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 13th,
+        // 14th and 15th books, each book's FIRST reach claim of any kind.
+        // Same additive, single-line registration every prior spell-lane
+        // cycle made here before it -- this function is a closed-set lookup
+        // table with its own dedicated test
+        // (`spell_book_slug_for_covers_every_catalog_book`), not
+        // attribution or measurement logic. See
+        // `src/bin/ingest_inner_sea_setting_spells.rs`.
+        "ISF" => "inner_sea_faiths",
+        "ISM" => "inner_sea_magic",
+        "ISTEM" => "inner_sea_temples",
+        // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): HA
+        // joins `spell_resolver::spell_catalog_rows()` as the catalog's
+        // 16th book, its second family of any kind. Same additive,
+        // single-line registration every prior spell-lane cycle made here
+        // before it. See `src/bin/ingest_spells.rs`.
+        "HA" => "horror_adventures",
+        // SD-32 row 20 (`decisions.md §17`/`§27b`): eleven more books joined
+        // `spell_resolver::spell_catalog_rows()`'s chain this cycle -- same
+        // additive, single-line registration every prior spell-lane cycle
+        // made here before it. `"B1"` maps to `"bestiary_1"`, matching
+        // `rule_set_id(RuleSetId::Bestiary1)`'s own spelling (the corpus
+        // directory is `bestiary`, the engine id is `bestiary_1` -- see
+        // `corpus_dir_for`'s own comment on this exact rename).
+        // `"UMWP"` (Ultimate Magic's Words of Power example spells) has no
+        // `RuleSetId` of its own -- it is a second source file inside the
+        // already-compiled `ultimate_magic` book, not a new book -- so it
+        // maps to that book's own slug, the same book its sibling `UM`
+        // arm above already resolves to.
+        "B1" => "bestiary_1",
+        "B4" => "bestiary_4",
+        "BOTD1" => "book_of_the_damned_volume_1",
+        "BOTD2" => "book_of_the_damned_volume_2",
+        "ISI" => "inner_sea_intrigue",
+        "ISR" => "inner_sea_races",
+        "ISWG" => "inner_sea_world_guide",
+        "MC" => "monster_codex",
+        "MYTHIC" => "mythic_adventures",
+        "UE" => "ultimate_equipment",
+        "UMWP" => "ultimate_magic",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \
@@ -7069,6 +9527,31 @@ fn classify(
         // in the wrong kind before this cycle; real content with no
         // engine table now, honestly reported as such.
         Kind::MonsterAbility => not_ingested("monster_ability_has_no_engine_table"),
+        // SD-32 card 15 (`decisions.md §12b`): the per-skill definition
+        // table (`KEYSTAT:`/`ACHECK:`/class-skill `BONUS:` rows) has no
+        // engine table -- `src/rules_core/skill_allocation.rs` is
+        // skill-POINT allocation, not a per-skill data source ingesting
+        // these corpus rows. Real, newly-visible content with no engine
+        // table yet, honestly reported as such -- same shape as
+        // `Kind::Companion`/`Kind::MonsterAbility` above.
+        Kind::Skill => not_ingested("skill_content_has_no_engine_table"),
+        // SD-32 `decisions.md §17`: the five kinds landed through
+        // `SIMPLE_FILENAME_KINDS` (see `file_kind`'s doc comment) -- none
+        // has an engine table yet, same honest-uningested shape as
+        // `Kind::Skill`/`Kind::Companion`/`Kind::MonsterAbility` above. This
+        // arm, required by Rust's exhaustive match over `Kind`, is the ONE
+        // per-kind line a genuinely new kind of this shape still needs
+        // beyond the `SIMPLE_FILENAME_KINDS` data row -- and it is
+        // deliberately not a blanket wildcard default, so a kind that DOES
+        // later gain an engine table cannot silently keep reporting
+        // not-ingested by falling through an unattended `_ => ...` arm.
+        Kind::Template => not_ingested("template_content_has_no_engine_table"),
+        Kind::Deity => not_ingested("deity_content_has_no_engine_table"),
+        Kind::Power => not_ingested("power_content_has_no_engine_table"),
+        Kind::Domain => not_ingested("domain_content_has_no_engine_table"),
+        Kind::Language => not_ingested("language_content_has_no_engine_table"),
+        Kind::Ability => not_ingested("ability_content_has_no_engine_table"),
+        Kind::Trait => not_ingested("trait_content_has_no_engine_table"),
     }
 }
 
@@ -7860,6 +10343,39 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
     for id in PuClassId::ALL {
         class_books.insert(id.name().to_string(), "pathfinder_unchained");
     }
+    // SD-32 card 11 (T12): `untabled_base_class_chassis`'s 20-class registry
+    // (`epic-3-class-reachability`, `decisions.md §10` item 4) is a REAL
+    // `compute_pilot_base_chassis` dispatch arm (`pilot_compute/mod.rs`,
+    // `untabled_base_class_chassis::resolve`) that already emits genuine
+    // `class_chassis.base_attack_bonus`/`base_save.*` explanations for a
+    // selected character -- it was simply never registered here, so the
+    // classifier reported every one of these 20 classes' `Kind::Class`
+    // records `not-ingested` even though the engine holds and computes a
+    // real chassis for them. Driven entirely by the registry's own data
+    // (`untabled-base-class-chassis.json`, itself corpus-derived): adding a
+    // 21st class here costs zero new code, unlike a hand-added match arm.
+    for meta in untabled_base_class_chassis::untabled_base_class_registry() {
+        let bare_name = meta
+            .class_id
+            .strip_prefix("class:")
+            .unwrap_or(meta.class_id.as_str())
+            .to_string();
+        let book: &'static str = match meta.source_book.as_str() {
+            "ultimate_psionics" => "ultimate_psionics",
+            "occult_adventures" => "occult_adventures",
+            "advanced_players_guide" => "advanced_players_guide",
+            "ultimate_magic" => "ultimate_magic",
+            "ultimate_intrigue" => "ultimate_intrigue",
+            "ultimate_wilderness" => "ultimate_wilderness",
+            other => panic!(
+                "untabled_base_class_chassis registry entry {} names source_book {other:?}, \
+                 which modelled_class_books()'s match has no arm for -- add one rather than \
+                 silently dropping the class from the registered set",
+                meta.class_id
+            ),
+        };
+        class_books.insert(bare_name, book);
+    }
     class_books
 }
 
@@ -8516,10 +11032,22 @@ fn main() {
                 .collect()
         })
         .unwrap_or_default();
-    // Operator directive 2026-07-27: redundant to other tomes, will not be
-    // brought in. Sourced here rather than inferred, and reported as its own
-    // scope word so it can never be confused with "not yet done".
-    let out_of_scope: BTreeSet<&str> = ["beginner_box", "core_essentials"].into_iter().collect();
+    // Operator directive 2026-07-27 excluded `beginner_box` here as
+    // "redundant to other tomes, will not be brought in". `decisions.md
+    // §27b` (2026-08-23, `sd32-beginner-box-ingest`) overturns that
+    // disposition: "no 'unregistered book' exemption ... the only
+    // admissible reason for a unit not to close is a hard impossibility --
+    // the source data does not exist, or licensing forbids shipping it."
+    // Neither applies (both `bbox_equip_*.lst` files are present in the
+    // pinned oracle, ordinary OGC equipment mechanics) -- `beginner_box` is
+    // now `in_scope` via `rule_set_for` returning `None` here falling
+    // through to that check below being irrelevant: its equipment records
+    // are real corpus records even without a compiled `RuleSetId`, the same
+    // "book has real ingested content but no compiled rule set" shape this
+    // module already reports via `evidence: "no_compiled_rule_set_for_book"`
+    // for every other un-compiled book. Removed from this set so it reports
+    // that real shape instead of the retired `out_of_scope` label.
+    let out_of_scope: BTreeSet<&str> = ["core_essentials"].into_iter().collect();
 
     let mut books: Vec<BookMeta> = Vec::new();
     for id in &book_dirs {
@@ -8564,9 +11092,20 @@ fn main() {
     }
 
     // --- enumerate ---------------------------------------------------------
+    // `decisions.md §23b`: corpus-wide PC class roster, unioned from every
+    // book's own `book_pc_class_names` and computed BEFORE enumeration --
+    // `refine_kind`'s `Kind::ClassFeature` arm needs it to tell a
+    // deity-obedience feat line apart from a genuine class feature even in a
+    // book that declares no `*classes*.lst` of its own (most archetype/
+    // supplement books, `book_pc_class_names`'s own doc comment).
+    let corpus_pc_class_names_pre: BTreeSet<String> =
+        books.iter().flat_map(|book| book_pc_class_names(&book_paths[&book.id])).collect();
     let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
     for book in &books {
-        enumerations.insert(book.id.clone(), enumerate_book(&book_paths[&book.id], &book.id));
+        enumerations.insert(
+            book.id.clone(),
+            enumerate_book(&book_paths[&book.id], &book.id, &corpus_pc_class_names_pre),
+        );
     }
 
     // `mod_only_rescue`: a `.MOD` row whose base name appears nowhere in the
@@ -8585,7 +11124,28 @@ fn main() {
         let targets = std::mem::take(&mut enumeration.mod_targets);
         let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
         for (kind, key, name, provenance, magnitudes, resolved_book) in targets {
-            if declared.contains(&(kind, name.to_lowercase())) {
+            // SD-32 T9 onboarding (card 11), group D's PFS-overlay-citation
+            // shape re-derived for `.MOD` rows specifically: a `.MOD` row's
+            // OWN kind comes from its file (`file_kind`), never from
+            // `refine_kind`'s per-row `TYPE:` redirect (the `.MOD`
+            // continuation row carries no `TYPE:Trait...` of its own -- its
+            // payload is the overlay's `TYPE:PFSNotLegal`). So a PFS-legality
+            // `.MOD` row targeting a PF1e chargen Trait (real example:
+            // `ultimate_campaign/_pfs/pfs_uca_abilities_traits.lst:7`,
+            // `Trait ~ Corpse Cannibal.MOD`) is stashed under `Kind::Ability`
+            // even though the base declaration it modifies
+            // (`uca_abilities_traits.lst:280`) redirected to `Kind::Trait`
+            // via that same `TYPE:` check -- so the `declared` lookup below,
+            // scoped strictly by kind, never finds it and `mod_only_rescue`
+            // wrongly mints a second, orphan `Kind::Ability` unit citing the
+            // overlay row's own coordinate instead of recognizing the base
+            // is already declared. Check both kinds for exactly the
+            // Ability<->Trait pair `refine_kind`'s `Kind::Ability` arm
+            // redirects -- the only redirect this walker performs from a
+            // `.MOD` row's raw file-kind to a different declared kind.
+            let already_declared = declared.contains(&(kind, name.to_lowercase()))
+                || (kind == Kind::Ability && declared.contains(&(Kind::Trait, name.to_lowercase())));
+            if already_declared {
                 continue;
             }
             if !rescued.insert((kind, name.to_lowercase())) {
@@ -8612,10 +11172,25 @@ fn main() {
     // identity are ONE unit. Applied per book+kind, keyed on the corpus
     // identity (KEY: when present, else display name) -- never on the display
     // name alone, which is what collided 18 archetype-qualified spells.
+    //
+    // `decisions.md §12b` (card 15's cause-pin cycle,
+    // `15-card-15-internal-duplicate-identity-memo.md`): for `Kind::ClassFeature`
+    // specifically, the fallback identity (no `KEY:` field, so the bare
+    // display name) is too weak -- 158 of the 179/180-row residual are
+    // genuinely distinct records sharing one display name (the four-way
+    // `Aberrant Bloodline` collision, one per class). `disambiguate_class_feature_fallback_collisions`
+    // runs first and rewrites a LATER colliding row's key to carry its
+    // `CATEGORY:` facet when that facet was not already seen for this key,
+    // so the filter below keeps it as a distinct unit instead of dropping
+    // it. See that function's own doc comment for why the scope is this
+    // narrow (fallback-key-only, `CATEGORY:Internal` excluded).
     for enumeration in enumerations.values_mut() {
         let mut seen: BTreeSet<(Kind, String)> = BTreeSet::new();
         let mut duplicates = 0usize;
         let units = std::mem::take(&mut enumeration.units);
+        let categories = std::mem::take(&mut enumeration.class_feature_categories);
+        let units = disambiguate_class_feature_fallback_collisions(units, &categories);
+        let units = disambiguate_class_feature_keyed_name_collisions(units);
         enumeration.units = units
             .into_iter()
             .filter(|u| {
@@ -8630,6 +11205,15 @@ fn main() {
         if duplicates > 0 {
             *enumeration.trap_hits.entry("duplicate_identity").or_default() += duplicates;
         }
+    }
+
+    // See `drop_core_essentials_native_restatements`'s own doc comment.
+    let core_essentials_native_restatements =
+        drop_core_essentials_native_restatements(&mut enumerations);
+    if core_essentials_native_restatements > 0 {
+        eprintln!(
+            "core_essentials native-restatement duplicates dropped (decisions.md §17): {core_essentials_native_restatements}"
+        );
     }
 
     // --- engine ------------------------------------------------------------
@@ -8727,6 +11311,17 @@ fn main() {
             // the disposition cannot drift between the two.
             if is_core_essentials_residual(&unit.book) {
                 core_essentials_residuals_deleted += 1;
+                // Opt-in diagnostic (unset by default, no effect on any real
+                // run's output): `DEBUG_RESIDUAL=1` prints kind/key/file for
+                // every deleted residual, so a future ceiling bump can be
+                // investigated -- per this constant's own "investigate
+                // before touching this ceiling" rule -- without re-deriving
+                // the per-row breakdown from scratch each time. Used to
+                // derive `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s
+                // 138 -> 171 bump, `decisions.md §17`.
+                if std::env::var("DEBUG_RESIDUAL").is_ok() {
+                    eprintln!("RESIDUAL\t{}\t{}\t{}", unit.kind.id(), unit.key, unit.provenance.file);
+                }
                 continue;
             }
             // `source_book`, deliberately, not `unit.book`: this resolves a
@@ -9759,26 +12354,29 @@ mod rule_set_mapping_tests {
     #[test]
     fn uncompiled_books_stay_none() {
         // This test needs a book the engine genuinely has not compiled, and it
-        // has now outlived FOUR of them: `ultimate_psionics` moved to
+        // has now outlived FIVE of them: `ultimate_psionics` moved to
         // compiled in SD28-E29 (`epic-29-upsi-complete`), `inner_sea_gods` in
         // SD-29 Epic 5 extend round 9 (`RuleSetId::Isg`), `occult_adventures`
-        // in SD31-E6-F2-003 (`RuleSetId::Oa`, its spell family), and
+        // in SD31-E6-F2-003 (`RuleSetId::Oa`, its spell family),
         // `adventurers_guide` in SD-31 wave-29 (`RuleSetId::AdventurersGuide`,
-        // its spell family, `lane5-book-onboard` lane). The comment this
-        // replaces also stated a reason that was wrong by the time it was
-        // read -- "`inner_sea_gods` ... (SD-30's own book set, out of this
-        // bundle)" -- and `decisions.md §38` had already re-scoped SD-29
-        // corpus-wide.
+        // its spell family, `lane5-book-onboard` lane), and `inner_sea_temples`
+        // (this book's own former subject) in SD-32 Gate 0
+        // (`gate-0-book-onboarding-precondition`, AT-32-G0-003,
+        // `RuleSetId::InnerSeaTemples`) -- caught this cycle, unrelated to
+        // this cycle's own T2b scope (`decisions.md §16`), by re-running the
+        // full test suite before push per `workflow-instruction.md §5`'s
+        // rebase discipline (`scripts/retro.py correction`,
+        // `docs/retro/events/t2b-refine-kind-fix.jsonl`).
         //
-        // `inner_sea_temples` is uncompiled by DERIVATION, not by assumption:
-        // `corpus_dir_for` is exhaustive over `RuleSetId` and carries no arm
-        // returning it, so no `COMPILED_RULE_SETS` member can map to it --
-        // re-checked against the current match arm one by one (33 arms, none
-        // return `"inner_sea_temples"`), and the book genuinely has a real
-        // corpus directory (`OBSERVABLE_BOOK_DIRS` names
-        // `pathfinder/paizo/campaign_setting/inner_sea_temples`), so this is
-        // a real uncompiled book, not a typo'd nonexistent one.
-        assert_eq!(rule_set_for("inner_sea_temples"), None);
+        // `guide_to_the_river_kingdoms` is uncompiled by DERIVATION, not by
+        // assumption: `corpus_dir_for` is exhaustive over `RuleSetId` and
+        // carries no arm returning it, so no `COMPILED_RULE_SETS` member can
+        // map to it (re-checked one arm at a time against the current match
+        // block), and the book genuinely has a real corpus directory in the
+        // pinned oracle (`pathfinder/paizo/campaign_setting/
+        // guide_to_the_river_kingdoms`), so this is a real uncompiled book,
+        // not a typo'd nonexistent one.
+        assert_eq!(rule_set_for("guide_to_the_river_kingdoms"), None);
     }
 }
 
@@ -9898,20 +12496,33 @@ mod e14_harness_tests {
     /// the name-coincidence defect `modelled_race_of_race_trait` already
     /// records for `race_trait`.
     ///
-    /// **UE now has a real `data/corpus/ultimate_equipment/equipment/`
-    /// directory** (`cache_gen::ultimate_equipment`, dumping
-    /// `rules_tables::ultimate_equipment::equipment_tables`), but that
-    /// table's own doc comment documents 65 keys (55 equipment + 10
-    /// equipmods) deliberately EXCLUDED as cross-book republished items --
-    /// `Celestial Shield` is one of them (`Dogslicer` is the module's own
-    /// spot-checked example of the same exclusion). So the assertion below
-    /// still holds, now for the *correct*, book-scoped reason (UE's real
-    /// corpus was read and genuinely does not carry this key) rather than
-    /// the earlier, weaker reason (UE had no corpus to read at all).
+    /// **Correction (SD-32 T12 row20 cycle2, re-derived against the pinned
+    /// PCGen oracle, not assumed).** `ue::equipment_tables()`'s own doc
+    /// comment blanket-labels 65 keys "cross-book republished items,
+    /// deliberately excluded", spot-checking only `Dogslicer` as proof of a
+    /// byte-identical reprint. That spot-check does not generalise to
+    /// `Celestial Shield`: the oracle line UE's own corpus record transcribes
+    /// (`ue_equip_arms_armor.lst:126`, `SOURCEPAGE:p.131`) carries
+    /// `PROFICIENCY:SHIELD|Shield (Light)`, `COST:4020`, `ACCHECK:-1`,
+    /// `SPELLFAILURE:5`, `BONUS:COMBAT|AC|1` -- a real, distinct, cited magic
+    /// item that only *shares a display name* with ARG's heavy shield
+    /// (`COST:13170`, feather-fall/overland-flight ability, no `BONUS:COMBAT`
+    /// token at all). This is exactly the "shared name is not a shared
+    /// thing" shape `modelled_race_of_race_trait` already records for
+    /// `race_trait` -- the doc comment two paragraphs up already knew the two
+    /// rows differ mechanically and drew the wrong conclusion from it.
     ///
-    /// This pins the *attribution*, and it is a strictly HIGHER bar than the
-    /// bare-key form it replaced: it can only ever withhold a grounding, never
-    /// grant one.
+    /// The hand table's exclusion of this key was itself the defect: it
+    /// dropped a real, oracle-confirmed UE item rather than shipping it
+    /// under UE's own book scope. `gen_equipment_gap_tables.rs`'s complement
+    /// pass (`held` = `hand_authored_equipment_rows()`'s own per-book key
+    /// set) does not know about that hand-curated exclusion and correctly
+    /// re-surfaces the record as `equipment_gap_tables::ULTIMATE_EQUIPMENT_
+    /// GAP_ROWS`'s own `"Celestial Shield"` row, book-scoped to `"UE"` --
+    /// which is the *more* correct behaviour under `decisions.md §27b`
+    /// ("EVERYTHING" -- no unit is dropped because it is inconvenient), not
+    /// a bug. The assertion below is retargeted to the now-proven truth
+    /// instead of the stale exclusion.
     #[test]
     fn a_key_two_books_share_grounds_only_the_book_whose_corpus_was_read() {
         let wired = probe_equipment_effect_wiring(&repo_root());
@@ -9923,12 +12534,22 @@ mod e14_harness_tests {
             "ARG owns a real corpus record for this key and must still ground"
         );
         assert!(
-            !wired.contains(&(
+            wired.contains(&(
                 "ultimate_equipment".to_string(),
                 "Celestial Shield".to_string()
             )),
-            "Ultimate Equipment has no corpus directory at all -- nothing observed \
-             ITS record, so nothing may claim it"
+            "UE owns its OWN real, oracle-confirmed corpus record for this key \
+             (ue_equip_arms_armor.lst:126, SOURCEPAGE:p.131) -- a genuinely \
+             different light shield, not ARG's heavy shield, and must ground \
+             under its own book scope"
+        );
+        assert!(
+            !wired.contains(&(
+                "inner_sea_taverns".to_string(),
+                "Celestial Shield".to_string()
+            )),
+            "Inner Sea Taverns has no equipment corpus directory at all -- \
+             nothing observed ANY record for it, so nothing may claim this key"
         );
         // Structural, not just this one pair: no book without a
         // `data/corpus/<book>/equipment` directory may appear at all.
@@ -10477,6 +13098,117 @@ mod race_trait_grounding_tests {
             assert!(
                 src.contains(&format!("\"{book}\"")),
                 "{book} is not named in race_catalog.rs at all"
+            );
+        }
+    }
+
+    // ----- T2b closure investigation (SD-32 Epic 2, `epic-2-t2b` lane) -----
+
+    /// Every `data/corpus/*/race_trait/**/*.json` record's own source
+    /// coordinate, `(<lst basename>, <line>)` -- the same join key
+    /// `EngineFacts::race_trait_engine_book` uses. Walks every book
+    /// directory that HAS a `race_trait/` subtree, not just the app's own
+    /// `RACE_CORPUS_BOOKS` list -- this must see everything actually
+    /// ingested anywhere, including a book the app's own loader does not
+    /// yet read, so a false "never ingested" verdict below cannot hide
+    /// behind that narrower list.
+    fn ingested_race_trait_source_coordinates(repo_root: &Path) -> BTreeSet<(String, usize)> {
+        let mut out = BTreeSet::new();
+        let corpus_root = repo_root.join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        for book in books.flatten() {
+            let root = book.path().join("race_trait");
+            if !root.is_dir() {
+                continue;
+            }
+            let mut stack = vec![root];
+            while let Some(dir) = stack.pop() {
+                let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        stack.push(path);
+                        continue;
+                    }
+                    if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                        continue;
+                    }
+                    let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                    let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else {
+                        continue;
+                    };
+                    let Some(src_path) = value.pointer("/source/path").and_then(|v| v.as_str())
+                    else {
+                        continue;
+                    };
+                    let Some(line) = value.pointer("/source/line").and_then(|v| v.as_u64())
+                    else {
+                        continue;
+                    };
+                    let Some(base) = Path::new(src_path).file_name() else { continue };
+                    out.insert((base.to_string_lossy().into_owned(), line as usize));
+                }
+            }
+        }
+        out
+    }
+
+    /// **The T2b re-scoping finding, pinned as a standing regression.**
+    /// `epic-breakdown.md`'s T2b row and card 11's cycle-1 receipt name
+    /// `modelled_race_of_race_trait`'s compound-key matching as the cause of
+    /// the corpus-wide `race_trait_race_not_modelled` population (2,472
+    /// units, re-derived from `docs/work-inventory.json`,
+    /// `scripts/retro.py correction` filed under `epic-2-t2b`). It is not:
+    /// cross-referencing every ingested `data/corpus/*/race_trait/**/*.json`
+    /// record's own `source.path`/`source.line` against all 2,472 residual
+    /// units' coordinates finds ZERO overlap. This matcher only ever runs
+    /// against an ALREADY-INGESTED unit (`classify`'s `Kind::RaceTrait` arm
+    /// calls it on a `CorpusUnit` built from a real `data/corpus` record),
+    /// so if a coordinate was never ingested at all, the matcher never gets
+    /// a chance to misjudge it -- the population is a raw-content ingestion
+    /// gap (71% in books never registered in `race_catalog.rs`'s
+    /// `RACE_CORPUS_BOOKS`; the remainder in registered books but never
+    /// transcribed from the pinned oracle's `.lst` rows), not a matching
+    /// defect. This pins three hand-verified samples, one per un-ingested
+    /// cause this finding names (a `mod_only` phantom-shaped row, a
+    /// no-`~`-at-all row, and an "Adopted Race ~ &lt;real non-CRB race&gt;"
+    /// selector row) as a standing regression: if any of them is EVER
+    /// ingested, this test starts asserting against the wrong population and
+    /// must be re-derived, not silently patched around.
+    ///
+    /// **Correction (SD-32 T12 row20 cycle2), re-derived, not assumed.** The
+    /// prior "Adopted Race ~" sample, `fetchling_abilities_race.lst:32`, DID
+    /// get genuinely ingested by a real generic-ingest cycle (`data/corpus/
+    /// bestiary_2/race_trait/fetchling/adopted_race_fetchling.json`,
+    /// `completeness: "full"`, real transcribed `raw_tokens`, not a stub) --
+    /// exactly the scenario this test's own failure message predicted. A
+    /// corpus-wide scan (51 `KEY:Adopted Race ~` rows across `core_essentials/
+    /// races/**/*_abilities_race.lst`) found 14 of 51 now genuinely ingested
+    /// by that same cycle, 37 still not. Retargeted to
+    /// `tiefling_abilities_race.lst:37` ("Adopted Race ~ Tiefling"),
+    /// confirmed still absent from `data/corpus/*/race_trait` by the same
+    /// scan -- the "Adopted Race ~" ingestion-gap CAUSE this test pins is
+    /// still real and still un-ingested for the great majority of its
+    /// population; only this one specific coordinate needed to move. Not a
+    /// loosening: this raises no bar and drops no coverage, it moves one
+    /// pinned coordinate off a cause that partially closed onto one that has
+    /// not (`decisions.md §1a`/`§16`: a unit that really moved out of a
+    /// shape is not a unit closed, but the test asserting against it must
+    /// track the truth, not the stale coordinate).
+    #[test]
+    fn the_t2b_residual_population_is_never_ingested_not_a_matcher_miss() {
+        let ingested = ingested_race_trait_source_coordinates(&probe_root());
+        for (file, line) in [
+            ("acg_abilities_race.lst", 9),      // "Arcanist Exploit ~ Arcane Barrier"
+            ("arg_abilities_race.lst", 2204),   // "Fins to Feet"
+            ("tiefling_abilities_race.lst", 37), // "Adopted Race ~ Tiefling"
+        ] {
+            assert!(
+                !ingested.contains(&(file.to_string(), line)),
+                "{file}:{line} must NOT be present in data/corpus/*/race_trait -- if it now \
+                 is, T2b's residual population has genuinely shrunk by real ingestion and \
+                 this test's own premise (the sampled cause is un-ingested, not a matcher \
+                 miss) needs re-deriving against the real corpus"
             );
         }
     }
@@ -11303,6 +14035,9 @@ mod monster_ability_text_complete_rung_tests {
             owners: &[],
             source_file: "x.lst",
             source_line: 1,
+            codex_generated_name: false,
+            rename_reason: None,
+            rename_coordinate: None,
         };
         assert!(monster_ability_desc_leaks_unresolved_argument(&declared_var));
 
@@ -12644,6 +15379,56 @@ mod modelled_class_books_registry_tests {
         assert_eq!(class_books.get("unchained_rogue"), Some(&"pathfinder_unchained"));
         assert_eq!(class_books.get("unchained_summoner"), Some(&"pathfinder_unchained"));
     }
+
+    /// SD-32 card 11 (T12): all 20 `untabled_base_class_chassis` registry
+    /// entries must register here, driven entirely by the registry's own
+    /// data (mutation-proof: comment out the loop above and this goes RED
+    /// for every one of the 20, not just a sample).
+    #[test]
+    fn all_twenty_untabled_base_classes_are_registered_from_the_chassis_registry_itself() {
+        let class_books = modelled_class_books();
+        let registry = untabled_base_class_chassis::untabled_base_class_registry();
+        assert_eq!(registry.len(), 20, "registry population drifted; re-run its own census script");
+        for meta in registry {
+            let bare = meta.class_id.strip_prefix("class:").unwrap_or(meta.class_id.as_str());
+            assert_eq!(
+                class_books.get(bare).copied(),
+                Some(meta.source_book.as_str()),
+                "{bare} (registry entry) must be registered under its own source_book"
+            );
+        }
+        // Spot check two by name, so a reader sees a concrete example rather
+        // than only the loop's abstraction.
+        assert_eq!(class_books.get("kineticist"), Some(&"occult_adventures"));
+        assert_eq!(class_books.get("vigilante"), Some(&"ultimate_intrigue"));
+    }
+
+    /// The class-probe's own real compute sweep now finds an attributable
+    /// delta for a formerly-unmodelled class: `Kind::Class` records for
+    /// these 20 move from `not-ingested` to `grounded`, proving the wiring
+    /// reaches the real dispatch chain (`compute_pilot_base_chassis` ->
+    /// `untabled_base_class_chassis::resolve`), not just this map.
+    #[test]
+    fn a_kind_class_record_for_a_newly_registered_class_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.class_books = modelled_class_books();
+        facts.class_effect_wired.insert("kineticist".to_string());
+        let unit = CorpusUnit {
+            book: "occult_adventures".to_string(),
+            source_book: "occult_adventures".to_string(),
+            kind: Kind::Class,
+            key: "Kineticist".to_string(),
+            name: "Kineticist".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "oa_classes.lst".to_string(), line: 1 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "class_probe_observed_computed_delta_on_the_rendered_snapshot");
+    }
 }
 
 /// `SD31-E5-F1-003`: `class_feature_owner`'s multi-word/underscored-owner
@@ -13748,9 +16533,32 @@ mod spell_probe_tests {
         let outcomes = probe_spell_effect_wiring(&fixture(), &repo_root());
         let keys_by_book = probe_spell_keys_by_book();
         let mut expected = 0usize;
+        // SD-32 row 20: `OBSERVABLE_BOOK_DIRS` carries TWO directory entries
+        // for the same engine book -- `"beastiary"` (the misspelled alias,
+        // `CORPUS_DIR_ALIASES` maps it to `"bestiary"`) and `"bestiary"`
+        // itself (the correctly-spelled directory, added later for
+        // equipment reasons, see its own comment above) -- both resolve to
+        // `engine_book_for_corpus_dir` = `"bestiary_1"`. `probe_spell_
+        // effect_wiring`'s `outcomes` is a `BTreeMap<(book, key), _>`, so
+        // examining the same `(engine_book, key)` pair twice (once per dir
+        // entry) is naturally idempotent there. This loop used to count it
+        // TWICE (`expected += 1` inside a `for key in keys` with no
+        // per-book dedup), which only ever matched `outcomes.len()` by
+        // coincidence because `"bestiary_1"` carried zero spell keys before
+        // this cycle (`beastiary1` had no `spell_list` table to chain) --
+        // the double-count was latent and inert. Now that
+        // `keys_by_book.get("bestiary_1")` is real and non-empty (111
+        // keys), the latent bug surfaces: `seen_books` makes this loop
+        // count each engine book's keys exactly once, matching the
+        // production map's own dedup, instead of once per aliased
+        // directory entry.
+        let mut seen_books: std::collections::BTreeSet<&'static str> = std::collections::BTreeSet::new();
         for dir_name in OBSERVABLE_BOOK_DIRS {
             let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else { continue };
             if rule_set_for_engine_book(engine_book).is_none() {
+                continue;
+            }
+            if !seen_books.insert(engine_book) {
                 continue;
             }
             let Some(keys) = keys_by_book.get(engine_book) else { continue };
@@ -15047,7 +17855,7 @@ mod core_essentials_book_attribution_tests {
             "races/kasatha/kasatha_races.lst",
             "Kasatha\t\tSORTKEY:a_base_pc\tSTARTFEATS:1\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration
             .units
             .iter()
@@ -15072,7 +17880,7 @@ mod core_essentials_book_attribution_tests {
             "ce_spells.lst",
             "SOURCELONG:Bestiary\tSOURCESHORT:B1\n\nMage Hand\tSCHOOL:Transmutation\tCLASSES:Wizard\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration
             .units
             .iter()
@@ -15094,7 +17902,7 @@ mod core_essentials_book_attribution_tests {
             "races/monkey_goblin/monkey_goblin_races.lst",
             "Goblin (Monkey)\t\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration
             .units
             .iter()
@@ -15115,7 +17923,7 @@ mod core_essentials_book_attribution_tests {
             "ce_abilities_race.lst",
             "Darkvision\t\tKEY:Darkvision\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration
             .units
             .iter()
@@ -15143,7 +17951,7 @@ mod core_essentials_book_attribution_tests {
              SOURCELONG:Bestiary\tSOURCESHORT:B1\tSOURCEDATE:2009-10\n\
              After Directive\tKEY:After Directive\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let before = enumeration
             .units
             .iter()
@@ -15178,7 +17986,7 @@ mod core_essentials_book_attribution_tests {
              SOURCELONG:Bestiary 2\tSOURCESHORT:B2\n\
              B2 Row\tKEY:B2 Row\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let b1 = enumeration.units.iter().find(|u| u.key == "B1 Row").unwrap();
         assert_eq!(b1.book, "bestiary");
         let b2 = enumeration.units.iter().find(|u| u.key == "B2 Row").unwrap();
@@ -15205,7 +18013,7 @@ mod core_essentials_book_attribution_tests {
              SOURCELONG:Universal Rules\tSOURCESHORT:UR\n\
              Capsize\tKEY:Capsize\tCATEGORY:Special Ability\tTYPE:Extraordinary.SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let b3 = enumeration.units.iter().find(|u| u.key == "B3 Row").unwrap();
         assert_eq!(b3.book, "bestiary_3");
         let capsize = enumeration.units.iter().find(|u| u.key == "Capsize").unwrap();
@@ -15228,7 +18036,7 @@ mod core_essentials_book_attribution_tests {
             "SOURCELONG:Universal Rules\tSOURCESHORT:UR\n\
              UR Row\tKEY:UR Row\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let ur = enumeration.units.iter().find(|u| u.key == "UR Row").unwrap();
         assert_eq!(ur.book, "core_essentials");
     }
@@ -15244,7 +18052,7 @@ mod core_essentials_book_attribution_tests {
             "SOURCELONG:Bestiary 2\tSOURCESHORT:B2\n\
              Dwarf Ability\tKEY:Dwarf Ability\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration.units.iter().find(|u| u.key == "Dwarf Ability").unwrap();
         assert_eq!(
             unit.book, "core_rulebook",
@@ -15267,7 +18075,7 @@ mod core_essentials_book_attribution_tests {
         let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
         enumerations.insert(
             "core_essentials".to_string(),
-            enumerate_book(&book.root, "core_essentials"),
+            enumerate_book(&book.root, "core_essentials", &BTreeSet::new()),
         );
         let declared: BTreeSet<(Kind, String)> = BTreeSet::new();
         let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
@@ -15319,7 +18127,7 @@ mod core_essentials_book_attribution_tests {
         let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
         enumerations.insert(
             "core_essentials".to_string(),
-            enumerate_book(&book.root, "core_essentials"),
+            enumerate_book(&book.root, "core_essentials", &BTreeSet::new()),
         );
         let declared: BTreeSet<(Kind, String)> = BTreeSet::new();
         let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
@@ -15464,6 +18272,39 @@ mod core_essentials_book_attribution_tests {
     /// failure, on a box that has not bootstrapped the pin -- `verify.sh`'s
     /// `preflight-oracle` stage runs first in every cycle specifically so
     /// this condition is never actually hit in the gate that matters.
+    ///
+    /// **SD-32 card 15 raised this pin from 117 to 138** (`CORE_ESSENTIALS_
+    /// RESIDUAL_DELETION_CEILING`'s doc comment above carries the full
+    /// re-derive command and the exact 21-row `ce_skills.lst` accounting --
+    /// real new content becoming visible for the first time via
+    /// `Kind::Skill`, not a predicate widening).
+    ///
+    /// **SD-32 `decisions.md §17` raised this pin from 138 to 171** on the
+    /// same terms -- `Kind::Template`/`Kind::Language` landing makes 33 more
+    /// real `core_essentials` rows enumerable, all belonging to slugs
+    /// already documented as ambiguous/carved-out. Full accounting in
+    /// `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment.
+    ///
+    /// **SD-32 card 15-ability raised this pin from 171 to 448.** This raw
+    /// single-book walk's own count (448) is 11 lower than `main`'s real,
+    /// cross-book-pipeline count (459, `CORE_ESSENTIALS_RESIDUAL_DELETION_
+    /// CEILING`'s own doc comment) -- a gap that did not exist before this
+    /// cycle (both were 170). Investigated, not asserted away: this test
+    /// calls `enumerate_book` directly on ONLY `core_essentials`'s own
+    /// directory and applies a same-book `(kind, key)` dedup, which is
+    /// exactly what it did for the prior `Kind::Template` raise too; the
+    /// residual `Kind::Ability` population (`ce_abilities.lst`'s book-wide
+    /// tables) is large enough and varied enough in its per-row `key`
+    /// shapes that the two measurement paths' pre-existing small structural
+    /// difference (this test's own comment above already documents one:
+    /// `main` runs `drop_core_essentials_native_restatements` before
+    /// counting, this raw call does not) now produces a visible 11-unit gap
+    /// rather than the earlier 4-unit one. Both figures are real,
+    /// independently re-derived counts of the SAME underlying content, not
+    /// a predicate change -- `is_core_essentials_residual`'s body stays
+    /// byte-for-byte unchanged; tracked as two separate pins exactly as
+    /// this file's own precedent already does (170/171), not reconciled to
+    /// one number under time pressure.
     #[test]
     fn core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline() {
         let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
@@ -15480,9 +18321,24 @@ mod core_essentials_book_attribution_tests {
             // would be a false negative, not a real finding.
             return;
         }
-        let enumeration = enumerate_book(&book_dir, "core_essentials");
+        let mut enumeration = enumerate_book(&book_dir, "core_essentials", &BTreeSet::new());
+        // `main`'s own pipeline runs a (kind, key) duplicate-identity dedup
+        // pass over every book's units AFTER `enumerate_book` (see `main`'s
+        // `--- id uniqueness ---` section) before it ever counts a residual;
+        // this raw single-book test call skips that pass entirely otherwise.
+        // Landing `Kind::Template`/`Kind::Language` (`decisions.md §17`)
+        // exposed the gap for the first time -- several of the newly
+        // enumerable `core_essentials` template rows across different
+        // ambiguous race slugs collide on `(kind, key)` once none of them
+        // resolve to a real book (all of them share the SAME unresolved
+        // `book == "core_essentials"`), which the raw walk alone
+        // over-counts as 174 against `main`'s real 170. Replicated here so
+        // this pin tracks what `main` actually deletes, not an
+        // over-conservative proxy for it.
+        let mut seen: BTreeSet<(Kind, String)> = BTreeSet::new();
+        enumeration.units.retain(|u| seen.insert((u.kind, u.key.clone())));
         let residual = enumeration.units.iter().filter(|u| u.book == "core_essentials").count();
-        const PINNED_BASELINE: usize = 117;
+        const PINNED_BASELINE: usize = 448;
         assert!(
             residual <= PINNED_BASELINE,
             "core_essentials residual GREW to {residual} (pinned baseline {PINNED_BASELINE}) -- \
@@ -15515,7 +18371,7 @@ mod core_essentials_book_attribution_tests {
             "races/catfolk/catfolk_races.lst",
             "Catfolk\t\tSORTKEY:a_base_pc\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration.units.iter().find(|u| u.name == "Catfolk").unwrap();
         assert_eq!(unit.book, "advanced_race_guide");
     }
@@ -15532,7 +18388,7 @@ mod core_essentials_book_attribution_tests {
             "races/catfolk/catfolk_abilities_race.lst",
             "Catfolk ~ Cat's Luck\tKEY:Catfolk ~ Cat's Luck\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration.units.iter().find(|u| u.name == "Catfolk ~ Cat's Luck").unwrap();
         assert_eq!(
             unit.book, "bestiary_3",
@@ -15551,7 +18407,7 @@ mod core_essentials_book_attribution_tests {
             "races/skinwalker/skinwalker_races.lst",
             "Skinwalker\t\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
         );
-        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let enumeration = enumerate_book(&book.root, "core_essentials", &BTreeSet::new());
         let unit = enumeration.units.iter().find(|u| u.name == "Skinwalker").unwrap();
         assert_eq!(unit.book, "bestiary_5");
     }

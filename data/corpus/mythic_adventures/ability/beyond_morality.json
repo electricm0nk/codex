@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Beyond Morality",
+    "name": "Beyond Morality",
+    "description": "You have no alignment. You can become a member of any class, even one with an alignment requirement, and can never lose your membership because of a change in alignment. If you violate the code of ethics of any of your classes, you might still lose access to certain features of such classes, subject to GM discretion. Attempts to detect your alignment don't return any results. If a class restricts you from casting spells with an alignment descriptor, you can cast such spells without restrictions or repercussions. If you're the target of a spell or effect that is based on alignment, you're treated as the most favorable alignment when determining the spell's effect on you. Any effects that alter alignment have no effect on you. If you lose this effect, you revert to your previous alignment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Beyond Morality"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You have no alignment. You can become a member of any class, even one with an alignment requirement, and can never lose your membership because of a change in alignment. If you violate the code of ethics of any of your classes, you might still lose access to certain features of such classes, subject to GM discretion. Attempts to detect your alignment don't return any results. If a class restricts you from casting spells with an alignment descriptor, you can cast such spells without restrictions or repercussions. If you're the target of a spell or effect that is based on alignment, you're treated as the most favorable alignment when determining the spell's effect on you. Any effects that alter alignment have no effect on you. If you lose this effect, you revert to your previous alignment."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassClassAlignment_All_Class|1|TYPE=Bypass"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassProhibitSpellAlignment_Restriction|1|TYPE=Bypass"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 293,
+    "record_key": "Mythic Path Ability ~ Beyond Morality"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Soulbound Familiar ~ Soul Focus",
+    "name": "Soul Focus",
+    "description": "The soul fragment bound to the familiar lives within a focus crystal surgically inserted into the animal. As long as this soul focus remains intact, it can be used to bind the soul fragment into another familiar, with the same cost and time requirements as replacing a familiar. Once bound into the soul focus, the soul continues to learn, and so if it is later put into a new familiar body, the soul retains its personality and memories from its previous body or bodies. A soul focus has hardness 8, 12 hit points, and a break DC of 20, though it can be attacked only when surgically removed from the familiar. If the soul focus is destroyed, creating a new soul focus with none of the old one's memories costs as much as replacing a familiar, in addition to the normal cost of replacing the familiar itself. The soulbound familiar gains Skill Focus in a skill important to the creature whose soul provided the fragment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulbound Familiar ~ Soul Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The soul fragment bound to the familiar lives within a focus crystal surgically inserted into the animal. As long as this soul focus remains intact, it can be used to bind the soul fragment into another familiar, with the same cost and time requirements as replacing a familiar. Once bound into the soul focus, the soul continues to learn, and so if it is later put into a new familiar body, the soul retains its personality and memories from its previous body or bodies. A soul focus has hardness 8, 12 hit points, and a break DC of 20, though it can be attacked only when surgically removed from the familiar. If the soul focus is destroyed, creating a new soul focus with none of the old one's memories costs as much as replacing a familiar, in addition to the normal cost of replacing the familiar itself. The soulbound familiar gains Skill Focus in a skill important to the creature whose soul provided the fragment."
+      },
+      {
+        "key": "ADD",
+        "value": "FEAT|Skill Focus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 626,
+    "record_key": "Soulbound Familiar ~ Soul Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Monk Archetype ~ Karmic Monk",
     "name": "Karmic Monk",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "A karmic monk contemplates the myriad harmonies that guide existence. He learns to use the disharmony in others against them, and to alter his own inner harmonies to exploit weaknesses in his opponents' defenses.",
     "raw_tokens": [
       {
@@ -151,5 +151,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

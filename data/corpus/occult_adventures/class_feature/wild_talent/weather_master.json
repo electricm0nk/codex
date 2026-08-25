@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Weather Master",
     "name": "Weather Master",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element air; Type utility (Sp); Level 8; Burn 0 By focusing on your connection to air and seeding the air around you for 10 minutes, you can create powerful weather effects, as control weather. You can create tornadoes or hurricane-force winds, as appropriate for the season. If you have access to the fire element, you can create hot weather, a heat wave, a thaw, or an early spring. If you have access to the water element, you can create all other types of weather listed in control weather.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

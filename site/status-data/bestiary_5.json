@@ -3,6 +3,35 @@
   "title": "Bestiary 5",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 2,
+      "denominator": 2,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 2
+      },
+      "items": [
+        {
+          "name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RaceStatAbility",
+          "standing": "origin",
+          "display_name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form"
+        },
+        {
+          "name": "Racial Traits ~ Skinwalker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Skinwalker"
+        }
+      ]
+    },
+    {
       "kind": "companion",
       "label": "Companions",
       "done": 48,
@@ -418,13 +447,50 @@
       ]
     },
     {
-      "kind": "monster_ability",
-      "label": "Monster Abilities",
+      "kind": "language",
+      "label": "Languages",
       "done": 0,
       "partial": 0,
-      "not_started": 25,
-      "denominator": 25,
+      "not_started": 1,
+      "denominator": 1,
       "pct": 0.0,
+      "excluded_from_percentage": 2,
+      "standing_breakdown": {
+        "unclassified": 2,
+        "origin": 1
+      },
+      "items": [
+        {
+          "name": "Common (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Common (cannot speak)"
+        },
+        {
+          "name": "Reptoid",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "origin",
+          "display_name": "Reptoid"
+        },
+        {
+          "name": "Sasquatch",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Sasquatch"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 22,
+      "partial": 2,
+      "not_started": 1,
+      "denominator": 25,
+      "pct": 88.0,
       "excluded_from_percentage": 15,
       "standing_breakdown": {
         "origin": 25,
@@ -433,147 +499,147 @@
       "items": [
         {
           "name": "Air Blast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike.ChuspikiRacialTrait",
           "standing": "origin",
           "display_name": "Air Blast"
         },
         {
           "name": "Ambush Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.PlesiosaurusRacialTrait",
           "standing": "origin",
           "display_name": "Ambush Attack"
         },
         {
           "name": "Ball Tail",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.DigmaulRacialTrait",
           "standing": "origin",
           "display_name": "Ball Tail"
         },
         {
           "name": "Basic Aerokinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.ChuspikiRacialTrait",
           "standing": "origin",
           "display_name": "Basic Aerokinesis"
         },
         {
           "name": "Bewildering Assault",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.EsipilRacialTrait",
           "standing": "origin",
           "display_name": "Bewildering Assault"
         },
         {
           "name": "Brain Drain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BrainMoleRacialTrait",
           "standing": "origin",
           "display_name": "Brain Drain"
         },
         {
           "name": "Drench",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.WaterWyspRacialTrait",
           "standing": "unclassified",
           "display_name": "Drench"
         },
         {
           "name": "Easily Trained",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.TroodonRacialTrait",
           "standing": "origin",
           "display_name": "Easily Trained"
         },
         {
           "name": "Easy to Call",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.SahkilSubtypeTrait",
           "standing": "origin",
           "display_name": "Easy to Call"
         },
         {
           "name": "Emotional Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.SahkilSubtypeTrait",
           "standing": "origin",
           "display_name": "Emotional Focus"
         },
         {
           "name": "Feather Fall",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Feather Fall"
         },
         {
           "name": "Hold Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.BlueWhaleRacialTrait",
           "standing": "unclassified",
           "display_name": "Hold Breath (SpecialQuality.Extraordinary.BlueWhaleRacialTrait)"
         },
         {
           "name": "Hold Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.NarwhalRacialTrait",
           "standing": "unclassified",
           "display_name": "Hold Breath (SpecialQuality.Extraordinary.NarwhalRacialTrait)"
         },
         {
           "name": "Lesser Telekinesis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.AetherWyspRacialTrait",
           "standing": "origin",
           "display_name": "Lesser Telekinesis"
         },
         {
           "name": "Living Battery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.WyspRacialTrait",
           "standing": "origin",
           "display_name": "Living Battery"
         },
         {
           "name": "Look of Fear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.EsipilRacialTrait",
           "standing": "origin",
           "display_name": "Look of Fear (SpecialAttack.Supernatural.EsipilRacialTrait)"
         },
         {
           "name": "Look of Fear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.SahkilSubtypeTrait",
           "standing": "origin",
           "display_name": "Look of Fear (SpecialAttack.Supernatural.SahkilSubtypeTrait)"
         },
         {
           "name": "Pressure Adaptation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.CamerocerasRacialTrait",
           "standing": "origin",
           "display_name": "Pressure Adaptation"
         },
         {
           "name": "Ramming Snout",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.KaprosuchusRacialTrait",
           "standing": "origin",
           "display_name": "Ramming Snout"
         },
         {
           "name": "Repartee",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.LiminalSpriteRacialTrait",
           "standing": "origin",
           "display_name": "Repartee"
         },
         {
           "name": "Resonance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.WyspRacialTrait.Aura",
           "standing": "origin",
           "display_name": "Resonance"
@@ -587,126 +653,126 @@
         },
         {
           "name": "Second Sight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.BrainMoleRacialTrait",
           "standing": "origin",
           "display_name": "Second Sight"
         },
         {
           "name": "Servitor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.WyspRacialTrait",
           "standing": "origin",
           "display_name": "Servitor"
         },
         {
           "name": "Shrouded Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.BrainMoleRacialTrait",
           "standing": "origin",
           "display_name": "Shrouded Mind"
         },
         {
           "name": "Skip Between",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.SahkilSubtypeTrait",
           "standing": "origin",
           "display_name": "Skip Between"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.BrainMoleRacialTrait",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike.BrainMoleRacialTrait)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.ChuspikiRacialTrait",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike.ChuspikiRacialTrait)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.EsipilRacialTrait",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike.EsipilRacialTrait)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.LiminalSpriteRacialTrait",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike.LiminalSpriteRacialTrait)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.XiaoRacialTrait",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike.XiaoRacialTrait)"
         },
         {
           "name": "Spirit Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.SahkilSubtypeTrait",
           "standing": "unclassified",
           "display_name": "Spirit Touch"
         },
         {
           "name": "Spit",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.WollipedRacialTrait",
           "standing": "unclassified",
           "display_name": "Spit"
         },
         {
           "name": "Sprint",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.TherizinosaurusRacialTrait",
           "standing": "unclassified",
           "display_name": "Sprint"
         },
         {
           "name": "Sweeping Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.TherizinosaurusRacialTrait",
           "standing": "origin",
           "display_name": "Sweeping Strike"
         },
         {
           "name": "Tusk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.NarwhalRacialTrait",
           "standing": "origin",
           "display_name": "Tusk"
         },
         {
           "name": "Unnatural Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialQuality.Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Unnatural Aura"
         },
         {
           "name": "Versatile Performance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.LiminalSpriteRacialTrait",
           "standing": "unclassified",
           "display_name": "Versatile Performance"
         },
         {
           "name": "Wind Blessed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.ChuspikiRacialTrait",
           "standing": "origin",
           "display_name": "Wind Blessed"
         },
         {
           "name": "Wind Form",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.ChuspikiRacialTrait",
           "standing": "unclassified",
           "display_name": "Wind Form"
@@ -718,13 +784,13 @@
       "label": "Race Traits",
       "done": 1,
       "partial": 1,
-      "not_started": 81,
-      "denominator": 83,
+      "not_started": 82,
+      "denominator": 84,
       "pct": 1.2,
-      "excluded_from_percentage": 63,
+      "excluded_from_percentage": 62,
       "standing_breakdown": {
-        "unclassified": 63,
-        "origin": 83
+        "unclassified": 62,
+        "origin": 84
       },
       "items": [
         {
@@ -1494,7 +1560,7 @@
           "name": "Scales",
           "doneness": "not-started",
           "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Scales"
         },
         {
@@ -1812,6 +1878,182 @@
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Skinwalker"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 23,
+      "denominator": 23,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 23
+      },
+      "items": [
+        {
+          "name": "Aether",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Aether"
+        },
+        {
+          "name": "Android",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Android"
+        },
+        {
+          "name": "Astomoi",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Astomoi"
+        },
+        {
+          "name": "Deep One",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Deep One"
+        },
+        {
+          "name": "Gray",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Gray"
+        },
+        {
+          "name": "IsSkinwalker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsSkinwalker"
+        },
+        {
+          "name": "Manasaputra",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Manasaputra"
+        },
+        {
+          "name": "Phantom",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Phantom"
+        },
+        {
+          "name": "Robot",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Robot"
+        },
+        {
+          "name": "Sahkil",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Sahkil"
+        },
+        {
+          "name": "Skinwalker",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "origin",
+          "display_name": "Skinwalker (Race Builder Subtype)"
+        },
+        {
+          "name": "Skinwalker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Skinwalker"
+        },
+        {
+          "name": "Skinwalker",
+          "doneness": "not-started",
+          "type_facet": "Racial Heritage",
+          "standing": "origin",
+          "display_name": "Skinwalker (Racial Heritage)"
+        },
+        {
+          "name": "Skinwalker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Skinwalker #4"
+        },
+        {
+          "name": "Werebat-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Werebat-Kin"
+        },
+        {
+          "name": "Werebear-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Werebear-Kin"
+        },
+        {
+          "name": "Wereboar-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wereboar-Kin"
+        },
+        {
+          "name": "Werecrocodile-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Werecrocodile-Kin"
+        },
+        {
+          "name": "Wereraptor-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wereraptor-Kin"
+        },
+        {
+          "name": "Wererat-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wererat-Kin"
+        },
+        {
+          "name": "Wereshark-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wereshark-Kin"
+        },
+        {
+          "name": "Weretiger-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Weretiger-Kin"
+        },
+        {
+          "name": "Werewolf-Kin",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Werewolf-Kin"
         }
       ]
     }

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Implacable Stalker ~ Gory Display",
+    "delivery": "Extraordinary",
+    "description": "Whenever an implacable stalker kills a sentient living creature, as a swift action, it can revel in the kill, shredding its victim's corpse in a gruesome display of power. If it does, it chooses one of the following benefits -- gain a +4 morale bonus to Strength and Dexterity for 1 minute, regain a single use of a spell-like ability that it can normally use three or more times per day, or immediately heal a number of hit points equal to its Hit Dice. Alternatively, instead of any of these benefits, the implacable stalker can cause a single creature within 60 feet to become more vulnerable to fear. Creatures affected in this way lose any immunity to fear they may have. If the creature did not possess immunity to fear, it takes a -4 penalty on saving throws to resist fear effects, and all Intimidate checks attempted against it receive a +4 circumstance bonus. These effects last for 10 minutes. Finally, if the creature is currently immune to the implacable stalker's fear aura because it succeeded at a previous saving throw, it loses that immunity.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:implacable_stalker_gory_display",
+    "name": "Gory Display",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever an implacable stalker kills a sentient living creature, as a swift action, it can revel in the kill, shredding its victim's corpse in a gruesome display of power. If it does, it chooses one of the following benefits -- gain a +4 morale bonus to Strength and Dexterity for 1 minute, regain a single use of a spell-like ability that it can normally use three or more times per day, or immediately heal a number of hit points equal to its Hit Dice. Alternatively, instead of any of these benefits, the implacable stalker can cause a single creature within 60 feet to become more vulnerable to fear. Creatures affected in this way lose any immunity to fear they may have. If the creature did not possess immunity to fear, it takes a -4 penalty on saving throws to resist fear effects, and all Intimidate checks attempted against it receive a +4 circumstance bonus. These effects last for 10 minutes. Finally, if the creature is currently immune to the implacable stalker's fear aura because it succeeded at a previous saving throw, it loses that immunity."
+      },
+      {
+        "key": "KEY",
+        "value": "Implacable Stalker ~ Gory Display"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.ImplacableStalker"
+      }
+    ],
+    "source_page": "p.239",
+    "traits": [
+      "ImplacableStalker"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 292,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Implacable Stalker ~ Gory Display",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

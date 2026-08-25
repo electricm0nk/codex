@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sense Magic ~ Spontaneous",
+    "name": "Sense Magic",
+    "description": "Detect magic auras.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sense Magic ~ Spontaneous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Words of Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "WordsOfPowerOutput.Effect.Detection.Bard0.Oracle0.Inquisitor0.Sorcerer0.Summoner0"
+      },
+      {
+        "key": "DESC",
+        "value": "Detect magic auras."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.174"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 286,
+    "record_key": "Sense Magic ~ Spontaneous"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

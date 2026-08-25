@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Skirmisher",
     "name": "Skirmisher",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Many rangers rely on spells, but there are some who eschew aid from divine powers for their own reasons. Skirmishers rely on their wits, their wisdom, and sometimes even instinct to aid in their quests.",
     "raw_tokens": [
       {
@@ -51,6 +51,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Skirmisher],[!PREFACT:1,ABILITIES,Ranger_Archetype_Spells=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Spells|true"
       }
     ]
   },
@@ -67,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

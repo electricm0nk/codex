@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption ~ Armored Stain",
+    "name": "Armored Stain",
+    "description": "Your take a -%1 penalty on Dexterity- and Strength- based skill checks.|PrometheanArmoredPenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Armored Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PrometheanArmoredStain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PrometheanArmoredPenalty|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "Your take a -%1 penalty on Dexterity- and Strength- based skill checks.|PrometheanArmoredPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Dexterity,TYPE=Strength|-PrometheanArmoredPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrometheanArmoredPenalty|1+(PrometheanManifestation>=5)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 717,
+    "record_key": "Promethean Corruption ~ Armored Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

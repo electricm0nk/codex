@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis Archetype ~ Ectopic Artisan",
+    "name": "Ectopic Artisan",
+    "class": "Aegis",
+    "description": "You blend the tools of the shaper into your own skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis Archetype ~ Ectopic Artisan"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AegisArchetype.AegisAstralRepair.AegisDamageReduction.AegisReconfigure.AegisMasterCraftsman.AegisCannibalizeSuit"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Aegis=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ectopic Artisan ~ Aegis Archetype],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AegisAstralRepair,TYPE.AegisDamageReduction,TYPE.AegisReconfigure,TYPE.AegisMasterCraftsman,TYPE.AegisCannibalizeSuit]"
+      },
+      {
+        "key": "DESC",
+        "value": "You blend the tools of the shaper into your own skills."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Ectopic Artisan ~ Astral Manipulation|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ectopic Artisan ~ Ectoplasmic Creation|PRECLASS:1,Aegis=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Ectopic Artisan ~ Astral Warrior|PRECLASS:1,Aegis=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Ectopic Artisan ~ Cocooning Strike|PRECLASS:1,Aegis=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Ectopic Artisan ~ Astral Swarm|PRECLASS:1,Aegis=12"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Disable Device"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1626,
+    "record_key": "Aegis Archetype ~ Ectopic Artisan"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

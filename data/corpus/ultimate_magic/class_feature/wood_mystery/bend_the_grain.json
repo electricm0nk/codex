@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wood Mystery ~ Bend the Grain",
     "name": "Bend the Grain",
-    "class": "Wood Mystery",
+    "class": "Oracle",
     "description": "As a standard action, %1/day, you can shape or warp wooden objects. This functions as either wood shape or warp wood.|BendTheGrainTimes",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

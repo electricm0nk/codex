@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Decollate",
+    "school": "Necromancy",
+    "level": 4,
+    "description": "A target can safely remove its head."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_spells.lst",
+    "sha256": "29f138223c7315e28ef034306a2f02621b7e16b2c397a98ed2a8f924805f0f0c",
+    "line": 30,
+    "record_key": "Decollate"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

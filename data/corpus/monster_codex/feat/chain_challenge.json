@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Chain Challenge",
+    "category": "General",
+    "name": "Chain Challenge",
+    "description": "You feed off the rush of victory over your enemies, and channel that fervor into battle. When the target of your challenge ability is killed or knocked unconscious, you can declare a new challenge target within 30 feet as an immediate action. This action must be taken immediately upon your initial challenge target's defeat, and you can't take it later if you are unable to act at the time. If you declare a new challenge using this feat, it doesn't count against your total daily uses of challenge. You can chain together challenges beyond the first.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Cavalier ~ Challenge,Samurai ~ Challenge",
+      "PRELEVEL:MIN=7"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 10,
+    "record_key": "Chain Challenge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

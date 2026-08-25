@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Unlock Psionics",
+    "name": "Unlock Psionics",
+    "class": "Aegis",
+    "description": "Gain bonuses to Use Magic Device.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Unlock Psionics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain bonuses to Use Magic Device."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Use Magic Device|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Use Magic Device|2|PRESKILL:1,Use Magic Device=10"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 132,
+    "record_key": "Aegis ~ Unlock Psionics"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Cockatrice ~ Petrification",
+    "name": "Petrification",
+    "description": "A mythic cockatrice's bite causes flesh to calcify and harden-multiple bites can cause a living creature to fossilize into stone. Each time a creature is damaged by a mythic cockatrice's bite attack, it must succeed at a DC 13 Fortitude save or take 1d6 points of Dexterity damage as its flesh and bones stiffen and harden. If a creature's Dexterity score is reduced to 0 by a cockatrice's bite, that creature immediately turns completely to stone, as if petrified by a flesh to stone spell. Every day, a creature petrified by a cockatrice in this manner can attempt a new DC 12 Fortitude save; if it succeeds, the victim recovers from the petrification with a Dexterity score of 1 (and thereafter can be restored to full Dexterity by natural healing or magic as normal). If a petrified creature fails three of these Fortitude saves in a row, the petrified state becomes permanent. A creature restored to flesh via magic has any Dexterity damage caused by cockatrice bites removed, but not any existing Dexterity damage from other sources. A cockatrice is immune to the petrification ability of itself and of other cockatrices, but other petrification attacks affect them normally. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Cockatrice ~ Petrification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Cockatrice Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic cockatrice's bite causes flesh to calcify and harden-multiple bites can cause a living creature to fossilize into stone. Each time a creature is damaged by a mythic cockatrice's bite attack, it must succeed at a DC 13 Fortitude save or take 1d6 points of Dexterity damage as its flesh and bones stiffen and harden. If a creature's Dexterity score is reduced to 0 by a cockatrice's bite, that creature immediately turns completely to stone, as if petrified by a flesh to stone spell. Every day, a creature petrified by a cockatrice in this manner can attempt a new DC 12 Fortitude save; if it succeeds, the victim recovers from the petrification with a Dexterity score of 1 (and thereafter can be restored to full Dexterity by natural healing or magic as normal). If a petrified creature fails three of these Fortitude saves in a row, the petrified state becomes permanent. A creature restored to flesh via magic has any Dexterity damage caused by cockatrice bites removed, but not any existing Dexterity damage from other sources. A cockatrice is immune to the petrification ability of itself and of other cockatrices, but other petrification attacks affect them normally. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 81,
+    "record_key": "Mythic Cockatrice ~ Petrification"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

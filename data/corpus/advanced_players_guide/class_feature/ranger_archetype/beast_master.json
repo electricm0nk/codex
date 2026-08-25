@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Beast Master",
     "name": "Beast Master",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Some rangers, particularly those in primitive lands or who were raised by animals, have unusually strong bonds with animals. Unique among rangers, they can bond with multiple animals of any kind, creating a menagerie of wild yet loyal creatures, like a strange family.",
     "raw_tokens": [
       {
@@ -59,6 +59,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Beast Master],[!PREFACT:1,ABILITIES,Ranger_Archetype_ClassSkills=True,Ranger_Archetype_HuntersBond=True,Ranger_Archetype_CombatStyleFeat6=True,Ranger_Archetype_Camouflage=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Camouflage|true"
       }
     ]
   },
@@ -75,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

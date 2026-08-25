@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Living Armor",
+    "name": "Living Armor",
+    "description": "You can sheathe your body in an armored carapace.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Living Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "HiveManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "HiveManifestationLevel,2"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Hive Corruption ~ Living Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "DESC",
+        "value": "You can sheathe your body in an armored carapace."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hive Corruption ~ Living Armor Gift|Hive Corruption ~ Living Armor Stain"
+      },
+      {
+        "key": "DESC",
+        "value": "[Special] Upon receiving this manifestation, you must take both the gift and the stain, even with the useful corruption or vile corruption variants.|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Corruption (Useful),Rules ~ Use Corruption (Vile)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 428,
+    "record_key": "Hive Corruption ~ Living Armor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

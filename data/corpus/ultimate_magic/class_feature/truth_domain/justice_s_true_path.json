@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Truth Domain ~ Justice's True Path",
     "name": "Justice's True Path",
-    "class": "Truth Domain",
+    "class": "Cleric",
     "description": "As a standard action, you can touch a creature, granting a +%1 insight bonus on one attack roll, skill check, ability check, or saving throw before your next turn; this bonus lasts for 1 round. You can use this ability %2 times per day.|JusticesTruePathBonus|DomainTruthTimes",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

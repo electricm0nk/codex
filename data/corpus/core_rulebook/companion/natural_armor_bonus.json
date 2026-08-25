@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Familiar ~ Natural Armor Bonus",
+    "name": "Natural Armor Bonus",
+    "description": "The number noted here is in addition to the familiar's existing natural armor bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar ~ Natural Armor Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Familiar Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The number noted here is in addition to the familiar's existing natural armor bonus."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|FamiliarAC|TYPE=NaturalArmor.STACK"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarAC|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarAC|(1+MASTERVAR(\"FamiliarLVL\"))/2|PREVAREQ:FamiliarACStandard,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarACStandard|0"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_cr.lst",
+    "sha256": "edda5ccc2df39b9c3415b43b6bf208454cd1233824b38070c8f19f97c9b45b93",
+    "line": 59,
+    "record_key": "Familiar ~ Natural Armor Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

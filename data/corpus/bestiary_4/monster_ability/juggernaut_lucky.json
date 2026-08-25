@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Juggernaut ~ Lucky",
+    "delivery": "Supernatural",
+    "description": "Twice per day, the juggernaut may reroll any d20 roll that it has just made before the results of the roll are revealed. The juggernaut must take the result of the reroll, even if it's worse than the original roll.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:juggernaut_lucky",
+    "name": "Luck Domain - Lucky",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Twice per day, the juggernaut may reroll any d20 roll that it has just made before the results of the roll are revealed. The juggernaut must take the result of the reroll, even if it's worse than the original roll."
+      },
+      {
+        "key": "KEY",
+        "value": "Juggernaut ~ Lucky"
+      },
+      {
+        "key": "TYPE",
+        "value": "JuggernautDomain.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "JuggernautDomain"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 936,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Juggernaut ~ Lucky",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

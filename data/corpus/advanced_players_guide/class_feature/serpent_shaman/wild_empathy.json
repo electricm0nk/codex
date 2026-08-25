@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Serpent Shaman ~ Wild Empathy",
     "name": "Wild Empathy",
-    "class": "Serpent Shaman",
+    "class": "Shaman",
     "description": "A serpent shaman can use wild empathy with reptiles as a full-round action with a +4 bonus.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

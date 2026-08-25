@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "False Casting",
+    "name": "False Casting",
+    "description": "When using a magic item, you can trick onlookers into thinking you used spellcasting instead.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PREABILITY:1,CATEGORY=FEAT,Magical Aptitude],[PRESKILL:2,Bluff=1,Sleight of Hand=1]"
+      },
+      {
+        "key": "DESC",
+        "value": "When using a magic item, you can trick onlookers into thinking you used spellcasting instead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you use a magic item or a spell-like ability to create a magical effect, you may add additional magic-seeming words and hand gestures to trick onlookers into believing you cast the spell yourself. If using an item that is recognizable as a magical implement (such as a wand or ring), you can trick viewers into thinking you are just using the item as a focus component. Onlookers who have no ranks in Spellcraft have no knowledge of what is genuine spellcasting, and automatically believe you are casting a spell.&nl;If an onlooker attempts a Spellcraft check to identify your \"casting,\" his check is opposed by your Bluff check. If he succeeds, he realizes the deception. If he fails, he believes you cast the spell. Regardless of the result of that opposed check, he uses the result of that Spellcraft check to identify the \"spell\" you cast, except the DC is 20 + the spell's level instead of 15 + the spell's level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_feats.lst",
+    "sha256": "f255f32b2c6894521aee43ebb941009d9cf63e0a34a905a8607bbec5ee203a3c",
+    "line": 7,
+    "record_key": "False Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hunter Archetype ~ Packmaster",
     "name": "Packmaster",
-    "class": "Hunter Archetype",
+    "class": "Hunter",
     "description": "Some hunters form bonds with packs of well-trained creatures. Whether such a hunter is a northern berserker running with a pack of timber wolves or a savage warrior dashing through the jungle alongside her herd of dimetrodons, the packmaster revels in the thrill of the hunt and the glory of the kill. A packmaster is more comfortable in groups than alone, and although her animal companions may be weaker than a typical hunter's, what they lack in strength they make up for in numbers.",
     "raw_tokens": [
       {
@@ -63,6 +63,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Hunter"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Packmaster],[!PREFACT:1,ABILITIES,Hunter_Archetype_AnimalCompanion=True,Hunter_Archetype_AnimalFocus=True,Hunter_Archetype_TeamworkFeats=True,Hunter_Archetype_MasterHunter=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_SecondAnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_MasterHunter|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_TeamworkFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_MasterHunter|true"
       }
     ]
   },
@@ -79,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

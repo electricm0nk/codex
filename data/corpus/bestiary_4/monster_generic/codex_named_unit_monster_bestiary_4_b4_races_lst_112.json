@@ -1,0 +1,191 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:38Z",
+  "data": {
+    "key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_112)",
+    "name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_112)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,80"
+      },
+      {
+        "key": "REACH",
+        "value": "40"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|20|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|32"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|34"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|26"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|11|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|25"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BleedDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|29"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Escape Artist|Fly|Intimidate|Knowledge (nobility)|Perception|Spellcraft|Stealth|Survival|Swim"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tattered Lash,Natural.Melee.Finesseable.Weapon.Slashing,*4,2d8,SPROP=plus bleed"
+      },
+      {
+        "key": "SR",
+        "value": "40"
+      },
+      {
+        "key": "DR",
+        "value": "15/Epic and Lawful"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:34"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "CR",
+        "value": "29"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "KIT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 112,
+    "record_key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_112)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_4:b4_races.lst:112"
+  }
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Kinetic Blade",
     "name": "Kinetic Blade",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element universal; Type form infusion; Level 1; Burn 1 Associated Blasts any Saving Throw none You form a weapon using your kinetic abilities. You create a nonreach, light or one-handed weapon in your hand formed of pure energy or elemental matter. (If you're a telekineticist, you instead transfer the power of your kinetic blast to any object held in one hand.) The kinetic blade's shape is purely cosmetic and doesn't affect the damage dice, critical threat range, or critical multiplier of the kinetic blade, nor does it grant the kinetic blade any weapon special features. The object held by a telekineticist for this form infusion doesn't prevent her from using gather power. You can use this form infusion once as part of an attack action, a charge action, or a full-attack action in order to make melee attacks with your kinetic blade. Since it's part of another action (and isn't an action itself), using this wild talent doesn't provoke any additional attacks of opportunity. The kinetic blade deals your kinetic blast damage on each hit (applying any modifiers to your kinetic blast's damage as normal, but not your Strength modifier). The blade disappears at the end of your turn. The weapon deals the same damage type that your kinetic blast deals, and it interacts with Armor Class and spell resistance as normal for a blast of its type. Even if a telekineticist uses this power on a magic weapon or another unusual object, the attack doesn't use any of the magic weapon's bonuses or effects and simply deals the telekineticist's blast damage. The kinetic blade doesn't add the damage bonus from elemental overflow.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

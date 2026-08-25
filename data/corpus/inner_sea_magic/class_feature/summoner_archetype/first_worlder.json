@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ First Worlder",
     "name": "First Worlder",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "Most summoners have a close connection to creatures from the farthest reaches of the planes. A few have a primal connection to nature, and their power is tied to the First World. It is not unusual for these summoners to associate with druids, for like druids, first worlders have a powerful tie to the natural world. Some first worlders are driven half-mad by the strange energies and intelligences that seep into their minds and bodies, though, and these poor souls are prone to lash out at loggers, druids, or innocent passersby without considering whether or not they are threats. A first worlder's eidolon usually resembles a fey creature or plant monsters, though some are fantastic otherworldly animals with exaggerated features.",
     "raw_tokens": [
       {
@@ -55,6 +55,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ First Worlder],[!PREFACT:1,ABILITIES,Summoner_Archetype_SummonMonster=True,Summoner_Archetype_Eidolon=True,Summoner_Archetype_EidolonBaseForm=True,Summoner_Archetype_EidolonType=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_SummonMonster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_SummonMonster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Eidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_EidolonBaseForm|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_EidolonType|True"
       }
     ]
   },
@@ -71,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

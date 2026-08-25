@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "ABP_AC_Deflection",
+    "name": "ABP_AC_Deflection",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_AC_Deflection_Bonus|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Automatic Bonus Progression|AUTOMATIC|ABP Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|ABP_AC_Deflection_Bonus|TYPE=Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_AC_Deflection_Bonus|1|PREVARGTEQ:ABP_AC_DeflectionLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_AC_Deflection_Bonus|1|PREVARGTEQ:ABP_AC_DeflectionLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_AC_Deflection_Bonus|1|PREVARGTEQ:ABP_AC_DeflectionLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_AC_Deflection_Bonus|1|PREVARGTEQ:ABP_AC_DeflectionLVL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_AC_Deflection_Bonus|1|PREVARGTEQ:ABP_AC_DeflectionLVL,18"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 38,
+    "record_key": "ABP_AC_Deflection"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

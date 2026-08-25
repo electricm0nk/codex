@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Rules ~ Use Race Builder System",
+    "name": "Use Advanced Race Guide Race Builder System",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rules ~ Use Race Builder System"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaceLegs|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RaceHands|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TraitsPerCategory|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ARG_RaceBuilderPoints|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Race Type|AUTOMATIC|Racial Type ~ Humanoid|!PREABILITY:1,CATEGORY=Racial Traits,TYPE.AltRaceTypeQuality"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Race Size|AUTOMATIC|Racial Size ~ Medium|!PREABILITY:1,CATEGORY=Racial Traits,TYPE.AltRaceSize"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Race Speed|AUTOMATIC|Racial Speed ~ Normal|!PREABILITY:1,CATEGORY=Racial Traits,TYPE.AltRaceSpeed"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Racial Language ~ Standard|!PREABILITY:1,CATEGORY=Special Ability,TYPE.RacialQualityLanguage"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Race Starting Points|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Race Name|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Race Languages|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceLegs,RaceHands|2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 9,
+    "record_key": "Rules ~ Use Race Builder System"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

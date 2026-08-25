@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Harmonic Spell",
+    "category": "General",
+    "name": "Harmonic Spell",
+    "description": "You can weave bardic music effects into your spellcasting in such a way that your spellcasting and bardic performance become indistinguishable. Casting spells extends duration of bardic performance. You can weave bardic music effects into your spellcasting in such a way that your spellcasting and bardic performance become indistinguishable. Whenever you cast a spell while you are maintaining a bardic performance, you can maintain the bardic performance for that round without expending one of your rounds of performance for the day. In addition, you can switch from one bardic performance to another as a swift action when you cast a spell while maintaining a bardic performance.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Bardic Performance"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 28,
+    "record_key": "Harmonic Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

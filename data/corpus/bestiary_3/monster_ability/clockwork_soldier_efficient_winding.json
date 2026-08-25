@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Clockwork Soldier ~ Efficient Winding",
+    "delivery": "Extraordinary",
+    "description": "A clockwork soldier can function for 2 days per Hit Die every time it is wound.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:clockwork_soldier_efficient_winding",
+    "name": "Efficient Winding",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A clockwork soldier can function for 2 days per Hit Die every time it is wound."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Soldier ~ Efficient Winding"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClockworkSoldierRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.57",
+    "traits": [
+      "ClockworkSoldierRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 580,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Clockwork Soldier ~ Efficient Winding",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

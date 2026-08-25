@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T20:09:16Z",
   "data": {
     "key": "Barbarian Archetype ~ Dreadnought",
     "name": "Dreadnought",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Unstoppable and fearless, the dreadnought turns the terror of her enemies into violent physical power.",
     "raw_tokens": [
       {
@@ -103,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

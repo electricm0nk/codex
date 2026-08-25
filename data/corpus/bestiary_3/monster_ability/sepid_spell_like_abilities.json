@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sepid ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 15th; concentration +21) At will-comprehend languages, deeper darkness, greater teleport (self plus 50 lbs. of objects only), nondetection, speak with dead (DC 19) 3/day-blindness/deafness (DC 18), fly, ice storm, invisibility, mirror image, scorching ray, touch of idiocy, true strike 1/day-animate dead, baleful polymorph (DC 21), bestow curse (DC 20), break enchantment, create undead, disintegrate (DC 22), enervation, fireball (DC 19), hold monster (DC 21), summon (level 4, 1 ghawwas or 1 shira 40%%), true seeing",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:sepid_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 15th; concentration +21) At will-comprehend languages, deeper darkness, greater teleport (self plus 50 lbs. of objects only), nondetection, speak with dead (DC 19) 3/day-blindness/deafness (DC 18), fly, ice storm, invisibility, mirror image, scorching ray, touch of idiocy, true strike 1/day-animate dead, baleful polymorph (DC 21), bestow curse (DC 20), break enchantment, create undead, disintegrate (DC 22), enervation, fireball (DC 19), hold monster (DC 21), summon (level 4, 1 ghawwas or 1 shira 40%%), true seeing"
+      },
+      {
+        "key": "KEY",
+        "value": "Sepid ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "SepidRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "SepidRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 743,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Sepid ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

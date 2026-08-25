@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Tanglefoot Bomb",
     "name": "Tanglefoot Bomb*",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "A creature that takes a direct hit from a tanglefoot bomb must save against the bomb's DC or be entangled and glued to the floor as if it had failed its save against a tanglefoot bag (see page 160 of the Core Rulebook). Creatures in the splash area that fail their saves are entangled but not glued to the floor; those who make this save are not entangled at all.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

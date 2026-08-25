@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Underfoot",
     "name": "Underfoot",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "When raging, the giant stalker can attempt to enter a giant's space, provided she is at least one size category smaller than the giant. This does not provoke an attack of opportunity. Doing so takes a move action and requires a successful combat maneuver check against the giant's CMD. If she succeeds, she enters a square in the giant's space. If she makes an attack against the giant while sharing its space, the giant is treated as being flat-footed against her. At the end of her turn, she exits the giant's space into any square adjacent to the giant's space.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

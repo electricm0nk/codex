@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vampire (Nosferatu) ~ Weaknesses",
+    "delivery": null,
+    "description": "A nosferatu can't tolerate the strong odor of garlic, and won't enter an area laced with it. Similarly, it recoils from mirrors or strongly presented holy symbols. These things don't harm the nosferatu-they merely keep it at bay. A recoiling nosferatu must stay at least 5 feet away from the mirror or holy symbol and can't touch or make melee attacks against that creature. Holding a nosferatu at bay takes a standard action. After 1 round, a nosferatu can overcome its revulsion of the object and function normally each round it succeeds at a DC 25 Will save. A nosferatu cannot enter a private home or dwelling unless invited in by someone with the authority to do so. Reducing a nosferatu's hit points to 0 incapacitates it but doesn't always destroy it (see fast healing). However, certain attacks can slay nosferatu. Exposing any nosferatu to direct sunlight staggers it on the first round of exposure and destroys it utterly on the second consecutive round of exposure if it does not escape. Each round of immersion in running water deals an amount of damage to a nosferatu equal to one-third of its full normal hit points-a nosferatu reduced to 0 hit points in this manner is destroyed (If the base creature has a swim speed, the nosferatu is not harmed by running water.). Driving a wooden stake through a helpless nosferatu's heart instantly slays it (this is a full-round action). However, it returns to life if the stake is removed, unless its head is also severed and anointed with holy water.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:vampire_nosferatu_weaknesses",
+    "name": "Weaknesses",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A nosferatu can't tolerate the strong odor of garlic, and won't enter an area laced with it. Similarly, it recoils from mirrors or strongly presented holy symbols. These things don't harm the nosferatu-they merely keep it at bay. A recoiling nosferatu must stay at least 5 feet away from the mirror or holy symbol and can't touch or make melee attacks against that creature. Holding a nosferatu at bay takes a standard action. After 1 round, a nosferatu can overcome its revulsion of the object and function normally each round it succeeds at a DC 25 Will save. A nosferatu cannot enter a private home or dwelling unless invited in by someone with the authority to do so. Reducing a nosferatu's hit points to 0 incapacitates it but doesn't always destroy it (see fast healing). However, certain attacks can slay nosferatu. Exposing any nosferatu to direct sunlight staggers it on the first round of exposure and destroys it utterly on the second consecutive round of exposure if it does not escape. Each round of immersion in running water deals an amount of damage to a nosferatu equal to one-third of its full normal hit points-a nosferatu reduced to 0 hit points in this manner is destroyed (If the base creature has a swim speed, the nosferatu is not harmed by running water.). Driving a wooden stake through a helpless nosferatu's heart instantly slays it (this is a full-round action). However, it returns to life if the stake is removed, unless its head is also severed and anointed with holy water."
+      },
+      {
+        "key": "KEY",
+        "value": "Vampire (Nosferatu) ~ Weaknesses"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1416,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Vampire (Nosferatu) ~ Weaknesses",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Popobala ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "A popobala loses its frightful presence, popobala fever, and stench abilities when not in its true form.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:popobala_change_shape",
+    "name": "Change Shape",
+    "owners": [
+      "bestiary_3:monster:popobala"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A popobala loses its frightful presence, popobala fever, and stench abilities when not in its true form."
+      },
+      {
+        "key": "KEY",
+        "value": "Popobala ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      },
+      {
+        "key": "TYPE",
+        "value": "PopobalaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.221",
+    "traits": [
+      "PopobalaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1422,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Popobala ~ Change Shape",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

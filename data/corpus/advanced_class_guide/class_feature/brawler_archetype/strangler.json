@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler Archetype ~ Strangler",
     "name": "Strangler",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "A strangler is trained to choke the life out of her victims with her vise-like grip. Some stranglers are self-taught and are little more than brutish murderers, unhinged sociopaths, or opportunistic alley-bashers. Others are members of murder cults or specialized schools of assassination, trained since the cradle to kill with their bare hands.",
     "raw_tokens": [
       {
@@ -63,6 +63,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Strangler],[!PREFACT:1,ABILITIES,Brawler_Archetype_Knockout=True,Brawler_Archetype_BrawlersFlurry=True,Brawler_Archetype_UnarmedStrike=True,Brawler_Archetype_AwesomeBlow=True,Brawler_Archetype_ImprovedAwesomeBlow=True,Brawler_Archetype_ACBonus=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BrawlersFlurry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_Knockout|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_AwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ImprovedAwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BrawlersFlurry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_Knockout|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_AwesomeBlow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ImprovedAwesomeBlow|true"
       }
     ]
   },
@@ -79,5 +139,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

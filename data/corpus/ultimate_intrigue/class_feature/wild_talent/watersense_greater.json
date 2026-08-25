@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Watersense (Greater)",
+    "name": "Watersense, Greater",
+    "class": "Kineticist",
+    "description": "Element water; Type utility (Su); Level 5; Burn 0 - You project your watersense outward through the tides and water around you, allowing you to spy on others at a distance. You can take 10 minutes to project your senses, choosing a location within 480 feet that is connected to your current location via the same continuous body of water, or you can take 1 hour to attempt to spy on a specific creature within %1 miles that is visible from a location connected to your current location via the same continuous body of water. In the latter case, the creature receives a Will save as per scrying (including bonuses and penalties based on connection and knowledge); a target that saves is immune to your greater watersense for 24 hours. In either case, an extremely thin funnel of water, lasting for %1 minutes, carries light and sound to your location, where your target area or location appears in the water next to you and you can view it as if through a scrying sensor, allowing you to both see and hear the area immediately surrounding the other end of the funnel. In the case of a distance greater than 480 feet, the sound comes 1 round later than its corresponding visual information for every mile away you are (for instance, if you were 5 miles away, you would see your target start talking 5 rounds before you heard what it said). When you are tracking a creature, the funnel moves as best it can through the water to follow that creature, up to 150 feet per round, but the target can escape by simply moving away from the water. If you also possess the voice of the wind wild talent, you can use its message effect to send your voice through the funnel with a delay of 1 round per mile. This wild talent is a divination and scrying effect.|KineticistLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Watersense (Greater)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Watersense"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite watersense"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Water,5"
+      },
+      {
+        "key": "DESC",
+        "value": "Element water; Type utility (Su); Level 5; Burn 0 - You project your watersense outward through the tides and water around you, allowing you to spy on others at a distance. You can take 10 minutes to project your senses, choosing a location within 480 feet that is connected to your current location via the same continuous body of water, or you can take 1 hour to attempt to spy on a specific creature within %1 miles that is visible from a location connected to your current location via the same continuous body of water. In the latter case, the creature receives a Will save as per scrying (including bonuses and penalties based on connection and knowledge); a target that saves is immune to your greater watersense for 24 hours. In either case, an extremely thin funnel of water, lasting for %1 minutes, carries light and sound to your location, where your target area or location appears in the water next to you and you can view it as if through a scrying sensor, allowing you to both see and hear the area immediately surrounding the other end of the funnel. In the case of a distance greater than 480 feet, the sound comes 1 round later than its corresponding visual information for every mile away you are (for instance, if you were 5 miles away, you would see your target start talking 5 rounds before you heard what it said). When you are tracking a creature, the funnel moves as best it can through the water to follow that creature, up to 150 feet per round, but the target can escape by simply moving away from the water. If you also possess the voice of the wind wild talent, you can use its message effect to send your voice through the funnel with a delay of 1 round per mile. This wild talent is a divination and scrying effect.|KineticistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 38,
+    "record_key": "Wild Talent ~ Watersense (Greater)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

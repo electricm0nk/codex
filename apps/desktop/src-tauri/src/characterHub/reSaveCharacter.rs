@@ -231,6 +231,7 @@ mod tests {
             },
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
+            companion_species: None,
             saved_at: TEST_SAVED_AT.to_owned(),
         };
         let character_input = compose_character_input(&request);

@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "data": {
+    "key": "Craft (Ships)",
+    "name": "Craft (Ships)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "INT"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence.Craft.Base"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionSkill,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Ships)|3|TYPE=ClassSkill|PRECSKILL:1,Craft (Ships)|PRESKILL:1,Craft (Ships)=1"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Craft skill checks are made with a -2 circumstance penalty if improvised tools are used"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Craft (Ships)|-2|TYPE=Circumstance|!PREITEM:1,TYPE=CraftToolsShips"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_skills.lst",
+    "sha256": "4cb379aac1fcb20677623cecf3842a30eef88d79d4fe4fe00fbc0f49f856c9ea",
+    "line": 29,
+    "record_key": "Craft (Ships)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

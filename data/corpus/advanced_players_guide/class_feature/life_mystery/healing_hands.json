@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Life Mystery ~ Healing Hands",
     "name": "Healing Hands",
-    "class": "Life Mystery",
+    "class": "Oracle",
     "description": "You gain a +4 bonus on Heal checks. You may provide first aid to two people or treat two people for poison as a standard action (make a separate Heal check for each creature). When using the Heal skill to treat wounds from caltrops (and so on), treat deadly wounds, treat poison, treat disease, or treat long-term care, you may treat double the normal number of people you may treat at the same time. You may provide longterm care for yourself.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

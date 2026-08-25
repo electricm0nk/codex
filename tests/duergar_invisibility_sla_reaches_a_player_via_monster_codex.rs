@@ -257,9 +257,18 @@ fn the_monster_codex_race_trait_records_are_the_in_scope_ones() {
             "Oversized Goblin",
             "Oversized Goblin ~ Ability Scores",
             "Oversized Goblin ~ Size",
+            "Ratfolk ~ Cheek Pouches",
+            "Ratfolk ~ Cleanliness",
+            "Ratfolk ~ Lab Rat",
+            "Ratfolk ~ Surface Sprinter",
+            "Ratfolk ~ Surface Sprinter ~ Speed",
+            "Ratfolk ~ Surface Sprinter ~ Vision",
         ]),
-        "Monster Codex's in-scope racial traits are Duergar's 2 and Goblin's 3. Its six Ratfolk \
-         rows are deliberately absent: Ratfolk has no ingested race chassis, and emitting them \
-         would manufacture content for a race this project has not ingested."
+        "Monster Codex's in-scope racial traits are Duergar's 2, Goblin's 3, and (SD-32 \
+         card-11 T2b lane, 2026-08-23) Ratfolk's 6. Ratfolk gained a real chassis in \
+         `ingest_races.rs`'s SD-31-E6-F4-002 batch (2026-08-16); this test's own prior \
+         wording -- 'Ratfolk has no ingested race chassis' -- had gone stale against that \
+         landing. `Standard Goblin` (mc_abilities_race.lst:30) stays absent: no `DESC:`, \
+         `BONUS:` or `ABILITY:` token at all, so there is nothing to transcribe."
     );
 }

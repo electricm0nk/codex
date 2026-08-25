@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Trickery Domain ~ Master's Illusion",
     "name": "Master's Illusion",
-    "class": "Trickery Domain",
+    "class": "Cleric",
     "description": "You can create an illusion that hides the appearance of yourself and any number of allies within 30 feet for %1 rounds. This ability otherwise functions like the spell Veil. The save DC to disbelieve this effect is %2. The rounds do not need to be consecutive.|TrickeryMastersIllusionRounds|TrickeryMastersIllusionDC",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

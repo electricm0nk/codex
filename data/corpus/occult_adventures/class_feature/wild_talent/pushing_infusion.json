@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Pushing Infusion",
     "name": "Pushing Infusion",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element aether, air, earth, or water; Type substance infusion; Level 1; Burn 1 Associated Blasts air, blizzard, charged water, earth, magma, metal, mud, sandstorm, steam, telekinetic, water Saving Throw none The momentum of your kinetic blast knocks foes back. Attempt a bull rush combat maneuver check against each target damaged by your infused blast, using your Constitution modifier instead of your Strength modifier to determine your bonus. This infusion can push a foe back by a maximum of 5 feet. You can increase the burn cost of this infusion to increase the maximum distance pushed by 5 feet per additional point of burn accepted. You can't use this infusion with a form infusion such as cloud that causes your kinetic blast to lack a clear direction to push.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Channeling Force",
+    "category": "Combat",
+    "name": "Channeling Force",
+    "description": "You distill your channeled energy into a sheen of force that surrounds your weapon for a limited time.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.ChannelEnergy",
+      "PRESPELLDESCRIPTOR:1,Force=0"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 31,
+    "record_key": "Channeling Force"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Unforgotten",
+    "category": "Story",
+    "name": "Unforgotten",
+    "description": "[Not Implemented] You search for a person dear to you-lost, but you pray not dead. Your dogged determination reduces any nonlethal damage you take by 1 point, to a minimum of 1 point of nonlethal damage. You also gain a +1 bonus on Will saves. Goal:Find your lost loved one alive, and in the process, decisively defeat a challenging foe who kept you apart. Completion Benefit:You gain a +1 bonus on all saving throws, replacing the +1 bonus on Will saves. If you find your loved one dead, you lose all benefits from this feat until you put the body and possibly soul to proper rest. Putting the body to rest restores the completion benefit, but you don't regain the ability to reduce nonlethal damage.",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:You must have a close relative, spouse, or other person dear to your heart who never returned from a journey, was captured, or otherwise vanished with little trace, or you have the Major Disaster background."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 28,
+    "record_key": "Unforgotten"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Negative Levels",
+    "name": "Negative Levels",
+    "description": "%1 negative level (-%1 effective level and loses access to %1 spell from the highest spell level castable)|NegLevels|PREVARLTEQ:NegLevels,1",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NegLevels|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 negative level (-%1 effective level and loses access to %1 spell from the highest spell level castable)|NegLevels|PREVARLTEQ:NegLevels,1"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 negative levels (-%1 effective levels and loses access to %1 spells from the highest spell level castable)|NegLevels|PREVARGT:NegLevels,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|-1*(NegLevels)"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|-5*(NegLevels)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Fortitude,Reflex,Will|-1*(NegLevels)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Strength,TYPE=Dexterity,TYPE=Intelligence,TYPE=Wisdom,TYPE=Charisma|-1*(NegLevels)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.562"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 342,
+    "record_key": "Negative Levels"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

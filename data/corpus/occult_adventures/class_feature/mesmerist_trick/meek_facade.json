@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Meek Facade",
     "name": "Meek Facade",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "The subject magically seems like a weak target, goading an enemy into attacking her. The mesmerist can trigger this trick when the subject misses a creature with an attack (even if it's part of a full attack in which she hits that creature with another attack). The enemy must attack no one other than the subject, and the subject gains a +%1 dodge bonus to AC against the triggering enemy's attacks. Both of these effects last for 1 round. This is mind-affecting compulsion effect.|2+MesmeristLVL/5",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

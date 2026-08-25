@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Adaptive Warrior ~ Counter Fighting Style",
+    "name": "Counter Fighting Style",
+    "class": "Adaptive Warrior",
+    "description": "You get a +%1 competence bonus on attack and damage rolls against an enemy you have examined for at least one round.  This lasts for one minute, until you use Examine Technique on another target, or you have expended focus.|CounterFightingStyleBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adaptive Warrior ~ Counter Fighting Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CounterFightingStyleBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You get a +%1 competence bonus on attack and damage rolls against an enemy you have examined for at least one round.  This lasts for one minute, until you use Examine Technique on another target, or you have expended focus.|CounterFightingStyleBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " You can expend focus when attacking to automatically threaten a critical hit.|PRECLASS:1,Adaptive Warrior=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CounterFightingStyleBonus|max(1,AdaptiveWarriorLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.349"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1127,
+    "record_key": "Adaptive Warrior ~ Counter Fighting Style"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

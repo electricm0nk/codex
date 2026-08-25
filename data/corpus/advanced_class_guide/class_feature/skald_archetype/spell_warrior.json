@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald Archetype ~ Spell Warrior",
     "name": "Spell Warrior",
-    "class": "Skald Archetype",
+    "class": "Skald",
     "description": "The spell warrior uses his arcane knowledge rather than his rage to turn the tide of battle in favor of himself and his allies. With a clash of bracers and a sonorous chant, the Spell Warrior's song reaches out to touch the weapons of his allies, lending them arcane power. While his song does not inspire rage, he can use the power of his music to enchant the weapons of his allies and counter the spells of his foes.",
     "raw_tokens": [
       {
@@ -63,6 +63,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Skald"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Spell Warrior],[!PREFACT:1,ABILITIES,Skald_Archetype_ScribeScroll=True,Skald_Archetype_InspiredRage=True,Skald_Archetype_DirgeOfDoom=True,Skald_Archetype_SpellKenning=True,Skald_Archetype_MasterSkald=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_InspiredRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_MasterSkald|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ScribeScroll|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_InspiredRage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_MasterSkald|true"
       }
     ]
   },
@@ -79,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

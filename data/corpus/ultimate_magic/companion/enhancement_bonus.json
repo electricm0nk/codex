@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Black Blade ~ Enhancement Bonus",
+    "name": "Enhancement Bonus",
+    "description": "+%1|BBEnhancement",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Black Blade ~ Enhancement Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BBEnhancement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1|BBEnhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|10*BBEnhancement"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Blackblade"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 65,
+    "record_key": "Black Blade ~ Enhancement Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

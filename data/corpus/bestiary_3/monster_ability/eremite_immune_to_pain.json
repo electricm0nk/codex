@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Eremite ~ Immune to Pain",
+    "delivery": "Supernatural",
+    "description": "An eremite is immune to nonlethal damage, as well as to all magical effects associated with extreme pain, such as a symbol of pain, another eremite's pain attack, or similar effects at the GM's discretion.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:eremite_immune_to_pain",
+    "name": "Immune to Pain",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An eremite is immune to nonlethal damage, as well as to all magical effects associated with extreme pain, such as a symbol of pain, another eremite's pain attack, or similar effects at the GM's discretion."
+      },
+      {
+        "key": "KEY",
+        "value": "Eremite ~ Immune to Pain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "TYPE",
+        "value": "EremiteRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.172",
+    "traits": [
+      "EremiteRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1162,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Eremite ~ Immune to Pain",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

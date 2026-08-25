@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Avenging Beast ~ Skill Ranks per Level",
+    "name": "Skill Ranks per Level",
+    "class": "Vigilante",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Avenging Beast ~ Skill Ranks per Level"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.AvengingBeastClassFeatures"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOINTS|NUMBER|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_ui.lst",
+    "sha256": "82bfd1c734f1fc071a7e3de22959a711631bdcab7e0e9a921b109e9ee49fe46d",
+    "line": 12,
+    "record_key": "Avenging Beast ~ Skill Ranks per Level"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

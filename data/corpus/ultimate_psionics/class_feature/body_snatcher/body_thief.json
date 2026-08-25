@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Body Snatcher ~ Body Thief",
+    "name": "Body Thief",
+    "class": "Body Snatcher",
+    "description": "You can manifest mind switch at a higher manifester level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Body Snatcher ~ Body Thief"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BodySnatcherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest mind switch at a higher manifester level."
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.Mind Switch|BodySnatcherLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.352"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|SPELLCASTER.Psionic=6|Mind Switch"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1150,
+    "record_key": "Body Snatcher ~ Body Thief"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

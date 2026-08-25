@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jackalwere ~ Sleep Gaze",
+    "delivery": "Supernatural",
+    "description": "Sleep for 3 minutes (a standard action rouses the creature, as does damage), 30 feet, Will DC 12 negates. A creature that succeeds at the saving throw cannot be affected by the same jackalwere's sleep gaze for 24 hours. This is a sleep effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jackalwere_sleep_gaze",
+    "name": "Sleep Gaze",
+    "owners": [
+      "bestiary_3:monster:jackalwere"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sleep for 3 minutes (a standard action rouses the creature, as does damage), 30 feet, Will DC 12 negates. A creature that succeeds at the saving throw cannot be affected by the same jackalwere's sleep gaze for 24 hours. This is a sleep effect. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Jackalwere ~ Sleep Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "TYPE",
+        "value": "JackalwereRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.154",
+    "traits": [
+      "JackalwereRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1078,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Jackalwere ~ Sleep Gaze",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

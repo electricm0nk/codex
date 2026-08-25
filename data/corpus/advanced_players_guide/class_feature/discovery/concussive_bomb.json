@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Concussive Bomb",
     "name": "Concussive Bomb*",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "When the alchemist creates a bomb, he can choose to have it inflict sonic damage. Concussive bombs deal %1d%2 points of sonic damage instead of the normal damage for a bomb. Creatures that take a direct hit from a concussive bomb are deafened for 1 minute unless they succeed at a Fortitude save.|AlchemistBombAdditionalDice+1|ConcusiveBombDieSize",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

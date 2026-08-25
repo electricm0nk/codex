@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Pack Wild Shape",
+    "name": "Pack Wild Shape",
+    "description": "When you use the wild shape class feature, you can also transform allies when you change shape. When you use wild shape, you can expend one use of mythic power to select %1 willing allies. These allies take the same animal form as you do, with the same abilities as yours. Divide the duration of that use of wild shape evenly (rounded down) among yourself and the affected allies. The transformation ends for everyone when you return to your normal form or use wild shape again. An ally can end its own transformation early as a standard action without affecting the duration for you or other allies. You must have the wild shape class feature to select this ability.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Pack Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Wild Shape"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use the wild shape class feature, you can also transform allies when you change shape. When you use wild shape, you can expend one use of mythic power to select %1 willing allies. These allies take the same animal form as you do, with the same abilities as yours. Divide the duration of that use of wild shape evenly (rounded down) among yourself and the affected allies. The transformation ends for everyone when you return to your normal form or use wild shape again. An ally can end its own transformation early as a standard action without affecting the duration for you or other allies. You must have the wild shape class feature to select this ability.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29, 35"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 228,
+    "record_key": "Mythic Path Ability ~ Pack Wild Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

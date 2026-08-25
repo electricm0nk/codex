@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Deadhand Initiate",
+    "category": "Combat",
+    "name": "Deadhand Initiate",
+    "description": "Your adulation of death not only shields you from your fears, it allows you to feed on them. While using Deadhand Style, as long as you have at least 1 point in your ki pool, your bonus on saving throws against fear effects increases to +4, and the DC of Intimidate checks attempted against you increases by 8. Additionally, if an enemy targets you with a fear effect, you can spend 1 point from your ki pool as an immediate action to gain a number of temporary hit points equal to twice your Hit Dice.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Deadhand Style",
+      "PRESKILL:1,Knowledge (religion)=6",
+      "PREVARGTEQ:PreStatScore_WIS,19"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 16,
+    "record_key": "Deadhand Initiate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

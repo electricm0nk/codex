@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Warrior ~ Eternal Warrior",
+    "name": "Eternal Warrior",
+    "class": "Psychic Warrior",
+    "description": "Gain a wide variety of bonuses for 5 minutes; 1/day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Warrior ~ Eternal Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a wide variety of bonuses for 5 minutes; 1/day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|ALL|PsychicWarriorPrimeStat*PsionicFocusActive"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|PsychicWarriorPrimeStat*PsionicFocusActive"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Melee,DAMAGE.Ranged|PsychicWarriorPrimeStat*PsionicFocusActive"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|INITIATIVE|PsychicWarriorPrimeStat*PsionicFocusActive"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|PsychicWarriorPrimeStat*PsionicFocusActive"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|MOVEADD|TYPE.Walk|PsychicWarriorPrimeStat*5*PsionicFocusActive"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|ALL|PsychicWarriorPrimeStat*PsionicFocusActive"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 541,
+    "record_key": "Psychic Warrior ~ Eternal Warrior"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

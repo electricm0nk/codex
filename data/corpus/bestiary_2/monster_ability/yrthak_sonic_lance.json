@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Yrthak ~ Sonic Lance",
+    "delivery": "Extraordinary",
+    "description": "Once per round, a yrthak can focus sonic energy in a 60-foot ray that deals 8d6 sonic damage to one target.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:yrthak_sonic_lance",
+    "name": "Sonic Lance",
+    "owners": [
+      "bestiary_2:monster:yrthak"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round, a yrthak can focus sonic energy in a 60-foot ray that deals 8d6 sonic damage to one target."
+      },
+      {
+        "key": "KEY",
+        "value": "Yrthak ~ Sonic Lance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:08:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1418,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Yrthak ~ Sonic Lance",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

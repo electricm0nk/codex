@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Elemental Strike",
+    "category": "Combat",
+    "name": "Elemental Strike",
+    "description": "You draw upon your extraplanar heritage to imbue your weapons with elemental energies. As a swift action, you can imbue your weapons with elemental energy. For 1 round, your weapons deal an additional points of energy damage. The type of energy damage depends on your race: acid for oread, electricity for sylph, fire for ifrit, or cold for undine. Special:[NOT IMPLEMENTED] You can use this feat instead of Arcane Strike to qualify for or attack with the Deadly Dealer feat.",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsIfrit=true,IsOread=true,IsSylph=true,IsUndine=true",
+      "PRETEXT:Ifrit, oread, sylph, or undine."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 31,
+    "record_key": "Elemental Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

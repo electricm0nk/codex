@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Phrenic Slayer ~ Power Resistance",
+    "name": "Power Resistance",
+    "class": "Phrenic Slayer",
+    "description": "Gain PR %1 against effects from favored enemy.|SlayerPowerResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Slayer ~ Power Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PhrenicSlayerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayerPowerResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain PR %1 against effects from favored enemy.|SlayerPowerResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlayerPowerResistance|13+PhrenicSlayerLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.367"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1330,
+    "record_key": "Phrenic Slayer ~ Power Resistance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

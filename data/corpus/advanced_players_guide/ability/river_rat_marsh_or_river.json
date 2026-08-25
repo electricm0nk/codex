@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ River Rat",
+    "name": "River Rat (marsh or river)",
+    "description": "You learned to swim right after you learned to walk. As a youth, a gang of river pirates put you to work swimming in nighttime rivers and canals with a dagger in your teeth so you could sever the anchor ropes of merchant vessels. You gain a +1 trait bonus on damage dealt with a dagger and a +1 trait bonus on Swim checks. Swim is always a class skill for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ River Rat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RegionalTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ River Rat],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RegionalTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You learned to swim right after you learned to walk. As a youth, a gang of river pirates put you to work swimming in nighttime rivers and canals with a dagger in your teeth so you could sever the anchor ropes of merchant vessels. You gain a +1 trait bonus on damage dealt with a dagger and a +1 trait bonus on Swim checks. Swim is always a class skill for you."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Dagger|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Swim"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 216,
+    "record_key": "Trait ~ River Rat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

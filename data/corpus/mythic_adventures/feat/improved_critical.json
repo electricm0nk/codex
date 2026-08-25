@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Improved Critical",
+    "category": "Mythic",
+    "name": "Improved Critical (Mythic)",
+    "description": "Your critical strikes with your chosen weapon are deadlier than most. Your critical multiplier with your chosen weapon is increased by 1 (to a maximum of x6).",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Critical",
+      "PRETOTALAB:8",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 103,
+    "record_key": "Improved Critical"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

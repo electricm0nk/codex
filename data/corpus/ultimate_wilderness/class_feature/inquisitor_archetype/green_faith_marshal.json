@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Inquisitor Archetype ~ Green Faith Marshal",
     "name": "Green Faith Marshal",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "The Green Faith marshal serves as a literal force of nature, hunting down and punishing those who have committed sins against nature through enslavement and mistreatment of animals or destruction of wild places.",
     "raw_tokens": [
       {
@@ -111,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

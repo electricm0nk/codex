@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T19:41:18Z",
+  "data": {
+    "key": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)",
+    "school": "Conjuration",
+    "level": 7,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_spells.lst",
+    "sha256": "6ced82a6317309ca529afd1b403d66212011e766aae38468d280623dce0085cf",
+    "line": 16,
+    "record_key": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

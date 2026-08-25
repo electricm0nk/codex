@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Broad Study",
     "name": "Broad Study",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "You can use your spellstrike and spell combat abilities while casting or using spells from the spell list of another class. This does not allow you to cast arcane spells from that class's spell list without suffering the normal chances of arcane spell failure, unless the spell lacks somatic components.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Discovery ~ Alchemical Zombie",
     "name": "Alchemical Zombie",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You gain the ability to animate a relatively complete corpse as an alchemy-powered zombie.  This process takes 1 hour and costs 100 gp in alchemical reagents per HD of the corpse being animated; the dead creature gains the zombie template.  Zombies that are created in this manner count as undead created by Animate Dead for the purposes of determining how many undead the alchemist can control.  The created zombie is a creature, not a supernatural effect.",
     "raw_tokens": [
       {
@@ -31,6 +31,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.15"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
       }
     ]
   },
@@ -48,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

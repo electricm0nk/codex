@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Enduring Elixir",
+    "name": "Enduring Elixir",
+    "description": "Whenever you drink an elixir, extract, or potion with a duration of 10 minutes per level or longer, you can change its duration to 1 day. You can have this ability in effect on only one elixir, extract, or potion at a time. Using it on a second one causes the duration of the first to revert to normal-and to end immediately if the normal duration would have expired. If you're at least 9th tier, you can select this ability a second time to have it work on extracts and potions with a duration of 1 minute or longer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Enduring Elixir"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you drink an elixir, extract, or potion with a duration of 10 minutes per level or longer, you can change its duration to 1 day. You can have this ability in effect on only one elixir, extract, or potion at a time. Using it on a second one causes the duration of the first to revert to normal-and to end immediately if the normal duration would have expired. If you're at least 9th tier, you can select this ability a second time to have it work on extracts and potions with a duration of 1 minute or longer."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 384,
+    "record_key": "Mythic Path Ability ~ Enduring Elixir"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

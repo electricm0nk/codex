@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist Archetype ~ Miasmic",
+    "name": "Miasmic",
+    "class": "Vitalist",
+    "description": "You take a unique interest in understanding poisons and diseases and how to use these afflictions in a more offensive nature.  You can then use this knowledge to cause sickness instead of curing it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist Archetype ~ Miasmic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VitalistArchetype.VitalistKnacks.VitalistTransferWounds.VitalistStealHealth.VitalistRequestAid"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vitalist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vitalist Archetype ~ Miasmic],[!PREABILITY:1,CATEGORY=Archetype,TYPE.VitalistKnacks,TYPE.VitalistTransferWounds,TYPE.VitalistStealHealth,TYPE.VitalistRequestAid]"
+      },
+      {
+        "key": "DESC",
+        "value": "You take a unique interest in understanding poisons and diseases and how to use these afflictions in a more offensive nature.  You can then use this knowledge to cause sickness instead of curing it."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Miasmic ~ Noxious Talent|PRECLASS:1,Vitalist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Miasmic ~ Sickening Touch|PRECLASS:1,Vitalist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Miasmic ~ Disease Mastery|PRECLASS:1,Vitalist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Miasmic ~ Block Toxin|PRECLASS:1,Vitalist=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2307,
+    "record_key": "Vitalist Archetype ~ Miasmic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

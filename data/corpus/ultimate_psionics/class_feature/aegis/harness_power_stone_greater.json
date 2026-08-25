@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Harness Power Stone Greater",
+    "name": "Harness Power Stone (Greater)",
+    "class": "Aegis",
+    "description": "You can manifest a 3rd-level power from a stored power stone multiple times, ML %1.|HarnessPowerStoneML",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Harness Power Stone Greater"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aegis ~ Power Stone Repository"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HarnessPowerStoneML|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest a 3rd-level power from a stored power stone multiple times, ML %1.|HarnessPowerStoneML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HarnessPowerStoneML|5"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 141,
+    "record_key": "Aegis ~ Harness Power Stone Greater"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

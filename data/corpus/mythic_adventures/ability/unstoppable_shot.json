@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Unstoppable Shot",
+    "name": "Unstoppable Shot",
+    "description": "You can use a ranged or thrown weapon to make a single powerful shot that shoots through all creatures in a line. As a standard action, make a single ranged attack roll and resolve the attack against all targets in a straight line up to the maximum range of your weapon, stopping at any barrier the attack couldn't penetrate. Roll damage once and apply that damage to each creature hit by the attack. Before making the attack roll, you can expend one use of mythic power to bend the path of the attack up to two times as it strikes targets or objects. Each deflection can alter the line of the attack up to 90 degrees, allowing you to shoot around corners or cover.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Unstoppable Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use a ranged or thrown weapon to make a single powerful shot that shoots through all creatures in a line. As a standard action, make a single ranged attack roll and resolve the attack against all targets in a straight line up to the maximum range of your weapon, stopping at any barrier the attack couldn't penetrate. Roll damage once and apply that damage to each creature hit by the attack. Before making the attack roll, you can expend one use of mythic power to bend the path of the attack up to two times as it strikes targets or objects. Each deflection can alter the line of the attack up to 90 degrees, allowing you to shoot around corners or cover."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 365,
+    "record_key": "Mythic Path Ability ~ Unstoppable Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

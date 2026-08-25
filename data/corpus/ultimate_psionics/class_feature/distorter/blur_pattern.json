@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Distorter ~ Blur Pattern",
+    "name": "Blur Pattern",
+    "class": "Distorter",
+    "description": "You have learned to alter your own pattern to make yourself harder to perceive.  As long as you maintain psionic focus, you gain concealment (20%% miss chance).  This ability can be suppressed as a free action, but once suppressed, requires a standard action to reactivate.  A see invisibility spell does not counteract the effect, but a true seeing spell or pierce the veils manifestation does.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Distorter ~ Blur Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to alter your own pattern to make yourself harder to perceive.  As long as you maintain psionic focus, you gain concealment (20%% miss chance).  This ability can be suppressed as a free action, but once suppressed, requires a standard action to reactivate.  A see invisibility spell does not counteract the effect, but a true seeing spell or pierce the veils manifestation does."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1819,
+    "record_key": "Distorter ~ Blur Pattern"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

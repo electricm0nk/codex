@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Warrior of the Holy Light",
     "name": "Warrior of the Holy Light",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Some paladins use their gifts to focus on the holy light that shines within their souls. With the gifts of purity and redemption, these paladins spend much of their lives helping others find the true path. Unleashing this power takes patience and comes at a steep price. Warriors of the holy light have the following class features.",
     "raw_tokens": [
       {
@@ -55,6 +55,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Warrior of the Holy Light],[!PREFACT:1,ABILITIES,Paladin_Archetype_AuraOfFaith=True,Paladin_Archetype_Spells=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfFaith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfFaith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Spells|true"
       }
     ]
   },
@@ -71,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

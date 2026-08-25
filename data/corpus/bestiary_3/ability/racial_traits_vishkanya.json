@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Vishkanya",
+    "name": "Racial Traits ~ Vishkanya",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Vishkanya_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vishkanya Racial Trait|AUTOMATIC|Vishkanya ~ Ability Scores|PREVAREQ:Vishkanya_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_globalvar.lst",
+    "sha256": "c864bbbefb7e89de1e170b51382c49c53217e0b0f5f8f74893c9b024aae44f64",
+    "line": 10,
+    "record_key": "Racial Traits ~ Vishkanya"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

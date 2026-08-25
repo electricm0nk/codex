@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Derhii ~ Knockdown",
+    "delivery": "Extraordinary",
+    "description": "When a derhii confirms a critical hit with a two-handed weapon, it has a chance to knock an opponent prone in addition to the damage dealt by the critical hit. If the derhii's confirmation roll exceeds its opponent's CMD, the opponent is knocked prone as if from the trip combat maneuver. This does not provoke an attack of opportunity, nor can the derhii be tripped if the confirmation roll fails to exceed the CMD.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_3:monster_ability:derhii_knockdown",
+    "name": "Knockdown",
+    "owners": [
+      "bestiary_3:monster:derhii"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a derhii confirms a critical hit with a two-handed weapon, it has a chance to knock an opponent prone in addition to the damage dealt by the critical hit. If the derhii's confirmation roll exceeds its opponent's CMD, the opponent is knocked prone as if from the trip combat maneuver. This does not provoke an attack of opportunity, nor can the derhii be tripped if the confirmation roll fails to exceed the CMD."
+      },
+      {
+        "key": "KEY",
+        "value": "Derhii ~ Knockdown"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "TYPE",
+        "value": "DerhiiRacialAbility.SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.75",
+    "traits": [
+      "DerhiiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 665,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Derhii ~ Knockdown",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

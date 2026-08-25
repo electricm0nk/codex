@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cleric Archetype ~ Words of Power",
+    "name": "Words of Power Cleric",
+    "description": "A words of power using cleric; %1 meta words/day.|ClericMetaWordsPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cleric Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.ClericArchetype.ClericSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cleric=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClericMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using cleric; %1 meta words/day.|ClericMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|Barrier|Burst|Cone|Line|Personal|Selected"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric0|TYPE=Cleric1|TYPE=MetaLevel0|TYPE=MetaLevel1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric2|TYPE=MetaLevel2|PRECLASS:1,Cleric=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric3|TYPE=MetaLevel3|PRECLASS:1,Cleric=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric4|TYPE=MetaLevel4|PRECLASS:1,Cleric=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric5|TYPE=MetaLevel5|PRECLASS:1,Cleric=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric6|TYPE=MetaLevel6|PRECLASS:1,Cleric=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric7|TYPE=MetaLevel7|PRECLASS:1,Cleric=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric8|TYPE=MetaLevel8|PRECLASS:1,Cleric=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=Cleric9|TYPE=MetaLevel9|PRECLASS:1,Cleric=17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericMetaWordsPerDay|max(1,classlevel(\"Cleric\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 22,
+    "record_key": "Cleric Archetype ~ Words of Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Profane Nimbus",
+    "school": "Evocation",
+    "level": 4,
+    "description": "Unholy energy damages good creatures that attack you and protects you from good attacks."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_spells.lst",
+    "sha256": "29f138223c7315e28ef034306a2f02621b7e16b2c397a98ed2a8f924805f0f0c",
+    "line": 55,
+    "record_key": "Profane Nimbus"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

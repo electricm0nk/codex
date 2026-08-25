@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Soulbound Puppet",
     "name": "Soulbound Puppet [Necromancy]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a full-round action, you can expend 1 point of mental focus to create a soulbound puppet from a bone, doll, or skull. If you use a bone or a skull, your power builds a Tiny or Small flesh puppet around it that vaguely resembles the original creature from which the bones were taken. If the implement is a doll, the doll comes to life. Treat this as a familiar, using your occultist level as your wizard level to determine its powers and abilities. By using a bone or skull from the appropriate creature or a doll shaped like that creature, you can select any of the familiar choices available to a wizard. You can instead use a humanoid bone, doll, or skull, to give the puppet the base statistics of a homunculus (Bestiary 176), but without a fly speed or the poison bite or telepathic link abilities. No matter the form, this creature is a construct with an alignment matching your own. You can have no more than one soulbound puppet active at any given time. The soulbound puppet remains animated for 10 minutes per occultist level you possess.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Prestidigitation",
+    "name": "Prestidigitation",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Prestidigitation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Prestidigitation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Prestidigitation_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Prestidigitation_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Prestidigitation_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Prestidigitation_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Prestidigitation_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Prestidigitation_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Prestidigitation_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_Prestidigitation_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Prestidigitation_LVL|Prestidigitation,RacialSLA_Prestidigitation_DC|PREVAREQ:RacialSLA_Prestidigitation_AtWill,0|PREVAREQ:RacialSLA_Prestidigitation_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Prestidigitation_LVL|Prestidigitation,RacialSLA_Prestidigitation_DC|PREVAREQ:RacialSLA_Prestidigitation_AtWill,1|PREVAREQ:RacialSLA_Prestidigitation_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_Prestidigitation_LVL|Prestidigitation,RacialSLA_Prestidigitation_DC|PREVAREQ:RacialSLA_Prestidigitation_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Prestidigitation_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Prestidigitation_SpellLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Prestidigitation_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Prestidigitation_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Prestidigitation_DC|10+RacialSLA_Prestidigitation_SpellLVL+RacialSLA_Prestidigitation_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 193,
+    "record_key": "Racial SLA ~ Prestidigitation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

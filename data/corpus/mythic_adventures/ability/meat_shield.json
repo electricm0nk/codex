@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Meat Shield",
+    "name": "Meat Shield",
+    "description": "You can use a creature you're grappling to protect you from harm. If you're grappling a creature and are attacked with a melee or ranged attack, as an immediate action you can attempt a grapple combat maneuver check against your grappled opponent. If you succeed, the incoming attack targets your grappled opponent instead of you. If you fail, the grappled opponent breaks free from the grapple and the incoming attack targets you as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Meat Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use a creature you're grappling to protect you from harm. If you're grappling a creature and are attacked with a melee or ranged attack, as an immediate action you can attempt a grapple combat maneuver check against your grappled opponent. If you succeed, the incoming attack targets your grappled opponent instead of you. If you fail, the grappled opponent breaks free from the grapple and the incoming attack targets you as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 205,
+    "record_key": "Mythic Path Ability ~ Meat Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

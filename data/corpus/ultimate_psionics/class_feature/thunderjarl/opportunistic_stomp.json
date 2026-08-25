@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thunderjarl ~ Opportunistic Stomp",
+    "name": "Opportunistic Stomp",
+    "class": "Thunderjarl",
+    "description": "Any time you manifest stomp, you can make one attack of opportunity against any creature affected by that manifestation that fails the saving throw, provided you are within reach of the affected creature.  These attacks of opportunity do not count against your normal limit of attacks of opportunity per round and you can make %1 of these attacks of opportunity per round for this ability.|OpportunisticStompAttacks",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thunderjarl ~ Opportunistic Stomp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OpportunisticStompAttacks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any time you manifest stomp, you can make one attack of opportunity against any creature affected by that manifestation that fails the saving throw, provided you are within reach of the affected creature.  These attacks of opportunity do not count against your normal limit of attacks of opportunity per round and you can make %1 of these attacks of opportunity per round for this ability.|OpportunisticStompAttacks"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OpportunisticStompAttacks|PsychicWarriorPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2121,
+    "record_key": "Thunderjarl ~ Opportunistic Stomp"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

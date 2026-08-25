@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Archetype ~ Beast Rider",
     "name": "Beast Rider",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "The cavalier is defined not only by his dedication to his order or his skill on the battlefield, but also by the special relationship he maintains with his mount. Where some cavaliers are simply skilled with horses or well-trained knights, the beast rider spends his life in constant pursuit of the most perfect mount, forming bonds with greater, more powerful, and more exotic creatures.",
     "raw_tokens": [
       {
@@ -51,6 +51,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cavalier"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Beast Rider],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Proficiencies=True,Cavalier_Archetype_Mount=True,Cavalier_Archetype_ExpertTrainer=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_ExpertTrainer|true"
       }
     ]
   },
@@ -67,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

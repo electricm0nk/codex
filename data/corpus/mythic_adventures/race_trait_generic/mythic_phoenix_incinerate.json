@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Phoenix ~ Incinerate",
+    "name": "Incinerate",
+    "description": "Any creature killed by fire damage from a mythic phoenix is entirely destroyed, leaving behind only a trace of fine ash. The creature's magical equipment is unaffected.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Phoenix ~ Incinerate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Phoenix Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature killed by fire damage from a mythic phoenix is entirely destroyed, leaving behind only a trace of fine ash. The creature's magical equipment is unaffected."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 231,
+    "record_key": "Mythic Phoenix ~ Incinerate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

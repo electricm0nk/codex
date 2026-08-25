@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Strategy ~ Telempathic Resistance",
+    "name": "Telempathic Resistance",
+    "class": "Strategy",
+    "description": "All collective members gain a +%1 insight bonus to saving throws for %2 rounds.|TelempathicResistanceBonus|TelempathicResistanceDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strategy ~ Telempathic Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.TacticianStrategy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TelempathicResistanceDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TelempathicResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "All collective members gain a +%1 insight bonus to saving throws for %2 rounds.|TelempathicResistanceBonus|TelempathicResistanceDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelempathicResistanceDuration|TacticianSecondaryStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelempathicResistanceBonus|1+max(0,(StrategyLVL-4)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 939,
+    "record_key": "Strategy ~ Telempathic Resistance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Possessed Corruption ~ Unrestrained",
+    "name": "Unrestrained",
+    "description": "The spirit resists physical restraint.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Unrestrained"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PossessedManifestation"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CorruptionUnrestrainedBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "DESC",
+        "value": "The spirit resists physical restraint."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Possessed Unrestrained Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Possessed Unrestrained Stain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorruptionUnrestrainedBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorruptionUnrestrainedBonus|2|PREVARGTEQ:PossessedManifestationLevel,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 679,
+    "record_key": "Possessed Corruption ~ Unrestrained"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

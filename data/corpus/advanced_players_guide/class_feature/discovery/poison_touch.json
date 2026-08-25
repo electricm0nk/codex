@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Poison Touch",
     "name": "Poison Touch",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "The alchemist gains a poisonous touch, as if under the effects of a poison spell. He can suppress or activate this ability as a free action. The physical appearance of how the alchemist generates and delivers his poisonous touch varies from alchemist to alchemist.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

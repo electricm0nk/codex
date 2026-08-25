@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Protean Bloodline ~ Protoplasm",
     "name": "Protoplasm",
-    "class": "Protean Bloodline",
+    "class": "Sorcerer",
     "description": "You can create a ball of entropic protoplasm and hurl it at targets within 30 feet. This protoplasm acts as a tanglefoot bag that also inflicts 1 point of acid damage per round to a creature entangled by it. The protoplasm dissolves within 1d3 rounds. You may use this ability %1 times per day.|Sorcerer_Protean_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

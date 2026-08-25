@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Cooperation Subdomain",
+    "name": "Cooperation Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Cooperation Subdomain],[PREVARLT:CommunityDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Synergistic Touch|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Community)|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Unity|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Community"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "DESC",
+        "value": "You know that you and your allies are strongest when you work together toward a common goal."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=1|Borrow Skill"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=2|Share Language"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=3|Coordinated Effort"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=4|Imbue with Spell Ability"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=5|Telepathic Bond"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=6|Heroes' Feast"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=7|Refuge"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=8|Cure Critical Wounds (Mass)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cooperation Subdomain=9|Miracle"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Community"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 7,
+    "record_key": "Cooperation Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

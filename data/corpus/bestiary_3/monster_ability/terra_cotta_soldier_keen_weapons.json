@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Terra-Cotta Soldier ~ Keen Weapons",
+    "delivery": "Supernatural",
+    "description": "After it has engaged in at least 1 round of combat, a terra-cotta soldier's weapons automatically gain the benefits of keen weapon (CL 6th). This effect persists until the end of the battle.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:terra_cotta_soldier_keen_weapons",
+    "name": "Keen Weapons",
+    "owners": [
+      "bestiary_3:monster:terra_cotta_soldier"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "After it has engaged in at least 1 round of combat, a terra-cotta soldier's weapons automatically gain the benefits of keen weapon (CL 6th). This effect persists until the end of the battle."
+      },
+      {
+        "key": "KEY",
+        "value": "Terra-Cotta Soldier ~ Keen Weapons"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "TYPE",
+        "value": "TerraCottaSoldierRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.262",
+    "traits": [
+      "TerraCottaSoldierRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1595,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Terra-Cotta Soldier ~ Keen Weapons",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

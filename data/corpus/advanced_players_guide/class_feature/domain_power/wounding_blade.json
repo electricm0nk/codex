@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Wounding Blade",
     "name": "Wounding Blade",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, you can give a weapon that you touch the wounding special weapon quality for %1 rounds. You can use this ability %2 per day.|DomainWarLVL/2|DomainWarLVL/4-1",
     "raw_tokens": [
       {
@@ -52,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

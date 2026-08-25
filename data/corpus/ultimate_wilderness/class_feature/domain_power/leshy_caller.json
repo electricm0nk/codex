@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Leshy Caller",
     "name": "Leshy Caller",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can spontaneously swap out any of your domain spells for a summon nature's ally spell of the same level or lower, to a maximum of summon nature's ally VII. If you do, you must use the spell to summon one or more leshys. Add leaf leshy (B3), gourd leshy (B3), fungus leshy (B3), seaweed leshy (B3), and lotus leshy (B5) to your summon nature's ally I, II, III, IV, and V lists, respectively. You count as a plant creature for the purpose of creating leshys (Bestiary 3 p.176). As a standard action, you can grant a single leshy within 30 feet a +4 sacred bonus on its next attack roll before the start of your next turn. You can use this ability %1 times per day.|DomainPlantTimes",
     "raw_tokens": [
       {
@@ -51,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

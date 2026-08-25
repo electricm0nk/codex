@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Psionic Deed ~ Slowing Shot",
+    "name": "Slowing Shot",
+    "description": "At 15th level, when the gunslinger hits a creature with a firearm attack, she can spend 1 grit point as a free action and cause the creature to be slowed.  The target is staggered and can take only a single move action or standard action each turn, but not both (nor may it take full-round actions).  Additionally, it takes a -1 penalty on attack rolls, AC, and Reflex saves.  The creature moves at half its normal speed (round down to the next 5-foot increment), which affects the creature's jumping distance as normal for decreased speed.  This effect lasts for %1 rounds.|SlowingShotDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Deed ~ Slowing Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality.DeedsLvl15.DeedHasCost.Supernatural"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "IsPsionic,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlowingShotDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, when the gunslinger hits a creature with a firearm attack, she can spend 1 grit point as a free action and cause the creature to be slowed.  The target is staggered and can take only a single move action or standard action each turn, but not both (nor may it take full-round actions).  Additionally, it takes a -1 penalty on attack rolls, AC, and Reflex saves.  The creature moves at half its normal speed (round down to the next 5-foot increment), which affects the creature's jumping distance as normal for decreased speed.  This effect lasts for %1 rounds.|SlowingShotDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowingShotDuration|max(1,WIS)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 63,
+    "record_key": "Psionic Deed ~ Slowing Shot"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

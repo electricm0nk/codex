@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Healing Domain ~ Rebuke Death",
     "name": "Rebuke Death",
-    "class": "Healing Domain",
+    "class": "Cleric",
     "description": "You can touch a living creature as a standard action, healing it of 1d4 points of damage. You can only use this ability on a creature that is below 0 hit points. You can use this ability %1 times per day.|RebukeDeathTimes|PREVARLT:DomainHealingLVL,2",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

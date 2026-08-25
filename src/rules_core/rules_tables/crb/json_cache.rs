@@ -139,6 +139,16 @@ pub struct CorpusRecord<T> {
     pub pi_field: Option<String>,
     #[serde(default)]
     pub pi_marker: Option<String>,
+    /// `t9-onboarding-pi-last-leak-and-generators` cycle: `decisions.md
+    /// §24b`-3, ported from `cache_gen::equipment_gap`'s identical field --
+    /// this file predated the `name`/`key` blacklist scan entirely (only
+    /// `description` was ever screened), the eighth instance of "screens
+    /// some shipped fields, not all" in this bundle. `#[serde(default)]`
+    /// so this is additive to every already-shipped record's shape.
+    #[serde(default)]
+    pub codex_generated_name: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rename: Option<crate::rules_core::cache_gen::equipment_gap::RenameInfo>,
 }
 
 /// `data/corpus/core_rulebook/class/<slug>.json` payload. Mirrors

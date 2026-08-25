@@ -206,7 +206,45 @@ mod tests {
     #[test]
     fn the_book_ships_every_monster_and_thirty_six_linked_abilities() {
         assert_eq!(monsters().len(), 261);
-        assert_eq!(monster_abilities().len(), 36);
+        // 36 -> 409 (T9 `MonsterAbilityFacet` widening cycle). Two fixes
+        // together: (1) the widened facet vocabulary
+        // (`Weakness`/`Defensive`/`Aura`/`Sense`/`Communicate`) and (2) a
+        // real parsing bug fix, reading EVERY `TYPE:` token on a row instead
+        // of only the first (`scripts/transcribe_monster_tables.py::
+        // type_segments`) — 27 dragon-subtype rows state their facet on a
+        // SECOND `TYPE:` token (`Forest Dragon ~ Change Shape`:
+        // `TYPE:Supernatural` then `TYPE:RaceAbility.SpecialQuality`), which
+        // the old single-token `token()` read silently dropped. This
+        // remains the "36" function name deliberately — renaming it is out
+        // of this cycle's scope, and the number it names is now stale by
+        // construction, exactly like `the_shipped_total_is_the_books_
+        // real_measured_count`'s own precedent in `bestiary/mod.rs`. 1
+        // owned row remains excluded and named on stderr (`Adlet ~
+        // Spell-Like Abilities`, bare `TYPE:SpellLike` with no facet
+        // segment at all).
+        // 409 owned + 266 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 675. The owner-less count is pinned separately
+        // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        // 409/675 -> 410/686 (`decisions.md §27`/round 8, +11 total): the
+        // `TYPE:`-facet-vocabulary-gap group closes via the provisional
+        // `SpecialQuality` default. +1 owned (`Adlet ~ Spell-Like
+        // Abilities`, this comment's own previously-named excluded row,
+        // now shipping); +10 owner-less (`Asurendra ~ None`, `Lunar/Royal/
+        // Water Naga ~ Spells`, `Unfettered Eidolon ~
+        // Str/Dex/Con/Int/Wis/Cha`) — pinned separately below.
+        // 410/686 -> 410/696 (`decisions.md §27b` round 9, +10 total, all
+        // owner-less): the multi-DESC: parse-refusal group closes via
+        // `parse_desc`'s new generalised sixth branch -- Jiang-Shi Vampire
+        // plus the 9 `Traits Output ~ <Kind>` rows (`&nl;`-marker
+        // continuation shape) are shared reference-library text no single
+        // stat block in this book owns; `owned` is UNCHANGED, all 10 land
+        // in the owner-less pin below.
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 410);
+        assert_eq!(monster_abilities().len(), 696);
     }
 
     /// The first book in the lane to lose NO monster row: no `NAMEISPI:YES`, no
@@ -222,17 +260,59 @@ mod tests {
         );
     }
 
-    /// Every transcribed ability row is owned by a monster row of this book.
-    /// The book has orphans; the point of this test is that none of them got in.
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// An owner-less ability row no longer forbids shipping: an un-ingested
+    /// row's shape cannot be measured, so the 266 rows no monster row of this
+    /// book claims now SHIP with `owners: &[]`, and this test's job changes
+    /// from "forbid an empty owner list" to "pin the EXACT set of records
+    /// that carry one". `list_monster_catalog` never walks these directly
+    /// (only a monster's own `ability_keys`), so shipping them does not
+    /// surface a stub; each key is pinned separately, by name, in
+    /// `reach_gate.rs::UNREACHED_RECORD_FINDINGS` under
+    /// `("bestiary_3", "monster_abilities")` as a proven non-reach, not a
+    /// silent claim of reachability.
     #[test]
-    fn no_shipped_ability_is_an_orphan() {
-        for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} reaches no monster and would load without ever being shown",
-                ability.key
-            );
-        }
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        // 266 -> 276 (`decisions.md §27`/round 8, +10): the `TYPE:`-facet-
+        // vocabulary-gap group closes via the provisional `SpecialQuality`
+        // default -- 10 of the 11 newly-shipped rows are owner-less
+        // (`Asurendra ~ None`, `Lunar/Royal/Water Naga ~ Spells`,
+        // `Unfettered Eidolon ~ Str/Dex/Con/Int/Wis/Cha`); the 11th
+        // (`Adlet ~ Spell-Like Abilities`) is owned, see the test above.
+        // 276 -> 286 (`decisions.md §27b` round 9, +10): the multi-DESC:
+        // parse-refusal group closes -- Jiang-Shi Vampire plus the 9
+        // `Traits Output ~ <Kind>` rows, all owner-less, see the test above.
+        assert_eq!(
+            unowned.len(),
+            286,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py bestiary_3` run, and update the matching \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0x9384_d1f9_b175_24c6,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly. \
+             0x01b42774_3381b829 -> 0x9384d1f9_b17524c6 (`decisions.md §27b` round 9): the \
+             set gains 10 new members (Jiang-Shi Vampire plus 9 `Traits Output ~ <Kind>` \
+             rows), re-derived live from this test's own failing run, never guessed, per \
+             `decisions.md §17a`."
+        );
     }
 
     /// Every owner named by a shipped ability is itself a shipped monster.
@@ -267,56 +347,104 @@ mod tests {
     /// 397 from this list — all 9 now ship, owned via the `CATEGORY:Internal`
     /// bundle-row hop (see the module header and
     /// `every_shipped_ability_is_reached_by_its_namespaced_key` below).
+    /// **Superseded `decisions.md §20` for three of the four.** `304`,
+    /// `1150`, and `1448` now ship owner-less (shape measurable,
+    /// reachability not claimed) instead of being excluded — each is one of
+    /// the 266 pinned by `every_owner_less_ability_is_a_named_and_pinned_
+    /// non_reach` above. `1663` (`Jiang-Shi Vampire`) stays excluded for an
+    /// UNRELATED, pre-existing reason: its `DESC:` shape is multi-valued and
+    /// `parse_desc` still refuses it (`scripts/transcribe_monster_tables.py
+    /// bestiary_3`'s own stderr names it under the multi-`DESC:` screen, not
+    /// the orphan one) — the orphan-ship mechanism only widens WHAT the
+    /// orphan screen keeps, never what an unrelated screen already drops.
     #[test]
-    fn the_remaining_orphan_rows_are_not_records() {
-        for line in [304u32, 1150, 1448, 1663] {
+    fn the_previously_excluded_orphans_now_ship_owner_less() {
+        for line in [304u32, 1150, 1448] {
+            let ability = monster_abilities()
+                .iter()
+                .find(|a| a.source_line == line)
+                .unwrap_or_else(|| {
+                    panic!(
+                        "b3_abilities_race.lst:{line} ships for shape measurement \
+                         (decisions.md §20)"
+                    )
+                });
             assert!(
-                !monster_abilities().iter().any(|a| a.source_line == line),
-                "b3_abilities_race.lst:{line} is owned by no monster row of this book and must \
-                 not ship"
+                ability.owners.is_empty(),
+                "{} was expected owner-less; no monster row of this book claims it",
+                ability.key
             );
         }
+        // **Round 9 update (`decisions.md §27b`):** `b3_abilities_race.lst:1663`
+        // (Jiang-Shi Vampire) used to be excluded by the multi-DESC: screen.
+        // `parse_desc`'s new generalised sixth branch (`_concat_desc_variants`)
+        // now resolves it -- an `&nl;`-marker continuation shape, same
+        // mechanism as `Traits Output ~ Asura` below -- so it SHIPS,
+        // owner-less (no monster row of this book claims it by name).
+        let jiang_shi = monster_abilities()
+            .iter()
+            .find(|a| a.source_line == 1663)
+            .unwrap_or_else(|| {
+                panic!(
+                    "b3_abilities_race.lst:1663 ships for shape measurement \
+                     (decisions.md §27b round 9)"
+                )
+            });
+        assert!(
+            jiang_shi.owners.is_empty(),
+            "{} was expected owner-less; no monster row of this book claims it",
+            jiang_shi.key
+        );
     }
 
     /// Every shipped ability of this book is reached by the namespaced-prefix
-    /// link rather than by a monster row naming it — EXCEPT the 9 named below,
-    /// added by `SD31-W21-MONSTER-001`'s `CATEGORY:Internal` bundle-row hop,
-    /// whose namespace prefix is a human-readable short name distinct from
-    /// their real owner's corpus `KEY:` (`Adhukait`/`Aghasura`/`Legion Archon`
-    /// versus `Asura (Adhukait)`/`Asura (Aghasura)`/`Archon (Legion)`). This
-    /// was the first book in the lane where the property held for the WHOLE
-    /// shipped set (`row-named` reads 0 against `b3_races.lst`'s 100
+    /// link — either directly (the prefix IS an owner's corpus `KEY:`) or
+    /// through an owner's human-readable `name` (`SD31-W21-MONSTER-001`'s
+    /// `CATEGORY:Internal` bundle-row hop first surfaced this: a monster like
+    /// `key: "Archon (Legion)", name: "Legion Archon"` is namespaced by its
+    /// SHORT display name, not its parenthesised corpus key). This was the
+    /// first book in the lane where the property held for the WHOLE shipped
+    /// set (`row-named` reads 0 against `b3_races.lst`'s 100
     /// `ABILITY:Special Ability|AUTOMATIC|` tokens, which name rows the
     /// inventory files under `race_trait` — `file_kind` reads only the first
     /// `TYPE:` segment; see this module's header for the 341-unit scope
-    /// finding that follows from it) — it still holds for every OTHER shipped
-    /// ability, which this test now asserts explicitly rather than trusting
-    /// the exception list to stay exhaustive by construction.
+    /// finding that follows from it).
+    ///
+    /// **Rewritten by the T9 `MonsterAbilityFacet` widening cycle.** The
+    /// prior version hand-maintained a 9-entry exception list for exactly
+    /// this `name`-vs-`key` shape; re-running the transcriber against the
+    /// widened facet vocabulary (plus a real multi-`TYPE:`-token parsing fix
+    /// — `Forest`/`Sea`/`Sky`/`Sovereign`/`Underworld` Dragon subtypes, each
+    /// stating their facet on a SECOND `TYPE:` token) newly shipped 33 more
+    /// ability rows of this exact shape, which would have made the list
+    /// 42 entries and counting — the un-scalable pattern `decisions.md §16`
+    /// warns against. Resolving through `monster.name` instead is the fix
+    /// for the shape itself, not one more name added to a list.
+    ///
+    /// **Scoped to OWNED rows by `decisions.md §20`.** An owner-less row
+    /// (no monster row of this book claims it) has no owner to check the
+    /// namespaced prefix against by construction — that is the whole point
+    /// of shipping it owner-less rather than dropping it — so this property
+    /// only applies where an owner exists at all.
     #[test]
     fn every_shipped_ability_is_reached_by_its_namespaced_key() {
-        const BUNDLE_OWNED_EXCEPTIONS: &[&str] = &[
-            "Legion Archon ~ Flames of Faith",
-            "Legion Archon ~ Second Skin",
-            "Adhukait ~ Dance of Disaster",
-            "Adhukait ~ Dual Mind",
-            "Adhukait ~ Spell-Like Abilities",
-            "Aghasura ~ Attraction Aura",
-            "Aghasura ~ Dual Wielder",
-            "Aghasura ~ Infused Weapons",
-            "Aghasura ~ Poison",
-        ];
-        for ability in monster_abilities() {
-            if BUNDLE_OWNED_EXCEPTIONS.contains(&ability.key) {
-                continue;
-            }
+        for ability in monster_abilities().iter().filter(|a| !a.owners.is_empty()) {
             let (prefix, _) = ability
                 .key
                 .split_once(" ~ ")
                 .unwrap_or_else(|| panic!("{} is not a namespaced key", ability.key));
+            let reached = ability.owners.iter().any(|owner| {
+                *owner == prefix
+                    || monsters()
+                        .iter()
+                        .find(|m| m.key == *owner)
+                        .is_some_and(|m| m.name == prefix)
+            });
             assert!(
-                ability.owners.contains(&prefix),
-                "{} is namespaced to {prefix}, which is not among its owners",
-                ability.key
+                reached,
+                "{} is namespaced to {prefix}, which is not among its owners ({:?}) either by \
+                 key or by the owning monster's display name",
+                ability.key, ability.owners
             );
         }
     }

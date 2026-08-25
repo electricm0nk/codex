@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Darkvision (Extraordinary)",
+    "delivery": "Extraordinary",
+    "description": "A creature with darkvision can see in total darkness, to a range of %1 feet. Within this range, the creature can see as clearly as a sighted creature could see in an area of bright light. Darkvision is black and white only but is otherwise like normal sight.",
+    "description_variables": [
+      "UMR_DarkvisionEx_Range"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:universal_monster_rule_darkvision_extraordinary",
+    "name": "Darkvision",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_DarkvisionEx_Range|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_DarkvisionEx_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with darkvision can see in total darkness, to a range of %1 feet. Within this range, the creature can see as clearly as a sighted creature could see in an area of bright light. Darkvision is black and white only but is otherwise like normal sight.|UMR_DarkvisionEx_Range|PREVAREQ:UMR_DarkvisionEx_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Darkvision (Extraordinary)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialQuality.Extraordinary.Sense.Vision"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (UMR_DarkvisionEx_Range)"
+      }
+    ],
+    "source_page": "p.292",
+    "traits": [
+      "Universal Monster Rule",
+      "Sense",
+      "Vision"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2425,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Darkvision (Extraordinary)",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Share Knowledge",
     "name": "Share Knowledge",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman targets a single willing ally within 30 feet and shares her knowledge and experience with that target for %1 minutes. During that time, the subject knows the languages that the shaman does and uses the shaman's skill modifier on all Knowledge checks instead of its own. A creature affected by this hex cannot be affected by it again for 24 hours.|ShamanShareKnowledgeDuration",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

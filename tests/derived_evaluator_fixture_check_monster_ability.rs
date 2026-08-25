@@ -709,6 +709,9 @@ fn synthetic_ability(
         owners: &["Scratch"],
         source_file: "scratch.lst",
         source_line: 1,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     }
 }
 

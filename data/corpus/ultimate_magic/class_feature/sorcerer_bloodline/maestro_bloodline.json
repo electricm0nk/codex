@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sorcerer Bloodline ~ Maestro",
     "name": "Maestro Bloodline",
-    "class": "Sorcerer Bloodline",
+    "class": "Sorcerer",
     "description": "The spiritual power of art and song runs strongly through your family line. This may be the result of ancient pacts made with azata patrons, or even an inheritance from a lillend or trumpet archon ancestor. It could also be the lingering taint of a less savory heritage, such as from a harpy or a forefather driven to madness by the disquieting gibbering of a shoggoth. However it came to be, your family's artistic bent shows itself strongly in your magic.|PREVAREQ:Sorcerer_Maestro_Description,0",
     "raw_tokens": [
       {
@@ -176,5 +176,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

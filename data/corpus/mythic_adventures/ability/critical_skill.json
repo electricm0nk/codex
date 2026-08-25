@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Critical Skill",
+    "name": "Critical Skill",
+    "description": "Whenever you roll a natural 20 on a skill check, you perform that skill with exceptional proficiency. Typically, this means that the task takes half the normal amount of time to accomplish. If the skill would normally take a full-round action, it instead takes a standard action. If it would normally take a standard or move action, it instead takes a swift action. If it would normally take a swift or free action, it instead takes no time at all. The GM might rule that instead of reducing the amount of time needed, using the skill takes the normal amount of time but the critical success results in some other added benefit, depending on the skill being used and the situation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Critical Skill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you roll a natural 20 on a skill check, you perform that skill with exceptional proficiency. Typically, this means that the task takes half the normal amount of time to accomplish. If the skill would normally take a full-round action, it instead takes a standard action. If it would normally take a standard or move action, it instead takes a swift action. If it would normally take a swift or free action, it instead takes no time at all. The GM might rule that instead of reducing the amount of time needed, using the skill takes the normal amount of time but the critical success results in some other added benefit, depending on the skill being used and the situation."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 303,
+    "record_key": "Mythic Path Ability ~ Critical Skill"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

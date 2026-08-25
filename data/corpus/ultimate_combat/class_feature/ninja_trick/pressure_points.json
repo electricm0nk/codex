@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ninja Trick ~ Pressure Points",
     "name": "Pressure Points",
-    "class": "Ninja Trick",
+    "class": "Ninja",
     "description": "* A ninja with this trick can strike at an opponent's vital pressure points, causing weakness and intense pain. Whenever the ninja deals sneak attack damage, she also deals 1 point of Strength or Dexterity damage, decided by the ninja. Unlike normal ability damage, this damage can be healed by a DC 15 Heal check. Each successful check heals 1 point of damage caused by this trick. A ninja with this trick receives a +10 insight bonus on this Heal check.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

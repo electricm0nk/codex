@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ No Undying Hatred Stain",
+    "name": "No Undying Hatred Stain",
+    "description": "You have refused the stain of your manifestation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ No Undying Hatred Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedUndyingHatredStain"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,Rules ~ Use Corruption (Useful)"
+      },
+      {
+        "key": "DESC",
+        "value": "You have refused the stain of your manifestation."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 85,
+    "record_key": "Accursed Corruption ~ No Undying Hatred Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

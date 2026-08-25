@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Dark Tapestry Mystery ~ Cloak of Darkness",
     "name": "Cloak of Darkness",
-    "class": "Dark Tapestry Mystery",
+    "class": "Oracle",
     "description": "You conjure a cloak of shadowy darkness that grants you a +%1 armor bonus and a +%2 circumstance bonus on Stealth checks.  You can use this cloak for %3 hours per day.  The duration does not need to be consecutive, but it must be spent in 1-hour increments.|CloakOfDarknessArmorBonus|CloakOfDarknessStealthBonus|CloakOfDarknessTimes",
     "raw_tokens": [
       {
@@ -76,5 +76,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

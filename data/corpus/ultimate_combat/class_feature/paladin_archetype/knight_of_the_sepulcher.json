@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Knight Of The Sepulcher",
     "name": "Knight of the Sepulcher",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Not content with the antipaladin's mere corruption of the soul, the knight of the sepulcher sacrifices mortality along with morality. The knight of the sepulcher archetype is available only to the antipaladin alternate class.",
     "raw_tokens": [
       {
@@ -75,6 +75,70 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Knight of the Sepulcher],[!PREFACT:1,ABILITIES,Antipaladin_Archetype_Cruelty=True,Antipaladin_Archetype_SmiteGood=True,Antipaladin_Archetype_AuraOfDespair=True,Antipaladin_Archetype_FiendishBoon=True,Antipaladin_Archetype_AuraOfVengeance=True,Antipaladin_Archetype_AuraOfSin=True,Antipaladin_Archetype_UnholyChampion=True,Antipaladin_Archetype_SmiteGood10=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_Cruelty|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_SmiteGood10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfDespair|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_FiendishBoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfVengeance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfSin|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_UnholyChampion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_Cruelty|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_SmiteGood|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfDespair|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_FiendishBoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfVengeance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfSin|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_UnholyChampion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_SmiteGood10|true"
       }
     ]
   },
@@ -91,5 +155,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

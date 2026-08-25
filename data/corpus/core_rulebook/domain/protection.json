@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Protection",
+    "name": "Protection",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainProtection,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Protection Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.ProtectionDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|DomainProtectionSaveBonus|TYPE=Resistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "DESC",
+        "value": "Your faith is your greatest source of protection, and you can use that faith to defend others. In addition, you receive a +1 resistance bonus on saving throws. This bonus increases by 1 for every 5 levels you possess."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Protection=1|Sanctuary|Protection=2|Shield Other|Protection=3|Protection from Energy|Protection=4|Spell Immunity|Protection=5|Spell Resistance|Protection=6|Antimagic Field|Protection=7|Repulsion|Protection=8|Mind Blank|Protection=9|Prismatic Sphere"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 35,
+    "record_key": "Protection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

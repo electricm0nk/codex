@@ -287,8 +287,8 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
   );
   assertEqual(
     loadTraits().length,
-    589,
-    'race trait records across all three books (CRB 67 + B1 108 + ARG 414; ARG 156 -> 201 by ' +
+    596,
+    'race trait records across all three books (CRB 67 + B1 108 + ARG 421; ARG 156 -> 201 by ' +
       'SD-31 Epic 1-F2, 2026-08-15, 201 -> 259 by SD-31-E6-F4-002\'s own 6-race chassis batch, ' +
       '259 -> 283 by SD-31-E6-F4-003\'s own 24-record alternate-trait batch for those same 6 ' +
       'races, both 2026-08-16, 283 -> 321 by SD31-E6-F4-004\'s own 4-race chassis batch ' +
@@ -300,7 +300,10 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
       'still moves this total; 350 -> 414 by the Core Essentials removal, 2026-08-18 ' +
       '(SD31-CE-COMPANION-001, decisions.md 9): Aasimar\'s and Tiefling\'s 64 heritage records ' +
       '-- 16 selectable heritages plus the 48 replacement rows they grant -- re-filed here from ' +
-      'data/corpus/core_essentials/race_trait/, which this test never loaded)',
+      'data/corpus/core_essentials/race_trait/, which this test never loaded; 414 -> 421 by ' +
+      'SD-32 card-11 T2b lane, 2026-08-23 (decisions.md 16 item 2): the 7 ' +
+      '`Human ~ Adoptive Parentage` CHOOSE-pool members, Drow/Dwarf/Elf/Gnome/Grippli/' +
+      'Halfling/Orc)',
   );
   const standard = loadStandardTraits();
   assertEqual(standard.length, 175, 'standard racial trait records (CRB 67 + B1 108)');

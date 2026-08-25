@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Familiar ~ Scry on Familiar",
+    "name": "Scry on Familiar",
+    "description": "If the master is 13th level or higher, he may scry on his familiar (as if casting the scrying spell) once per day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar ~ Scry on Familiar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Class Feature.Familiar Class Feature.SpecialQuality.Special Quality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "If the master is 13th level or higher, he may scry on his familiar (as if casting the scrying spell) once per day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_cr.lst",
+    "sha256": "edda5ccc2df39b9c3415b43b6bf208454cd1233824b38070c8f19f97c9b45b93",
+    "line": 69,
+    "record_key": "Familiar ~ Scry on Familiar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

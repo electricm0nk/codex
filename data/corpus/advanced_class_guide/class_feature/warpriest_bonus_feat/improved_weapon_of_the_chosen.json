@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Improved Weapon of the Chosen",
     "name": "Improved Weapon of the Chosen",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "This feat acts as Weapon of the Chosen, except you gain the benefits on all attacks until the start of your next turn. Your attacks gain a single alignment component of your deity-either chaotic, evil, good, or lawful-for the purpose of overcoming damage reduction. If your deity is neutral with no other alignment components, your attacks instead overcome damage reduction as though your weapon were both cold iron and silver.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

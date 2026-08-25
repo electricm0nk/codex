@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Forbidden Rites Domain ~ Darkness Domain",
     "name": "Darkness",
-    "class": "Forbidden Rites Domain",
+    "class": "Cleric",
     "description": "You manipulate shadows and darkness. In addition, you receive Blind-Fight as a bonus feat.",
     "raw_tokens": [
       {
@@ -79,6 +79,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Cleric=1|Obscuring Mist|Cleric=2|Blindness/Deafness (Blindness Only)|Cleric=3|Deeper Darkness|Cleric=4|Shadow Conjuration|Cleric=5|Summon Monster V (1d3 Shadows)|Cleric=6|Shadow Walk|Cleric=7|Power Word Blind|Cleric=8|Shadow Evocation (Greater)|Cleric=9|Shades"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Magus=2"
       }
     ]
   },
@@ -96,5 +100,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

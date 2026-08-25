@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "data": {
+    "key": "Ghost",
+    "name": "Ghost",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghost Ability|(CR-3)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|CHA-CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Climb|Disguise|Fly|Intimidate|Knowledge (Arcana)|Knowledge (Religion)|Perception|Sense Motive|Spellcraft|Stealth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Corrupting Touch|Flight Maneuverability|Rejuvenation|Undead Traits"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,30"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Incorporeal"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst",
+    "sha256": "7c27e01584c43c548e0c2c3ed900332d774628c6a8c56a5be4992cba036085d1",
+    "line": 24,
+    "record_key": "Ghost"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

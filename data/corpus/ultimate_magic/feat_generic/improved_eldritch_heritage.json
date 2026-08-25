@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Improved Eldritch Heritage",
+    "name": "Improved Eldritch Heritage",
+    "description": "The power of your discovered bloodline continues to grow.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Eldritch Heritage"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=11"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CHASCORE,ImprovedEldritchHeritageCharismaPrerequisite"
+      },
+      {
+        "key": "DESC",
+        "value": "The power of your discovered bloodline continues to grow."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Eldritch Heritage Selection|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain either the 3rd-level or the 9th-level power (your choice) of the bloodline you selected with the Eldritch Heritage feat. For purposes of using that power, treat your sorcerer level as equal to your character level - 2, even if you have levels in sorcerer. You do not gain any of the other bloodline abilities."
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Special - You may select this feat multiple times. Its effects do not stack. Each time you select the feat, it applies to a different bloodline power for that bloodline available at sorcerer level 3 or 9."
+      },
+      {
+        "key": "INFO",
+        "value": "Prerequisite|Cha 15, Eldritch Heritage, character level 11th."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 73,
+    "record_key": "Improved Eldritch Heritage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

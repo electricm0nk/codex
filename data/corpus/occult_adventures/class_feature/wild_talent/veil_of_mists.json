@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Veil Of Mists",
     "name": "Veil Of Mists",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element water; Type utility (Su); Level 2; Burn 0 You create a misty veil over your features, disguising yourself as disguise self for a number of minutes equal to your Constitution modifier. If you accept 1 point of burn, until the next time your burn is removed, each use of this wild talent lasts until you dismiss it.",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

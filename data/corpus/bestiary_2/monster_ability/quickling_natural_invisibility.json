@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Quickling ~ Natural Invisibility",
+    "delivery": "Supernatural",
+    "description": "A quickling is invisible when motionless.  It loses this invisibility and remains visible for 1 round in any round in which it takes an action other than a free action.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:quickling_natural_invisibility",
+    "name": "Natural Invisibility",
+    "owners": [
+      "bestiary_2:monster:quickling"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A quickling is invisible when motionless.  It loses this invisibility and remains visible for 1 round in any round in which it takes an action other than a free action."
+      },
+      {
+        "key": "KEY",
+        "value": "Quickling ~ Natural Invisibility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.227",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1035,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Quickling ~ Natural Invisibility",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Elven Magic",
+    "name": "Elven Magic",
+    "description": "+2 untyped bonus on caster level, to overcome SR, &amp; +2 racial bonus on Spellcraft checks to ID Magic Item Properties.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Elven Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 untyped bonus on caster level, to overcome SR, &amp; +2 racial bonus on Spellcraft checks to ID Magic Item Properties."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Spellcraft=to identify magic item properties|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 334,
+    "record_key": "Builder Racial Trait ~ Elven Magic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

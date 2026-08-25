@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Beast ~ Skills",
     "name": "Skills",
-    "class": "Order of the Beast",
+    "class": "Cavalier",
     "description": "An order of the beast cavalier adds Disable Device (Dex) and Stealth (Dex) to his list of class skills. An order of the beast cavalier can make Disable Device checks untrained. If he has ranks in the skill, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1) when using it to sabotage, jam, or destroy a device.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

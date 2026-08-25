@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Efficient Surge",
+    "name": "Efficient Surge",
+    "class": null,
+    "description": "When you invoke a wild surge, you instead reduce the cost of the power manifested by the level of wild surge (to a minimum cost of 0) instead of increasing your manifester level and adding power points to augment the power.  This reduction in cost does not stack with other similar effects, such as that by a torc of power preservation.  The power is still treated as having spent the full amount of power points when determining the number of power points the wilder can spend on manifesting it.  Psychic enervation:Lose %1 power points and staggered until the end of your next turn.|EfficientPPLoss",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.SurgeType"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "WildSurgeMustModifyML,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EfficientPPLoss|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you invoke a wild surge, you instead reduce the cost of the power manifested by the level of wild surge (to a minimum cost of 0) instead of increasing your manifester level and adding power points to augment the power.  This reduction in cost does not stack with other similar effects, such as that by a torc of power preservation.  The power is still treated as having spent the full amount of power points when determining the number of power points the wilder can spend on manifesting it.  Psychic enervation:Lose %1 power points and staggered until the end of your next turn.|EfficientPPLoss"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Efficient Surge Bond|!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderSurgeBond|PREABILITY:1,CATEGORY=Special Ability,Efficient Surge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Efficient Improved Surge Bond|PREABILITY:1,CATEGORY=Internal,Wilder ~ Improved Surge Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EfficientPPLoss|SurgeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1049,
+    "record_key": "Efficient Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

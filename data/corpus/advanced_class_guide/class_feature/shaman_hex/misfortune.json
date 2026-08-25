@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Hex ~ Misfortune",
     "name": "Misfortune",
-    "class": "Shaman Hex",
+    "class": "Shaman",
     "description": "The shaman causes a creature within 30 feet to suffer grave misfortune for %1 rounds. Anytime the creature makes an ability check, attack roll, saving throw, or skill check, it must roll twice and take the worse result. A successful Will saving throw (DC %2) negates this hex. This hex affects all rolls the target must make while it lasts. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanMisfortuneHexDuration|ShamanMisfortuneHexDC",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

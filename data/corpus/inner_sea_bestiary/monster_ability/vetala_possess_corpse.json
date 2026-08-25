@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vetala ~ Possess Corpse",
+    "delivery": "Supernatural",
+    "description": "As a full-round action, a Vetala can possess a Large or smaller corpse just as it can a living body. The Vetala's consciousness leaves its body and takes control of the corpse, animating it as either a skeleton or zombie (depending on its state of decay). The Vetala can remain in control of a corpse indefinitely, and can communicate through the body, but cannot use any of its other special abilities.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:vetala_possess_corpse",
+    "name": "Possess Corpse",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a Vetala can possess a Large or smaller corpse just as it can a living body. The Vetala's consciousness leaves its body and takes control of the corpse, animating it as either a skeleton or zombie (depending on its state of decay). The Vetala can remain in control of a corpse indefinitely, and can communicate through the body, but cannot use any of its other special abilities."
+      },
+      {
+        "key": "KEY",
+        "value": "Vetala ~ Possess Corpse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.55",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 382,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Vetala ~ Possess Corpse",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

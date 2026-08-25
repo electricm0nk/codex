@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "data": {
+    "key": "Inspired Rage",
+    "name": "Inspired Rage",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Inspired Rage&colon; Morale bonuses to Strength, Constitution and Will saving throws depending on the ally's Skald level, but also take a –1 penalty to AC."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|Will|(1+floor((%CHOICE)/4)*1)|TYPE=MORALE"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|-1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR,CON|(2+floor((%CHOICE)/8)*2)|TYPE=MORALE"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|VAR|InspiredRageBonus|%CHOICE"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=20|TITLE=Ally's Skald Level"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst",
+    "sha256": "089a3c6958b30fa81dd066355de5fe92a518c6e9df7f3b5374f0560fd40a9ee9",
+    "line": 28,
+    "record_key": "Inspired Rage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

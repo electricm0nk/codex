@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Mascot ~ Share Spells",
+    "name": "Share Spells",
+    "description": "Spells that target a mascot via its share spells ability function at its master's caster level - 2. The mascot also benefit from the spells of any team member when it is using share spells. This alters share spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mascot ~ Share Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Spells that target a mascot via its share spells ability function at its master's caster level - 2. The mascot also benefit from the spells of any team member when it is using share spells. This alters share spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 587,
+    "record_key": "Mascot ~ Share Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sorcerer Bloodline ~ Celestial",
     "name": "Celestial Bloodline",
-    "class": "Sorcerer Bloodline",
+    "class": "Sorcerer",
     "description": "Your bloodline is blessed by a celestial power, either from a celestial ancestor or through divine intervention. Although this power drives you along the path of good, your fate (and alignment) is your own to determine.|PREVAREQ:Sorcerer_Celestial_Description,0",
     "raw_tokens": [
       {
@@ -176,5 +176,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

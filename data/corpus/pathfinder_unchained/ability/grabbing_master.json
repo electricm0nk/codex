@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Grabbing Master",
+    "name": "Grabbing Master",
+    "description": "When you are grappling only one opponent while using Grabbing StyleACG, you can spend 5 stamina points to continue to threaten the area within your reach with your free hand until the beginning of your next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Grabbing Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When you are grappling only one opponent while using Grabbing StyleACG, you can spend 5 stamina points to continue to threaten the area within your reach with your free hand until the beginning of your next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "120"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|ACG"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_acg.lst",
+    "sha256": "570d75d3124c424e2ac73115e554567a42c86aa05cf319c5d41c5135b1068c68",
+    "line": 24,
+    "record_key": "Combat Trick ~ Grabbing Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

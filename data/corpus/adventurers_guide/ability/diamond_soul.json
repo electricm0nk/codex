@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Diamond Soul",
+    "name": "Diamond Soul",
+    "description": "A student of perfection can spend 2 points from his ki pool as a swift action to gain spell resistance %1. This spell resistance lasts for %2 rounds.|10+StudentOfPerfectionLVL|StudentOfPerfectionLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Diamond Soul"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "StudentOfPerfectionLVL,6,UntwistingIronStudent,1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Pathfinder Unchained"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "PU"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "DESC",
+        "value": "A student of perfection can spend 2 points from his ki pool as a swift action to gain spell resistance %1. This spell resistance lasts for %2 rounds.|10+StudentOfPerfectionLVL|StudentOfPerfectionLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 16,
+    "record_key": "Student of Perfection ~ Diamond Soul"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Battle Scout",
     "name": "Battle Scout",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Armies need clean water, safe routes, and intelligence about their enemies. Though regular outdoorsmen might suffice in many cases, some large forces look to battle scouts to keep the body of their troops safe and prepared for the terrain and whatever dangers that terrain hides.",
     "raw_tokens": [
       {
@@ -63,6 +63,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ BATTLE SCOUT],[!PREFACT:1,ABILITIES,Ranger_Archetype_FavoredEnemy2=True,Ranger_Archetype_FavoredEnemy3=True,Ranger_Archetype_FavoredEnemy4=True,Ranger_Archetype_MasterHunter=True,Ranger_Archetype_AnimalCompanion=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_MasterHunter|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_MasterHunter|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_AnimalCompanion|true"
       }
     ]
   },
@@ -79,5 +123,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

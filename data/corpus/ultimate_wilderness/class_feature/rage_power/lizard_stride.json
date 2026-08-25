@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Lizard Stride",
     "name": "Lizard Stride",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "When the barbarian makes a charge or run action while raging, she can move across the surface of water without sinking. She sinks immediately if she ends her turn standing on water.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

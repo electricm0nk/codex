@@ -1,0 +1,132 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Monk Archetype ~ Sage Counselor",
+    "name": "Sage Counselor",
+    "class": "Unchained Monk Archetype",
+    "description": "Sage counselors are ascetics and mystics who leave the confines of the monastery walls to advise secular people about spiritual truths and to seek knowledge of the outside world. They often find work as mentors teaching religion and martial arts, and some of them even become counselors for people in high places. Sage counselors often speak in metaphors, knowing that indirect persuasion is more effective than speaking plainly, and they use indirect tactics in combat as well.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk Archetype ~ Sage Counselor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Unchained Monk Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Unchained Monk Archetype ~ Sage Counselor],[!PREFACT:1,ABILITIES,Monk_Archetype_ClassSkills=True,Monk_Archetype_BonusFeat1=True,Monk_Archetype_BonusFeat2=True,Monk_Archetype_BonusFeat6=True,Monk_Archetype_BonusFeat10=True,Monk_Archetype_FlurryOfBlows=True,Monk_Archetype_KiPool=True,Monk_Archetype_KiPowers4=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sage counselors are ascetics and mystics who leave the confines of the monastery walls to advise secular people about spiritual truths and to seek knowledge of the outside world. They often find work as mentors teaching religion and martial arts, and some of them even become counselors for people in high places. Sage counselors often speak in metaphors, knowing that indirect persuasion is more effective than speaking plainly, and they use indirect tactics in combat as well."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Sage Counselor ~ Class Skills|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sage Counselor ~ Cunning Fist|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sage Counselor ~ Feinting Flurry|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sage Counselor ~ Deceptive Ki|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_KiPool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_KiPowers4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_KiPowers4|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 16,
+    "record_key": "Unchained Monk Archetype ~ Sage Counselor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

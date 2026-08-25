@@ -63,6 +63,7 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::apg::equipment_tables::EquipmentCategory;
 use crate::rules_core::rules_tables::apg::{self, ApgClassId};
@@ -131,6 +132,18 @@ pub struct CacheRecord<T: Serialize> {
     pub license: crate::rules_core::shape_b_v1::License,
     pub pi_field: Option<String>,
     pub pi_marker: Option<String>,
+    /// `decisions.md §24b`-3 -- see `cache_gen::acg::CacheRecord::
+    /// codex_generated_name`'s identical doc comment; same gap-close, same
+    /// generation family, `t9-onboarding-pi-final-leaks-and-generators` cycle.
+    pub codex_generated_name: bool,
+}
+
+/// `cache_gen::acg::name_or_key_is_pi`'s byte-identical sibling for APG --
+/// same gap, same fix, `t9-onboarding-pi-final-leaks-and-generators` cycle.
+/// Zero live impact today (this cycle's own corpus-wide re-derivation found
+/// no hit in this book).
+fn name_or_key_is_pi(values: &[&str]) -> bool {
+    values.iter().any(|v| pi_screening::blacklist_term_hit_including_concatenated(v).is_some())
 }
 
 // ---------------------------------------------------------------------
@@ -386,9 +399,14 @@ impl From<std::io::Error> for GenerationError {
     }
 }
 
+/// SD-32 Epic 5 protective sweep -- see `cache_gen::acg::write_json`'s
+/// identical doc comment; same shape, same fix.
 fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
     std::fs::create_dir_all(out_dir)?;
     let path = out_dir.join(format!("{slug}.json"));
+    if path.exists() {
+        return Ok(());
+    }
     let json = serde_json::to_string_pretty(record)
         .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
     std::fs::write(path, json)
@@ -513,6 +531,7 @@ fn generate_classes(
             license,
             pi_field,
             pi_marker,
+            codex_generated_name: false,
         };
         let slug = slugify(class_id.name(), &mut used);
         write_json(&class_dir, &slug, &record)?;
@@ -681,14 +700,27 @@ fn generate_spells(
         } else {
             Completeness::ChassisOnly
         };
-        let (license, pi_field, pi_marker, stored_desc) =
+        let (mut license, mut pi_field, pi_marker, stored_desc) =
             pi_screening::classify_optional_field("description", entry.description);
+        let key_is_pi = name_or_key_is_pi(&[entry.key]);
+        let out_key = if key_is_pi {
+            license = crate::rules_core::shape_b_v1::License::PiRedacted;
+            let mut fields: Vec<&str> = Vec::new();
+            if pi_field.as_deref() == Some("description") {
+                fields.push("description");
+            }
+            fields.push("key");
+            pi_field = Some(fields.join(","));
+            neutral_key("spell", WIRING_CLASS_BOOK_ID, wiring_file, wiring_line)
+        } else {
+            entry.key.to_string()
+        };
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
             ingested_at: ingested_at.to_string(),
             data: SpellData {
-                key: entry.key.to_string(),
+                key: out_key,
                 school: entry.school.map(|s| format!("{s:?}")),
                 level: entry.level,
                 description: stored_desc,
@@ -700,8 +732,11 @@ fn generate_spells(
             license,
             pi_field,
             pi_marker,
+            codex_generated_name: key_is_pi,
         };
-        let slug = slugify(entry.key, &mut used);
+        // `cache_gen::acg::generate_spells`'s identical directory-placement-
+        // fix precedent: slug from the (possibly-renamed) output key.
+        let slug = slugify(&record.data.key, &mut used);
         write_json(&spell_dir, &slug, &record)?;
         report.spells_written += 1;
     }
@@ -905,16 +940,32 @@ fn generate_equipment(
         } else {
             Completeness::ChassisOnly
         };
-        let (license, pi_field, pi_marker, stored_desc) =
+        let (mut license, mut pi_field, pi_marker, stored_desc) =
             pi_screening::classify_optional_field("description", entry.description);
+        let name_is_pi = name_or_key_is_pi(&[entry.key, entry.name]);
+        let (out_key, out_name) = if name_is_pi {
+            license = crate::rules_core::shape_b_v1::License::PiRedacted;
+            let mut fields: Vec<&str> = Vec::new();
+            if pi_field.as_deref() == Some("description") {
+                fields.push("description");
+            }
+            fields.push("name");
+            pi_field = Some(fields.join(","));
+            (
+                neutral_key("equipment", WIRING_CLASS_BOOK_ID, wiring_file, wiring_line),
+                neutral_name("equipment", WIRING_CLASS_BOOK_ID, wiring_file, wiring_line),
+            )
+        } else {
+            (entry.key.to_string(), entry.name.to_string())
+        };
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
             ingested_at: ingested_at.to_string(),
             data: EquipmentData {
-                key: entry.key.to_string(),
+                key: out_key,
                 category: format!("{:?}", entry.category),
-                name: entry.name.to_string(),
+                name: out_name,
                 cost_gp: entry.cost_gp,
                 weight: entry.weight,
                 description: stored_desc,
@@ -925,8 +976,11 @@ fn generate_equipment(
             license,
             pi_field,
             pi_marker,
+            codex_generated_name: name_is_pi,
         };
-        let slug = slugify(entry.key, &mut used);
+        // `cache_gen::acg::generate_equipment`'s identical directory-
+        // placement-fix precedent: slug from the (possibly-renamed) key.
+        let slug = slugify(&record.data.key, &mut used);
         write_json(&equipment_dir, &slug, &record)?;
         report.equipment_written += 1;
     }
@@ -968,6 +1022,39 @@ pub fn generate(
 mod tests {
     use super::*;
 
+    // --- t9-onboarding-pi-final-leaks-and-generators: `name`/`key`
+    // screening (mirrors `cache_gen::acg`'s own tests exactly). Never a
+    // literal blacklist term -- indexes into
+    // `pi_screening::PI_BLACKLIST_TERMS`, per `decisions.md §24b`-2.
+
+    #[test]
+    fn name_or_key_is_pi_is_false_for_an_ordinary_clean_value() {
+        assert!(!name_or_key_is_pi(&["Longsword", "Cure Light Wounds"]));
+    }
+
+    #[test]
+    fn name_or_key_is_pi_catches_a_blacklisted_key() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[9];
+        assert!(name_or_key_is_pi(&[term, "clean"]));
+    }
+
+    #[test]
+    fn name_or_key_is_pi_catches_a_blacklisted_name_even_when_key_is_clean() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[22];
+        assert!(name_or_key_is_pi(&["clean_key", term]));
+    }
+
+    #[test]
+    fn a_name_pi_equipment_entry_would_be_renamed_never_shipped_under_its_own_identity() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[24];
+        assert!(name_or_key_is_pi(&[term, "Ordinary Item"]));
+        let codex_key = neutral_key("equipment", WIRING_CLASS_BOOK_ID, "apg_equip_general.lst", 7);
+        let codex_name = neutral_name("equipment", WIRING_CLASS_BOOK_ID, "apg_equip_general.lst", 7);
+        assert_ne!(codex_key, term);
+        assert_ne!(codex_name, term);
+        assert!(codex_name.starts_with("Codex-Named Unit"));
+    }
+
     #[test]
     fn slugify_handles_parens_and_collisions() {
         let mut used = BTreeSet::new();
@@ -976,5 +1063,57 @@ mod tests {
         let a = slugify("Giant Hide (Ogre)", &mut used2);
         let b = slugify("Giant Hide (Ogre)", &mut used2);
         assert_ne!(a, b);
+    }
+
+    /// SD-32 Epic 5 protective sweep, mirrors `cache_gen::acg`'s identical
+    /// finding: `write_json` clobbered an already-enriched file with no
+    /// exists-guard. 622 of 670 `advanced_players_guide` spell/equipment
+    /// on-disk records carry a `raw_tokens` field
+    /// `enrich_spell_raw_tokens.rs`/`enrich_equipment_raw_tokens.rs` write
+    /// AFTER this generator runs, which this generator's own
+    /// `SpellData`/`EquipmentData` cannot reconstruct.
+    #[test]
+    fn write_json_never_overwrites_an_existing_file() {
+        let dir = std::env::temp_dir().join(format!(
+            "apg_write_json_test_{}_{}",
+            std::process::id(),
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("foo.json");
+        std::fs::write(&path, r#"{"data":{"key":"foo"},"raw_tokens":["ENRICHED-MARKER"]}"#).unwrap();
+
+        let record = CacheRecord {
+            population: Population::InScope,
+            completeness: Completeness::Full,
+            ingested_at: "2026-08-22T00:00:00Z".to_string(),
+            data: SpellData {
+                key: "foo".to_string(),
+                school: Some("Evocation".to_string()),
+                level: Some(1),
+                description: None,
+                full_text: false,
+            },
+            source: Source::LstToken {
+                path: "apg_spells.lst".to_string(),
+                sha256: "deadbeef".to_string(),
+                line: 1,
+                record_key: "foo".to_string(),
+            },
+            wiring_class: "display".to_string(),
+            wiring_class_signals: vec!["display".to_string()],
+            license: crate::rules_core::shape_b_v1::License::Ogl,
+            pi_field: None,
+            pi_marker: None,
+            codex_generated_name: false,
+        };
+        write_json(&dir, "foo", &record).expect("write_json must succeed");
+
+        let content = std::fs::read_to_string(&path).unwrap();
+        assert!(
+            content.contains("ENRICHED-MARKER"),
+            "write_json clobbered a file a later enrichment pass had already written into: {content}"
+        );
+        std::fs::remove_dir_all(&dir).ok();
     }
 }

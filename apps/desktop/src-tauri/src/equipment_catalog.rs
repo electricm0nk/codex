@@ -765,15 +765,58 @@ mod tests {
         // the built catalog: `ISG` 72/125, `MYTHIC` 97/252 (most mythic
         // items are `.MOD`/`NAMEISPI` rows or bare stat-boost items with no
         // `DESC:`/`SPROP:` token), `ISC` 7/65, `ISI` 9/34, `BOTD2` 3/5.
-        assert_eq!(with_description("ISG"), 72);
+        // SD-32 `decisions.md §24` re-derivation (`t9-onboarding-unowned-
+        // reds`): `ISG`'s 25 newly-included neutral-named rows contribute
+        // 25 more real descriptions (72 -> 97); `ISI`'s 8 newly-included
+        // rows contribute 3 more (9 -> 12); `BOTD2`'s 1 newly-included row
+        // contributes 1 more (3 -> 4). `MYTHIC`'s and `ISC`'s newly-
+        // included rows carry no `DESC:`/`SPROP:` token of their own, so
+        // their description counts are unchanged.
+        assert_eq!(with_description("ISG"), 97);
         assert_eq!(with_description("MYTHIC"), 97);
         assert_eq!(with_description("ISC"), 7);
-        assert_eq!(with_description("ISI"), 9);
-        assert_eq!(with_description("BOTD2"), 3);
+        assert_eq!(with_description("ISI"), 12);
+        assert_eq!(with_description("BOTD2"), 4);
         // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
+        // SD-32 T9 onboarding (card 11): `ISTEM` 33/43, `ISM` 4/6 --
+        // re-derived directly against the generated `equipment_gap_tables.rs`
+        // (counting non-`None` `description` fields, not hand-adjusted).
+        assert_eq!(with_description("ISTEM"), 33);
+        // SD-32 T9 residual (`decisions.md §20`): `ISM` 4 -> 54.
+        // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
+        // at all (fixed) and `ism_equipmods.lst` regained its citations on
+        // a stale exclusion (fixed) -- ISM's row count itself grew 6 -> 68,
+        // and 54 of those 68 carry a real `DESC:`/`SPROP:` token,
+        // re-derived directly against the regenerated
+        // `equipment_gap_tables.rs`.
+        assert_eq!(with_description("ISM"), 54);
+        // SD-32 T9 residual: the new `AG` book (`adventurers_guide`, no
+        // corpus gap config at all before this cycle) -- 14 of its 97 rows
+        // carry a real description, re-derived directly against the
+        // generated table.
+        // SD-32 `decisions.md §24`/T9 residual re-derivation: `AG`'s
+        // newly-included rows (97 -> 116 total, see `catalog_spans_every_
+        // ingested_book_with_their_real_counts`) contribute 4 more real
+        // descriptions (14 -> 18).
+        assert_eq!(with_description("AG"), 18);
+        // SD-32 desktop count re-sweep: `BB` (`beginner_box`) -- 13 of its
+        // 19 rows carry a real `DESC:`/`SPROP:` token (6 `description:
+        // None`), re-derived directly against the regenerated
+        // `equipment_gap_tables.rs`.
+        assert_eq!(with_description("BB"), 13);
+        // Re-derived fresh this cycle (`sd32-desktop-count-resweep`) as the
+        // real, measured total -- not the old 4719 plus a hand-adjusted
+        // delta, because `OA`/`HA`/`ISR`/`ISWG`/`MC`/`B2`/`B3`/`B4` are not
+        // individually pinned above and their own description counts moved
+        // too (their ROW counts drifted in `catalog_spans_every_ingested_
+        // book_with_their_real_counts` above, and some of that growth
+        // carries real `DESC:`/`SPROP:` text). 4756 -> 4769 (+13, `BB`
+        // above). Command: `cd apps/desktop/src-tauri && cargo test
+        // --locked --bin codex-desktop equipment_catalog -- --nocapture`
+        // with a temporary per-book description-count dump.
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            4618
+            4769
         );
     }
 
@@ -830,7 +873,14 @@ mod tests {
         // (`ultimate_equipment:"Elysian Shield"`, `NAMEISPI:YES`) that
         // predates this cycle -- see `equipment_resolver.rs`'s own comment
         // on the same number for the full citation.
-        assert_eq!(count_by_book(&response, "UE"), 1613);
+        //
+        // SD-32 T9 onboarding (card 11): re-derived pre-existing red,
+        // unrelated to this cycle's own changes -- see
+        // `equipment_resolver.rs`'s identical correction (same underlying
+        // `ue::equipment_tables()` static table, byte-identical to this
+        // branch's pinned base) for the full citation. 1613 was already
+        // stale before this cycle touched anything; 1614 is the real count.
+        assert_eq!(count_by_book(&response, "UE"), 1614);
         // 24 General (pregenerated spellbooks) + 2 ArmsArmor (Scrollmaster
         // Gear); no `um_equipmods.lst` file exists for this book. Matches
         // `equipment_resolver::EQUIPMENT_BOOK_UM`'s own pinned 26.
@@ -859,8 +909,14 @@ mod tests {
         // JSON file, one to one.
         assert_eq!(count_by_book(&response, "OA"), 119);
         assert_eq!(count_by_book(&response, "HA"), 117);
-        assert_eq!(count_by_book(&response, "ISR"), 71);
-        assert_eq!(count_by_book(&response, "ISWG"), 46);
+        // SD-32 `decisions.md §24` (re-derived this cycle, `t9-onboarding-
+        // unowned-reds`, against `tests/equipment_gap_tables.rs`'s own
+        // already-correct `EXPECTED_PER_BOOK`, which independently agrees):
+        // a declared-PI/blacklisted-name row is no longer excluded from
+        // this book whole -- it is INCLUDED under a Codex-generated
+        // neutral name. ISR 71 -> 72 (+1), ISWG 46 -> 53 (+7).
+        assert_eq!(count_by_book(&response, "ISR"), 72);
+        assert_eq!(count_by_book(&response, "ISWG"), 53);
         assert_eq!(count_by_book(&response, "MC"), 49);
         // `B2`/`B3`: 7/8, not 8/9 -- each net of 1 bare PFS organized-play
         // legality OVERLAY row (`is_non_record_line`'s `PFSNotLegal`
@@ -869,7 +925,9 @@ mod tests {
         // the full citation.
         assert_eq!(count_by_book(&response, "B2"), 7);
         assert_eq!(count_by_book(&response, "B3"), 8);
-        assert_eq!(count_by_book(&response, "B4"), 5);
+        // SD-32 `decisions.md §24`: 5 -> 8 (+3), same neutral-name-inclusion
+        // shape as ISR/ISWG above.
+        assert_eq!(count_by_book(&response, "B4"), 8);
 
         // `SD31-E6-F10-004`: 5 further already-compiled books, the ones
         // `SD31-E6-F10-003` deliberately left out (`OPEN-ISSUES.md` row 186)
@@ -878,27 +936,73 @@ mod tests {
         // `blacklist_hit` pre-filter excludes/redacts only the individual
         // offending rows; see `tests/equipment_gap_tables.rs`'s own
         // `EXPECTED_PER_BOOK` for the full citation.
-        assert_eq!(count_by_book(&response, "ISG"), 125);
-        assert_eq!(count_by_book(&response, "MYTHIC"), 252);
-        assert_eq!(count_by_book(&response, "ISC"), 65);
-        assert_eq!(count_by_book(&response, "ISI"), 34);
-        assert_eq!(count_by_book(&response, "BOTD2"), 5);
+        // SD-32 `decisions.md §24` (re-derived this cycle against
+        // `tests/equipment_gap_tables.rs`'s own already-correct
+        // `EXPECTED_PER_BOOK`, which independently agrees): each book's
+        // declared-PI/blacklist name exclusions are no longer excluded
+        // whole -- they are INCLUDED under a Codex-generated neutral name.
+        // 125 -> 150 (`inner_sea_gods`, +25), 252 -> 255 (`mythic_
+        // adventures`, +3), 65 -> 72 (`inner_sea_combat`, +7), 34 -> 42
+        // (`inner_sea_intrigue`, +8), 5 -> 6 (`book_of_the_damned_
+        // volume_2`, +1).
+        assert_eq!(count_by_book(&response, "ISG"), 150);
+        assert_eq!(count_by_book(&response, "MYTHIC"), 255);
+        assert_eq!(count_by_book(&response, "ISC"), 72);
+        assert_eq!(count_by_book(&response, "ISI"), 42);
+        assert_eq!(count_by_book(&response, "BOTD2"), 6);
+        // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off --
+        // two more already-compiled books; see `tests/equipment_gap_tables.rs`
+        // `EXPECTED_PER_BOOK` for the full citation.
+        assert_eq!(count_by_book(&response, "ISTEM"), 43);
+        // SD-32 T9 residual (`decisions.md §20`): 6 -> 68.
+        // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
+        // (nor `"ISTEM"` above) at all -- the corpus gap lane's own config
+        // table already generated these rows, but the cache writer silently
+        // dropped every one before it reached `data/corpus/`. Fixed; see
+        // `tests/equipment_gap_tables.rs`'s own `EXPECTED_PER_BOOK` for the
+        // full citation, including the separately-recovered
+        // `ism_equipmods.lst` (+62) that raises this to 68.
+        assert_eq!(count_by_book(&response, "ISM"), 68);
+        // SD-32 `decisions.md §24`/T9 residual (`decisions.md §20`):
+        // `adventurers_guide` (`AG`) had no corpus gap config at all before
+        // T9 residual landed -- the single largest un-covered `equipment`
+        // population. 97 -> 115 (+18, its declared-PI exclusions are no
+        // longer excluded whole under `§24`) -> 116 (+1, `ag_equipmods.lst`
+        // was absent from `AG`'s `BOOK_INPUTS`, recovering one real
+        // `equipment_modifier` object). `tests/equipment_gap_tables.rs`'s
+        // own already-correct `EXPECTED_PER_BOOK` independently agrees.
+        assert_eq!(count_by_book(&response, "AG"), 116);
+        // SD-32 desktop count re-sweep: `beginner_box` (`BB`) was ingested
+        // (`decisions.md §27b`, the `EXCLUDED_BOOKS` carve-out removed) --
+        // 19 new corpus files under `data/corpus/beginner_box/equipment/`,
+        // every one routed through the same corpus gap lane as `UW`/`ISG`/
+        // etc above, one catalog row per shipped JSON file. Re-derived
+        // directly against the regenerated `equipment_gap_tables.rs`
+        // (`grep -c 'book: "BB"'`).
+        assert_eq!(count_by_book(&response, "BB"), 19);
 
-        // 3309 + 375 + 319 + 7 + 215 + 42 + 105 + 1613 + 26 + 552 + 224 + 127
-        // + 119 + 117 + 71 + 46 + 49 + 7 + 8 + 5 + 125 + 252 + 65 + 34 + 5.
         // Pinned as a total as well as per book so that a book silently
         // dropping out of the chain cannot be masked by another book
-        // growing. The +769 over the previous 6146 is exactly the corpus
-        // gap lane's row count (`tests/equipment_gap_tables.rs` pins the
-        // per-book split against `docs/work-inventory.json`'s own
-        // `not-ingested` population); the further +421 (6915 -> 7336) is
-        // `SD31-E6-F10-003`'s 8-book extension of that same lane, net of
-        // the 1 pre-existing UE PI leak (`"Elysian Shield"`) and the 2 bare
-        // PFS legality overlay rows this cycle's fixes also caught. The
-        // further +481 (7336 -> 7817) is `SD31-E6-F10-004`'s 5-book
-        // extension, net of 35 declared-PI name exclusions and 9 new
-        // per-record blacklist name/key exclusions corpus-wide.
-        assert_eq!(response.entries.len(), 7817);
+        // growing. Re-derived fresh this cycle (`sd32-desktop-count-
+        // resweep`) by summing every `count_by_book` assertion above (equal
+        // to `response.entries.len()` itself, run via `cd apps/desktop/
+        // src-tauri && cargo test --locked --bin codex-desktop
+        // equipment_catalog -- --nocapture` with a temporary per-book
+        // dump, matching `tests/equipment_gap_tables.rs`'s independently-
+        // derived `EXPECTED_PER_BOOK` sum): 8025 -> 8100 (+75 = the 9
+        // `decisions.md §24` neutral-name-inclusion deltas above -- ISR +1,
+        // ISWG +7, B4 +3, ISG +25, MYTHIC +3, ISC +7, ISI +8, BOTD2 +1,
+        // AG +19 (97->116) -- plus the pre-existing 1-unit UE-total
+        // inconsistency this same pass also closed: the per-book `UE`
+        // assertion above was already 1614, but the OLD total assertion
+        // (8025) had never been updated off the superseded 1613, so 8025
+        // was already 1 short of its own per-book sum before this cycle
+        // touched anything) -> 8119 (+19, `BB` above; `beginner_box`
+        // ingestion, `decisions.md §27b` -- a pinned-count staleness
+        // regression, not a logic regression: this workspace is a
+        // SEPARATE cargo build from the root-level sweep that ingested
+        // `beginner_box`, so nothing here re-ran until now).
+        assert_eq!(response.entries.len(), 8119);
     }
 
     #[test]
@@ -1209,7 +1313,21 @@ mod tests {
         // `book_of_the_damned_volume_2`), verified below (the loop over
         // `cross_book.difference(&expected_cross_book)`) to involve a gap
         // row, same discipline as every prior growth of this count.
-        assert_eq!(cross_book.len(), 213);
+        // SD-32 T9 residual (`decisions.md §20`): 213 -> 225, +12 new
+        // cross-book collisions from the `ISM` routing/citation fix and the
+        // new `AG`/`UM` books, every one verified below (the loop
+        // immediately following) to involve a gap row -- not hand-counted.
+        // SD-32 desktop count re-sweep (`beginner_box` ingested,
+        // `decisions.md §27b`): 225 -> 230, +5 new cross-book collisions
+        // from `BB` (`Bandages of Rapid Recovery`, `Campfire Bead`,
+        // `Dawnflower Sash`, `Flying Ointment`, `Glowing Glove`, each
+        // shared with an already-cataloged book's hand table or gap row),
+        // every one verified below (the loop immediately following) to
+        // involve a gap row -- not hand-counted. Command: `cd apps/desktop/
+        // src-tauri && cargo test --locked --bin codex-desktop
+        // keys_do_not_collide -- --nocapture` with a temporary
+        // `cross_book.difference(&expected_cross_book)` dump.
+        assert_eq!(cross_book.len(), 230);
         for key in cross_book.difference(&expected_cross_book) {
             assert!(
                 gap_pairs.iter().any(|(_, gap_key)| gap_key == key),
@@ -1289,7 +1407,33 @@ mod tests {
         // `SD31-E6-F10-004`: +35 ArmsArmor rows across the 5 newly-extended
         // gap-lane books (1015 -> 1050), re-derived fresh from the built
         // catalog, not adjusted by a hand count.
-        assert_eq!(response.entries.len(), 1050);
+        // SD-32 T9 onboarding (card 11): +8 ArmsArmor rows, all from
+        // inner_sea_temples (ism contributes 0 -- its 6 rows are all
+        // `General`), re-derived directly against the generated
+        // `equipment_gap_tables.rs` (1050 -> 1058).
+        // SD-32 T9 residual (`decisions.md §20`): +19 ArmsArmor rows, all
+        // from the new `AG` book (`ism`'s routing fix and recovered
+        // `ism_equipmods.lst` rows are all `Equipmods` category, 0
+        // ArmsArmor; `um` contributes 0 rows at all), re-derived directly
+        // against the regenerated table (1058 -> 1077).
+        // SD-32 `decisions.md §24` re-derivation (`t9-onboarding-unowned-
+        // reds`): 1077 -> 1095 (+18), measured directly (not hand-summed
+        // from a per-book delta) via a temporary per-book/per-category
+        // dump against the current corpus, alongside the neutral-name-
+        // inclusion widening documented on `catalog_spans_every_ingested_
+        // book_with_their_real_counts` above (whose per-book row-count
+        // deltas this total is consistent with: `ISG`/`MYTHIC`/`ISI`/
+        // `BOTD2`'s current `ArmsArmor` counts are all 0, so their growth
+        // is entirely `General`/`Equipmods`; `ISR`/`ISWG`/`B4`/`ISC` each
+        // currently carry a nonzero `ArmsArmor` count, consistent with
+        // being the source of this delta). Command: `cd apps/desktop/
+        // src-tauri && cargo test --locked --bin codex-desktop
+        // equipment_catalog -- --nocapture` with a temporary per-book
+        // `ArmsArmor`-count dump.
+        // SD-32 desktop count re-sweep: 1095 -> 1097 (+2, `BB`'s 2
+        // `ArmsArmor` rows -- `beginner_box` ingestion, `decisions.md
+        // §27b`).
+        assert_eq!(response.entries.len(), 1097);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Aberrant Bloodline ~ Long Limbs",
     "name": "Long Limbs",
-    "class": "Aberrant Bloodline",
+    "class": "Sorcerer",
     "description": "Your reach increases by %1 feet whenever you are making a melee touch attack. This ability does not otherwise increase your threatened area.|Sorcerer_LongLimbs_Reach",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

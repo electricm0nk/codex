@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Travel Domain ~ Agile Feet",
     "name": "Agile Feet",
-    "class": "Travel Domain",
+    "class": "Cleric",
     "description": "As a free action, you can gain increased mobility for 1 round. For the next round, you ignore all difficult terrain and do not take any penalties for moving through it. You can use this ability %1 times per day.|AgileFeetTimes",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

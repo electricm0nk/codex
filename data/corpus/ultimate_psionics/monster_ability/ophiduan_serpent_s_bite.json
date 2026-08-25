@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Ophiduan ~ Serpent's Bite",
+    "delivery": null,
+    "description": "1/day, for 1 minute, gain %1d8 bite attack.  Manifester Level %2.",
+    "description_variables": [
+      "(TL+4)/5",
+      "TL"
+    ],
+    "facet": "SpecialAttack",
+    "key": "ultimate_psionics:monster_ability:ophiduan_serpent_s_bite",
+    "name": "Serpent's Bite",
+    "owners": [
+      "ultimate_psionics:monster:ophiduan"
+    ],
+    "source_page": "p.22",
+    "traits": [
+      "RacialTraits",
+      "Psilike",
+      "OphiduanRacialTrait",
+      "OphiduanRacialDefault"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 311,
+    "record_key": "Ophiduan ~ Serpent's Bite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

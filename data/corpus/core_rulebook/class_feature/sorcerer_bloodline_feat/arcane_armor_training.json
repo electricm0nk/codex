@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Arcane Armor Training",
+    "name": "Arcane Armor Training",
+    "class": "Sorcerer",
+    "description": "You have learned how to cast spells while wearing armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Arcane Armor Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRECLASS:1,SPELLCASTER=3],[PREVARGTEQ:CasterLevel_Highest,3]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREPROFWITHARMOR:1,TYPE.Light],[PREABILITY:1,CATEGORY=FEAT,Armor Proficiency (Light)]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_ArcaneArmorTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to cast spells while wearing armor."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Arcane Armor Training"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a swift action, reduce the arcane spell failure chance due to the armor you are wearing by 10%% for any spells you cast this round."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2015,
+    "record_key": "Sorcerer Bloodline Feat ~ Arcane Armor Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

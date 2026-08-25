@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Cloud Subdomain",
+    "name": "Cloud Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Cloud Subdomain],[PREVARLT:AirDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Cloud Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cloud Subdomain=1|Obscuring Mist|Cloud Subdomain=2|Wind Wall|Cloud Subdomain=3|Gaseous Form|Cloud Subdomain=4|Solid Fog|Cloud Subdomain=5|Control Winds|Cloud Subdomain=6|Chain Lightning|Cloud Subdomain=7|Elemental Body IV (Air Only)|Cloud Subdomain=8|Whirlwind|Cloud Subdomain=9|Storm of Vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 18,
+    "record_key": "Cloud Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

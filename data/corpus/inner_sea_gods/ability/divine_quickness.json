@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel ~ Divine Quickness",
+    "name": "Divine Quickness",
+    "description": "Starting at 4th level, so long as the sentinel carries his deity's favored weapon, he gains a +2 sacred or profane bonus on initiative checks. The weapon doesn't need to be carried in hand, but must at least be on his person and accessible enough that he can wield it with no greater than a move action. At 8th level, this bonus increases to +4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Divine Quickness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sentinel Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 4th level, so long as the sentinel carries his deity's favored weapon, he gains a +2 sacred or profane bonus on initiative checks. The weapon doesn't need to be carried in hand, but must at least be on his person and accessible enough that he can wield it with no greater than a move action. At 8th level, this bonus increases to +4."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|2+(SentinelLVL>=8)+(SentinelLVL>=8)|TYPE=Sacred|PREVARGTEQ:IsSacred,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|2+(SentinelLVL>=8)+(SentinelLVL>=8)|TYPE=Profane|PREVARGTEQ:IsProfane,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 114,
+    "record_key": "Sentinel ~ Divine Quickness"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Shadowbound Corruption ~ Weaver of Lies Gift",
+    "name": "Weaver of Lies Gift",
+    "description": "Once per day, you can use shadow conjuration as a spell-like ability, but only to emulate a sorcerer/wizard spell of level %1 or lower. Your caster level is equal to your character level. The illusion is %2%% real.|ShadowboundManifestationLevel-1|10*(ShadowboundManifestationLevel-1)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowbound Corruption ~ Weaver of Lies Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ShadowboundWeaverOfLiesGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can use shadow conjuration as a spell-like ability, but only to emulate a sorcerer/wizard spell of level %1 or lower. Your caster level is equal to your character level. The illusion is %2%% real.|ShadowboundManifestationLevel-1|10*(ShadowboundManifestationLevel-1)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Weaver of Lies|TIMES=1|CASTERLEVEL=TL|Shadow Conjuration,14+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 859,
+    "record_key": "Shadowbound Corruption ~ Weaver of Lies Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

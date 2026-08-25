@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ravener ~ Soul Magic",
+    "delivery": "Supernatural",
+    "description": "A ravener retains the base creature's spellcasting capability, adding three levels to the base creature's caster level.  This increases the number of spells known by the ravener, but the ravener loses all spell slots.  Instead, whenever the ravener wishes to cast any one of its spells known, it consumes a number of hit points from its soul ward equal to the spell slot level necessary to cast the spell (including increased levels for metamagic feats and so on).  If the soul ward has insufficient hit points, the ravener cannot cast that spell.  Casting a spell that reduces its soul ward to exactly 0 hit points does not harm the ravener (though most are not comfortable without this buffer of soul-energy and try to replenish it quickly).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:ravener_soul_magic",
+    "name": "Soul Magic",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Sorcerer|3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A ravener retains the base creature's spellcasting capability, adding three levels to the base creature's caster level.  This increases the number of spells known by the ravener, but the ravener loses all spell slots.  Instead, whenever the ravener wishes to cast any one of its spells known, it consumes a number of hit points from its soul ward equal to the spell slot level necessary to cast the spell (including increased levels for metamagic feats and so on).  If the soul ward has insufficient hit points, the ravener cannot cast that spell.  Casting a spell that reduces its soul ward to exactly 0 hit points does not harm the ravener (though most are not comfortable without this buffer of soul-energy and try to replenish it quickly)."
+      },
+      {
+        "key": "KEY",
+        "value": "Ravener ~ Soul Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.231",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1057,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Ravener ~ Soul Magic",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

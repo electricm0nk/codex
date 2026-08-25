@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Archetype ~ Witch Doctor",
     "name": "Witch Doctor",
-    "class": "Shaman Archetype",
+    "class": "Shaman",
     "description": "The witch doctor is a healer who specializes in afflictions of the soul. Often misunderstood, she protects her tribe with healing powers, powerful defensive magic, and her own divine \"witchcraft.\"",
     "raw_tokens": [
       {
@@ -63,6 +63,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Shaman"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Witch Doctor],[!PREFACT:1,ABILITIES,Shaman_Archetype_Hex=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_Hex|true"
       }
     ]
   },
@@ -79,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

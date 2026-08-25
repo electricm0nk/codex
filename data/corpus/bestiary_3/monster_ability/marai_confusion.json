@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Marai ~ Confusion",
+    "delivery": "Supernatural",
+    "description": "A creature bitten by a marai's bite (from either its actual mouth or the snakes it has for hands) must succeed at a DC 19 Will save or become confused for 1 round. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:marai_confusion",
+    "name": "Confusion",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature bitten by a marai's bite (from either its actual mouth or the snakes it has for hands) must succeed at a DC 19 Will save or become confused for 1 round. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Marai ~ Confusion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "TYPE",
+        "value": "MaraiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.228",
+    "traits": [
+      "MaraiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1453,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Marai ~ Confusion",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

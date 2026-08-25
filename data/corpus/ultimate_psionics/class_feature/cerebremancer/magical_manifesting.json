@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cerebremancer ~ Magical Manifesting",
+    "name": "Magical Manifesting",
+    "class": "Cerebremancer",
+    "description": "Expend up to a %1-level spell slot to increase power's level by that amount.|MagicalManifesting",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cerebremancer ~ Magical Manifesting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CerebremancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagicalManifesting|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend up to a %1-level spell slot to increase power's level by that amount.|MagicalManifesting"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagicalManifesting|floor((1+CerebremancerLVL)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.354"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1176,
+    "record_key": "Cerebremancer ~ Magical Manifesting"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

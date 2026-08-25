@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:45Z",
+  "data": {
+    "corpus_key": "Horror ~ Link",
+    "delivery": "Extraordinary",
+    "description": "A nightmare constructor and his horror share a mental link that allows for communication across any distance (as long as they are on the same plane). This communication is a free action, allowing the nightmare constructor to give orders to his horror at any time. In addition, magic items interfere with the nightmare constructor's connection to his horror. As a result, the nightmare constructor and his horror share magic item slots. For example, if the nightmare constructor is wearing a ring, his horror can wear no more than one ring. In case of a conflict, the items worn by the nightmare constructor remain active, and those used by the horror become dormant.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:horror_link",
+    "name": "Link",
+    "owners": [],
+    "source_page": "p.268",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 734,
+    "record_key": "Horror ~ Link"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

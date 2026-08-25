@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Warrior ~ Honor in All Things",
     "name": "Honor in All Things",
-    "class": "Order of the Warrior",
+    "class": "Warrior",
     "description": "The order of the warrior samurai draws strength from his sense of honor. Whenever the samurai makes a skill check or saving throw, he can call upon his honor as a free action to grant him a +4 morale bonus on the roll. He can use this ability %1/day.|SamuraiHonorTimes",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

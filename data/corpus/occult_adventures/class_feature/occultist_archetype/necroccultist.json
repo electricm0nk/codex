@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Occultist Archetype ~ Necroccultist",
     "name": "Necroccultist",
-    "class": "Occultist Archetype",
+    "class": "Occultist",
     "description": "Necroccultists' fascination with death and the undead drives them to explore the forbidden necromantic arts as they search for secrets they can use to manipulate the natural cycle of life and death. They contact and learn from the dead, rather than from items or outsiders, allowing them to drain the life of their foes to feed their own power, and even call forth phantasmal hordes of spirits to destroy their enemies.",
     "raw_tokens": [
       {
@@ -99,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

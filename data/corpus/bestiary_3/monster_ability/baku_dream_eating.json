@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Baku ~ Dream Eating",
+    "delivery": "Supernatural",
+    "description": "A baku can feed upon the dreams of any single sleeping creature within 100 feet. Alternatively, the baku can feed upon the dreams of a creature that it manages to contact with its dream spell-like ability. A creature can resist this effect with a DC 22 Will save. When a baku feeds in this way, it can elect to consume only nightmares or all dreams. If it only consumes nightmares, the target creature is immune to the effects of the nightmare spell, the dream haunting ability of the night hag, and other similar attacks for that period of sleep. If the baku instead feeds on all of the creature's dreams, that creature is fatigued upon waking and does not gain any benefits it would have received from sleep, such as natural healing or the ability to regain spells after resting. This is a mind-affecting sleep effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:baku_dream_eating",
+    "name": "Dream Eating",
+    "owners": [
+      "bestiary_3:monster:baku"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A baku can feed upon the dreams of any single sleeping creature within 100 feet. Alternatively, the baku can feed upon the dreams of a creature that it manages to contact with its dream spell-like ability. A creature can resist this effect with a DC 22 Will save. When a baku feeds in this way, it can elect to consume only nightmares or all dreams. If it only consumes nightmares, the target creature is immune to the effects of the nightmare spell, the dream haunting ability of the night hag, and other similar attacks for that period of sleep. If the baku instead feeds on all of the creature's dreams, that creature is fatigued upon waking and does not gain any benefits it would have received from sleep, such as natural healing or the ability to regain spells after resting. This is a mind-affecting sleep effect. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Baku ~ Dream Eating"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "TYPE",
+        "value": "BakuRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.31",
+    "traits": [
+      "BakuRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 439,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Baku ~ Dream Eating",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

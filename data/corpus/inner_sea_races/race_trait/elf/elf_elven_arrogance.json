@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T19:20:15Z",
+  "ingested_at": "2026-08-23T22:30:42Z",
   "data": {
     "key": "Elf ~ Elven Arrogance",
     "name": "Elven Arrogance",
@@ -51,11 +51,11 @@
       },
       {
         "key": "ABILITY",
-        "value": "Internal|AUTOMATIC|Elven Arrogance ~ Sylvan|!PREREGION:Tian Xia"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
-        "value": "Internal|AUTOMATIC|Elven Arrogance ~ Senzar|PREREGION:Tian Xia"
+        "value": "[redacted PI]"
       },
       {
         "key": "COST",
@@ -80,7 +80,7 @@
     "record_key": "Elf ~ Elven Arrogance"
   },
   "license": "PI-REDACTED",
-  "pi_field": "description",
+  "pi_field": "description,raw_tokens",
   "pi_marker": "redacted",
   "wiring_class": "computed",
   "wiring_class_signals": [

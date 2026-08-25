@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Combat Saboteur",
+    "name": "Combat Saboteur",
+    "description": "You can sabotage an opponent's gear with a simple touch. This sabotage is a sunder combat maneuver that doesn't provoke attacks of opportunity. Add your tier to your CMB when attempting this maneuver. If you succeed, you can give the broken condition to a single item the opponent is wielding or carrying. This attack doesn't deal any damage to the object. The condition can be removed by spending 1 minute undoing the sabotage, or instantaneously with mending or a similar spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Combat Saboteur"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can sabotage an opponent's gear with a simple touch. This sabotage is a sunder combat maneuver that doesn't provoke attacks of opportunity. Add your tier to your CMB when attempting this maneuver. If you succeed, you can give the broken condition to a single item the opponent is wielding or carrying. This attack doesn't deal any damage to the object. The condition can be removed by spending 1 minute undoing the sabotage, or instantaneously with mending or a similar spell."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 300,
+    "record_key": "Mythic Path Ability ~ Combat Saboteur"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

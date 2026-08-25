@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mummy Rot",
+    "name": "Mummy Rot",
+    "description": "Curse, disease, injury; Fort DC 16; Onset 1 minute; Frequency 1/day; Effect 1d6 Con damage and 1d6 Cha damage; Cure mummy rot can only be cured by successfully casting both remove curse and remove disease within 1 minute of each other.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "Curse.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "Curse, disease, injury; Fort DC 16; Onset 1 minute; Frequency 1/day; Effect 1d6 Con damage and 1d6 Cha damage; Cure mummy rot can only be cured by successfully casting both remove curse and remove disease within 1 minute of each other."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.557"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 32,
+    "record_key": "Mummy Rot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

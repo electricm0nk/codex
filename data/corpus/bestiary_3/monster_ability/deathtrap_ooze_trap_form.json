@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Deathtrap Ooze ~ Trap Form",
+    "delivery": "Supernatural",
+    "description": "Taking 1 minute to do so, a deathtrap ooze can assume the form of any Medium or Large mechanical trap that has no more than one moving part (excluding pits). The ooze can maintain this form indefinitely. The trap it can assume the form of must be of a CR equal to or less than that of the deathtrap ooze itself-appropriate traps from pages 420-421 of the Core Rulebook include the swinging axe trap (CR 1), the wall scythe trap (CR 4), and the falling block trap (CR 5). In trap form, the ooze uses its attack bonus, but otherwise functions as the emulated trap and uses that trap's statistics and damage. If a creature searching for traps exceeds the DC to find the ooze's trap form, a successful follow-up DC 19 Knowledge (dungeoneering) check allows the creature that discovered the trap to discern its true nature. If the ooze takes any damage, it reverts to its normal form as a free action. Otherwise, reverting to its normal form takes a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:deathtrap_ooze_trap_form",
+    "name": "Trap Form",
+    "owners": [
+      "bestiary_3:monster:deathtrap_ooze"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Taking 1 minute to do so, a deathtrap ooze can assume the form of any Medium or Large mechanical trap that has no more than one moving part (excluding pits). The ooze can maintain this form indefinitely. The trap it can assume the form of must be of a CR equal to or less than that of the deathtrap ooze itself-appropriate traps from pages 420-421 of the Core Rulebook include the swinging axe trap (CR 1), the wall scythe trap (CR 4), and the falling block trap (CR 5). In trap form, the ooze uses its attack bonus, but otherwise functions as the emulated trap and uses that trap's statistics and damage. If a creature searching for traps exceeds the DC to find the ooze's trap form, a successful follow-up DC 19 Knowledge (dungeoneering) check allows the creature that discovered the trap to discern its true nature. If the ooze takes any damage, it reverts to its normal form as a free action. Otherwise, reverting to its normal form takes a swift action."
+      },
+      {
+        "key": "KEY",
+        "value": "Deathtrap Ooze ~ Trap Form"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      },
+      {
+        "key": "TYPE",
+        "value": "DeathtrapOozeRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.64",
+    "traits": [
+      "DeathtrapOozeRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 616,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Deathtrap Ooze ~ Trap Form",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

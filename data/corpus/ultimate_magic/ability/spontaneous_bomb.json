@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Spontaneous Bomb",
+    "name": "Spontaneous Bomb",
+    "description": "When it comes to bombs, you have a special trick up your sleeve. Once per day as a swift action, you can apply a discovery that you qualify for (but do not already know) to a bomb. This does not allow you to stack non-stacking discoveries on a bomb.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Spontaneous Bomb"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "When it comes to bombs, you have a special trick up your sleeve. Once per day as a swift action, you can apply a discovery that you qualify for (but do not already know) to a bomb. This does not allow you to stack non-stacking discoveries on a bomb."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 47,
+    "record_key": "Preparation Ritual ~ Spontaneous Bomb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

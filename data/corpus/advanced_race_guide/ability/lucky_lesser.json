@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Lucky (Lesser)",
+    "name": "Lucky, Lesser",
+    "description": "+1 racial bonus on all Saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Lucky (Lesser)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Lucky, Lesser"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 racial bonus on all Saving throws."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|1|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.223"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 224,
+    "record_key": "Builder Racial Trait ~ Lucky (Lesser)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

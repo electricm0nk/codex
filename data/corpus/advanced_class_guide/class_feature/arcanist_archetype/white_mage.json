@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcanist Archetype ~ White Mage",
     "name": "White Mage",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "A white mage is an arcanist touched by a divine power and gifted with the ability to heal others.",
     "raw_tokens": [
       {
@@ -47,6 +47,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Arcanist"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ White Mage],[!PREFACT:1,ABILITIES,Arcanist_Archetype_ArcanistExploit1=True,Arcanist_Archetype_ArcanistExploit9=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit9|true"
       }
     ]
   },
@@ -63,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Favored Terrain ~ Plane (Aligned)",
     "name": "Favored Terrain (Aligned Plane)",
-    "class": "Favored Terrain",
+    "class": "Ranger",
     "description": "You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked on any one chosen aligned Plane|FavoredTerrainAlignedPlane",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

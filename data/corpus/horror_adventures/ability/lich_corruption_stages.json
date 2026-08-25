@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lich Corruption Stages",
+    "name": "Lich Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Lich Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LichCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|LichCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-The first time you recover from this disconnected state, you return diminished, taking a permanent -2 penalty to your Charisma score, and your alignment shifts one step toward evil."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-The second time this happens, your alignment shifts another step toward evil and you take an additional -2 penalty to your Charisma score."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-The third time this happens, you die and your soul is consumed by the Negative Energy Plane. You can't be raised or resurrected except by powerful magic such as miracle or wish. Even if you do get brought back, you are an evil lich NPC under the GM's control."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Lich Corruption Stage %1|LichCorruptionStage"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2|PREVARGTEQ:LichCorruptionStage,2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 462,
+    "record_key": "Lich Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

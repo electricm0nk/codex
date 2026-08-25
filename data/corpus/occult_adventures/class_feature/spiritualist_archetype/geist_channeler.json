@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Spiritualist Archetype ~ Geist Channeler",
     "name": "Geist Channeler",
-    "class": "Spiritualist Archetype",
+    "class": "Spiritualist",
     "description": "Some phantoms retain less of their personalities and memories than others. Though most phantoms maintain some semblance of their former selves, others of their kind, known as geists, came close to being lost forever before they became phantoms. Incapable of manifesting in ectoplasmic form and devoid of human emotions, these strange entities are much closer to ghosts than most other phantoms. The spiritualists who work with them, known as geist channelers, are able to call on them in unique ways.",
     "raw_tokens": [
       {
@@ -95,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

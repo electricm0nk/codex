@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fear Projector ~ Project Fear",
+    "name": "Project Fear",
+    "class": "Fear Projector",
+    "description": "You are capable of projecting horrifying images into the minds of your enemies.  As a standard action, you target one creature within %1 ft. and project these terrifying images into that creature's mind unless the creature makes a successful Will save (DC %2).  A failed save means the creature is shaken for %3 rounds.|ProjectFearRange|ProjectFearDC|ProjectFearDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fear Projector ~ Project Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProjectFearRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProjectFearDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProjectFearDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are capable of projecting horrifying images into the minds of your enemies.  As a standard action, you target one creature within %1 ft. and project these terrifying images into that creature's mind unless the creature makes a successful Will save (DC %2).  A failed save means the creature is shaken for %3 rounds.|ProjectFearRange|ProjectFearDC|ProjectFearDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProjectFearRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProjectFearRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProjectFearDuration|TacticianSecondaryStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProjectFearDC|10+TacticianLVL/2+TacticianSecondaryStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2277,
+    "record_key": "Fear Projector ~ Project Fear"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,133 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wilder Power Points",
+    "name": "Wilder Power Points",
+    "class": "Wilder",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WilderPPStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WilderPPL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderPPStat|WilderPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderPPL|WilderML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:WilderPPL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:WilderPPL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|6|PREVARGTEQ:WilderPPL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:WilderPPL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|10|PREVARGTEQ:WilderPPL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|11|PREVARGTEQ:WilderPPL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:WilderPPL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|14|PREVARGTEQ:WilderPPL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|16|PREVARGTEQ:WilderPPL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|18|PREVARGTEQ:WilderPPL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|20|PREVARGTEQ:WilderPPL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|21|PREVARGTEQ:WilderPPL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|23|PREVARGTEQ:WilderPPL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|25|PREVARGTEQ:WilderPPL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|26|PREVARGTEQ:WilderPPL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|29|PREVARGTEQ:WilderPPL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|30|PREVARGTEQ:WilderPPL,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|31|PREVARGTEQ:WilderPPL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|32|PREVARGTEQ:WilderPPL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(WilderPPStat*WilderPPL)/2|TYPE=WilderBonusPP"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1032,
+    "record_key": "Wilder Power Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

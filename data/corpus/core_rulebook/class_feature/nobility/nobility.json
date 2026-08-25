@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Nobility Domain",
     "name": "Nobility",
-    "class": null,
+    "class": "Cleric",
     "description": "You are a great leader, an inspiration to all who follow the teachings of your faith.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Nobility=1|Divine Favor|Nobility=2|Enthrall|Nobility=3|Magic Vestment|Nobility=4|Discern Lies|Nobility=5|Command (Greater)|Nobility=6|Geas/Quest|Nobility=7|Repulsion|Nobility=8|Demand|Nobility=9|Storm of Vengeance"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Nobility],[PREVARLT:NobilityDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

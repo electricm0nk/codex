@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Psychic Archetype ~ Amnesiac",
     "name": "Amnesiac",
-    "class": "Psychic Archetype",
+    "class": "Psychic",
     "description": "The amnesiac once possessed great psychic power, but mental blocks-resulting from either a traumatic event or intentional implantation-have caused her to forget what she knew before. The amnesiac's struggle to control her psychic magic leads to wild and unpredictable results.",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

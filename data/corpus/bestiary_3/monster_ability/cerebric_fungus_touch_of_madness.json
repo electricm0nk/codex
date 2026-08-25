@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cerebric Fungus ~ Touch of Madness",
+    "delivery": "SpellLike",
+    "description": "The cerebric fungus may daze one living creature by making a successful touch attack. The target creature must succeed at a DC 14 Will save, or it becomes dazed for 1 round per caster level (4 rounds for most cerebric fungi). The dazed subject is not stunned (so attackers get no special advantage against it). This is a mind-affecting enchantment, equivalent to a 2ndlevel spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:cerebric_fungus_touch_of_madness",
+    "name": "Touch of Madness",
+    "owners": [
+      "bestiary_3:monster:cerebric_fungus"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The cerebric fungus may daze one living creature by making a successful touch attack. The target creature must succeed at a DC 14 Will save, or it becomes dazed for 1 round per caster level (4 rounds for most cerebric fungi). The dazed subject is not stunned (so attackers get no special advantage against it). This is a mind-affecting enchantment, equivalent to a 2ndlevel spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Cerebric Fungus ~ Touch of Madness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "TYPE",
+        "value": "CerebricFungusRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.52",
+    "traits": [
+      "CerebricFungusRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 562,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Cerebric Fungus ~ Touch of Madness",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

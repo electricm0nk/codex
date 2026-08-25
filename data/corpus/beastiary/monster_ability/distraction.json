@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Distraction",
+    "delivery": "Extraordinary",
+    "description": "You can nauseate creatures that you damage. Any living creature that takes damage from you is nauseated for 1 round; a Fortitude save (DC %1) negates the effect.",
+    "description_variables": [
+      "DistractionDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:distraction",
+    "name": "Distraction",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Distraction"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|DistractionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DistractionDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DistractionDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Distraction)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DistractionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can nauseate creatures that you damage. Any living creature that takes damage from you is nauseated for 1 round; a Fortitude save (DC %1) negates the effect.|DistractionDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Distraction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.299",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1357,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Distraction",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

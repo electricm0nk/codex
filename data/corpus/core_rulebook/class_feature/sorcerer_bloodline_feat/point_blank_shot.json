@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Point-Blank Shot",
+    "name": "Point-Blank Shot",
+    "class": "Sorcerer",
+    "description": "You are especially accurate when making ranged attacks against close target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Point-Blank Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_PointBlankShot,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are especially accurate when making ranged attacks against close target."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Point-Blank Shot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You get a +1 bonus on attack and damage rolls with ranged weapons at ranges of up to 30 feet."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2065,
+    "record_key": "Sorcerer Bloodline Feat ~ Point-Blank Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

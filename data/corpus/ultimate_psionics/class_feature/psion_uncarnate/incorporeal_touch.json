@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Uncarnate ~ Incorporeal Touch",
+    "name": "Incorporeal Touch",
+    "class": "Psion Uncarnate",
+    "description": "Gain melee touch attack that deals %1d6 damage, %2/day.|UncarnateIncorporealTouchDice|UncarnateIncorporealTouchTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psion Uncarnate ~ Incorporeal Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionUncarnateClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UncarnateIncorporealTouchDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UncarnateIncorporealTouchTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain melee touch attack that deals %1d6 damage, %2/day.|UncarnateIncorporealTouchDice|UncarnateIncorporealTouchTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncarnateIncorporealTouchDice|floor((1+PsionUncarnateLVL)/3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UncarnateIncorporealTouchTimes|(PsionUncarnateLVL/2)+2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.370"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|UncarnateIncorporealTouchTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1406,
+    "record_key": "Psion Uncarnate ~ Incorporeal Touch"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

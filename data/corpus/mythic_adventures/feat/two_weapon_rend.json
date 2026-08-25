@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Two-Weapon Rend",
+    "category": "Mythic",
+    "name": "Two-Weapon Rend (Mythic)",
+    "description": "Your synchronized dual attacks are even more dangerous, and can leave lasting wounds. The damage of your Two-Weapon Rend increases to 2d8 points plus . You can expend one use of mythic power to gain a bonus on this damage.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Two-Weapon Rend",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 178,
+    "record_key": "Two-Weapon Rend"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

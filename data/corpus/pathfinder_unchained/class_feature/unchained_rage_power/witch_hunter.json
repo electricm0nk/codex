@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Witch Hunter",
+    "name": "Witch Hunter",
+    "class": "Unchained Barbarian",
+    "description": "You gain a +%1 bonus on damage rolls against creatures possessing spells or spell-like abilities. In addition, if you confirm a critical hit against a creature affected by an ongoing beneficial spell effect, that effect is suppressed for 1 round (determined randomly if the creature is currently affected by more than one effect).|WitchHunterBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Witch Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Rage Power ~ Superstition"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Witch Hunter"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHunterBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on damage rolls against creatures possessing spells or spell-like abilities. In addition, if you confirm a critical hit against a creature affected by an ongoing beneficial spell effect, that effect is suppressed for 1 round (determined randomly if the creature is currently affected by more than one effect).|WitchHunterBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHunterBonus|1+floor(RagePowersLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 394,
+    "record_key": "Unchained Rage Power ~ Witch Hunter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

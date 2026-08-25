@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife ~ Psychic Strike",
+    "name": "Psychic Strike",
+    "class": "Soulknife",
+    "description": "Imbue mind blade with psychic energy; +%1d%2|PsychicStrikeDice|PsychicStrikeDieType",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife ~ Psychic Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicStrikeBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicStrikeDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicStrikeDieType|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Imbue mind blade with psychic energy; +%1d%2|PsychicStrikeDice|PsychicStrikeDieType"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1|PsychicStrikeBonusDamage|PREVARGT:PsychicStrikeBonusDamage,0"
+      },
+      {
+        "key": "DESC",
+        "value": " damage when discharged."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicStrikeDieType|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicStrikeDice|(SoulknifeLVL+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.64"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 739,
+    "record_key": "Soulknife ~ Psychic Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

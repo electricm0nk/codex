@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:11Z",
+  "data": {
+    "key": "Psionics",
+    "name": "Psionics",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainPsionics,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Psionics],[PREVARLT:PsionicsDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Psionics Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.PsionicsDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionicsDomain|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionicsDomain|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "DESC",
+        "value": "Dedication has opened your third eye, allowing your psychic power to spring forth in a cascade of potential."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Psionics=1|Charm Person|Psionics=2|Detect Thoughts|Psionics=3|Seek Thoughts|Psionics=4|Charm Monster|Psionics=5|Telepathic Bond|Psionics=6|Suggestion (Mass)|Psionics=7|Insanity|Psionics=8|Mind Blank|Psionics=9|Foresight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_domains_apg.lst",
+    "sha256": "076aa3678ee044c7a623a57747b8c273681b09cd281817d57a18bc616ed46082",
+    "line": 8,
+    "record_key": "Psionics"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

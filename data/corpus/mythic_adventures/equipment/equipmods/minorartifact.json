@@ -9,6 +9,10 @@
     "raw_bonus_chains": [],
     "raw_tokens": [
       {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
         "key": "KEY",
         "value": "Legendary Item ~ Artifact / Minor"
       },
@@ -46,7 +50,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 20,
+    "line": 157,
     "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
     "record_key": "MinorArtifact",
     "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"

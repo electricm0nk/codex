@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Primal Choice ~ Rage Power 20",
+    "name": "Rage Power",
+    "class": "Primal Choice",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Primal Choice ~ Rage Power 20"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Level 20 Primal Choice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Rage_Power|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePower20|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2816,
+    "record_key": "Primal Choice ~ Rage Power 20"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

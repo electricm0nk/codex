@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Charm Domain ~ Dazing Touch",
     "name": "Dazing Touch",
-    "class": "Charm Domain",
+    "class": "Cleric",
     "description": "You can cause a living creature to become dazed for 1 round as a melee touch attack. Creatures with more thatn %1 Hit Dice are unaffected. You can use this ability %2 times per day.|DomainCharmLVL|DazingTouchTimes",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

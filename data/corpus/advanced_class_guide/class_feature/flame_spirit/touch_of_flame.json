@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Flame Spirit ~ Touch of Flame",
     "name": "Touch of Flame",
-    "class": "Flame Spirit",
+    "class": "Shaman",
     "description": "As a standard action, the shaman can make a melee touch attack that deals 1d6+%1 points of fire damage. A shaman can use this ability a %2 times per day.|ShamanTouchOfFlameBonusDamage|ShamanTouchOfFlameTimes",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Plant Domain",
     "name": "Plant",
-    "class": null,
+    "class": "Cleric",
     "description": "You find solace in the green, can grow defensive thorns, and can communicate with plants.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Plant=1|Entangle|Plant=2|Barkskin|Plant=3|Plant Growth|Plant=4|Command Plants|Plant=5|Wall of Thorns|Plant=6|Repel Wood|Plant=7|Animate Plants|Plant=8|Control Plants|Plant=9|Shambler"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Plant],[PREVARLT:PlantDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

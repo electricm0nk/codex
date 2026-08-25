@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Verdant",
     "name": "Verdant Bloodrager Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Your body is suffused with raw plant life. When you bloodrage, your plantlike characteristics bolster your durability and grant you some control over vegetation. While bloodraging, you gain plantlike abilities and immunities as you become overgrown with jagged branches, rugged bark, and thick vines.|PREVAREQ:Bloodrager_Verdant_Description,0",
     "raw_tokens": [
       {
@@ -176,5 +176,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

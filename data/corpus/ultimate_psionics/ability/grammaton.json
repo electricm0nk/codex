@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cryptic Archetype ~ Grammaton",
+    "name": "Grammaton",
+    "description": "For you, the way bullets travel through the air is a special pattern that can bue used and manipulated for deadly attacks and abilities.  You use handguns to destroy patterns and enemies alike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic Archetype ~ Grammaton"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CrypticArchetype.CrypticScribeTattoo.CrypticInsight4.CrypticInsight6.CrypticPower7.CrypticHideInPlainSight"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cryptic=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cryptic Archetype ~ Grammaton],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CrypticScribeTattoo,TYPE.CrypticInsight4,TYPE.CrypticInsight6,TYPE.CrypticPower7,TYPE.CrypticHideInPlainSight]"
+      },
+      {
+        "key": "DESC",
+        "value": "For you, the way bullets travel through the air is a special pattern that can bue used and manipulated for deadly attacks and abilities.  You use handguns to destroy patterns and enemies alike."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Firearm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Firearms)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Grammaton ~ Pattern of the Gun|PRECLASS:1,Cryptic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Grammaton ~ Disrupt Pattern|PRECLASS:1,Cryptic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Grammaton ~ Gritted Patterns|PRECLASS:1,Cryptic=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Grammaton ~ Insightful Deed|PRECLASS:1,Cryptic=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Grammaton ~ Avoid Attacks|PRECLASS:1,Cryptic=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cryptic Class Feature|AUTOMATIC|Grammaton ~ Gun Kata|PRECLASS:1,Cryptic=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cryptic Insight|-1|PRECLASS:1,Cryptic=4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cryptic Insight|-1|PRECLASS:1,Cryptic=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Cryptic;LEVEL=3|-1|PRECLASS:1,Cryptic=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 10,
+    "record_key": "Cryptic Archetype ~ Grammaton"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

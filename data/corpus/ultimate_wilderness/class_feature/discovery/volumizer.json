@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Volumizer",
     "name": "Volumizer",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "The alchemist can use an extract slot of any level to create a reactive tablet that purifies water and doubles its volume. This works like purify food and drink for a maximum volume of water equal to 1 gallon for each level the alchemist has x the level of the extract slot the alchemist used to create the tablet. Additionally, if the alchemist has a receptacle of sufficient volume to gather the water, the tablet doubles the volume of pure water. The water volume increases over the course of 1 minute, but the effect stops before it can create significant water pressure on a container that's not large enough to hold the entire volume. An unused tablet remains usable until the next time the alchemist recovers extract slots.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

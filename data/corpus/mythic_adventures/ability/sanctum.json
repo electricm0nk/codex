@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Sanctum",
+    "name": "Sanctum",
+    "description": "You gain access to your own personal extradimensional sanctum. By concentrating for 1 minute without interruption, you conjure the door to your own personal sanctum, similar to mage's magnificent mansion, but with the following differences. The sanctum takes up a space equal to six 20-foot cubes per tier, shapeable when you first create it as if it were a spell whose area or effect is shapeable. The sanctum is permanent and persistent, so you can store objects within the sanctum and retrieve them on future visits. The sanctum includes one unseen servant per tier. When you conjure the sanctum's door, you decide which creatures can see and use it (to all other creatures it's invisible and impermeable). The door remains until you dismiss it-a standard action with unlimited range as long as you are on the same plane as the door. If you dismiss the door while you are outside the sanctum, all creatures other than your familiar are immediately shunted outside. Conjuring the door automatically dismisses any other active door. As a full-round action, your familiar can enter or leave the sanctum from any square adjacent to you, without using the conjured door.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Sanctum"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain access to your own personal extradimensional sanctum. By concentrating for 1 minute without interruption, you conjure the door to your own personal sanctum, similar to mage's magnificent mansion, but with the following differences. The sanctum takes up a space equal to six 20-foot cubes per tier, shapeable when you first create it as if it were a spell whose area or effect is shapeable. The sanctum is permanent and persistent, so you can store objects within the sanctum and retrieve them on future visits. The sanctum includes one unseen servant per tier. When you conjure the sanctum's door, you decide which creatures can see and use it (to all other creatures it's invisible and impermeable). The door remains until you dismiss it-a standard action with unlimited range as long as you are on the same plane as the door. If you dismiss the door while you are outside the sanctum, all creatures other than your familiar are immediately shunted outside. Conjuring the door automatically dismisses any other active door. As a full-round action, your familiar can enter or leave the sanctum from any square adjacent to you, without using the conjured door."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 398,
+    "record_key": "Mythic Path Ability ~ Sanctum"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

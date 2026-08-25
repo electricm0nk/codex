@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Vestigial Arm",
     "name": "Vestigial Arm",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You gain a new arm (left or right) on your torso. The arm is fully under your control and cannot be concealed except with magic or bulky clothing. The arm does not give you any extra attacks or actions per round, though the arm can wield a weapon and make attacks as part of your attack routine (using two-weapon fighting). The arm can manipulate or hold items as well as your original arms (for example, allowing the alchemist to use one hand to wield a weapon, another hand to hold a potion, and the third hand to throw a bomb). The arm has its own \"hand\" and \"ring\" magic item slots (though the alchemist can still only wear two rings and two hand magic items at a time).",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

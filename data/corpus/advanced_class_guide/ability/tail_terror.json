@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Tail Terror",
+    "name": "Tail Terror",
+    "description": "You have strengthened your tail enough to make slap attacks with it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Tail Terror"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsKobold=true"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "1"
+      },
+      {
+        "key": "DESC",
+        "value": "You have strengthened your tail enough to make slap attacks with it."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=KoboldTailAttachment"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Tail Terror"
+      },
+      {
+        "key": "BONUS",
+        "value": "SLOTS|WEAPON|1|PREEQUIP:1,TYPE=KoboldTailAttachment"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail Slap,Weapon.Natural.Weapon Group Natural.Melee.Bludgeoning.Finesseable,*1,1d4"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You can make a tail slap attack with your tail. This is a secondary natural attack that deals 1d4 points of bludgeoning damage. Furthermore, you can augment your tail slap attack with a kobold tail attachment. For the purpose of weapon feats, you are considered proficient with all kobold tail attachments."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 50,
+    "record_key": "Warpriest Bonus Feat ~ Tail Terror"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_237)",
+    "name": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_237)",
+    "description": "Your hours of meditation on inner perfection and the nature of strength and speed allows you to focus your thoughts to achieve things your body might not normally be able to do on its own. Select any Dexterity-based skill. You make checks with that skill using your Wisdom modifier instead of the skill's normal ability score. That skill is always a class skill for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.ReligionTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your hours of meditation on inner perfection and the nature of strength and speed allows you to focus your thoughts to achieve things your body might not normally be able to do on its own. Select any Dexterity-based skill. You make checks with that skill using your Wisdom modifier instead of the skill's normal ability score. That skill is always a class skill for you."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SKILL|TYPE=Dexterity"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|LIST|WIS-DEX|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.333"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 237,
+    "record_key": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_237)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "advanced_players_guide:apg_abilities.lst:237"
+  }
+}

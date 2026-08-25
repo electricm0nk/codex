@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Feature ~ Supreme Trickster",
+    "name": "Supreme Trickster",
+    "description": "Whenever you make an attack roll against a non-mythic foe, that foe is treated as flat-footed, even if it has abilities that prevent it from being flat-footed. Once per round when you roll a natural 20 on an opposed skill check against a mythic foe, you regain one use of mythic power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Feature ~ Supreme Trickster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Feature.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you make an attack roll against a non-mythic foe, that foe is treated as flat-footed, even if it has abilities that prevent it from being flat-footed. Once per round when you roll a natural 20 on an opposed skill check against a mythic foe, you regain one use of mythic power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 97,
+    "record_key": "Mythic Path Feature ~ Supreme Trickster"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

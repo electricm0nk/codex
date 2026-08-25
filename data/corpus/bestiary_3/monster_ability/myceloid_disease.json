@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Myceloid ~ Disease",
+    "delivery": "Supernatural",
+    "description": "Purple Pox: inhaled or injury; save Fort DC 15; onset 1 minute; frequency 1/day; effect 1d2 Wis and 1d2 Con damage; cure 2 consecutive saves. A creature that dies of the purple pox becomes bloated over the course of 24 hours, after which its body bursts open, releasing a fully grown myceloid. Additionally, as long as a creature takes at least 7 points of Wisdom damage from the purple pox, it must make a DC 15 Will save each day to avoid becoming affected by a lesser geas (no HD limit) that compels the sickly character to seek out the nearest myceloid colony in order to offer itself up for spore domination. The save DCs are Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:myceloid_disease",
+    "name": "Disease",
+    "owners": [
+      "bestiary_3:monster:myceloid"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Purple Pox: inhaled or injury; save Fort DC 15; onset 1 minute; frequency 1/day; effect 1d2 Wis and 1d2 Con damage; cure 2 consecutive saves. A creature that dies of the purple pox becomes bloated over the course of 24 hours, after which its body bursts open, releasing a fully grown myceloid. Additionally, as long as a creature takes at least 7 points of Wisdom damage from the purple pox, it must make a DC 15 Will save each day to avoid becoming affected by a lesser geas (no HD limit) that compels the sickly character to seek out the nearest myceloid colony in order to offer itself up for spore domination. The save DCs are Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Myceloid ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "TYPE",
+        "value": "MyceloidRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.196",
+    "traits": [
+      "MyceloidRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1281,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Myceloid ~ Disease",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

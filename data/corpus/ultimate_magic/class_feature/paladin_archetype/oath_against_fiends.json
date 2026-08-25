@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Oath against Fiends",
     "name": "Oath against Fiends",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "You are constantly on the lookout for malicious fiendish insurgence into the world, and face it with swift and unwavering defiance.",
     "raw_tokens": [
       {
@@ -59,6 +59,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath against Fiends],[!PREFACT:1,ABILITIES,Paladin_Archetype_AuraOfResolve=True,Paladin_Archetype_Mercy9=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy9|true"
       }
     ]
   },
@@ -75,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

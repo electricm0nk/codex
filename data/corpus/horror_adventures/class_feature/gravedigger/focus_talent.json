@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger ~ Focus Talent",
+    "name": "Focus Talent",
+    "class": "Investigator",
+    "description": "A gravedigger can select a focus power for one of her implements as per an occultist of her investigator level in place of an investigator talent. This ability alters investigator talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger ~ Focus Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "DESC",
+        "value": "A gravedigger can select a focus power for one of her implements as per an occultist of her investigator level in place of an investigator talent. This ability alters investigator talents."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 39,
+    "record_key": "Gravedigger ~ Focus Talent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

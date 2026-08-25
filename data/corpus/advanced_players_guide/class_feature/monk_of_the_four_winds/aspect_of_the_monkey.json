@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Monk of the Four Winds ~ Aspect of the Monkey",
     "name": "Aspect of the Monkey",
-    "class": "Monk of the Four Winds",
+    "class": "Monk",
     "description": "The monk's face becomes that of a monkey, and he grows a prehensile tail. The monk can pick up objects and make unarmed attacks with his tail (though the tail does not grant additional unarmed attacks or natural attacks). In addition, the monk gains a climb speed equal to his land speed. The monkey is a creature of whimsy and a lover of pranks-a monk of any alignment can take on the aspect of the monkey.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

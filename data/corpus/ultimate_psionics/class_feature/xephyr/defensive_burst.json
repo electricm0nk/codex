@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Xephyr ~ Defensive Burst",
+    "name": "Defensive Burst",
+    "class": "Xephyr",
+    "description": "Any time you are under the effects of your burst ability, you gain a +%1 dodge bonus to your AC.|DefensiveBurstBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Xephyr ~ Defensive Burst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DefensiveBurstBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any time you are under the effects of your burst ability, you gain a +%1 dodge bonus to your AC.|DefensiveBurstBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Blade Skill|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|DefensiveBurstBonus*XephBurstActive|TYPE=Dodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DefensiveBurstBonus|min(3,floor((SoulknifeLVL+2)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|XephBurstTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.341"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2216,
+    "record_key": "Xephyr ~ Defensive Burst"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

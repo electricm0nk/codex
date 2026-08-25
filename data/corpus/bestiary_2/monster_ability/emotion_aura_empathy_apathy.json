@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Emotion Aura ~ Empathy Apathy",
+    "delivery": null,
+    "description": "This paracletus exists as the embodiment of the emotive duality of empathy and apathy. Three times per day, a paracletus can create an aura of either empathy or apathy that gives a +2 bonus (empathy) or a -2 penalty (apathy) on Bluff, Diplomacy and Intimidate skill checks. Creatures in the area must make a DC %1 Will save to resist the aura. A creature that makes its save against the aura is unaffected by that aeon's aura for the next 24 hours. The paracletus can choose one creature in the area to ignore its effects. The effect of the aura lasts for 10 minutes, and ends if a creature moves more than 30 feet from the aeon. The aura is a mind-affecting compulsion effect.",
+    "description_variables": [
+      "EmotionAuraDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:emotion_aura_empathy_apathy",
+    "name": "Aura of Empathy/Apathy",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1,30 ft.)|EmotionAuraDC"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This paracletus exists as the embodiment of the emotive duality of empathy and apathy. Three times per day, a paracletus can create an aura of either empathy or apathy that gives a +2 bonus (empathy) or a -2 penalty (apathy) on Bluff, Diplomacy and Intimidate skill checks. Creatures in the area must make a DC %1 Will save to resist the aura. A creature that makes its save against the aura is unaffected by that aeon's aura for the next 24 hours. The paracletus can choose one creature in the area to ignore its effects. The effect of the aura lasts for 10 minutes, and ends if a creature moves more than 30 feet from the aeon. The aura is a mind-affecting compulsion effect.|EmotionAuraDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Emotion Aura ~ Empathy Apathy"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Aura of Empathy/Apathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Spellike.Aura.EmotiveDuality"
+      }
+    ],
+    "source_page": "p.11",
+    "traits": [
+      "Spellike",
+      "Aura",
+      "EmotiveDuality"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2171,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Emotion Aura ~ Empathy Apathy",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

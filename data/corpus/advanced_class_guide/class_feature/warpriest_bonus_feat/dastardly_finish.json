@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Dastardly Finish",
     "name": "Dastardly Finish",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can take advantage of an enemy's debilitated state to attempt a coup de grace.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

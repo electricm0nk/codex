@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Metal Mystery ~ Steel Scarf",
     "name": "Steel Scarf",
-    "class": "Metal Mystery",
+    "class": "Oracle",
     "description": "As a swift action, you can harden a scarf, sleeve, cloak, or other piece of your clothing into something as hard as steel that stretches out to be up to 30 feet long. You can then strike outward with it as if it were a weapon making a melee attack. For the purpose of this ability, you are proficient with this weapon. You can use the weapon to perform combat maneuvers. Make a melee attack roll against a creature within 30 feet; you may use Weapon Finesse with this attack. If you hit, the weapon deals 1d8+%1 points of slashing damage. After this attack, the clothing returns to its normal length and hardness. You do not threaten an area with this weapon and cannot use it to make attacks of opportunity. You can use this ability %2 times per day.|SteelScarfBonusDamage|SteelScarfTimes",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

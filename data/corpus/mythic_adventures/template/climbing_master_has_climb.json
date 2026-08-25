@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Climbing Master ~ Has Climb",
+    "name": "Has Climb Speed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Climbing Master ~ Has Climb"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREMOVE",
+        "value": "1,Climb=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Climb|30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_templates.lst",
+    "sha256": "b8f0ee3a056b2302251f27bda2494492e59da70b3ee28c82c23082bca9cc1e9f",
+    "line": 18,
+    "record_key": "Climbing Master ~ Has Climb"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

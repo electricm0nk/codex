@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Heretic ~ False Font",
+    "name": "False Font",
+    "class": "Medium",
+    "description": "(Intermediate) You gain the effects of the energy font intermediate spirit power, but you must match the faith you chose to pervert, meaning that you always channel positive energy and add cure spells. You can channel positive energy %1 times per day. Add cure spells of each level you can cast from the cleric list to your medium spell list and spells known. These spells count as divine, as in the divine surge spirit power.|HierophantChannelTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Heretic ~ False Font"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HierophantChannelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HierophantChannelDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HierophantChannelTimes|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) You gain the effects of the energy font intermediate spirit power, but you must match the faith you chose to pervert, meaning that you always channel positive energy and add cure spells. You can channel positive energy %1 times per day. Add cure spells of each level you can cast from the cleric list to your medium spell list and spells known. These spells count as divine, as in the divine surge spirit power.|HierophantChannelTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HierophantChannelDC|10+(MediumLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HierophantChannelDice|(MediumLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HierophantChannelTimes|1+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of positive energy. You must choose to deal %1d6 points of positive energy damage to undead creatures or to heal living creatures of %1d6 points of damage. Creatures that take damage from channeled energy receive a DC %2 Will save to halve the damage. You can use this ability %3 times per day.|HierophantChannelDice|HierophantChannelDC|HierophantChannelTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Positive Energy Font|(%1d6, DC %2, %3/day)|HierophantChannelDice|HierophantChannelDC|HierophantChannelTimes"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=1|Cure Light Wounds"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=2|Cure Moderate Wounds"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=3|Cure Serious Wounds"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=4|Cure Critical Wounds"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=5|Cure Light Wounds (Mass)"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=6|Cure Moderate Wounds (Mass)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 108,
+    "record_key": "Medium ~ Heretic ~ False Font"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

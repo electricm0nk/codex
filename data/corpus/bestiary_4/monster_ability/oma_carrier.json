@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Oma ~ Carrier",
+    "delivery": "Extraordinary",
+    "description": "A creature swallowed whole by an oma can forgo attempts to cut itself out and instead attempt a DC 20 Reflex save on its turn. Success allows the creature to move into the creature's larger second stomach, where it can ride safely for an indefinite period without taking damage. When a passenger wishes to leave, it can cut its way free using the normal rules, or attempt an additional DC 20 Reflex save to be safely excreted in a square adjacent to the oma. An oma's carrier stomach can hold up to one Gargantuan creature (or twice as many creatures of the next smallest size: two Huge creatures, four Large, and so on). At its option, an oma can choose to forgo the normal bite damage of swallowing whole, but not the acid damage of the first stomach.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:oma_carrier",
+    "name": "Carrier",
+    "owners": [
+      "bestiary_4:monster:oma"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature swallowed whole by an oma can forgo attempts to cut itself out and instead attempt a DC 20 Reflex save on its turn. Success allows the creature to move into the creature's larger second stomach, where it can ride safely for an indefinite period without taking damage. When a passenger wishes to leave, it can cut its way free using the normal rules, or attempt an additional DC 20 Reflex save to be safely excreted in a square adjacent to the oma. An oma's carrier stomach can hold up to one Gargantuan creature (or twice as many creatures of the next smallest size: two Huge creatures, four Large, and so on). At its option, an oma can choose to forgo the normal bite damage of swallowing whole, but not the acid damage of the first stomach."
+      },
+      {
+        "key": "KEY",
+        "value": "Oma ~ Carrier"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oma Racial Trait.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Oma Racial Trait"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1146,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Oma ~ Carrier",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

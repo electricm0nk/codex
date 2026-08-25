@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:08Z",
+  "data": {
+    "key": "Pidgin of Giant",
+    "name": "Pidgin of Giant",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Spoken"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_languages.lst",
+    "sha256": "9ec59b85e940f9eb0d19aae7f7c85e87331d2fcaf946c1324b416bd495ec1847",
+    "line": 6,
+    "record_key": "Pidgin of Giant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

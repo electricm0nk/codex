@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Rage Casting",
+    "category": "Combat",
+    "name": "Rage Casting",
+    "description": "When you cast a bloodrager spell, as a swift action you can sacrifice some of your life force to augment the spell's potency. You can opt to take up to 1d6 points of damage per spell level of the spell you are casting, choosing the amount of dice before rolling. You cannot overcome this damage in any way, and it cannot be taken from temporary hit points. For each of these damage dice you roll, the DC of the spell you are casting increases by 1.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Bloodrager ~ Blood Casting",
+      "PRECLASS:1,SPELLCASTER.Arcane=1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 125,
+    "record_key": "Rage Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

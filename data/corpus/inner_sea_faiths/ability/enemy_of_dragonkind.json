@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist Boon ~ Dahak ~ Enemy of Dragonkind",
+    "name": "Enemy of Dragonkind",
+    "description": "If you have performed your daily obedience, when you are under the effects of protection from good or a similar effect, true dragons with fewer Hit Dice than you count as summoned creatures for the purpose of interacting with you, regardless of their alignment. In addition, three times per day while under such an effect, you can reroll one saving throw against a breath weapon, spell, or spell-like ability used against you by a creature of the dragon type. You can only reroll a single saving throw once.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist Boon ~ Dahak ~ Enemy of Dragonkind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, when you are under the effects of protection from good or a similar effect, true dragons with fewer Hit Dice than you count as summoned creatures for the purpose of interacting with you, regardless of their alignment. In addition, three times per day while under such an effect, you can reroll one saving throw against a breath weapon, spell, or spell-like ability used against you by a creature of the dragon type. You can only reroll a single saving throw once."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 132,
+    "record_key": "Evangelist Boon ~ Dahak ~ Enemy of Dragonkind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

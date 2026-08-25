@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Eyes of the Twilight",
+    "category": "General",
+    "name": "Eyes of the Twilight",
+    "description": "Your eyes have grown accustomed to the half-light of dusk and dawn. Creatures within an area of dim light don't gain concealment from you. You're still effectively blinded in an area of darkness.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Sharp Senses",
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.KeenSenses",
+      "PREABILITY:1,CATEGORY=Special Ability,Low-Light Vision",
+      "PRESKILL:1,Perception=7",
+      "PRETEXT:Sharp Senses, Perception 7 ranks, keen senses racial trait, low-light vision."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 34,
+    "record_key": "Eyes of the Twilight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

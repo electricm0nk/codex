@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Repose Blessing ~ Gentle Rest",
     "name": "Gentle Rest",
-    "class": "Repose Blessing",
+    "class": "Warpriest",
     "description": "You can fill a living creature with lethargy by hitting it with a melee touch attack, causing it to become staggered for 1 round. If the target is already staggered, it falls asleep for 1 round instead. An undead creature that's touched is staggered for %1 rounds.|max(1,WIS)",
     "raw_tokens": [
       {
@@ -41,5 +41,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Legendary Gifts ~ Legendary Armor",
+    "name": "Legendary Armor",
+    "class": "Legendary Gifts",
+    "description": "Your enhancement bonus from armor attunement increases by 2. If you are attuned to a suit of armor and a shield, you can either increase both bonuses by 1 or increase one bonus by 2. The enhancement bonus on a single attuned item can't exceed +5, but you can use the excess to add special abilities to the armor or shield. You can select this legendary gift multiple times; it stacks up to +10 on any one suit of armor or shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Gifts ~ Legendary Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ABP Legendary Gifts.Automatic Bonus Progression"
+      },
+      {
+        "key": "DESC",
+        "value": "Your enhancement bonus from armor attunement increases by 2. If you are attuned to a suit of armor and a shield, you can either increase both bonuses by 1 or increase one bonus by 2. The enhancement bonus on a single attuned item can't exceed +5, but you can use the excess to add special abilities to the armor or shield. You can select this legendary gift multiple times; it stacks up to +10 on any one suit of armor or shield."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_ArmorBonus|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Legendary Gifts"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 85,
+    "record_key": "Legendary Gifts ~ Legendary Armor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

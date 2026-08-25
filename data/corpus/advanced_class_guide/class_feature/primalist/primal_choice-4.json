@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Primalist ~ Primal Choice 4",
+    "name": "Primal Choice",
+    "class": "Bloodrager",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Primalist ~ Primal Choice 4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_BarbarianPrimalistChoice4|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_BarbarianPrimalistChoice4|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 2799,
+    "record_key": "Primalist ~ Primal Choice 4"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

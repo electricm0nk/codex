@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Rougarou",
+    "name": "Racial Traits ~ Rougarou",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Rougarou_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Rougarou Racial Trait|AUTOMATIC|Rougarou ~ Ability Scores|PREVAREQ:Rougarou_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/rougarou/rougarou_abilities_globalvar.lst",
+    "sha256": "44b42c2a9204eb9e08b9a310f05d3c01cac5bf13cb2338a2073d7b69eba4d0db",
+    "line": 10,
+    "record_key": "Racial Traits ~ Rougarou"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

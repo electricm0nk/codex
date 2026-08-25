@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Gifted Blade",
+    "name": "Gifted Blade",
+    "class": "Soulknife",
+    "description": "You are a soulknife who learned to manifest powers, as well as form mind blades.  You wield both blade and mind with deadly efficiency.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Gifted Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifePsychicStrike"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Gifted Blade],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifePsychicStrike]"
+      },
+      {
+        "key": "QUALIFY",
+        "value": "ABILITY=Archetype|Soulknife Archetype ~ Xephyr"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiftedBladePrimeStat|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a soulknife who learned to manifest powers, as well as form mind blades.  You wield both blade and mind with deadly efficiency."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Gifted Blade ~ Gifted Blade Manifesting|PRECLASS:1,Soulknife=3"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Gifted Blade"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Gifted Blade|var(\"GiftedBladePKL\")-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftedBladePrimeStat|WIS"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2137,
+    "record_key": "Soulknife Archetype ~ Gifted Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

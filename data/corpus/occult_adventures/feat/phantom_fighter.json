@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Phantom Fighter",
+    "category": "General",
+    "name": "Phantom Fighter",
+    "description": "Your phantom is a deadly foe of incorporeal adversaries. Your phantom's natural weapons are treated as having the ghost touch property. In addition, when you cast a touch spell to be delivered by your phantom, you can modify the spell as if you possessed the Ectoplasmic SpellAPG metamagic feat.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Spiritualist ~ Phantom",
+      "PRETEXT:Phantom with the magic attacks ability.",
+      "PREVARGTEQ:PhantomMasterLVL,4"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 50,
+    "record_key": "Phantom Fighter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

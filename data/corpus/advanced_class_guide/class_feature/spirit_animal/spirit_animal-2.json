@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Spirit Animal ~ Bones",
     "name": "Spirit Animal",
-    "class": "Spirit Animal",
+    "class": "Animal",
     "description": "The spirit animal gives off a ghostly glow and seems nearly transparent. The animal is under the constant effects of blur, with caster level equal to the shaman's level.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

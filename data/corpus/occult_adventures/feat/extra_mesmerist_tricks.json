@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Extra Mesmerist Tricks",
+    "category": "General",
+    "name": "Extra Mesmerist Tricks",
+    "description": "You can use your mesmerist tricks more often. You can implant two additional mesmerist tricks per day. Special: You can gain Extra Mesmerist Tricks multiple times. Its effects stack.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Mesmerist ~ Mesmerist Tricks"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 28,
+    "record_key": "Extra Mesmerist Tricks"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

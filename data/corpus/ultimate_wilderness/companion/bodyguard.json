@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Companion Archetype ~ Bodyguard",
+    "name": "Bodyguard",
+    "description": "Some companions live lives of faithful devotion and steady vigilance, standing watch through long hours and always ready to leap into action to protect their master.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Companion Archetype ~ Bodyguard"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CompanionArchetype.CF_CompanionShareSpells.CF_CompanionAnimalFeats.CF_CompanionMultiattack.CF_CompanionEvasion.CF_CompanionImprovedEvasion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Bodyguard],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionAnimalFeats,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionMultiattack,TYPE.CF_CompanionImprovedEvasion]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some companions live lives of faithful devotion and steady vigilance, standing watch through long hours and always ready to leap into action to protect their master."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Bodyguard ~ Animal Feats|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Bodyguard ~ Shared Vigilance|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Bodyguard ~ Tenacious Guardian|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Bodyguard ~ Uncanny Dodge|PREVARGTEQ:MasterLevel,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Bodyguard ~ Greater Tenacity|PREVARGTEQ:MasterLevel,15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Companion"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 419,
+    "record_key": "Companion Archetype ~ Bodyguard"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

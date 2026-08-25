@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Arcane Subdomain",
+    "name": "Arcane Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Arcane Subdomain],[PREVARLT:MagicDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Arcane Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arcane Subdomain=1|Magic Aura|Arcane Subdomain=2|Magic Mouth|Arcane Subdomain=3|Dispel Magic|Arcane Subdomain=4|Arcane Eye|Arcane Subdomain=5|Spell Resistance|Arcane Subdomain=6|Analyze Dweomer|Arcane Subdomain=7|Spell Turning|Arcane Subdomain=8|Protection from Spells|Arcane Subdomain=9|Mage's Disjunction"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 9,
+    "record_key": "Arcane Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Cavern Sniper",
     "name": "Cavern Sniper",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "Perfectly at home in the darkness, the cavern sniper capitalizes on stealth and ranged attacks imbued with his spell-like abilities to harass his opponents. The cavern sniper focuses on surprise, his innate magical abilities, and poison to take down unwary foes. The cavern sniper has the following class features.",
     "raw_tokens": [
       {
@@ -75,6 +75,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Fighter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Cavern Sniper],[!PREFACT:1,ABILITIES,Fighter_Archetype_Bravery=True,Fighter_Archetype_WeaponTraining1=True,Fighter_Archetype_WeaponTraining2=True,Fighter_Archetype_WeaponTraining3=True,Fighter_Archetype_WeaponTraining4=True,Fighter_Archetype_WeaponMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponMastery|true"
       }
     ]
   },
@@ -91,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

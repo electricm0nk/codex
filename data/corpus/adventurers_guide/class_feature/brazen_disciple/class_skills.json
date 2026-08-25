@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Brazen Disciple ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brazen Disciple ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Feature.BrazenDiscipleClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Bluff|Climb|TYPE=Craft|Disguise|Escape Artist|Intimidate|Knowledge (History)|Knowledge (Planes)|Perception|TYPE=Perform|TYPE=Profession|Sense Motive|Stealth"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 927,
+    "record_key": "Brazen Disciple ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

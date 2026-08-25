@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Granted Stride",
+    "name": "Granted Stride",
+    "description": "Your mythic grace means that you and your allies easily pass through undergrowth at full speed. Allies within 30 feet of you gain the benefits of woodland stride (as the ranger class feature), as long as they can see and hear you. As a swift action, you can expend one use of mythic power to allow allies within 30 feet to ignore naturally occurring difficult terrain in any of your favored terrains for %1 minutes. You must have the woodland stride and favored terrain class features to select this ability.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Granted Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,TYPE.FavoredTerrain,TYPE.Woodland Stride"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mythic grace means that you and your allies easily pass through undergrowth at full speed. Allies within 30 feet of you gain the benefits of woodland stride (as the ranger class feature), as long as they can see and hear you. As a swift action, you can expend one use of mythic power to allow allies within 30 feet to ignore naturally occurring difficult terrain in any of your favored terrains for %1 minutes. You must have the woodland stride and favored terrain class features to select this ability.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 177,
+    "record_key": "Mythic Path Ability ~ Granted Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

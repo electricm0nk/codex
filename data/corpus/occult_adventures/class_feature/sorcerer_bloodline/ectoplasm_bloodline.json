@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sorcerer Bloodline ~ Ectoplasm",
     "name": "Ectoplasm Bloodline",
-    "class": "Sorcerer Bloodline",
+    "class": "Sorcerer",
     "description": "Your family has a connection with the ethereal substance known as ectoplasm, whether from communing with the spirits or battling the spiritual undead. The power of the Ethereal Plane thrums in your mind and pulls at your flesh.|PREVAREQ:Sorcerer_Ectoplasm_Description,0",
     "raw_tokens": [
       {
@@ -176,5 +176,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

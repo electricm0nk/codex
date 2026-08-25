@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Maximized Magic",
     "name": "Maximized Magic",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "You can cast one spell per day as if it were modified by the Maximize Spell feat. This does not increase the casting time or the level of the spell.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

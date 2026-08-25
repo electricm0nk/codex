@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Multiweapon Fighting",
+    "name": "Multiweapon Fighting",
+    "description": "This multi-armed creature is skilled at making attacks with multiple weapons.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General.Combat"
+      },
+      {
+        "key": "PREHANDSGTEQ",
+        "value": "3"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "This multi-armed creature is skilled at making attacks with multiple weapons."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT-PRIMARY|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT-SECONDARY|6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Penalties for fighting with multiple weapons are reduced by -2 with the primary hand and by -6 with off hands. Normal: A creature without this feat takes a -6 penalty on attacks made with its primary hand and a -10 penalty on attacks made with all of its off hands. (It has one primary hand, and all the others are off hands.) See Two-Weapon Fighting in the Pathfinder RPG Core Rulebook. Special: This feat replaces the Two-Weapon Fighting feat for creatures with more than two arms."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_feats.lst",
+    "sha256": "a7ea4d8929b217e3b634f1113b881c9e0d3bea75eeae23ece83e02e08a3bf9b8",
+    "line": 20,
+    "record_key": "Multiweapon Fighting"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

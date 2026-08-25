@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:27:59Z",
+  "data": {
+    "key": "daze",
+    "name": "daze",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CLASSES",
+        "value": "Psychic Detective=0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+    "sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+    "line": 2134,
+    "record_key": "daze"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Bolt Ace",
     "name": "Bolt Ace",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "While gunslingers are full of sound and fury, there is a class of gunslingers that never soil their hands with powder or feel the sting of gun smoke. They commit their deeds in a more hushed manner, but with just as much flair.",
     "raw_tokens": [
       {
@@ -55,6 +55,78 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Gunslinger"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Bolt Ace],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_Grit=True,Gunslinger_Archetype_Deeds=True,Gunslinger_Archetype_Proficiencies=True,Gunslinger_Archetype_Gunsmith=true,Gunslinger_Archetype_GunTraining=true]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Grit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_QuickClearDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_UtilityShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_StartlingShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_ExpertLoadingDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_LightningReloadDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_MenacingShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Grit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Gunsmith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Gunsmith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining|true"
       }
     ]
   },
@@ -71,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

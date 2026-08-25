@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Dual-Cursed Oracle ~ Fortune",
     "name": "Fortune",
-    "class": "Dual-Cursed Oracle",
+    "class": "Oracle",
     "description": "As an immediate action, you can reroll any one d20 roll that you have just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll. You can use this ability %1/day.|FortuneTimes",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Bestial Climber",
     "name": "Bestial Climber",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the barbarian gains a natural climb speed equal to her land speed. A barbarian must have the raging climber rage power and be at least 6th level before selecting this rage power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

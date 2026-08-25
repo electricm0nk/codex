@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Domain Base ~ Scalykind",
+    "name": "Scalykind",
+    "class": "Domain Base",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Base ~ Scalykind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScalykindDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScalykindDomain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindDC|10+(DomainScalykindLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindTimes|DomainPowerTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 1296,
+    "record_key": "Domain Base ~ Scalykind"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

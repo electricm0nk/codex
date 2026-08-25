@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Implacable Stalker ~ Right Behind You",
+    "delivery": "SpellLike",
+    "description": "As a swift action, an implacable stalker can teleport to an unoccupied space, which must be adjacent to a creature the stalker is aware of that has the shaken, frightened, or panicked condition. The implacable stalker can travel a maximum distance of 480 feet with each use of this ability, and must wait 1d6 rounds between each use. Additionally, if the implacable stalker travels at least 40 feet, any shaken, frightened, or panicked creature it arrives adjacent to is denied its Dexterity bonus to AC against the implacable stalker's attacks until the beginning of the implacable stalker's next turn.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:implacable_stalker_right_behind_you",
+    "name": "Right Behind You",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, an implacable stalker can teleport to an unoccupied space, which must be adjacent to a creature the stalker is aware of that has the shaken, frightened, or panicked condition. The implacable stalker can travel a maximum distance of 480 feet with each use of this ability, and must wait 1d6 rounds between each use. Additionally, if the implacable stalker travels at least 40 feet, any shaken, frightened, or panicked creature it arrives adjacent to is denied its Dexterity bonus to AC against the implacable stalker's attacks until the beginning of the implacable stalker's next turn."
+      },
+      {
+        "key": "KEY",
+        "value": "Implacable Stalker ~ Right Behind You"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.ImplacableStalker"
+      }
+    ],
+    "source_page": "p.239",
+    "traits": [
+      "ImplacableStalker"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 294,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Implacable Stalker ~ Right Behind You",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

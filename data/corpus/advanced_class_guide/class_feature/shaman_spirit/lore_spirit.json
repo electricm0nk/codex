@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit ~ Lore",
     "name": "Lore (Spirit)",
-    "class": "Shaman Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: identify (1st), tongues (2nd), locate object (3rd), legend lore (4th), contact other plane (5th), mass owl's wisdom (6th), vision (7th), moment of prescience (8th), time stop (9th)",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

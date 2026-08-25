@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bard ~ Bardic Performance",
     "name": "Bardic Performance",
@@ -103,6 +103,18 @@
       {
         "key": "ASPECT",
         "value": "MasterAbility|Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for %1 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic performance is a standard action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the bard to stop the previous performance and start a new one as a standard action. A bardic performance cannot be disrupted, but it ends immediately if you are killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. You cannot have more than one bardic performance in effect at one time.|BardicPerformanceDuration|PREVARLT:BardicPerformanceLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for %1 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic performance is a move action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the bard to stop the previous performance and start a new one as a move action. A bardic performance cannot be disrupted, but it ends immediately if you are killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. You cannot have more than one bardic performance in effect at one time.|BardicPerformanceDuration|PREVARGTEQ:BardicPerformanceLVL,7|PREVARLT:BardicPerformanceLVL,13"
+      },
+      {
+        "key": "DESC",
+        "value": "You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for %1 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic performance is a swift action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the bard to stop the previous performance and start a new one as a swift action. A bardic performance cannot be disrupted, but it ends immediately if you are killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. You cannot have more than one bardic performance in effect at one time.|BardicPerformanceDuration|PREVARGTEQ:BardicPerformanceLVL,13"
       }
     ]
   },
@@ -120,5 +132,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Child of the Temple",
+    "name": "Child of the Temple",
+    "description": "You have long served at a temple in a city, and not only did you pick up on many of the nobility's customs, you spent much time in the temple libraries studying your faith. You gain a +1 trait bonus on Knowledge (Nobility) and Knowledge (Religion) checks, and %1 is always a class skill for you.|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Child of the Temple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.FaithTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Child of the Temple],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.FaithTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have long served at a temple in a city, and not only did you pick up on many of the nobility's customs, you spent much time in the temple libraries studying your faith. You gain a +1 trait bonus on Knowledge (Nobility) and Knowledge (Religion) checks, and %1 is always a class skill for you.|%LIST"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SKILL|Knowledge (Nobility)|Knowledge (Religion)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nobility),Knowledge (Religion)|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 29,
+    "record_key": "Trait ~ Child of the Temple"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

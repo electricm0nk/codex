@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_35)",
+    "name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_35)",
+    "description": "Driven by your loyalty to a fallen queen, you can inspire your allies to brutal acts.",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Bodyguard,Combat Reflexes"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Perform (oratory)=3"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Driven by your loyalty to a fallen queen, you can inspire your allies to brutal acts."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Whenever an ally within 30 feet makes an attack, you can attempt a DC 10 Perform (oratory) check as an immediate action. If you are successful, the ally gains a +2 morale bonus on her attack roll. If an attack affected in this way would normally deal nonlethal damage, it deals lethal damage instead. This ability has no effect if your ally cannot hear you speak or understand your words."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 35,
+    "record_key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_35)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_feats.lst:35"
+  }
+}

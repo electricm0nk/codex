@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Trox ~ Grabbing Appendages",
+    "name": "Grabbing Appendages",
+    "description": "A trox's smaller arms are useful for little more than aiding it with grappling. Trox gain Improved Grapple as a bonus feat, and can maintain a grapple and still make attacks with their main arms.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trox ~ Grabbing Appendages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Trox_ReplaceGrabbingAppendages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "A trox's smaller arms are useful for little more than aiding it with grappling. Trox gain Improved Grapple as a bonus feat, and can maintain a grapple and still make attacks with their main arms."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Grapple"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You can maintain a grapple and still make attacks with your main arms."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/trox/trox_abilities_race.lst",
+    "sha256": "5b478e1a25d05b92bc04c408960de69a1581897597032336432e174f62df649f",
+    "line": 21,
+    "record_key": "Trox ~ Grabbing Appendages"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

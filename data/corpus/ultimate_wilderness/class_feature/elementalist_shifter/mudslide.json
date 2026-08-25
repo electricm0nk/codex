@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elementalist Shifter ~ Mudslide",
     "name": "Mudslide",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "Combining the elements of earth and water causes the elementalist shifter to generate an aura of mud. This mud extends out to all squares adjacent to her and counts as difficult terrain; it moves with her and vanishes when she ends her elemental aspect.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Devil Binder Eidolon Smite Chaos",
+    "name": "Smite Chaos",
+    "description": "You can call out to the powers of law to aid you in your struggle against chaos %1/day. As a swift action, you choose one target within sight to smite. If this target is chaotic, you add +%2 to your attack rolls and +%3 to all damage rolls made against it, and automatically bypass any DR the creature might possess. This ability is twice as effective against outsiders with the chaotic subtype, chaotic-aligned aberrations, and fey. In addition, you gain a +%4 deflection bonus to your AC against attacks made by the target. If you target a creature that is not chaotic, the smite is wasted with no effect. The smite effect remains until the target is dead or the next time you rest and regain your uses of this ability.|DBESmiteTimes|max(CHA,0)|TL|max(CHA,0)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Devil Binder Eidolon Smite Chaos"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DBESmiteTimes|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call out to the powers of law to aid you in your struggle against chaos %1/day. As a swift action, you choose one target within sight to smite. If this target is chaotic, you add +%2 to your attack rolls and +%3 to all damage rolls made against it, and automatically bypass any DR the creature might possess. This ability is twice as effective against outsiders with the chaotic subtype, chaotic-aligned aberrations, and fey. In addition, you gain a +%4 deflection bonus to your AC against attacks made by the target. If you target a creature that is not chaotic, the smite is wasted with no effect. The smite effect remains until the target is dead or the next time you rest and regain your uses of this ability.|DBESmiteTimes|max(CHA,0)|TL|max(CHA,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DBESmiteTimes|(TL-2)/4"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DBESmiteTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 83,
+    "record_key": "Devil Binder Eidolon Smite Chaos"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

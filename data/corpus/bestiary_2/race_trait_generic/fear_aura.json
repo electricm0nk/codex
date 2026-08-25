@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Fear ~ Aura",
+    "name": "Fear",
+    "description": "The use of this ability is a free action.  The aura functions like the fear spell.  A fear aura is an area effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fear ~ Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.Aura"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearAuraRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The use of this ability is a free action.  The aura functions like the fear spell.  A fear aura is an area effect."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Fear"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearAuraDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Fear)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., DC %2)|FearAuraRange|FearAuraDC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1877,
+    "record_key": "Fear ~ Aura"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

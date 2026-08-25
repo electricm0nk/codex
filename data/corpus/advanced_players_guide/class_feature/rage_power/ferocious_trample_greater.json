@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Ferocious Trample (Greater)",
     "name": "Ferocious Trample, Greater",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "A barbarian's mount can affect creatures up to its own size with its ferocious trample. In addition, it can make an overrun combat maneuver check as a free action against a creature that fails its Reflex save (or chooses not to save in order to take an attack of opportunity) against its trample.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

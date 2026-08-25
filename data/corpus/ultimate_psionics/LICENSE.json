@@ -1,18 +1,18 @@
 {
   "book": "ultimate_psionics",
-  "classified_at": "2026-08-13T02:27:44Z",
+  "classified_at": "2026-08-23T14:10:45Z",
   "classified_by_cycle": "SD29-E5-F2-011",
   "license_declaration": {
-    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md \u00a72.2; the book's own ultimate_psionics.pcc declares ISOGL:YES at line 21, carries 29 COPYRIGHT lines and a real 10,418-byte OGL.txt",
+    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own ultimate_psionics.pcc declares ISOGL:YES at line 21, carries 29 COPYRIGHT lines and a real 10,418-byte OGL.txt",
     "product_identity_note": "Named deities, NPCs and unique places are Product Identity; monster stat blocks and their special-ability rules text are Open Game Content.",
-    "product_identity_source": "Dreamscarred Press Ultimate Psionics, OGL \u00a715 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, and the classifier's Product Identity screen returns 0 -- which is what the blacklist's per-record predicate predicts for a book whose creatures are generic psionic species rather than named personae"
+    "product_identity_source": "Dreamscarred Press Ultimate Psionics, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, and the classifier's Product Identity screen returns 0 -- which is what the blacklist's per-record predicate predicts for a book whose creatures are generic psionic species rather than named personae"
   },
   "operator_sign_off": {
     "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header.",
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 473,
+  "records_processed": 3382,
   "records_redacted": 0,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "PASS -- SD29-E5-F2-011 (monster lane), 2026-08-13T02:27:44Z: every field of the 34 records this run wrote (21 monsters + 13 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 34: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see. UPDATE -- SD31-E6-F5-002, 2026-08-16: `cache_gen::equipment_gap` onboarded this book's `equipment` kind for the first time (no prior directory) -- 113 real, oracle-cited records (`rules_tables::equipment_gap_tables`'s UPSI residue), each screened inline on both name and description, zero hits on either. records_processed restated 34 -> 147 (34 + 113). NOTE: `corpus_literal_sweep`'s own verification of these 113 records is separately blocked by a pre-existing defect (`docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` row 46 -- Dreamscarred Press's 4-segment corpus path is unrecognized by that binary's `book_dir_of`), not something this screening pass can speak to; the PI term-list scan above is independent of that and did run. UPDATE -- SD31-E6-F5-003, 2026-08-16: cache_gen::hand_authored_equipment onboarded this book's already-compiled equipment_tables() rows for the first time (previously only its equipment_gap-shaped Equipmods residue was on disk) -- 326 real, oracle-cited records, each screened inline via BOTH the declared-PI reader (NAMEISPI:/DESCISPI:) and the shared blacklist term scan on name AND description. records_processed restated 147 -> 473 (147 + 326)."
+  "screening_method_note": "PASS -- SD29-E5-F2-011 (monster lane), 2026-08-23T14:10:45Z: every field of the 64 records this run wrote (0 monsters + 64 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 3382: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

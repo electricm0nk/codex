@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Xephyr ~ Mind Knife",
+    "name": "Mind Knife",
+    "class": "Xephyr",
+    "description": "You can also shape your mind blade into the form of a xephyr knife.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Xephyr ~ Mind Knife"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can also shape your mind blade into the form of a xephyr knife."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Mind Xephyr Knife"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Two-Weapon Fighting"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.341"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2215,
+    "record_key": "Xephyr ~ Mind Knife"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

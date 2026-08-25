@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Infernal Affinity ~ Power of the Pit",
+    "name": "Power of the Pit",
+    "description": "Your form becomes infused with vile power. You gain immunity to fire and poison. You also gain resistance to acid 10 and cold 10, and the ability to see perfectly in darkness of any kind to a range of 60 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infernal Affinity ~ Power of the Pit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_SeeInDarkness_Range|60"
+      },
+      {
+        "key": "DESC",
+        "value": "Your form becomes infused with vile power. You gain immunity to fire and poison. You also gain resistance to acid 10 and cold 10, and the ability to see perfectly in darkness of any kind to a range of 60 feet."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fire|Immunity to Poison|Universal Monster Rule ~ See in Darkness"
+      },
+      {
+        "key": "VISION",
+        "value": "See in Darkness (Sorcerer_InfernalPowerOfThePit_VisionDistance)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Vision|See in Darkness 60 ft.|Sorcerer_InfernalPowerOfThePit_VisionDistance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 70,
+    "record_key": "Infernal Affinity ~ Power of the Pit"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

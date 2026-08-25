@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Recovered Rage",
     "name": "Recovered Rage",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Whenever you reduce a foe to 0 or fewer hit points while you are raging or using raging song, you regain 1 round of rage or raging song (your choice if you have both abilities), as long as the number of Hit Dice that foe possesses are equal to or greater than %1. You cannot use this feat to regain more rounds of rage or raging song each day than your daily maximum number of rounds, nor can you ever exceed your maximum number of rounds.|CL/2",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

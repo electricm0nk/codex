@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Crusader",
+    "name": "Crusader",
+    "description": "Your prowess and ability draw countless followers to your banner. You gain followers as if you had the Leadership feat. In addition, you add +%1 to your leadership score when determining the number of followers you gain. Whenever you are within 100 feet of such followers, each follower can use the surge ability once per day without needing to expend mythic power. The followers use the same die type as your surge ability. If you have or gain the Leadership feat, you gain followers from both this ability and the Leadership feat (in effect doubling the number of followers gained).|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Crusader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your prowess and ability draw countless followers to your banner. You gain followers as if you had the Leadership feat. In addition, you add +%1 to your leadership score when determining the number of followers you gain. Whenever you are within 100 feet of such followers, each follower can use the surge ability once per day without needing to expend mythic power. The followers use the same die type as your surge ability. If you have or gain the Leadership feat, you gain followers from both this ability and the Leadership feat (in effect doubling the number of followers gained).|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 142,
+    "record_key": "Mythic Path Ability ~ Crusader"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

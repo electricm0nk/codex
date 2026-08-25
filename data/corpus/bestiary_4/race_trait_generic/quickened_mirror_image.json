@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Quickened Mirror Image",
+    "name": "Quickened Mirror Image",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Mythic Spell"
+      },
+      {
+        "key": "TYPE",
+        "value": "MythicSpellList"
+      },
+      {
+        "key": "PRESPELL",
+        "value": "1,Quickened Mirror Image"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/support/b4_abilities_race_ma.lst",
+    "sha256": "14619b9ed7741f0f4a84e8b25a0d5e2319596ca623301b3b337d58ff8c8f1b63",
+    "line": 37,
+    "record_key": "Quickened Mirror Image"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

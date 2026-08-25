@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Critical Mastery",
+    "category": "Mythic",
+    "name": "Critical Mastery (Mythic)",
+    "description": "Your critical hits are versatile and devastating. When using Critical Mastery, increase the number of critical feats you may apply by .",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Critical Mastery",
+      "PREABILITY:1,CATEGORY=Mythic Feat,Critical Focus",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 63,
+    "record_key": "Critical Mastery"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

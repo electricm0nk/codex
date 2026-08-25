@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Maddening Obliteration",
+    "category": "Combat",
+    "name": "Maddening Obliteration",
+    "description": "With a mighty killing blow, your unsettling punch vaporizes your foe. When you damage a living creature with an unarmed strike while using Maddening Style, and you have at least 1 point in your ki pool, that creature suffers a -2 penalty on saving throws against any confusion, madness, and insanity effects (including your Maddening Strike) for 1 round. Additionally, if you reduce a creature to fewer than 0 hit points with a Stunning Fist attack, you can spend 2 points from your ki pool as a free action to obliterate your opponent, reducing their body to fine dust as per disintegrate. A living creature can attempt a Fortitude save (DC ) to negate this effect.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Maddening Strike",
+      "PRESKILL:1,Knowledge (arcana)=10",
+      "PREVARGTEQ:PreStatScore_WIS,19,PreStatScore_CHA,15"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 39,
+    "record_key": "Maddening Obliteration"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

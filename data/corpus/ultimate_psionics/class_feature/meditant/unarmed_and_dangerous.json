@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Meditant ~ Unarmed and Dangerous",
+    "name": "Unarmed and Dangerous",
+    "class": "Meditant",
+    "description": "You are a student in the art of fighting without weapons.  You gain the Improved Unarmed Strike feat as a bonus feat.  In addition, your unarmed strikes deal %1d%2 damage if you are Medium, adjusted accordingly for other sizes.|UnarmedAndDangerousDice|UnarmedAndDangerousDieSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Meditant ~ Unarmed and Dangerous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnarmedAndDangerousDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnarmedAndDangerousDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a student in the art of fighting without weapons.  You gain the Improved Unarmed Strike feat as a bonus feat.  In addition, your unarmed strikes deal %1d%2 damage if you are Medium, adjusted accordingly for other sizes.|UnarmedAndDangerousDice|UnarmedAndDangerousDieSize"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Unarmed Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Meditant UDAM 1|PREVARLT:PsychicWarriorLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Meditant UDAM 5|PREMULT:2,[PREVARGTEQ:PsychicWarriorLVL,5],[PREVARLT:PsychicWarriorLVL,10]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Meditant UDAM 10|PREMULT:2,[PREVARGTEQ:PsychicWarriorLVL,10],[PREVARLT:PsychicWarriorLVL,15]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Meditant UDAM 15|PREMULT:2,[PREVARGTEQ:PsychicWarriorLVL,15],[PREVARLT:PsychicWarriorLVL,20]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Meditant UDAM 20|PREVARGTEQ:PsychicWarriorLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnarmedAndDangerousDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnarmedAndDangerousDice|1|PRECLASS:1,Psychic Warrior=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnarmedAndDangerousDieSize|6+2*floor(PsychicWarriorLVL/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnarmedAndDangerousDieSize|-6|PRECLASS:1,Psychic Warrior=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2061,
+    "record_key": "Meditant ~ Unarmed and Dangerous"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

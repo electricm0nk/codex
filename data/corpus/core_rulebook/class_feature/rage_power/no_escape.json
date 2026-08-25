@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ No Escape",
     "name": "No Escape",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "You can move up to normal your speed as an immediate action, but you can only use this ability when an adjacent foe uses a withdraw action to move away from you. You must end your movement adjacent to the enemy that used the withdraw action. You provoke attacks of opportunity as normal during this movement. This power can only be used once per rage.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

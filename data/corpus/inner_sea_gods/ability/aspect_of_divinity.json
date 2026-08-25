@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted ~ Aspect of Divinity",
+    "name": "Aspect of Divinity",
+    "description": "At 7th level, the exalted gains a physical trait that reflects her faith. These physical traits vary by individual and deity; examples include hair with the appearance of fire or water, scaled or metallic flesh, talons, reptilian or glowing eyes, or a faint and colorful aura. The traits may be obvious or subtle, but in any case they confer no special attacks or abilities and impose a -4 penalty on Disguise checks. In addition, the exalted gains a permanent protection from chaos/evil/good/law effect with a caster level equal to her character level. She must select one alignment from which her aura protects her, and the chosen alignment must be opposed to the exalted's alignment (and therefore her deity's). An exalted who is neutral chooses any of the four alignments. Once the exalted makes this choice, it can't be changed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted ~ Aspect of Divinity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exalted Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, the exalted gains a physical trait that reflects her faith. These physical traits vary by individual and deity; examples include hair with the appearance of fire or water, scaled or metallic flesh, talons, reptilian or glowing eyes, or a faint and colorful aura. The traits may be obvious or subtle, but in any case they confer no special attacks or abilities and impose a -4 penalty on Disguise checks. In addition, the exalted gains a permanent protection from chaos/evil/good/law effect with a caster level equal to her character level. She must select one alignment from which her aura protects her, and the chosen alignment must be opposed to the exalted's alignment (and therefore her deity's). An exalted who is neutral chooses any of the four alignments. Once the exalted makes this choice, it can't be changed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 100,
+    "record_key": "Exalted ~ Aspect of Divinity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

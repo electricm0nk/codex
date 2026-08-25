@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Saboteur",
     "name": "Saboteur",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "The saboteur is an alchemist who specializes in destroying the plans, materials, and allies of his enemies. A saboteur has focused his alchemical research toward new ways to conceal his presence, sow confusion, and blow up large structures.",
     "raw_tokens": [
       {
@@ -59,6 +59,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Saboteur],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Mutagen=True,Alchemist_Archetype_ClassSkills=true]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_ClassSkills|true"
       }
     ]
   },
@@ -75,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

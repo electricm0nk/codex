@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Nightmare Constructor ~ Devastating Touch",
+    "name": "Devastating Touch",
+    "description": "Your horror gains the devastating touch ability of a dread, using your class level to determine the total damage dealt.  This also allows you to select terrors that modify devastating touch, but these terrors only apply to the horror's use of devastating touch.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nightmare Constructor ~ Devastating Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your horror gains the devastating touch ability of a dread, using your class level to determine the total damage dealt.  This also allows you to select terrors that modify devastating touch, but these terrors only apply to the horror's use of devastating touch."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 13,
+    "record_key": "Nightmare Constructor ~ Devastating Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

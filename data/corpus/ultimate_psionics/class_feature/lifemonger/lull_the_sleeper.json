@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Lifemonger ~ Lull the Sleeper",
+    "name": "Lull the Sleeper",
+    "class": "Lifemonger",
+    "description": "You can expend your psionic focus and spend a swift action so you and any collective member who spends a swift action on their own turn gain a +%1 insight bonus to attack rolls until the beginning of their next turn.|LullTheSleeperBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lifemonger ~ Lull the Sleeper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LullTheSleeperBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus and spend a swift action so you and any collective member who spends a swift action on their own turn gain a +%1 insight bonus to attack rolls until the beginning of their next turn.|LullTheSleeperBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LullTheSleeperBonus|floor((VitalistLVL-4)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2337,
+    "record_key": "Lifemonger ~ Lull the Sleeper"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Faerie's Strike",
     "name": "Faerie's Strike",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "%1 times per day, when you use Vital Strike (or Improved Vital Strike or Greater Vital Strike), your strike saps the strength of your opponent. The creature hit must succeed at a DC %2 Fortitude save or be illuminated as if by faerie fire for 1 minute. You can choose to use this ability as a free action after you hit the target with the attack. This is a supernatural ability.|max(WIS,1)|CL/2+10+WIS",
     "raw_tokens": [
       {
@@ -69,5 +69,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Grim Fate Stain",
+    "name": "Grim Fate Stain",
+    "description": "You can't benefit from morale bonuses. You take a -%1 penalty on Perform and Sense Motive checks.|GrimFateSkillPenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Grim Fate Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedGrimFateStain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GrimFateSkillPenalty|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "DESC",
+        "value": "You can't benefit from morale bonuses. You take a -%1 penalty on Perform and Sense Motive checks.|GrimFateSkillPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive,TYPE=Perform|GrimFateSkillPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GrimFateSkillPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GrimFateSkillPenalty|-2|PREVARGTEQ:AccursedManifestationLevel,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 60,
+    "record_key": "Accursed Corruption ~ Grim Fate Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,30 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "description": "[redacted PI]",
+    "key": "Savior's Arrow",
+    "name": "Savior's Arrow",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]",
+      "PREWEAPONPROF:1,Longbow"
+    ]
+  },
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 76,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "record_key": "Savior's Arrow",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

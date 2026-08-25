@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Qlippoth-Spawn ~ Skilled",
+    "name": "Skilled",
+    "description": "The motherless have a +2 racial bonus on Escape Artist and Survival checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Qlippoth-Spawn ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Tiefling ~ Qlippoth-Spawn"
+      },
+      {
+        "key": "DESC",
+        "value": "The motherless have a +2 racial bonus on Escape Artist and Survival checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist,Survival|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Escape Artist, +2 Survival"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+    "sha256": "c5e0157cc152a160d6fb535fed312baccbc96ef1e560687b570b267dd1c041ca",
+    "line": 111,
+    "record_key": "Qlippoth-Spawn ~ Skilled"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

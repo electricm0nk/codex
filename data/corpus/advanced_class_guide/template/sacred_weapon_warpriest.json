@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "data": {
+    "key": "Sacred Weapon ~ Warpriest",
+    "name": "Sacred Weapon ~ Warpriest",
+    "raw_tokens": [
+      {
+        "key": "TEMPDESC",
+        "value": "Your BAB is your class levels."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "EQ|Weapon|WEAPON|TOHIT|TL-BAB|TYPE=Temporary"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst",
+    "sha256": "089a3c6958b30fa81dd066355de5fe92a518c6e9df7f3b5374f0560fd40a9ee9",
+    "line": 16,
+    "record_key": "Sacred Weapon ~ Warpriest"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

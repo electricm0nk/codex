@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Accursed Bloodline ~ Wretched Endurance",
     "name": "Wretched Endurance",
-    "class": "Accursed Bloodline",
+    "class": "Sorcerer",
     "description": "You gain a +%1 bonus on all saving throws against charm, cold, fear, fire, and sleep effects.|Sorcerer_AccursedWretchedEndurance_SaveBonus",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

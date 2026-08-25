@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Warrior Archetype ~ Pathmaster",
+    "name": "Pathmaster",
+    "class": "Psychic Warrior",
+    "description": "You focus your study on a single path, rather than expanding your options.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Warrior Archetype ~ Pathmaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsychicWarriorArchetype.PsychicWarriorSecondaryPath.PsychicWarriorBonusFeat11.PsychicWarriorTwistingPath.PsychicWarriorPathweaving"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic Warrior=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Warrior Archetype ~ Pathmaster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsychicWarriorSecondaryPath,TYPE.PsychicWarriorBonusFeat11,TYPE.PsychicWarriorPathweaving,TYPE.PsychicWarriorTwistingPath]"
+      },
+      {
+        "key": "DESC",
+        "value": "You focus your study on a single path, rather than expanding your options."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Pathmaster ~ Advanced Path|PRECLASS:1,Psychic Warrior=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Pathmaster ~ Focused Path|PRECLASS:1,Psychic Warrior=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Pathmaster ~ Empowered Path|PRECLASS:1,Psychic Warrior=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Pathmaster ~ Master Maneuver|PRECLASS:1,Psychic Warrior=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2024,
+    "record_key": "Psychic Warrior Archetype ~ Pathmaster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

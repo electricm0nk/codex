@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Mana Wastes Mutant ~ Acid Resistance",
+    "delivery": "Supernatural",
+    "description": "The Mana Waste Mutant gains Acid Resistance %1 The Mana Waste Mutant gains Immunity to Acid",
+    "description_variables": [
+      "MutantAcidResistance"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:mana_wastes_mutant_acid_resistance",
+    "name": "Acid Resistance",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|MutantAcidResistance|10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MutantAcidResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The Mana Waste Mutant gains Acid Resistance %1|MutantAcidResistance|PREVARLT:MutantAcidResistance,30"
+      },
+      {
+        "key": "DESC",
+        "value": "The Mana Waste Mutant gains Immunity to Acid|PREVARGTEQ:MutantAcidResistance,30"
+      },
+      {
+        "key": "KEY",
+        "value": "Mana Wastes Mutant ~ Acid Resistance"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mana Wastes Mutant ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.MutantSpecialAbility"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.29",
+    "traits": [
+      "MutantSpecialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 203,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Mana Wastes Mutant ~ Acid Resistance",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

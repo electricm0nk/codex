@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blighted Defiler ~ Life Buffer",
+    "name": "Life Buffer",
+    "class": "Kineticist",
+    "description": "A blighted defiler gains a buffer she can use to store life potential from healthy areas in order to use it later. She must use steal power on a healthy area and take none of the three usual benefits, and this doesn't count as a use of steal power for elemental might or stolen strength. This grants her buffer 1 life point. It can hold",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blighted Defiler ~ Life Buffer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.BlightedDefilerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A blighted defiler gains a buffer she can use to store life potential from healthy areas in order to use it later. She must use steal power on a healthy area and take none of the three usual benefits, and this doesn't count as a use of steal power for elemental might or stolen strength. This grants her buffer 1 life point. It can hold"
+      },
+      {
+        "key": "DESC",
+        "value": "1 life point.|!PRECLASS:1,Kineticist=11"
+      },
+      {
+        "key": "DESC",
+        "value": "2 life points.|PRECLASS:1,Kineticist=11|!PRECLASS:1,Kineticist=16"
+      },
+      {
+        "key": "DESC",
+        "value": "3 life points.|PRECLASS:1,Kineticist=16"
+      },
+      {
+        "key": "DESC",
+        "value": "When using steal power, she can spend 1 life point to gain the benefits even in an area she already blighted that month. Life points remain in the buffer until she spends them."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 17,
+    "record_key": "Blighted Defiler ~ Life Buffer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

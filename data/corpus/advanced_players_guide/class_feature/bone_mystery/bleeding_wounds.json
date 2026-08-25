@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bone Mystery ~ Bleeding Wounds",
     "name": "Bleeding Wounds",
-    "class": "Bone Mystery",
+    "class": "Oracle",
     "description": "Whenever a creature takes damage from one of your spells or effects that causes negative energy damage, it takes %1 point(s) of bleeding damage each round.|OracleBleedingWoundsPoints",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

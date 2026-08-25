@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Heavens Mystery ~ Mantle of Moonlight",
     "name": "Mantle of Moonlight",
-    "class": "Heavens Mystery",
+    "class": "Oracle",
     "description": "Your innate understanding of the moon renders you immune to lycanthropy. Additionally, you may disrupt a lycanthropeUs connection to the moon with a successful touch attack. This action automatically forces the lycanthrope into its humanoid form, which it must remain in for %1 round(s).|OracleMantleofMoonlightDuration",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

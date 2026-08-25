@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Divine Hunter",
     "name": "Divine Hunter",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Most paladins rush into battle, meeting evil toe-to-toe. The divine hunter prefers to engage evil from afar, striking down her foes before they can threaten her allies.",
     "raw_tokens": [
       {
@@ -71,6 +71,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ DIVINE HUNTER],[!PREFACT:1,ABILITIES,Paladin_Archetype_Proficiencies=True,Paladin_Archetype_AuraOfCourage=True,Paladin_Archetype_DivineBond=True,Paladin_Archetype_Mercy6=True,Paladin_Archetype_AuraOfResolve=True,Paladin_Archetype_AuraOfFaith=True,Paladin_Archetype_AuraOfJustice=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ArmorProficiencyHeavy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfFaith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfFaith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
       }
     ]
   },
@@ -87,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

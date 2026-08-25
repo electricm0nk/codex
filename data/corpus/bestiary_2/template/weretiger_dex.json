@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Weretiger_DEX",
+    "name": "Weretiger_DEX",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|DEX|15"
+      },
+      {
+        "key": "!PRESTAT",
+        "value": "1,DEX=15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
+    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520",
+    "line": 37,
+    "record_key": "Weretiger_DEX"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,22 +1,129 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Rogue ~ Rogue Talents",
-    "name": "Rogue Talents",
-    "class_key": "Rogue ~ Unchained Class",
     "base_class_key": "Rogue",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Rogue Class Feature"
-    ],
-    "min_level": 2,
-    "is_granted": true,
-    "visible": "NO",
+    "class_key": "Rogue ~ Unchained Class",
     "class_skills": [],
     "description": null,
-    "source_page": null,
+    "is_granted": true,
+    "key": "Unchained Rogue ~ Rogue Talents",
+    "min_level": 2,
+    "name": "Rogue Talents",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "RogueTalentLVL/2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RogueTalentLVL",
+          "RogueLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,2",
+          "PREVAREQ:Rogue_CF_RogueTalent2,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,4",
+          "PREVAREQ:Rogue_CF_RogueTalent4,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,6",
+          "PREVAREQ:Rogue_CF_RogueTalent6,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,8",
+          "PREVAREQ:Rogue_CF_RogueTalent8,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,10",
+          "PREVAREQ:Rogue_CF_RogueTalent10,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,12",
+          "PREVAREQ:Rogue_CF_RogueTalent12,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,14",
+          "PREVAREQ:Rogue_CF_RogueTalent14,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,16",
+          "PREVAREQ:Rogue_CF_RogueTalent16,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,18",
+          "PREVAREQ:Rogue_CF_RogueTalent18,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rogue Talent",
+          "-1",
+          "PREVARGTEQ:RogueTalentLVL,20",
+          "PREVAREQ:Rogue_CF_RogueTalent20,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CombatTrickAllowed",
+          "1",
+          "TYPE=Base"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,35 +148,34 @@
       {
         "key": "DEFINE",
         "value": "RogueTalentLVL|0"
-      }
-    ],
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "ABILITYPOOL",
-          "Unchained Rogue Talent",
-          "RogueTalentLVL/2"
-        ]
       },
       {
-        "qualifiers": [
-          "VAR",
-          "RogueTalentLVL",
-          "RogueLVL"
-        ]
+        "key": "DEFINE",
+        "value": "CombatTrickAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombatTrickTaken|0"
       }
-    ]
+    ],
+    "source_page": null,
+    "type_tokens": [
+      "Unchained Rogue Class Feature"
+    ],
+    "visible": "NO"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 587,
-    "record_key": "Unchained Rogue ~ Rogue Talents"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 587,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Rogue ~ Rogue Talents",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

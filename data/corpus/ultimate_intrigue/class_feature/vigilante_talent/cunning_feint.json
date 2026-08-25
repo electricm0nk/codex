@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Cunning Feint",
     "name": "Cunning Feint",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante can feint as a move action or in place of his first attack during a full attack.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

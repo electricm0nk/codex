@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bard Archetype ~ Thoughtsinger",
+    "name": "Thoughtsinger",
+    "class": "Bard",
+    "description": "You bring your friends together into a chorus of thoughts and emotions.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Thoughtsinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardBardicPerformance.BardWellVersed.BardVersatilePerformance.BardSuggestion.BardMassSuggestion.BardDirgeOfDoom.BardFrighteningTune.BardDeadlyPerformance"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Thoughtsinger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardBardicPerformance,TYPE.BardWellVersed,TYPE.BardVersatilePerformance,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardDirgeOfDoom,TYPE.BardFrighteningTune,TYPE.BardDeadlyPerformance]"
+      },
+      {
+        "key": "DESC",
+        "value": "You bring your friends together into a chorus of thoughts and emotions."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Collective|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Thoughtsinger ~ Wild Talent|PRECLASS:1,Barbarian=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Thoughtsong|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Music of the Spheres|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Telepathy|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Compelling Voice|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Emotional Shield|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ Fear Cascade|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bard Class Feature|AUTOMATIC|Thoughtsinger ~ The Becoming|PRECLASS:1,Bard=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Thoughtsinger ~ Collective Range Unlimited|PRECLASS:1,Bard=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Thoughtsinger ~ Collective Range Planar|PRECLASS:1,Bard=19"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.296"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2424,
+    "record_key": "Bard Archetype ~ Thoughtsinger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

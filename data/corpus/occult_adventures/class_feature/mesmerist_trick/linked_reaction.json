@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Linked Reaction",
     "name": "Linked Reaction",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "A hive mind allows the mesmerist and an ally to share one another's reaction times. The mesmerist can trigger this trick whe either the subject or the mesmerist is surprise and the other isn't (even if the mesmerist would normally be unable to take actions because of being surprised). Both the mesmerist and the subject can act in this surprise round. The mesmerist can't implant this trick on himself.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

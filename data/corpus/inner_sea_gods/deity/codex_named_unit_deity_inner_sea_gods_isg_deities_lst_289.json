@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_289)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_289)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Artifice,Evil,Law,Rune|PREALIGN:LN,LE,NE"
+      },
+      {
+        "key": "DESC",
+        "value": "Infernal duke of fate, luck, patterns"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Second Fate"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Two-faced devil head"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Fox"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Black|White"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Infernal Dukes"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Flail (Dire)"
+      },
+      {
+        "key": "ALIGN",
+        "value": "LE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.326"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 289,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_289)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:289"
+  }
+}

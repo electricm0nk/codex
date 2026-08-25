@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Akvan ~ Aura of Hopelessness",
+    "delivery": "Supernatural",
+    "description": "All creatures within 30 feet of an akvan must make a successful DC 30 Will save or take a -4 penalty on attack rolls, saving throws, skill checks, and ability checks. This is a mind-affecting effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:akvan_aura_of_hopelessness",
+    "name": "Aura of Hopelessness",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures within 30 feet of an akvan must make a successful DC 30 Will save or take a -4 penalty on attack rolls, saving throws, skill checks, and ability checks. This is a mind-affecting effect. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Akvan ~ Aura of Hopelessness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "TYPE",
+        "value": "AkvanRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.84",
+    "traits": [
+      "AkvanRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 709,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Akvan ~ Aura of Hopelessness",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

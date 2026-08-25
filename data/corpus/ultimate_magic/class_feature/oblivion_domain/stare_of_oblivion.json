@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Oblivion Domain ~ Stare of Oblivion",
     "name": "Stare of Oblivion",
-    "class": "Oblivion Domain",
+    "class": "Cleric",
     "description": "You can use feeblemind as a gaze attack against one creature (Will DC %1 negates). This effect lasts 1d4 rounds. You can use this ability %2 times per day.|StareOfOblivionDC|StareOfOblivionTimes",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Peri ~ Whirlwind Dance",
+    "delivery": "Supernatural",
+    "description": "Once per day as a full-round action, a peri can spin in an ever-faster, whirling dance, transforming itself into a spinning vortex of flame 10 to 40 feet high for up to 9 rounds. This ability functions as the whirlwind ability (DC 26 Reflex save), but any creature that comes in contact with the whirlwind or is caught inside it takes 2d6+6 points of fire damage and is subject to the peri's burn special attack. The save DC is Dexterity-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:peri_whirlwind_dance",
+    "name": "Whirlwind Dance",
+    "owners": [
+      "bestiary_3:monster:peri"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a full-round action, a peri can spin in an ever-faster, whirling dance, transforming itself into a spinning vortex of flame 10 to 40 feet high for up to 9 rounds. This ability functions as the whirlwind ability (DC 26 Reflex save), but any creature that comes in contact with the whirlwind or is caught inside it takes 2d6+6 points of fire damage and is subject to the peri's burn special attack. The save DC is Dexterity-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Peri ~ Whirlwind Dance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "TYPE",
+        "value": "PeriRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.218",
+    "traits": [
+      "PeriRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1409,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Peri ~ Whirlwind Dance",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

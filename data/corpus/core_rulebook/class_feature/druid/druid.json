@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid",
     "name": "Druid",
-    "class": null,
+    "class": "Druid",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,366 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|DruidLVL"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Orisons|PREVARGTEQ:Druid_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Spontaneous Casting|PREVAREQ:Druid_CF_SpontaneousCasting,0|PREVARGTEQ:Druid_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Nature Sense|PREVAREQ:Druid_CF_NatureSense,0|PREVARGTEQ:Druid_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Wild Empathy|PREVAREQ:Druid_CF_WildEmpathy,0|PREVARGTEQ:Druid_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Nature Bond|PREVAREQ:Druid_CF_NatureBond,0|PREVARGTEQ:Druid_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Woodland Stride|PREVAREQ:Druid_CF_WoodlandStride,0|PREVARGTEQ:Druid_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Trackless Step|PREVAREQ:Druid_CF_TracklessStep,0|PREVARGTEQ:Druid_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Wild Shape|PREVAREQ:Druid_CF_WildShape,0|PREVARGTEQ:Druid_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Resist Nature's Lure|PREVAREQ:Druid_CF_ResistNaturesLure,0|PREVARGTEQ:Druid_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Venom Immunity|PREVAREQ:Druid_CF_VenomImmunity,0|PREVARGTEQ:Druid_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ A Thousand Faces|PREVAREQ:Druid_CF_AThousandFaces,0|PREVARGTEQ:Druid_CFP_Level,13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Druid ~ Timeless Body|PREVAREQ:Druid_CF_TimelessBody,0|PREVARGTEQ:Druid_CFP_Level,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Druid Class Feature|AUTOMATIC|Weapon and Armor Proficiency ~ Druid|!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidArmorProficiencies|!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWeaponProficiencies"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|TYPE=ArmorProfMedium|!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidArmorProficiencies|PREVAREQ:Druid_CF_ArmorProficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Proficiencies ~ Druid|!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWeaponProficiencies|PREVAREQ:Druid_CF_WeaponProficiencies,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_SpontaneousCasting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_NatureSense|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildEmpathy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WoodlandStride|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_TracklessStep|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShape|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_ResistNaturesLure|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_VenomImmunity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_AThousandFaces|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_TimelessBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_NatureBond|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeUses20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeOptions4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeOptions6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeOptions8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeOptions10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_WildShapeOptions12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_DruidDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Druid_CF_AnimalCompanion|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_SpontaneousCasting|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_SpontaneousCasting=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_NatureSense|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_NatureSense=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildEmpathy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildEmpathy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WoodlandStride|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WoodlandStride=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_TracklessStep|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_TracklessStep=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShape|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShape=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_ResistNaturesLure|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_ResistNaturesLure=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_VenomImmunity|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_VenomImmunity=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_AThousandFaces|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_AThousandFaces=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_TimelessBody|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_TimelessBody=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_NatureBond|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_NatureBond=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeUses4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeUses4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeUses8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeUses8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeUses10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeUses10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeUses12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeUses12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeUses14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeUses14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeUses16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeUses16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeUses18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeUses18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeUses20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeUses20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeOptions4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeOptions4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeOptions6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeOptions6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeOptions8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeOptions8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeOptions10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeOptions10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShapeOptions12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_WildShapeOptions12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_DruidDomain|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_DruidDomain=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_AnimalCompanion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_AnimalCompanion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_SpontaneousCasting|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidSpontaneousCasting"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_NatureSense|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidNatureSense"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildEmpathy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWildEmpathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WoodlandStride|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_TracklessStep|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidTracklessStep"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShape|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWildShape"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_ResistNaturesLure|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidResistNaturesLure"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_VenomImmunity|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidVenomImmunity"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_AThousandFaces|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidAThousandFaces"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_TimelessBody|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidTimelessBody"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Druid_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShape6|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWildShape6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Druid_CF_WildShape8|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWildShape8"
       }
     ]
   },
@@ -48,5 +408,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

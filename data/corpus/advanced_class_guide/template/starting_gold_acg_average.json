@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "data": {
+    "key": "Starting Gold ACG ~ Average",
+    "name": "Starting Gold ACG ~ Average",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Starting Gold CRB ~ Average"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_templates.lst",
+    "sha256": "089a3c6958b30fa81dd066355de5fe92a518c6e9df7f3b5374f0560fd40a9ee9",
+    "line": 25,
+    "record_key": "Starting Gold ACG ~ Average"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

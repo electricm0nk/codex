@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian Archetype ~ Mounted Fury",
     "name": "Mounted Fury",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Many barbarian tribes are masters of the horse, teaching their members how to ride from a young age. As a result, barbarians from such tribes are even more terrifying when mounted, using their steeds' speed and strength to great advantage.",
     "raw_tokens": [
       {
@@ -75,6 +75,34 @@
       {
         "key": "FACT",
         "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Mounted Fury],[!PREFACT:1,ABILITIES,Barbarian_Archetype_FastMovement=True,Barbarian_Archetype_UncannyDodge=True,Barbarian_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
       }
     ]
   },
@@ -91,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

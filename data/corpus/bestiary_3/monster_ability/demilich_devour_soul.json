@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Demilich ~ Devour Soul",
+    "delivery": "Supernatural",
+    "description": "As a standard action with a range of 300 feet, a demilich can imprison the soul of a living creature within one of 10 special gems embedded in its skull. If the target succeeds at a DC 24 Fortitude save, it gains two permanent negative levels. If it fails, its soul is immediately drawn into one of the gems in the demilich's skull. The soul remains trapped within the gem, visible as but a gleam except under true seeing. The soulless body corrupts and decays rapidly, reducing to dust in a single round. As long as the dead creature's soul remains trapped in the gemstone, it cannot be restored to life via any means save direct divine intervention. Gems with souls trapped in them can be retrieved from a destroyed demilich, at which point they can either be crushed to release any souls within to their afterlife or used in the place of the usual material components to restore the soul and body with resurrection or true resurrection. After 24 hours, the demilich can choose to consume any soul trapped in a gem, healing it 1d6 hit points per Hit Die of the soul, at which point only miracle or wish can restore the dead creature to life. The save DC is Charisma-based, and includes a +2 bonus for the Ability Focus feat.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:demilich_devour_soul",
+    "name": "Devour Soul",
+    "owners": [
+      "bestiary_3:monster:demilich"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action with a range of 300 feet, a demilich can imprison the soul of a living creature within one of 10 special gems embedded in its skull. If the target succeeds at a DC 24 Fortitude save, it gains two permanent negative levels. If it fails, its soul is immediately drawn into one of the gems in the demilich's skull. The soul remains trapped within the gem, visible as but a gleam except under true seeing. The soulless body corrupts and decays rapidly, reducing to dust in a single round. As long as the dead creature's soul remains trapped in the gemstone, it cannot be restored to life via any means save direct divine intervention. Gems with souls trapped in them can be retrieved from a destroyed demilich, at which point they can either be crushed to release any souls within to their afterlife or used in the place of the usual material components to restore the soul and body with resurrection or true resurrection. After 24 hours, the demilich can choose to consume any soul trapped in a gem, healing it 1d6 hit points per Hit Die of the soul, at which point only miracle or wish can restore the dead creature to life. The save DC is Charisma-based, and includes a +2 bonus for the Ability Focus feat."
+      },
+      {
+        "key": "KEY",
+        "value": "Demilich ~ Devour Soul"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "TYPE",
+        "value": "DemilichRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.66",
+    "traits": [
+      "DemilichRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 623,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Demilich ~ Devour Soul",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

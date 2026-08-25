@@ -1,6 +1,6 @@
 {
   "book": "bestiary_2",
-  "classified_at": "2026-08-17T12:26:27Z",
+  "classified_at": "2026-08-23T22:58:56Z",
   "classified_by_cycle": "SD29-E5-F2-005",
   "license_declaration": {
     "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_2.pcc carries a live COPYRIGHT block plus a real OGL.txt",
@@ -12,8 +12,8 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 893,
-  "records_redacted": 0,
+  "records_processed": 1457,
+  "records_redacted": 2,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "Every field of the 715 records this run wrote (314 monsters + 401 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 794: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see. UPDATE -- SD31-E1-F1-001 (race chassis lane), 2026-08-15: `ingest_races.rs` added this book's first `race` (6) and `race_trait` (57) records -- the 6-race Bestiary 2 chassis batch (Fetchling, Grippli, Ifrit, Oread, Sylph, Undine) -- screened by the same bounded term list, zero PI hits. records_processed restated 731 -> 794. PASS -- SD29-E5-F2-005 (monster lane), 2026-08-17T12:26:27Z: every field of the 92 records this run wrote (0 monsters + 92 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 893: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "Every field of the 715 records this run wrote (314 monsters + 401 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 794: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see. UPDATE -- SD31-E1-F1-001 (race chassis lane), 2026-08-15: `ingest_races.rs` added this book's first `race` (6) and `race_trait` (57) records -- the 6-race Bestiary 2 chassis batch (Fetchling, Grippli, Ifrit, Oread, Sylph, Undine) -- screened by the same bounded term list, zero PI hits. records_processed restated 731 -> 794. PASS -- SD29-E5-F2-005 (monster lane), 2026-08-23T22:58:56Z: every field of the 2 records this run wrote (0 monsters + 2 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 1457: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

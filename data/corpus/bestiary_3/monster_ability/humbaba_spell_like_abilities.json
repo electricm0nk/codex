@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Humbaba ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 20th; concentration +25) Constant-true seeing 3/day-greater shout (DC 23) 1/day-destruction (DC 22), earthquake (DC 23), power word stun",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:humbaba_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:humbaba"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 20th; concentration +25) Constant-true seeing 3/day-greater shout (DC 23) 1/day-destruction (DC 22), earthquake (DC 23), power word stun"
+      },
+      {
+        "key": "KEY",
+        "value": "Humbaba ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "HumbabaRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "HumbabaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1062,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Humbaba ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

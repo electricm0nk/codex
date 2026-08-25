@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Cyclops (Great) ~ Flash of Brutality",
+    "name": "Flash of Brutality",
+    "description": "Once per day as a swift action, a great cyclops can gain a burst of savage inspiration. When it does, it doubles the threat range of all weapons, natural attacks, and rocks it attacks with until the start of its next turn. Once per day, when the cyclops reaches 0 or fewer hit points and is conscious because of its Diehard feat, this ability recharges, allowing it to use the ability a second time that same day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Cyclops (Great) ~ Flash of Brutality"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Cyclops (Great) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action, a great cyclops can gain a burst of savage inspiration. When it does, it doubles the threat range of all weapons, natural attacks, and rocks it attacks with until the start of its next turn. Once per day, when the cyclops reaches 0 or fewer hit points and is conscious because of its Diehard feat, this ability recharges, allowing it to use the ability a second time that same day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 88,
+    "record_key": "Mythic Cyclops (Great) ~ Flash of Brutality"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

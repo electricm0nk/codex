@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Blighted Fey",
+    "name": "Blighted Fey",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DR",
+        "value": "10/Cold Iron or Good"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Fey"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nature),Perception,Stealth|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,ElectricityResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Fey ~ Cyth-V'sug's Unity|Blighted Fey ~ Daughters of Arlantia|Blighted Fey ~ Fungal Rejuvenation|Blighted Fey ~ Parasitic Bond|Blighted Fey ~ Tainted Blood|Blighted Fey ~ Thorn Throw|Immunity to Disease|Immunity to Paralysis|Immunity to Poison|Immunity to Polymorph|Resistance to Cold|Resistance to Electricity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Toughness"
+      },
+      {
+        "key": "SR",
+        "value": "11+CR"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Blighted Fey"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (30')"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_templates.lst",
+    "sha256": "fe601a343aaca6afdad281ce318825abf7f59f9a593ae84bf9356b7d9cb98967",
+    "line": 7,
+    "record_key": "Blighted Fey"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Fey Creature ~ Fire Energy Resistance",
+    "name": "Energy Resistance (Fire)",
+    "description": "A fey creature gains resistance 10 to one energy type, or increases an existing resistance by 10. Resistance increased beyond 30 becomes immunity instead. This ability can be selected more than once.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Creature ~ Fire Energy Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.FeyCreatureSelection.FeyCreatureRacialTrait.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A fey creature gains resistance 10 to one energy type, or increases an existing resistance by 10. Resistance increased beyond 30 becomes immunity instead. This ability can be selected more than once."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance.REPLACE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 853,
+    "record_key": "Fey Creature ~ Fire Energy Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

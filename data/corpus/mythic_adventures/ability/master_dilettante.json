@@ -1,0 +1,132 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Master Dilettante",
+    "name": "Master Dilettante",
+    "description": "You are passingly familiar with almost every subject and have dabbled in numerous fields and activities. You gain a +%1 competence bonus on all untrained skill checks. You can attempt all skill checks untrained, even if the skill normally cannot be used untrained.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Master Dilettante"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are passingly familiar with almost every subject and have dabbled in numerous fields and activities. You gain a +%1 competence bonus on all untrained skill checks. You can attempt all skill checks untrained, even if the skill normally cannot be used untrained.|MythicLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|MythicLevel|TYPE=Competence|!PRESKILL:1,Acrobatics=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Appraise|MythicLevel|TYPE=Competence|!PRESKILL:1,Appraise=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|MythicLevel|TYPE=Competence|!PRESKILL:1,Bluff=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|MythicLevel|TYPE=Competence|!PRESKILL:1,Climb=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Untrained)|MythicLevel|TYPE=Competence|!PRESKILL:1,TYPE.Craft=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Untrained ~ Disable Device|MythicLevel|TYPE=Competence|!PRESKILL:1,Disable Device=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Untrained ~ Handle Animal|MythicLevel|TYPE=Competence|!PRESKILL:1,Handle Animal=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Untrained ~ Linguistics|MythicLevel|TYPE=Competence|!PRESKILL:1,Linguistics=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|MythicLevel|TYPE=Competence|!PRESKILL:1,Perception=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Untrained)|MythicLevel|TYPE=Competence|!PRESKILL:1,TYPE.Perform=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Untrained)|MythicLevel|TYPE=Competence|!PRESKILL:1,TYPE.Profession=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Ride|MythicLevel|TYPE=Competence|!PRESKILL:1,Ride=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|MythicLevel|TYPE=Competence|!PRESKILL:1,Sense Motive=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Untrained ~ Sleight of Hand|MythicLevel|TYPE=Competence|!PRESKILL:1,Sleight of Hand=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Untrained ~ Spellcraft|MythicLevel|TYPE=Competence|!PRESKILL:1,Spellcraft=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|MythicLevel|TYPE=Competence|!PRESKILL:1,Stealth=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Survival|MythicLevel|TYPE=Competence|!PRESKILL:1,Survival=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|MythicLevel|TYPE=Competence|!PRESKILL:1,Swim=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Untrained ~ Use Magic Device|MythicLevel|TYPE=Competence|!PRESKILL:1,Use Magic Device=1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 203,
+    "record_key": "Mythic Path Ability ~ Master Dilettante"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

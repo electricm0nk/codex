@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Spell Focus",
+    "name": "Spell Focus",
+    "class": "Sorcerer",
+    "description": "Any spells you cast of your chosen school of magic are more difficult to resist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Spell Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_SpellFocus,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Any spells you cast of your chosen school of magic are more difficult to resist."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Spell Focus|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select."
+      },
+      {
+        "key": "TYPE",
+        "value": "FocusReplacement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2090,
+    "record_key": "Sorcerer Bloodline Feat ~ Spell Focus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

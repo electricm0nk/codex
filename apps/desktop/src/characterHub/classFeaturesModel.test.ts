@@ -1,4 +1,8 @@
-import { buildClassFeatureSurface, matchesCorpusFeature } from './classFeaturesModel';
+import {
+  buildClassFeatureSurface,
+  matchesCorpusFeature,
+  unmatchedClassFeatureDescriptions,
+} from './classFeaturesModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
 import type { ClassFeatureDescriptionDto } from '../boundary/loadClassFeatureDescriptions';
@@ -281,7 +285,8 @@ function verifiesTheUnnamespacedIdsKeepTheirExistingAttribution() {
 function descriptionDto(
   classSlug: string,
   featureSlug: string,
-  description: string
+  description: string,
+  grantedFeat: string | null = null
 ): ClassFeatureDescriptionDto {
   return {
     book: 'core_rulebook',
@@ -290,6 +295,7 @@ function descriptionDto(
     key: `${classSlug} ~ ${featureSlug}`,
     name: featureSlug,
     description,
+    grantedFeat,
   };
 }
 
@@ -440,6 +446,149 @@ function verifiesADescriptionWithNoMatchingExplanationProducesNoRowAtAllRegardle
   );
 }
 
+/**
+ * T4 closure (`epic-breakdown.md` Epic 2, "built-but-unreachable render
+ * surface"). This is the OTHER half of the test directly above:
+ * `buildClassFeatureSurface` alone still produces zero rows for an
+ * unmatched description (unchanged, correctly), but
+ * `unmatchedClassFeatureDescriptions` is the new reference-list surface
+ * that DOES surface it — the fix site the comment above named as missing.
+ */
+function verifiesAnUnmatchedDescriptionForAHeldClassIsReturnedByTheReferenceSurface() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [], // no engine explanations at all -- exactly the shape above
+    ROGUE,
+    [descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC)]
+  );
+  assertEqual(unmatched.length, 1, 'a real corpus description for a held class with no explanation must surface');
+  assertEqual(unmatched[0].description, SNEAK_ATTACK_DESC, 'the real corpus text, verbatim');
+}
+
+/** A description already attached to a grounded feature row must not also appear in the reference list -- no duplicate display. */
+function verifiesADescriptionAlreadyAttachedToAGroundedRowIsNotDuplicatedInTheReferenceSurface() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [explanation('class_chassis.rogue.sneak_attack', 6)],
+    ROGUE,
+    [descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC)]
+  );
+  assertEqual(unmatched.length, 0, 'already-shown-as-enrichment descriptions must not duplicate in the reference list');
+}
+
+/**
+ * A description matching only an `.unsupported` explanation is STILL
+ * unreachable today (`buildClassFeatureSurface` never attaches
+ * `corpusDescription` inside the `notComputed` loop) -- it must still
+ * surface here, not be wrongly excluded as though it were already shown.
+ */
+function verifiesADescriptionMatchingOnlyAnUnsupportedNoticeStillSurfaces() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [explanation('class_chassis.rogue.sneak_attack.unsupported', 0, 'not grounded for this posture')],
+    ROGUE,
+    [descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC)]
+  );
+  assertEqual(
+    unmatched.length,
+    1,
+    'an .unsupported match never attaches a description anywhere else, so it must still surface here'
+  );
+}
+
+/** A description for a class this build does not hold must never surface. */
+function verifiesADescriptionForAnUnheldClassNeverSurfaces() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [],
+    ROGUE,
+    [descriptionDto('barbarian', 'rage', 'A barbarian feature this build does not hold.')]
+  );
+  assertEqual(unmatched.length, 0, 'an unheld class must never surface a reference row');
+}
+
+// --- T4-L9 (`decisions.md §13`): the feat-held reachability arm ------------
+//
+// `class_feature_feat_bridge.rs`'s 471-record population carries a synthetic
+// pool-group `classSlug` (e.g. `"golden_legionnaire"`), never a real class
+// token -- these four tests prove the SECOND, feat-held gate this cycle adds,
+// mirroring the four class-held cases directly above rather than replacing
+// them.
+
+/**
+ * The core positive case: a bridge record (`grantedFeat` set, synthetic
+ * `classSlug`) surfaces when the character holds the granted feat, even
+ * though `heldClasses` names no class matching `classSlug` at all.
+ */
+function verifiesABridgeRecordSurfacesWhenTheCharacterHoldsTheGrantedFeat() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [],
+    ROGUE, // holds no class named "golden_legionnaire"
+    [descriptionDto('golden_legionnaire', 'swift_aid', 'With a quick but harmless swipe...', 'Swift Aid')],
+    ['Swift Aid']
+  );
+  assertEqual(
+    unmatched.length,
+    1,
+    'a bridge record must surface on the feat-held arm even though no held class matches its synthetic classSlug'
+  );
+  assertEqual(unmatched[0].grantedFeat, 'Swift Aid', 'the granted feat identity is carried through unchanged');
+}
+
+/** The negative twin: the same record must NOT surface when the feat is not held. */
+function verifiesABridgeRecordNeverSurfacesWhenTheGrantedFeatIsNotHeld() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [],
+    ROGUE,
+    [descriptionDto('golden_legionnaire', 'swift_aid', 'With a quick but harmless swipe...', 'Swift Aid')],
+    ['Dodge', 'Toughness']
+  );
+  assertEqual(unmatched.length, 0, 'a bridge record must never surface when its granted feat is not held');
+}
+
+/**
+ * The identity comparison must fold both real shapes `selectedFeats` can
+ * carry -- the catalog key (`"Swift Aid"`) and the engine's lowercase
+ * `feat:`-prefixed token (`"feat:swift_aid"`) -- exactly like
+ * `feat_identity.rs::holds` does on the Rust side. A caller passing either
+ * shape must get the same reachability answer.
+ */
+function verifiesTheFeatHeldCheckFoldsBothSelectedFeatsShapes() {
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [],
+    ROGUE,
+    [descriptionDto('golden_legionnaire', 'swift_aid', 'With a quick but harmless swipe...', 'Swift Aid')],
+    ['feat:swift_aid']
+  );
+  assertEqual(
+    unmatched.length,
+    1,
+    'the engine token shape ("feat:swift_aid") must fold to the same identity as the catalog key ("Swift Aid")'
+  );
+}
+
+/**
+ * A bridge record must never surface merely because the character happens
+ * to hold a class whose token equals `classSlug` -- for these records
+ * `classSlug` is a synthetic pool-group name, and the class-held arm must
+ * stay disabled whenever `grantedFeat` is present, even in the
+ * (unrealistic, but not to be trusted blindly) case that a real class
+ * shares that token.
+ */
+function verifiesABridgeRecordIgnoresTheClassHeldArmEvenIfClassSlugCoincidentallyMatchesAHeldClass() {
+  const heldRogueAsGoldenLegionnaire: HeldClass[] = [
+    { classId: 'class:golden_legionnaire', classLabel: 'Golden Legionnaire', level: 1 },
+  ];
+  const unmatched = unmatchedClassFeatureDescriptions(
+    [],
+    heldRogueAsGoldenLegionnaire,
+    [descriptionDto('golden_legionnaire', 'swift_aid', 'With a quick but harmless swipe...', 'Swift Aid')],
+    [] // the feat itself is NOT held
+  );
+  assertEqual(
+    unmatched.length,
+    0,
+    'a bridge record (grantedFeat present) must be gated on the held feat only, never on classSlug, even ' +
+      'when a held class token happens to equal it'
+  );
+}
+
 async function main() {
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
   verifiesTheDetailTextIsNeverRewritten();
@@ -461,6 +610,14 @@ async function main() {
   verifiesAWrongClassCandidateNeverAttachesEvenWithTheSameFeatureSlug();
   verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription();
   verifiesADescriptionWithNoMatchingExplanationProducesNoRowAtAllRegardlessOfHowManyDescriptionsExist();
+  verifiesAnUnmatchedDescriptionForAHeldClassIsReturnedByTheReferenceSurface();
+  verifiesADescriptionAlreadyAttachedToAGroundedRowIsNotDuplicatedInTheReferenceSurface();
+  verifiesADescriptionMatchingOnlyAnUnsupportedNoticeStillSurfaces();
+  verifiesADescriptionForAnUnheldClassNeverSurfaces();
+  verifiesABridgeRecordSurfacesWhenTheCharacterHoldsTheGrantedFeat();
+  verifiesABridgeRecordNeverSurfacesWhenTheGrantedFeatIsNotHeld();
+  verifiesTheFeatHeldCheckFoldsBothSelectedFeatsShapes();
+  verifiesABridgeRecordIgnoresTheClassHeldArmEvenIfClassSlugCoincidentallyMatchesAHeldClass();
 }
 
 main().catch((error: unknown) => {

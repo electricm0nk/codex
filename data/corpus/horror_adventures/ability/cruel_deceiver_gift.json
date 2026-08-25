@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Cruel Deceiver Gift",
+    "name": "Cruel Deceiver Gift",
+    "description": "You gain a +%1 bonus on Bluff and Disguise checks.|CruelDeceiverSkillBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Cruel Deceiver Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedCruelDeceiverGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CruelDeceiverSkillBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff and Disguise checks.|CruelDeceiverSkillBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use"
+      },
+      {
+        "key": "DESC",
+        "value": "mirage arcana,|PREVARGTEQ:AccursedManifestationLevel,5"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use dancing lights, disguise self, and ghost sound once per day each as a spell-like ability. You can perfectly mimic the sound of any animal or voice you have ever heard."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Disguise|CruelDeceiverSkillBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CruelDeceiverSkillBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CruelDeceiverSkillBonus|2|PREVARGTEQ:AccursedManifestationLevel,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Dancing Lights|Disguise Self|Ghost Sound"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Mirage Arcana|PREVARGTEQ:AccursedManifestationLevel,5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 50,
+    "record_key": "Accursed Corruption ~ Cruel Deceiver Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Starry Grace",
+    "name": "Starry Grace",
+    "description": "Your quick and free starknife motions allow you to make deadly dexterous attacks.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Focus (starknife)"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "HasWeaponFinesseFeat,1"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Dex 13, Weapon Finesse, Weapon Focus (starknife)."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_DEX,13"
+      },
+      {
+        "key": "DESC",
+        "value": "Your quick and free starknife motions allow you to make deadly dexterous attacks."
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Starknife|DAMAGE|max(DEX,STR)-STR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When wielding a starknife, you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage. The starknife must be one appropriate for your size. You do not gain this benefit while fighting with two weapons or using flurry of blows, or any time another hand is otherwise occupied. In addition, if you have the panache class feature, as long as you have at least 1 panache point, you gain a +5 bonus to your movement speed on your move action after taking an attack action with a starknife or on your Spring Attack or charge with a starknife."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 96,
+    "record_key": "Starry Grace"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

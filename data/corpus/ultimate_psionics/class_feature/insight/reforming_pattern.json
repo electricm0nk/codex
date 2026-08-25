@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Reforming Pattern",
+    "name": "Reforming Pattern",
+    "class": "Insight",
+    "description": "You have learned to modify your own pattern so it will reform if you are killed.  You must make an anchor pattern to activate this ability, a process which takes 24 hours of uninterrupted concentration.  When you are slain, you can reform as if affected by astral seed, although you suffer two permanent negative levels once your physical body is reformed and the storage crystal is formed at the site of the anchor pattern.  You may only have one such anchor pattern at any given time and it lasts %1 days.|ReformingPatternDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Reforming Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,16"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ReformingPatternDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to modify your own pattern so it will reform if you are killed.  You must make an anchor pattern to activate this ability, a process which takes 24 hours of uninterrupted concentration.  When you are slain, you can reform as if affected by astral seed, although you suffer two permanent negative levels once your physical body is reformed and the storage crystal is formed at the site of the anchor pattern.  You may only have one such anchor pattern at any given time and it lasts %1 days.|ReformingPatternDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ReformingPatternDuration|CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 215,
+    "record_key": "Insight ~ Reforming Pattern"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

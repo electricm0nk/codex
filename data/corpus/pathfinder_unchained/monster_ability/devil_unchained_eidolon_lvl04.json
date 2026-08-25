@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Devil ~ Unchained Eidolon LVL04",
+    "delivery": null,
+    "description": "At 4th level, devil eidolons gain acid resistance 10 and cold resistance 10.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl04",
+    "name": "Eidolon Progession Lv.4",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, devil eidolons gain acid resistance 10 and cold resistance 10."
+      },
+      {
+        "key": "KEY",
+        "value": "Devil ~ Unchained Eidolon LVL04"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DevilLVL4"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "DevilLVL4"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 141,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Devil ~ Unchained Eidolon LVL04",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

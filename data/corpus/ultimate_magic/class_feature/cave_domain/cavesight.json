@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Cave Domain ~ Cavesight",
     "name": "Cavesight",
-    "class": "Cave Domain",
+    "class": "Cleric",
     "description": "You can grant darkvision 60 ft to a willing creature you touch.  This effect lasts one minute, or one hour if used on yourself.  You can use this ability %1 times per day.|DomainCaveTimes",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

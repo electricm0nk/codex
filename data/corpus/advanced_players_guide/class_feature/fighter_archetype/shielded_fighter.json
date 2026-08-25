@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Shielded Fighter",
     "name": "Shielded Fighter",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "A shielded fighter focuses on both offense and defense, blending weapon and shield in perfect balance to impede his enemies while delivering deadly blows, and even turning the shield itself into a formidable weapon. These fighting school benefits apply when wielding a weapon and a shield simultaneously.",
     "raw_tokens": [
       {
@@ -67,6 +67,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Fighter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Shielded Fighter],[!PREFACT:1,ABILITIES,Fighter_Archetype_ArmorTraining=True,Fighter_Archetype_WeaponTraining=True,Fighter_Archetype_ArmorMastery=True,Fighter_Archetype_WeaponMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponMastery|true"
       }
     ]
   },
@@ -83,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

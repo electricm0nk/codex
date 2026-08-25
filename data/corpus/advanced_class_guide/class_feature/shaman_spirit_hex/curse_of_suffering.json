@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Curse of Suffering",
     "name": "Curse of Suffering",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman causes a creature within 30 feet to take more damage from bleed effects and causes its wounds to heal at a slower rate. When the cursed creature takes bleed damage, it takes 1 additional point of bleed damage (even if the bleed is ability damage). Furthermore, when the target is subject to an effect that would restore its hit points, that effect restores only half the normal amount of hit points. This curse lasts %1 rounds. A creature affected by this hex cannot be affected by it again for 24 hours.|ShamanCurseOfSufferingDuration",
     "raw_tokens": [
       {
@@ -43,6 +43,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.38"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShamanLifeHex"
       }
     ]
   },
@@ -59,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Agathion ~ Poison Save Bonus",
+    "name": "Poison Save Bonus",
+    "description": "Agathions gain a +4 racial bonus on saving throws against poison.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Agathion ~ Poison Save Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SaveBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Agathions gain a +4 racial bonus on saving throws against poison."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.306"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 vs. poison"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1986,
+    "record_key": "Agathion ~ Poison Save Bonus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,65 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Empyreal Lord",
+    "delivery": "Extraordinary",
+    "description": "A empyreal lord grants spells to its followers and has a favored weapon as if it were a deity. &nl; Racial subtype energy resistances are increased to 30. &nl; An empyreal lord's natural weapons, as well as any weapons he or she wields, are treated as epic and good for the purpose of overcoming damage reduction (and possibly chaotic or lawful as appropriate). &nl; An empyreal lord can touch a willing creature and imbue it with magical healing power.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:traits_output_empyreal_lord",
+    "name": "Empyreal Lord Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; An empyreal lord can touch a willing creature and imbue it with magical healing power."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; An empyreal lord's natural weapons, as well as any weapons he or she wields, are treated as epic and good for the purpose of overcoming damage reduction (and possibly chaotic or lawful as appropriate)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Racial subtype energy resistances are increased to 30."
+      },
+      {
+        "key": "DESC",
+        "value": "A empyreal lord grants spells to its followers and has a favored weapon as if it were a deity."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Empyreal Lord"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "Supernatural"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 100,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Traits Output ~ Empyreal Lord",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

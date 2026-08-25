@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Wyvaran",
+    "name": "Racial Traits ~ Wyvaran",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Wyvaran_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wyvaran Racial Trait|AUTOMATIC|Wyvaran ~ Ability Scores|PREVAREQ:Wyvaran_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_globalvar.lst",
+    "sha256": "a914e1cb314ea93c52f77c32700249c5b3a9439a766490d7c5a910be638942d3",
+    "line": 10,
+    "record_key": "Racial Traits ~ Wyvaran"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

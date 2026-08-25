@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Archetype ~ Peacekeeper",
+    "name": "Peacekeeper",
+    "class": "Psion",
+    "description": "You seek to diffuse hostility and end conflicts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psion Archetype ~ Peacekeeper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsionArchetype.PsionTelepathTelepathy.PsionTelepathMentalIntrusion"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Telepathy Discipline"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psion Archetype ~ Peacekeeper],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsionTelepathTelepathy.PsionMentalIntrusion]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Noral"
+      },
+      {
+        "key": "DESC",
+        "value": "You seek to diffuse hostility and end conflicts."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Peacekeeper ~ Peace Through Force|PRECLASS:1,Psion=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Peacekeeper ~ No Raised Hand|PRECLASS:1,Psion=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.334"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1943,
+    "record_key": "Psion Archetype ~ Peacekeeper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Blazing Aura",
+    "name": "Blazing Aura",
+    "description": "An inferno rages inside you, causing your body to radiate intense heat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Blazing Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Inner Flame,Scorching Weapons"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=13"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsIfrit=true"
+      },
+      {
+        "key": "DESC",
+        "value": "An inferno rages inside you, causing your body to radiate intense heat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Blazing Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you use Scorching Weapons, on your turn as a free action, you may create an aura of heat that lasts for 1 round. This aura deals 1d6 points of fire damage to any creature that begins its turn adjacent to you."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 44,
+    "record_key": "Warpriest Bonus Feat ~ Blazing Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

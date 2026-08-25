@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle Archetype ~ Reincarnated Oracle",
     "name": "Reincarnated Oracle",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "A reincarnated oracle draws her knowledge and power from the experiences of her previous lives. Her memories guide her through a spiritual ascension leading the way to her ultimate incarnation.",
     "raw_tokens": [
       {
@@ -67,6 +67,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Oracle"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Reincarnated Oracle],[!PREFACT:1,ABILITIES,Oracle_Archetype_MysterySpell2=True,Oracle_Archetype_MysterySpell4=True,Oracle_Archetype_MysterySpell10=True,Oracle_Archetype_MysterySpell16=True,Oracle_Archetype_MysterySpell18=True,Oracle_Archetype_Revelation1=True,Oracle_Archetype_Revelation3=True,Oracle_Archetype_Revelation7=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation7|true"
       }
     ]
   },
@@ -83,5 +151,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vishkanya ~ Poison Resistance",
+    "name": "Poison Resistance",
+    "description": "A vishkanya has a racial bonus on saving throws against poison equal to its Hit Dice.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vishkanya ~ Poison Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Vishkanya_ReplacePoisonResistance=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Vishkanya_PoisonResistance_Bonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vishkanya has a racial bonus on saving throws against poison equal to its Hit Dice."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Vishkanya_PoisonResistance_Bonus|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaveBonus_vs_Poison|Vishkanya_PoisonResistance_Bonus|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 racial bonus on saving throws against poison.|Vishkanya_PoisonResistance_Bonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627",
+    "line": 21,
+    "record_key": "Vishkanya ~ Poison Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

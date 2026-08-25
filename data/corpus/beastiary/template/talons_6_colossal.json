@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Talons 6 (Colossal)",
+    "name": "Talons 6 (Colossal)",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PRESIZEEQ",
+        "value": "C"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrimaryAttackDamageDice|2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrimaryAttackDamageSize|8|TYPE=Base"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Talons,Weapon.Natural.NaturalPrimary.Weapon Group Natural.Melee.Finesseable.Slashing,*6,2d8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33",
+    "line": 550,
+    "record_key": "Talons 6 (Colossal)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Ambusher ~ Cunning Ambusher",
+    "name": "Cunning Ambusher",
+    "description": "An ambusher gains uncanny dodge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ambusher ~ Cunning Ambusher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An ambusher gains uncanny dodge."
+      },
+      {
+        "key": "DESC",
+        "value": "An ambusher gains a +2 racial bonus on initiative checks, and during the surprise round, opponents are always considered flat-footed against the ambusher's attacks, even if they have already acted.|PREVARGTEQ:MasterLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "An ambusher gains a +2 morale bonus on attack and damage rolls during a surprise round.|PREVARGTEQ:MasterLevel,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Retain Dex To AC ~ Flat-footed|Uncanny Dodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|2|TYPE=Racial|PREVARGTEQ:MasterLevel,6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 441,
+    "record_key": "Ambusher ~ Cunning Ambusher"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

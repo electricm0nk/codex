@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dual Path ~ Guardian",
+    "name": "Guardian",
+    "description": "Not all mythic characters seek glory and fame for themselves. Some take a more humble route, watching over those dear to them or the lands they call home. Guardians seek connections with those around them, even the beasts, and draw their power from the trust of such bonds. This doesn't mean that all guardians are peaceful--indeed many use violent means to further their goals and safeguard those they watch over. But they find worth in those who travel with them. In battle, none can take the sort of punishment and wounds that a guardian can sustain.&nl;Role: When others would retreat, you stand your ground. Your place is at the front of the battle, taking every hit your enemies can give while daring them to dish out more. Your job is to stop your enemies' advance, interposing yourself in the path of peril. You'll gladly take all that brutal punishment and return the beating with zeal. The wounds you suffer might kill a lesser hero, but you relish the thrill of combat, confident that your physical and mental perfection will lead to victory.&nl;Classes: Any class that is frequently in the middle of a chaotic melee will find many valuable abilities within the guardian path. Barbarians, cavaliers, fighters, inquisitors, monks, and paladins all make excellent guardians. Some of the guardian's powers also lend themselves to the druid, ranger, or even the summoner, granting bonuses to companions and allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual Path ~ Guardian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dual Path.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Mythic Feat,Dual Path"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Mythic Path ~ Guardian"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all mythic characters seek glory and fame for themselves. Some take a more humble route, watching over those dear to them or the lands they call home. Guardians seek connections with those around them, even the beasts, and draw their power from the trust of such bonds. This doesn't mean that all guardians are peaceful--indeed many use violent means to further their goals and safeguard those they watch over. But they find worth in those who travel with them. In battle, none can take the sort of punishment and wounds that a guardian can sustain.&nl;Role: When others would retreat, you stand your ground. Your place is at the front of the battle, taking every hit your enemies can give while daring them to dish out more. Your job is to stop your enemies' advance, interposing yourself in the path of peril. You'll gladly take all that brutal punishment and return the beating with zeal. The wounds you suffer might kill a lesser hero, but you relish the thrill of combat, confident that your physical and mental perfection will lead to victory.&nl;Classes: Any class that is frequently in the middle of a chaotic melee will find many valuable abilities within the guardian path. Barbarians, cavaliers, fighters, inquisitors, monks, and paladins all make excellent guardians. Some of the guardian's powers also lend themselves to the druid, ranger, or even the summoner, granting bonuses to companions and allies."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mythic Path Feature ~ Guardian's Call|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 49,
+    "record_key": "Dual Path ~ Guardian"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

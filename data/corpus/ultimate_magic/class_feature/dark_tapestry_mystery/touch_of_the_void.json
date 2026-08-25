@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Dark Tapestry Mystery ~ Touch of the Void",
     "name": "Touch of the Void",
-    "class": "Dark Tapestry Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can perform a melee touch attack that deals 1d6+%1 points of cold damage. You can use this ability %2/day.|TouchOfTheVoidBonusDamage|TouchOfTheVoidTimes|!PRECLASS:1,Oracle=7",
     "raw_tokens": [
       {
@@ -80,5 +80,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

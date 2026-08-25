@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Annihilator ~ Absorb Critical",
+    "name": "Absorb Critical",
+    "class": "Annihilator",
+    "description": "You can dismiss your astral suit as an immediate action to turn a critical hit into a normal hit.  Any applicable damage reduction from the astral suit is still applied to the attack.  You can use this ability %1/day.|AbsorbCriticalTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Annihilator ~ Absorb Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbsorbCriticalTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can dismiss your astral suit as an immediate action to turn a critical hit into a normal hit.  Any applicable damage reduction from the astral suit is still applied to the attack.  You can use this ability %1/day.|AbsorbCriticalTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbsorbCriticalTimes|3+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|AbsorbCriticalTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1778,
+    "record_key": "Annihilator ~ Absorb Critical"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

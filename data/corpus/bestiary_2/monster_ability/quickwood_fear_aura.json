@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Quickwood ~ Fear Aura",
+    "delivery": "Supernatural",
+    "description": "A quickwood with stored magical energy can activate its fear aura as a standard action.  The aura has a raius of 10 feet per spell level of the effect and lasts for 1 round (Will DC %1 negates).  Creatures that fail their saving throw become panicked for 1 minute.",
+    "description_variables": [
+      "QuickwoodFearAuraDC"
+    ],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:quickwood_fear_aura",
+    "name": "Fear Aura",
+    "owners": [
+      "bestiary_2:monster:quickwood"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(variable distance, DC %1)|QuickwoodFearAuraDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuickwoodFearAuraDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuickwoodFearAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Fear Aura)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuickwoodFearAuraDC|4|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "QuickwoodFearAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A quickwood with stored magical energy can activate its fear aura as a standard action.  The aura has a raius of 10 feet per spell level of the effect and lasts for 1 round (Will DC %1 negates).  Creatures that fail their saving throw become panicked for 1 minute.|QuickwoodFearAuraDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Quickwood ~ Fear Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      }
+    ],
+    "source_page": "p.228",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1041,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Quickwood ~ Fear Aura",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

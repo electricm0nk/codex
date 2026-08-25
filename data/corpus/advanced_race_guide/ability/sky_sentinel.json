@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Sky Sentinel",
+    "name": "Sky Sentinel",
+    "description": "+1 racial bonus to attack, +2 dodge bonus to AC, +2 untyped bonus on Perception against flying creatures; enemies don't get highter ground bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Sky Sentinel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 racial bonus to attack, +2 dodge bonus to AC, +2 untyped bonus on Perception against flying creatures; enemies don't get highter ground bonus."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 494,
+    "record_key": "Builder Racial Trait ~ Sky Sentinel"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

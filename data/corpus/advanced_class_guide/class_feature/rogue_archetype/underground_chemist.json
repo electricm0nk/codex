@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rogue Archetype ~ Underground Chemist",
     "name": "Underground Chemist",
-    "class": "Rogue Archetype",
+    "class": "Rogue",
     "description": "Underground chemists are part of the rotting, fetid underbelly of the alchemical world. While underground chemists can't hold a candle to dedicated alchemists, they're tricky and dangerous with alchemical substances and potions.",
     "raw_tokens": [
       {
@@ -55,6 +55,38 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Rogue"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Underground Chemist],[!PREFACT:1,ABILITIES,Rogue_Archetype_Evasion=True,Rogue_Archetype_RogueTalents=True,Rogue_Archetype_RogueTalents=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_AdvancedTalents|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalents|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalents|true"
       }
     ]
   },
@@ -71,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

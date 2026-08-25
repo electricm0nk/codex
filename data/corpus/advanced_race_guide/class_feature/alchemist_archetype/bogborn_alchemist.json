@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Bogborn Alchemist",
     "name": "Bogborn Alchemist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Some grippli alchemists are particularly attuned to the swamps and the dangerous creatures that inhabit them; these serve as their laboratories and research subjects, respectively.",
     "raw_tokens": [
       {
@@ -59,6 +59,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Bogborn Alchemist],[!PREFACT:1,ABILITIES,Alchemist_Archetype_ThrowAnything=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_ThrowAnything|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_ThrowAnything|true"
       }
     ]
   },
@@ -75,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Monk of the Four Winds ~ Aspect of the Oni",
     "name": "Aspect of the Oni",
-    "class": "Monk of the Four Winds",
+    "class": "Monk",
     "description": "The monk's skin becomes pitch black, and his hair turns white, black, red, or violet. He can assume gaseous form (as the spell) as a standard action for 1 minute per day per monk level. This duration does not need to be consecutive, but it must be spent in 1-minute increments. The oni is treacherous and deceitful, and it hungers for the pain and death of living creatures-a monk must be evil to take on the aspect of the oni.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

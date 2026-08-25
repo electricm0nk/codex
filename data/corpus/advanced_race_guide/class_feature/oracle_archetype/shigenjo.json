@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle Archetype ~ Shigenjo",
     "name": "Shigenjo",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "The shigenjo walks the path of enlightenment and transcendence by seeking oneness with the celestial spirits. In doing so, she unlocks the martial potential of her own spiritual power.",
     "raw_tokens": [
       {
@@ -91,6 +91,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Oracle"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Shigenjo],[!PREFACT:1,ABILITIES,Oracle_Archetype_MysterySpell2=True,Oracle_Archetype_MysterySpell4=True,Oracle_Archetype_MysterySpell8=True,Oracle_Archetype_MysterySpell12=True,Oracle_Archetype_MysterySpell14=True,Oracle_Archetype_Revelation7=True,Oracle_Archetype_Revelation15=True,Oracle_Archetype_Revelation20=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation20|true"
       }
     ]
   },
@@ -107,5 +175,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

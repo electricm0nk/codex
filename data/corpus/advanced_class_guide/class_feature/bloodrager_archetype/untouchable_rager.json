@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Archetype ~ Untouchable Rager",
     "name": "Untouchable Rager",
-    "class": "Bloodrager Archetype",
+    "class": "Bloodrager",
     "description": "While most bloodragers are known for their inexplicable ability to focus their bloodline into a horrifying mix of martial terror and spellcasting fury, from time to time a bloodrager's bloodline acts differently. Instead of empowering the bloodrager, it shields the bloodrager from magic of all types, often keeping the bloodrager untouched within the midst of magical effects.",
     "raw_tokens": [
       {
@@ -51,6 +51,138 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Untouchable Rager],[!PREFACT:1,ABILITIES,Bloodrager_Archetype_Spells=True,Bloodrager_Archetype_BloodCasting=True,Bloodrager_Archetype_EschewMaterials=True,Bloodrager_Archetype_BloodlineSpells=true,Bloodrager_Archetype_BloodlineSpell7=true,Bloodrager_Archetype_BloodlineSpell10=true,Bloodrager_Archetype_BloodlineSpell13=true,Bloodrager_Archetype_BloodlineSpell16=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most bloodragers are known for their inexplicable ability to focus their bloodline into a horrifying mix of martial terror and spellcasting fury, from time to time a bloodrager's bloodline acts differently. Instead of empowering the bloodrager, it shields the bloodrager from magic of all types, often keeping the bloodrager untouched within the midst of magical effects."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Untouchable Rager ~ Raging Resistance|PRECLASS:1,Bloodrager=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Untouchable Rager ~ Resistance Control|PRECLASS:1,Bloodrager=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_EschewMaterials|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_EschewMaterials|true"
+      },
+      {
+        "key": "DESC",
+        "value": "While most bloodragers are known for their inexplicable ability to focus their bloodline into a horrifying mix of martial terror and spellcasting fury, from time to time a bloodrager's bloodline acts differently. Instead of empowering the bloodrager, it shields the bloodrager from magic of all types, often keeping the bloodrager untouched within the midst of magical effects."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Untouchable Rager ~ Raging Resistance|PRECLASS:1,Bloodrager=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Untouchable Rager ~ Resistance Control|PRECLASS:1,Bloodrager=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_EschewMaterials|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodCasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_EschewMaterials|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpell7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpell13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineSpell16|true"
       }
     ]
   },
@@ -67,5 +199,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

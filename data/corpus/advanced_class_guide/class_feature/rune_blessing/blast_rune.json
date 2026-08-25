@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rune Blessing ~ Blast Rune",
     "name": "Blast Rune",
-    "class": "Rune Blessing",
+    "class": "Warpriest",
     "description": "You can create a blast rune in any adjacent square. Any creature entering this square takes an amount of damage equal to 1d6 + %1. This rune deals either acid, cold, electricity, or fire damage, designated when you create the rune. The rune is invisible, and lasts a number of rounds equal to your warpriest level or until discharged. You cannot create a blast rune in a square occupied by another creature. This rune counts as a 1st-level spell for the purposes of dispelling. It can be discovered with a successful DC 26 Perception skill check and disarmed with a successful DC 26 Disable Device skill check.|WarpriestLVL/2",
     "raw_tokens": [
       {
@@ -40,5 +40,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

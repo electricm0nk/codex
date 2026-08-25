@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Noral ~ Gift of Tongues",
+    "delivery": null,
+    "description": "You gain a +1 bonus on Bluff and Diplomacy checks, and learn an additional language every time you put a rank in the Linguistics skill.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:noral_gift_of_tongues",
+    "name": "Gift of Tongues",
+    "owners": [
+      "ultimate_psionics:monster:noral"
+    ],
+    "source_page": "p.21",
+    "traits": [
+      "RacialTraits",
+      "NoralRacialTrait",
+      "NoralRacialDefault"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 280,
+    "record_key": "Noral ~ Gift of Tongues"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

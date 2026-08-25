@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Case The Joint",
     "name": "Case the Joint",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief can learn important facts about a location before returning later. If he spends at least 1 hour in a location, he can attempt a DC 20 Knowledge (engineering) check. If he succeeds, he gains the ability to later reroll any one failed skill check involving the location's layout (such as a Stealth check to sneak into the location, a Disable Device check to disable an alarm, or a Sleight of Hand check to snatch an object from a pedestal). For every 10 by which the check exceeds 20, the phantom thief gains an additional reroll. If the phantom thief fails to return to the location within 1 week, the situation changes too much and he cannot use the rerolls. A phantom thief can't case the same joint more than once a week.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

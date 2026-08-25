@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Fire Nimbus",
     "name": "Fire Nimbus",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman causes a creature within 30 feet to gain a nimbus of fire. Though this doesn't harm the creature, it does cause the creature to emit light like a torch, preventing it from gaining any benefit from concealment or invisibility. The target also takes a -2 penalty on saving throws against spells or effects that deal fire damage. The fire nimbus lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanFireNimbusDuration|ShamanFireNimbusDC",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

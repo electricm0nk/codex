@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mobile Knife ~ Fury of a Single Blade",
+    "name": "Fury of a Single Blade",
+    "class": "Mobile Knife",
+    "description": "When you move before making a single ranged attack with a thrown weapon, including using the Shot on the Run feat, you roll as if you had made a full attack, although you only throw a single weapon.  Roll each attack in the sequence and determine the number of attacks that successfully struck the target.  If at least two of the attacks were successful, the attack deals double damage.  Additional dice of damage are not multiplied.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mobile Knife ~ Fury of a Single Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you move before making a single ranged attack with a thrown weapon, including using the Shot on the Run feat, you roll as if you had made a full attack, although you only throw a single weapon.  Roll each attack in the sequence and determine the number of attacks that successfully struck the target.  If at least two of the attacks were successful, the attack deals double damage.  Additional dice of damage are not multiplied."
+      },
+      {
+        "key": "DESC",
+        "value": " If at least three of the attacks were successful, the attack damage is multiplied by 5.|PRECLASS:1,Marksman=12"
+      },
+      {
+        "key": "DESC",
+        "value": " If at least four of the attacks were successful, the attack damage is multiplied by 7.|PRECLASS:1,Marksman=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.341"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1925,
+    "record_key": "Mobile Knife ~ Fury of a Single Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

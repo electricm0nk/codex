@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Kobold Bloodline ~ Trap Sense",
     "name": "Trap Sense",
-    "class": "Kobold Bloodline",
+    "class": "Sorcerer",
     "description": "You develop a sixth sense that helps you avoid traps. You gain a +%1 bonus on Perception checks made to notice traps. You also gain a +%2 bonus on Reflex saves to avoid traps and a +%3 dodge bonus to AC against attacks made by traps. This bonus stacks with that provided by a rogue's trap sense and similar abilities.",
     "raw_tokens": [
       {
@@ -96,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

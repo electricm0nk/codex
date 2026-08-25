@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Covenant of Abaddon",
+    "name": "Covenant of Abaddon (any of the Four Horsemen)",
+    "description": "Because your soul is pledged to one of the Horsemen, you gain a +2 trait bonus on Fortitude saving throws against level-draining effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Covenant of Abaddon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.ReligionTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Covenant of Abaddon],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.ReligionTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "Because your soul is pledged to one of the Horsemen, you gain a +2 trait bonus on Fortitude saving throws against level-draining effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 trait bonus on Fortitude saving throws against level-draining effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 156,
+    "record_key": "Trait ~ Covenant of Abaddon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Protector ~ Resilience",
+    "name": "Resilience",
+    "class": "Protector",
+    "description": "As an immediate action, you may reduce the damage you are about to take by 2 hit points for every 1 power point you spend.  You may not spend more power points than your manifester level per effect being reduced.  If you already have the resilience ability, the hit points reduction improves by 1 hit point per power point spent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Protector ~ Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, you may reduce the damage you are about to take by 2 hit points for every 1 power point you spend.  You may not spend more power points than your manifester level per effect being reduced.  If you already have the resilience ability, the hit points reduction improves by 1 hit point per power point spent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2100,
+    "record_key": "Protector ~ Resilience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

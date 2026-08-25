@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Water Dancer ~ Unarmed Strike",
+    "name": "Unarmed Strike",
+    "class": "Monk",
+    "description": "A water dancer gains the unarmed strike monk class feature but treats his unarmed strike damage as that of a monk 4 levels lower (minimum 1st level). This alters unarmed strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Water Dancer ~ Unarmed Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.WaterDancerClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "A water dancer gains the unarmed strike monk class feature but treats his unarmed strike damage as that of a monk 4 levels lower (minimum 1st level). This alters unarmed strike."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkUnarmedDamageLVL|-4|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "TYPE",
+        "value": "Tribal Weapon Group"
+      },
+      {
+        "key": "TYPE",
+        "value": "Tribal Weapon Group"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 116,
+    "record_key": "Water Dancer ~ Unarmed Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

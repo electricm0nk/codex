@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Archetype ~ Strategist",
     "name": "Strategist",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "Some cavaliers make a lifelong mission out of their exceptional ability to direct troops on the battlefield, combining tactical insight with a preternatural skill at improving the teamwork of their allies in order to win the day. Such strategists are masters at learning the strengths and weaknesses of those they fight alongside, and at employing those observations at the most opportune moments. The best of them are also skilled at determining the strengths and weaknesses of their enemies, as well as at countering some of those strengths with their own formidable abilities.",
     "raw_tokens": [
       {
@@ -59,6 +59,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cavalier"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ STRATEGIST],[!PREFACT:1,ABILITIES,Cavalier_Archetype_ExpertTrainer=True,Cavalier_Archetype_GreaterBanner=True,Cavalier_Archetype_BonusFeat18=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_BonusFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_BonusFeat18|true"
       }
     ]
   },
@@ -75,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

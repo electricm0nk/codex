@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Weakening Claws Gift",
+    "name": "Weakening Claws Gift",
+    "description": "Your nails grow into claw natural weapons that deal 1d3 points of damage if you're Medium (1d2 if Small). Once per day, you can make a weakening claw attack as a standard action. If you hit, you inflict a permanent -4 penalty on the target's Strength score. The victim can halve the penalty and reduce the duration to 24 hours with a successful Fort save (DC %1).|10+TL/2+AccursedManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Weakening Claws Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedWeakeningClawsGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "DESC",
+        "value": "Your nails grow into claw natural weapons that deal 1d3 points of damage if you're Medium (1d2 if Small). Once per day, you can make a weakening claw attack as a standard action. If you hit, you inflict a permanent -4 penalty on the target's Strength score. The victim can halve the penalty and reduce the duration to 24 hours with a successful Fort save (DC %1).|10+TL/2+AccursedManifestationLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawSize|-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 90,
+    "record_key": "Accursed Corruption ~ Weakening Claws Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

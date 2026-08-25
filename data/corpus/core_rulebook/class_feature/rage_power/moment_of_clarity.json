@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Moment of Clarity",
     "name": "Moment of Clarity",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "You do not gain any benefits or take any of the penalties from rage for 1 round. This includes the penalty to Armor Class and the restriction on what actions can be performed. This round still counts against your total number of rounds of rage per day. This power can only be used once per rage. Activating this power is a swift action.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

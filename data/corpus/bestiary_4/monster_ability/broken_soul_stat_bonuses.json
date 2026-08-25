@@ -1,0 +1,77 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Broken Soul ~ Stat Bonuses",
+    "delivery": null,
+    "description": "A broken soul gains Diehard, Endurance, Great Fortitude, and Toughness as bonus feats. A broken soul gains a +8 racial bonus on Intimidate checks, but takes a -10 racial penalty on Concentration checks because of its constant pain.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:broken_soul_stat_bonuses",
+    "name": "Stat Bonuses",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Diehard"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Endurance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Great Fortitude"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Toughness"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|-10 racial penalty on Concentration checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Broken Soul Stat Bonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|8|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A broken soul gains Diehard, Endurance, Great Fortitude, and Toughness as bonus feats. A broken soul gains a +8 racial bonus on Intimidate checks, but takes a -10 racial penalty on Concentration checks because of its constant pain."
+      },
+      {
+        "key": "KEY",
+        "value": "Broken Soul ~ Stat Bonuses"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 336,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Broken Soul ~ Stat Bonuses",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

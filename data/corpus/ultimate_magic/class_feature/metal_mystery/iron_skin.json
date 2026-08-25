@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Metal Mystery ~ Iron Skin",
     "name": "Iron Skin",
-    "class": "Metal Mystery",
+    "class": "Oracle",
     "description": "Your skin hardens and takes on the appearance of iron %1/day, granting you DR 10/adamantine.  This ability functions as stoneskin, using your oracle level as the caster level, except it only affects you.|IronSkinTimes",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Hex ~ Evil Eye",
     "name": "Evil Eye",
-    "class": "Shaman Hex",
+    "class": "Shaman",
     "description": "The shaman causes doubt to creep into the mind of a foe within 30 feet that she can see. The target takes a %1 penalty on one of the following (shaman's choice): ability checks, AC, attack rolls, saving throws, or skill checks. This hex lasts %2 rounds. A successful Will saving throw (DC %3) reduces this to just 1 round. This is a mind-affecting effect.|ShamanEvilEyeHexPenalty|ShamanEvilEyeHexDuration|ShamanEvilEyeHexDC",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

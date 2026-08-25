@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Celestial Crusader",
+    "name": "Celestial Crusader",
+    "description": "+1 insight on attack rolls and AC vs. evil outsiders; +2 racial bonus to Knowledge (Planes) and Spellcraft to identify evil outsiders or items or effects evil outsiders create; skills can be used untrained for these purposes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Celestial Crusader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 insight on attack rolls and AC vs. evil outsiders; +2 racial bonus to Knowledge (Planes) and Spellcraft to identify evil outsiders or items or effects evil outsiders create; skills can be used untrained for these purposes."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 473,
+    "record_key": "Builder Racial Trait ~ Celestial Crusader"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

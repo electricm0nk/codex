@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Familiar Archetype ~ Egotist",
+    "name": "Egotist",
+    "description": "An egotist believes itself to be the real master in the relationship-the power behind the throne. It often attempts to communicate \"orders\" for its master as best it can, interfering in matters ranging from spell choices and tactical combat decisions to its master's love life.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar Archetype ~ Egotist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FamiliarArchetype.CF_FamiliarAlertness.CF_FamiliarSpeakwithMaster.CF_FamiliarDeliverTouchSpells.CF_FamiliarScryonFamiliar"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Egotist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarSpeakwithMaster,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarScryonFamiliar]"
+      },
+      {
+        "key": "DESC",
+        "value": "An egotist believes itself to be the real master in the relationship-the power behind the throne. It often attempts to communicate \"orders\" for its master as best it can, interfering in matters ranging from spell choices and tactical combat decisions to its master's love life."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Egotist ~ Class Skills|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Egotist ~ Song of Myself|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Familiar ~ Speak with Master|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Egotist ~ Receive Touch Spells|PREVARGTEQ:MasterLevel,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Egotist ~ Scry on Master|PREVARGTEQ:MasterLevel,11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Familiar"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 535,
+    "record_key": "Familiar Archetype ~ Egotist"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Shadow Lord",
+    "name": "Shadow Lord",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "238"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=5"
+      },
+      {
+        "key": "PRETEMPLATE",
+        "value": "1,Shadow Creature"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Magic|5|PREHD:MIN=5,MAX=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Magic|5|PREHD:MIN=11,MAX=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Magic|10|PREHD:MIN=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|15|TYPE=Resistance|PREHD:MIN=5,MAX=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|15|TYPE=Resistance|PREHD:MIN=5,MAX=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|20|TYPE=Resistance|PREHD:MIN=11,MAX=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|20|TYPE=Resistance|PREHD:MIN=11,MAX=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|30|TYPE=Resistance|PREHD:MIN=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|30|TYPE=Resistance|PREHD:MIN=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Shadow Lord"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE|LE|NE"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 165,
+    "record_key": "Shadow Lord"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

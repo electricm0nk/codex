@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Fey Bloodrager Bloodline ~ Quickling Bloodrage",
     "name": "Quickling Bloodrage",
-    "class": "Fey Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "While bloodraging you're treated as if you are under the effects of haste.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

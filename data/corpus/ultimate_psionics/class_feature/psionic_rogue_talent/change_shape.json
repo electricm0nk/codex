@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psionic Rogue Talent ~ Change Shape",
+    "name": "Change Shape",
+    "class": "Rogue",
+    "description": "You can assume the appearance of a specific humanoid as per minor metamorphosis, but without any extra abilities.  The uncomfortable transformation takes 5 rounds to complete, during which you are staggered.  If you study your victim for 3 rounds, you recieve a bonus of +%1 on Bluff checks to impersonate that individual, a +%2 bonus on Disguise checks, and a +1 bonus on Use Magic Device rolls to emulate the humanoid's race.  Ending the transfomration can be done as a free action, but takes 5 rounds to complete, during which time you are staggered.  You cannot be under the effect of this talent and Undistinguished Features at the same time.|MenteurChangeShapeBluffBonus|MenteurChangeShapeDisguiseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Rogue Talent ~ Change Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.Supernatural.RogueTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Menteur ~ Rogue Archetype"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MenteurChangeShapeBluffBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MenteurChangeShapeDisguiseBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can assume the appearance of a specific humanoid as per minor metamorphosis, but without any extra abilities.  The uncomfortable transformation takes 5 rounds to complete, during which you are staggered.  If you study your victim for 3 rounds, you recieve a bonus of +%1 on Bluff checks to impersonate that individual, a +%2 bonus on Disguise checks, and a +1 bonus on Use Magic Device rolls to emulate the humanoid's race.  Ending the transfomration can be done as a free action, but takes 5 rounds to complete, during which time you are staggered.  You cannot be under the effect of this talent and Undistinguished Features at the same time.|MenteurChangeShapeBluffBonus|MenteurChangeShapeDisguiseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MenteurChangeShapeBluffBonus|floor(RogueLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MenteurChangeShapeDisguiseBonus|5+RogueLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.322"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1096,
+    "record_key": "Psionic Rogue Talent ~ Change Shape"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

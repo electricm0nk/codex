@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption ~ Bloodthirst Stain",
+    "name": "Bloodthirst Stain",
+    "description": "Your toothy maw distorts your speech, and your thoughts flit between potential prey. You take a 15%% spell failure chance for spells with verbal or thought (Occult Adventures 144) components and a -2 penalty on all Bluff, Diplomacy, Disguise, Handle Animal, and Perform checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Bloodthirst Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeepOneBloodthirstStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "DESC",
+        "value": "Your toothy maw distorts your speech, and your thoughts flit between potential prey. You take a 15%% spell failure chance for spells with verbal or thought (Occult Adventures 144) components and a -2 penalty on all Bluff, Diplomacy, Disguise, Handle Animal, and Perform checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Disguise,Handle Animal,TYPE=Perform|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 119,
+    "record_key": "Deep One Corruption ~ Bloodthirst Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

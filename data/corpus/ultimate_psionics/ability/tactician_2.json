@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Clan Warden ~ Tactician",
+    "name": "Tactician",
+    "description": "You can grant your bonus teamwork feat to all allies within 30 feet who can see and hear you.  Allies retain the use of this bonus feat for %1 rounds.  Allies do not need to meet the prerequisites of these bonus feats.  You can use this ability %2/day.|TacticianFeatLendingDuration|TacticianFeatLendingTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Clan Warden ~ Tactician"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianFeatLendingDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianFeatLendingTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can grant your bonus teamwork feat to all allies within 30 feet who can see and hear you.  Allies retain the use of this bonus feat for %1 rounds.  Allies do not need to meet the prerequisites of these bonus feats.  You can use this ability %2/day.|TacticianFeatLendingDuration|TacticianFeatLendingTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianFeatLendingDuration|3+floor(InquisitorLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianFeatLendingTimes|1+floor(InquisitorLVL/5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.340"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|TacticianFeatLendingTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 73,
+    "record_key": "Clan Warden ~ Tactician"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

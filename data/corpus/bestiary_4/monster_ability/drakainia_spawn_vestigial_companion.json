@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Drakainia Spawn ~ Vestigial Companion",
+    "delivery": "Extraordinary",
+    "description": "The creature has the head of an animal (usually a goat, chicken, or dog) growing out of its back or torso, providing the scent ability. If the base creature already has scent, this mutation allows it to determine the direction of a particular scent as a free action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_spawn_vestigial_companion",
+    "name": "Vestigial Companion",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature has the head of an animal (usually a goat, chicken, or dog) growing out of its back or torso, providing the scent ability. If the base creature already has scent, this mutation allows it to determine the direction of a particular scent as a free action."
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia Spawn ~ Vestigial Companion"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 565,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia Spawn ~ Vestigial Companion",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

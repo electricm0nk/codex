@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Dragon Style",
     "name": "Dragon Style",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You call upon the spirit of dragonkind, gaining greater resilience, mobility, and fierceness from the blessing of these great beings.",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

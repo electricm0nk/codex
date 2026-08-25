@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kyton (Apostle) ~ Agonizing Prayer",
+    "delivery": "Supernatural",
+    "description": "As a full-round action that provokes attacks of opportunity, an apostle kyton can orate a prayer so profane that it causes any non-kyton listening to erupt in bleeding wounds. Any non-kyton listener must succeed at a Will save (DC %1) or take %2d6 points of nonlethal damage, take bleed damage as if struck by the apostle kyton's bleeding touch, and become staggered for 1 round. Creatures that succeed on this save halve the nonlethal damage and negate the staggered effect, but they still take the bleed damage. A creature that has taken nonlethal damage greater than or equal to its current hit points is not normally rendered unconscious by this ability, but such a creature is still helpless, rendering it susceptible to the apostle kyton's seductive oration ability. This is a sonic pain effect.",
+    "description_variables": [
+      "10+HD/2+CHA",
+      "HD"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:kyton_apostle_agonizing_prayer",
+    "name": "Agonizing Prayer",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action that provokes attacks of opportunity, an apostle kyton can orate a prayer so profane that it causes any non-kyton listening to erupt in bleeding wounds. Any non-kyton listener must succeed at a Will save (DC %1) or take %2d6 points of nonlethal damage, take bleed damage as if struck by the apostle kyton's bleeding touch, and become staggered for 1 round. Creatures that succeed on this save halve the nonlethal damage and negate the staggered effect, but they still take the bleed damage. A creature that has taken nonlethal damage greater than or equal to its current hit points is not normally rendered unconscious by this ability, but such a creature is still helpless, rendering it susceptible to the apostle kyton's seductive oration ability. This is a sonic pain effect.|10+HD/2+CHA|HD"
+      },
+      {
+        "key": "KEY",
+        "value": "Kyton (Apostle) ~ Agonizing Prayer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.ApostleKyton"
+      }
+    ],
+    "source_page": "p.240",
+    "traits": [
+      "ApostleKyton"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 297,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Kyton (Apostle) ~ Agonizing Prayer",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

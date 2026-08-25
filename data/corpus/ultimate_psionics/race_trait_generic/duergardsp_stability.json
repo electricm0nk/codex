@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "DuergarDSP ~ Stability",
+    "name": "Stability",
+    "description": "+4 to CMD to resist bull rush or trip when standing on the ground.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "DuergarDSP ~ Stability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Extraordinary.DuergarDSPRacialTrait.DuergarDSPRacialDefault"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,DuergarDSP ~ Stability],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.DuergarDSPStability]"
+      },
+      {
+        "key": "DESC",
+        "value": "+4 to CMD to resist bull rush or trip when standing on the ground."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_BullRush,CMD_Trip|4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 99,
+    "record_key": "DuergarDSP ~ Stability"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

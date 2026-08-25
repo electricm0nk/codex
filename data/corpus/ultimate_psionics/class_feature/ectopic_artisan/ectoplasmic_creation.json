@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ectopic Artisan ~ Ectoplasmic Creation",
+    "name": "Ectoplasmic Creation",
+    "class": "Ectopic Artisan",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ectopic Artisan ~ Ectoplasmic Creation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EctoplasmicCreationTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EctoplasmicCreationML|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=EctoplasmicCreationTimes|CASTERLEVEL=EctoplasmicCreationML|Ectoplasmic Creation|PREVARLT:AegisLVL,11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=EctoplasmicCreationTimes|CASTERLEVEL=EctoplasmicCreationML|Ectoplasmic Creation (Major)|PREVARGTEQ:AegisLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EctoplasmicCreationTimes|INT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EctoplasmicCreationML|floor(AegisLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.263"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1752,
+    "record_key": "Ectopic Artisan ~ Ectoplasmic Creation"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

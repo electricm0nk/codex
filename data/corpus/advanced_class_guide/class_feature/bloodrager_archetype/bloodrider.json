@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Archetype ~ Bloodrider",
     "name": "Bloodrider",
-    "class": "Bloodrager Archetype",
+    "class": "Bloodrager",
     "description": "In the world's wild lands, a mount is an advantage in both everyday life and the dealing of death. In many barbarian tribes, the true stature of a warrior is determined by his skill and ferocity on horseback. Other tribes measure it in skill atop whatever terrible mounts their people employ. A number of bloodragers are not only skilled in the art of mounted combat, but have learned to channel their arcane energies directly into their mount.",
     "raw_tokens": [
       {
@@ -55,6 +55,82 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Bloodrider],[!PREFACT:1,ABILITIES,Bloodrager_Archetype_FastMovement=True,Bloodrager_Archetype_UncannyDodge=True,Bloodrager_Archetype_ImprovedUncannyDodge=True,Bloodrager_Archetype_BloodlineFeat9=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "In the world's wild lands, a mount is an advantage in both everyday life and the dealing of death. In many barbarian tribes, the true stature of a warrior is determined by his skill and ferocity on horseback. Other tribes measure it in skill atop whatever terrible mounts their people employ. A number of bloodragers are not only skilled in the art of mounted combat, but have learned to channel their arcane energies directly into their mount."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Bloodrider ~ Fast Rider|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Bloodrider ~ Feral Mount|PRECLASS:1,Bloodrager=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Bloodrider ~ Blood Bond|PRECLASS:1,Bloodrager=9"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_BloodlineFeat9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_BloodlineFeat9|true"
       }
     ]
   },
@@ -71,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

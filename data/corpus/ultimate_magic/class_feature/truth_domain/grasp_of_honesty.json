@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Truth Domain ~ Grasp of Honesty",
     "name": "Grasp of Honesty",
-    "class": "Truth Domain",
+    "class": "Cleric",
     "description": "Any creature you are grappling or pinning is affected by zone of truth (Will DC %1 negates). Outside of combat, you may use this ability by touching a target with both hands. You can use this ability %2 rounds per day. These rounds do not need to be consecutive. The effect ends if you stop grappling, pinning, or touching the target.|GraspOfHonestyDC|GraspOfHonestyRounds",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

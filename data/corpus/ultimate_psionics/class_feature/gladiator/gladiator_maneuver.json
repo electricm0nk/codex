@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gladiator ~ Maneuver",
+    "name": "Gladiator ~ Maneuver",
+    "class": "Gladiator",
+    "description": "Expend focus to not provoke attacks of opportunity for using a maneuver.  If you already do not provoke, add a +%1 competence bonus to maneuver checks (stacks with trance).|GladiatorManeuverBonus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GladiatorManeuverBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend focus to not provoke attacks of opportunity for using a maneuver.  If you already do not provoke, add a +%1 competence bonus to maneuver checks (stacks with trance).|GladiatorManeuverBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GladiatorManeuverBonus|2+max(0,GladiatorPathLVL-4)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 685,
+    "record_key": "Gladiator ~ Maneuver"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

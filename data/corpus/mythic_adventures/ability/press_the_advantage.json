@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Press the Advantage",
+    "name": "Press the Advantage",
+    "description": "When an ally seriously harms a foe, you seize the moment. When an ally within 30 feet confirms a critical hit against a creature you threaten, the target of the critical hit provokes an attack of opportunity from you. If you hit with your attack of opportunity, all of your allies gain a +2 bonus on attack rolls against that creature for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Press the Advantage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When an ally seriously harms a foe, you seize the moment. When an ally within 30 feet confirms a critical hit against a creature you threaten, the target of the critical hit provokes an attack of opportunity from you. If you hit with your attack of opportunity, all of your allies gain a +2 bonus on attack rolls against that creature for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 237,
+    "record_key": "Mythic Path Ability ~ Press the Advantage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

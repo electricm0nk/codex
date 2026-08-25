@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ghoran ~ Delicious",
+    "name": "Delicious",
+    "description": "Ghorans take a -2 penalty on Escape Artist and combat maneuver checks to escape a grapple against a creature that has a bite attack with the grab ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoran ~ Delicious"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Ability.Extraordinary.Weakness"
+      },
+      {
+        "key": "TYPE",
+        "value": "BuilderWeaknessTrait"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Ghoran_ReplaceDelicious=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghorans take a -2 penalty on Escape Artist and combat maneuver checks to escape a grapple against a creature that has a bite attack with the grab ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Racial Points|-1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|-2 penalty on combat maneuver checks to escape a grapple against a creature that has a bite attack with the grab ability."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|-2 penalty on Escape Artist to escape a grapple against a creature that has a bite attack with the grab ability."
+      },
+      {
+        "key": "INFO",
+        "value": "Racial Points|-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
+    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb",
+    "line": 19,
+    "record_key": "Ghoran ~ Delicious"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

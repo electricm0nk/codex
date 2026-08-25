@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Burning Skeleton ~ Fiery Death",
+    "delivery": "Supernatural",
+    "description": "A burning skeleton explodes into a burst of flame when it dies. Anyone adjacent to the skeleton when it is destroyed takes %1d6 points of fire damage. A DC %2 Reflex save halves this damage.",
+    "description_variables": [
+      "FieryDeathDice",
+      "FieryDeathSaveDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:burning_skeleton_fiery_death",
+    "name": "Fiery Death",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|FieryDeathDice|max(1,HD/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FieryDeathSaveDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FieryDeathDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FieryDeathSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A burning skeleton explodes into a burst of flame when it dies. Anyone adjacent to the skeleton when it is destroyed takes %1d6 points of fire damage. A DC %2 Reflex save halves this damage.|FieryDeathDice|FieryDeathSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Burning Skeleton ~ Fiery Death"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.251",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1362,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Burning Skeleton ~ Fiery Death",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

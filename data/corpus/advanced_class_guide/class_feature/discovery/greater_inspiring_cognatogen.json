@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Greater Inspiring Cognatogen",
     "name": "Greater Inspiring Cognatogen",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "The alchemist's inspiring cognatogen now grants a +2 dodge bonus to AC and a +2 bonus to Reflex saving throws; a -4 penalty to Strength and Constitution; and the effects of having the amazing inspiration, eidetic recollection, and expanded inspiration investigator discoveries. An alchemist must be at least 12th level and must have the inspiring cognatogen discovery or class feature to select this discovery.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

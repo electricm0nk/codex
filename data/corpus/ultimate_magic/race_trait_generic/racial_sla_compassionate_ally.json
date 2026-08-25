@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Compassionate Ally",
+    "name": "Compassionate Ally",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Compassionate Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Compassionate Ally"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CompassionateAlly_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CompassionateAlly_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CompassionateAlly_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CompassionateAlly_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CompassionateAlly_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CompassionateAlly_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CompassionateAlly_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_CompassionateAlly_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_CompassionateAlly_LVL|Compassionate Ally,RacialSLA_CompassionateAlly_DC|PREVAREQ:RacialSLA_CompassionateAlly_AtWill,0|PREVAREQ:RacialSLA_CompassionateAlly_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_CompassionateAlly_LVL|Compassionate Ally,RacialSLA_CompassionateAlly_DC|PREVAREQ:RacialSLA_CompassionateAlly_AtWill,1|PREVAREQ:RacialSLA_CompassionateAlly_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_CompassionateAlly_LVL|Compassionate Ally,RacialSLA_CompassionateAlly_DC|PREVAREQ:RacialSLA_CompassionateAlly_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CompassionateAlly_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CompassionateAlly_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CompassionateAlly_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CompassionateAlly_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CompassionateAlly_DC|10+RacialSLA_CompassionateAlly_SpellLVL+RacialSLA_CompassionateAlly_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_race.lst",
+    "sha256": "b3c584d7f0a08fcebf18eec699ed8a95e5c57d7ef4958b588b9889ef05655e8b",
+    "line": 34,
+    "record_key": "Racial SLA ~ Compassionate Ally"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

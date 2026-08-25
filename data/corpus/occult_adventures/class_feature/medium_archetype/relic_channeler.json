@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Medium Archetype ~ Relic Channeler",
     "name": "Relic Channeler",
-    "class": "Medium Archetype",
+    "class": "Medium",
     "description": "A relic channeler carries relics of legend around with her. She need not rely on locating the specific spirits that she seeks, but the relics limit the number of unique spirits she can channel.",
     "raw_tokens": [
       {
@@ -99,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

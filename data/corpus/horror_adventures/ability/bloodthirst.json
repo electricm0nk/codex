@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption ~ Bloodthirst",
+    "name": "Bloodthirst",
+    "description": "You gain a bite attack and can taste blood in the water.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Bloodthirst"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DeepOneManifestation"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Deep One Corruption ~ Deep Adaptation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a bite attack and can taste blood in the water."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Deep One Bloodthirst Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Deep One Bloodthirst Stain Choice|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 115,
+    "record_key": "Deep One Corruption ~ Bloodthirst"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

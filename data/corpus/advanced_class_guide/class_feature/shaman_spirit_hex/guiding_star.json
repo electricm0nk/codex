@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Guiding Star",
     "name": "Guiding Star",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "Whenever the shaman can see the open sky at night, she can determine her precise location and can add her Wisdom modifier to her Charisma modifier on all Charisma-based skill checks. In addition, once per night while outdoors, she can cast one spell as if it were modified by the Empower Spell, Extend Spell, Silent Spell, or Still Spell feat without increasing the spell's casting time or level. The shaman doesn't need to possess the feat to use this ability.",
     "raw_tokens": [
       {
@@ -39,6 +39,10 @@
       {
         "key": "TEMPBONUS",
         "value": "PC|SKILL|TYPE=Charisma|WIS"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Shaman=2"
       }
     ]
   },
@@ -57,5 +61,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

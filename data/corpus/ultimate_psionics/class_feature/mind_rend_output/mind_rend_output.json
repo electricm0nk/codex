@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mind Rend Output",
+    "name": "Mind Rend Output",
+    "class": null,
+    "description": "Your attack deals %1d%2 additional damage if your target would be denied a Dex bonus to AC; %1d%3 if a power point is spent.  This extra damage is not multiplied on a critical hit.|MindRendDice|MindRendDieType|MindRendDieType2",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Mind Rend"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindRendDieType|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindRendDieType2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindRendDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack deals %1d%2 additional damage if your target would be denied a Dex bonus to AC; %1d%3 if a power point is spent.  This extra damage is not multiplied on a critical hit.|MindRendDice|MindRendDieType|MindRendDieType2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindRendDieType|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindRendDieType2|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 299,
+    "record_key": "Mind Rend Output"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Longevity",
+    "name": "Longevity",
+    "description": "Upon taking this ability, you can no longer die from old age. If you have penalties to your physical ability scores due to aging, you no longer take those penalties. You still continue to age, and you gain all the benefits to your mental ability scores.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Longevity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon taking this ability, you can no longer die from old age. If you have penalties to your physical ability scores due to aging, you no longer take those penalties. You still continue to age, and you gain all the benefits to your mental ability scores."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UseAgeRulesNegateAgePenalties|1|TYPE=Boolean"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 201,
+    "record_key": "Mythic Path Ability ~ Longevity"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

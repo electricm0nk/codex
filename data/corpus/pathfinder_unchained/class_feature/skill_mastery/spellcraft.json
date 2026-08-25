@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skill Mastery ~ Spellcraft",
+    "name": "Spellcraft",
+    "class": "Skill Mastery",
+    "description": "When making a spellcraft check, you may take 10 even if stress and distractions would normally prevent you from doing so.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill Mastery ~ Spellcraft"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Skill Mastery ~ spellcraft"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Skill Mastery"
+      },
+      {
+        "key": "DESC",
+        "value": "When making a spellcraft check, you may take 10 even if stress and distractions would normally prevent you from doing so."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 990,
+    "record_key": "Skill Mastery ~ Spellcraft"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

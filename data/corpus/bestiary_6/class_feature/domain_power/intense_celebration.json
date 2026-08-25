@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Intense Celebration",
     "name": "Intense Celebration",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, any spells you cast that confer a morale effect upon you or your allies are automatically affected as if by the Extend Spell metamagic feat, with no increase in spell level.",
     "raw_tokens": [
       {
@@ -43,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Derhii ~ Booming Voice",
+    "delivery": "Extraordinary",
+    "description": "A derhii can use its own booming voice as a signal. The sound can be heard up to 12 miles away as a thrumming in the air that conveys 20 words of information in 5 minutes.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:derhii_booming_voice",
+    "name": "Booming Voice",
+    "owners": [
+      "bestiary_3:monster:derhii"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A derhii can use its own booming voice as a signal. The sound can be heard up to 12 miles away as a thrumming in the air that conveys 20 words of information in 5 minutes."
+      },
+      {
+        "key": "KEY",
+        "value": "Derhii ~ Booming Voice"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "TYPE",
+        "value": "DerhiiRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.75",
+    "traits": [
+      "DerhiiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 664,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Derhii ~ Booming Voice",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

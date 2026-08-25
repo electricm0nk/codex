@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "A silencing weapon makes no noise when drawn or when used to attack. Targets struck can be muffled, somewhat. Critical hits silence target.",
+    "key": "Special Ability ~ Silencing ~ Weapon",
+    "name": "Silencing",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Silencing ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon.Melee.Ranged"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,WeaponEnhancement"
+      },
+      {
+        "key": "SPROP",
+        "value": "A silencing weapon makes no noise when drawn or when used to attack. Targets struck can be muffled, somewhat. Critical hits silence target."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equipmods.lst",
+    "record_key": "Special Ability ~ Silencing ~ Weapon",
+    "sha256": "5bc2ad2638890d74716a60fb31681d23ec188d9c540e2e662a31e696f3fcd056"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

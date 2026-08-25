@@ -1,16 +1,16 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
-    "key": "Enlightened Bloodrager ~ Bloodline Feat",
+    "key": "Enlightened Bloodrager ~ Bloodline Feat ~ AG",
     "name": "Bloodline Feat",
-    "class": "Enlightened Bloodrager",
-    "description": null,
+    "class": "Bloodrager",
+    "description": "An enlightened bloodrager adds Expanded Arcana, Nameless One, and all feats that list Nameless One as a prerequisite to the list of feats she can select as a bloodline feat.",
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Enlightened Bloodrager ~ Bloodline Feat"
+        "value": "Enlightened Bloodrager ~ Bloodline Feat ~ AG"
       },
       {
         "key": "CATEGORY",
@@ -18,23 +18,23 @@
       },
       {
         "key": "TYPE",
-        "value": "EnlightenedBloodragerFeatChoice"
+        "value": "Bloodrager Class Feature.EnlightenedBloodragerClassFeatures.SpecialQuality"
       },
       {
-        "key": "STACK",
-        "value": "YES"
+        "key": "SOURCEPAGE",
+        "value": "p.120"
       },
       {
-        "key": "MULT",
-        "value": "YES"
-      },
-      {
-        "key": "CHOOSE",
-        "value": "NOCHOICE"
+        "key": "DESC",
+        "value": "An enlightened bloodrager adds Expanded Arcana, Nameless One, and all feats that list Nameless One as a prerequisite to the list of feats she can select as a bloodline feat."
       },
       {
         "key": "BONUS",
-        "value": "VAR|BloodlineBonusFeats|1"
+        "value": "ABILITYPOOL|Enlightened Bloodrager Feat Choice|(BloodragerLVL-3)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerDR|-1+(BloodragerLVL>=13)+(BloodragerLVL>=19)"
       }
     ]
   },
@@ -42,14 +42,15 @@
     "kind": "lst_token",
     "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
     "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
-    "line": 706,
-    "record_key": "Enlightened Bloodrager ~ Bloodline Feat"
+    "line": 702,
+    "record_key": "Enlightened Bloodrager ~ Bloodline Feat ~ AG"
   },
-  "wiring_class": "computed",
+  "wiring_class": "derived",
   "wiring_class_signals": [
-    "computed:choice"
+    "derived:bonus"
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

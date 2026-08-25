@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Noetics Subdomain ~ Psychokinesis",
+    "name": "Psychokinesis",
+    "description": "You can move an object, or even a creature, by concentrating your mind on its current location and then the location you desire, creating a sustained force.  You can move up to %1 pounds up to 20 feet per round.  A create can negate the effect on an object it possesses or itself with a successful Will save (DC %2) or with power resistance.  The weight can be moved across the ground or through the air.  This effect ends if the object is forced out of range (%3 ft.) or if you cease concentration.  You can use this ability %4 rounds per day.|PsychokinesisWeight|PsychokinesisDC|PsychokinesisRange|PsychokinesisTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Noetics Subdomain ~ Psychokinesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.PsiLike.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychokinesisWeight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychokinesisDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychokinesisRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychokinesisTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can move an object, or even a creature, by concentrating your mind on its current location and then the location you desire, creating a sustained force.  You can move up to %1 pounds up to 20 feet per round.  A create can negate the effect on an object it possesses or itself with a successful Will save (DC %2) or with power resistance.  The weight can be moved across the ground or through the air.  This effect ends if the object is forced out of range (%3 ft.) or if you cease concentration.  You can use this ability %4 rounds per day.|PsychokinesisWeight|PsychokinesisDC|PsychokinesisRange|PsychokinesisTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychokinesisDC|DomainPsionicsDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychokinesisTimes|DomainPsionicsTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychokinesisWeight|25*DomainPsionicsLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychokinesisRange|25+5*floor(DomainPsionicsLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 121,
+    "record_key": "Noetics Subdomain ~ Psychokinesis"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

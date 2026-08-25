@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vigilante Favored Maneuver ~ Bull Rush ~ Favored Maneuver (Sunder)",
+    "name": "Favored Maneuver (Sunder)",
+    "class": "Vigilante",
+    "description": "You gain the Improved Sunder feat. You also gains a +2 circumstance bonus on CMB checks to Sunder the weapon a foe that is unaware of you at the start of your combat maneuver.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Favored Maneuver ~ Bull Rush"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VigilanteFavoredManeuver"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vigilante Favored Maneuver ~ Bull Rush"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the Improved Sunder feat. You also gains a +2 circumstance bonus on CMB checks to Sunder the weapon a foe that is unaware of you at the start of your combat maneuver."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Sunder"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 140,
+    "record_key": "Vigilante Favored Maneuver ~ Bull Rush ~ Favored Maneuver (Sunder)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

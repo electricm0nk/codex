@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Archetype ~ Eldritch Scrapper",
     "name": "Eldritch Scrapper",
-    "class": "Sorcerer Archetype",
+    "class": "Sorcerer",
     "description": "An eldritch scrapper is usually spoiling for a fight, looking to prove that she's just as tough as a martial character. A veteran of many brawls against opponents who were suspicious of her manifesting magic, an eldritch scrapper has a thick skin and a fighting style that blends weapons with spells.",
     "raw_tokens": [
       {
@@ -51,6 +51,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Sorcerer"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Sorcerer Archetype ~ Eldritch Scrapper],[!PREFACT:1,ABILITIES,Sorcerer_Archetype_Bloodline=True,Sorcerer_Archetype_Bloodline=True,Sorcerer_Archetype_Bloodline=True,Sorcerer_Archetype_Bloodline=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlinePower15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Bloodline|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_Bloodline|true"
       }
     ]
   },
@@ -67,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

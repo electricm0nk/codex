@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Discipline ~ HK",
     "name": "Discipline",
@@ -39,6 +39,10 @@
       {
         "key": "BONUS",
         "value": "VAR|HKDisciplineDC|10+HellknightLvl+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
       }
     ]
   },
@@ -56,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

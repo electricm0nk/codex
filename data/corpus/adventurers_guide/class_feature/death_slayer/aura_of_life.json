@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Death Slayer ~ Aura of Life",
     "name": "Aura of Life",
-    "class": "Death Slayer",
+    "class": "Slayer",
     "description": "A death slayer can emit a 10-foot aura of positive energy that weakens undead creatures as a swift action. This creates a dim crimson glow around the death slayer. Each undead creature within the aura at the start of its turn takes 4d6 points of positive energy damage. While this aura is active, the death slayer has fast healing 10. A death slayer can activate this aura for up to 10 rounds per day. The duration need not be consecutive, and she can deactivate the aura as a free action.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

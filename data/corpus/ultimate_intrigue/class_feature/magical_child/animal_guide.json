@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Magical Child ~ Animal Guide",
+    "name": "Animal Guide",
+    "class": "Vigilante",
+    "description": "A magical child starts play with a magical spirit guide in the form of a familiar, using her vigilante level as her effective wizard level. The familiar also has a social identity as a seemingly normal animal, though vigilantes with outlandish familiars might still need to hide the familiar. &nl;At 3rd level, the magical child's familiar reveals another aspect of its form, and its vigilante identity changes into a creature on the Improved Familiar list that would be available to a 3rd-level spellcaster (the animal guide's social identity always remains as the original normal animal). The familiar can change its vigilante identity again when the magical child reaches 5th and 7th level, each time to familiars available at those levels. The Improved Familiar feat's alignment restrictions apply to this ability, but only the magical child's vigilante identity needs to have an alignment that fulfills the alignment requirements of the improved familiar. The familiar's new vigilante form choices are permanent, and it cannot transform back into its former vigilante identities until 9th level, when the familiar gains the change shape universal monster ability if it doesn't already have it. It can use this ability at will when in its vigilante identity to transform into any of its four vigilante identities. &nl;In vigilante form, a magical child's familiar gains an amount of DR/magic equal to her vigilante level. This doesn't stack with any DR/magic that her vigilante form might already possess. &nl;If a magical child's familiar dies, its consciousness simply leaves its body, and the magical child can replace its body after 24 hours. To do so, she must conduct an 8-hour ritual that costs 200 gp per her vigilante level, but once the ritual is complete, the familiar returns in a new body. It retains all of its memories from its earlier service to the magical child.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magical Child ~ Animal Guide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A magical child starts play with a magical spirit guide in the form of a familiar, using her vigilante level as her effective wizard level. The familiar also has a social identity as a seemingly normal animal, though vigilantes with outlandish familiars might still need to hide the familiar. &nl;At 3rd level, the magical child's familiar reveals another aspect of its form, and its vigilante identity changes into a creature on the Improved Familiar list that would be available to a 3rd-level spellcaster (the animal guide's social identity always remains as the original normal animal). The familiar can change its vigilante identity again when the magical child reaches 5th and 7th level, each time to familiars available at those levels. The Improved Familiar feat's alignment restrictions apply to this ability, but only the magical child's vigilante identity needs to have an alignment that fulfills the alignment requirements of the improved familiar. The familiar's new vigilante form choices are permanent, and it cannot transform back into its former vigilante identities until 9th level, when the familiar gains the change shape universal monster ability if it doesn't already have it. It can use this ability at will when in its vigilante identity to transform into any of its four vigilante identities. &nl;In vigilante form, a magical child's familiar gains an amount of DR/magic equal to her vigilante level. This doesn't stack with any DR/magic that her vigilante form might already possess. &nl;If a magical child's familiar dies, its consciousness simply leaves its body, and the magical child can replace its body after 24 hours. To do so, she must conduct an 8-hour ritual that costs 200 gp per her vigilante level, but once the ritual is complete, the familiar returns in a new body. It retains all of its memories from its earlier service to the magical child."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Standard Familiar List"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Familiar|PREVARGTEQ:VigilanteLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarMasterLVL|VigilanteLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 99,
+    "record_key": "Magical Child ~ Animal Guide"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

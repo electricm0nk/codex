@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ranger Combat Style ~ Besmara",
     "name": "Besmara",
-    "class": "Ranger Combat Style",
+    "class": "Ranger",
     "description": "If a ranger selects Besmara's style, he can choose from the following list whenever he gains a combat style feat: Agile Maneuvers, Improved Dirty Trick, Improved Feint, and Weapon Finesse. At 6th level, he adds Greater Feint and Quick Dirty Trick to the list. At 10th level, he adds Critical Focus and Disengaging Flourish to the list.",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

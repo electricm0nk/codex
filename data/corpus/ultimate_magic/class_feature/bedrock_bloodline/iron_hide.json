@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bedrock Bloodline ~ Iron Hide",
     "name": "Iron Hide",
-    "class": "Bedrock Bloodline",
+    "class": "Sorcerer",
     "description": "As a swift action, you can grant yourself DR 10/adamantine for %1 rounds per day. The rounds do not need to be used consecutively. This bloodline power replaces crystal shard.",
     "raw_tokens": [
       {
@@ -92,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

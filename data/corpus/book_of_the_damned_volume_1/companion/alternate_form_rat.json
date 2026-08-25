@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Imp Companion Trick ~ Alternate Form (Rat)",
+    "name": "Alternate Form (Rat)",
+    "description": "The Imp can assume the form of a rat as if using beast shape I.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imp Companion Trick ~ Alternate Form (Rat)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.ImpCompTrick.ImpCompStartTrick"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Imp Companion Trick ~ Alternate Form (Rat)"
+      },
+      {
+        "key": "DESC",
+        "value": "The Imp can assume the form of a rat as if using beast shape I."
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
+    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9",
+    "line": 19,
+    "record_key": "Imp Companion Trick ~ Alternate Form (Rat)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

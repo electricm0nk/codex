@@ -1,0 +1,65 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Underworld Dragon ~ Underworld Burrower",
+    "delivery": "Extraordinary",
+    "description": "An adult underworld dragon gains a 10-foot bonus to its burrow speed. When the underworld dragon becomes old and every two age categories thereafter, its burrow speed increases by an additional 10 feet.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:underworld_dragon_underworld_burrower",
+    "name": "Underworld Burrower",
+    "owners": [
+      "bestiary_3:monster:dragon_underworld"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Burrow|((DragonAgeCategory-4)/2)*10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An adult underworld dragon gains a 10-foot bonus to its burrow speed. When the underworld dragon becomes old and every two age categories thereafter, its burrow speed increases by an additional 10 feet."
+      },
+      {
+        "key": "KEY",
+        "value": "Underworld Dragon ~ Underworld Burrower"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality"
+      }
+    ],
+    "source_page": "p.102",
+    "traits": [
+      "RaceAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 797,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Underworld Dragon ~ Underworld Burrower",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

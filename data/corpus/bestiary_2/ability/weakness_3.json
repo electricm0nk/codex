@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Nosferatu-Born ~ Weakness",
+    "name": "Weakness",
+    "description": "Ancient-born take a -1 penalty on saves against effects that damage, drain, or reduce physical ability scores.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nosferatu-Born ~ Weakness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NosferatuBorn_Weakness_Penalty|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Ancient-born take a -1 penalty on saves against effects that damage, drain, or reduce physical ability scores."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NosferatuBorn_Weakness_Penalty|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "AllSaveBonus|+%1 vs. effects that damage, drain, or reduce physical ability scores|NosferatuBorn_Weakness_Penalty"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceWeakness|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
+    "line": 60,
+    "record_key": "Nosferatu-Born ~ Weakness"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

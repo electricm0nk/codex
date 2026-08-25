@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Regenerative Stance",
+    "name": "Regenerative Stance",
+    "class": "Unchained Barbarian",
+    "description": "You can continually replenish your health. At the start of your turn, you regain %1 temporary hit point, but this cannot give you more than her maximum temporary hit points from rage. This is a stance rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Regenerative Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RegenerativeStanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can continually replenish your health. At the start of your turn, you regain %1 temporary hit point, but this cannot give you more than her maximum temporary hit points from rage. This is a stance rage power."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerativeStanceBonus|min(floor(RagePowersLVL/4),5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 378,
+    "record_key": "Unchained Rage Power ~ Regenerative Stance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

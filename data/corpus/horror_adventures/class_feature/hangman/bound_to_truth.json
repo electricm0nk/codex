@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hangman ~ Bound to Truth",
+    "name": "Bound to Truth",
+    "class": "Vigilante",
+    "description": "A hangman adds half his vigilante level to his Sense Motive checks to notice lies told by a creature entangled or grappled by his noose, by feeling the creature's throat clench or changes in its breathing. In addition, he can prevent a creature entangled or grappled in his noose from lying by tightening the noose, as per a single-target zone of truth (the caster level equals his vigilante level; the save DC is Charisma-based). He can use the latter ability %1 rounds per day. These rounds don't need to be consecutive.|VigilanteLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hangman ~ Bound to Truth"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality.Extraordinary.SpellLike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "DESC",
+        "value": "A hangman adds half his vigilante level to his Sense Motive checks to notice lies told by a creature entangled or grappled by his noose, by feeling the creature's throat clench or changes in its breathing. In addition, he can prevent a creature entangled or grappled in his noose from lying by tightening the noose, as per a single-target zone of truth (the caster level equals his vigilante level; the save DC is Charisma-based). He can use the latter ability %1 rounds per day. These rounds don't need to be consecutive.|VigilanteLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 27,
+    "record_key": "Hangman ~ Bound to Truth"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

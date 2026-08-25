@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wizard Archetype ~ Cruoromancer",
     "name": "Cruoromancer",
-    "class": "Wizard Archetype",
+    "class": "Wizard",
     "description": "To those who know how to manipulate it, the blood of a dhampir can be a powerful component to magic. A cruoromancer infuses his necromantic magic with the power of his unique mixture of living blood and undead ichor. As his power increases in this strange arcane art, a cruoromancer finds potent ways to infuse his unique blood with necromancy spells. A cruoromancer has the following class features.",
     "raw_tokens": [
       {
@@ -79,6 +79,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Wizard"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Cruoromancer],[!PREFACT:1,ABILITIES,Wizard_Archetype_ArcaneBond=True,Wizard_Archetype_BonusFeat5=True,Wizard_Archetype_BonusFeat10=True,Wizard_Archetype_BonusFeat15=True,Wizard_Archetype_BonusFeat20=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeat15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeat20|true"
       }
     ]
   },
@@ -95,5 +139,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Scaled Rider ~ Focused Mount",
+    "name": "Focused Mount",
+    "class": "Scaled Rider",
+    "description": "Your mount gains the Wild Talent feat.  In addition, you and your mount are treated as maintaining psionic focus if either one is maintaining psionic focus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scaled Rider ~ Focused Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KaraanFocusedMount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mount gains the Wild Talent feat.  In addition, you and your mount are treated as maintaining psionic focus if either one is maintaining psionic focus."
+      },
+      {
+        "key": "DESC",
+        "value": " You can expend your mount's psionic focus to power a psionic feat you possess.  Should you have an additional focus available, such as from the Psicrystal Containment feat, you can use it in conjunction with this ability.|PRECLASS:1,Psychic Warrior=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KaraanFocusedMount|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.337"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2128,
+    "record_key": "Scaled Rider ~ Focused Mount"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Trained Animal",
+    "name": "Trained Animal",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Animal Tricks and Training"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Animal"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Animal Trick|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Animal Trick|2|PRESTAT:1,INT=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Animal Trick|3|PRESTAT:1,INT=2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b",
+    "line": 51,
+    "record_key": "Trained Animal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

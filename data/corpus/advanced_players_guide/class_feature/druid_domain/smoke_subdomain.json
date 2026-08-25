@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Smoke Subdomain",
     "name": "Smoke Subdomain",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Burning Hands|Druid=2|Pyrotechnics|Druid=3|Stinking Cloud|Druid=4|Wall of Fire|Druid=5|Fire Shield|Druid=6|Fire Seeds|Druid=7|Elemental Body IV (Fire Only)|Druid=8|Incendiary Cloud|Druid=9|Elemental Swarm (Fire Spell Only)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

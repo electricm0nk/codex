@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Forbidden Rites Domain ~ Community Domain",
     "name": "Community",
-    "class": "Forbidden Rites Domain",
+    "class": "Cleric",
     "description": "Your touch can heal wounds, and your presence instills unity and strengthens emotional bonds.",
     "raw_tokens": [
       {
@@ -92,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

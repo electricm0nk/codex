@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Troodon ~ Easily Trained",
+    "delivery": "Extraordinary",
+    "description": "A troodon is unusually quick to pick up tricks and animal training. All Handle Animal checks made to train a troodon gain a +2 bonus. A troodon can learn an additional 2 tricks beyond what an animal of its intelligence can normally be taught.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:troodon_easily_trained",
+    "name": "Easily Trained",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Animal Trick|2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A troodon is unusually quick to pick up tricks and animal training. All Handle Animal checks made to train a troodon gain a +2 bonus. A troodon can learn an additional 2 tricks beyond what an animal of its intelligence can normally be taught."
+      },
+      {
+        "key": "KEY",
+        "value": "Troodon ~ Easily Trained"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TroodonRacialTrait"
+      }
+    ],
+    "source_page": "p.84",
+    "traits": [
+      "TroodonRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Troodon ~ Easily Trained",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Apocalypse Mystery ~ Pass the Torch",
     "name": "Pass the Torch",
-    "class": "Apocalypse Mystery",
+    "class": "Oracle",
     "description": "%1 times per day as a swift action, you can channel the energy of the apocalypse into your body, causing you to ignite. You take 1d4 points of fire damage when you activate this ability and again at the beginning of your turn until you end the effect. Any creature that begins its turn adjacent to you takes 1d6 points of fire damage as the fire spreads, plus 1 additional point of fire damage for each previous round you have had this ability active. For example, adjacent creatures take 1d6+5 points of damage if you have had this ability active for 5 rounds. You can use this ability for %2 rounds , and you can end this ability as a free action.|1+OracleLVL/5|OracleLVL",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

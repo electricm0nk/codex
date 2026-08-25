@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Severis ~ Phrenic Liberation",
+    "name": "Phrenic Liberation",
+    "description": "When striking a creature being controlled by a phrenic scourge creature, the damage is redirected to the controlling creature.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Severis ~ Phrenic Liberation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When striking a creature being controlled by a phrenic scourge creature, the damage is redirected to the controlling creature."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.441"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 245,
+    "record_key": "Severis ~ Phrenic Liberation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

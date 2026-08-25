@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hunter Archetype ~ Primal Companion Hunter",
     "name": "Primal Companion Hunter",
-    "class": "Hunter Archetype",
+    "class": "Hunter",
     "description": "Most hunters are skilled at awakening the primal beasts inside themselves. However, some can instead activate the primal essence within their animal companion. These primal companion hunters bestow upon their companions the ability to suddenly manifest new and terrifying powers-throwbacks to long-extinct beasts, bizarre mutations from extreme environments, or new abilities crafted from generations of selective breeding.",
     "raw_tokens": [
       {
@@ -55,6 +55,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Hunter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Primal Companion Hunter],[!PREFACT:1,ABILITIES,Hunter_Archetype_AnimalFocus=True,Hunter_Archetype_MasterHunter=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_SecondAnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_MasterHunter|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_MasterHunter|true"
       }
     ]
   },
@@ -71,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

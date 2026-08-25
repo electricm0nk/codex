@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Desert Giant ~ Sandwalking",
+    "delivery": "Extraordinary",
+    "description": "A desert giant travels at full speed across sand, rocky ground, or dust, and leaves no trail behind unless it chooses to.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:desert_giant_sandwalking",
+    "name": "Sandwalking",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A desert giant travels at full speed across sand, rocky ground, or dust, and leaves no trail behind unless it chooses to."
+      },
+      {
+        "key": "KEY",
+        "value": "Desert Giant ~ Sandwalking"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
+      },
+      {
+        "key": "TYPE",
+        "value": "DesertGiantRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.128",
+    "traits": [
+      "DesertGiantRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 912,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Desert Giant ~ Sandwalking",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

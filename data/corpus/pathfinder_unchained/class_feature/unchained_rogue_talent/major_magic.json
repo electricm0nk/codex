@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Major Magic",
+    "name": "Major Magic",
+    "class": "Unchained Rogue Talent",
+    "description": "You can cast %1 %2 times a day as a spell-like ability. The caster level for this ability is %3. The save DC for this spell is %4.|%CHOICE|RogueMajorMagicTimes|RogueCasterLevel|11+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Major Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.Unchained Rogue Talent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Rogue Talent ~ Minor Magic"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=11"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue Talent ~ Major Magic"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RogueMajorMagicTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cast %1 %2 times a day as a spell-like ability. The caster level for this ability is %3. The save DC for this spell is %4.|%CHOICE|RogueMajorMagicTimes|RogueCasterLevel|11+INT"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SPELLS|CLASSLIST=Wizard[LEVELMAX=1;LEVELMIN=1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RogueMajorMagicTimes|RogueTalentLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 646,
+    "record_key": "Unchained Rogue Talent ~ Major Magic"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

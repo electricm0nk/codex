@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Holy Tactician ~ Tactical Acumen",
     "name": "Tactical Acumen",
@@ -31,6 +31,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.64"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain an additional +1 on attack rolls or to AC due to battlefield positioning.|!PRERULE:1,DisplayFullSpell"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

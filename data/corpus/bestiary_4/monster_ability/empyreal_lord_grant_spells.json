@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Empyreal Lord ~ Grant Spells",
+    "delivery": null,
+    "description": "An empyreal lord can grant spells to its worshipers as if it were a deity. An empyreal lord's domains are Chaos (if chaotic), Good, Law (iflawful), and two other domains relevant to its theme and interests (or three if it is neither chaotic nor lawful). Like a deity, an empyreal lord has a favored weapon.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:empyreal_lord_grant_spells",
+    "name": "Grant Spells",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An empyreal lord can grant spells to its worshipers as if it were a deity. An empyreal lord's domains are Chaos (if chaotic), Good, Law (iflawful), and two other domains relevant to its theme and interests (or three if it is neither chaotic nor lawful). Like a deity, an empyreal lord has a favored weapon."
+      },
+      {
+        "key": "KEY",
+        "value": "Empyreal Lord ~ Grant Spells"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 123,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Empyreal Lord ~ Grant Spells",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

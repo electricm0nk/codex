@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Law Domain ~ Staff of Order",
     "name": "Staff of Order",
-    "class": "Law Domain",
+    "class": "Cleric",
     "description": "You can give a weapon touched the Axiomatic special weapon quality for %1 rounds. You can use this ability %2 times per day.|DomainLawLVL/2|StaffOfOrderTimes",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

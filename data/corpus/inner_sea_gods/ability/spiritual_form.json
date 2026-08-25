@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist ~ Spiritual Form",
+    "name": "Spiritual Form",
+    "description": "Upon reaching 10th level, the evangelist gains the ability to assume a spiritual form. Assuming this form is a standard action, and the evangelist can remain in spiritual form for a number of minutes per day equal to her character level. This duration does not need to be consecutive, but it must be used in 1-minute increments. Returning to her normal form is a free action. The evangelist's spiritual form grants her telepathy to a range of 100 feet, as well as two variable abilities. Upon reaching 10th level, the evangelist must choose the form of these two abilities, and once she has selected them they can't be changed. First, she chooses one ability score to which she gains a +4 bonus when in spiritual form. Second, she chooses one physical transformation from the following to gain when she transforms: wings (fly speed of 40 feet with good maneuverability), gills (ability to breathe water and a swim speed of 30 feet), or a single natural attack (a claw, bite, gore, slam, or tail sting that deals damage as appropriate for the evangelist's size) as well as a temporary appendage capable of making such an attack if necessary.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Spiritual Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Evangelist Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon reaching 10th level, the evangelist gains the ability to assume a spiritual form. Assuming this form is a standard action, and the evangelist can remain in spiritual form for a number of minutes per day equal to her character level. This duration does not need to be consecutive, but it must be used in 1-minute increments. Returning to her normal form is a free action. The evangelist's spiritual form grants her telepathy to a range of 100 feet, as well as two variable abilities. Upon reaching 10th level, the evangelist must choose the form of these two abilities, and once she has selected them they can't be changed. First, she chooses one ability score to which she gains a +4 bonus when in spiritual form. Second, she chooses one physical transformation from the following to gain when she transforms: wings (fly speed of 40 feet with good maneuverability), gills (ability to breathe water and a swim speed of 30 feet), or a single natural attack (a claw, bite, gore, slam, or tail sting that deals damage as appropriate for the evangelist's size) as well as a temporary appendage capable of making such an attack if necessary."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 20,
+    "record_key": "Evangelist ~ Spiritual Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

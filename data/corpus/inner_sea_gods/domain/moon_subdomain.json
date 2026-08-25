@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Moon Subdomain",
+    "name": "Moon Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Moon Subdomain],[PREVARLT:DarknessDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Blind-Fight"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Darkness|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Darkness)|PREVARGTEQ:DomainDarknessAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Moonfire|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Darkness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "DESC",
+        "value": "Even amid the darkness of night, the power of the illuminating moon has always fascinated you."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=1|Faerie Fire"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=2|Blindness/Deafness (Blindness Only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=3|Deeper Darkness"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=4|Moonstruck"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=5|Summon Monster V (1d3 Shadows)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=6|Dream"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=7|Power Word Blind"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=8|Shadow Evocation (Greater)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Moon Subdomain=9|Shades"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Darkness"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 17,
+    "record_key": "Moon Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

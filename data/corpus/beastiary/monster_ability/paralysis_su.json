@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Paralysis ~ Su",
+    "delivery": "Supernatural",
+    "description": "You can render your victims immobile. Paralyzed creatures cannot move, speak, or take any physical actions. The creature is rooted to the spot, frozen and helpless. Paralysis works on the body, and a character can usually resist it with a Fortitude saving throw (DC %1). Unlike hold person and similar effects, a paralysis effect does not allow a new save each round. A Tail Sweeped creature flying in the air at the time that it is paralyzed cannot flap its Tail Sweeps and falls. A swimmer can't swim and may drown.",
+    "description_variables": [
+      "ParalysisDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:paralysis_su",
+    "name": "Paralysis",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Paralysis"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|ParalysisDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParalysisDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParalysisDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Paralysis)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ParalysisDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can render your victims immobile."
+      },
+      {
+        "key": "DESC",
+        "value": "You can render your victims immobile. Paralyzed creatures cannot move, speak, or take any physical actions. The creature is rooted to the spot, frozen and helpless. Paralysis works on the body, and a character can usually resist it with a Fortitude saving throw (DC %1). Unlike hold person and similar effects, a paralysis effect does not allow a new save each round. A Tail Sweeped creature flying in the air at the time that it is paralyzed cannot flap its Tail Sweeps and falls. A swimmer can't swim and may drown.|ParalysisDC|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Paralysis ~ Su"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.302"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.302",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1453,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Paralysis ~ Su",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

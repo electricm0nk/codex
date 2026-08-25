@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Drakainia Spawn ~ Covered in Eyes",
+    "delivery": "Extraordinary",
+    "description": "Eyes cover the front and back of the creature's head. It gains all-around vision.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_spawn_covered_in_eyes",
+    "name": "Covered in Eyes",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All-Around Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Eyes cover the front and back of the creature's head. It gains all-around vision."
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia Spawn ~ Covered in Eyes"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Senses"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Senses"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 560,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia Spawn ~ Covered in Eyes",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Baleful Glare Gift",
+    "name": "Baleful Glare Gift",
+    "description": "Once per day, when you successfully use Intimidate to demoralize a creature within 30 feet, you can curse that target as a swift action. The victim must succeed at a Will save (DC %1) or be staggered permanently. If you use this ability on a creature that is still under the effects of your baleful glare from a previous day, the target must succeed at a Fortitude saving throw (DC %1) or be paralyzed with fear for 3 days. At the end of each day the target spends paralyzed with fear, it must succeed at another Fortitude saving throw or die. Your effective caster level for these curses is equal to your character level.|10+TL/2+AccursedManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Baleful Glare Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedBalefulGlareGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, when you successfully use Intimidate to demoralize a creature within 30 feet, you can curse that target as a swift action. The victim must succeed at a Will save (DC %1) or be staggered permanently. If you use this ability on a creature that is still under the effects of your baleful glare from a previous day, the target must succeed at a Fortitude saving throw (DC %1) or be paralyzed with fear for 3 days. At the end of each day the target spends paralyzed with fear, it must succeed at another Fortitude saving throw or die. Your effective caster level for these curses is equal to your character level.|10+TL/2+AccursedManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 34,
+    "record_key": "Accursed Corruption ~ Baleful Glare Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

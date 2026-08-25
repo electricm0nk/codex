@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Nyogoth ~ Acid Spray",
+    "name": "Acid Spray",
+    "description": "A nyogoth's body is full of highly corrosive digestive fluid.  Every time a nyogoth is damaged by a piercing or slashing weapon, all creatures adjacent to the nyogoth take 1d6 points of acid damage (2d6 acid damage if the attack is a critical hit).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nyogoth ~ Acid Spray"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A nyogoth's body is full of highly corrosive digestive fluid.  Every time a nyogoth is damaged by a piercing or slashing weapon, all creatures adjacent to the nyogoth take 1d6 points of acid damage (2d6 acid damage if the attack is a critical hit)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1018,
+    "record_key": "Nyogoth ~ Acid Spray"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

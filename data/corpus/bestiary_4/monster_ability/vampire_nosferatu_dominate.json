@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vampire (Nosferatu) ~ Dominate",
+    "delivery": "Supernatural",
+    "description": "A nosferatu can crush a humanoid opponent's will as a standard action. Anyone the nosferatu targets must succeed at a Will save (DC %1) or fall instantly under the nosferatu's influence, as though by a dominate person spell (caster level 12th). This ability has a range of 30 feet. At the GM's discretion, some nosferatu (such as a very old one or with an unusually strong bloodline) might be able to affect different creature types with this power.",
+    "description_variables": [
+      "10+HD/2+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:vampire_nosferatu_dominate",
+    "name": "Dominate",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A nosferatu can crush a humanoid opponent's will as a standard action. Anyone the nosferatu targets must succeed at a Will save (DC %1) or fall instantly under the nosferatu's influence, as though by a dominate person spell (caster level 12th). This ability has a range of 30 feet. At the GM's discretion, some nosferatu (such as a very old one or with an unusually strong bloodline) might be able to affect different creature types with this power.|10+HD/2+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Vampire (Nosferatu) ~ Dominate"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1410,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Vampire (Nosferatu) ~ Dominate",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

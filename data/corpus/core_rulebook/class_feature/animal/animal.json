@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Animal Domain",
     "name": "Animal",
-    "class": null,
+    "class": "Cleric",
     "description": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill.",
     "raw_tokens": [
       {
@@ -75,6 +75,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Animal=1|Calm Animals|Animal=2|Hold Animal|Animal=3|Dominate Animal|Animal=4|Summon Nature's Ally IV (Animals Only)|Animal=5|Beast Shape III (Animals Only)|Animal=6|Antilife Shell|Animal=7|Animal Shapes|Animal=8|Summon Nature's Ally VIII (Animals Only)|Animal=9|Shapechange"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Animal],[PREVARLT:AnimalDomain,1]"
       }
     ]
   },
@@ -92,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

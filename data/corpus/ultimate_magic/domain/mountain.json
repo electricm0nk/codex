@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Mountain",
+    "name": "Mountain",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mountain Domain ~ Foothold|PREVARGTEQ:DomainMountainAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mountain Domain ~ Thin Air|PREVARGTEQ:DomainMountainAbilityTriggerLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMountainLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMountainDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMountainTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMountainAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMountainLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMountainDC|10+(DomainMountainLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMountainTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMountainAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Mountain=1|Stone Fist|Mountain=2|Stone Call|Mountain=3|Cloak of Winds|Mountain=4|Stoneskin|Mountain=5|Geyser|Mountain=6|Suffocation|Mountain=7|Flesh to Stone|Mountain=8|Reverse Gravity|Mountain=9|Clashing Rocks"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
+    "line": 19,
+    "record_key": "Mountain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

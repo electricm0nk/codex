@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Lightning Arc",
+    "name": "Lightning Arc",
+    "class": "Blade Skill",
+    "description": "When you expend your psionic focus to penalize an enemy via the Lightning Blade blade skill, if the penalized target is adjacent to you at the end of its next turn, it is dazzled for one round and another enemy within %1 feet of the target takes %2d%3 electricity damage (Ref %4 halves).|LightningArcRange|LightningArcDamageDice|LightningArcDamageDieType|LightningArcDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Lightning Arc"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Blade Skill ~ Lightning Blade"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LightningArcRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LightningArcDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LightningArcDamageDieType|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LightningArcDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you expend your psionic focus to penalize an enemy via the Lightning Blade blade skill, if the penalized target is adjacent to you at the end of its next turn, it is dazzled for one round and another enemy within %1 feet of the target takes %2d%3 electricity damage (Ref %4 halves).|LightningArcRange|LightningArcDamageDice|LightningArcDamageDieType|LightningArcDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LightningArcDC|BladeSkillDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LightningArcRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LightningArcDamageDice|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LightningArcDamageDieType|6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 785,
+    "record_key": "Blade Skill ~ Lightning Arc"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

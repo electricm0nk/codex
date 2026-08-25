@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sanguine Bloodline ~ The Blood Is the Life",
     "name": "The Blood Is the Life",
-    "class": "Sanguine Bloodline",
+    "class": "Sorcerer",
     "description": "You can gain sustenance from the blood of the recently dead. As a standard action, you can drink the blood of a creature that died within the past minute. The creature must be corporeal, must be at least the same size as you, and must have blood. This ability heals you 1d6 hit points and nourishes you as if you'd had a full meal. You may use this ability %1 times per day. This bloodline power replaces grave touch.|Sorcerer_Undead_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

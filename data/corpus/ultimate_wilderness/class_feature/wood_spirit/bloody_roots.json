@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wood Spirit ~ Bloody Roots",
     "name": "Bloody Roots",
-    "class": "Wood Spirit",
+    "class": "Shaman",
     "description": "As a standard action, the shaman can cause a field of thick roots to burrow up from the ground. This ability functions as black tentacles with a caster level equal to the shaman's level. The area is centered on the shaman but remains stationary if she then moves. The shaman is unaffected by the roots. Her allies treat the area as difficult terrain, but the roots don't attack them. The shaman can end the effect as a free action. She can use this ability a number of rounds per day equal to 3 + her Charisma modifier, but these rounds do not need to be consecutive.|3+CHA",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

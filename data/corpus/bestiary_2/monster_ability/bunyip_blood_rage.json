@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Bunyip ~ Blood Rage",
+    "delivery": null,
+    "description": "A bunyip's blood rage ability activates whenever it detects blood in the water using its keen scent, but otherwise functions as the universal monster rule of the same name.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:bunyip_blood_rage",
+    "name": "Blood Rage",
+    "owners": [
+      "bestiary_2:monster:bunyip"
+    ],
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "A bunyip's blood rage ability activates whenever it detects blood in the water using its keen scent, but otherwise functions as the universal monster rule of the same name."
+      },
+      {
+        "key": "KEY",
+        "value": "Bunyip ~ Blood Rage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.50",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:08:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 208,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Bunyip ~ Blood Rage",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

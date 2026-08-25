@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Interceptor ~ Maneuver",
+    "name": "Interceptor ~ Maneuver",
+    "class": "Interceptor",
+    "description": "You can expend your psionic focus as an immediate action when an enemy you threaten attacks one of your allies to make a single melee attack or bull rush attempt against that enemy.  Your attack or bull rush attempt is resolved before the enemy's attack.  If you made a melee attack and it is successful, the struck enemy takes a -%1 penalty on the attack and damage rolls of the attack that triggered this maneuver.|InterceptorTranceBonus",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus as an immediate action when an enemy you threaten attacks one of your allies to make a single melee attack or bull rush attempt against that enemy.  Your attack or bull rush attempt is resolved before the enemy's attack.  If you made a melee attack and it is successful, the struck enemy takes a -%1 penalty on the attack and damage rolls of the attack that triggered this maneuver.|InterceptorTranceBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 699,
+    "record_key": "Interceptor ~ Maneuver"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

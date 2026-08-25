@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Feral Heart ~ Feral Transformation",
+    "name": "Feral Transformation",
+    "class": "Feral Heart",
+    "description": "By expending psionic focus as a free action, your body takes on a more bestial form, granting you a +%1 morale bonus to Strength and Dexterity and to Intimidate checks, but suffering a -2 penalty to Intelligence, Wisdom, and Charisma.  This can be used for %2 rounds per day and can be dismissed as a free action.  While under the effect of feral transformation, you cannot gain psionic focus or use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.|FeralTransformationBonus|FeralTransformationRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Heart ~ Feral Transformation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralTransformationBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralTransformationRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "By expending psionic focus as a free action, your body takes on a more bestial form, granting you a +%1 morale bonus to Strength and Dexterity and to Intimidate checks, but suffering a -2 penalty to Intelligence, Wisdom, and Charisma.  This can be used for %2 rounds per day and can be dismissed as a free action.  While under the effect of feral transformation, you cannot gain psionic focus or use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.|FeralTransformationBonus|FeralTransformationRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralTransformationBonus|max(2,2*floor((SoulknifeLVL+2)/6))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralTransformationRounds|2*SoulknifeLVL+CON+2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,DEX|FeralTransformationBonus|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|INT,WIS,CHA|-2"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Intimidate|FeralTransformationBonus|TYPE=Morale"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2172,
+    "record_key": "Feral Heart ~ Feral Transformation"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

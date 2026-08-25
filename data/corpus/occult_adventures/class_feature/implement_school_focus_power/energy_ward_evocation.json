@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Energy Ward",
     "name": "Energy Ward [Evocation]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to surround yourself in a swirling ward of energy. When you activate this power, you must select acid, cold, electricity, or fire. You gain resistance %1 against that energy type, and whenever a creature hits you with a melee weapon or natural weapon, that creature takes 1d6 points of energy damage of the chosen type. Attacks made with melee weapons with reach don't cause the attacker to take this damage. The energy ward lasts for %2 rounds. You must be at least 7th level to select this focus power.|5*floor((OccultistLvl+5)/6)|OccultistLVL",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Domain Power ~ Painful Smite",
+    "name": "Painful Smite",
+    "description": "Prior to making a melee attack roll, you can choose to convert all damage from that strike into nonlethal damage, adding +%1 to the damage. If you succeed in your attack, as a free action you can make an Intimidate check against your target to demoralize the target. You gain a bonus on your Intimidate check equal to the amount of nonlethal damage dealt by the painful smite. You can use this ability %2 times per day.|WIS|DomainDestructionTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Painful Smite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "Prior to making a melee attack roll, you can choose to convert all damage from that strike into nonlethal damage, adding +%1 to the damage. If you succeed in your attack, as a free action you can make an Intimidate check against your target to demoralize the target. You gain a bonus on your Intimidate check equal to the amount of nonlethal damage dealt by the painful smite. You can use this ability %2 times per day.|WIS|DomainDestructionTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainDestructionTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 280,
+    "record_key": "Domain Power ~ Painful Smite"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

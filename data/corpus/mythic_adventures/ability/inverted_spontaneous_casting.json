@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Inverted Spontaneous Casting",
+    "name": "Inverted Spontaneous Casting",
+    "description": "If you can spontaneously cast cure or inflict spells, you gain the ability to spontaneously cast the opposite type of spell (i.e., you can spontaneously cast inflict spells if you can normally cast cure spells, or cures spell if you can normally cast inflict spells). When spontaneously casting the opposite type of spell, you must use a spell slot that is at least 1 level higher than that of the spell you want to cast. For example, if you can spontaneously cast cure spells and want to spontaneously cast inflict light wounds, you must expend a 2nd-level spell slot.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Inverted Spontaneous Casting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "If you can spontaneously cast cure or inflict spells, you gain the ability to spontaneously cast the opposite type of spell (i.e., you can spontaneously cast inflict spells if you can normally cast cure spells, or cures spell if you can normally cast inflict spells). When spontaneously casting the opposite type of spell, you must use a spell slot that is at least 1 level higher than that of the spell you want to cast. For example, if you can spontaneously cast cure spells and want to spontaneously cast inflict light wounds, you must expend a 2nd-level spell slot."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 194,
+    "record_key": "Mythic Path Ability ~ Inverted Spontaneous Casting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

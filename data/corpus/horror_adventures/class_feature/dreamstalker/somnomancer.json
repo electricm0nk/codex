@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dreamstalker ~ Somnomancer",
+    "name": "Somnomancer",
+    "class": "Mesmerist",
+    "description": "A dreamstalker gains the slumber hex. The dreamstalker's effective witch level is equal to her mesmerist level, and she can activate them only by expending two daily uses of mesmerist tricks. The save DCs for her hexes are Charisma-based. She can take certain additional hexes in place of mesmerist tricks at higher levels. When she would normally gain a new mesmerist trick, she can learn additional spells instead. Each time she does so, she adds two of the available spells of a level she can currently cast to her list of spells known. This alters mesmerist tricks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamstalker ~ Somnomancer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "DESC",
+        "value": "A dreamstalker gains the slumber hex. The dreamstalker's effective witch level is equal to her mesmerist level, and she can activate them only by expending two daily uses of mesmerist tricks. The save DCs for her hexes are Charisma-based. She can take certain additional hexes in place of mesmerist tricks at higher levels. When she would normally gain a new mesmerist trick, she can learn additional spells instead. Each time she does so, she adds two of the available spells of a level she can currently cast to her list of spells known. This alters mesmerist tricks."
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexAbilityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexAbilityLVL|MesmeristLVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC|10+CHA+(WitchHexAbilityLVL/2)|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Witch Hex)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Witch Hex ~ Slumber"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 141,
+    "record_key": "Dreamstalker ~ Somnomancer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

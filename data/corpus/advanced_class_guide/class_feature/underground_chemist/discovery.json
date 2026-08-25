@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Underground Chemist ~ Discovery",
     "name": "Discovery",
-    "class": "Underground Chemist",
+    "class": "Rogue",
     "description": "An underground chemist can select one of the following alchemist discoveries (APG p.28) in place of a rogue talent: concentrate poison, dilution, enhance potion, extend potion, mummification, nauseating flesh, poison conversion, preserve organs, spontaneous healing, or sticky poison. She uses her rogue level as her alchemist level for determining the effects of her discoveries and whether she is able to select one.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

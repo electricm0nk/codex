@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bhuta ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 11th; concentration +17) At will-animal trance (DC 18), speak with animals, veil (self only, as animal with backward feet; DC 22) 3/day-charm animal (DC 17) 1/day-magic jar (animals only, DC 21)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bhuta_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:bhuta"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 11th; concentration +17) At will-animal trance (DC 18), speak with animals, veil (self only, as animal with backward feet; DC 22) 3/day-charm animal (DC 17) 1/day-magic jar (animals only, DC 21)"
+      },
+      {
+        "key": "KEY",
+        "value": "Bhuta ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "BhutaRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "BhutaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 504,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bhuta ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

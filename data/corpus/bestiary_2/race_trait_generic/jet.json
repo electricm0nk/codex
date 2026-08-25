@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Jet",
+    "name": "Jet",
+    "description": "The creature can swim backward as a full-round action at the listed speed.  It must move in a straight line while jetting, and does not provoke attacks of opportunity when it does so.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ModifyMovement.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "JetSpeed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature can swim backward as a full-round action at the listed speed.  It must move in a straight line while jetting, and does not provoke attacks of opportunity when it does so."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft.)|JetSpeed"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1919,
+    "record_key": "Jet"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Arcane Metamastery",
+    "name": "Arcane Metamastery",
+    "description": "As a swift action, you can expend one use of mythic power and pick any one metamagic feat you know that increases the slot level of the spell by 0 or 1 levels. For the next 10 rounds, you can apply this metamagic feat to any arcane spell you cast without increasing the spell slot used or casting time. You can also use this ability on an arcane spell you cast from a scroll, staff, or wand. You can't have more than one use of this ability active at a time. If you use this ability again, any previous use immediately ends (though this doesn't affect spells already cast). You can select this ability more than once. Each time you select this ability, the maximum spell slot level increase of the metamagic feat you can choose goes up by 1, to a maximum of 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Arcane Metamastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Arcane_Metamastery,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Arcane_Metamastery|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend one use of mythic power and pick any one metamagic feat you know that increases the slot level of the spell by 0 or 1 levels. For the next 10 rounds, you can apply this metamagic feat to any arcane spell you cast without increasing the spell slot used or casting time. You can also use this ability on an arcane spell you cast from a scroll, staff, or wand. You can't have more than one use of this ability active at a time. If you use this ability again, any previous use immediately ends (though this doesn't affect spells already cast). You can select this ability more than once. Each time you select this ability, the maximum spell slot level increase of the metamagic feat you can choose goes up by 1, to a maximum of 4."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcane_Metamastery|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 290,
+    "record_key": "Mythic Path Ability ~ Arcane Metamastery"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

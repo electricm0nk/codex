@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Arcane",
     "name": "Arcane Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "While others of your kin are powerful wizards and sorcerers, the eldritch nature of the blood coursing through your veins transforms you into a spell-breaking terror.|PREVAREQ:Bloodrager_Arcane_Description,0",
     "raw_tokens": [
       {
@@ -204,5 +204,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

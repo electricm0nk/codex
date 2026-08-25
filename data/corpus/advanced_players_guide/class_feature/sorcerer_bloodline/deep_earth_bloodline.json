@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sorcerer Bloodline ~ Deep Earth",
     "name": "Deep Earth Bloodline",
-    "class": "Sorcerer Bloodline",
+    "class": "Sorcerer",
     "description": "The echoing cave-songs and the rumble and creak of primal spirits deep below the ground thrum in your soul and in all your family line. You are likely slow, steady, and stable in your thinking, little prone to wandering and preferring to instead find depth in contemplation.|PREVAREQ:Sorcerer_Deep Earth_Description,0",
     "raw_tokens": [
       {
@@ -176,5 +176,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Adept Arcana ~ Critical Strike",
     "name": "Critical Strike",
-    "class": "Adept Arcana",
+    "class": "Adept",
     "description": "Whenever you score a critical hit with a melee weapon, you may cast a spell with a range of touch as a swift action, then make a touch with that spell attack against the target of the critical hit as a free action. You can use this ability once per day.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Shadow Grasp",
+    "name": "Shadow Grasp",
+    "description": "Your darkness spells have substance and bind your foes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Metamagic"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Tenebrous Spell,Umbral Spell"
+      },
+      {
+        "key": "DESC",
+        "value": "Your darkness spells have substance and bind your foes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you cast a spell with the darkness descriptor that affects an area, creatures in the area are entangled. If the spell allows a saving throw, a successful save negates the entangle effect. If the spell does not normally allow a save, a creature can make a Reflex save (DC = the spell's DC if it had a saving throw) to negate the effect. If the spell allows spell resistance, failing to overcome a creature's spell resistance means it is not entangled. &nl;An entangled creature remains so as long as it is in the area of the spell and for 1 round after it leaves. A creature that leaves and reenters the area must make a new saving throw to avoid becoming entangled. Creatures that succeed at a save to resist being entangled do not have to make additional saves if they stay within the darkened area. &nl;You are never impeded by the effects of your spells modified by this feat. A Shadow Grasp spell uses up a slot one level higher than the spell's actual level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_feats.lst",
+    "sha256": "f255f32b2c6894521aee43ebb941009d9cf63e0a34a905a8607bbec5ee203a3c",
+    "line": 10,
+    "record_key": "Shadow Grasp"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

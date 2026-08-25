@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Souls Subdomain",
     "name": "Souls Subdomain",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Deathwatch|Druid=2|Gentle Repose|Druid=3|Animate Dead|Druid=4|Death Ward|Druid=5|Slay Living|Druid=6|Antilife Shell|Druid=7|Destruction|Druid=8|Waves of Exhaustion|Druid=9|Trap the Soul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

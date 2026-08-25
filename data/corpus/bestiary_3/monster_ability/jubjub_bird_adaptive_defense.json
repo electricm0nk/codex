@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jubjub Bird ~ Adaptive Defense",
+    "delivery": "Supernatural",
+    "description": "When first encountered, a jubjub bird has no energy resistance. When damaged by an attack that causes cold, electricity, fire, or sonic damage, it gains resistance 30 to that energy type until the end of its next turn. If an attack causes more than one type of energy damage, the jubjub bird gains resistance 30 to all the types of energy damage dealt.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jubjub_bird_adaptive_defense",
+    "name": "Adaptive Defense",
+    "owners": [
+      "bestiary_3:monster:jubjub_bird"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When first encountered, a jubjub bird has no energy resistance. When damaged by an attack that causes cold, electricity, fire, or sonic damage, it gains resistance 30 to that energy type until the end of its next turn. If an attack causes more than one type of energy damage, the jubjub bird gains resistance 30 to all the types of energy damage dealt."
+      },
+      {
+        "key": "KEY",
+        "value": "Jubjub Bird ~ Adaptive Defense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "TYPE",
+        "value": "JubjubBirdRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.157",
+    "traits": [
+      "JubjubBirdRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1096,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Jubjub Bird ~ Adaptive Defense",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

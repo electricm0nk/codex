@@ -770,7 +770,20 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // never through `data/corpus/`'s own, separately-screened JSON) --
         // `gen_cache_equipment_gap`'s JSON-write path already excluded it
         // correctly; this generator's OWN output did not, until now.
-        assert_eq!(count(EQUIPMENT_BOOK_UE), 1613);
+        //
+        // SD-32 T9 onboarding (card 11): re-derived pre-existing red,
+        // unrelated to this cycle's own group-E rename fix -- this
+        // catalog (`hand_authored_equipment_rows`) chains
+        // `ue::equipment_tables::{equipment_tables,equipmod_tables}()`
+        // verbatim with NO `declared_pi_at`/NAMEISPI screening of its own
+        // (confirmed: no such call anywhere in this function), so its row
+        // count is exactly that static table's length and does not move
+        // with `cache_gen::ultimate_equipment`'s corpus-JSON generator.
+        // `src/rules_core/rules_tables/ultimate_equipment/equipment_tables.rs`
+        // is byte-identical to this branch's own pinned base (`git diff`
+        // against `origin/tranche/12` is empty), so 1614 was already the
+        // real count before this cycle touched anything -- 1613 was stale.
+        assert_eq!(count(EQUIPMENT_BOOK_UE), 1614);
         // SD28-E15: UM's 26-record equipment table (24 General + 2
         // ArmsArmor). Re-derived from the catalog itself, not by hand-adding
         // 26 to the old 5,477 total -- also independently confirmed the 26
@@ -820,7 +833,34 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // count is unchanged; this card's file grant never touches a
         // hand-authored table.
         assert_eq!(hand_authored_equipment_rows().len(), 6_146);
-        assert_eq!(rows.len(), 7_817);
+        // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off: the
+        // gap lane's own row count grew by 49 (1,671 -> 1,720; two more
+        // already-compiled books, inner_sea_temples 43 + inner_sea_magic 6),
+        // so the total grows by the same 49 (7,817 -> 7,866). Hand-authored
+        // count is unchanged.
+        // SD-32 T9 residual (`decisions.md §20`): the gap lane's own row
+        // count grew by another 159 (1,720 -> 1,879; `cache_gen::equipment_
+        // gap::book_routing` had no arm for `ISTEM`/`ISM` at all, silently
+        // dropping rows the table already generated -- fixed, +0 new rows,
+        // just unblocked; `ISM` also regained its `ism_equipmods.lst`
+        // citations on a stale exclusion, +62; the new `adventurers_guide`
+        // book adds +97; the new `ultimate_magic` book adds +0, see
+        // `tests/equipment_gap_tables.rs`), so the total grows by the same
+        // 159 (7,866 -> 8,025). Hand-authored count is unchanged.
+        //
+        // SD-32 T9 onboarding (card 11): re-derived pre-existing red. At
+        // this cycle's PIN, `equipment_gap_tables.rs`'s own header already
+        // stated "Total: 1953 rows" -- 74 more than the 1,879 this pinned
+        // lineage's arithmetic assumes (6,146 + 1,879 = 8,025) -- an
+        // untraced drift from an earlier cycle's regen that updated the
+        // generated table without updating this pinned total. This cycle's
+        // own group-C fix (`decisions.md §20` residual: `ag_equipmods.lst`
+        // was absent from `adventurers_guide`'s `BOOK_INPUTS`) adds the
+        // real, evidenced +1 (1,953 -> 1,954, one `equipment_modifier` row,
+        // `cargo run --locked --bin gen_equipment_gap_tables`'s own diff:
+        // 3 insertions, 2 deletions, all in the `adventurers_guide` block).
+        // Retargeted to the proven total: 6,146 + 1,954 = 8,100.
+        assert_eq!(rows.len(), 8_100);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.
@@ -1005,6 +1045,15 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // exact list from a fresh, isolated `cargo test --lib
         // equipment_resolver::tests::the_two_lookups_agree` run against
         // this cycle's own final state.
+        //
+        // GREW 19 -> 20, SD-32 T9 residual (`decisions.md §20`): the new
+        // `adventurers_guide` gap book (see the `rows.len()` assertion
+        // above) adds `"Rod (Storm Kindler's)"` (`ag_equip_magic_items.lst`,
+        // `AG`) -- same shape as every entry above, a corpus gap row's
+        // `KEY:` coincidentally matching a string
+        // `equipment_cost_gp_headless_resolve`'s free-form, CRB-precedence
+        // matching resolves to a different real `Rod` row. Both records are
+        // real; not this cycle's file grant to fix.
         assert_eq!(
             disagreements,
             vec![
@@ -1026,6 +1075,7 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
                 "OBSIDIAN",
                 "REACH",
                 "ROPE",
+                "Rod (Storm Kindler's)",
                 "Wooden",
             ],
             "a cross-book identity collision outside this pinned set means a newly ambiguous id \

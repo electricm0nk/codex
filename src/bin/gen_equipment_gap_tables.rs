@@ -40,7 +40,8 @@ use std::collections::{BTreeSet, HashMap};
 use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 
-use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
+use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
+use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UM, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
 use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
 use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
@@ -96,30 +97,35 @@ fn blacklist_hit(text: &str) -> Option<&'static str> {
 /// while the real screen has been removed or bypassed (wave-12 adversarial
 /// review CONFIRMED the prior test defined its own local re-implementation
 /// instead, which survived deletion of the whole production screen).
+///
+/// **`decisions.md §24` (SD-32):** a name-PI row is no longer excluded from
+/// the compiled table -- `main()`'s caller renames it (`neutral_name`/
+/// `neutral_key`, coordinate-derived) rather than dropping it, because a
+/// row this generator drops here can NEVER reach `data/corpus/` at all
+/// (`cache_gen::equipment_gap::generate()` only ever iterates rows THIS
+/// table already contains). `ScreenOutcome` therefore always keeps the
+/// record now; `name_is_pi` tells the caller whether to rename it.
 enum ScreenOutcome {
-    /// The record's own corpus row declares `NAMEISPI:YES` -- a name cannot
-    /// be redacted, so the whole record is excluded.
-    ExcludedDeclaredName,
-    /// The record's `name`/`key` hits the blacklist term scan even though
-    /// nothing declared it -- same exclusion, undeclared shape.
-    ExcludedBlacklistName,
-    /// The record survives screening, carrying whichever redaction(s) fired
-    /// so the caller's receipt counters stay accurate.
-    Kept { record: ParsedRecord, description_pi_redacted: bool, description_blacklist_redacted: bool },
+    Kept {
+        record: ParsedRecord,
+        /// `declared.name` OR a blacklist hit on `key`/`name` -- the
+        /// caller renames the record under a Codex-generated neutral
+        /// identity when this is `true` (`§24b`-1: never derived from the
+        /// original name, only from coordinates the caller already has).
+        name_is_pi: bool,
+        description_pi_redacted: bool,
+        description_blacklist_redacted: bool,
+    },
 }
 
 fn screen_record(mut record: ParsedRecord, declared: DeclaredProductIdentity) -> ScreenOutcome {
-    if declared.name {
-        return ScreenOutcome::ExcludedDeclaredName;
-    }
     let mut description_pi_redacted = false;
     if declared.description {
         description_pi_redacted = true;
         record.description = Some(REDACTED_PI_MARKER.to_string());
     }
-    if blacklist_hit(&record.name).is_some() || blacklist_hit(&record.key).is_some() {
-        return ScreenOutcome::ExcludedBlacklistName;
-    }
+    let name_is_pi =
+        declared.name || blacklist_hit(&record.name).is_some() || blacklist_hit(&record.key).is_some();
     let mut description_blacklist_redacted = false;
     if let Some(desc) = &record.description
         && blacklist_hit(desc).is_some()
@@ -127,7 +133,7 @@ fn screen_record(mut record: ParsedRecord, declared: DeclaredProductIdentity) ->
         description_blacklist_redacted = true;
         record.description = Some(REDACTED_PI_MARKER.to_string());
     }
-    ScreenOutcome::Kept { record, description_pi_redacted, description_blacklist_redacted }
+    ScreenOutcome::Kept { record, name_is_pi, description_pi_redacted, description_blacklist_redacted }
 }
 
 // SD31-E6-F10-003: short codes for 13 further already-compiled books that
@@ -161,6 +167,34 @@ const EQUIPMENT_BOOK_MYTHIC: &str = "MYTHIC";
 const EQUIPMENT_BOOK_ISC: &str = "ISC";
 const EQUIPMENT_BOOK_ISI: &str = "ISI";
 const EQUIPMENT_BOOK_BOTD2: &str = "BOTD2";
+// SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off -- two more
+// already-compiled books extended into this gap lane, same shape as the
+// arms immediately above. Both are genuine new-content books (not
+// previously in `equipment_book_slug_for`'s match at all), so a new
+// `equipment_book_slug_for` arm is needed for each -- see that function's
+// own edit note in `v06_work_inventory.rs`.
+const EQUIPMENT_BOOK_ISTEM: &str = "ISTEM";
+const EQUIPMENT_BOOK_ISM: &str = "ISM";
+// SD-32 T9 residual (`decisions.md §20`): `adventurers_guide` had no
+// `BOOK_INPUT` entry at all -- 115 `not-ingested` equipment units, the
+// single largest un-covered `equipment`-kind population, re-derived
+// against the pinned oracle. Same shape as the arms immediately above:
+// a genuine new-content book, routed in `cache_gen::equipment_gap`'s
+// `book_routing` alongside this constant.
+const EQUIPMENT_BOOK_AG: &str = "AG";
+// SD-32 `sd32-beginner-box-ingest`: `beginner_box` never had a `BOOK_INPUT`
+// entry at all -- decisions.md §27b overturns the operator's earlier
+// 2026-07-27 "redundant to other tomes, will not be brought in" disposition
+// (`v06_work_inventory.rs`'s `out_of_scope` set carried that note; removed
+// alongside this arm). §27b: "no 'unregistered book' exemption" and "the
+// only admissible reason for a unit not to close is a hard impossibility --
+// the source data does not exist, or licensing forbids shipping it". Both
+// `bbox_equip_magic_items.lst` and `bbox_equip_arms_armor.lst` are present
+// in the pinned oracle and carry ordinary OGC equipment mechanics, so
+// neither applies. Same shape as `AG`/`ISTEM`/`ISM` above: a genuine
+// new-content book, routed in `cache_gen::equipment_gap`'s `book_routing`
+// alongside this constant.
+const EQUIPMENT_BOOK_BB: &str = "BB";
 
 /// Refuses to ship a description whose rendering the player would see as
 /// broken PCGen syntax -- an unsubstituted `%N`/`%<KEYWORD>` reference or a
@@ -440,6 +474,82 @@ const BOOK_INPUTS: &[BookInput] = &[
         slug: "book_of_the_damned_volume_2",
         files: &["pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_equip.lst"],
     },
+    // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off. Three
+    // files per `docs/work-inventory.json`'s own `source_file` field over
+    // this book's `not-ingested` equipment population -- re-derived by
+    // direct read of `fresh_inventory.json`, not guessed from a directory
+    // glob.
+    BookInput {
+        code: EQUIPMENT_BOOK_ISTEM,
+        slug: "inner_sea_temples",
+        files: &[
+            "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_magic_items.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_arm_armor.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_general.lst",
+        ],
+    },
+    // SD-32 T9 residual: the doc comment this replaced ("`ism_equipmods.lst`
+    // is deliberately NOT named here ... zero not-ingested equipment units
+    // for that file") went stale -- re-derived against the pinned oracle,
+    // `docs/work-inventory.json` now carries 62 `not-ingested`
+    // `equipment_modifier` units citing `ism_equipmods.lst` (kind, not the
+    // `equipment` kind the retired comment checked). Added back in.
+    BookInput {
+        code: EQUIPMENT_BOOK_ISM,
+        slug: "inner_sea_magic",
+        files: &[
+            "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equip.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_equipmods.lst",
+        ],
+    },
+    // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUT` entry at
+    // all -- see `EQUIPMENT_BOOK_AG`'s doc comment above.
+    //
+    // Cause C (`t9-onboarding-equipment-modifier-ability-rootcause` receipt,
+    // group C): `ag_equipmods.lst` was simply absent from this `files` list,
+    // so the book's one `equipment_modifier` object ("Medium Grey Maiden
+    // Plate ~ Agile Maiden ~ Armor" et al) was never read at all -- a
+    // genuine ingest gap, not a citation defect. Added back in; the
+    // `_equipmods` basename check at `equipment_book_slug_for`/the category
+    // classifier below routes it to `equipment_modifier` automatically.
+    BookInput {
+        code: EQUIPMENT_BOOK_AG,
+        slug: "adventurers_guide",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_general.lst",
+            "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_magic_items.lst",
+            "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equipmods.lst",
+        ],
+    },
+    // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already
+    // routed in `equipment_resolver.rs`'s compiled catalog) had no
+    // `BOOK_INPUT` entry -- 19 `not-ingested` equipment units, re-derived
+    // against the pinned oracle. `pfs_um_equip_general.lst` is a real
+    // Pathfinder Society legality-overlay file cited by some of those
+    // units, same shape as `_pfs/pfs_acg_equip.lst` elsewhere in this list.
+    BookInput {
+        code: EQUIPMENT_BOOK_UM,
+        slug: "ultimate_magic",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+            "pathfinder/paizo/roleplaying_game/ultimate_magic/_pfs/pfs_um_equip_general.lst",
+        ],
+    },
+    // SD-32 `sd32-beginner-box-ingest` (`decisions.md §27b`): `beginner_box`
+    // had no `BOOK_INPUT` entry at all -- 19 `equipment`-kind units (14
+    // `no_record`, 5 cross-book-name-matched `no_formula_tokens`), the whole
+    // of `docs/work-inventory.json`'s `beginner_box` population, re-derived
+    // against the pinned oracle. Both files live directly under the book's
+    // own corpus directory (no shared-library host-discovery hazard).
+    BookInput {
+        code: EQUIPMENT_BOOK_BB,
+        slug: "beginner_box",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+            "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_arms_armor.lst",
+        ],
+    },
 ];
 
 /// One parsed corpus record, before the already-held filter runs.
@@ -468,11 +578,39 @@ struct ParsedRecord {
     /// by `gen_cache_equipment_gap` but was STILL compiled into this file's
     /// own `INNER_SEA_RACES_GAP_ROWS` static before this fix.
     line: u32,
+    /// `decisions.md §24`: `Some((file, line))` when `key`/`name` above
+    /// have ALREADY been overwritten with the Codex-generated neutral
+    /// identity -- carries the real citation forward so `cache_gen::
+    /// equipment_gap::generate` can resolve the record's true corpus
+    /// location directly, without text-searching the LST for a `key`/
+    /// `name` that no longer appears there (it now reads
+    /// "Codex-Named Unit (...)"). `file` is relative to the BOOK's own
+    /// directory (matching `find_citation`'s own return shape), not to
+    /// `PCGEN_CORPUS_ROOT`. `None` for an ordinary (non-renamed) row.
+    name_pi_citation: Option<(String, u32)>,
 }
 
 /// The catalog category a `.lst` basename declares. `_equipmods` is tested
 /// before `_equip` for the same reason `file_kind` tests it first: every
 /// equipmods basename also contains `_equip`.
+/// `decisions.md §24`: the path a renamed row's citation must carry --
+/// relative to the BOOK's own directory, matching `cache_gen::
+/// equipment_gap::find_citation`'s own return shape (which
+/// `PathBuf::strip_prefix`s the book directory), not `PCGEN_CORPUS_ROOT`.
+/// `rel` is one of `BookInput.files`'s entries (always
+/// `.../<slug>/...`); everything after the LAST `/<slug>/` marker is the
+/// book-relative path, preserving any `_pfs/`-style subdirectory. Falls
+/// back to the bare filename if the marker is somehow absent (never
+/// observed -- every `BookInput.files` entry is rooted under its own
+/// `slug` directory by construction).
+fn book_relative_path(rel: &str, slug: &str) -> String {
+    let marker = format!("/{slug}/");
+    match rel.find(&marker) {
+        Some(idx) => rel[idx + marker.len()..].to_string(),
+        None => Path::new(rel).file_name().and_then(|f| f.to_str()).unwrap_or(rel).to_string(),
+    }
+}
+
 fn category_for(basename: &str) -> &'static str {
     if basename.contains("_equipmods") {
         "Equipmods"
@@ -701,7 +839,16 @@ fn parse_lst(text: &str, category: &'static str, base_fields: &HashMap<String, B
             }
         }
 
-        out.push(ParsedRecord { key, name, category, cost_gp, weight_lbs, description: safe_description(description), line: line_number });
+        out.push(ParsedRecord {
+            key,
+            name,
+            category,
+            cost_gp,
+            weight_lbs,
+            description: safe_description(description),
+            line: line_number,
+            name_pi_citation: None,
+        });
     }
     out
 }
@@ -790,19 +937,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // real per-record parse), and re-reading from disk a second time
         // risks a race against nothing (files are static) but is simply
         // wasted I/O; read once, use twice.
-        let mut file_texts: Vec<(PathBuf, String, String)> = Vec::new();
+        let mut file_texts: Vec<(PathBuf, String, String, String)> = Vec::new();
         for rel in input.files {
             let path = root.join(rel);
             let text = std::fs::read_to_string(&path)
                 .map_err(|e| format!("{}: {e}", path.display()))?;
             let basename = Path::new(rel).file_name().unwrap().to_string_lossy().into_owned();
-            file_texts.push((path, basename, text));
+            // `decisions.md §24`: the citation `cache_gen::equipment_gap::
+            // generate` needs for a renamed row is relative to the BOOK's
+            // own directory (matching `find_citation`'s own return shape),
+            // not just the bare filename -- several books cite a `_pfs/`
+            // subdirectory file, and `basename` alone would lose that.
+            let book_rel = book_relative_path(rel, input.slug);
+            file_texts.push((path, basename, book_rel, text));
         }
         let base_fields = collect_base_fields(
-            &file_texts.iter().map(|(_, _, t)| t.clone()).collect::<Vec<_>>(),
+            &file_texts.iter().map(|(_, _, _, t)| t.clone()).collect::<Vec<_>>(),
         );
 
-        for (path, basename, text) in &file_texts {
+        for (path, basename, book_rel, text) in &file_texts {
             for record in parse_lst(text, category_for(basename), &base_fields) {
                 let already = held
                     .get(input.code)
@@ -822,32 +975,41 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // own doc comment for why this generator needed its own
                 // copy of this check rather than relying on `gen_cache_
                 // equipment_gap`'s separate JSON-write-path screen. A
-                // declared-PI name is a hard exclude (a name cannot be
-                // redacted, `pi_screening::DeclaredProductIdentity::name`'s
-                // own doc comment); a declared-PI description is redacted to
-                // the marker, same as every other PI-screened description in
-                // this program. `screen_record` (below) is the real
-                // production screen; `blacklist_screen_tests` drives THIS
-                // function directly rather than a hand-rolled restatement
-                // that cannot detect it being removed (wave-12 adversarial
-                // review CONFIRMED the prior in-test `fn screen` was a gate
-                // that could not fail).
+                // declared-PI name USED to be a hard exclude; `decisions.md
+                // §24` supersedes that -- see `screen_record`'s own doc
+                // comment for why a row excluded HERE could never reach
+                // `data/corpus/` at all. A declared-PI description is still
+                // redacted to the marker, same as every other PI-screened
+                // description in this program. `screen_record` (below) is
+                // the real production screen; `blacklist_screen_tests`
+                // drives THIS function directly rather than a hand-rolled
+                // restatement that cannot detect it being removed (wave-12
+                // adversarial review CONFIRMED the prior in-test `fn
+                // screen` was a gate that could not fail).
                 let declared = declared_pi_at(path, record.line);
                 match screen_record(record, declared) {
-                    ScreenOutcome::ExcludedDeclaredName => {
-                        name_pi_excluded += 1;
-                        continue;
-                    }
-                    ScreenOutcome::ExcludedBlacklistName => {
-                        blacklist_name_excluded += 1;
-                        continue;
-                    }
-                    ScreenOutcome::Kept { record, description_pi_redacted: d1, description_blacklist_redacted: d2 } => {
+                    ScreenOutcome::Kept { mut record, name_is_pi, description_pi_redacted: d1, description_blacklist_redacted: d2 } => {
                         if d1 {
                             description_pi_redacted += 1;
                         }
                         if d2 {
                             blacklist_description_redacted += 1;
+                        }
+                        if name_is_pi {
+                            // `decisions.md §24` -- ingest under a
+                            // Codex-generated neutral name derived ONLY
+                            // from (kind, book, source_file, source_line),
+                            // never from the original PI name (which this
+                            // branch does not even read to compute it).
+                            if declared.name {
+                                name_pi_excluded += 1;
+                            } else {
+                                blacklist_name_excluded += 1;
+                            }
+                            let kind = if record.category == "Equipmods" { "equipment_modifier" } else { "equipment" };
+                            record.name_pi_citation = Some((book_rel.clone(), record.line));
+                            record.key = neutral_key(kind, input.slug, book_rel, record.line);
+                            record.name = neutral_name(kind, input.slug, book_rel, record.line);
                         }
                         rows.push(record);
                     }
@@ -867,7 +1029,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         for row in &rows {
             writeln!(
                 body,
-                "    EquipmentGapRow {{ book: {}, key: {}, name: {}, category: {}, cost_gp: {}, weight_lbs: {}, description: {} }},",
+                "    EquipmentGapRow {{ book: {}, key: {}, name: {}, category: {}, cost_gp: {}, weight_lbs: {}, description: {}, name_pi_citation: {} }},",
                 rust_string(input.code),
                 rust_string(&row.key),
                 rust_string(&row.name),
@@ -876,6 +1038,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 rust_f64(row.weight_lbs),
                 match &row.description {
                     Some(d) => format!("Some({})", rust_string(d)),
+                    None => "None".to_string(),
+                },
+                match &row.name_pi_citation {
+                    Some((file, line)) => format!("Some(({}, {line}))", rust_string(file)),
                     None => "None".to_string(),
                 }
             )?;
@@ -906,6 +1072,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
          //! (`SD31-E6-F6-001`, `OPEN-ISSUES.md` rows 70/103) — never fabricated,\n\
          //! never inherited past one hop.\n\
          //!\n\
+         //! `decisions.md §24`: a row whose real `key`/`name` is Product Identity\n\
+         //! (declared `NAMEISPI:YES` or a blacklist hit) is no longer excluded\n\
+         //! whole — it is INCLUDED under a Codex-generated neutral `key`/`name`\n\
+         //! (`name_pi_citation` is `Some` for exactly these rows).\n\
+         //!\n\
          //! Total: {total} rows.\n"
     )?;
     writeln!(
@@ -928,6 +1099,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
          \x20   pub cost_gp: Option<f64>,\n\
          \x20   pub weight_lbs: Option<f64>,\n\
          \x20   pub description: Option<&'static str>,\n\
+         \x20   /// `decisions.md §24`: `Some((source_file, source_line))`\n\
+         \x20   /// ONLY when `key`/`name` above are a Codex-generated neutral\n\
+         \x20   /// identity (the row's real name/key is Product Identity) --\n\
+         \x20   /// carries the real citation so `cache_gen::equipment_gap::\n\
+         \x20   /// generate` can resolve it directly instead of text-searching\n\
+         \x20   /// for a `key`/`name` the real corpus no longer contains.\n\
+         \x20   /// `source_file` is relative to the book's own directory.\n\
+         \x20   /// `None` for an ordinary row.\n\
+         \x20   pub name_pi_citation: Option<(&'static str, u32)>,\n\
          }}\n"
     )?;
     writeln!(
@@ -965,13 +1145,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     println!("pi-screening: CLEAN (0 hits over the generated text)");
     println!(
-        "declared-pi (§53.5): {name_pi_excluded} name(s) excluded whole, \
-         {description_pi_redacted} description(s) redacted to {REDACTED_PI_MARKER:?}"
+        "declared-pi (§53.5): {name_pi_excluded} name(s) renamed under a Codex-generated \
+         neutral identity (decisions.md §24), {description_pi_redacted} description(s) \
+         redacted to {REDACTED_PI_MARKER:?}"
     );
     println!(
         "blacklist-screen (per-record, §52.3-equivalent): {blacklist_name_excluded} name/key \
-         hit(s) excluded whole, {blacklist_description_redacted} description(s) redacted to \
-         {REDACTED_PI_MARKER:?}"
+         hit(s) renamed under a Codex-generated neutral identity (decisions.md §24), \
+         {blacklist_description_redacted} description(s) redacted to {REDACTED_PI_MARKER:?}"
     );
     Ok(())
 }
@@ -1366,43 +1547,45 @@ mod blacklist_screen_tests {
                 weight_lbs: None,
                 description: description.map(|d| d.to_string()),
                 line: 1,
+                name_pi_citation: None,
             }
         }
         let clean = DeclaredProductIdentity::default();
 
         match screen_record(record("Altar of Desna", None), clean) {
-            ScreenOutcome::ExcludedBlacklistName => {}
-            _ => panic!("a blacklisted NAME must exclude the whole record"),
+            ScreenOutcome::Kept { name_is_pi, .. } => {
+                assert!(name_is_pi, "a blacklisted NAME must be flagged for rename (decisions.md §24), never dropped")
+            }
         }
 
         match screen_record(
             record("Cloak Of The Night Sky", Some("...If Desna is the wearer's patron...")),
             clean,
         ) {
-            ScreenOutcome::Kept { record, description_pi_redacted, description_blacklist_redacted } => {
+            ScreenOutcome::Kept { record, name_is_pi, description_pi_redacted, description_blacklist_redacted } => {
+                assert!(!name_is_pi, "the NAME itself carries no blacklisted term");
                 assert_eq!(record.description.as_deref(), Some(REDACTED_PI_MARKER));
                 assert!(!description_pi_redacted, "not a DECLARED hit -- must count as the blacklist counter, not the declared one");
                 assert!(description_blacklist_redacted);
             }
-            _ => panic!("a blacklisted free-text DESCRIPTION must redact and keep the record"),
         }
 
         match screen_record(record("Masterwork Backpack", Some("A sturdy pack.")), clean) {
-            ScreenOutcome::Kept { record, description_pi_redacted, description_blacklist_redacted } => {
+            ScreenOutcome::Kept { record, name_is_pi, description_pi_redacted, description_blacklist_redacted } => {
+                assert!(!name_is_pi);
                 assert_eq!(record.description.as_deref(), Some("A sturdy pack."));
                 assert!(!description_pi_redacted);
                 assert!(!description_blacklist_redacted);
             }
-            _ => panic!("a clean record must be kept with its description untouched"),
         }
     }
 
-    /// A DECLARED `NAMEISPI:YES` excludes the record even when its name
-    /// carries no blacklist term at all -- the two exclusion paths
-    /// (`ExcludedDeclaredName`/`ExcludedBlacklistName`) are genuinely
-    /// distinct branches, not one path double-counted as the other.
+    /// A DECLARED `NAMEISPI:YES` flags the record for rename even when its
+    /// name carries no blacklist term at all -- the two `name_is_pi`
+    /// triggers (`declared.name` / blacklist hit) are genuinely distinct
+    /// conditions, not one path double-counted as the other.
     #[test]
-    fn a_declared_name_hit_excludes_even_with_no_blacklist_term() {
+    fn a_declared_name_hit_is_flagged_for_rename_even_with_no_blacklist_term() {
         let record = ParsedRecord {
             key: "Belkzen Battle Standard".to_string(),
             name: "Belkzen Battle Standard".to_string(),
@@ -1410,12 +1593,63 @@ mod blacklist_screen_tests {
             cost_gp: None,
             weight_lbs: None,
             description: None,
+            name_pi_citation: None,
             line: 1,
         };
         let declared = DeclaredProductIdentity { name: true, description: false };
         match screen_record(record, declared) {
-            ScreenOutcome::ExcludedDeclaredName => {}
-            _ => panic!("a declared NAMEISPI:YES record must be excluded via the declared path"),
+            ScreenOutcome::Kept { name_is_pi, .. } => {
+                assert!(name_is_pi, "a declared NAMEISPI:YES record must be flagged for rename")
+            }
         }
+    }
+
+    /// End-to-end `decisions.md §24` proof against `main()`'s real caller
+    /// logic (mirrored here rather than driving the whole binary): a
+    /// name-PI row must be KEPT under a Codex-generated neutral
+    /// `key`/`name`, carrying its real citation on `name_pi_citation` so
+    /// the corpus-dump step can still find it, and the returned identity
+    /// must never contain the original PI-shaped string.
+    #[test]
+    fn a_renamed_row_carries_a_neutral_identity_and_its_real_citation() {
+        let record = ParsedRecord {
+            key: "Belkzen Battle Standard".to_string(),
+            name: "Belkzen Battle Standard".to_string(),
+            category: "General",
+            cost_gp: None,
+            weight_lbs: None,
+            description: None,
+            name_pi_citation: None,
+            line: 7,
+        };
+        let declared = DeclaredProductIdentity { name: true, description: false };
+        let ScreenOutcome::Kept { mut record, name_is_pi, .. } = screen_record(record, declared);
+        assert!(name_is_pi);
+        // Mirrors `main()`'s own post-`screen_record` rename block.
+        let book_rel = "isr_equip.lst";
+        record.name_pi_citation = Some((book_rel.to_string(), record.line));
+        record.key = neutral_key("equipment", "inner_sea_races", book_rel, record.line);
+        record.name = neutral_name("equipment", "inner_sea_races", book_rel, record.line);
+
+        assert!(record.name.starts_with("Codex-Named Unit ("));
+        assert!(record.key.starts_with("Codex-Named Unit ("));
+        assert!(!record.name.contains("Belkzen"));
+        assert!(!record.key.contains("Belkzen"));
+        assert_eq!(record.name_pi_citation, Some(("isr_equip.lst".to_string(), 7)));
+    }
+
+    #[test]
+    fn book_relative_path_strips_everything_before_the_book_slug_directory() {
+        assert_eq!(
+            book_relative_path(
+                "pathfinder/paizo/roleplaying_game/ultimate_magic/_pfs/pfs_um_equip_general.lst",
+                "ultimate_magic"
+            ),
+            "_pfs/pfs_um_equip_general.lst"
+        );
+        assert_eq!(
+            book_relative_path("pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst", "inner_sea_gods"),
+            "isg_equip.lst"
+        );
     }
 }

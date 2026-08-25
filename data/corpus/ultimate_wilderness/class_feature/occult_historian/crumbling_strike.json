@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Occult Historian ~ Crumbling Strike",
+    "name": "Crumbling Strike",
+    "class": "Occultist",
+    "description": "An occult historian can channel the erosion of countless ages into a single melee strike. As a full-round action, the occult historian can make a melee attack against a single target at her highest base attack bonus. If she hits, she deals %1d6 points of damage. If the target succeeds at a Fortitude save (DC %2), it takes only 5d6 points of damage. A creature slain by this attack crumbles to dust. The occult historian can use this ability once per day, plus an additional time per day at 16th and 20th levels. This replaces the additional questions granted by outside contact 2, 3, and 4.|min(40,OccultistLVL*2)|10+OccultistLVL/2+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occult Historian ~ Crumbling Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.OccultHistorianClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An occult historian can channel the erosion of countless ages into a single melee strike. As a full-round action, the occult historian can make a melee attack against a single target at her highest base attack bonus. If she hits, she deals %1d6 points of damage. If the target succeeds at a Fortitude save (DC %2), it takes only 5d6 points of damage. A creature slain by this attack crumbles to dust. The occult historian can use this ability once per day, plus an additional time per day at 16th and 20th levels. This replaces the additional questions granted by outside contact 2, 3, and 4.|min(40,OccultistLVL*2)|10+OccultistLVL/2+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 149,
+    "record_key": "Occult Historian ~ Crumbling Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

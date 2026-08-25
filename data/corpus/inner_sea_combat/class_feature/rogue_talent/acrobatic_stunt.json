@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Acrobatic Stunt",
     "name": "Acrobatic Stunt",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "Once per day, when flanked by at least two opponents, a rogue with this talent can, as an immediate action when any of the threatening opponents attacks her, attempt an Acrobatics check against the highest CMD of the threatening creatures plus 2 per threatening creature beyond the second. If successful, the rogue may take a 5-foot step in any direction, so long as she remains within the reach of the attacker triggering the movement. The rogue's final position is used to determine whether the attacker benefits from flanking. On a failed check, the rogue falls prone in her original position and the attack resolves as normal (the opponent gains a +4 bonus for attacking a prone target). A rogue may use this ability one additional time per day for every 5 rogue levels she possesses. A rogue must be trained in Acrobatics to select this talent.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

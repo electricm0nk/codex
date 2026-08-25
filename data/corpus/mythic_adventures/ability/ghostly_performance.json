@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Ghostly Performance",
+    "name": "Ghostly Performance",
+    "description": "Whenever you use bardic performance, you don't need to spend an action to maintain the effect. This means you can maintain the performance if paralyzed or stunned, although it still ends if you are unconscious or dead. You must still expend rounds of bardic performance to continue the effect. Once you start a performance, its effect continues whether or not the subjects can perceive you or the performance. When the performance ends, its effects linger for %1 rounds. This extended duration stacks with any other abilities that extend the duration of your performance, such as Lingering Performance. This ability doesn't change how many active performances you can have at once.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Ghostly Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you use bardic performance, you don't need to spend an action to maintain the effect. This means you can maintain the performance if paralyzed or stunned, although it still ends if you are unconscious or dead. You must still expend rounds of bardic performance to continue the effect. Once you start a performance, its effect continues whether or not the subjects can perceive you or the performance. When the performance ends, its effects linger for %1 rounds. This extended duration stacks with any other abilities that extend the duration of your performance, such as Lingering Performance. This ability doesn't change how many active performances you can have at once.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 176,
+    "record_key": "Mythic Path Ability ~ Ghostly Performance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

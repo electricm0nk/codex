@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Antipaladin Archetype ~ Rough Rampager",
     "name": "Rough Rampager",
-    "class": "Antipaladin Archetype",
+    "class": "Antipaladin",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -51,6 +51,46 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.43"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Antipaladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Antipaladin Archetype ~ Rough Rampager],[!PREFACT:1,ABILITIES,Antipaladin_Archetype_AuraOfCowardice=True,Antipaladin_Archetype_AuraOfDespair=True,Antipaladin_Archetype_AuraOfSin=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfCowardice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfDespair|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfSin|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfCowardice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfDespair|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfSin|true"
       }
     ]
   },
@@ -67,5 +107,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

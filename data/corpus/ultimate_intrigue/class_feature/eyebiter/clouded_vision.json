@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Eyebiter ~ Clouded Vision",
+    "name": "Clouded Vision",
+    "class": "Mesmerist",
+    "description": "At 3rd level, the eyebiter can use this ocular occlusion to cause the target to become dazzled for 1 minute and suffer a 20%% miss chance on all attacks the target makes against opponents within 60 feet. Opponents more than 60 feet away have total concealment from the target.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eyebiter ~ Clouded Vision"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "OcularOcclusion_LVL_1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, the eyebiter can use this ocular occlusion to cause the target to become dazzled for 1 minute and suffer a 20%% miss chance on all attacks the target makes against opponents within 60 feet. Opponents more than 60 feet away have total concealment from the target."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Ocular Occlusion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 63,
+    "record_key": "Eyebiter ~ Clouded Vision"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

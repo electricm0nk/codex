@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Consigliere ~ Convincing Attitude",
+    "name": "Convincing Attitude",
+    "class": "Rogue",
+    "description": "A consigliere gains Persuasive as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Consigliere ~ Convincing Attitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.ConsigliereClassFeatures.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A consigliere gains Persuasive as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": " He gains the certainty [Diplomacy] rogue talent.|PRECLASS:1,Rogue=2"
+      },
+      {
+        "key": "DESC",
+        "value": " If a consigliere attempts a Diplomacy check and fails to influence a creature's attitude by 5 or more, the creature's attitude remains unchanged instead of decreasing by one step.|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Persuasive"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Certainty ~ Diplomacy|PRECLASS:1,Rogue=2|PREABILITY:1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 31,
+    "record_key": "Unchained Consigliere ~ Convincing Attitude"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

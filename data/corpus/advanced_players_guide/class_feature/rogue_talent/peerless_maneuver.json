@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Peerless Maneuver",
     "name": "Peerless Maneuver",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "%1/day, a rogue with this talent can roll two dice while making an Acrobatics check, and take the better result. She must choose to use this talent before making the Acrobatics check. A rogue can use this ability one additional time per day for every 5 rogue levels she possesses.|(RogueLVL/5)+1",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

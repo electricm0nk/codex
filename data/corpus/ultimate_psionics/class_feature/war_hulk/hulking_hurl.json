@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "War Hulk ~ Hulking Hurl",
+    "name": "Hulking Hurl",
+    "class": "War Hulk",
+    "description": "You gain the ranged attack customization as a bonus customization, but can form a boulder from the ectoplasm instead of a small shard of crystal.  The damamge is twice the base damage of your slam attack, plus your Strength modifier, and deals bludgeoning instead of piercing damage.  The boulder dissipates after the attack, regardless of if it struck the target, and maintains any size increase from effects like expansion once thrown.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "War Hulk ~ Hulking Hurl"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ranged attack customization as a bonus customization, but can form a boulder from the ectoplasm instead of a small shard of crystal.  The damamge is twice the base damage of your slam attack, plus your Strength modifier, and deals bludgeoning instead of piercing damage.  The boulder dissipates after the attack, regardless of if it struck the target, and maintains any size increase from effects like expansion once thrown."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|AUTOMATIC|Aegis ~ Ranged Attack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1794,
+    "record_key": "War Hulk ~ Hulking Hurl"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

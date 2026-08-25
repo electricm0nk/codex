@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit ~ Heavens",
     "name": "Heavens (Spirit)",
-    "class": "Shaman Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: color spray (1st), hypnotic pattern (2nd), daylight (3rd), rainbow pattern (4th), overland flight (5th), chain lightning (6th), prismatic spray (7th), sunburst (8th), meteor swarm (9th)",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

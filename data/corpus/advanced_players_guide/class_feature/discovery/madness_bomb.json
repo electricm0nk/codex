@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Madness Bomb",
     "name": "Madness Bomb",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "The alchemist's bombs do more than sear flesh - they sear the mind. A creature that takes a direct hit from a madness bomb takes damage from the bomb plus 1d4 points of Wisdom damage. Reduce the amount of normal damage dealt by the bomb by 2d%1 (so a bomb that would normally deal 6d%1+4 points of damage deals 4d%1+4 points of damage instead). The amount of Wisdom damage dealt by a madness bomb is reduced by 1 for each madness bomb that hit the target in the past 24 hours, to a minimum of 1 point of Wisdom damage.|AlchemistBombDiceSize",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

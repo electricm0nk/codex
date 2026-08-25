@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Vanara ~ Risky Troublemaker",
+    "name": "Risky Troublemaker",
+    "race_key": "Vanara",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vanara Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Vanara_ReplacePrehensileTail"
+    ],
+    "description": "Vanara families who seek to emulate the Monkey King teach their members that unexpected opportunities are worth taking great risks. These vanaras can choose to roll twice on Use Magic Device checks. If they do, they take the higher result unless either die roll is a natural 1, in which case the check automatically fails. This racial trait replaces prehensile tail.",
+    "source_page": "p.217",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vanara ~ Risky Troublemaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vanara Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Vanara ~ Risky Troublemaker],[!PREFACT:1,ABILITIES,Vanara_ReplacePrehensileTail=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Vanara families who seek to emulate the Monkey King teach their members that unexpected opportunities are worth taking great risks. These vanaras can choose to roll twice on Use Magic Device checks. If they do, they take the higher result unless either die roll is a natural 1, in which case the check automatically fails."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces prehensile tail.|!PREABILITY:1,CATEGORY=Special Ability,Vanara ~ Risky Troublemaker"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You can choose to roll twice on Use Magic Device checks. If you do, you take the higher result unless either die roll is a natural 1, in which case the check automatically fails."
+      },
+      {
+        "key": "FACT",
+        "value": "Vanara_ReplacePrehensileTail|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1632,
+    "record_key": "Vanara ~ Risky Troublemaker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

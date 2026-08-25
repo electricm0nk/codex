@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vishkanya ~ Limber",
+    "name": "Limber",
+    "description": "Vishkanyas receive a +2 racial bonus on Escape Artist and Stealth checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vishkanya ~ Limber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Vishkanya_ReplaceLimber=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Vishkanyas receive a +2 racial bonus on Escape Artist and Stealth checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist,Stealth|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Escape Artist, +2 Stealth"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627",
+    "line": 20,
+    "record_key": "Vishkanya ~ Limber"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

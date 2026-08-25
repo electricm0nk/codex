@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Rugged Northerner",
+    "name": "Rugged Northerner",
+    "description": "You live a hard life in a cold climate, and after enduring the hardships of many brutal winters, you've gained some benefit from the frozen environs.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Survival=1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CON,13"
+      },
+      {
+        "key": "DESC",
+        "value": "You live a hard life in a cold climate, and after enduring the hardships of many brutal winters, you've gained some benefit from the frozen environs."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.133"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You treat extreme cold conditions (Core Rulebook 442) as severe cold, and severe cold as cold weather conditions. You are not impacted at all by normal cold weather conditions. In addition, you do not become fatigued by frostbite or hypothermia."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 52,
+    "record_key": "Rugged Northerner"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

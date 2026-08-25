@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ Shaitan Binder",
     "name": "Shaitan Binder",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "Shaitan binders call upon a reflection of their genie ancestors to serve as their eidolons. A shaitan binder has the following class features.",
     "raw_tokens": [
       {
@@ -67,6 +67,70 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Shaitan Binder],[!PREFACT:1,ABILITIES,Summoner_Archetype_Eidolon=True,Summoner_Archetype_ShareSpells=True,Summoner_Archetype_ShieldAlly=True,Summoner_Archetype_GreaterShieldAlly=True,Summoner_Archetype_Aspect=True,Summoner_Archetype_GreaterAspect=True,Summoner_Archetype_TwinEidolon=True,Summoner_Archetype_EidolonBaseForm=True,Summoner_Archetype_EidolonType=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Eidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_ShareSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_ShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_GreaterShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_GreaterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_TwinEidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_ShareSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_ShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_GreaterShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_GreaterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_TwinEidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_EidolonBaseForm|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_EidolonType|True"
       }
     ]
   },
@@ -83,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

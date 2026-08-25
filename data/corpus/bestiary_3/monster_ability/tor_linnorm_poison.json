@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tor Linnorm ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury; save Fort DC 33; frequency 1/round for 10 rounds; effect 8d6 fire damage and 1d8 Con drain; cure 3 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tor_linnorm_poison",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite-injury; save Fort DC 33; frequency 1/round for 10 rounds; effect 8d6 fire damage and 1d8 Con drain; cure 3 consecutive saves."
+      },
+      {
+        "key": "KEY",
+        "value": "Tor Linnorm ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "TYPE",
+        "value": "TorLinnormRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.185",
+    "traits": [
+      "TorLinnormRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1231,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Tor Linnorm ~ Poison",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

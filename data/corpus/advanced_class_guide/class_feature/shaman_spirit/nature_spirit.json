@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Spirit ~ Nature",
     "name": "Nature (Spirit)",
-    "class": "Shaman Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: charm animal (1st), barkskin (2nd), speak with plants (3rd), grove of respite (4th), awaken (5th), stone tell (6th), creeping doom (7th), animal shapes (8th), world wave (9th)",
     "raw_tokens": [
       {
@@ -59,6 +59,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.44"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: charm animal (1st), barkskin (2nd), speak with plants (3rd), grove of respite (4th), animal growth (5th), stone tell (6th), creeping doom (7th), animal shapes (8th), world wave (9th)"
       }
     ]
   },
@@ -75,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

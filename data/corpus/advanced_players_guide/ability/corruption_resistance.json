@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Corruption Resistance",
+    "name": "Corruption Resistance",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CorruptionResistance_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CorruptionResistance_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CorruptionResistance_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CorruptionResistance_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CorruptionResistance_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CorruptionResistance_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CorruptionResistance_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_CorruptionResistance_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_CorruptionResistance_LVL|Corruption Resistance,SLA_CorruptionResistance_DC|PREVAREQ:SLA_CorruptionResistance_AtWill,0|PREVAREQ:SLA_CorruptionResistance_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_CorruptionResistance_LVL|Corruption Resistance,SLA_CorruptionResistance_DC|PREVAREQ:SLA_CorruptionResistance_AtWill,1|PREVAREQ:SLA_CorruptionResistance_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_CorruptionResistance_LVL|Corruption Resistance,SLA_CorruptionResistance_DC|PREVAREQ:SLA_CorruptionResistance_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CorruptionResistance_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CorruptionResistance_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CorruptionResistance_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CorruptionResistance_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CorruptionResistance_DC|10+SLA_CorruptionResistance_SpellLVL+SLA_CorruptionResistance_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 397,
+    "record_key": "Corruption Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

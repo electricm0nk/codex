@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Death Slayer ~ Channel Smite",
     "name": "Channel Smite",
-    "class": "Death Slayer",
+    "class": "Slayer",
     "description": "A death slayer gains Channel Smite as a bonus feat. If she already has this feat, she instead gains a different feat selected from those bonus feats normally available to her at 2nd level.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

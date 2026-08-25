@@ -1,0 +1,94 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Fins to Feet",
+    "name": "Fins to Feet",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_FinsToFeet_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_FinsToFeet_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_FinsToFeet_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_FinsToFeet_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_FinsToFeet_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_FinsToFeet_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_FinsToFeet_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_FinsToFeet_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_FinsToFeet_LVL|Fins to Feet,SLA_FinsToFeet_DC|PREVAREQ:SLA_FinsToFeet_AtWill,0|PREVAREQ:SLA_FinsToFeet_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_FinsToFeet_LVL|Fins to Feet,SLA_FinsToFeet_DC|PREVAREQ:SLA_FinsToFeet_AtWill,1|PREVAREQ:SLA_FinsToFeet_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_FinsToFeet_LVL|Fins to Feet,SLA_FinsToFeet_DC|PREVAREQ:SLA_FinsToFeet_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_FinsToFeet_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_FinsToFeet_SpellLVL|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_FinsToFeet_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_FinsToFeet_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_FinsToFeet_DC|10+SLA_FinsToFeet_SpellLVL+SLA_FinsToFeet_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2204,
+    "record_key": "Fins to Feet"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

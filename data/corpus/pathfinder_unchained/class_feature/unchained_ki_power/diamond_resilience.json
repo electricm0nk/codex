@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Diamond Resilience",
+    "name": "Diamond Resilience",
+    "class": "Unchained Ki Power",
+    "description": "By spending 1 ki point as a swift action, the monk gains DR 2/-. At 16th level, the damage reduction increases to 4/-. At 19th level, it increases to DR 6/-. This DR lasts for 1 minute. A monk must be at least 12th level before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Diamond Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Extraordinary.Diamond Resilience"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending 1 ki point as a swift action, the monk gains DR 2/-. At 16th level, the damage reduction increases to 4/-. At 19th level, it increases to DR 6/-. This DR lasts for 1 minute. A monk must be at least 12th level before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 532,
+    "record_key": "Unchained Ki Power ~ Diamond Resilience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

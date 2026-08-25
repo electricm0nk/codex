@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Quick Disable",
+    "name": "Quick Disable",
+    "class": "Insight",
+    "description": "It takes you half the normal amount of time to disable a trap using the Disable Device skill (minimum 1 round).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Quick Disable"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.CrypticInsight"
+      },
+      {
+        "key": "DESC",
+        "value": "It takes you half the normal amount of time to disable a trap using the Disable Device skill (minimum 1 round)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 209,
+    "record_key": "Insight ~ Quick Disable"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

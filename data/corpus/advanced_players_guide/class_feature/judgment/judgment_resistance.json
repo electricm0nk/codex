@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Judgment ~ Resistance",
     "name": "Judgment / Resistance",
-    "class": "Judgment",
+    "class": "Inquisitor",
     "description": "The inquisitor is shielded by a flickering aura, gaining %1 points of energy resistance against one energy type (acid, cold, electricity, fire, or sonic) chosen when the judgment is declared.|2*(1+floor(InqJudgeResistanceLVL/3))",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Badlands Domain",
+    "name": "Badlands",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Badlands Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainBadlandsLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainBadlandsDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainBadlandsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainBadlandsAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Badlands Domain ~ Subsistence|PREVARGTEQ:DomainBadlandsAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Badlands Domain ~ Wasteland Stride|PREVARGTEQ:DomainBadlandsAbilityTriggerLVL,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Badlands Domain ~ Badlands Spirit|PREVARGTEQ:DomainBadlandsAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainBadlandsLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainBadlandsDC|10+(DomainBadlandsLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainBadlandsTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainBadlandsAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|Cloak of Shade|Inquisitor=2|Feast of Ashes|Inquisitor=3|Cloak of Winds|Inquisitor=4|Spike Stones|Inquisitor=5|Wind Blades|Inquisitor=6|Find the Path"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_fap.lst",
+    "sha256": "7c3db2030157f04d08ce9d813c1f22162bfaeaea7227bd40419a8d5fe75d566b",
+    "line": 6,
+    "record_key": "Green Faith Marshal ~ Badlands Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

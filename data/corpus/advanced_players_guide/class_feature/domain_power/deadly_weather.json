@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Deadly Weather",
     "name": "Deadly Weather",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, you can unleash a furious call to the heavens, summoning forth an ever-changing storm of destruction %1 rounds per day. This storm has a radius of %2 feet. Each round, the storm has one of the following effects: driving rain (-4 on all Perception checks and ranged attack rolls), howling winds (-8 on Fly skill checks and ranged attack rolls), heavy snow (all terrain is considered difficult), or lightning bolt (as call lightning). Other effects depending on the weather might also apply (at the GM's discretion). You choose which effect takes place each round, but no effect may be repeated on the following round. These rounds do not need to be consecutive.|DomainDestructionLVL|DomainDestructionLVL*5",
     "raw_tokens": [
       {
@@ -52,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald Archetype ~ Totemic Skald",
     "name": "Totemic Skald",
-    "class": "Skald Archetype",
+    "class": "Skald",
     "description": "The totemic skald forms a close connection to an animal totem. Through the power of this mystical ally, the skald can change shapes, assuming its form as his own. Additionally, the totem animal grants the skald a measure of its spiritual power that he can share with his allies.",
     "raw_tokens": [
       {
@@ -59,6 +59,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Skald"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Totemic Skald],[!PREFACT:1,ABILITIES,Skald_Archetype_RagePowers=True,Skald_Archetype_UncannyDodge=True,Skald_Archetype_ImprovedUncannyDodge=True,Skald_Archetype_SpellKenning=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_RagePower3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_RagePowers|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SpellKenning|true"
       }
     ]
   },
@@ -75,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Ability ~ Legendary Hero",
+    "name": "Legendary Hero",
+    "description": "You have reached the height of mortal power. You regain uses of your mythic power at the rate of one use per hour, in addition to completely refreshing your uses each day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Ability ~ Legendary Hero"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "You have reached the height of mortal power. You regain uses of your mythic power at the rate of one use per hour, in addition to completely refreshing your uses each day."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 65,
+    "record_key": "Mythic Ability ~ Legendary Hero"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

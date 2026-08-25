@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Elf ~ Starchild",
+    "name": "Starchild",
+    "description": "Some half-elves descend from elves who are not from this world, but rather visitors from another world, plane, or dimension. Half-elves with this trait gain Psychic Sensitivity (Occult Adventures 138) as a bonus feat at 1st level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Starchild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Starchild],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAdaptability=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-elves descend from elves who are not from this world, but rather visitors from another world, plane, or dimension. Half-elves with this trait gain Psychic Sensitivity (Occult Adventures 138) as a bonus feat at 1st level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces adaptability.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Starchild"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Psychic Sensitivity"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAdaptability|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_race_oa.lst",
+    "sha256": "51dd1e75b16189109c965cea5a6dd7bd556dec31d79e76682d12d8c084039642",
+    "line": 5,
+    "record_key": "Half-Elf ~ Starchild"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

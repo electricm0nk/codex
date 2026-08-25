@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serial Killer ~ Charming",
+    "name": "Charming",
+    "class": "Vigilante",
+    "description": "A serial killer gains the charm hex as if she were a witch of her vigilante level, but she can't affect animals. The DC is based on her Charisma, and the ability is nonmagical.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serial Killer ~ Charming"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "A serial killer gains the charm hex as if she were a witch of her vigilante level, but she can't affect animals. The DC is based on her Charisma, and the ability is nonmagical."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Witch Hex ~ Charm"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexAbilityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchHexDC|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexStat|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexAbilityLVL|VigilanteLVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC|10+WitchHexStat+(WitchHexAbilityLVL/2)|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchHexDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Witch Hex)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 37,
+    "record_key": "Serial Killer ~ Charming"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

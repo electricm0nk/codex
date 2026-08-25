@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Magnum Opus",
+    "category": "Story",
+    "name": "Magnum Opus",
+    "description": "[Not Implemented] You seek to create a true masterpiece. [DEFERRED-WITH-REASON: uca_feats.lst:74 -- .MOD BENEFIT: row's own sentence is grammatically truncated (\"...or win the artistic Completion Benefit:...\", no object after \"artistic\"); the Goal: clause's real ending is not recoverable from the corpus; upstream corpus defect, not repaired by inventing text.]",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:You must either have sold five or more self-created works of art worth a total of at least 5,000 gp, have performed at least five performances for audiences of 50 or more while achieving a great performance result or better on your Perform check, or have the Virtuoso background."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 22,
+    "record_key": "Magnum Opus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

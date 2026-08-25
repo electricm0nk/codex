@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "War Mind ~ Chain of Personal Superiority",
+    "name": "Chain of Personal Superiority",
+    "class": "War Mind",
+    "description": "Gain +%1 insight bonus to Str and Con for up to 1 minute, 3/day.|SuperiorityChain",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "War Mind ~ Chain of Personal Superiority"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WarMindClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SuperiorityChain|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 insight bonus to Str and Con for up to 1 minute, 3/day.|SuperiorityChain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SuperiorityChain|2*floor((WarMindLVL+5)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.385"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,CON|SuperiorityChain|TYPE=Insight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1572,
+    "record_key": "War Mind ~ Chain of Personal Superiority"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

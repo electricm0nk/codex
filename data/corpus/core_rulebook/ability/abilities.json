@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Intelligent Item ~ Stat",
+    "name": "Abilities",
+    "description": "Intelligence %1, Wisdom %2, Charisma %3, Ego Score %1|IntItemStatINT|IntItemStatWIS|IntItemStatCHA|IntelligentItemEgo",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Stat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Intelligent Item"
+      },
+      {
+        "key": "TYPE",
+        "value": "IntelligentItemOutput"
+      },
+      {
+        "key": "DESC",
+        "value": "Intelligence %1, Wisdom %2, Charisma %3, Ego Score %1|IntItemStatINT|IntItemStatWIS|IntItemStatCHA|IntelligentItemEgo"
+      },
+      {
+        "key": "DESC",
+        "value": " Unaccountable EGO increase Base Magic Item Value 1,001 gp to 5,000 gp (+1)"
+      },
+      {
+        "key": "DESC",
+        "value": " &nl;5,001 gp to 10,000 gp (+2)"
+      },
+      {
+        "key": "DESC",
+        "value": " &nl;10,001 gp to 20,000 gp (+3)"
+      },
+      {
+        "key": "DESC",
+        "value": " &nl;20,001 gp to 50,000 gp (+4)"
+      },
+      {
+        "key": "DESC",
+        "value": " &nl;50,001 gp to 100,000 gp (+6)"
+      },
+      {
+        "key": "DESC",
+        "value": " &nl;100,001 gp to 200,000 gp (+8)"
+      },
+      {
+        "key": "DESC",
+        "value": " &nl;200,001 gp and higher (+12)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 149,
+    "record_key": "Intelligent Item ~ Stat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Flexible School ~ Enchantment",
+    "name": "Enchantment School",
+    "description": "The enchanter uses magic to control and manipulate the minds of his victims.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flexible School ~ Enchantment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool.Flexible School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Enchantment School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Enchantment Opposition School"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_FlexibleSchool_EnchantmentLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The enchanter uses magic to control and manipulate the minds of his victims."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flexible School Power ~ Enchantment ~ Enchanting Smile"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_FlexibleSchool_EnchantmentLVL|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 448,
+    "record_key": "Flexible School ~ Enchantment"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

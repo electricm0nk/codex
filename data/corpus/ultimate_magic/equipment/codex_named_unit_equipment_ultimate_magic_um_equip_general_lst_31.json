@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:27:07Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_31)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_31)",
+    "cost_gp": 16550.0,
+    "weight_lbs": 9.0,
+    "description": "Level 17 Diviner; Protection - Each book features a superior lock (DC 40); secret page hides the 9th- and 7th-level spells, and the first book is warded with explosive runes (Reflex DC 17).; Opposition Schools - Illusion, transmutation; Spells - 9.foresight(S), freedom; 8.demand, discern location(S), greater prying eyes(S), trap the soul; 7.instant summons, greater arcane sight(S), greater scrying(S), plane shift, vision(S); 6.analyze dweomer(S), greater dispel magic, guards and wards, legend lore(S), repulsion, true seeing(S); 5.contact other plane(S), major creation, secret chest, sending, telepathic bond(S), planar adaptation(OP); 4.bestow curse, dimensional anchor, lesser geas, lesser globe of invulnerability, locate creature(S), remove curse, secure shelter, share senses(S); 3.arcane sight(S), blood biography(S), clairaudience/clairvoyance(S), explosive runes, secret page(OP), seek senses(S), tongues(S); 2.continual flame, detect thoughts(S), flaming sphere, hold person, locate object(S), resist energy, see invisibility(S), summon monster II; 1.cause fear, comprehend languages(S), detect secret doors(S), detect undead(S), disguise self(OP), identify(S), protection from evil, protection from law, true strike(S); Preparation Ritual - Improved Eyes of Rul Thaven"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5",
+    "line": 31,
+    "record_key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_31)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_magic:um_equip_general.lst:31"
+  }
+}

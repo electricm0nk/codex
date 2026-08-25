@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Rules ~ Allow 2nd Corruption",
+    "name": "Allow 2nd Corruption",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rules ~ Allow 2nd Corruption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,Rules ~ Use Corruption (Standard),Rules ~ Use Corruption (Useful),Rules ~ Use Corruption (Vile)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Corruption Type Choice|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 18,
+    "record_key": "Rules ~ Allow 2nd Corruption"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

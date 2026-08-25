@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Terran (cannot speak)",
+    "name": "Terran (cannot speak)",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Understand"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_languages.lst",
+    "sha256": "b8e04b15ad8aaec4009668df8a907d9d7917889c3b8d9e43a2193aae87de5ce5",
+    "line": 25,
+    "record_key": "Terran (cannot speak)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

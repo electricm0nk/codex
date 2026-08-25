@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor ~ Discern Lies",
     "name": "Discern Lies",
@@ -31,6 +31,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.41"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=4"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=4"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=4"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Leadership Subdomain,Martyr Subdomain=4"
       }
     ]
   },
@@ -47,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

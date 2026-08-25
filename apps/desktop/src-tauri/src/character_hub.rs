@@ -425,6 +425,23 @@ pub struct CreateCharacterRequest {
     /// exclusion guard blocks the save rather than being silently dropped.
     #[serde(default)]
     pub selected_alternate_trait_keys: Vec<String>,
+    /// A companion-bearing class's (Druid/Hunter/Cavalier) real
+    /// character-creation-time choice of companion/mount species, as a
+    /// `companion_base_stat_table.rs` slug (`"gulper_plant"`,
+    /// `"allosaurus"`, ...). `#[serde(default)]` so an omitted field (every
+    /// pre-existing saved payload, and every non-companion-bearing class)
+    /// keeps working unchanged and falls back to that class's own prior
+    /// fixed default species (Wolf for Druid/Hunter, Horse for Cavalier) --
+    /// row 20 cycle 6's own named wiring gap: `ground_companion_stat_
+    /// block`'s verified per-species table had no character-creation-time
+    /// dispatch point until this field and `compose_character_input`'s
+    /// own read of it. An unrecognized slug (a typo, or a species this
+    /// engine has not yet hand-authored a verified base-stat row for)
+    /// is never fabricated -- `ground_selected_companion_or_default`
+    /// (`pilot_compute/mod.rs`) falls back to the same class default
+    /// rather than guessing.
+    #[serde(default)]
+    pub companion_species: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1486,6 +1503,7 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         // Human Fighter, and seeding a swap nobody chose would be exactly the
         // fabricated-default this file's other seeds are each argued down to.
         selected_alternate_trait_keys: Vec::new(),
+        companion_species: None,
     };
 
     let character_input = compose_character_input(&request);
@@ -4119,7 +4137,10 @@ mod tests {
                 "race:svirfneblin",
                 "race:tengu",
                 "race:tiefling",
-                // Bestiary 2's 6, SD-31 Epic 1-F2 (2026-08-15).
+                // Bestiary 2's 7: the original 6 (SD-31 Epic 1-F2,
+                // 2026-08-15) plus Dhampir (SD-32 card-11 T2b lane,
+                // 2026-08-23, chassis + standard tier only).
+                "race:dhampir",
                 "race:fetchling",
                 "race:grippli",
                 "race:ifrit",
@@ -4829,8 +4850,13 @@ mod tests {
                 race.race_id
             );
         }
+        // Dhampir gained a chassis + standard-tier traits, SD-32 card-11
+        // T2b lane (2026-08-23), and is now offered above -- Kasatha (ARG's
+        // reprint of an Inner Sea Races race, `inner_sea_races` itself
+        // un-ingested for it) stands in as the still-genuinely-un-ingested
+        // example this test needs.
         let unknown = compute_pilot_with_corpus(
-            &compose_character_input(&request_for("race:dhampir", 1)),
+            &compose_character_input(&request_for("race:kasatha", 1)),
             corpus_fixture_bundle(),
         );
         assert!(
@@ -4914,6 +4940,7 @@ mod tests {
             },
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
+            companion_species: None,
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -5010,6 +5037,215 @@ mod tests {
     fn compose_character_input_threads_the_requested_class_id() {
         let input = compose_character_input(&request_for_class("race:human", "class:paladin", 1));
         assert_eq!(input.chosen.class_levels[0].class_id, "class:paladin");
+    }
+
+    /// SD-32 T12 Epic 10 row 20 cycle 6: proves row 20 cycle 5's own claim
+    /// ("the character-creation-time picker is already wired -- `class_id`
+    /// is a free-form string dispatched by `compute_class_chassis`, not a
+    /// separate `ClassId`-enum picker widget") at the REAL
+    /// character-creation altitude, not just `generic_class_chassis::
+    /// resolve`'s own isolated unit tests (`src/rules_core/pilot_compute/
+    /// generic_class_chassis.rs`, which only proves the crate-internal
+    /// function in isolation). Iterates every one of the 61 conventional PC
+    /// classes `class_catalog_generic.rs` re-derives from the corpus (60 via
+    /// `load_generic_class_progressions`, plus Demoniac -- named separately
+    /// because THAT module's own formula evaluator does not bind the bare
+    /// `classlevel()` empty-key sentinel `generic_class_chassis::resolve`
+    /// binds; see that module's own doc comment, "All 61 resolve --
+    /// Demoniac closed on rebase, mid-cycle") at level 1, and asserts NONE
+    /// of them falls through to the `class_chassis.unsupported` diagnostic
+    /// -- `compute_class_chassis`'s (`src/rules_core/pilot_compute/mod.rs`)
+    /// only fallback when no dispatch arm, including `generic_class_
+    /// chassis::resolve`, recognizes the class id. A class that still fell
+    /// through here would surface as "Blocked: unsupported class" to a real
+    /// player picking it at creation -- exactly the gap this cycle's brief
+    /// asked to be either closed or precisely disproven with evidence.
+    #[test]
+    fn all_61_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
+        let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
+        let (records, unresolved) =
+            crate::class_catalog_generic::load_generic_class_progressions(&repo_root);
+        assert!(
+            unresolved.is_empty() || unresolved.iter().all(|(_, name)| name == "Demoniac"),
+            "class_catalog_generic.rs's own unresolved list must contain only the named \
+             Demoniac gap, got: {unresolved:?}"
+        );
+        let mut names: Vec<String> = records.into_iter().map(|record| record.name).collect();
+        assert_eq!(
+            names.len(),
+            60,
+            "expected 60 of the 61 conventional PC classes from class_catalog_generic.rs's own \
+             re-derivation (Demoniac is the one named gap in THAT module, closed instead by \
+             generic_class_chassis::resolve's own CLASSLEVEL:: binding -- see this test's own \
+             doc comment)"
+        );
+        names.push("Demoniac".to_owned());
+        assert_eq!(names.len(), 61, "must cover all 61, not a partial sweep");
+
+        let slug = |name: &str| -> String {
+            name.trim().to_ascii_lowercase().split_whitespace().collect::<Vec<_>>().join("_")
+        };
+
+        let mut checked = 0usize;
+        for name in &names {
+            let class_id = format!("class:{}", slug(name));
+            let diagnostics = claim_blocking_diagnostic_ids("race:human", &class_id, 1);
+            assert!(
+                !diagnostics.contains("class_chassis.unsupported"),
+                "{name} ({class_id}) must resolve a real chassis at character-creation \
+                 altitude, not fall through to class_chassis.unsupported -- got diagnostics: \
+                 {diagnostics:?}"
+            );
+            checked += 1;
+        }
+        assert_eq!(
+            checked, 61,
+            "must have exercised all 61 conventional classes, not a partial sweep"
+        );
+    }
+
+    /// SD-32 T12 Epic 10 row 20 cycle 7: closes cycle 6's own named wiring
+    /// gap ("`ground_companion_stat_block` has zero live callers anywhere
+    /// in the crate") and proves it at the real character-creation
+    /// altitude, the same way `all_61_generic_classes_reach_a_real_
+    /// chassis_at_character_creation_altitude` proved the class picker --
+    /// through `CreateCharacterRequest` -> `compose_character_input` ->
+    /// `build_pilot_headless_receipt`, never `generic_class_chassis::
+    /// resolve` or `ground_companion_stat_block` called directly in
+    /// isolation. A Druid whose request carries `companion_species:
+    /// Some("gulper_plant")` must reach `Computed` (the default Druid
+    /// nature-bond seed is unaffected -- only the species changes), and
+    /// its explanation records must carry Gulper Plant's own verified
+    /// stat block (`companion_base_stat_table.rs`'s table), never Wolf's.
+    #[test]
+    fn a_druid_who_selects_gulper_plant_grounds_gulper_plant_not_wolf_at_character_creation_altitude()
+    {
+        let default_request = request_for_class("race:human", "class:druid", 1);
+        let default_input = compose_character_input(&default_request);
+        let default_receipt = build_pilot_headless_receipt(&default_input);
+        assert_eq!(
+            default_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "precondition: a Druid with no companion_species override must still reach Computed \
+             (the existing Wolf default), got: {:?}",
+            default_receipt.computation.diagnostics
+        );
+        assert!(
+            default_receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.druid.animal_companion.wolf_stat_block"),
+            "precondition: the default (no override) Druid must ground Wolf, not some other \
+             species, or this test is not exercising the override case: {:?}",
+            default_receipt.computation.explanations.iter().map(|e| &e.id).collect::<Vec<_>>()
+        );
+
+        let gulper_plant_request = CreateCharacterRequest {
+            companion_species: Some("gulper_plant".to_owned()),
+            ..request_for_class("race:human", "class:druid", 1)
+        };
+        let gulper_plant_input = compose_character_input(&gulper_plant_request);
+        let gulper_plant_receipt = build_pilot_headless_receipt(&gulper_plant_input);
+        assert_eq!(
+            gulper_plant_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Druid who selects a verified-but-non-default companion species must still reach \
+             Computed, got: {:?}",
+            gulper_plant_receipt.computation.diagnostics
+        );
+        let ids: std::collections::BTreeSet<&str> =
+            gulper_plant_receipt.computation.explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(
+            ids.contains("class_chassis.druid.animal_companion.gulper_plant_stat_block"),
+            "a Druid who selected gulper_plant must ground Gulper Plant's own verified stat \
+             block through the real character-creation request path, got: {ids:?}"
+        );
+        assert!(
+            !ids.contains("class_chassis.druid.animal_companion.wolf_stat_block"),
+            "a Druid who selected gulper_plant must NOT also ground Wolf's stat block -- the \
+             dispatch must replace the default, not merely add to it: {ids:?}"
+        );
+        let base_attack = gulper_plant_receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.druid.animal_companion.base_attack_bonus")
+            .expect("expected a base_attack_bonus record");
+        assert_eq!(
+            base_attack.value, 2,
+            "Gulper Plant base attack bonus at master level 1: HD*3/4 (2 HD -> 1) + Str 12 \
+             modifier (+1) = 2 (row 20 cycle 9 correction: the table's own strength/constitution \
+             fields hold the species' printed 1st-level total directly, matching Wolf/Horse's \
+             own established precedent -- Str 12/Con 13 for Gulper Plant, not the delta-backed- \
+             out Str 10/Con 11 cycles 5-8 stored; see companion_base_stat_table.rs's own cycle 9 \
+             module-doc addendum), matching companion_base_stat_table.rs's own \
+             gulper_plant_grounds_a_real_new_species_at_master_level_1 test"
+        );
+
+        // An unrecognized species slug must fall back to the class's own
+        // prior default, never fabricate a stat block for an unverified
+        // species and never block the character. Row 20 cycle 13 grounded
+        // `griffon` (this test's own unknown-species example through cycle
+        // 12) as part of closing the full 196-record companion population
+        // (`companion_base_stat_table.rs`'s own cycle-13 addendum), so the
+        // fallback example moves to a slug that is not, and never has
+        // been, a real PF1 companion species -- proving the fallback path
+        // still exists and still works now that the table has no real gaps
+        // left to exercise it with, the same correction
+        // `companion_base_stat_table.rs`'s own
+        // `an_unknown_species_slug_refuses_rather_than_guesses` test made.
+        let unknown_species_request = CreateCharacterRequest {
+            companion_species: Some("not_a_real_companion_species".to_owned()),
+            ..request_for_class("race:human", "class:druid", 1)
+        };
+        let unknown_species_receipt =
+            build_pilot_headless_receipt(&compose_character_input(&unknown_species_request));
+        assert_eq!(
+            unknown_species_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "an unrecognized companion_species must fall back to the class default, not block \
+             the character: {:?}",
+            unknown_species_receipt.computation.diagnostics
+        );
+        assert!(
+            unknown_species_receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.druid.animal_companion.wolf_stat_block"),
+            "an unrecognized companion_species (not_a_real_companion_species, no verified table \
+             row) must fall back to grounding Wolf, this class's own prior default, never \
+             fabricate a stat block for it: {:?}",
+            unknown_species_receipt.computation.explanations.iter().map(|e| &e.id).collect::<Vec<_>>()
+        );
+
+        // Positive proof, not just the refusal-path correction above:
+        // `griffon` itself now grounds through the SAME real
+        // character-creation request path `gulper_plant` was proven
+        // through above, never falling back to Wolf.
+        let griffon_request = CreateCharacterRequest {
+            companion_species: Some("griffon".to_owned()),
+            ..request_for_class("race:human", "class:druid", 1)
+        };
+        let griffon_receipt = build_pilot_headless_receipt(&compose_character_input(&griffon_request));
+        assert_eq!(
+            griffon_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Druid who selects griffon (grounded by row 20 cycle 13) must reach Computed: {:?}",
+            griffon_receipt.computation.diagnostics
+        );
+        let griffon_ids: std::collections::BTreeSet<&str> =
+            griffon_receipt.computation.explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(
+            griffon_ids.contains("class_chassis.druid.animal_companion.griffon_stat_block"),
+            "a Druid who selected griffon must ground Griffon's own verified stat block, not \
+             fall back to Wolf, now that row 20 cycle 13 grounded it: {griffon_ids:?}"
+        );
+        assert!(
+            !griffon_ids.contains("class_chassis.druid.animal_companion.wolf_stat_block"),
+            "a Druid who selected griffon must NOT also ground Wolf's stat block: {griffon_ids:?}"
+        );
     }
 
     /// The single most important regression guard: proves the golden-path
@@ -6284,7 +6520,14 @@ mod tests {
         // `SD31-E6-F10-004`: +148 further corpus gap-lane Equipmods rows,
         // across 5 further already-compiled books (1683 -> 1831),
         // re-derived fresh from the built picker, not adjusted by delta.
-        assert_eq!(offered.len(), 1831, "the picker's real offered-row count");
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): +63 more,
+        // re-derived fresh from the built picker again (not adjusted by
+        // delta, same discipline as the prior re-derivation) after the T12
+        // census/class-feature lanes' corpus growth (1831 -> 1894). The
+        // assertion this test exists for is the `refused` check below, not
+        // this count -- it still runs against the fresh 1894 and still
+        // passes empty.
+        assert_eq!(offered.len(), 1894, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()
@@ -7111,14 +7354,17 @@ mod tests {
             list_feats_for_character_at_root(&root, &crate::feat_catalog::FeatCatalogFilter::default())
                 .expect("listing should succeed");
 
-        // 1578 hand-authored + the 531 corpus gap rows (`SD31-E6-F8-001`'s
+        // 1578 hand-authored + the 649 corpus gap rows (`SD31-E6-F8-001`'s
         // original 83 + `SD31-E6-F8-002`'s 242 + `SD31-E6-F2-007`'s 199
         // Mythic Adventures rows -- SD31-W10-INTEGRATE-001 excluded 159
         // VISIBLE:EXPORT display-plumbing twins from the original 358 --
-        // + `SD31-E6-F8-003`'s 7). This is the character sheet's own feat
-        // list, so this number moving is the evidence that the gap lane's
-        // rows reach a player and not only a table.
-        assert_eq!(response.entries.len(), 2109, "no record may be filtered away");
+        // + `SD31-E6-F8-003`'s 7 + SD-32 Gate 0 book-onboarding
+        // precondition's 9 inner_sea_taverns rows + SD-32 T9 onboarding's
+        // (card 11) 109: inner_sea_combat 23 + inner_sea_gods 86). This is
+        // the character sheet's own feat list, so this number moving is
+        // the evidence that the gap lane's rows reach a player and not
+        // only a table.
+        assert_eq!(response.entries.len(), 2227, "no record may be filtered away");
         for entry in &response.entries {
             let eligibility = entry
                 .eligibility
@@ -7163,7 +7409,7 @@ mod tests {
     #[test]
     fn the_character_less_catalog_sends_no_eligibility_key() {
         let response = crate::feat_catalog::build_feat_catalog();
-        assert_eq!(response.entries.len(), 2109);
+        assert_eq!(response.entries.len(), 2227);
         assert!(response.entries.iter().all(|entry| entry.eligibility.is_none()));
         let json = serde_json::to_string(&response.entries[0]).expect("serialises");
         assert!(!json.contains("eligibility"), "{json}");

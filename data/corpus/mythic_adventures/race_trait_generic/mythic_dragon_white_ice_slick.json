@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Dragon (White) ~ Ice Slick",
+    "name": "Ice Slick",
+    "description": "Ice and slush persists from a mythic juvenile white dragon's breath weapon, coating all surfaces in the area and turning the area into difficult terrain for 1 minute per age category. The dragon can breathe at a location beyond its breath weapon range, coating it in ice and slush, instead of damaging creatures, in a radius equal to half its breath weapon range and at a range of 30 feet per age category (a 15-foot burst up to 120 feet for a mythic juvenile white dragon).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Dragon (White) ~ Ice Slick"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Dragon (White) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Ice and slush persists from a mythic juvenile white dragon's breath weapon, coating all surfaces in the area and turning the area into difficult terrain for 1 minute per age category. The dragon can breathe at a location beyond its breath weapon range, coating it in ice and slush, instead of damaging creatures, in a radius equal to half its breath weapon range and at a range of 30 feet per age category (a 15-foot burst up to 120 feet for a mythic juvenile white dragon)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 132,
+    "record_key": "Mythic Dragon (White) ~ Ice Slick"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

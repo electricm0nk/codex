@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Lizard Monitor Wild Shape ~ Poison",
     "name": "Poison",
@@ -43,6 +43,10 @@
       {
         "key": "ASPECT",
         "value": "Ability Benefit|(DC %1)|PoisonSaveDC"
+      },
+      {
+        "key": "DESC",
+        "value": "Calling upon the venomous powers of natural predators, you infect the subject with a horrible poison by making a successful melee touch attack. This poison deals 1d3 Constitution damage per round for 6 rounds. Poisoned creatures can make a Fortitude save each round to negate the damage and end the affliction.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },
@@ -59,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

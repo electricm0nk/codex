@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Fast Getaway",
     "name": "Fast Getaway",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "After successfully making a sneak attack or Sleight of Hand check, a rogue with this talent can spend a move action to take the withdraw action. She can move no more than her speed during this movement.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

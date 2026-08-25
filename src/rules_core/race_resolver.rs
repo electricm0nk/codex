@@ -609,7 +609,24 @@ impl RaceCorpus {
                 // Cross-record, so not knowable here; filled by
                 // `load_race_corpus`'s post-load pass.
                 granted_by_trait_key: None,
-                description_redacted: record.pi_field.as_deref() == Some("description")
+                // `pi_field` is a comma-joined list when more than one field
+                // was redacted (`ingest_race_traits.rs`'s own
+                // `raw_tokens`-widening idiom: `f.split(',').any(|p| p ==
+                // "raw_tokens")`) -- a record whose `raw_tokens` ALSO carried
+                // PI (concatenated-identifier scan hits) stores
+                // `"description,raw_tokens"`, not the bare `"description"`
+                // this used to require byte-for-byte. An exact-equals check
+                // here silently returned `false` for such a record even
+                // though its `description` field genuinely is the marker,
+                // which is exactly the class of defect this field's own doc
+                // comment above describes (redaction "live and ineffective"
+                // on the rendered surface) -- `render_description` would
+                // fall through to the `DESC:` raw-token path for a record
+                // this repo's OWN generator already knows is redacted.
+                description_redacted: record
+                    .pi_field
+                    .as_deref()
+                    .is_some_and(|f| f.split(',').any(|part| part == "description"))
                     && record.pi_marker.as_deref()
                         == Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED),
                 source_path,
@@ -687,6 +704,42 @@ impl RaceCorpus {
     pub fn unclassified_traits(&self) -> Vec<&RaceTraitRecord> {
         let mut out: Vec<&RaceTraitRecord> =
             self.traits.values().flatten().filter(|t| t.role == TraitRole::Unclassified).collect();
+        out.sort_by(|a, b| a.data.key.cmp(&b.data.key));
+        out
+    }
+
+    /// Every trait record, across every loaded race, whose `CATEGORY:` token
+    /// equals `category` verbatim, sorted by key.
+    ///
+    /// A general-purpose seam for a shape that does not fit the
+    /// default/alternate/flag-granted protocol at all — see
+    /// [`adoptive_parentage_options`], its one caller today.
+    pub fn traits_by_category(&self, category: &str) -> Vec<&RaceTraitRecord> {
+        let mut out: Vec<&RaceTraitRecord> = self
+            .traits
+            .values()
+            .flatten()
+            .filter(|t| t.data.category.as_deref() == Some(category))
+            .collect();
+        out.sort_by(|a, b| a.data.key.cmp(&b.data.key));
+        out
+    }
+
+    /// Every trait record, across every loaded race, carrying `token` as one
+    /// of its (possibly several) `TYPE:` components, sorted by key.
+    ///
+    /// [`traits_by_category`]'s sibling seam: the Adopted-Race selector shape
+    /// (`decisions.md §25`, [`adopted_race_choose_selectors`]) shares its
+    /// `CATEGORY:Special Ability` with countless ordinary standard traits, so
+    /// `traits_by_category` alone cannot select it — its own `TYPE:AdoptiveRace`
+    /// component is the one thing no other trait in this corpus carries.
+    pub fn traits_by_type_token(&self, token: &str) -> Vec<&RaceTraitRecord> {
+        let mut out: Vec<&RaceTraitRecord> = self
+            .traits
+            .values()
+            .flatten()
+            .filter(|t| t.data.type_tokens.iter().any(|tt| tt == token))
+            .collect();
         out.sort_by(|a, b| a.data.key.cmp(&b.data.key));
         out
     }
@@ -921,6 +974,8 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     ("Oread", SizeCategory::Medium),       // TEMPLATE:SIZE_M
     ("Sylph", SizeCategory::Medium),       // TEMPLATE:SIZE_M
     ("Undine", SizeCategory::Medium),      // TEMPLATE:SIZE_M
+    // Bestiary 2's Dhampir, SD-32 card-11 T2b lane (2026-08-23).
+    ("Dhampir", SizeCategory::Medium),     // TEMPLATE:SIZE_M
     // Bestiary 5's 1, SD-31 Epic 1 follow-on batch (2026-08-15).
     ("Skinwalker", SizeCategory::Medium),  // TEMPLATE:SIZE_M, over a chassis FACT:BaseSize|S
     // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16).
@@ -947,6 +1002,171 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     // Bestiary 6's 1, SD-31 wave-24 integration cycle (2026-08-20).
     ("Rougarou", SizeCategory::Medium),    // chassis FACT:BaseSize|M, DESC "Rougarous are Medium creatures"
 ];
+
+/// PCGen's `CATEGORY:` value for the "Adoptive Parentage" ability shape —
+/// `arg_abilities_race.lst`'s `###Block: Adoptive Parentage Options`
+/// (`decisions.md §16` item 2, SD-32 card-11 T2b lane). Public so the ingest
+/// binary and this module read the identical literal.
+pub const ADOPTIVE_PARENTAGE_CATEGORY: &str = "Adoptive Parentage";
+
+/// One trait this option grants, resolved against the adopted race's own
+/// already-ingested trait set — never fabricated. `None` if the corpus does
+/// not (yet) carry a record for the target key; see
+/// [`AdoptiveParentageOption::unresolved_grants`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AdoptiveParentageGrant {
+    pub key: String,
+    pub name: String,
+}
+
+/// One "Adoptive Parentage" ability: available to a character of **any**
+/// race, and — when selected — grants a **named other race**'s own standard
+/// traits outright.
+///
+/// This is a structurally different mechanic from [`TraitRole::Alternate`]
+/// (which replaces content *within* the race a character already is) and
+/// from [`TraitRole::FlagGranted`] (content granted *by another trait of the
+/// same race*): here the granting record and its two grant targets belong to
+/// the SAME race (e.g. all three of `"Dwarf"`, `"Dwarf ~ Weapon
+/// Familiarity"` and `"Dwarf ~ Languages"` are filed under race key
+/// `"Dwarf"`), but the *character* selecting it need not be that race at
+/// all. [`RaceCorpus::resolve`] resolves one race's own trait set against
+/// itself and has no notion of "any character, any race" — so this is
+/// deliberately a standalone reader, not a `TraitRole` variant threaded
+/// through `resolve`'s per-race pipeline (`decisions.md §16`'s "resolves the
+/// selector to the race it adopts", read literally: the race, not a rebuild
+/// of the resolver around a mechanic seven records use).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AdoptiveParentageOption {
+    /// The record's own corpus key — bare, e.g. `"Dwarf"` (PCGen states no
+    /// explicit `KEY:` on these rows, so the display name doubles as both).
+    pub key: String,
+    pub name: String,
+    pub book_id: String,
+    /// The race this option adopts. Always a race with its own chassis
+    /// record in the SAME loaded corpus (`decisions.md §16`'s ask) — every
+    /// one of the 7 ARG rows this reads targets an already in-scope race, and
+    /// [`RaceCorpus::chassis`] on this key is how a caller re-verifies that
+    /// rather than trusting this struct's word for it.
+    pub adopted_race: String,
+    pub description: Option<String>,
+    /// Grant targets the corpus resolves to a real, already-ingested trait
+    /// record. Empty is a legitimate, honestly-reported answer, never
+    /// papered over with a fabricated trait.
+    pub grants: Vec<AdoptiveParentageGrant>,
+    /// Grant targets this option's own `ABILITY:...AUTOMATIC` token names
+    /// that do **not** resolve to a loaded record for the adopted race — a
+    /// fact this struct surfaces rather than silently drops. Empty for every
+    /// option this cycle ingests (both of ARG's two grant targets per race
+    /// are already-ingested standard traits), but the field exists so a
+    /// future book's adoptive-parentage row that names an unmodelled trait
+    /// is a visible finding, not a quieter one.
+    pub unresolved_grants: Vec<String>,
+}
+
+/// Every "Adoptive Parentage" option in a loaded corpus (`decisions.md §16`
+/// item 2), resolved against the same corpus's own already-ingested trait
+/// records — never fabricated, never assumed present.
+///
+/// Reads [`RaceCorpus::traits_by_category`] rather than iterating every
+/// trait and checking role, because these records are deliberately
+/// [`TraitRole::Unclassified`] (no readable default/replace/grant gate of
+/// their own) — the general-purpose seam exists exactly so a shape like this
+/// one, which the default/alternate/flag-granted vocabulary was never
+/// written to describe, has somewhere to be read from instead of forcing a
+/// new [`TraitRole`] variant through every exhaustive match in the crate for
+/// seven records.
+pub fn adoptive_parentage_options(corpus: &RaceCorpus) -> Vec<AdoptiveParentageOption> {
+    let mut out = Vec::new();
+    for record in corpus.traits_by_category(ADOPTIVE_PARENTAGE_CATEGORY) {
+        let adopted_race = record.data.race_key.clone();
+        let pool = corpus.traits_for(&adopted_race);
+        let mut grants = Vec::new();
+        let mut unresolved_grants = Vec::new();
+        for target_key in record.automatic_trait_grants() {
+            match pool.iter().find(|t| t.data.key == target_key) {
+                Some(found) => grants.push(AdoptiveParentageGrant {
+                    key: found.data.key.clone(),
+                    name: found.data.name.clone(),
+                }),
+                None => unresolved_grants.push(target_key),
+            }
+        }
+        out.push(AdoptiveParentageOption {
+            key: record.data.key.clone(),
+            name: record.data.name.clone(),
+            book_id: record.book_id.clone(),
+            adopted_race,
+            description: record.data.description.clone(),
+            grants,
+            unresolved_grants,
+        });
+    }
+    out.sort_by(|a, b| a.key.cmp(&b.key));
+    out
+}
+
+/// PCGen's `TYPE:` value marking the "Adopted Race" selector shape
+/// (`decisions.md §25`): `TYPE:AdoptiveRace`, no dot-components, distinct
+/// from every other `TYPE:` this corpus carries. Public so
+/// `ingest_race_traits.rs` and this module read the identical literal rather
+/// than each carrying its own copy.
+pub const ADOPTED_RACE_SELECTOR_TYPE: &str = "AdoptiveRace";
+
+/// The literal `CHOOSE:` prefix an Adopted-Race selector row's pool token
+/// carries; the pool's `<X> Race Trait` suffix follows verbatim.
+pub const ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX: &str = "ABILITYSELECTION|Special Ability|TYPE=";
+
+/// One "Adopted Race" selector (`decisions.md §25`): available to a
+/// character of the race it names' own type (the row itself, e.g. Oread's,
+/// carries no further race restriction beyond being filed under that race),
+/// and — when selected — grants ONE trait from a named other content kind's
+/// pool: PF1e's chargen Trait mechanic (`kind: trait`,
+/// [`crate::rules_core::trait_pool`]), never this corpus's own race-trait
+/// population. Structurally the closest existing shape is
+/// [`AdoptiveParentageOption`] (any-race-selectable, names a target), but the
+/// target pool is a different content kind entirely, which is why this is a
+/// distinct struct rather than a variant of that one.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AdoptedRaceSelector {
+    pub key: String,
+    pub name: String,
+    pub book_id: String,
+    /// The race this selector is filed under and adopts.
+    pub adopted_race: String,
+    /// The `CHOOSE:` token's pool suffix, e.g. `"Oread Race Trait"` — matched
+    /// against a `kind: trait` record's own `TYPE:Trait.RaceTrait.<X> Race
+    /// Trait` third dot-segment by [`crate::rules_core::trait_pool`]. `None`
+    /// for a malformed row this project refuses to guess at rather than
+    /// resolving against nothing.
+    pub pool_type_suffix: Option<String>,
+}
+
+/// Every "Adopted Race" selector in a loaded corpus (`decisions.md §25`'s
+/// 14-unit population), read the same way [`adoptive_parentage_options`] reads
+/// its own shape: nothing here is resolved against the Trait pool itself —
+/// that is [`crate::rules_core::trait_pool`]'s job, kept separate because the
+/// pool is a different content kind this module does not load.
+pub fn adopted_race_choose_selectors(corpus: &RaceCorpus) -> Vec<AdoptedRaceSelector> {
+    let mut out = Vec::new();
+    for record in corpus.traits_by_type_token(ADOPTED_RACE_SELECTOR_TYPE) {
+        let pool_type_suffix = record
+            .data
+            .raw_tokens
+            .iter()
+            .find(|t| t.key == "CHOOSE" && t.value.trim_start().starts_with(ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX))
+            .map(|t| t.value.trim_start()[ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX.len()..].to_string());
+        out.push(AdoptedRaceSelector {
+            key: record.data.key.clone(),
+            name: record.data.name.clone(),
+            book_id: record.book_id.clone(),
+            adopted_race: record.data.race_key.clone(),
+            pool_type_suffix,
+        });
+    }
+    out.sort_by(|a, b| a.key.cmp(&b.key));
+    out
+}
 
 /// Creature size for a loose race identifier — a `race:<slug>` character-input
 /// token, a bare corpus race key, or either in any case, matched by exactly the
@@ -1034,6 +1254,21 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     // Monster Codex (SD-29's race-trait pilot). `mc_abilities_race.lst:16,17`.
     ("Duergar ~ Ironskinned", &["Duergar_ReplaceSLAEnlargePerson"]),
     ("Duergar ~ Twilight-Touched", &["Duergar_ReplaceSLAInvisibility"]),
+    // Monster Codex's Ratfolk alternates (SD-32 card-11 T2b lane,
+    // 2026-08-23): `mc_abilities_race.lst:34-52`. Ratfolk gained a chassis
+    // in `ingest_races.rs`'s SD-31-E6-F4-002 batch (ARG-native), so these
+    // four Monster Codex rows -- previously refused by `ingest_race_traits.
+    // rs`'s `IN_SCOPE_RACES` filter under a stale "no chassis" premise --
+    // now ingest. `Surface Sprinter` sets two flags on one row (it replaces
+    // both darkvision/slow-speed at once); its two replacement rows
+    // (`Ratfolk ~ Surface Sprinter ~ Speed`/`~ Vision`) are
+    // `TraitRole::FlagGranted` via its own `ABILITY:...|AUTOMATIC|` token,
+    // never entered here directly -- same convention Strix's Wing-Clipped
+    // uses above.
+    ("Ratfolk ~ Cheek Pouches", &["Ratfolk_ReplaceSwarming"]),
+    ("Ratfolk ~ Cleanliness", &["Ratfolk_ReplaceRodentEmpathy"]),
+    ("Ratfolk ~ Lab Rat", &["Ratfolk_ReplaceTinker"]),
+    ("Ratfolk ~ Surface Sprinter", &["Ratfolk_ReplaceSpeed", "Ratfolk_ReplaceVision"]),
     // ---- Dwarf ----
     ("Dwarf ~ Ancient Enmity", &["Dwarf_ReplaceHatred"]),
     ("Dwarf ~ Craftsman", &["Dwarf_ReplaceGreed"]),
@@ -1432,6 +1667,25 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Oread ~ Isolated", &["Oread_ReplaceEnergyResistance", "Oread_ReplaceLanguages"]),
     ("Sylph ~ Secretive", &["Sylph_ReplaceSpellLikeAbility", "Sylph_ReplaceEnergyResistance"]),
     ("Undine ~ Triton Magic", &["Undine_ReplaceSpellLikeAbility"]),
+    // ---- Catfolk, Gillman, Kitsune, Nagaji, Ratfolk, Strix, Vanara,
+    // Vishkanya, Wayang (a sibling SD-32 card-11 T2b lane's `inner_sea_races`
+    // stale-regen fix, 2026-08-22, closed the SAME "IN_SCOPE_RACES grew,
+    // book never re-run" defect this lane found for `monster_codex`; this
+    // batch adds the resulting 9 real alternate-trait rows' replace flags,
+    // transcribed off `data/corpus/inner_sea_races/race_trait/`, SD-32
+    // card-11 T2b lane, 2026-08-23). `Vishkanya ~ Deceptive` grants
+    // `Deceptive ~ Vishkanya ~ Limber` (`TraitRole::FlagGranted` via its own
+    // `ABILITY:...AUTOMATIC...` token), same convention as Strix's
+    // Wing-Clipped above, so that dependent row is not entered here.
+    ("Catfolk ~ Jungle Stalker", &["Catfolk_ReplaceCatsLuck", "Catfolk_ReplaceSprinter"]),
+    ("Gillman ~ Deep Gillman", &["Gillman_ReplaceAmphibious", "Gillman_ReplaceEnchantmentResistance"]),
+    ("Kitsune ~ Duplicitous", &["Kitsune_ReplaceKitsuneMagic"]),
+    ("Nagaji ~ Serpent Affinity", &["Nagaji_ReplaceResistant"]),
+    ("Ratfolk ~ Market Dweller", &["Ratfolk_ReplaceTinker"]),
+    ("Strix ~ Cautious Brawler", &["Strix_ReplaceHatred", "Strix_ReplaceSuspicious"]),
+    ("Vanara ~ Risky Troublemaker", &["Vanara_ReplacePrehensileTail"]),
+    ("Vishkanya ~ Deceptive", &["Vishkanya_ReplaceLimber"]),
+    ("Wayang ~ In the Shadows", &["Wayang_ReplaceLurker"]),
 
     // ================= Horror Adventures =================
     // SD-29 race-trait lane, round 3. 41 of the book's 43 in-scope rows in
@@ -1844,8 +2098,11 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             corpus.race_keys().len(),
-            38,
-            "38 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
+            39,
+            "39 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 7 (the original 6 plus \
+             Dhampir, SD-32 card-11 T2b lane, 2026-08-23, chassis + the 11 unconditional \
+             standard traits only -- its own heritage/subrace file stays deferred, same \
+             precedent as Skinwalker below) + Bestiary 5's 1 \
              (Skinwalker, chassis + standard tier only) + Advanced Race Guide's 12 \
              (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang; \
              SD31-E6-F4-004, 2026-08-17: Gillman, Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, \
@@ -2068,9 +2325,69 @@ mod tests {
         // the corpus, and never applies -- an upstream data gap this engine
         // reports rather than papers over. `reach_gate`'s `OPEN_FINDINGS` names
         // the remedy.
+        // `Suli ~ Trusted Mediator` (Inner Sea Races, `isr_abilities_race.lst`,
+        // landed by a sibling SD-32 card-11 T2b lane's `inner_sea_races`
+        // stale-regen fix, 2026-08-22) is the third, same *kind* of residue as
+        // `Human ~ Tribalistic Languages`: its own `!PREFACT` is wrapped inside
+        // a `PREMULT` self-exclusion guard (see this module's doc comment on
+        // why that is preserved verbatim rather than read as a standalone
+        // suppressor), so it carries no standalone gate this engine reads.
+        //
+        // The 7 `Drow`/`Dwarf`/`Elf`/`Gnome`/`Grippli`/`Halfling`/`Orc` rows
+        // (SD-32 card-11 T2b lane, 2026-08-23) are a **different kind of
+        // residue than all three above**: they are not a data gap. Each is a
+        // genuine `CHOOSE:ABILITYSELECTION|Adoptive Parentage|ANY` pool
+        // member for `Human ~ Adoptive Parentage` (`arg_abilities_race.lst:
+        // 257`, already ingested and already `TraitRole::Alternate`) — gated
+        // by the CHOOSE on that OTHER row, not by any readable gate of their
+        // own, which is exactly why `classify()` correctly leaves them
+        // `Unclassified` rather than inventing a fifth role for seven
+        // records. [`adoptive_parentage_options`] is the reader that
+        // resolves them (to the race each one adopts, and the two
+        // already-modelled traits it grants); this test's job is only to
+        // confirm they carry no gate this engine would otherwise apply them
+        // by, which would be wrong — nobody who has not picked `Human ~
+        // Adoptive Parentage` and then chosen one of these seven gets it for
+        // free.
         assert_eq!(
             unclassified,
-            vec![("Human", "Human ~ Tribalistic Languages"), ("Goblin", "Oversized Goblin")]
+            vec![
+                // SD-32 `decisions.md §25` cycle 2, all 14: the "Adopted
+                // Race" selector shape (`ingest_race_traits.rs`'s new
+                // `selector_only` `BookSource`s). Same *kind* of residue as
+                // the 7 Adoptive-Parentage-pool rows below -- gated by their
+                // OWN `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=<X> Race
+                // Trait` pool, resolved by
+                // `adopted_race_choose_selectors`/`crate::rules_core::
+                // trait_pool::resolve_adopted_race_options`, never by a
+                // readable `PREFACT`/default gate this classifier would
+                // otherwise apply them by. Sorted by key, exactly as
+                // `unclassified_traits()` sorts every other entry here.
+                ("Catfolk", "Adopted Race ~ Catfolk"),
+                ("Dhampir", "Adopted Race ~ Dhampir"),
+                ("Fetchling", "Adopted Race ~ Fetchling"),
+                ("Grippli", "Adopted Race ~ Grippli"),
+                ("Ifrit", "Adopted Race ~ Ifrit"),
+                ("Oread", "Adopted Race ~ Oread"),
+                ("Ratfolk", "Adopted Race ~ Ratfolk"),
+                ("Rougarou", "Adopted Race ~ Rougarou"),
+                ("Skinwalker", "Adopted Race ~ Skinwalker"),
+                ("Suli", "Adopted Race ~ Suli"),
+                ("Sylph", "Adopted Race ~ Sylph"),
+                ("Undine", "Adopted Race ~ Undine"),
+                ("Vanara", "Adopted Race ~ Vanara"),
+                ("Vishkanya", "Adopted Race ~ Vishkanya"),
+                ("Drow", "Drow"),
+                ("Dwarf", "Dwarf"),
+                ("Elf", "Elf"),
+                ("Gnome", "Gnome"),
+                ("Grippli", "Grippli"),
+                ("Halfling", "Halfling"),
+                ("Human", "Human ~ Tribalistic Languages"),
+                ("Orc", "Orc"),
+                ("Goblin", "Oversized Goblin"),
+                ("Suli", "Suli ~ Trusted Mediator"),
+            ]
         );
 
         // And the two that used to live here still do not auto-apply: they
@@ -2131,8 +2448,15 @@ mod tests {
             }
         }
         assert_eq!(
-            redacted, 31,
-            "Inner Sea Races' 22 PI-redacted records + Core Essentials' 9, counted on disk. \
+            redacted, 34,
+            "Inner Sea Races' 25 PI-redacted records + Core Essentials' 9, counted on disk. \
+             ISR's 22 -> 25 by a sibling SD-32 card-11 T2b lane's stale-regen fix \
+             (2026-08-22): `Catfolk ~ Jungle Stalker`, `Ratfolk ~ Market Dweller` and \
+             `Suli ~ Trusted Mediator` (the row this module's own \
+             `no_corpus_trait_is_left_without_a_readable_gate` test separately tracks as \
+             `Unclassified`, not `Alternate` -- redaction is independent of trait role) each \
+             name Golarion Product Identity in their prose; the other 6 of that batch's 9 new \
+             alternates do not. \
              Horror Adventures added 0: it is a rules supplement, not a campaign setting. \
              ISR's 18 -> 22 by SD-31 Epic 1-F2 (2026-08-15): `Fetchling ~ Shadow Agent`, \
              `Grippli ~ Defensive Training`, `Ifrit ~ Brazen Flame` and `Undine ~ Triton \
@@ -2180,7 +2504,14 @@ mod tests {
         // `is_heritage_choice_subtrait`), not silently absorbed here.
         // 353 -> 361 by SD-31 wave-24 (2026-08-20): Rougarou (Bestiary 6)
         // adds 8 new standard rows, same flat shape, no heritage content.
-        assert_eq!(count(TraitRole::Default), 361);
+        // 361 -> 373 by SD-32 card-11 T2b lane (2026-08-23): Dhampir
+        // (Bestiary 2) adds its 12 unconditional standard-trait rows
+        // (Ability Scores, Type, Size, Speed, Vision, Skilled, Undead
+        // Resistance, Weakness, Negative Energy Affinity, Spell-Like
+        // Ability, Resist Level Drain, Languages) -- same flat shape, its
+        // heritage/subrace file stays deferred, same precedent as
+        // Skinwalker/Rougarou above.
+        assert_eq!(count(TraitRole::Default), 373);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
@@ -2196,7 +2527,18 @@ mod tests {
         // of them granting a further dependent row that would also count
         // here (Throwback's and Tree Stranger's grants are `FlagGranted`,
         // counted below instead).
-        assert_eq!(count(TraitRole::Alternate), 357);
+        // 357 -> 361 by SD-32 card-11 T2b lane (2026-08-23): Monster
+        // Codex's 4 new Ratfolk alternates (Cheek Pouches, Cleanliness,
+        // Lab Rat, Surface Sprinter) -- Surface Sprinter's own two
+        // replacement rows are `FlagGranted`, counted below instead.
+        // 361 -> 370 by a sibling SD-32 card-11 T2b lane's `inner_sea_races`
+        // stale-regen fix (2026-08-22): 9 new alternates (Catfolk ~ Jungle
+        // Stalker, Gillman ~ Deep Gillman, Kitsune ~ Duplicitous, Nagaji ~
+        // Serpent Affinity, Ratfolk ~ Market Dweller, Strix ~ Cautious
+        // Brawler, Vanara ~ Risky Troublemaker, Vishkanya ~ Deceptive,
+        // Wayang ~ In the Shadows) -- Vishkanya ~ Deceptive's own dependent
+        // row is `FlagGranted`, counted below instead.
+        assert_eq!(count(TraitRole::Alternate), 370);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -2245,16 +2587,48 @@ mod tests {
         // ~ Speed` (one `ABILITY:...|AUTOMATIC|` token naming two keys), and
         // Vanara's `Tree Stranger` grants `Tree Stranger ~ Vanara ~ Speed`
         // the same way -- 3 new dependent rows total.
-        assert_eq!(count(TraitRole::FlagGranted), 74);
-        // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
-        // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
-        // key and names each one's remedy. Unchanged by SD-31 Epic 1-F2: every
-        // one of this batch's gate-free rows has a real granter (see above),
-        // so none of them lands here.
-        assert_eq!(count(TraitRole::Unclassified), 2);
+        // 74 -> 76 by SD-32 card-11 T2b lane (2026-08-23): Monster Codex's
+        // Ratfolk `Surface Sprinter` grants both `Ratfolk ~ Surface Sprinter
+        // ~ Speed` and `Ratfolk ~ Surface Sprinter ~ Vision` (one
+        // `ABILITY:...|AUTOMATIC|` token naming two keys) -- the identical
+        // Gillman `Throwback` shape immediately above.
+        // 76 -> 78 by a sibling SD-32 card-11 T2b lane's `inner_sea_races`
+        // stale-regen fix (2026-08-22): `Vishkanya ~ Deceptive` grants
+        // `Deceptive ~ Vishkanya ~ Limber` plus one more dependent row from
+        // the same 9-alternate batch (re-derive:
+        // `unclassified_traits()`/`alternate_traits()` diffed against the
+        // 9 new ISR alternates' own `ABILITY:...AUTOMATIC...` tokens names
+        // the second).
+        assert_eq!(count(TraitRole::FlagGranted), 78);
+        // `Oversized Goblin`, `Human ~ Tribalistic Languages` and (added by a
+        // sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix,
+        // 2026-08-22) `Suli ~ Trusted Mediator` -- see
+        // `no_corpus_trait_is_left_without_a_readable_gate`, which pins all
+        // three by key and names each one's remedy. Unchanged by SD-31 Epic
+        // 1-F2: every one of that batch's gate-free rows has a real granter
+        // (see above), so none of them lands here.
+        //
+        // 3 -> 10 by SD-32 card-11 T2b lane (2026-08-23): the 7 `Human ~
+        // Adoptive Parentage` CHOOSE-pool members (Drow/Dwarf/Elf/Gnome/
+        // Grippli/Halfling/Orc). They carry no gate of their own by design
+        // -- `no_corpus_trait_is_left_without_a_readable_gate` names why --
+        // and `link_automatic_grants` cannot promote them either, because
+        // its per-race grouping never crosses from `Human`'s trait group
+        // into theirs.
+        // 10 -> 24 by SD-32 `decisions.md §25` cycle 2 (2026-08-23): the 14
+        // "Adopted Race" selector rows (`ingest_race_traits.rs`'s new
+        // `selector_only` `BookSource`s -- bestiary_2 7, bestiary_3 5,
+        // bestiary_5 1, bestiary_6 1). Same *kind* of residue as the 7
+        // Adoptive-Parentage-pool members immediately above: no readable
+        // gate of their own by design, gated instead by their OWN
+        // `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=<X> Race Trait`,
+        // resolved by `adopted_race_choose_selectors`/
+        // `crate::rules_core::trait_pool::resolve_adopted_race_options`, not
+        // by this classifier.
+        assert_eq!(count(TraitRole::Unclassified), 24);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            794,
+            845,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2272,7 +2646,16 @@ mod tests {
              Changeling 9, Samsaran 9; 768 -> 786), closing `arg_races.lst`'s full 37-row \
              playable-race roster -- no new alternate-trait batch, neither race has any ARG \
              alternate content + SD-31 wave-24's Rougarou (Bestiary 6, 2026-08-20): 8 new \
-             standard-tier rows, no heritage/alternate content (786 -> 794)"
+             standard-tier rows, no heritage/alternate content (786 -> 794) + SD-32 card-11 \
+             T2b lane's 18 (2026-08-23: Dhampir's 12 standard-tier rows + Monster Codex's 4 \
+             new Ratfolk alternates + the 2 dependent rows Surface Sprinter grants; 794 -> 812) \
+             + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix \
+             (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted \
+             Mediator (Unclassified) = 12 (812 -> 824) + this cycle's 7 `Human ~ Adoptive \
+             Parentage` CHOOSE-pool members (Unclassified: Drow, Dwarf, Elf, Gnome, \
+             Grippli, Halfling, Orc; `decisions.md §16` item 2, 2026-08-23; 824 -> 831) \
+             + `decisions.md §25` cycle 2's 14 Adopted-Race selector records (Unclassified: \
+             bestiary_2 7, bestiary_3 5, bestiary_5 1, bestiary_6 1; 2026-08-23; 831 -> 845)"
         );
     }
 
@@ -2456,7 +2839,31 @@ mod tests {
         // (`ingest_races.rs`'s `SD31-E6-F4-004` batch wrote each race's
         // `!PREFACT` gates from its own globalvar file), so the orphan-flag
         // assertion above still does not move.
-        assert_eq!(all_flags.len(), 137);
+        //
+        // SD-32 card-11 T2b lane (2026-08-23) moved this 137 -> 139: Monster
+        // Codex's Ratfolk `Surface Sprinter` sets 2 brand-new flags,
+        // `Ratfolk_ReplaceSpeed` and `Ratfolk_ReplaceVision` (its other
+        // three new alternates -- Cheek Pouches/Cleanliness/Lab Rat -- reuse
+        // `Ratfolk_ReplaceSwarming`/`ReplaceRodentEmpathy`/`ReplaceTinker`,
+        // the SAME flags ARG's own Ratfolk alternates already claim: two
+        // different books' alternates legitimately replacing the same base
+        // trait share its one replace-flag by PCGen's own design). Every
+        // flag is claimed by Ratfolk's own standard row (`ingest_races.rs`
+        // wrote its `!PREFACT` gates from Ratfolk's globalvar file, as
+        // every other race's do), so the orphan-flag assertion above still
+        // does not move.
+        //
+        // A sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen
+        // fix (2026-08-22) moved this 139 -> 144: its 9 new alternates'
+        // flags are mostly reuses of already-claimed names (two different
+        // books' alternates legitimately sharing one base trait's
+        // replace-flag), with 5 genuinely new (re-derive: diff this file's
+        // `ALTERNATE_TRAIT_REPLACE_FLAGS` additions for
+        // Catfolk/Gillman/Kitsune/Nagaji/Ratfolk/Strix/Vanara/Vishkanya/
+        // Wayang against the flag set already present before them). Every
+        // flag is claimed by its own race's standard row, so the
+        // orphan-flag assertion above still does not move.
+        assert_eq!(all_flags.len(), 144);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -2479,8 +2886,17 @@ mod tests {
         }
         assert_eq!(
             checked,
-            357,
-            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
+            370,
+            "153 ARG + 8 Monster Codex (the original 4 -- Duergar's Ironskinned/Twilight-\
+             Touched, Goblin's the two Oversized replacement rows -- plus SD-32 card-11 T2b's \
+             4 Ratfolk alternates, 2026-08-23: Cheek Pouches/Cleanliness/Lab Rat/Surface \
+             Sprinter. Surface Sprinter's own two replacement rows, `~ Speed`/`~ Vision`, are \
+             `FlagGranted` via its own `ABILITY:...AUTOMATIC...` token, same as Strix's \
+             Wing-Clipped below, so they are not counted here) + 1 APG + 76 Inner Sea Races \
+             (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, \
+             2026-08-22 -- Vishkanya ~ Deceptive's own dependent row is `FlagGranted`, not \
+             counted here) + \
+             41 Horror Adventures + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
              SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch's alternates, \
              minus Strix's Wing-Clipped-granted Flight and Suli's Energy-Strike-granted \
@@ -2599,7 +3015,9 @@ mod tests {
         assert_eq!(corpus.resolve_key("race:half-elf"), Some("Half-Elf"));
         assert_eq!(corpus.resolve_key("  race:HALF-ORC "), Some("Half-Orc"));
         assert_eq!(corpus.resolve_key("race:tiefling"), Some("Tiefling"));
-        assert_eq!(corpus.resolve_key("race:dhampir"), None, "a B2 race is not ingested");
+        // Dhampir gained a chassis + standard-tier traits, SD-32 card-11 T2b
+        // lane (2026-08-23); it now resolves like any other B2 race.
+        assert_eq!(corpus.resolve_key("race:dhampir"), Some("Dhampir"));
         assert_eq!(corpus.resolve_key(""), None);
     }
 
@@ -2665,13 +3083,14 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             RACE_SIZES.len(),
-            38,
+            39,
             "18 original + SD-31 Epic 1-F2's Bestiary 2 batch of 6 + the Skinwalker follow-on \
              batch + SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16) + \
              SD31-E6-F4-004's Advanced Race Guide follow-on batch of 4 (2026-08-17) + \
              SD31-E6-F4-007's Advanced Race Guide follow-on batch of 2 (2026-08-17: \
              Changeling, Samsaran), closing `arg_races.lst`'s full 37-row roster + SD-31 \
-             wave-24's Rougarou (Bestiary 6, 2026-08-20)"
+             wave-24's Rougarou (Bestiary 6, 2026-08-20) + SD-32 card-11 T2b lane's Dhampir \
+             (Bestiary 2, 2026-08-23)"
         );
         for key in corpus.race_keys() {
             let resolved = corpus.resolve(key, &[]).expect("resolves");
@@ -2685,8 +3104,9 @@ mod tests {
         assert_eq!(race_size_for_race_token("race:goblin"), Some(SizeCategory::Small));
         assert_eq!(race_size_for_race_token("race:half-elf"), Some(SizeCategory::Medium));
         assert_eq!(race_size_for_race_token("race:tiefling"), Some(SizeCategory::Medium));
-        // A race outside the ingested 18 stays an honest absence.
-        assert_eq!(race_size_for_race_token("race:dhampir"), None);
+        // Dhampir gained a chassis + standard-tier traits, SD-32 card-11
+        // T2b lane (2026-08-23); it now resolves like any other B2 race.
+        assert_eq!(race_size_for_race_token("race:dhampir"), Some(SizeCategory::Medium));
         assert_eq!(race_size_for_race_token(""), None);
     }
 
@@ -2709,8 +3129,11 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            357,
-            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
+            370,
+            "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk \
+             alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from \
+             a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + \
+             41 Horror Adventures + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6) + \
              SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
              SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on 4-race chassis batch) \
@@ -2755,7 +3178,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 357);
+        assert_eq!(selectable_alternate_trait_keys().len(), 370);
     }
 
     #[test]
@@ -2786,5 +3209,120 @@ mod tests {
             .find(|t| t.type_tokens.iter().any(|tt| tt == "Racial Ability Scores"))
             .expect("ability scores trait");
         assert_eq!(ability.declared_bonus_magnitudes(), vec![2, -2]);
+    }
+
+    /// `decisions.md §16` item 2 / SD-32 card-11 T2b: the "Adoptive
+    /// Parentage" selector resolves to the race it adopts, corpus-wide, by
+    /// class, not by instance. `arg_abilities_race.lst`'s `###Block:
+    /// Adoptive Parentage Options` names exactly 7 rows against the pinned
+    /// oracle (Dwarf, Elf, Gnome, Halfling, Orc, Drow, Grippli — verified
+    /// directly, `grep -c` over the corrected census script). Every one of
+    /// the 7 targets a race already chassis-modelled in this same corpus,
+    /// and both of its two grant targets (`<Race> ~ Weapon Familiarity`,
+    /// `<Race> ~ Languages`) are already-ingested standard traits — so this
+    /// is a real, closed grant link, not a browse-only stub: unlike
+    /// `bestiary_6`'s Rougarou row (proven empty corpus-wide, excluded, not
+    /// ingested), this shape has real content on the other end and is
+    /// therefore ingested.
+    #[test]
+    fn adoptive_parentage_resolves_all_seven_arg_options_to_a_modelled_race_with_real_grants() {
+        let corpus = all_books();
+        let options = adoptive_parentage_options(&corpus);
+        let keys: Vec<&str> = options.iter().map(|o| o.key.as_str()).collect();
+        assert_eq!(
+            keys,
+            vec!["Drow", "Dwarf", "Elf", "Gnome", "Grippli", "Halfling", "Orc"],
+            "exactly ARG's 7 Adoptive Parentage rows, sorted by key"
+        );
+        for option in &options {
+            assert_eq!(option.book_id, "advanced_race_guide");
+            assert_eq!(
+                option.adopted_race, option.key,
+                "every ARG Adoptive Parentage row's own KEY is its target race's name"
+            );
+            assert!(
+                corpus.chassis(&option.adopted_race).is_some(),
+                "{:?} must resolve to a race with its own chassis record in this corpus",
+                option.adopted_race
+            );
+            assert!(
+                option.description.as_deref().is_some_and(|d| !d.trim().is_empty()),
+                "{:?} must carry real corpus prose, not a fabricated placeholder",
+                option.key
+            );
+            assert!(
+                option.unresolved_grants.is_empty(),
+                "{:?}: every ARG Adoptive Parentage grant target must resolve against this \
+                 project's own already-ingested standard traits; a gap here would mean this \
+                 option grants nothing real, {:?}",
+                option.key,
+                option.unresolved_grants
+            );
+            let grant_names: Vec<&str> = option.grants.iter().map(|g| g.name.as_str()).collect();
+            assert_eq!(
+                grant_names,
+                vec!["Weapon Familiarity", "Languages"],
+                "{:?}: ARG's own row grants exactly these two already-modelled traits, in this \
+                 order (`ABILITY:<Race> Racial Trait|AUTOMATIC|<Race> ~ Weapon Familiarity|<Race> \
+                 ~ Languages`, verbatim against the pinned oracle)",
+                option.key
+            );
+        }
+    }
+
+    /// SD-32 `decisions.md §25` cycle 2: `adopted_race_choose_selectors`
+    /// finds the real, on-disk 14-unit population this cycle's new
+    /// `selector_only` `BookSource`s ingested -- the exact population named
+    /// in the epic's own acceptance criterion (bestiary_2 7, bestiary_3 5,
+    /// bestiary_5 1, bestiary_6 1).
+    #[test]
+    fn adopted_race_choose_selectors_finds_the_real_fourteen_unit_population() {
+        let corpus = all_books();
+        let selectors = adopted_race_choose_selectors(&corpus);
+        let races: Vec<&str> = selectors.iter().map(|s| s.adopted_race.as_str()).collect();
+        assert_eq!(
+            races,
+            vec![
+                "Catfolk", "Dhampir", "Fetchling", "Grippli", "Ifrit", "Oread", "Ratfolk", "Rougarou",
+                "Skinwalker", "Suli", "Sylph", "Undine", "Vanara", "Vishkanya",
+            ],
+            "exactly the 14 target races, sorted by key (\"Adopted Race ~ <Race>\")"
+        );
+        assert_eq!(selectors.len(), 14, "decisions.md §25's own population figure");
+        for selector in &selectors {
+            assert_eq!(selector.key, format!("Adopted Race ~ {}", selector.adopted_race));
+            assert_eq!(
+                selector.pool_type_suffix.as_deref(),
+                Some(format!("{} Race Trait", selector.adopted_race)).as_deref(),
+                "{:?}: every real oracle row's CHOOSE: pool suffix is \"<Race> Race Trait\", read, \
+                 never guessed",
+                selector.key
+            );
+        }
+        // All 14 target races now resolve to a real chassis record --
+        // `ingest_races.rs` has since given Dhampir/Skinwalker/Rougarou their
+        // own chassis (SD-31 wave-24 and SD-32 card-11 T2b, both landed after
+        // `epic-6-kind-trait_cycle-1_cycle_receipt.md §2` wrote the "three
+        // races with no chassis" finding this test corrects). The selector
+        // shape itself still needs no chassis to be admitted -- its pool
+        // resolves against `crate::rules_core::trait_pool`, never
+        // `RaceCorpus::traits_for` -- so `ingest_book`'s bypass stays even
+        // though it currently has nothing left to bypass for.
+        let without_chassis: Vec<&str> =
+            selectors.iter().filter(|s| corpus.chassis(&s.adopted_race).is_none()).map(|s| s.adopted_race.as_str()).collect();
+        assert!(without_chassis.is_empty(), "re-derive this test if a future book removes a chassis: {without_chassis:?}");
+    }
+
+    /// An option's target race resolving is not enough on its own —
+    /// `traits_by_category` must be scoped to the exact category string, not
+    /// a substring or a case-insensitive match, so a future book's
+    /// differently-cased or differently-worded category never silently joins
+    /// this population.
+    #[test]
+    fn traits_by_category_is_an_exact_match_not_a_substring() {
+        let corpus = all_books();
+        assert!(corpus.traits_by_category("Adoptive").is_empty());
+        assert!(corpus.traits_by_category("adoptive parentage").is_empty());
+        assert_eq!(corpus.traits_by_category(ADOPTIVE_PARENTAGE_CATEGORY).len(), 7);
     }
 }

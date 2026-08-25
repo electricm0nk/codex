@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Moroi-Born ~ Skilled",
+    "name": "Skilled",
+    "description": "Svetochers gain a +2 racial bonus on Diplomacy and Knowledge (nobility) checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Moroi-Born ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Svetochers gain a +2 racial bonus on Diplomacy and Knowledge (nobility) checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Knowledge (nobility)|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Diplomacy, +2 Knowledge (nobility)"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceSkilled|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
+    "line": 42,
+    "record_key": "Moroi-Born ~ Skilled"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

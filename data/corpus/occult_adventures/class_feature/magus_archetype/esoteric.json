@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Archetype ~ Esoteric",
     "name": "Esoteric",
-    "class": "Magus Archetype",
+    "class": "Magus",
     "description": "Esoterics are drawn to the mysticism of the occult and spend their lives delving into forgotten texts and forbidden tomes. Each esoteric learns to inscribe his spells on his flesh in a complex series of occult symbols and arcane equations.",
     "raw_tokens": [
       {
@@ -155,5 +155,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

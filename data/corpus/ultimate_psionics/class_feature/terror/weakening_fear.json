@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Weakening Fear",
+    "name": "Weakening Fear",
+    "class": "Terror",
+    "description": "Your attack fatigues the target for %1 rounds (Will DC %2 negates). This is a mind-affecting fear effect.  This terror has no effect on a creature that is already fatigued.|WeakeningFearDuration|WeakeningFearDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Weakening Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeakeningFearDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeakeningFearDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack fatigues the target for %1 rounds (Will DC %2 negates). This is a mind-affecting fear effect.  This terror has no effect on a creature that is already fatigued.|WeakeningFearDuration|WeakeningFearDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeakeningFearDuration|TerrorAugmentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeakeningFearDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeakeningFearDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Weakening Fear)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 313,
+    "record_key": "Terror ~ Weakening Fear"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Starburn",
     "name": "Starburn",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "As a standard action, the shaman causes one creature within 30 feet to burn like a star. The creature takes %1d6 points of fire damage and emits bright light for 1 round. A successful Fortitude saving throw (DC %2) halves the damage and negates the emission of bright light. The shaman can use this hex %3/day, but must wait 1d4 rounds between uses.|ShamanStarburnDice|ShamanStarburnDC|ShamanStarburnTimes",
     "raw_tokens": [
       {
@@ -76,5 +76,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

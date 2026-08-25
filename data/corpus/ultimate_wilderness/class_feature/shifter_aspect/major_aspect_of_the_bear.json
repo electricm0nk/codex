@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Bear ~ Major",
     "name": "Major Aspect of the Bear",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a dire bear (Bestiary p31). While in this form, you gain low-light vision and scent (30 feet), you gain two claw attacks (1d6 damage), a bite attack (1d8 damage), grab with your claws, and a 40 feet base speed.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

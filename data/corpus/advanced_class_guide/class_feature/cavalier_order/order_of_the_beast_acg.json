@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Order ~ Order of the Beast",
     "name": "Order of the Beast (ACG)",
-    "class": "Cavalier Order",
+    "class": "Cavalier",
     "description": "A cavalier who belongs to this order serves nature in all its forms. These cavaliers believe that animals make the most loyal companions, and keep close to woodland creatures.",
     "raw_tokens": [
       {
@@ -51,6 +51,14 @@
       {
         "key": "ASPECT",
         "value": "CombatBonus|mount gains a +%1 circumstance bonus on melee attack rolls against the target of his challenge whenever the cavalier is threatening the target.|1+OrderChallengeBonus"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
       }
     ]
   },
@@ -67,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

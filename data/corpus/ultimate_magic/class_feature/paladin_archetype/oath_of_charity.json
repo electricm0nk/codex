@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Oath of Charity",
     "name": "Oath of Charity",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "You dedicate your life to protecting those who can't protect themselves and giving to those who are in need.",
     "raw_tokens": [
       {
@@ -59,6 +59,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath of Charity],[!PREFACT:1,ABILITIES,Paladin_Archetype_LayOnHands=True,Paladin_Archetype_DivineBond=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_LayOnHands|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_LayOnHands|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineBond|true"
       }
     ]
   },
@@ -75,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

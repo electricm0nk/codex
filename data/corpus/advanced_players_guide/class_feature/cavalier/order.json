@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier ~ Order",
     "name": "Order",
@@ -35,6 +35,30 @@
       {
         "key": "BONUS",
         "value": "VAR|OrderAbilityLVL|CavalierLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderAbility2|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderAbility2|1|PREVARGTEQ:OrderAbilityLVL,2|PREVAREQ:Cavalier_CF_OrderAbility2,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderAbility8|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderAbility8|1|PREVARGTEQ:OrderAbilityLVL,8|PREVAREQ:Cavalier_CF_OrderAbility8,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrderAbility15|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrderAbility15|1|PREVARGTEQ:OrderAbilityLVL,15|PREVAREQ:Cavalier_CF_OrderAbility15,1"
       }
     ]
   },
@@ -52,5 +76,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

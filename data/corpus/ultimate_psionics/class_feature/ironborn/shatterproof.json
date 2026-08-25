@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ironborn ~ Shatterproof",
+    "name": "Shatterproof",
+    "class": "Ironborn",
+    "description": "Any time your armor is targeted by a sunder attempt or would otherwise take damage, the damage is instead transferred to you.  Any applicable hardness of the armor is applied before determine what (if any) damage is transferred to you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironborn ~ Shatterproof"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Any time your armor is targeted by a sunder attempt or would otherwise take damage, the damage is instead transferred to you.  Any applicable hardness of the armor is applied before determine what (if any) damage is transferred to you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2509,
+    "record_key": "Ironborn ~ Shatterproof"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Possessed Corruption ~ Unrestrained Stain",
+    "name": "Unrestrained Stain",
+    "description": "Objects you wear and carry slip from your grasp and fall from your pockets, or suddenly pelt creatures that have acted in an unhelpful manner toward you. It takes you a standard action to retrieve a stored item, and whenever you drop or lose hold of an item, it lands 10 feet away in a random direction. You take a -%1 penalty on saving throws and to your CMD against attacks and effects that would disarm you or steal from you.|CorruptionUnrestrainedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Unrestrained Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedUnrestrainedStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "DESC",
+        "value": "Objects you wear and carry slip from your grasp and fall from your pockets, or suddenly pelt creatures that have acted in an unhelpful manner toward you. It takes you a standard action to retrieve a stored item, and whenever you drop or lose hold of an item, it lands 10 feet away in a random direction. You take a -%1 penalty on saving throws and to your CMD against attacks and effects that would disarm you or steal from you.|CorruptionUnrestrainedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Steal,CMD_Disarm|-CorruptionUnrestrainedBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 683,
+    "record_key": "Possessed Corruption ~ Unrestrained Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

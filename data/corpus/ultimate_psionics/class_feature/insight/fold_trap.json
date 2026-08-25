@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Fold Trap",
+    "name": "Fold Trap",
+    "class": "Insight",
+    "description": "You can 'fold' the pattern of a trap you have personally crafted, compressing the trap into a light-weight projectile which can be thrown at a later time.  As a standard action, you can trhow the folded trap at an unoccupied square up to 30 feet away.  No attack roll is necessary and the trap is immediately 'unfolded' and ready to be triggered as normal.  The trap affected must have a CR no greater than %1.|FoldTrapCR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Fold Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Insight ~ Quick Trapsmith"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FoldTrapCR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can 'fold' the pattern of a trap you have personally crafted, compressing the trap into a light-weight projectile which can be thrown at a later time.  As a standard action, you can trhow the folded trap at an unoccupied square up to 30 feet away.  No attack roll is necessary and the trap is immediately 'unfolded' and ready to be triggered as normal.  The trap affected must have a CR no greater than %1.|FoldTrapCR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FoldTrapCR|max(1,floor(CrypticInsightLVL/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 205,
+    "record_key": "Insight ~ Fold Trap"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

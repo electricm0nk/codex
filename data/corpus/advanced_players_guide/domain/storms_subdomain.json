@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Storms Subdomain",
+    "name": "Storms Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Storms Subdomain],[PREVARLT:WeatherDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Storms Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Storms Subdomain=1|Obscuring Mist|Storms Subdomain=2|Fog Cloud|Storms Subdomain=3|Call Lightning|Storms Subdomain=4|Sleet Storm|Storms Subdomain=5|Call Lightning Storm|Storms Subdomain=6|Sirocco|Storms Subdomain=7|Control Weather|Storms Subdomain=8|Whirlwind|Storms Subdomain=9|Storm of Vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 68,
+    "record_key": "Storms Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

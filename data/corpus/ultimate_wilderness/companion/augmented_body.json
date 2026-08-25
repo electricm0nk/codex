@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Augmented Companion ~ Augmented Body",
+    "name": "Augmented Body",
+    "description": "An augmented companion heals only half as much as normal from positive energy healing effects but also heals half the usual amount from effects that specifically heal constructs.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Augmented Companion ~ Augmented Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An augmented companion heals only half as much as normal from positive energy healing effects but also heals half the usual amount from effects that specifically heal constructs."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 445,
+    "record_key": "Augmented Companion ~ Augmented Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

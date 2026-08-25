@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Effortless Aid",
+    "name": "Effortless Aid",
+    "description": "Once per day as a move action, you can select an adjacent ally. For the next minute, you can take 10 on attack rolls and skill checks to use the aid another action to aid that ally, even if you are distracted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Effortless Aid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Effortless Aid]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a move action, you can select an adjacent ally. For the next minute, you can take 10 on attack rolls and skill checks to use the aid another action to aid that ally, even if you are distracted."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 53,
+    "record_key": "Trait ~ Effortless Aid"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Psionic Sunder",
+    "category": "Psionic",
+    "name": "Psionic Sunder",
+    "description": "While maintaining psionic focus, when you successfully perform a sunder combat maneuver, you also deal %1 damage to the creature holding the item sundered.  If you expend your psionic focus when you perform a successful sunder maneuver, you ignore half the hardness of the object you are sundering.|PsionicSunderDamage",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Power Attack,Improved Sunder",
+      "PREMULT:1,[PRETOTALAB:1],[PREVARGTEQ:PrereqBAB,1]",
+      "PRESTAT:1,STR=13",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 265,
+    "record_key": "Psionic Sunder"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

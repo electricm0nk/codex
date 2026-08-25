@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Fey Blood (Lesser)",
     "name": "Fey Blood, Lesser",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, each time the barbarian confirms a critical hit, the target must succeed at a Will saving throw (DC %1) or be confused for one round. This is a mind-affecting compulsion effect.|10+floor(BarbarianLVL/2)+CON",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

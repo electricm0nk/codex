@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Warrior Path 2 ~ Brawling Path",
+    "name": "Brawling Path",
+    "class": "Warrior",
+    "description": "You bring the combat to your enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warrior Path 2 ~ Brawling Path"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Brawling Path.PsychicWarriorClassFeatures.SecondWarriorPath.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlingPathTranceLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrawlingPathLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You bring the combat to your enemy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Brawling ~ Path Skill|Path Skill Acrobatics|Path Skill Autohypnosis|Path Skill Escape Artist|PREVARGTEQ:WarriorPathLVL,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Brawling ~ Expanded Path|PREVARGTEQ:WarriorPathLVL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Path Power|1|PREVARGTEQ:WarriorPathLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlingPathTranceLVL|BrawlingPathLVL+WarriorPathTranceLVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BrawlingPathLVL|WarriorPathLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 561,
+    "record_key": "Warrior Path 2 ~ Brawling Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Dragon ~ Aid Allies",
     "name": "Aid Allies",
-    "class": "Order of the Dragon",
+    "class": "Dragon",
     "description": "Whenever an order of the dragon cavalier uses the aid another action to assist one of his allies, the ally receives a +%1 bonus to his Armor Class, attack roll, saving throw, or skill check.|3+(CavalierLVL-2)/6",
     "raw_tokens": [
       {
@@ -40,5 +40,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

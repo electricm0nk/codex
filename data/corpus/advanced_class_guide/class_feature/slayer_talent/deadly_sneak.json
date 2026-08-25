@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Slayer Talent ~ Deadly Sneak",
     "name": "Deadly Sneak**",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "Whenever a slayer with this talent uses the powerful sneak slayer talent, she treats all 1s and 2s on the sneak attack damage dice as 3s. A slayer must have the powerful sneak slayer talent before choosing this talent.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

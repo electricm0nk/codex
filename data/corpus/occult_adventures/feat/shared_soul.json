@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Shared Soul",
+    "category": "General",
+    "name": "Shared Soul",
+    "description": "You and your phantom are deeply connected in heart, mind, and soul. While your phantom is confined within your consciousness, you gain a +2 bonus on saving throws against death effects, energy drain, and possession. In addition, once per day when you fail a saving throw against a death effect or possession effect or gain a negative level, as an immediate action you can shunt that effect into the phantom's section of your soul instead. When you do so, you are not affected by that effect, but you also don't gain any of the normal benefits of your shared consciousness ability and can't manifest your phantom in any way for the normal duration of the spell or effect shunted into the phantom's consciousness. The phantom suffers the full effect you transferred, and as long as your phantom continues to suffer from the effect, you cannot shunt a death or possession effect or negative level onto your phantom.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Spiritualist ~ Shared Consciousness"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 64,
+    "record_key": "Shared Soul"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

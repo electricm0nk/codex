@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Whiplash",
+    "name": "Whiplash",
+    "class": "Blade Skill",
+    "description": "You can throw your mind shield as a thrown weapon with a range increment of %1.  In addition, by expending psionic focus as a free action after making a ranged attack with your mind shield, you can cause the shield to return back to your hand, hitting any enemy in line of effect from your target and dealing damage as a|WhiplashRangeIncrement",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Whiplash"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Shielded Blade ~ Form Mind Blade"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeSkillPrereqLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WhiplashRangeIncrement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can throw your mind shield as a thrown weapon with a range increment of %1.  In addition, by expending psionic focus as a free action after making a ranged attack with your mind shield, you can cause the shield to return back to your hand, hitting any enemy in line of effect from your target and dealing damage as a|WhiplashRangeIncrement"
+      },
+      {
+        "key": "DESC",
+        "value": " light|!PREABILITY:1,CATEGORY=Special Ability,Shielded Blade ~ Form Mind Shield"
+      },
+      {
+        "key": "DESC",
+        "value": " heavy|PREABILITY:1,CATEGORY=Special Ability,Shielded Blade ~ Form Mind Shield"
+      },
+      {
+        "key": "DESC",
+        "value": " shield.  You make a ranged attack roll for each enemy in the line of effect.  You may not use this blade skill if your mind shield is in the form of a tower shield."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WhiplashRangeIncrement|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 826,
+    "record_key": "Blade Skill ~ Whiplash"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

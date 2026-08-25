@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk ~ Slow Fall",
     "name": "Slow Fall",
@@ -43,6 +43,50 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.59"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,2|PREVAREQ:Monk_CF_SlowFall10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,4|PREVAREQ:Monk_CF_SlowFall20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,6|PREVAREQ:Monk_CF_SlowFall30,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,8|PREVAREQ:Monk_CF_SlowFall40,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,10|PREVAREQ:Monk_CF_SlowFall50,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,12|PREVAREQ:Monk_CF_SlowFall60,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,14|PREVAREQ:Monk_CF_SlowFall70,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,16|PREVAREQ:Monk_CF_SlowFall80,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowFallLVL|-2|PREVARGTEQ:MonkLVL,18|PREVAREQ:Monk_CF_SlowFall90,1"
+      },
+      {
+        "key": "DESC",
+        "value": "If you are within arm's reach of a wall, you can use it to slow your descent. You take damage as if the fall were %1 feet shorter than it actually is.|SlowFall|PREVARLT:SlowFallLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use a nearby wall to slow your descent and fall any distance without harm.|PREVAREQ:SlowFallLVL,20"
       }
     ]
   },
@@ -60,5 +104,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Variant Bandersnatch ~ Confounding",
+    "name": "Confounding Bandersnatch (+1 CR)",
+    "description": "Confounding bandersnatches drip infectious madness from their quills and Claws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Bandersnatch ~ Confounding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VariantBandersnatch.RacialAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Confounding bandersnatches drip infectious madness from their quills and Claws."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Confounding Bandersnatch ~ Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|CR|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 462,
+    "record_key": "Variant Bandersnatch ~ Confounding"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

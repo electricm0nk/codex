@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Shadow Knowledge",
+    "name": "Shadow Knowledge",
+    "description": "The knowledge in this book clings to your consciousness like the Shadow Plane itself. Unlike other boons, you do not spend this one. Until you prepare spells again, you are considered trained in all Knowledge skills as long as the check pertains to the geography and denizens of the Shadow Plane. If you are already trained in the appropriate Knowledge skill, you gain a +2 circumstance bonus on these checks instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Shadow Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "The knowledge in this book clings to your consciousness like the Shadow Plane itself. Unlike other boons, you do not spend this one. Until you prepare spells again, you are considered trained in all Knowledge skills as long as the check pertains to the geography and denizens of the Shadow Plane. If you are already trained in the appropriate Knowledge skill, you gain a +2 circumstance bonus on these checks instead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 43,
+    "record_key": "Preparation Ritual ~ Shadow Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

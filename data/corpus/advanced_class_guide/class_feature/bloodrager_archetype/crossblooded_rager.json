@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Archetype ~ Crossblooded Rager",
     "name": "Crossblooded Rager",
-    "class": "Bloodrager Archetype",
+    "class": "Bloodrager",
     "description": "While most bloodragers manifest only one bloodline, there are some who, through some quirk of heredity or the conjunction of other powers, manifest two. This combination of two distinct bloodlines can create a versatile and powerful rager who stands out among the horde.&nl;A crossblooded rager selects two different bloodlines. He gains access to the feats, bonus spells, and some of the powers of both bloodlines he is descended from, but at the cost of reducing mental clarity (see Drawbacks). If the crossblooded rager already has a bloodline from another class, one of the chosen bloodlines must be that bloodline.",
     "raw_tokens": [
       {
@@ -139,6 +139,10 @@
       {
         "key": "FACT",
         "value": "Bloodrager_Archetype_BloodlineSpell16|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
       }
     ]
   },
@@ -155,5 +159,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

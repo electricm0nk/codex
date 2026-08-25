@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Xenophobic",
+    "name": "Xenophobic",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_languages.lst",
+    "sha256": "1b13583eb27d06ce6dea0d5fc66d1edf9a056c4d0fdec687b3945990c976cb71",
+    "line": 20,
+    "record_key": "Xenophobic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

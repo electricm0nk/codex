@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Trail Of Flames",
     "name": "Trail Of Flames",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element fire; Type utility (Sp); Level 5; Burn 0 Saving Throw none; Spell Resistance yes When you take the withdraw or run action, you can leave a wall of fire in all squares you exit that lasts for 1 round.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

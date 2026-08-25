@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "First Blade ~ Regeneration",
+    "delivery": "Extraordinary",
+    "description": "The First Blade is difficult to kill. It heal damage at %1 points per round, as with fast healing, but it cannot die as long as its regeneration is still functioning (although it will still fall unconscious when its hit points are below 0). Adamantine weapons cause its regeneration to stop functioning on the round following the attack. During this round, it cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. It can regrow lost portions of its body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+    "description_variables": [
+      "RegenerationRate"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:first_blade_regeneration",
+    "name": "Regeneration",
+    "owners": [
+      "inner_sea_gods:monster:the_first_blade"
+    ],
+    "source_page": null,
+    "traits": [
+      "ModifyHP"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 15,
+    "record_key": "First Blade ~ Regeneration"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

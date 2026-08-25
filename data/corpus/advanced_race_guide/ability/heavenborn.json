@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Heavenborn",
+    "name": "Heavenborn",
+    "description": "+2 untyped bonus to Knowledge (planes); +1 untyped bonus to CL for good or light spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Heavenborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 untyped bonus to Knowledge (planes); +1 untyped bonus to CL for good or light spells."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|DESCRIPTOR.Good,DESCRIPTOR.Light|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Planes)|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 345,
+    "record_key": "Builder Racial Trait ~ Heavenborn"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

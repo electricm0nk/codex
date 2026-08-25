@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Guarded Stance",
+    "name": "Guarded Stance",
+    "class": "Unchained Barbarian",
+    "description": "You can take on a more defensive posture. This grants you a +%1 dodge bonus to your Armor Class for the duration of your current rage. This is a stance rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Guarded Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Guarded Stance"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GuardedStanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can take on a more defensive posture. This grants you a +%1 dodge bonus to your Armor Class for the duration of your current rage. This is a stance rage power."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GuardedStanceBonus|1+floor(RagePowersLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 357,
+    "record_key": "Unchained Rage Power ~ Guarded Stance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

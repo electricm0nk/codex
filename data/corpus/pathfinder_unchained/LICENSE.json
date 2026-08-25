@@ -1,7 +1,7 @@
 {
   "book": "pathfinder_unchained",
-  "classified_at": "2026-08-03T19:41:44Z",
-  "classified_by_cycle": "E2.2",
+  "classified_at": "2026-08-23T23:00:21Z",
+  "classified_by_cycle": "SD32-T9-NORECORD-R4",
   "license_declaration": {
     "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2",
     "product_identity_note": "Named deities, NPCs, and unique places are Product Identity per the book's own OGL Section 15 declaration; this book's own feat and equipment-modifier MECHANICS are Open Game Content.",
@@ -12,8 +12,8 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 127,
-  "records_redacted": 0,
+  "records_processed": 1271,
+  "records_redacted": 1,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the 20 canonical core Golarion deities plus a sampled set of known setting place names, the same list docs/governance/ogl-pi-blacklist.md's operating cycle used for the 4 in-scope books' retro-fit). This generator's own run screened 59 records (17 feats + 42 equipment modifiers), zero PI hits -- consistent with this book's own subject matter (alignment/stamina/wound-threshold feats and Automatic Bonus Progression equipment modifiers) being entirely rules-mechanical, setting-neutral text. `records_processed` below is 127, the full on-disk count derived at write time rather than from this run alone, since `ingest_pu_classes.rs` also writes real, separately-screened records (its own `pi_hits()` term scan) into this book's directory. This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~54 known names and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the 20 canonical core Golarion deities plus a sampled set of known setting place names, the same list docs/governance/ogl-pi-blacklist.md's operating cycle used for the 4 in-scope books' retro-fit). This generator's own run screened 59 records (17 feats + 42 equipment modifiers), zero PI hits -- consistent with this book's own subject matter (alignment/stamina/wound-threshold feats and Automatic Bonus Progression equipment modifiers) being entirely rules-mechanical, setting-neutral text. `records_processed` below is 1271, the full on-disk count derived at write time rather than from this run alone, since `ingest_pu_classes.rs` also writes real, separately-screened records (its own `pi_hits()` term scan) into this book's directory. This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~54 known names and does not prove the absence of PI beyond what that scan can see. PASS -- SD32-T9-NORECORD-R4 (monster lane), 2026-08-23T23:00:21Z: every field of the 0 records this run wrote (0 monsters + 0 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 1271: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

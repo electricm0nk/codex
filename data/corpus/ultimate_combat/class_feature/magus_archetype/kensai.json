@@ -1,0 +1,172 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Magus Archetype ~ Kensai",
+    "name": "Kensai",
+    "class": "Magus",
+    "description": "A kensai spends his life focusing his training and meditation into a rapturous perfection of the use of a single weapon, which is usually but not always a sword, channeling his arcane might through it in a dizzying and deadly dance beyond the abilities of even the greatest of mundane warriors.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Kensai"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusSpellRecall.MagusKnowledgePool.MagusWeaponProficiency.MagusArmorProficiency.MagusArmorMedium.MagusArmorHeavy.MagusArcana9.MagusImprovedSpellRecall"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Kensai],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusWeaponProficiency,TYPE.MagusSpellRecall,TYPE.MagusKnowledgePool,TYPE.MagusArmorProficiency,TYPE.MagusLightArmorProficiency,TYPE.MagusMediumArmorProficiency,TYPE.MagusHeavyArmorProficiency,TYPE.MagusArcana9,TYPE.MagusImprovedSpellRecall]"
+      },
+      {
+        "key": "DESC",
+        "value": "A kensai spends his life focusing his training and meditation into a rapturous perfection of the use of a single weapon, which is usually but not always a sword, channeling his arcane might through it in a dizzying and deadly dance beyond the abilities of even the greatest of mundane warriors."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Weapon and Armor Proficiency|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Diminished Spellcasting|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Canny Defense|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Weapon Focus|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Perfect Strike|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Fighter Training|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Iaijutsu|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Critical Perfection|PRECLASS:1,Magus=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Superior Reflexes|PRECLASS:1,Magus=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Iaijutsu Focus|PRECLASS:1,Magus=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Iaijutsu Master|PRECLASS:1,Magus=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Weapon Mastery|PRECLASS:1,Magus=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Kensai ~ Magus Arcana|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Kensai],[!PREFACT:1,ABILITIES,Magus_Archetype_SpellRecall=True,Magus_Archetype_KnowledgePool=True,Magus_Archetype_Proficiencies=True,Magus_Archetype_Arcana9=True,Magus_Archetype_ImprovedSpellRecall=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_WeaponProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Arcana9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Arcana9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellRecall|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 7,
+    "record_key": "Magus Archetype ~ Kensai"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

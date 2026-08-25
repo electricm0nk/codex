@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Celestial Bloodrager Bloodline ~ Angelic Protection",
     "name": "Angelic Protection",
-    "class": "Celestial Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "You gain a +4 defection bonus to AC and a +4 resistance bonus to on saving throws against attacks made or effects created by evil creatures, and you are affected as if subject to a Protection from Evil spell. This effect cannot be dispelled.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

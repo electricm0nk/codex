@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Nightmare Lord",
+    "name": "Nightmare Lord",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "DR",
+        "value": "5/Good or Silver"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "204"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=10"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,INT=6,CHA=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|SUBSCHOOL.Phantasm|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|SUBSCHOOL.Shadow|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate,Stealth|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsightRange|120|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Nightmare Creature Subtype|PRERACE:1,RACETYPE=Outsider"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Nightmare Creature Flight|!PREMOVE:1,Fly=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Nightmare Lord"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE|LE|NE"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 160,
+    "record_key": "Nightmare Lord"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

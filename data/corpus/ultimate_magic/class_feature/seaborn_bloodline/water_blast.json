@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Seaborn Bloodline ~ Water Blast",
     "name": "Water Blast",
-    "class": "Seaborn Bloodline",
+    "class": "Sorcerer",
     "description": "As a standard action, you can fire a bolt of water at a foe within 30 feet as a ranged touch attack. The foe is knocked prone, and at your option may be pushed 5 feet directly away from you. A reflex save (DC %1) negates this effect. You can use this ability %2 times per day. This bloodline power replaces dehydrating touch.|Sorcerer_SeabornWaterBlast_DC|Sorcerer_Aquatic_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -84,5 +84,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

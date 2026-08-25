@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pyrokineticist ~ Nimbus",
+    "name": "Nimbus",
+    "class": "Pyrokineticist",
+    "description": "%1/day for %2 minutes, create nimbus of flames that increases Cha, gives DR:5/magic, and does %3d6 fire damage.|NimbusTimes|NimbusDuration|Nimbus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pyrokineticist ~ Nimbus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PyrokineticistClassFeatures.SpecialQuality.Psilike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Nimbus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NimbusDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NimbusTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day for %2 minutes, create nimbus of flames that increases Cha, gives DR:5/magic, and does %3d6 fire damage.|NimbusTimes|NimbusDuration|Nimbus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NimbusTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NimbusTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NimbusDuration|PyrokineticistLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Nimbus|2*floor((PyrokineticistLVL-2)/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.376"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|NimbusTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CHA|4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1463,
+    "record_key": "Pyrokineticist ~ Nimbus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Equipment ~ Heavy Armor Grants Gauntlet",
+    "name": "Equipment ~ Heavy Armor Grants Gauntlet",
+    "class": "Equipment",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Gauntlet (Part of Armor Suit)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GauntletOS|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnarmedLethal|GauntletOS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2751,
+    "record_key": "Equipment ~ Heavy Armor Grants Gauntlet"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Great Old One ~ Mythic",
+    "delivery": "Supernatural",
+    "description": "A Great Old One has mythic power (10/day, surge +1d12) and counts as a 10th-rank mythic creature. A Great Old One can use any of its spell-like abilities as the mythic versions of those spells (if a mythic version of that spell exists), expending mythic power as normal. It can also expend mythic power to use the augmented versions of these spell-like abilities.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:great_old_one_mythic",
+    "name": "Mythic",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Rank|10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A Great Old One has mythic power (10/day, surge +1d12) and counts as a 10th-rank mythic creature. A Great Old One can use any of its spell-like abilities as the mythic versions of those spells (if a mythic version of that spell exists), expending mythic power as normal. It can also expend mythic power to use the augmented versions of these spell-like abilities."
+      },
+      {
+        "key": "KEY",
+        "value": "Great Old One ~ Mythic"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 134,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Great Old One ~ Mythic",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

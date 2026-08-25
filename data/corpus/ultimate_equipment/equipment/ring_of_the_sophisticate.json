@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 11000.0,
+    "description": "Wearer instantly knows direction to nearest watering hole.",
+    "key": "Ring of the Sophisticate",
+    "name": "Ring of the Sophisticate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Sense Motive,Knowledge (Local)",
+          "4",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "11000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=1|Locate Creature|Locate Object"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer instantly knows direction to nearest watering hole."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 201,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Ring of the Sophisticate",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

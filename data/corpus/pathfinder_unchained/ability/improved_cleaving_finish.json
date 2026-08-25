@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Improved Cleaving Finish",
+    "name": "Improved Cleaving Finish",
+    "description": "Once per round when you confirm a critical hit, you can spend 5 stamina points to treat that attack as if you reduced the target to 0 or fewer hit points for the purpose of using the Cleaving FinishUC feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Improved Cleaving Finish"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round when you confirm a critical hit, you can spend 5 stamina points to treat that attack as if you reduced the target to 0 or fewer hit points for the purpose of using the Cleaving FinishUC feat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "122"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 81,
+    "record_key": "Combat Trick ~ Improved Cleaving Finish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

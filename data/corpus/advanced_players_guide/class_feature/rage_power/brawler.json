@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Brawler",
     "name": "Brawler",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the barbarian is treated as if she has Improved Unarmed Strike. If she already has the feat, her unarmed strikes deal 1d6 points of damage (1d4 if she is Small).",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

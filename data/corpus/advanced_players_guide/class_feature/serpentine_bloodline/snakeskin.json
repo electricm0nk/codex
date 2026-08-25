@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Serpentine Bloodline ~ Snakeskin",
     "name": "Snakeskin",
-    "class": "Serpentine Bloodline",
+    "class": "Sorcerer",
     "description": "You gain a +%1 bonus to natural armor, a +%2 racial bonus on saves against poison, and a +%3 bonus on Escape Artist checks.|Sorcerer_SerpentineSnakeskin_NaturalArmorBonus|Sorcerer_SerpentineSnakeskin_SaveBonus|Sorcerer_SerpentineSnakeskin_Skillbonus",
     "raw_tokens": [
       {
@@ -96,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

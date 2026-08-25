@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Metal Mystery ~ Iron Weapon",
     "name": "Iron Weapon",
-    "class": "Metal Mystery",
+    "class": "Oracle",
     "description": "You can create a melee simple or martial weapon that lasts for %1 minutes.  This weapon is appropriate for your size and entirely made of metal (even if it would normally include non-metal parts, such as a spear's shaft) but functions as if it were a normal weapon of its type. You are considered proficient with this weapon. The weapon disappears after 1 round if it leaves your grasp. You can use this ability %2/day.|IronWeaponDuration|IronWeaponTimes|!PRECLASS:1,Oracle=3",
     "raw_tokens": [
       {
@@ -88,5 +88,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

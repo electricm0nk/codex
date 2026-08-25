@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Kobold",
+    "name": "Racial Traits ~ Kobold",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Kobold_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kobold Racial Trait|AUTOMATIC|Kobold ~ Ability Scores|PREVAREQ:Kobold_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kobold/kobold_abilities_globalvar.lst",
+    "sha256": "d9426257d84fb2d797da4d3b58ac8d5350c1d3940de0984eeb012dfa13c64782",
+    "line": 10,
+    "record_key": "Racial Traits ~ Kobold"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

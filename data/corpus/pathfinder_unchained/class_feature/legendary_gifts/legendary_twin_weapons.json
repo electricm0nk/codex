@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Legendary Gifts ~ Legendary Twin Weapons",
+    "name": "Legendary Twin Weapons",
+    "class": "Legendary Gifts",
+    "description": "Gain a +5 enhancement bonus from weapon attunement for two weapons at the same time. This counts as two legendary gifts. You can select this legendary gift multiple times, adding an additional attuned weapon with a +5 enhancement bonus each time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Legendary Gifts ~ Legendary Twin Weapons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ABP Legendary Gifts.Automatic Bonus Progression"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a +5 enhancement bonus from weapon attunement for two weapons at the same time. This counts as two legendary gifts. You can select this legendary gift multiple times, adding an additional attuned weapon with a +5 enhancement bonus each time."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Legendary Gifts"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 91,
+    "record_key": "Legendary Gifts ~ Legendary Twin Weapons"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

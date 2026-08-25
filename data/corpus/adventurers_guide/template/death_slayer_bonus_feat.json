@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "data": {
+    "key": "Death Slayer Bonus Feat",
+    "name": "Death Slayer Bonus Feat",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Channel Smite"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Death Slayer Bonus Feat|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_templates.lst",
+    "sha256": "5e9d10789d33dce65c644f7bf256c66287fbc40be2c91a3bf7c4983dbaf7026b",
+    "line": 14,
+    "record_key": "Death Slayer Bonus Feat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Stalker's Focus",
+    "category": "General",
+    "name": "Stalker's Focus",
+    "description": "Your affinity to the natural world allows you to adopt the focus of a single animal.",
+    "prerequisites": [
+      "!PREABILITY:2,CATEGORY=Special Ability,Hunter ~ Animal Focus,Sacred Huntsmaster ~ Animal Focus",
+      "PRESKILL:2,Knowledge (Nature)=3,Survival=3"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 154,
+    "record_key": "Stalker's Focus"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

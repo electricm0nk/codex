@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Witch",
+    "name": "Witch",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses witch as her secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Witch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses witch as her secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Patron: At 1st level, she chooses a patron. She never qualifies for the Extra Hex feat."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Witch's Familiar: At 3rd level, she gains a familiar, treating her character level as her effective witch level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Hex: At 7th level, she gains a hex of her choice as a 1stlevel witch. If she chooses the slumber hex, it can affect only creatures with Hit Dice less than or equal to her character level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Cantrip: At 11th level, if she has an Intelligence score of 10 or higher, she chooses a witch cantrip and can cast that cantrip as a spell-like ability at will. She uses her character level as the caster level and Intelligence as the cantrip's key ability score."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Improved Hex: At 15th level, she gains a second hex as a 1st-level witch, and her first hex advances as if she were an 8th-level witch."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Major Hex: At 19th level, she gains a major hex as a 10thlevel witch. She cannot gain the ice tomb hex."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 868,
+    "record_key": "Variant Multiclass ~ Witch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

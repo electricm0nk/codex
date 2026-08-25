@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Good Domain",
     "name": "Good",
-    "class": null,
+    "class": "Cleric",
     "description": "You have pledged your life and soul to goodness and purity.",
     "raw_tokens": [
       {
@@ -75,6 +75,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Good=1|Protection from Evil|Good=2|Align Weapon (Good Only)|Good=3|Magic Circle against Evil|Good=4|Holy Smite|Good=5|Dispel Evil|Good=6|Blade Barrier|Good=7|Holy Word|Good=8|Holy Aura|Good=9|Summon Monster IX (Good Spell Only)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Good],[PREVARLT:GoodDomain,1]"
       }
     ]
   },
@@ -92,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

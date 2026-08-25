@@ -1,0 +1,517 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Fighter ~ Class",
+    "name": "Fighter",
+    "class": "Fighter",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CFP_Level|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Archetype|AUTOMATIC|Archetype Fighter"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Fighter|PREVAREQ:Fighter_CF_ClassSkills,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CFP_Level|FighterLVL|TYPE=Base"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Weapon and Armor Proficiency ~ Fighter|!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterWeaponProficiencies,TYPE.FighterArmorProficiencies,TYPE.FighterHeavyArmorProficiency,TYPE.FighterMediumArmorProficiency,TYPE.FighterLightArmorProficiency,TYPE.FighterShieldProficiency,TYPE.FighterTowerShieldProficiency|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Martial|Weapon Prof ~ Simple|!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterWeaponProficiencies|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Heavy|!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorProficiencies,TYPE.FighterHeavyArmorProficiency|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Medium|!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorProficiencies,TYPE.FighterMediumArmorProficiency|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Prof ~ Light|!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorProficiencies,TYPE.FighterLightArmorProficiency|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorProficiencies,TYPE.FighterShieldProficiency|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof ~ Tower|!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorProficiencies,TYPE.FighterTowerShieldProficiency|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fighter Level Advanced Feat Tracker|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Weapon Specialization Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Disruptive Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Shield Focus Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Weapon Focus Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spellbreaker Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Weapon Specialization Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Penetrating Strike Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Critical Mastery Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Greater Penetrating Strike Qualify|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BraveryLVL|FighterLVL|TYPE=Class|PREVARGTEQ:Fighter_CFP_Level,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorTrainingLVL|FighterLVL|TYPE=Class|PREVARGTEQ:Fighter_CFP_Level,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponTrainingLVL|FighterLVL|TYPE=Class|PREVARGTEQ:Fighter_CFP_Level,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FighterWeaponQualifyLVL|FighterLVL|TYPE=Class|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter ~ Bonus Feats|PREVAREQ:Fighter_CF_BonusFeats,0|PREVARGTEQ:Fighter_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter ~ Bravery|PREVAREQ:Fighter_CF_Bravery,0|PREVARGTEQ:Fighter_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter ~ Armor Training|PREVAREQ:Fighter_CF_ArmorTraining,0|PREVARGTEQ:Fighter_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter ~ Weapon Training|PREVAREQ:Fighter_CF_WeaponTraining,0|PREVARGTEQ:Fighter_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Fighter ~ Armor Mastery|PREVAREQ:Fighter_CF_ArmorMastery,0|PREVARGTEQ:Fighter_CFP_Level,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Mastery|1|PREVAREQ:FighterWeaponMastery,0|PREVAREQ:Fighter_CF_WeaponMastery,0|PREVARGTEQ:Fighter_CFP_Level,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_Bravery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ArmorTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_WeaponTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_WeaponTraining1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_WeaponTraining2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_WeaponTraining3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_WeaponTraining4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ArmorMastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_WeaponMastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ArmorTraining1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ArmorTraining2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ArmorTraining3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ArmorTraining4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_BonusFeat20|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_TowerShieldProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_LightArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_MediumArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_HeavyArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fighter_CF_ShieldProficiency|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_TowerShieldProficiency|1|PREFACT:1,ABILITIES,Fighter_CF_TowerShieldProficiency=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorProficiencies|1|PREFACT:1,ABILITIES,Fighter_CF_ArmorProficiencies=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_Proficiencies|1|PREFACT:1,ABILITIES,Fighter_CF_Proficiencies=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_LightArmorProficiency|1|PREFACT:1,ABILITIES,Fighter_CF_LightArmorProficiency=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_MediumArmorProficiency|1|PREFACT:1,ABILITIES,Fighter_CF_MediumArmorProficiency=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_HeavyArmorProficiency|1|PREFACT:1,ABILITIES,Fighter_CF_HeavyArmorProficiency=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ShieldProficiency|1|PREFACT:1,ABILITIES,Fighter_CF_ShieldProficiency=true"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeats|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeats=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_Bravery|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_Bravery=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_ArmorTraining=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_WeaponTraining|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_WeaponTraining=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_WeaponTraining1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_WeaponTraining1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_WeaponTraining2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_WeaponTraining2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_WeaponTraining3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_WeaponTraining3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_WeaponTraining4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_WeaponTraining4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorMastery|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_ArmorMastery=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_WeaponMastery|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_WeaponMastery=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_ArmorTraining1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_ArmorTraining2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_ArmorTraining3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_ArmorTraining4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Fighter_CF_BonusFeat20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeats|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeats"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_Bravery|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining_ALL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_WeaponTraining|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterWeaponTraining_ALL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorMastery|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorMastery"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_WeaponMastery|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterWeaponMastery"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining1|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining2|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining3|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_ArmorTraining4|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat1|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat2|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat4|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat6|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat8|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat10|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat12|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat14|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat16|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat18|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fighter_CF_BonusFeat20|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 102,
+    "record_key": "Fighter ~ Class"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

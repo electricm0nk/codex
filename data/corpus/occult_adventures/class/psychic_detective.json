@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "Psychic Detective",
+    "name": "Psychic Detective",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_PsychicDetective|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CasterLevelBLPsychicDetective|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_PsychicDetective|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_BL_Stripped_PsychicDetective|Caster_Level_PsychicDetective-CasterLevelBLPsychicDetective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_PsychicDetective|PsychicDetectiveLVL+Caster_Level_Bonus+CasterLevelBLPsychicDetective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Highest__Arcane|Caster_Level_PsychicDetective|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Total__Arcane|Caster_Level_PsychicDetective"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Arcane"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+    "sha256": "7e8c9929ae0f1c7b8591e0dc8a10795355164297b7b0c7343b9ac37978df6c63",
+    "line": 192,
+    "record_key": "Psychic Detective"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

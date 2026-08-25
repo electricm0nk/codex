@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Leshy Tender ~ Stat Bonus",
+    "name": "Leshy Stat Bonus",
+    "class": "Leshy Tender",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshy Tender ~ Stat Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "LeshyTenderChoice1.LeshyTenderChoice2.LeshyTenderChoice3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LeshyStatBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LeshyStatBonus|1|PREMULT:2,[PREVARGTEQ:DruidLVL,4],[PREVARLT:GourdLeshyFamiliar,1,FungusLeshyFamiliar,1,SeaweedLeshyFamiliar,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LeshyStatBonus|1|PREMULT:2,[PREVARGTEQ:DruidLVL,8],[PREVARLT:FungusLeshyFamiliar,1,SeaweedLeshyFamiliar,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LeshyStatBonus|1|PREMULT:2,[PREVARGTEQ:DruidLVL,12],[PREVARLT:SeaweedLeshyFamiliar,1]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 528,
+    "record_key": "Leshy Tender ~ Stat Bonus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

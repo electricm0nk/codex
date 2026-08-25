@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Deep Earth Bloodline ~ Tremor",
     "name": "Tremor",
-    "class": "Deep Earth Bloodline",
+    "class": "Sorcerer",
     "description": "As a standard action, you can cause the ground to shake beneath a single creature within 30 feet, functioning as a trip maneuver using %1 in place of your CMB. You can use this ability %2 times per day.|Sorcerer_DeepEarthTremor_ManeuverBonus|Sorcerer_DeepEarth_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

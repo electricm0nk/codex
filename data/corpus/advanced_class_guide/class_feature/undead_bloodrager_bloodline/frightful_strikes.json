@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Undead Bloodrager Bloodline ~ Frightful Strikes",
     "name": "Frightful Strikes",
-    "class": "Undead Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "As a swift action once per bloodrage, you can empower your melee attacks with fear. For 1 round, creatures you hit with your melee attacks become shaken. Creatures who are already shaken become frightened, though this does not stack with the frightful charger ability.",
     "raw_tokens": [
       {
@@ -71,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

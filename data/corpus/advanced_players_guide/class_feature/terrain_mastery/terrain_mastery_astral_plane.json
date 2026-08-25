@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Terrain Mastery ~ Plane (Astral)",
     "name": "Terrain Mastery (Astral Plane)",
-    "class": "Terrain Mastery",
+    "class": "Ranger",
     "description": "The horizon walker's fly speed increases by +30 feet on planes with no gravity or subjective gravity.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

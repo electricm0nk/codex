@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Versatile Performance ~ Dance",
     "name": "Versatile Performance (Dance)",
-    "class": "Versatile Performance",
+    "class": "Bard",
     "description": "You can use your bonus in the Perform (Dance) skill in place of your bonus in the Acrobatics or Fly skills. When substituting in this way, you use your total Perform (Dance) skill bonus, including class skill bonus, in place of your Acrobatics or Fly skill bonus, whether or not you have ranks in that skill or if it is a class skill.",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

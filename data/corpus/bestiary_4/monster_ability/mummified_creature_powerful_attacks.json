@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mummified Creature ~ Powerful Attacks",
+    "delivery": "Extraordinary",
+    "description": "The mummification process hardens the mummified creature's bones to a stone-like density, granting the mummified creature a powerful slam attack if the base creature has no other natural attacks. This slam attack deals damage based on the mummified creature's size (Bestiary 302), treating the creature as if it were one size category larger. If a mummified creature already has natural attacks, it instead gains Improved Natural Attack as a bonus feat for each of the base creature's natural attacks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mummified_creature_powerful_attacks",
+    "name": "Powerful Attacks",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The mummification process hardens the mummified creature's bones to a stone-like density, granting the mummified creature a powerful slam attack if the base creature has no other natural attacks. This slam attack deals damage based on the mummified creature's size (Bestiary 302), treating the creature as if it were one size category larger. If a mummified creature already has natural attacks, it instead gains Improved Natural Attack as a bonus feat for each of the base creature's natural attacks."
+      },
+      {
+        "key": "KEY",
+        "value": "Mummified Creature ~ Powerful Attacks"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1100,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Mummified Creature ~ Powerful Attacks",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

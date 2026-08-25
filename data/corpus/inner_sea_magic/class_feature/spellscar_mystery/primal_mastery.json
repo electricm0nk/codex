@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Spellscar Mystery ~ Primal Mastery",
     "name": "Primal Mastery",
-    "class": "Spellscar Mystery",
+    "class": "Oracle",
     "description": "Whenever a spell you cast triggers a primal magic event, or whenever you use a Rod of Wonder, roll d%% twice when generating the result. You may pick which of the two results actually occurs. You gain a +2 bonus on all saving throws made to resist primal magic events or magical effects caused by a Rod of Wonder.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

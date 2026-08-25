@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Stormborn Bloodline ~ Ride the Lightning",
     "name": "Ride the Lightning",
-    "class": "Stormborn Bloodline",
+    "class": "Sorcerer",
     "description": "As a full-round action you can become a living lightning bolt and move in a straight line up to 10 times your speed. You do not provoke attacks of opportunity while moving in this way. Creatures or objects in your path are affected as by your thunderbolt power. Creatures do not block your movement but solid barriers do unless they are reduced to 0 hit points. You can use this power once per day for %1 rounds.|Sorcerer_StormbornRideTheLightning_Duration",
     "raw_tokens": [
       {
@@ -87,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

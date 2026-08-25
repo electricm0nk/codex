@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Sacred Huntsmaster",
     "name": "Sacred Huntsmaster",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "Some inquisitors create a strong bond with an animal companion, and they hunt and punish threats to the faith as an awe-inspiring duo. When they work together as one, there are few that dare to stand in their way.",
     "raw_tokens": [
       {
@@ -71,6 +71,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Sacred Huntsmaster],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Judgment=True,Inquisitor_Archetype_SecondJudgment=True,Inquisitor_Archetype_ThirdJudgment=True,Inquisitor_Archetype_Slayer=True,Inquisitor_Archetype_TrueJudgment=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SecondJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ThirdJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Slayer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TrueJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SecondJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ThirdJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Slayer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TrueJudgment|true"
       }
     ]
   },
@@ -87,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

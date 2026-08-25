@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Hunter's Tricks ~ Skill Sage",
     "name": "Skill Sage",
-    "class": "Hunter's Tricks",
+    "class": "Ranger",
     "description": "As a free action, the ranger can roll twice on any one skill check and take the better result. He must have at least 1 rank in that skill to use this ability.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

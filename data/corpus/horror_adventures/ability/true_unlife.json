@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Corruption ~ True Unlife",
+    "name": "True Unlife",
+    "description": "You can cheat death.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ True Unlife"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VampirismManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "VampirismManifestationLevel,3"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vampirism Corruption ~ Greater Unlife"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cheat death."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vampirism True Unlife Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vampirism True Unlife Stain Choice|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 932,
+    "record_key": "Vampirism Corruption ~ True Unlife"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

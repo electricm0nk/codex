@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Kitsune",
+    "name": "Racial Traits ~ Kitsune",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Kitsune_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kitsune Racial Trait|AUTOMATIC|Kitsune ~ Ability Scores|PREVAREQ:Kitsune_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_abilities_globalvar.lst",
+    "sha256": "a7f141bf549d1ae172ccf07a07db6762e62c434a46b9f39ab9cad935e43833e7",
+    "line": 10,
+    "record_key": "Racial Traits ~ Kitsune"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

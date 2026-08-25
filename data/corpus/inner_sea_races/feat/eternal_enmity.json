@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Eternal Enmity",
+    "category": "General",
+    "name": "Eternal Enmity",
+    "description": "Your hatred for the ancient enemies of your race runs deep, allowing you to inflict cruel wounds upon them. Your attacks deal an additional 1d6 points of precision damage against targets of your hatred racial trait. This bonus damage stacks with other sources of precision damage, such as sneak attack. If your hatred racial trait applies to two creature types or subtypes, you must choose one of them-this feat applies to targets of that type (and subtype, if applicable). Once made, this choice cannot be changed. Special: The Knowledge skill used to qualify for this feat must be appropriate for identifying creatures of the chosen type.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.RacialHatred",
+      "PRESKILL:1,TYPE.Knowledge=3",
+      "PRETEXT:Knowledge 3 ranks (see special), hatred racial trait."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 32,
+    "record_key": "Eternal Enmity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

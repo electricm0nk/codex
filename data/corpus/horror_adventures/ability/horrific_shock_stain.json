@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Horrific Shock Stain",
+    "name": "Horrific Shock Stain",
+    "description": "You take on a horrible appearance. You take a -%1 penalty on Diplomacy, Handle Animal, and wild empathy checks against creatures who can see you.|HorrificShockSkillPenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Horrific Shock Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedHorrificShockStain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HorrificShockSkillPenalty|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "DESC",
+        "value": "You take on a horrible appearance. You take a -%1 penalty on Diplomacy, Handle Animal, and wild empathy checks against creatures who can see you.|HorrificShockSkillPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Diplomacy=Creatures able to see you,Handle Animal=Creatures able to see you|HorrificShockSkillPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HorrificShockSkillPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HorrificShockSkillPenalty|-2|PREVARGTEQ:AccursedManifestationLevel,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 68,
+    "record_key": "Accursed Corruption ~ Horrific Shock Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

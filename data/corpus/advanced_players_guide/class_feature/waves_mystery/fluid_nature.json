@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Waves Mystery ~ Fluid Nature",
     "name": "Fluid Nature",
-    "class": "Waves Mystery",
+    "class": "Oracle",
     "description": "You receive a bonus to your Combat Maneuver Defense against bull rush, drag, grapple, reposition, and trip attempts. A creature trying to confirm a critical hit against you has a P4 penalty on its confirmation roll.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

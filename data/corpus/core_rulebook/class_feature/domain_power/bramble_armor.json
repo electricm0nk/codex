@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Bramble Armor",
     "name": "Bramble Armor",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can cause a host of wooden thorns to burst from your skin as a free action. While Bramble Armor is in effect, any foe striking you with an unarmed strike or a melee weapon without reach takes 1d6+%1 points of piercing damage. You can use this ability for %2 rounds per day. These rounds do not need to be consecutive.|DomainPlantLVL/2|BrambleArmorRounds",
     "raw_tokens": [
       {
@@ -63,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vermin Rider ~ Energized Mount",
+    "name": "Energized Mount",
+    "description": "You can expend your psionic focus as a swift action to allow your mount to deal an additional +1d6 points of energy damage with its natural attacks until the end of your next turn.  The energy type is that of the energy type for your chitin.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vermin Rider ~ Energized Mount"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus as a swift action to allow your mount to deal an additional +1d6 points of energy damage with its natural attacks until the end of your next turn.  The energy type is that of the energy type for your chitin."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_um.lst",
+    "sha256": "dbd6f422e0e3106db6759299ddad5770b0038d66d7c34ed615f7838b632fdad3",
+    "line": 14,
+    "record_key": "Vermin Rider ~ Energized Mount"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

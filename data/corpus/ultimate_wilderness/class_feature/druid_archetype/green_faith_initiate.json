@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Druid Archetype ~ Green Faith Initiate",
     "name": "Green Faith Initiate",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "Druids who are initiated into the magic of nature as strict students of the Green Faith's traditions sometimes demonstrate abilities unique to their organization.",
     "raw_tokens": [
       {
@@ -115,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

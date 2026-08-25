@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Tower Shield Specialist",
     "name": "Tower Shield Specialist",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "Many fighters believe the tower shield is a tool suitable only for troops on the battlefield, claiming it is too large and bulky to use in skirmishes or within dungeon corridors. Tower shield specialists defy those notions, using their massive shields with startling skill and incredible effect. They use these seemingly clumsy shields to perform deft maneuvers that confound their enemies.",
     "raw_tokens": [
       {
@@ -67,6 +67,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Fighter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ TOWER SHIELD SPECIALIST],[!PREFACT:1,ABILITIES,Fighter_Archetype_Bravery=True,Fighter_Archetype_WeaponTraining1=True,Fighter_Archetype_WeaponTraining2=True,Fighter_Archetype_WeaponTraining3=True,Fighter_Archetype_WeaponTraining4=True,Fighter_Archetype_WeaponMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponMastery|true"
       }
     ]
   },
@@ -83,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sandman ~ Sleep Aura",
+    "delivery": "Supernatural",
+    "description": "A sandman radiates a 20-foot-radius spread that puts creatures to sleep.  Any creature in the area must succeed on a DC %1 Will save or fall asleep, as if affected by a sleep spell (caster level 8th).  There is no limit to the number of Hit Dice a sandman can affect with this ability.  A creature that successfully saves is immune to that sandman's sleep aura for 24 hours.",
+    "description_variables": [
+      "SandmanSleepAuraDC"
+    ],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:sandman_sleep_aura",
+    "name": "Sleep Aura",
+    "owners": [
+      "bestiary_2:monster:sandman"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Sleep Aura"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(20 ft., DC %1)|SandmanSleepAuraDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SandmanSleepAuraDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SandmanSleepAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Sleep Aura)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SandmanSleepAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A sandman radiates a 20-foot-radius spread that puts creatures to sleep.  Any creature in the area must succeed on a DC %1 Will save or fall asleep, as if affected by a sleep spell (caster level 8th).  There is no limit to the number of Hit Dice a sandman can affect with this ability.  A creature that successfully saves is immune to that sandman's sleep aura for 24 hours.|SandmanSleepAuraDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Sandman ~ Sleep Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      }
+    ],
+    "source_page": "p.236",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1087,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Sandman ~ Sleep Aura",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

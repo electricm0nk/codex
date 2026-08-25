@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Devil (Ice) ~ Slow",
+    "name": "Slow",
+    "description": "A hit from a mythic ice devil's tail or spear induces numbing cold. The opponent must succeed at a DC 23 Fortitude save or be affected as though by a slow spell for 1d6 rounds. This effect comes from the devil, not its weapon; it is not a quality possessed by the spear itself. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Devil (Ice) ~ Slow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Devil (Ice) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A hit from a mythic ice devil's tail or spear induces numbing cold. The opponent must succeed at a DC 23 Fortitude save or be affected as though by a slow spell for 1d6 rounds. This effect comes from the devil, not its weapon; it is not a quality possessed by the spear itself. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 115,
+    "record_key": "Mythic Devil (Ice) ~ Slow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Death Slayer ~ Deadly Conviction",
     "name": "Deadly Conviction",
-    "class": "Death Slayer",
+    "class": "Slayer",
     "description": "A death slayer gains a +4 morale bonus on saving throws against spells and effects created by undead creatures. Once per day, she can ignore 1 negative level that would otherwise affect her.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

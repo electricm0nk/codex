@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Martial Kineticist ~ Psionic Prowess",
+    "name": "Psionic Prowess",
+    "class": "Kineticist",
+    "description": "You treat your Wisdom score as %1 higher for the purpose of determining bonus power points.|PsychicWarriorWISPPBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Kineticist ~ Psionic Prowess"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicWarriorWISPPBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You treat your Wisdom score as %1 higher for the purpose of determining bonus power points.|PsychicWarriorWISPPBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorWISPPBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorWISPPBonus|2|PRECLASS:1,Psychic Warrior=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(PsychicWarriorWISPPBonus*PsychicWarriorPL)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2039,
+    "record_key": "Martial Kineticist ~ Psionic Prowess"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

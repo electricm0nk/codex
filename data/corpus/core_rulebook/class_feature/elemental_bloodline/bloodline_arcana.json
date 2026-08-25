@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elemental Bloodline ~ Bloodline Arcana",
     "name": "Bloodline Arcana",
-    "class": "Elemental Bloodline",
+    "class": "Sorcerer",
     "description": "Whenever you cast a spell that deals energy damage, you can change the type of damage to",
     "raw_tokens": [
       {
@@ -95,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

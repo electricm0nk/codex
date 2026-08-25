@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Detect Chaos ~ HK",
     "name": "Detect Chaos",
-    "class": "Detect Chaos",
+    "class": "Hellknight",
     "description": "At will, you can use detect chaos, as the spell. You can, as a move action, concentrate on a single individual or item within 60 ft. and determine if it is chaotic, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect chaos in any other object or individual within range.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wyrwood ~ Type",
+    "name": "Construct",
+    "description": "Wyrwoods have the construct type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyrwood ~ Type"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Type"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wyrwood_ReplaceType=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wyrwoods have the construct type."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Construct"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "No Constitution Score"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wyrwood ~ Construct Traits"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|(max(SIZE-2,0)+max(SIZE-6,0))*10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyrwood/wyrwood_abilities_race.lst",
+    "sha256": "c42ff94153eb4f0c731a7aa3db89d3a9cd1d48f2a82f28fb172ceaba3e85888d",
+    "line": 15,
+    "record_key": "Wyrwood ~ Type"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

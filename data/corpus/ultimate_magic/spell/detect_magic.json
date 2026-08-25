@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:27:59Z",
+  "data": {
+    "key": "Detect Magic",
+    "name": "Detect Magic",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CLASSES",
+        "value": "Magus=0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+    "sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+    "line": 326,
+    "record_key": "Detect Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

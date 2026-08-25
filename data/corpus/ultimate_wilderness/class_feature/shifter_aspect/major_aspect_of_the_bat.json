@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Bat ~ Major",
     "name": "Major Aspect of the Bat",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a dire bat (Bestiary p30). While in this form, you gain a fly speed of 40 feet (clumsy) and blindsense with a range of 10 feet.|PREVARLT:ShifterBatAspectLVL,8",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

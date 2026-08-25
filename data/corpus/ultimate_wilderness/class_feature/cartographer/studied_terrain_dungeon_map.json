@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Cartographer ~ Dungeon Map",
     "name": "Studied Terrain (Dungeon Map)",
-    "class": "Cartographer",
+    "class": "Investigator",
     "description": "While indoors, underground, or in any other type of environment where visibility is limited by walls, the radius is %1 feet, and only areas that the cartographer has explored within the past 24 hours count as studied terrain. Areas explored after drawing the map do not retroactively become part of the studied terrain.|InvestigatorLVL*100",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

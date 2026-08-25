@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Feign Innocence",
     "name": "Feign Innocence",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief seems so innocent that it is hard to believe he was involved in wrongdoing. Within his area of renown, this provides a nonmagical effect identical to the innocence spell (Advanced Player's Guide p. 229.)",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

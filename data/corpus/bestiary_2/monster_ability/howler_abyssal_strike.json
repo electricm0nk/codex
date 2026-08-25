@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Howler ~ Abyssal Strike",
+    "delivery": "Extraordinary",
+    "description": "A howler's bite and quills are considered to be chaotic-aligned and evil-aligned for the purpose of overcoming damage reduction.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:howler_abyssal_strike",
+    "name": "Abyssal Strike",
+    "owners": [
+      "bestiary_2:monster:howler"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A howler's bite and quills are considered to be chaotic-aligned and evil-aligned for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Howler ~ Abyssal Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.159",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:08:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 695,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Howler ~ Abyssal Strike",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

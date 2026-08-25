@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Forgesteed Rider",
+    "name": "Forgesteed Rider",
+    "description": "You ride on the back of a half-flesh, half-construct mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Forgesteed Rider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype.CavalierMount.CavalierOrder.CavalierBonusFeats"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Forgesteed Rider],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CavalierMount,TYPE.CavalierOrder,TYPE.CavalierBonusFeats]"
+      },
+      {
+        "key": "DESC",
+        "value": "You ride on the back of a half-flesh, half-construct mount."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Forgesteed Rider ~ Forgesteed|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Forgesteed Rider ~ Linked Steed|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Forgesteed Rider ~ Challenging Steed|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Forgesteed Rider ~ Boost Steed|PRECLASS:1,Cavalier=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Forgesteed Rider ~ Bonus Feat|PRECLASS:1,Cavalier=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Forgesteed Rider ~ Life Link|PRECLASS:1,Cavalier=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Forgesteed Rider ~ Call Steed|PRECLASS:1,Cavalier=15"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.324"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 37,
+    "record_key": "Cavalier Archetype ~ Forgesteed Rider"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

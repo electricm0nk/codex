@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ability Score Modifier ~ Paragon",
+    "name": "Paragon",
+    "description": "[Cost: %1]|1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ability Score Modifier ~ Paragon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Racial Traits"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceStatAbility"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Racial Traits,TYPE.RaceStatAbility],[PREABILITY:1,CATEGORY=Racial Traits,Ability Score Modifier ~ Paragon]"
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Paragon Ability Score Selection|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 111,
+    "record_key": "Ability Score Modifier ~ Paragon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

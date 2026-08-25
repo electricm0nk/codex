@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Bitter Pill",
     "name": "Bitter Pill",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "The alchemist becomes bitter in flavor. Any creature that hits the bitter alchemist with a bite attack gains the sickened condition for 1 round unless it succeeds at a Fortitude save (DC %1). Any creature that swallows the alchemist whole gains the nauseated condition for 1 round unless it succeeds at a Fortitude save (same DC as above). If the alchemist is trapped in the creature's gullet and it becomes nauseated, the creature vomits him back out immediately as a free action at the start of the creature's turn; the alchemist lands prone adjacent to the creature.|10+AlchemistDiscoveryLVL/2+CON",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

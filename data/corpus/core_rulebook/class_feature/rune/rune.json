@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rune Domain",
     "name": "Rune",
-    "class": null,
+    "class": "Cleric",
     "description": "In strange and eldritch runes you find potent magic. You gain Scribe Scroll as a bonus feat.",
     "raw_tokens": [
       {
@@ -75,6 +75,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Rune=1|Erase|Rune=2|Secret Page|Rune=3|Glyph of Warding|Rune=4|Explosive Runes|Rune=5|Planar Binding (Lesser)|Rune=6|Glyph of Warding (Greater)|Rune=7|Instant Summons|Rune=8|Symbol of Death|Rune=9|Teleportation Circle"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Rune],[PREVARLT:RuneDomain,1]"
       }
     ]
   },
@@ -92,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

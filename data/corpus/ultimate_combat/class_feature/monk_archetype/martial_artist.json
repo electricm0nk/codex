@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Martial Artist",
     "name": "Martial Artist",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "The martial artist pursues a mastery of pure martial arts without the monastic traditions. He is a master of form, but lacks the ability to harness his ki.",
     "raw_tokens": [
       {
@@ -79,6 +79,114 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Martial Artist],[!PREFACT:1,ABILITIES,Monk_Archetype_Alignment=True,Monk_Archetype_StillMind=True,Monk_Archetype_EmptyBody=True,Monk_Archetype_SlowFall=True,Monk_Archetype_DiamondSoul=True,Monk_Archetype_PurityOfBody=True,Monk_Archetype_DiamondBody=True,Monk_Archetype_PerfectSelf=True,Monk_Archetype_WholenessOfBody=True,Monk_Archetype_TimelessBody=True,Monk_Archetype_TongueOfTheSunAndMoon=True,Monk_Archetype_KiPool=True,Monk_Archetype_AbundantStep=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Alignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_EmptyBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_DiamondSoul|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PurityOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TimelessBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_KiPool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Alignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_EmptyBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_DiamondSoul|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PurityOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TimelessBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_KiPool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_AbundantStep|true"
       }
     ]
   },
@@ -95,5 +203,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

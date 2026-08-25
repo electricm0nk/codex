@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Shaitan Binder Eidolon ~ Strength Bonus",
+    "name": "Strength Bonus",
+    "description": "Shaitan Binder Eidolons gain +2 to 1 ability score as long as they stay in biped form.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaitan Binder Eidolon ~ Strength Bonus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShaitanBinderEidolonStatBonus"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Shaitan Binder Eidolon (Biped)"
+      },
+      {
+        "key": "DESC",
+        "value": "Shaitan Binder Eidolons gain +2 to 1 ability score as long as they stay in biped form."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
+    "line": 35,
+    "record_key": "Shaitan Binder Eidolon ~ Strength Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

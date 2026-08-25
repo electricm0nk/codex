@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Marid Bloodline ~ Power of the Marid",
     "name": "Power of the Marid",
-    "class": "Marid Bloodline",
+    "class": "Sorcerer",
     "description": "You gain the power of genies to grant wishes. Once per day, you can cast limited wish as a spell-like ability. Such wishes must begin with the words \"I wish,\" and cannot duplicate a wish you have granted within the past 24 hours. If you use this ability to duplicate a spell with a costly material component, you must provide that component.&nl;You become immune to cold damage, and can use plane shift once per day to travel to or from the Plane of Water.",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

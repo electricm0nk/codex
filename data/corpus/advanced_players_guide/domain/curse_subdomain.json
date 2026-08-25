@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Curse Subdomain",
+    "name": "Curse Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Curse Subdomain],[PREVARLT:LuckDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Curse Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Curse Subdomain=1|Bane|Curse Subdomain=2|Aid|Curse Subdomain=3|Bestow Curse|Curse Subdomain=4|Freedom of Movement|Curse Subdomain=5|Break Enchantment|Curse Subdomain=6|Eyebite|Curse Subdomain=7|Spell Turning|Curse Subdomain=8|Moment of Prescience|Curse Subdomain=9|Miracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 20,
+    "record_key": "Curse Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

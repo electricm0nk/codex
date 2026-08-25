@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Pool Strike",
     "name": "Pool Strike",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "You can expend 1 point from your arcane pool as a standard action to charge your free hand with energy. You can make a melee touch attack with that hand as a free action as part of activating this ability. If the touch attack hits, it releases the charge and deals %1d6 points of energy damage (acid, cold, electricity, or fire, chosen when he spends the arcane pool point to activate this ability). You can use this ability with the spellstrike class feature. If you miss with this attack, you can hold the charge for up to 1 minute before it dissipates.|MagusPoolStrikeDamageDice",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

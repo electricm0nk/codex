@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Dragon ~ Starflight",
+    "delivery": "Supernatural",
+    "description": "In outer space, an outer dragon can survive in the void and fly at incredible speed. Travel times vary, but a trip within a single solar system should take 3d20 hours, and a trip beyond should take 3d20 days or more if the dragon knows the way to its destination. An outer dragon can carry one rider of one size category smaller than itself, four passengers two sizes smaller, eight passengers three sizes smaller, or 16 passengers four or more sizes smaller. Passengers are protected from the void of outer space.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:dragon_starflight",
+    "name": "Starflight",
+    "owners": [
+      "bestiary_4:monster:dragon_lunar",
+      "bestiary_4:monster:dragon_solar",
+      "bestiary_4:monster:dragon_time",
+      "bestiary_4:monster:dragon_void",
+      "bestiary_4:monster:dragon_vortex"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "In outer space, an outer dragon can survive in the void and fly at incredible speed. Travel times vary, but a trip within a single solar system should take 3d20 hours, and a trip beyond should take 3d20 days or more if the dragon knows the way to its destination. An outer dragon can carry one rider of one size category smaller than itself, four passengers two sizes smaller, eight passengers three sizes smaller, or 16 passengers four or more sizes smaller. Passengers are protected from the void of outer space."
+      },
+      {
+        "key": "KEY",
+        "value": "Dragon ~ Starflight"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 122,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Dragon ~ Starflight",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

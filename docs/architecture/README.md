@@ -1,7 +1,11 @@
 # Architecture docs
 
 > Scope: index and maintenance contract for the `docs/architecture/` living-documentation set.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure). **Path correction 2026-08-22**
+> (SD-32 closure epilogue, `workflow-instruction.md §13` architecture-docs refresh): the
+> provenance-note example and the update-and-feedback source-dirs row cited the old
+> apps/desktop/src/sd16/ directory, renamed to `apps/desktop/src/feedback/` / `apps/desktop/src/update/`
+> by `06d926e90` (2026-08-10) — fixed below; no other content in this doc re-verified.
 > Maintenance: updated at SD closure — see §Maintenance contract below
 
 ## Purpose
@@ -15,8 +19,12 @@ the new reality; it is never appended to with a changelog entry.
 ## Provenance note (the one place history is acknowledged)
 
 Modules, tests, and directories across this repo carry `sdNN`/`geNN`
-prefixes (e.g. `authoring_workbench.rs`, the `apps/desktop/src/sd16/` frontend
-directory, `tests/sd25_sorcerer_level_up_explanation_coverage.rs`). These prefixes name the
+prefixes (e.g. `tests/sd25_sorcerer_level_up_explanation_coverage.rs`,
+`docs/retro/events/sd31-transcribe.jsonl`). A 2026-08-10 sweep (`feat(sd29): function-based naming
+sweep`) removed `sdNN`/`geNN` prefixes from directory and source-file names, so the still-current
+examples are test/log filenames, not directories — e.g. the former apps/desktop/src/sd16/
+frontend directory is now `apps/desktop/src/feedback/` and `apps/desktop/src/update/`, un-prefixed.
+These prefixes name the
 originating spec-domain or grand-epic bundle that created the file — they
 are **proper nouns**, not documentation of what the code currently does.
 This doc set describes function, not the bundle that produced it; treat a
@@ -43,7 +51,7 @@ doc's coverage shifts.
 | [persistence.md](./persistence.md) | Saved-character and campaign local on-disk storage | `src/saved_character/`, `src/campaign/`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/campaign_drive.rs` |
 | [homebrew-and-oracle.md](./homebrew-and-oracle.md) | Homebrew package authoring; oracle-parity fixture schema | `src/homebrew_authoring/`, `src/oracle_validation/` |
 | [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map, rule-system adapter seam | `apps/desktop/` |
-| [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/sd16/`, `apps/desktop/src/testerWorkbench/feedback/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |
+| [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/feedback/`, `apps/desktop/src/update/`, `apps/desktop/src/testerWorkbench/feedback/`, `apps/desktop/src/testerWorkbench/update/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |
 | [release-pipeline.md](./release-pipeline.md) | Publish workflow, manifest generation, branch-promotion gates | `.github/workflows/`, `scripts/release/`, `tools/release/`, `scripts/tranche/` |
 | [testing.md](./testing.md) | Full verification command set, fixture grammar, corpus-gated tests | `tests/`, `apps/desktop/scripts/run-tests.mjs`, `apps/desktop/src/testSupport/` |
 | README.md (this file) | Doc-set index, provenance note, maintenance contract | `docs/architecture/` |
@@ -82,7 +90,7 @@ jump straight to the doc that owns the surface you're touching:
 1. All acceptance criteria done? If not, self-heal and run more loops. Repeat until done.
 2. Architecture docs updated? If not, run the truth-up script (`~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py`). It edits in place, removes obsolete content, refreshes headers, runs the verification one-liners, appends a YAML receipt to `<bundle>/receipts.md`. Repeat until verification one-liners pass and the receipt is in `receipts.md`.
 3. Graphify run? If not, run the graphify-update script (`~/.hermes/profiles/god-emporer/skills/devops/graphify-update/scripts/update_graphify.py`). The script invokes graphify against the codex repo, captures stdout/stderr/exit-code, appends a `graphify:update` receipt — **success OR failure, do not refuse on graphify non-zero exit**. Operator decides retry-vs-proceed.
-4. PR open? If not, open it. (PR creation is a bash-level command in the loop-instruction, not a separate skill.)
+4. PR open? If not, open it. (PR creation is a bash-level command in the workflow-instruction, not a separate skill.)
 5. Merge conflicts resolved? If any, fix them via the merge-conflict-resolution skill (`~/.hermes/profiles/god-emporer/skills/devops/merge-conflict-resolution/scripts/resolve_merge_conflicts.py`). Otherwise proceed.
 6. Stop the loop.
 

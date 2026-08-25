@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted Boon ~ Dahak ~ Flaming Vengeance",
+    "name": "Flaming Vengeance",
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can gain the benefits of a mislead spell as though cast by a wizard of level %1, with the following modifications. At the time of using this ability, you can establish a number of rounds before it will expire, or declare that it will expire when your illusory duplicate is touched. When either criteria is accomplished, the illusory duplicate explodes as a fireball spell cast by a 10th-level wizard.|min(20,TL)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted Boon ~ Dahak ~ Flaming Vengeance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day as a standard action, you can gain the benefits of a mislead spell as though cast by a wizard of level %1, with the following modifications. At the time of using this ability, you can establish a number of rounds before it will expire, or declare that it will expire when your illusory duplicate is touched. When either criteria is accomplished, the illusory duplicate explodes as a fireball spell cast by a 10th-level wizard.|min(20,TL)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 139,
+    "record_key": "Exalted Boon ~ Dahak ~ Flaming Vengeance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tripurasura ~ Elusive",
+    "delivery": "Supernatural",
+    "description": "The tripurasura and items it carries are considered to be under the effects of a nondetection spell. A caster must succeed at a DC 14 caster level check to overcome this effect.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tripurasura_elusive",
+    "name": "Elusive",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The tripurasura and items it carries are considered to be under the effects of a nondetection spell. A caster must succeed at a DC 14 caster level check to overcome this effect."
+      },
+      {
+        "key": "KEY",
+        "value": "Tripurasura ~ Elusive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "TYPE",
+        "value": "TripurasuraRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.26",
+    "traits": [
+      "TripurasuraRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 416,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Tripurasura ~ Elusive",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

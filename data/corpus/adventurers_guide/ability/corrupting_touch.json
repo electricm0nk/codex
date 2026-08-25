@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Infernal Affinity ~ Corrupting Touch",
+    "name": "Corrupting Touch",
+    "description": "You can cause a creature to become shaken as a melee touch attack. This effect persists for %1 rounds. Creatures shaken by this ability radiate an aura of evil, as if they were an evil outsider. Multiple touches do not stack, but they do add to the duration. You can use this ability %2 times per day.|DevilBinderCorruptingTouchDuration|InfernalAffinityTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infernal Affinity ~ Corrupting Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InfernalAffinityTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevilBinderCorruptingTouchDuration|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevilBinderCorruptingTouchDuration|max(SummonerLVL/2,1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InfernalAffinityTimes|3+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause a creature to become shaken as a melee touch attack. This effect persists for %1 rounds. Creatures shaken by this ability radiate an aura of evil, as if they were an evil outsider. Multiple touches do not stack, but they do add to the duration. You can use this ability %2 times per day.|DevilBinderCorruptingTouchDuration|InfernalAffinityTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds)|DevilBinderCorruptingTouchDuration"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|InfernalAffinityTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 66,
+    "record_key": "Infernal Affinity ~ Corrupting Touch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

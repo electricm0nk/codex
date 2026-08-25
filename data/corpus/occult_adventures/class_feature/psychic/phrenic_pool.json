@@ -1,12 +1,11 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
-    "key": "Psychic ~ Phrenic Pool",
-    "name": "Phrenic Pool",
     "class": "Psychic",
     "description": "A psychic has a pool of supernatural mental energy that she can draw upon to manipulate psychic spells as she casts them. The maximum number of points in a psychic's phrenic pool is %1. The phrenic pool is replenished each morning after 8 hours of rest or meditation; these hours don't need to be consecutive. The psychic might be able to recharge points in her phrenic pool in additional circumstances dictated by her psychic discipline. Points gained in excess of the pool's maximum are lost.|PhrenicPool",
+    "key": "Psychic ~ Phrenic Pool",
+    "name": "Phrenic Pool",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -42,18 +41,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
-    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
     "line": 1155,
-    "record_key": "Psychic ~ Phrenic Pool"
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "record_key": "Psychic ~ Phrenic Pool",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

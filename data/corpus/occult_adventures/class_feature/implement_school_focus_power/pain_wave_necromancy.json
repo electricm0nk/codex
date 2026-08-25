@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Pain Wave",
     "name": "Pain Wave [Necromancy]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to unleash a wave of pain. This wave hits all creatures other than you in a 20-foot-radius burst centered on a point that you designate within 100 feet. All living creatures in this area are wracked with pain, gaining the sickened condition for 1 round per occultist level you possess. Affected creatures can attempt a Will save to reduce the duration to just 1 round. This is a mind-affecting pain (UM) effect. You must be at least 7th level to select this focus power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

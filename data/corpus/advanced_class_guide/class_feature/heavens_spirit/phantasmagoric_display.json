@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Heavens Spirit ~ Phantasmagoric Display",
     "name": "Phantasmagoric Display",
-    "class": "Heavens Spirit",
+    "class": "Shaman",
     "description": "The shaman can cast prismatic wall and prismatic spray, each once per day with a caster level equal to her shaman level.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

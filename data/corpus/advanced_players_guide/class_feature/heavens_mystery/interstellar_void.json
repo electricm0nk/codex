@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Heavens Mystery ~ Interstellar Void",
     "name": "Interstellar Void",
-    "class": "Heavens Mystery",
+    "class": "Oracle",
     "description": "You call upon the frigid depths of outer space to bring a terrible chill to your enemies. As a standard action, one target within 30 feet is cloaked in the void and takes %1d6 points of cold damage. A successful Fortitude save (DC %2) halves this damage. At 10th level, the interstellar void is so extreme that enemies who fail their saving throw are fatigued. At 15th level, creatures who fail their save are exhausted and stunned for 1 round. You can use this ability %3 time(s) per day.|OracleInterstellarVoidDamageDice|OracleRevelationDC|OracleInterstellarVoidTimes",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

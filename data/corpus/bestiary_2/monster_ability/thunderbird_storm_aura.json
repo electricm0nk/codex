@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thunderbird ~ Storm Aura",
+    "delivery": "Supernatural",
+    "description": "A thunderbird is surrounded by a 100-foot-radius spread of severe winds that blow out from the center, dissipating swiftly at the limit of the aura's range.  In this area, ranged weapons (but not siege weapons) take a -4 penalty on attack rolls, Fly checks are made at a -4 penalty, and exposed flames are extinguished.  Small creatures must make a DC 10 Strength check (if on the ground) or a DC 20 Fly check to move toward the thunderbird, while Tiny or smaller creatures can be knocked backward (1d4x10 feet if they are on the ground and fail a DC 15 Strength check, or 2d6x10 feet if they are flying and fail a DC 25 Fly check).  Creatures on the ground that are pushed back take 1d4 points of nonlethal damage per 10 feet, and flying creatures that are pushed back take 2d6 points of nonlethal damage regardless of the distance they are pushed.  In addition, once every 1d4 rounds, a bolt of lightning strikes a random creature (other than the thunderbird) within the area of its storm aura.  This bolt of lightning deals 12d6 points of electricity damage (DC %1 Reflex halves).",
+    "description_variables": [
+      "ThunderbirdStormAuraDC"
+    ],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:thunderbird_storm_aura",
+    "name": "Storm Aura",
+    "owners": [
+      "bestiary_2:monster:thunderbird"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Storm Aura"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(100 ft.)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThunderbirdStormAuraDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThunderbirdStormAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Storm Aura)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThunderbirdStormAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A thunderbird is surrounded by a 100-foot-radius spread of severe winds that blow out from the center, dissipating swiftly at the limit of the aura's range.  In this area, ranged weapons (but not siege weapons) take a -4 penalty on attack rolls, Fly checks are made at a -4 penalty, and exposed flames are extinguished.  Small creatures must make a DC 10 Strength check (if on the ground) or a DC 20 Fly check to move toward the thunderbird, while Tiny or smaller creatures can be knocked backward (1d4x10 feet if they are on the ground and fail a DC 15 Strength check, or 2d6x10 feet if they are flying and fail a DC 25 Fly check).  Creatures on the ground that are pushed back take 1d4 points of nonlethal damage per 10 feet, and flying creatures that are pushed back take 2d6 points of nonlethal damage regardless of the distance they are pushed.  In addition, once every 1d4 rounds, a bolt of lightning strikes a random creature (other than the thunderbird) within the area of its storm aura.  This bolt of lightning deals 12d6 points of electricity damage (DC %1 Reflex halves).|ThunderbirdStormAuraDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Thunderbird ~ Storm Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      }
+    ],
+    "source_page": "p.264",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1249,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Thunderbird ~ Storm Aura",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

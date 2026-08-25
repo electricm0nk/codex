@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_171)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_171)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Destruction,Evil,Fire,War|PREALIGN:TN,LE,NE,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Elemental lord of deserts, fire, volcanoes"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|Queen of the Inferno"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Four flaming swords"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Megalania"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Orange|Yellow"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Elemental Lords"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Longsword"
+      },
+      {
+        "key": "ALIGN",
+        "value": "NE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.322"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 171,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_171)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:171"
+  }
+}

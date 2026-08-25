@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Moon-Beast ~ Rend",
+    "delivery": null,
+    "description": "2 tentacles, 1d6+9 plus Wisdom drain",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_3:monster_ability:moon_beast_rend",
+    "name": "Rend",
+    "owners": [
+      "bestiary_3:monster:moon_beast"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "2 tentacles, 1d6+9 plus Wisdom drain"
+      },
+      {
+        "key": "KEY",
+        "value": "Moon-Beast ~ Rend"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "TYPE",
+        "value": "MoonBeastRacialAbility.SpecialAttack"
+      }
+    ],
+    "source_page": "p.195",
+    "traits": [
+      "MoonBeastRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1277,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Moon-Beast ~ Rend",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

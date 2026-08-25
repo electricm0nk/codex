@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vox ~ Spells",
+    "name": "Spells",
+    "class": "Mesmerist",
+    "description": "A vox adds the following spells to his class list: 1st-ear-piercing scream; 2nd-cacophonous call, disrupt silence, distracting cacophony, piercing shriek, sonic scream; 4th-shout, sonic thrust, wall of sound; 5th-cacophonous call (mass), echolocation, resonating word; 6th-magnifying chime, shout (greater), sonic form. Unlike most psychic spells, a vox's mesmerist spells use both thought and verbal components; like a bard, a vox cannot remove the verbal components of his spells. This alters the mesmerist's spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vox ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.VoxClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A vox adds the following spells to his class list: 1st-ear-piercing scream; 2nd-cacophonous call, disrupt silence, distracting cacophony, piercing shriek, sonic scream; 4th-shout, sonic thrust, wall of sound; 5th-cacophonous call (mass), echolocation, resonating word; 6th-magnifying chime, shout (greater), sonic form. Unlike most psychic spells, a vox's mesmerist spells use both thought and verbal components; like a bard, a vox cannot remove the verbal components of his spells. This alters the mesmerist's spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Mesmerist=1|Ear-Piercing Scream"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Mesmerist=2|Cacophonous Call,Disrupt Silence,Distracting Cacophony,Piercing Shriek,Sonic Scream"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Mesmerist=4|Shout,Sonic Thrust,Wall of Sound"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Mesmerist=5|Cacophonous Call (Mass),Echolocation,Resonating Word"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Mesmerist=6|Magnifying Chime,Shout (Greater),Sonic Form"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 88,
+    "record_key": "Vox ~ Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Mummy ~ Create Spawn",
+    "name": "Create Spawn",
+    "description": "As a swift action, a mythic mummy can expend one use of mythic power to transform a slain opponent into a non-mythic mummy with the advanced simple template. The new mummy is under the command of the mummy that created it, and remains enslaved until the mythic mummy's death, at which time it becomes a free-willed creature. The spawn retains none of the abilities it had in life",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Mummy ~ Create Spawn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Mummy Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a mythic mummy can expend one use of mythic power to transform a slain opponent into a non-mythic mummy with the advanced simple template. The new mummy is under the command of the mummy that created it, and remains enslaved until the mythic mummy's death, at which time it becomes a free-willed creature. The spawn retains none of the abilities it had in life"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 217,
+    "record_key": "Mythic Mummy ~ Create Spawn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

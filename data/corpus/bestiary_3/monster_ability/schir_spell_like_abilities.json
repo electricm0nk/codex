@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Schir ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 6th; concentration +4) Constant-see invisibility, tongues 3/day-arcane lock, expeditious retreat, protection from good 1/day-summon (level 2, 1d3 schirs 20%%)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:schir_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 6th; concentration +4) Constant-see invisibility, tongues 3/day-arcane lock, expeditious retreat, protection from good 1/day-summon (level 2, 1d3 schirs 20%%)"
+      },
+      {
+        "key": "KEY",
+        "value": "Schir ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "SchirRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "SchirRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 660,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Schir ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

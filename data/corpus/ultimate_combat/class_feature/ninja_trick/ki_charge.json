@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ninja Trick ~ Ki Charge",
     "name": "Ki Charge",
-    "class": "Ninja Trick",
+    "class": "Ninja",
     "description": "A ninja with this trick can invest a portion of her ki into a single thrown weapon, such as a shuriken, and throw it as a standard action. The thrown weapon explodes on impact in a 5-foot burst, dealing %1d6 points of fire damage. Creatures caught in the blast receive a Reflex save to halve the damage. The DC of this save is %2. If the thrown weapon hits a creature, that creature takes a -2 penalty on the saving throw. If the thrown weapon misses, treat it as a thrown splash weapon. Using this ability expends 1 ki point from her ki pool.|1+(NinjaTrickLVL-2)/4|10+NinjaTrickLVL/2+CHA",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

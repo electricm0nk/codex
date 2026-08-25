@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Fey Friend",
+    "category": "General",
+    "name": "Fey Friend",
+    "description": "Your reverence for the Eldest helps make fey your allies. Fey regard you as akin to them, and the spells and other abilities of fey treat you as fey or your actual type, whichever is more advantageous to you. You gain a +2 bonus on Bluff, Diplomacy, and Sense Motive checks against fey.",
+    "prerequisites": [
+      "PREDEITY:1,PANTHEON.Eldest",
+      "PRETEXT:Prerequisite: Worshiper of one of the Eldest."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 47,
+    "record_key": "Fey Friend"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

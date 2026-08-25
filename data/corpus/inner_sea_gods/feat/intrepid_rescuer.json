@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Intrepid Rescuer",
+    "category": "Combat",
+    "name": "Intrepid Rescuer",
+    "description": "You instinctively react to interfere with foes that attack your allies or innocents. Whenever an opponent you threaten makes an attack against a helpless, prone, or stunned ally or any attack against a noncombatant, that opponent provokes an attack of opportunity from you. If your attack of opportunity hits your foe, she takes a -4 penalty on the attack roll that provoked this attack of opportunity.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Combat Reflexes",
+      "PREDEITY:1,Kurgess",
+      "PRETEXT:Prerequisites: Combat Reflexes, worshiper of Kurgess."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 55,
+    "record_key": "Intrepid Rescuer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

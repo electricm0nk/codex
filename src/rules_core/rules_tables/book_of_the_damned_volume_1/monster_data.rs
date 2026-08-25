@@ -131,6 +131,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Apostate)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 8,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Apostate Devil ~ Boundless Reach",
@@ -144,6 +147,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Apostate)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 9,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Apostate Devil ~ Evangelization",
@@ -157,6 +163,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Apostate)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 10,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Apostate Devil ~ Indomitable Oration",
@@ -170,6 +179,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Apostate)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 11,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Apostate Devil ~ Malleable Form",
@@ -183,6 +195,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Apostate)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 12,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Apostate Devil ~ Ohrwurm",
@@ -196,6 +211,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Apostate)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 13,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Apostate Devil ~ Summon Devil",
@@ -209,6 +227,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Apostate)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 14,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Apostate Devil ~ Wisdom Drain",
@@ -222,6 +243,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Apostate)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 15,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Heresy Devil ~ Spell-Like Abilities",
@@ -235,6 +259,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Heresy)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 19,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Heresy Devil ~ Corpulence",
@@ -248,6 +275,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Heresy)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 20,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Heresy Devil ~ Blasphemous Bile",
@@ -261,6 +291,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Heresy)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 21,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Heresy Devil ~ Devil Summoner",
@@ -274,6 +307,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Heresy)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 22,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Heresy Devil ~ Searing Word",
@@ -287,6 +323,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Heresy)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 23,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Heresy Devil ~ Summon Devil",
@@ -300,6 +339,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Heresy)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 24,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Heresy Devil ~ Throne of Skulls",
@@ -313,6 +355,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Heresy)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 25,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lesser Host Devil ~ Spell-Like Abilities",
@@ -326,6 +371,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Lesser Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 28,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lesser Host Devil ~ Superior Grappler",
@@ -339,6 +387,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Lesser Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 29,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lesser Host Devil ~ Noxious Breath",
@@ -352,6 +403,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Lesser Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 30,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lesser Host Devil ~ Shared Senses",
@@ -365,6 +419,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Lesser Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 31,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lesser Host Devil ~ Summon Devil",
@@ -378,6 +435,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Lesser Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 32,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Lesser Host Devil ~ Swarming",
@@ -391,6 +451,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Lesser Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 33,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Greater Host Devil ~ Spell-Like Abilities",
@@ -404,6 +467,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Greater Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 36,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Greater Host Devil ~ Infernal Wound",
@@ -417,6 +483,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Greater Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 37,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Greater Host Devil ~ Master Grappler",
@@ -430,6 +499,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Greater Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 38,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Greater Host Devil ~ Shared Senses",
@@ -443,6 +515,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Greater Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 39,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Greater Host Devil ~ Summon Devil",
@@ -456,6 +531,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Greater Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 40,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Greater Host Devil ~ Noxious Breath",
@@ -469,6 +547,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Greater Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 41,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Greater Host Devil ~ Rend",
@@ -482,6 +563,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Greater Host)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 42,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Warmonger Devil ~ Spell-Like Abilities",
@@ -495,6 +579,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Warmonger)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 45,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Warmonger Devil ~ Construct Form",
@@ -508,6 +595,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Warmonger)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 47,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Warmonger Devil ~ Hellstrider",
@@ -521,6 +611,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Warmonger)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 48,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Warmonger Devil ~ Merciless Blow",
@@ -534,6 +627,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Warmonger)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 49,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Warmonger Devil ~ Phalanx",
@@ -547,6 +643,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Warmonger)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 50,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Warmonger Devil ~ Stability",
@@ -560,6 +659,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Warmonger)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 51,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Warmonger Devil ~ Summon Devil",
@@ -573,6 +675,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Warmonger)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 52,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Warmonger Devil ~ Skills",
@@ -586,5 +691,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devil (Warmonger)"],
         source_file: "botd1_abilities_race.lst",
         source_line: 53,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
 ];

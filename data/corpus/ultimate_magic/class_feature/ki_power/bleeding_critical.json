@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ki Power ~ Bleeding Critical",
     "name": "Bleeding Critical",
-    "class": "Ki Power",
+    "class": "Monk",
     "description": "Spend 3 ki points as a free action on your turn to have Bleeding Critical until the beginning of your next turn.",
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.52"
+      },
+      {
+        "key": "TYPE",
+        "value": "SharkShamanBonus"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

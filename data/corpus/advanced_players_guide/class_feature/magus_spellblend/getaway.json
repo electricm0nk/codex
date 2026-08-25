@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Getaway",
+    "name": "Getaway",
+    "class": "Magus",
+    "description": "Getaway teleports you and allies you designate at the time of casting to a predetermined location. You must initially cast the spell at that location-all creatures affected by the spell must be present at that time and within 30 feet of you. At any time before the spell's duration expires, you may trigger the spell as a swift action. At this time, all affected creatures (or their remains and gear) within 30 feet of you are teleported to the location where you first cast the spell. Creatures more than 30 feet away from you are left behind. Selected creatures within 30 feet of you who do not wish to travel with you at that time can simply choose not to go. You can be transported any distance within a plane but cannot travel between planes.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Getaway"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=6|Getaway"
+      },
+      {
+        "key": "DESC",
+        "value": "Getaway teleports you and allies you designate at the time of casting to a predetermined location. You must initially cast the spell at that location-all creatures affected by the spell must be present at that time and within 30 feet of you. At any time before the spell's duration expires, you may trigger the spell as a swift action. At this time, all affected creatures (or their remains and gear) within 30 feet of you are teleported to the location where you first cast the spell. Creatures more than 30 feet away from you are left behind. Selected creatures within 30 feet of you who do not wish to travel with you at that time can simply choose not to go. You can be transported any distance within a plane but cannot travel between planes.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3588,
+    "record_key": "Magus Spellblend ~ Getaway"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

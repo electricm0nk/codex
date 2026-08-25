@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcanist Archetype ~ Occultist",
     "name": "Occultist",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "Not all arcanists peer inward to discern the deepest secrets of magic. Some look outward, connecting with extraplanar creatures and bartering for secrets, power, and favor.",
     "raw_tokens": [
       {
@@ -67,6 +67,38 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Arcanist"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Occultist],[!PREFACT:1,ABILITIES,Arcanist_Archetype_ArcanistExploit1=True,Arcanist_Archetype_ArcanistExploit7=True,Arcanist_Archetype_MagicalSupremacy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_MagicalSupremacy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_MagicalSupremacy|true"
       }
     ]
   },
@@ -83,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

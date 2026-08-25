@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Spellblight ~ Phase Blight",
+    "name": "Phase Blight",
+    "description": "A spellcaster afflicted with spellblight fades in and out of existence. Each time she casts a spell, she phases in and out of reality for 1 round per level of the spell cast. While phasing, any physical attacks made against the spellcaster have a 50%% miss chance, any individually targeted spell has a 50%% chance to fail to affect the caster, and the spellcaster takes only half damage from area attacks. In addition, while actively phasing, all of a spellcaster's physical attacks have a 50%% miss chance, all of the caster's spells that target creatures have a 50%% chance of affecting the target, and all of the caster's area attacks do 50%% of their normal damage. Unlike when casting the blink spell, the spellcaster does not become ethereal; she blinks in and out of reality altogether. Effects that block planar travel, like dimensional anchor, stabilize a phasing creature for the duration of the effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellblight ~ Phase Blight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "MajorSpellblight.Spellblight.Curse.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "A spellcaster afflicted with spellblight fades in and out of existence. Each time she casts a spell, she phases in and out of reality for 1 round per level of the spell cast. While phasing, any physical attacks made against the spellcaster have a 50%% miss chance, any individually targeted spell has a 50%% chance to fail to affect the caster, and the spellcaster takes only half damage from area attacks. In addition, while actively phasing, all of a spellcaster's physical attacks have a 50%% miss chance, all of the caster's spells that target creatures have a 50%% chance of affecting the target, and all of the caster's area attacks do 50%% of their normal damage. Unlike when casting the blink spell, the spellcaster does not become ethereal; she blinks in and out of reality altogether. Effects that block planar travel, like dimensional anchor, stabilize a phasing creature for the duration of the effect."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 22,
+    "record_key": "Spellblight ~ Phase Blight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

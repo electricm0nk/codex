@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ability Drain ~ Ex",
+    "delivery": "Extraordinary",
+    "description": "Your attack causes ability drain reducing %1 by the %2d%3. Ability drain is permanent and can only be restored through magic.",
+    "description_variables": [
+      "%CHOICE",
+      "AbilityDrainDice",
+      "AbilityDrainDieSize"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ability_drain_ex",
+    "name": "Ability Drain",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2 %3 damage)|AbilityDamageDice|AbilityDamageDieSize|%CHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AbilityDrainDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Cha|Con|Dex|Int|Str|Wis"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDrainDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AbilityDrainDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack causes ability drain reducing %1 by the %2d%3. Ability drain is permanent and can only be restored through magic.|%CHOICE|AbilityDrainDice|AbilityDrainDieSize"
+      },
+      {
+        "key": "KEY",
+        "value": "Ability Drain ~ Ex"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1286,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Ability Drain ~ Ex",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

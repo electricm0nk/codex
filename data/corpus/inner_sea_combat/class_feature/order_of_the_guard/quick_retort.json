@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Guard ~ Quick Retort",
     "name": "Quick Retort",
-    "class": "Order of the Guard",
+    "class": "Cavalier",
     "description": "At 15th level, the cavalier can strike out at those who mean his ward harm. Whenever a creature attacks the cavalier's ward, or attempts to steal, sunder, or otherwise wrest control of it from the cavalier or his allies, the attacking creature provokes an attack of opportunity from the cavalier. The cavalier receives a +2 bonus on attacks of opportunity he makes against such creatures.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

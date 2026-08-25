@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Discovery ~ Greater Alchemical Simulacrum",
     "name": "Greater Alchemical Simulacrum",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You gain the ability to create a simulacrum. This works like the simulacrum spell, except it costs 100 gp in alchemical materials per Hit Die of the simulacrum, requires 24 hours to grow, and decays into inert flesh rather than ice or snow if killed. The created simulacrum is a creature, not a supernatural effect.",
     "raw_tokens": [
       {
@@ -35,6 +35,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.16"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
       }
     ]
   },
@@ -52,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Sea Legs",
+    "name": "Sea Legs",
+    "description": "You have a sailor's instincts for moving about while aboard seagoing vessels.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Profession (sailor)=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a sailor's instincts for moving about while aboard seagoing vessels."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Climb,Swim|2"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +2 bonus on Acrobatics, Climb, and Swim checks."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 271,
+    "record_key": "Sea Legs"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

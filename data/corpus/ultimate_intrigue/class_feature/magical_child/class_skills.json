@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Magical Child ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Vigilante",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magical Child ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.MagicalChildClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Appraise|Bluff|Climb|TYPE=Craft|Diplomacy|Disguise|Escape Artist|Intimidate|Knowledge (arcana)|Knowledge (dungeoneering)|Knowledge (local)|Knowledge (nobility)|Knowledge (planes)|TYPE=Perform|TYPE=Profession|Ride|Sense Motive|Sleight of Hand|Spellcraft|Stealth|Swim|Use Magic Device"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 94,
+    "record_key": "Magical Child ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

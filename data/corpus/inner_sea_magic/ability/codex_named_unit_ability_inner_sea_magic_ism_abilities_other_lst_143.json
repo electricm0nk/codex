@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_143)",
+    "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_143)",
+    "description": "You gain the ability to achieve inner focus. Once per day as a swift action, your inner focus grants a +1 insight bonus on an attack roll.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.MonasteryReward"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to achieve inner focus. Once per day as a swift action, your inner focus grants a +1 insight bonus on an attack roll."
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 143,
+    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_143)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_magic:ism_abilities_other.lst:143"
+  }
+}

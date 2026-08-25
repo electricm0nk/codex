@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Memory Subdomain",
     "name": "Memory Subdomain",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Comprehend Languages|Druid=2|Memory Lapse|Druid=3|Speak with Dead|Druid=4|Divination|Druid=5|True Seeing|Druid=6|Modify Memory|Druid=7|Legend Lore|Druid=8|Moment of Prescience|Druid=9|Foresight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

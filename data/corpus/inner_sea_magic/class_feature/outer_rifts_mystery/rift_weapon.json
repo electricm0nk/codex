@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Outer Rifts Mystery ~ Rift Weapon",
     "name": "Rift Weapon",
-    "class": "Outer Rifts Mystery",
+    "class": "Oracle",
     "description": "Your understanding of the powers that move through the Outer Rifts allows you to imbue weapons with the ability to penetrate the defenses of creatures native to other planes. %1 per day as a standard action, you can touch one weapon (or a group of up to 20 similar pieces of ammunition) and give it the ability to penetrate DR/cold iron for %2 minutes.|RiftWeaponTimes|RiftWeaponDuration",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

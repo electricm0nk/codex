@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Disruptor ~ Absorb Energy",
+    "name": "Absorb Energy",
+    "description": "Convert powers manifested against you to light; %1 pp/day.|DisruptorPPLimit",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Disruptor ~ Absorb Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptorPPLimit|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Convert powers manifested against you to light; %1 pp/day.|DisruptorPPLimit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptorPPLimit|5*TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.435"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 188,
+    "record_key": "Disruptor ~ Absorb Energy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

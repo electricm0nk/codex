@@ -33,14 +33,18 @@
 //! * collapses `%%` to one `%` (lossless — nothing is looked up, nothing can
 //!   be lost);
 //! * substitutes `%N` when argument N is a plain integer literal;
-//! * **drops** `%N` when argument N is anything else — an expression this
-//!   engine cannot evaluate without the formula interpreter `decisions.md §24`
-//!   forbids — taking the `+`/`-` sign that introduced it with it, closing the
-//!   whitespace, and **reporting** the dropped argument rather than guessing a
-//!   value. This is the identical discipline
-//!   `ingest_race_traits::substitute_placeholders` already ships (its
-//!   `Halfling ~ Adaptable Luck` record reads "they only gain a bonus" for
-//!   exactly this reason);
+//! * **drops** `%N` when argument N is anything this module's own narrow
+//!   `<Name><+|-><integer>` offset shape (see [`resolve_desc_argument`]) does
+//!   not cover, taking the `+`/`-` sign that introduced it with it, closing
+//!   the whitespace, and **reporting** the dropped argument rather than
+//!   guessing a value. (`SD-27 decisions.md §24.1`'s formula-interpreter ban
+//!   this doc used to cite here was overturned by `SD-31 decisions.md`
+//!   Decision 20 on 2026-08-21, before this module's own `resolve_desc_
+//!   argument` was last touched — `Halfling ~ Adaptable Luck`, this doc's own
+//!   worked example, now resolves at ingest time too, via `race_trait_
+//!   formula_binding::resolve_same_row_formula`; this module's narrower
+//!   offset-only shape is unaffected and still correct for the population it
+//!   serves, but is no longer the *only* option the way this comment implied);
 //! * removes the `|`-delimited argument tail in all cases;
 //! * removes a trailing `|`-delimited **PCGen qualifier** (`PREABILITY:…`,
 //!   `!PRERULE:1,DisplayFullSpell`, …). A `DESC:` token may end in one or
@@ -462,6 +466,20 @@ fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
     let prose = segments[..split_at].join("|");
     let args = segments[split_at..].iter().map(|s| (*s).to_string()).collect();
     (prose, args)
+}
+
+/// The `|`-delimited argument tail of a raw `DESC:` token, exactly as
+/// [`render_pcgen_desc_with_values`] itself reads it -- exposed read-only so a
+/// caller that wants to resolve an argument through a mechanism OTHER than
+/// [`PcgenDisplayValues`]'s named-lookup (e.g. evaluating the argument text
+/// directly as a PCGen formula, when it is itself a raw expression like
+/// `"max(1,WarpriestLVL/2)"` rather than a bare variable name) can see the
+/// exact argument strings this module's own renderer will later try to
+/// resolve, without duplicating `split_prose_and_args`'s own tail-taken-
+/// from-the-right parsing (SD-32 T12 Epic 8 row 18 cycle 15,
+/// `class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument`).
+pub(crate) fn desc_token_arguments(raw: &str) -> Vec<String> {
+    split_prose_and_args(raw).1
 }
 
 /// Whether `chars[i]` (a `'%'`) is part of standard "d%"/"D%" percentile-

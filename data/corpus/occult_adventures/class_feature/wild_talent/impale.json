@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Impale",
     "name": "Impale",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element earth or water; Type form infusion; Level 3; Burn 2 Associated Blasts earth, ice, metal Saving Throw none You extend a long, sharp spike of elemental matter along a line, impaling multiple foes. Make a single attack roll against each creature or object in a 30-foot line, starting with the closest target. If the result is a critical threat, roll to confirm against only the first target you hit. Calculate damage against each target you hit, starting from the closest. If your attack hits a target but fails to deal physical damage to that target, the spike fails to penetrate and the infused blast doesn't continue. A blast with the impale infusion can penetrate solid barriers, but it must deal enough damage to destroy the barrier in order to continue through. Infused earth and metal blasts always deal piercing damage.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Extra Summons",
+    "name": "Extra Summons",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Summon Monster SLA"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Ability to cast summon monster as a spelllike ability, summoner 1st."
+      },
+      {
+        "key": "PREVARLTEQ",
+        "value": "Feat_Extra_Summons_Taken,Feat_Extra_Summons_Allowed"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Feat_Extra_Summons_Allowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Feat_Extra_Summons_Taken|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Extra Summons Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Feat_Extra_Summons_Taken|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonMonsterTimes|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 52,
+    "record_key": "Extra Summons"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

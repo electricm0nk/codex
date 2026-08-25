@@ -314,8 +314,11 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         }
     }
     assert_eq!(
-        checked, 357,
-        "ARG's 153 + Monster Codex's 4 + APG's 1 + Inner Sea Races' 67 + Horror Adventures' 41 \
+        checked, 370,
+        "ARG's 153 + Monster Codex's 8 (4 original + SD-32 card-11 T2b's 4 Ratfolk \
+         alternates, 2026-08-23) + APG's 1 + Inner Sea Races' 76 (67 pre-existing + 9 from \
+         a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + Horror \
+         Adventures' 41 \
          + Core Essentials' 16 heritages, selectable alternates (SD-29 decisions.md §44, §45, \
          §47, §49) + SD-31 Epic 1-F2's 48 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, \
          2026-08-15) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
@@ -364,7 +367,7 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
 
     assert_eq!(
         from_row,
-        354,
+        366,
         "rows whose own !PREFACT declares the gate (166 -> 223: SD-31 Epic 1-F2's 57 new \
          standard rows, 2026-08-15, all of which declare their own !PREFACT; 223 -> 232: the \
          Skinwalker follow-on batch's 9 standard rows, all of which also declare their own \
@@ -378,7 +381,9 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
          ReplaceShardsOfThePast=True` even though its SECOND gate statement in the globalvar \
          file is a `BONUS:ABILITYPOOL` grant rather than an `ABILITY:` one -- see \
          `ingest_races.rs`'s `globalvar_prevareq_flags`; 346 -> 354: SD-31 wave-24's \
-         Rougarou (Bestiary 6, 2026-08-20), 8 standard rows, same shape, all self-gated)"
+         Rougarou (Bestiary 6, 2026-08-20), 8 standard rows, same shape, all self-gated; \
+         354 -> 366: SD-32 card-11 T2b lane's Dhampir (Bestiary 2, 2026-08-23), 12 standard \
+         rows, same shape, all self-gated)"
     );
     assert_eq!(from_globalvar, 9, "Aasimar's nine, whose only declaration is the globalvar file");
 }

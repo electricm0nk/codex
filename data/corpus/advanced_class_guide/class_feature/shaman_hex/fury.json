@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Hex ~ Fury",
     "name": "Fury",
-    "class": "Shaman Hex",
+    "class": "Shaman",
     "description": "A shaman incites a creature within 30 feet into a primal fury. The target receives a +%1 morale bonus on attack rolls and a +%1 resistance bonus on saving throws against fear for %2 rounds. Once a creature has benefited from the fury hex, it cannot benefit from it again for 24 hours.|ShamanFuryHexBonus|ShamanFuryHexDuration",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Archetype ~ Blood Conduit",
     "name": "Blood Conduit",
-    "class": "Bloodrager Archetype",
+    "class": "Bloodrager",
     "description": "Blood conduits learn to channel their arcane might directly through their flesh, without the need for mystical words or gestures.",
     "raw_tokens": [
       {
@@ -55,6 +55,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Blood Conduit],[!PREFACT:1,ABILITIES,Bloodrager_Archetype_FastMovement=True,Bloodrager_Archetype_BloodlineFeats=True,Bloodrager_Archetype_UncannyDodge=True,Bloodrager_Archetype_ImprovedUncannyDodge=True,Bloodrager_Archetype_IndomitableWill=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_IndomitableWill|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_IndomitableWill|true"
       }
     ]
   },
@@ -71,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

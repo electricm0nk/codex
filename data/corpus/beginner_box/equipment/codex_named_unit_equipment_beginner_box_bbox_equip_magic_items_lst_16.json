@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T22:40:18Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_beginner_box_bbox_equip_magic_items_lst_16)",
+    "category": "MagicItems",
+    "name": "Codex-Named Unit (equipment_beginner_box_bbox_equip_magic_items_lst_16)",
+    "cost_gp": 3500.0,
+    "weight_lbs": 0.0,
+    "description": "+1 bonus on all saving throws. Once per day, you can use it to give yourself the benefit of a false life spell (1d10+5 temporary hit points)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+    "sha256": "f56e5fde77194bd07f1800f566f6c4668f7b2f4a67f72d19b81665fd75104a70",
+    "line": 16,
+    "record_key": "Codex-Named Unit (equipment_beginner_box_bbox_equip_magic_items_lst_16)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "beginner_box:bbox_equip_magic_items.lst:16"
+  }
+}

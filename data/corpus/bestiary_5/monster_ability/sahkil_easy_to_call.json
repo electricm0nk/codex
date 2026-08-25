@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sahkil ~ Easy to Call",
+    "delivery": "Extraordinary",
+    "description": "Sahkils count as having 4 fewer Hit Dice (minimum 2) for purposes of spells or effects that call outsiders, such as planar binding. However, they receive a racial bonus equal to 1/2 their Hit Dice on Charisma checks to break free of planar binding spells and similar effects, and their spell resistance counts as if it were 5 higher for the purpose of breaking free of planar binding spells and similar effects.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:sahkil_easy_to_call",
+    "name": "Easy to Call",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sahkils count as having 4 fewer Hit Dice (minimum 2) for purposes of spells or effects that call outsiders, such as planar binding. However, they receive a racial bonus equal to 1/2 their Hit Dice on Charisma checks to break free of planar binding spells and similar effects, and their spell resistance counts as if it were 5 higher for the purpose of breaking free of planar binding spells and similar effects."
+      },
+      {
+        "key": "KEY",
+        "value": "Sahkil ~ Easy to Call"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.SahkilSubtypeTrait"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "SahkilSubtypeTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 98,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Sahkil ~ Easy to Call",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

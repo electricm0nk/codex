@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist ~ Aligned Class",
+    "name": "Aligned Class",
+    "description": "Evangelists come from many different backgrounds, and they show an unusual range of diversity. At 2nd level, the evangelist must choose a class she belonged to before adding the prestige class to be her aligned class. She gains all the class features for this class, essentially adding every evangelist level beyond 1st to her aligned class to determine what class features she gains. She still retains the Hit Dice, base attack bonus, saving throw bonuses, and skill ranks of the prestige class, but gains all other class features ofher aligned class as well as those of the evangelist prestige class.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Aligned Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Evangelist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Evangelists come from many different backgrounds, and they show an unusual range of diversity. At 2nd level, the evangelist must choose a class she belonged to before adding the prestige class to be her aligned class. She gains all the class features for this class, essentially adding every evangelist level beyond 1st to her aligned class to determine what class features she gains. She still retains the Hit Dice, base attack bonus, saving throw bonuses, and skill ranks of the prestige class, but gains all other class features ofher aligned class as well as those of the evangelist prestige class."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Evangelist Aligned Class|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 15,
+    "record_key": "Evangelist ~ Aligned Class"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

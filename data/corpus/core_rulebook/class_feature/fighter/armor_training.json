@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter ~ Armor Training",
     "name": "Armor Training",
@@ -75,6 +75,22 @@
       {
         "key": "UNENCUMBEREDMOVE",
         "value": "MediumArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorTrainingTier|-1|PREVAREQ:Fighter_CF_ArmorTraining1,1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorTraining,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorTrainingTier|-1|PREVAREQ:Fighter_CF_ArmorTraining2,1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorTraining,2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorTrainingTier|-1|PREVAREQ:Fighter_CF_ArmorTraining3,1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorTraining,3]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArmorTrainingTier|-1|PREVAREQ:Fighter_CF_ArmorTraining4,1|PREMULT:2,[PREEQUIP:1,TYPE=Armor],[PREVARGTEQ:ArmorTraining,4]"
       }
     ]
   },
@@ -92,5 +108,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Saurian Subdomain",
+    "name": "Saurian Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Saurian Subdomain],[PREVARLT:ScalykindDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Venomous Stare|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Scalykind)|PREVARGTEQ:DomainScalykindAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dinosaur Companion|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Scalykind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "DESC",
+        "value": "Few creatures demand your respect and awe like the mighty dinosaur."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=1|Magic Fang"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=2|Animal Trance"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=3|Magic Fang (Greater)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=4|Summon Nature's Ally IV (deinonychus or pteranodon only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=5|Beast Shape III"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=6|Eyebite"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=7|Summon Nature's Ally VII (brachiosaurus or tyrannosaurus only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=8|Animal Shapes (Reptiles Only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=9|Shapechange"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Scalykind"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 20,
+    "record_key": "Saurian Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

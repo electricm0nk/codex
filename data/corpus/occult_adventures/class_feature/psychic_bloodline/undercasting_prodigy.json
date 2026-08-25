@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Psychic Bloodline ~ Undercasting Prodigy",
     "name": "Undercasting Prodigy",
-    "class": "Psychic Bloodline",
+    "class": "Sorcerer",
     "description": "Whenever you gain a new level of spells, you automatically replace any psychic bloodline spells that can be undercast with the highest-level version you can cast in your list of spells known. For example, at 9th level, you would replace mind thrust I, id insinuation I, and ego whip I with mind thrust IV, id insinuation III, and ego whip II, respectively, as spells known.",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

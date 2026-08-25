@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Awesome Blow",
     "name": "Awesome Blow",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The brute has learned that his body is his most formidable weapon. He gains the Awesome Blow monster feat as a bonus feat, but only while in his vigilante identity. He can ignore the feat's prerequisites. His awesome blow combat maneuver deals an amount of damage equal to 1d6 plus his Strength modifier, or his unarmed strike damage, whichever is better.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Phoenix Bloodline",
+    "name": "Phoenix Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Blood Arcanist Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "SorcererBloodlineChoice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorcerer Bloodline ~ Phoenix"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlineLVL|BloodlineLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlineProgressionLVL|BloodlineProgressionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlineArcana1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlinePowers|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlinePower1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlinePower3|if(Sorcerer_Phoenix_BloodlineProgressionLVL>=3,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlinePower9|if(Sorcerer_Phoenix_BloodlineProgressionLVL>=9,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlinePower15|if(Sorcerer_Phoenix_BloodlineProgressionLVL>=15,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlinePower20|if(Sorcerer_Phoenix_BloodlineProgressionLVL>=20,1,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Phoenix_BloodlinePower1Times|BloodlinePowerTimes+BloodlinePower1TimesBonus|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_heog.lst",
+    "sha256": "b65ecb24acec398e84f01d1a8d9e8630b9d8494a27e5afdc86e7a5c383be9c95",
+    "line": 2,
+    "record_key": "Phoenix Bloodline"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

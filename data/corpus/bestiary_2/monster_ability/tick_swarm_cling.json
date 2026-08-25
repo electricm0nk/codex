@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tick Swarm ~ Cling",
+    "delivery": "Extraordinary",
+    "description": "If a creature leaves a tick swarm's square, the swarm takes 1d6 points of damage to reflect the loss of its numbers as several ticks cling to the victim.  A creature with ticks clinging to it takes swarm damage at the end of its turn each round.  As a full round action, the creature can remove the ticks with a DC %1 Reflex save.  At least 10 points of damage from any area effect destroys all clinging ticks.",
+    "description_variables": [
+      "TickSwarmClingDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:tick_swarm_cling",
+    "name": "Cling",
+    "owners": [
+      "bestiary_2:monster:tick_swarm"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Cling"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TickSwarmClingDC|10+TL/2+DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TickSwarmClingDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Cling)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TickSwarmClingDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If a creature leaves a tick swarm's square, the swarm takes 1d6 points of damage to reflect the loss of its numbers as several ticks cling to the victim.  A creature with ticks clinging to it takes swarm damage at the end of its turn each round.  As a full round action, the creature can remove the ticks with a DC %1 Reflex save.  At least 10 points of damage from any area effect destroys all clinging ticks.|TickSwarmClingDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Tick Swarm ~ Cling"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttck.Extraordinary"
+      }
+    ],
+    "source_page": "p.265",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T18:15:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1259,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Tick Swarm ~ Cling",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

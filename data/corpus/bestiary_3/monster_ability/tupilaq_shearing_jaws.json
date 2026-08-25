@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tupilaq ~ Shearing Jaws",
+    "delivery": "Extraordinary",
+    "description": "All tupilaqs are crafted with oversized jaws capable of tearing and pulling. A tupilaq applies twice its Strength modifier to damage with a successful bite attack and threatens a critical hit on a roll of 19-20. A tupilaq is treated as Large for all checks made to move a grappled opponent.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tupilaq_shearing_jaws",
+    "name": "Shearing Jaws",
+    "owners": [
+      "bestiary_3:monster:tupilaq"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All tupilaqs are crafted with oversized jaws capable of tearing and pulling. A tupilaq applies twice its Strength modifier to damage with a successful bite attack and threatens a critical hit on a roll of 19-20. A tupilaq is treated as Large for all checks made to move a grappled opponent."
+      },
+      {
+        "key": "KEY",
+        "value": "Tupilaq ~ Shearing Jaws"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      },
+      {
+        "key": "TYPE",
+        "value": "TupilaqRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.275",
+    "traits": [
+      "TupilaqRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1643,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Tupilaq ~ Shearing Jaws",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

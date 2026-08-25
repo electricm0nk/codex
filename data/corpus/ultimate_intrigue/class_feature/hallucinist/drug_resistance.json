@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hallucinist ~ Drug Resistance",
+    "name": "Drug Resistance",
+    "class": "Investigator",
+    "description": "A hallucinist gains a +%1 bonus on all saving throws against drug addiction.|HallucinistDrugAddictionBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallucinist ~ Drug Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HallucinistDrugAddictionBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A hallucinist gains a +%1 bonus on all saving throws against drug addiction.|HallucinistDrugAddictionBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " A hallucinist becomes completely immune to drug addiction, but he can choose to lower this immunity for any particular drug. If he becomes addicted to a drug, he must fully recover from the addiction before he can resume his immunity to addiction to that drug.|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinistDrugAddictionBonus|1+(InvestigatorLVL>=5)+(InvestigatorLVL>=8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 26,
+    "record_key": "Hallucinist ~ Drug Resistance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

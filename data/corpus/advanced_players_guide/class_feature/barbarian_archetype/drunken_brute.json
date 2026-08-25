@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian Archetype ~ Drunken Brute",
     "name": "Drunken Brute",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Barbarians are known for their ability to consume potent drink, but drunken brutes turn drinking into a combat tactic, using the potent liquor to fuel their rage and grant them additional powers.",
     "raw_tokens": [
       {
@@ -55,6 +55,18 @@
       {
         "key": "FACT",
         "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Drunken Brute],[!PREFACT:1,ABILITIES,Barbarian_Archetype_FastMovement=true]"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
       }
     ]
   },
@@ -71,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

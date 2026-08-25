@@ -1,0 +1,308 @@
+{
+  "kind": "feat",
+  "population": 682,
+  "written": 682,
+  "name_pi_renamed": 35,
+  "unresolved": [],
+  "written_by_book": {
+    "advanced_players_guide": 37,
+    "advanced_race_guide": 1,
+    "adventurers_guide": 81,
+    "bestiary": 4,
+    "book_of_the_damned_volume_2": 2,
+    "horror_adventures": 17,
+    "inner_sea_combat": 1,
+    "inner_sea_faiths": 1,
+    "inner_sea_magic": 7,
+    "inner_sea_races": 22,
+    "inner_sea_world_guide": 6,
+    "mythic_adventures": 353,
+    "ultimate_combat": 51,
+    "ultimate_intrigue": 16,
+    "ultimate_magic": 48,
+    "ultimate_wilderness": 35
+  },
+  "renamed_records": [
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 2,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_2)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 9,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_9)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 10,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_10)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 11,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_11)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 12,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_12)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 13,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_13)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 14,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_14)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 15,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_15)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 16,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_16)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 17,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_17)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 18,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_18)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 20,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_20)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 35,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_35)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 36,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_36)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 37,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_37)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 53,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_53)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 70,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_70)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 71,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_71)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 72,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_72)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 73,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_73)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 74,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_74)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 75,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_75)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 77,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_77)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 78,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_78)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 80,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_80)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 81,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_81)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 82,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_82)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "adventurers_guide",
+      "source_file": "ag_feats.lst",
+      "source_line": 83,
+      "codex_name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_83)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "inner_sea_combat",
+      "source_file": "isc_abilities_feat.lst",
+      "source_line": 6,
+      "codex_name": "Codex-Named Unit (feat_inner_sea_combat_isc_abilities_feat_lst_6)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_feats.lst",
+      "source_line": 8,
+      "codex_name": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_8)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_feats.lst",
+      "source_line": 10,
+      "codex_name": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_10)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_feats.lst",
+      "source_line": 30,
+      "codex_name": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_30)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_feats.lst",
+      "source_line": 36,
+      "codex_name": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_36)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_feats.lst",
+      "source_line": 41,
+      "codex_name": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_41)",
+      "reason": "name_pi_blocked"
+    },
+    {
+      "kind": "feat",
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_feats.lst",
+      "source_line": 43,
+      "codex_name": "Codex-Named Unit (feat_inner_sea_world_guide_iswg_feats_lst_43)",
+      "reason": "name_pi_blocked"
+    }
+  ],
+  "term_list_size": 60
+}

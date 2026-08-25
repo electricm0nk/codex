@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wildcat ~ Steal Training 2",
     "name": "Steal Training",
-    "class": "Wildcat",
+    "class": "Monk",
     "description": "You have had additional training in the Steal combat maneuver. You gain a +%1 bonus on combat maneuver checks when attempting this combat maneuver and a +%1 bonus to your CMD when defending against this maneuver.|WildcatStealBonus",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

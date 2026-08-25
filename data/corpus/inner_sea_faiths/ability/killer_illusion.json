@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Sivanah ~ Killer Illusion",
+    "name": "Killer Illusion",
+    "description": "If you have performed your daily obedience, once per day, as a free action when you hit with a melee attack, you can cause images of a creature the target most fears to erupt from your weapon right before its eyes. Resolve this effect before rolling damage for the attack; this functions as phantasmal killer, and the target can attempt a Will saving throw (DC %1) to recognize the image as unreal. On a failed save, the phantasm touches the target, which must then succeed at a Fortitude saving throw (DC %1) or die from fear. Even if the target succeeds at its Fortitude saving throw, it takes 3d6 points of damage as well as the damage from the successful melee attack. Unlike phantasmal killer, this effect cannot be turned upon you if the subject possesses telepathy or is wearing a helm of telepathy.|14+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Sivanah ~ Killer Illusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day, as a free action when you hit with a melee attack, you can cause images of a creature the target most fears to erupt from your weapon right before its eyes. Resolve this effect before rolling damage for the attack; this functions as phantasmal killer, and the target can attempt a Will saving throw (DC %1) to recognize the image as unreal. On a failed save, the phantasm touches the target, which must then succeed at a Fortitude saving throw (DC %1) or die from fear. Even if the target succeeds at its Fortitude saving throw, it takes 3d6 points of damage as well as the damage from the successful melee attack. Unlike phantasmal killer, this effect cannot be turned upon you if the subject possesses telepathy or is wearing a helm of telepathy.|14+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 329,
+    "record_key": "Sentinel Boon ~ Sivanah ~ Killer Illusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

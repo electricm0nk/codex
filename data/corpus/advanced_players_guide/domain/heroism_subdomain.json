@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Heroism Subdomain",
+    "name": "Heroism Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Heroism Subdomain],[PREVARLT:GloryDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Heroism Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Heroism Subdomain=1|Shield of Faith|Heroism Subdomain=2|Bless Weapon|Heroism Subdomain=3|Heroism|Heroism Subdomain=4|Holy Smite|Heroism Subdomain=5|Righteous Might|Heroism Subdomain=6|Heroism (Greater)|Heroism Subdomain=7|Holy Sword|Heroism Subdomain=8|Holy Aura|Heroism Subdomain=9|Gate"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 39,
+    "record_key": "Heroism Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

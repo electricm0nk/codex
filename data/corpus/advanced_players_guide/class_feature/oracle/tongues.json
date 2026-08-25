@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle ~ Tongues",
     "name": "Tongues",
@@ -31,6 +31,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.44"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=2"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=3"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Agathion Subdomain=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Language Subdomain=3"
+      },
+      {
+        "key": "DESC",
+        "value": "In times of stress or unease, you speak in tongues. Whenever you are in combat, you can only speak and understand two selected languages. This does not interfere with spellcasting, but it does apply to spells that are language dependent.|PREVARGTEQ:OracleCurseLVL,5|PREVARLT:OracleCurseLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Oracle Tongues Choice|1|PREVARGTEQ:OracleCurseLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "In times of stress or unease, you speak in tongues. Whenever you are in combat, you can only speak two selected languages. This does not interfere with spellcasting, but it does apply to spells that are language dependent. You can understand any spoken language, as if under the effects of tongues, even during combat.|PREVARGTEQ:OracleCurseLVL,10|PREVARLT:OracleCurseLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "In times of stress or unease, you speak in tongues. Whenever you are in combat, you can only speak two selected languages. This does not interfere with spellcasting, but it does apply to spells that are language dependent. You can speak and understand any spoken language, as if under the effects of tongues, but your speech is still restricted during combat.|PREVARGTEQ:OracleCurseLVL,15"
       }
     ]
   },
@@ -47,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

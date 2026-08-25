@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Psionic Deed ~ Thundering Shot",
+    "name": "Thundering Shot",
+    "description": "At 11th level, the gunslinger can spend 1 grit point and fire her gun into the ground at her feet to cause a concussive blast to all creatures within 30 ft. of her. All creatures in the blast radius suffer force damage equal to the gunslinger's level. Creatures that make a Reflex saving throw (DC %1)  suffer only half damage.|ThunderingShotDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Deed ~ Thundering Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality.DeedsLvl11.DeedHasCost.Supernatural"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "IsPsionic,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThunderingShotDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, the gunslinger can spend 1 grit point and fire her gun into the ground at her feet to cause a concussive blast to all creatures within 30 ft. of her. All creatures in the blast radius suffer force damage equal to the gunslinger's level. Creatures that make a Reflex saving throw (DC %1)  suffer only half damage.|ThunderingShotDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThunderingShotDC|10+GunslingerLVL/2+DEX"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 61,
+    "record_key": "Psionic Deed ~ Thundering Shot"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

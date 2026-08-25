@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_22)",
+    "category": "ArmsArmor",
+    "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_22)",
+    "cost_gp": 2000.0,
+    "weight_lbs": 50.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst",
+    "sha256": "552092581f8480ce2a536d5358ebd3049ccb2f93a7e65a10a6287acbff6e50fa",
+    "line": 22,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_22)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_equip_arms_armor.lst:22"
+  }
+}

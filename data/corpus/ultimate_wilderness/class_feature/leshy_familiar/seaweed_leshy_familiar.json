@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Leshy Familiar ~ Seaweed Leshy",
+    "name": "Seaweed Leshy Familiar",
+    "class": "Leshy Familiar",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshy Familiar ~ Seaweed Leshy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "LeshyTenderChoice3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeaweedLeshyFamiliar|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SeaweedLeshyFamiliar|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Familiar|Familiar (Seaweed Leshy)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 527,
+    "record_key": "Leshy Familiar ~ Seaweed Leshy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

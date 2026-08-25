@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -27,6 +27,34 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Brawler Bonus Feat|(1+BrawlerLVL)/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler Bonus Feat|-1|PREVARGTEQ:BrawlerLvl,2|PREVAREQ:Brawler_CF_BonusFeat2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler Bonus Feat|-1|PREVARGTEQ:BrawlerLvl,5|PREVAREQ:Brawler_CF_BonusFeat5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler Bonus Feat|-1|PREVARGTEQ:BrawlerLvl,8|PREVAREQ:Brawler_CF_BonusFeat8,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler Bonus Feat|-1|PREVARGTEQ:BrawlerLvl,11|PREVAREQ:Brawler_CF_BonusFeat11,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler Bonus Feat|-1|PREVARGTEQ:BrawlerLvl,14|PREVAREQ:Brawler_CF_BonusFeat14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler Bonus Feat|-1|PREVARGTEQ:BrawlerLvl,17|PREVAREQ:Brawler_CF_BonusFeat17,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Brawler Bonus Feat|-1|PREVARGTEQ:BrawlerLvl,20|PREVAREQ:Brawler_CF_BonusFeat20,1"
       }
     ]
   },
@@ -45,5 +73,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

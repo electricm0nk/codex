@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thriae Queen ~ Spawn Soldiers",
+    "delivery": "Supernatural",
+    "description": "Three times per day as a standard action, a thriae queen can spawn a large swarm of wasps. This functions as four separate wasp swarms (Bestiary 275) that occupy all of the squares adjacent to the thriae queen. These swarms do not harm any thriae, and while they move with the queen as she moves, the swarms cannot leave her side. The swarms last until they are destroyed or 1 hour passes, at which point the swarms die on their own.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:thriae_queen_spawn_soldiers",
+    "name": "Spawn Soldiers",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a standard action, a thriae queen can spawn a large swarm of wasps. This functions as four separate wasp swarms (Bestiary 275) that occupy all of the squares adjacent to the thriae queen. These swarms do not harm any thriae, and while they move with the queen as she moves, the swarms cannot leave her side. The swarms last until they are destroyed or 1 hour passes, at which point the swarms die on their own."
+      },
+      {
+        "key": "KEY",
+        "value": "Thriae Queen ~ Spawn Soldiers"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "TYPE",
+        "value": "ThriaeQueenRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.264",
+    "traits": [
+      "ThriaeQueenRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1601,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Thriae Queen ~ Spawn Soldiers",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

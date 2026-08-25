@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Avenging Beast ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Vigilante",
+    "description": "When in his vigilante identity, the avenging beast gains the ability to take on the shape of the animal represented by his animal mask. This ability functions identically to the druid's wild shape ability, except the ability does not improve beyond functioning as beast shape I. The avenging beast treats his vigilante level as his druid level for the purposes of this ability. An avenging beast can use wild shape once per day at 5th level and one additional time per day at 7th level and every 2 levels thereafter, for a total of eight times per day at 19th level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Avenging Beast ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.AvengingBeastClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When in his vigilante identity, the avenging beast gains the ability to take on the shape of the animal represented by his animal mask. This ability functions identically to the druid's wild shape ability, except the ability does not improve beyond functioning as beast shape I. The avenging beast treats his vigilante level as his druid level for the purposes of this ability. An avenging beast can use wild shape once per day at 5th level and one additional time per day at 7th level and every 2 levels thereafter, for a total of eight times per day at 19th level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_ui.lst",
+    "sha256": "82bfd1c734f1fc071a7e3de22959a711631bdcab7e0e9a921b109e9ee49fe46d",
+    "line": 16,
+    "record_key": "Avenging Beast ~ Wild Shape"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

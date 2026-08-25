@@ -1,0 +1,116 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Paladin Archetype ~ Sleeper's Guardian",
+    "name": "Sleeper's Guardian",
+    "class": "Paladin",
+    "description": "You will go to any lengths to keep the world safe, and the Sleeper deep in his slumber.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Sleeper's Guardian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinAuraOfGood.PaladinSmiteEvil.PaladinDivineGrace.PaladinDivineBond.PaladinSpells"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Sleeper's Guardian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfGood,TYPE.PaladinSmiteEvil,TYPE.PaladinDivineGrace,TYPE.PaladinDivineBond,TYPE.PaladinSpells]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Duergar,Duergar ~ Psionic"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IsPsionic|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You will go to any lengths to keep the world safe, and the Sleeper deep in his slumber."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Sleeper's Guardian ~ Aura of Order|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Sleeper's Guardian ~ Smite Chaos|PRECLASS:1,Paladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Sleeper's Guardian ~ Disrupting Lullaby|PRECLASS:1,Paladin=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Sleeper's Guardian ~ Sleeper's Guardian Manifesting|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Divine Bond|NORMAL|Divine Bond ~ Celestial Spirit|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Divine Bond|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Sleeper's Guardian ~ Divine Bond|PRECLASS:1,Paladin=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Purifier ~ No Spellcasting"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psionic"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Gifted Blade"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Gifted Blade|var(\"SleepersGuardianPKL\")-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IsPsionic|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2537,
+    "record_key": "Paladin Archetype ~ Sleeper's Guardian"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

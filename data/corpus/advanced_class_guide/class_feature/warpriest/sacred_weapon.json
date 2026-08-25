@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest ~ Sacred Weapon",
     "name": "Sacred Weapon",
@@ -75,6 +75,74 @@
       {
         "key": "ASPECT",
         "value": "CheckCount|%1|WarpriestSacredWeaponEnhancementUses"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpriestSacredWeaponEnhancementUses|0"
+      },
+      {
+        "key": "DESC",
+        "value": " Enhance one weapon with divine power as a swift action, granting a +%1 enhancement bonus for %2 rounds per day. These bonuses stack with any existing bonuses the weapon might have, to a maximum of +5. The weapon must have at least a +1 enhancement bonus before any other special abilities can be added. Special abilities replace an amount of bonus equal to the special ability's base cost. The warpriest can enhance a weapon with any of the following weapon special abilities: Defending, Flaming, Frost, Keen, Shock,|WarpriestSacredWeaponEnhancement|WarpriestSacredWeaponEnhancementUses"
+      },
+      {
+        "key": "DESC",
+        "value": "Vicious,|PREMULT:2,[PREALIGN:CG,CN,CE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Merciful,|PREMULT:2,[PREALIGN:LG,LN,LE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghost touch,|PREMULT:2,[PREALIGN:LG,NG,CG],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Mighty cleaving,|PREMULT:2,[PREALIGN:LE,NE,CE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Spell storing, Thundering,|PREMULT:2,[PREALIGN:TN],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Disruption,|PREVARGTEQ:WarpriestSacredWeaponEnhancement,2"
+      },
+      {
+        "key": "DESC",
+        "value": "Anarchic,|PREMULT:2,[PREALIGN:CG,CN,CE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Axiomatic,|PREMULT:2,[PREALIGN:LG,LN,LE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Holy,|PREMULT:2,[PREALIGN:LG,NG,CG],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Unholy,|PREMULT:2,[PREALIGN:LE,NE,CE],[PREVARGTEQ:WarpriestSacredWeaponEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Brilliant energy|PREVARGTEQ:WarpriestSacredWeaponEnhancement,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponEnhancement|min(5,WarpriestLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponEnhancementUses|WarpriestLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestSacredWeaponLVL|HalflingWarpriestFavClassBonus/4"
       }
     ]
   },
@@ -92,5 +160,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

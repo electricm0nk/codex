@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Wysp ~ Living Battery",
+    "delivery": "Extraordinary",
+    "description": "As an immediate action, a wysp can kill itself to cause a creature benefiting from its resonance to heal 2 hit points for each of that creature's HD. If the wysp uses this ability, its death can't be prevented, and its life can't be restored by any effect less than true resurrection, miracle, or wish, even if such an effect can normally revive an outsider.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:wysp_living_battery",
+    "name": "Living Battery",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As an immediate action, a wysp can kill itself to cause a creature benefiting from its resonance to heal 2 hit points for each of that creature's HD. If the wysp uses this ability, its death can't be prevented, and its life can't be restored by any effect less than true resurrection, miracle, or wish, even if such an effect can normally revive an outsider."
+      },
+      {
+        "key": "KEY",
+        "value": "Wysp ~ Living Battery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.WyspRacialTrait"
+      }
+    ],
+    "source_page": "p.282",
+    "traits": [
+      "WyspRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Wysp ~ Living Battery",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Terminator ~ Emotionless Killer",
+    "name": "Emotionless Killer",
+    "class": "Medium",
+    "description": "(Intermediate) You are immune to emotion effects, including fear, but you can't benefit from morale bonuses or bardic performances.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Terminator ~ Emotionless Killer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "(Intermediate) You are immune to emotion effects, including fear, but you can't benefit from morale bonuses or bardic performances."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 122,
+    "record_key": "Medium ~ Terminator ~ Emotionless Killer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

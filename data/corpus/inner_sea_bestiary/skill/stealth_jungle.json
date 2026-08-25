@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "data": {
+    "key": "Stealth (Jungle)",
+    "name": "Stealth (Jungle)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "DEX"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "YES"
+      },
+      {
+        "key": "CLASSES",
+        "value": "ALL"
+      },
+      {
+        "key": "TYPE",
+        "value": "SkillUse"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "PRERULE",
+        "value": "1,DISPLAYSKILLUSE"
+      },
+      {
+        "key": "PREVARNEQ",
+        "value": "var(\"SKILL.Stealth (Jungle).MISC\"),var(\"SKILL.Stealth.MISC\")"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_skills.lst",
+    "sha256": "8499c1fb92819e4eaa82546ccce6bf0dca714648cf45a5a0214bea8ad2bc47b3",
+    "line": 8,
+    "record_key": "Stealth (Jungle)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Preservationist",
     "name": "Preservationist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Some alchemists are obsessed with collecting and preserving exotic creatures. These preservationists may use bottled animals and monsters as teaching tools, but some learn how to reanimate them for short periods to battle on the alchemist's behalf.",
     "raw_tokens": [
       {
@@ -67,6 +67,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Preservationist],[!PREFACT:1,ABILITIES,Alchemist_Archetype_PoisonUse=True,Alchemist_Archetype_PoisonResistance4=True,Alchemist_Archetype_PoisonResistance6=True,Alchemist_Archetype_PoisonImmunity=True,Alchemist_Archetype_PersistentMutagen=True,Alchemist_Archetype_Discovery18=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonUse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PersistentMutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Discovery18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonUse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PersistentMutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Discovery18|true"
       }
     ]
   },
@@ -83,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Improved Bodily Mutations ~ Aquatic Form",
     "name": "Aquatic Form",
-    "class": "Improved Bodily Mutations",
+    "class": "Psychic",
     "description": "The mutation mind's legs fuse into a tail and fins to sprout from her back and side, granting her a swim speed of 30 feet, tremorsense with a range of 30 feet (affecting other creatures in contact with the same body of water), and the aquatic subtype. Her base land speed is reduced to 10 feet.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

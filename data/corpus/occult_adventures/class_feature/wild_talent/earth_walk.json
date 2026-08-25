@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Earth Walk",
     "name": "Earth Walk",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element earth; Type utility (Su); Level 1; Burn - Because you meld very slightly into the earth, when you are standing on an earthen surface, you ignore difficult terrain caused by rocks, earth, or mud, and while on such surfaces you add your elemental overflow bonus to your CMD against being moved or tripped and on Acrobatics checks to balance.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

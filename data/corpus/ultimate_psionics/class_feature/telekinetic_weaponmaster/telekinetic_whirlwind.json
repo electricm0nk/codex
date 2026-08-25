@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Telekinetic Weaponmaster ~ Telekinetic Whirlwind",
+    "name": "Telekinetic Whirlwind",
+    "class": "Telekinetic Weaponmaster",
+    "description": "As a standard action, you may designate a 10 ft. square within 20 ft. and make a single melee attack against each enemy inside using a weapon you are wielding.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Telekinetic Weaponmaster ~ Telekinetic Whirlwind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TelekineticWeaponmasterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you may designate a 10 ft. square within 20 ft. and make a single melee attack against each enemy inside using a weapon you are wielding."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.382"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1523,
+    "record_key": "Telekinetic Weaponmaster ~ Telekinetic Whirlwind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

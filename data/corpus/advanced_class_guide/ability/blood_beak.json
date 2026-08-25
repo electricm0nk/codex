@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Blood Beak",
+    "name": "Blood Beak",
+    "description": "Your bleed attack is bloody and dangerous.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Blood Beak"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Tengu ~ Natural Weapon"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsTengu=true"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "5"
+      },
+      {
+        "key": "DESC",
+        "value": "Your bleed attack is bloody and dangerous."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Blood Beak"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Beak|DAMAGESIZE|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.165"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Increase the damage of your beak attack to 1d6. Furthermore, when you confirm a critical hit with your beak attack, you also deal 1 point of bleed damage. The bleed effect from this feat stacks with that of the Bleeding Critical feat and similar effects, adding 1 point to your bleed damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 56,
+    "record_key": "Warpriest Bonus Feat ~ Blood Beak"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

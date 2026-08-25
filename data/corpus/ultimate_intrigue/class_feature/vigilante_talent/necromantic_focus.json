@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Necromantic Focus",
     "name": "Necromantic Focus",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The cabalist gains Spell Focus (necromancy) as a bonus feat. He also adds additional spells to his spellbook from the following list, provided he can cast spells of the appropriate level: 1st-cause fear, 2nd-blindness/deafness, 3rd-bestow curse, 4th-poison, 5th-feast on fear (ACG), 6th-slay living.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

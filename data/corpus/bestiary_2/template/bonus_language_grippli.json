@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Bonus Language ~ Grippli",
+    "name": "Bonus Language ~ Grippli",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Grippli"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/grippli/grippli_templates_language.lst",
+    "sha256": "f2b0200b560a9b03202e050834856dbe20e35276ddd5fe787acee14eae19e79f",
+    "line": 6,
+    "record_key": "Bonus Language ~ Grippli"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

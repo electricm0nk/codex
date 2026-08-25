@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Feral Heart ~ Feral Roar",
+    "name": "Feral Roar",
+    "class": "Feral Heart",
+    "description": "You can unleash a roar and make an Intimidate check to demoralize a target within 30 ft. as a move action.  If performing a charge, you can use this ability as part of the charge, but only against the target of the charge attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Heart ~ Feral Roar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a roar and make an Intimidate check to demoralize a target within 30 ft. as a move action.  If performing a charge, you can use this ability as part of the charge, but only against the target of the charge attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.281"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2170,
+    "record_key": "Feral Heart ~ Feral Roar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

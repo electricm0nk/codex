@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Kineticist Primary Element ~ Aether",
     "name": "Aether",
-    "class": "Kineticist Primary Element",
+    "class": "Kineticist",
     "description": "Kineticists who focus on the element of aether-a rare substance formed when elemental energy affects the Ethereal Plane-are called telekineticists. Telekineticists use strands of aether to move objects with their minds.",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

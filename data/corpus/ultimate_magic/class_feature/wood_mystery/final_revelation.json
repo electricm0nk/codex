@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wood Mystery ~ Final Revelation",
     "name": "Final Revelation",
-    "class": "Wood Mystery",
+    "class": "Oracle",
     "description": "You become a living creature of wood. You are forevermore treated as the plant type rather than your original type for the purpose of spells and magical effects. Your skin takes on the appearance of polished wood grain, and you gain a +4 natural armor bonus to your Armor Class and damage reduction 10/- against wooden weapons or any natural attacks made by a wooden or woodlike creature. You gain immunity to paralysis, poison, polymorph, sleep, and stunning. At will, you can meld with any tree or single block of wood (as meld into stone, except wood only, and with no limit to how long you can remain in the wood).",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

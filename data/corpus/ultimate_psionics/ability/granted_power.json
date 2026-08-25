@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Psionics Domain ~ Granted Power",
+    "name": "Granted Power",
+    "description": "You gain Wild Talent or Psionic Talent as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionics Domain ~ Granted Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Wild Talent or Psionic Talent as a bonus feat."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Wild Talent Determination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 115,
+    "record_key": "Psionics Domain ~ Granted Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

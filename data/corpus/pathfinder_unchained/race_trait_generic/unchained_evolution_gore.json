@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Gore",
+    "name": "Gore",
+    "description": "The eidolon grows a number of horns on its head, giving it a gore attack. This attack is a primary attack. The gore deals 1d6 points of damage (1d8 if Large, 2d6 if Huge).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Gore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Eidolon Subtype ~ Agathion,Eidolon Subtype ~ daemon,Eidolon Subtype ~ demon,Eidolon Subtype ~ devil,Eidolon Subtype ~ div,Eidolon Subtype ~ elemental,Eidolon Subtype ~ protean,Eidolon Subtype ~ psychopomp"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Agathion, daemon, demon, devil, div, elemental, protean, or psychopomp subtype."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidMaxAttacks,EidUsedAttacks+1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidGoreCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon grows a number of horns on its head, giving it a gore attack. This attack is a primary attack. The gore deals 1d6 points of damage (1d8 if Large, 2d6 if Huge)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Gore"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidGoreCount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidUsedAttacks|1"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 227,
+    "record_key": "Unchained Evolution ~ Gore"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

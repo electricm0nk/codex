@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Traceur ~ Acrobatic Movements",
+    "name": "Acrobatic Movements",
+    "class": "Traceur",
+    "description": "When using Acrobatics to move on narrow or uneven surfaces, you are not considered flat-footed and you do not lose your Dexterity bonus to AC (if any).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Traceur ~ Acrobatic Movements"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "When using Acrobatics to move on narrow or uneven surfaces, you are not considered flat-footed and you do not lose your Dexterity bonus to AC (if any)."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Warrior Path Skill|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2109,
+    "record_key": "Traceur ~ Acrobatic Movements"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

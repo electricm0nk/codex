@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Possessed Corruption ~ Two Minds Gift",
+    "name": "Two Minds Gift",
+    "description": "The extra mind provides a reserve of willpower against mental attacks. You gain a +2 bonus on saves against mind-affecting effects; if you fail, you can give the spirit 1 point of influence over you to reroll the save without using an action. If you do, you must accept the result of the second roll and can't reroll. These benefits don't apply against this corruption.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Two Minds Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedTwoMindsGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "DESC",
+        "value": "The extra mind provides a reserve of willpower against mental attacks. You gain a +2 bonus on saves against mind-affecting effects; if you fail, you can give the spirit 1 point of influence over you to reroll the save without using an action. If you do, you must accept the result of the second roll and can't reroll. These benefits don't apply against this corruption."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 on saves vs. mind-affecting effects."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 673,
+    "record_key": "Possessed Corruption ~ Two Minds Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

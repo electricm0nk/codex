@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order Of The Eastern Star ~ One Purpose",
     "name": "One Purpose",
-    "class": "Order Of The Eastern Star",
+    "class": "Cavalier",
     "description": "At 15th level, the cavalier's mount shares the benefits of the cavalier's guarded ability as long as both are wearing light or no armor and carrying no more than a light load. The cavalier must fight defensively or use Combat Expertise to grant these benefits, but the mount need not. In addition, the mount gains all the benefits of the cavalier's challenge, regardless of what barding it wears.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

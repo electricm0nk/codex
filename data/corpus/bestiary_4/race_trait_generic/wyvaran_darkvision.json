@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wyvaran ~ Darkvision",
+    "name": "Darkvision",
+    "description": "Wyvarans can see in the dark up to 60 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wyvaran ~ Darkvision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wyvaran_ReplaceDarkvision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wyvarans can see in the dark up to 60 feet."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasRacialVision|1|TYPE=Boolean"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_race.lst",
+    "sha256": "f9263c1e5ec38c272aea979b35614055b3d7ae8ce582325efc216270053d6fed",
+    "line": 20,
+    "record_key": "Wyvaran ~ Darkvision"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

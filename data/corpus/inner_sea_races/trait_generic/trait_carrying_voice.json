@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Carrying Voice",
+    "name": "Carrying Voice",
+    "description": "Treat your caster level as 2 higher to determine the range of sonic spells and effects. Others do not suffer a penalty on Perception checks to hear your voice due to wind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Carrying Voice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Sylph Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Carrying Voice]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsSylph=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat your caster level as 2 higher to determine the range of sonic spells and effects. Others do not suffer a penalty on Perception checks to hear your voice due to wind."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 44,
+    "record_key": "Trait ~ Carrying Voice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

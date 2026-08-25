@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Protean Subdomain",
+    "name": "Protean Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Protean Subdomain],[PREVARLT:ChaosDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Protean Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Protean Subdomain=1|Confusion (Lesser)|Protean Subdomain=2|Align Weapon (Chaos Only)|Protean Subdomain=3|Displacement|Protean Subdomain=4|Chaos Hammer|Protean Subdomain=5|Dispel Law|Protean Subdomain=6|Planar Binding (Proteans Only)|Protean Subdomain=7|Word of Chaos|Protean Subdomain=8|Cloak of Chaos|Protean Subdomain=9|Summon Monster IX (Chaos Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 58,
+    "record_key": "Protean Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

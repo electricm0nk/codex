@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger ~ Gun Training",
     "name": "Gun Training",
@@ -43,6 +43,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.12"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Gun Training Choice|-1|PRECLASS:1,Gunslinger=5|PREVAREQ:Gunslinger_CF_GunTraining1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Gun Training Choice|-1|PRECLASS:1,Gunslinger=9|PREVAREQ:Gunslinger_CF_GunTraining2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Gun Training Choice|-1|PRECLASS:1,Gunslinger=13|PREVAREQ:Gunslinger_CF_GunTraining3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Gun Training Choice|-1|PRECLASS:1,Gunslinger=17|PREVAREQ:Gunslinger_CF_GunTraining4,1"
       }
     ]
   },
@@ -60,5 +76,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

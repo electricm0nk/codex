@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Ability ~ Mythic Power",
+    "name": "Mythic Power",
+    "description": "Mythic characters can draw upon a wellspring of power to accomplish amazing deeds and cheat fate. This power is used by a number of different abilities. Each day, you can expend %1 mythic power. This amount is your maximum amount of mythic power. If an ability allows you to regain uses of your mythic power, you can never have more than this amount.|MythicPowerTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Ability ~ Mythic Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Ability.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicPowerTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Mythic characters can draw upon a wellspring of power to accomplish amazing deeds and cheat fate. This power is used by a number of different abilities. Each day, you can expend %1 mythic power. This amount is your maximum amount of mythic power. If an ability allows you to regain uses of your mythic power, you can never have more than this amount.|MythicPowerTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicPowerTimes|3+(MythicLevel*2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day, surge +1d%2)|MythicPowerTimes|MythicSurgeDieSize|!PREABILITY:1,CATEGORY=Mythic Feat,Potent Surge"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day, surge +1d%2+1)|MythicPowerTimes|MythicSurgeDieSize|PREABILITY:1,CATEGORY=Mythic Feat,Potent Surge"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|MythicPowerTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 57,
+    "record_key": "Mythic Ability ~ Mythic Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

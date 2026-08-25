@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Discipline Ferocity ~ Ferocity",
+    "name": "Ferocity",
+    "class": "Psychic",
+    "description": "You cling to life with increasing ferocity. You gain ferocity as per the universal monster rule. Whenever you have 0 hit points or negative hit points, you gain a +4 morale bonus to your Strength and Dexterity, as well as a +2 morale bonus on Fortitude saves. At 8th level, you are not staggered when you have 0 hit points or negative hit points, and you automatically stabilize when you have negative hit points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Ferocity ~ Ferocity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You cling to life with increasing ferocity. You gain ferocity as per the universal monster rule. Whenever you have 0 hit points or negative hit points, you gain a +4 morale bonus to your Strength and Dexterity, as well as a +2 morale bonus on Fortitude saves. At 8th level, you are not staggered when you have 0 hit points or negative hit points, and you automatically stabilize when you have negative hit points."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 161,
+    "record_key": "Psychic Discipline Ferocity ~ Ferocity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

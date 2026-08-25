@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Water Blessing ~ Armor of Ice",
     "name": "Armor of Ice",
-    "class": "Water Blessing",
+    "class": "Warpriest",
     "description": "You can touch any one ally and wreath it in freezing mist. This works as fire shield (chill shield only) with a duration 1 minute.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

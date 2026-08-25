@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Intimidating Glare",
     "name": "Intimidating Glare",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "You can make an Intimidate check against one adjacent foe as a move action. If you successfully demoralize your opponent, the foe is shaken for 1d4 rounds + 1 round for every 5 points by which your check exceeds the DC.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

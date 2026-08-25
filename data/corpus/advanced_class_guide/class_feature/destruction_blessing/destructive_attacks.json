@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Destruction Blessing ~ Destructive Attacks",
     "name": "Destructive Attacks",
-    "class": "Destruction Blessing",
+    "class": "Warpriest",
     "description": "You can touch an ally and bless it with the power of destruction. For 1 minute, the ally gains a +%1 morale bonus on weapon damage rolls.|max(1,WarpriestLVL/2)",
     "raw_tokens": [
       {
@@ -40,5 +40,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

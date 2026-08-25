@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Monkey",
     "name": "Aspect of the Monkey",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "The monkey is a climbing trickster who specializes in mobility and manual agility.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

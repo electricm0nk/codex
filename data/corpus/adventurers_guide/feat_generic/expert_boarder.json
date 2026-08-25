@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Expert Boarder",
+    "name": "Expert Boarder",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Affiliated with the Gray Corsairs"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Acrobatics and Climb are class skills for you. You gain a +2 bonus on Acrobatics and Climb checks to climb or swing on a rope or ship's rigging. You do not provoke attacks of opportunity from climbing or swinging on a rope or ship's rigging."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Climb"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=Swing on a rope or ship's rigging,Climb=Climb on a rope or ship's rigging|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 31,
+    "record_key": "Expert Boarder"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

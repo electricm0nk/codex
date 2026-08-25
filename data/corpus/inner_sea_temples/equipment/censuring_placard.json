@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Censuring Placard",
+    "category": "ArmsArmor",
+    "name": "Censuring Placard",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "As a swift action with a successful melee attack, the wielder can use the placard to cast break enchantment on that target. Whether this effort is successful or not, the break enchantment ability cannot be used again for a week."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_arm_armor.lst",
+    "sha256": "4a217ae48fc457d728a35c5934a9eea02f94fa67ca7285c7638ce33dc42752ce",
+    "line": 8,
+    "record_key": "Censuring Placard"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

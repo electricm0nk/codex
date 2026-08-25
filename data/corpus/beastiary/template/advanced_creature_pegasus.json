@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "data": {
+    "key": "Advanced Creature (Pegasus)",
+    "name": "Advanced Creature (Pegasus)",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Pegasus"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,CON,INT,WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Petrification|Pegasus ~ Resistance to Poison|Resistance to Fire"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst",
+    "sha256": "7c27e01584c43c548e0c2c3ed900332d774628c6a8c56a5be4992cba036085d1",
+    "line": 19,
+    "record_key": "Advanced Creature (Pegasus)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

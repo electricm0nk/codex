@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Nimble Guardian",
     "name": "Nimble Guardian",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "Some catfolk monks dedicate their graceful prowess to the defense of others, especially those dedicated to a similar ethos or who prove themselves as stalwart allies of the monk's cause. A nimble guardian has the following class features.",
     "raw_tokens": [
       {
@@ -67,6 +67,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Nimble Guardian],[!PREFACT:1,ABILITIES,Monk_Archetype_Evasion=True,Monk_Archetype_StillMind=True,Monk_Archetype_PurityOfBody=True,Monk_Archetype_WholenessOfBody=True,Monk_Archetype_ImprovedEvasion=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PurityOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PurityOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ImprovedEvasion|true"
       }
     ]
   },
@@ -83,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

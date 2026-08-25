@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Dispelling Attack",
+    "name": "Dispelling Attack",
+    "class": "Unchained Rogue Talent",
+    "description": "Opponents that are dealt sneak attack damage by you are affected by a targeted Dispel Magic, targeting the lowest-level spell effect active on the target. The caster level for this ability is %1.|DispellingAttackCasterLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Dispelling Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.Unchained Rogue Advanced Talent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Rogue Talent ~ Major Magic"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DispellingAttackCasterLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Opponents that are dealt sneak attack damage by you are affected by a targeted Dispel Magic, targeting the lowest-level spell effect active on the target. The caster level for this ability is %1.|DispellingAttackCasterLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DispellingAttackCasterLevel|RogueTalentLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 670,
+    "record_key": "Unchained Rogue Talent ~ Dispelling Attack"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

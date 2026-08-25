@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "data": {
+    "key": "Lost Skill Point",
+    "name": "Lost Skill Point",
+    "raw_tokens": [
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "EXCLUSIVE",
+        "value": "YES"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY|READONLY"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_skills.lst",
+    "sha256": "0f4493199e7e13bab58c63551160be3ef872e131fba5999d3996db197af5bd49",
+    "line": 35,
+    "record_key": "Lost Skill Point"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

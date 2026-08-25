@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Hive Mind Gift",
+    "name": "Hive Mind Gift",
+    "description": "The strength of the hive mind bolsters your own, granting you a +%1 bonus on Will saves.|HiveCorrutionHiveMindBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Hive Mind Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveHiveMindGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HiveCorrutionHiveMindBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "DESC",
+        "value": "The strength of the hive mind bolsters your own, granting you a +%1 bonus on Will saves.|HiveCorrutionHiveMindBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HiveCorrutionHiveMindBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HiveCorrutionHiveMindBonus|1|PREVARGTEQ:HiveManifestationLevel,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|HiveCorrutionHiveMindBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 422,
+    "record_key": "Hive Corruption ~ Hive Mind Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

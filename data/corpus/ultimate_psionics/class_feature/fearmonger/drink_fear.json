@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fearmonger ~ Drink Fear",
+    "name": "Drink Fear",
+    "class": "Fearmonger",
+    "description": "When using your devastating touch ability on a shaken, frightened, or panicked target, you gain %1 temporary hit point that last for one minute.|DrinkFearTHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fearmonger ~ Drink Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DrinkFearTHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When using your devastating touch ability on a shaken, frightened, or panicked target, you gain %1 temporary hit point that last for one minute.|DrinkFearTHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Terror|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DrinkFearTHP|DreadLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1881,
+    "record_key": "Fearmonger ~ Drink Fear"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

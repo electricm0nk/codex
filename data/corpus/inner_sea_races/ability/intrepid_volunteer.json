@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Intrepid Volunteer",
+    "name": "Intrepid Volunteer",
+    "description": "Choose one Strength-based skill or one combat maneuver. You can use your Dexterity modifier in place of your Strength modifier to calculate your total modifier for that skill check or combat maneuver check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Intrepid Volunteer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Halfling Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Intrepid Volunteer]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsHalfling=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose one Strength-based skill or one combat maneuver. You can use your Dexterity modifier in place of your Strength modifier to calculate your total modifier for that skill check or combat maneuver check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 75,
+    "record_key": "Trait ~ Intrepid Volunteer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Spear of Purity",
+    "name": "Spear of Purity",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SpearOfPurity_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SpearOfPurity_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SpearOfPurity_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SpearOfPurity_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SpearOfPurity_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SpearOfPurity_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SpearOfPurity_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_SpearOfPurity_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_SpearOfPurity_LVL|Spear of Purity,SLA_SpearOfPurity_DC|PREVAREQ:SLA_SpearOfPurity_AtWill,0|PREVAREQ:SLA_SpearOfPurity_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_SpearOfPurity_LVL|Spear of Purity,SLA_SpearOfPurity_DC|PREVAREQ:SLA_SpearOfPurity_AtWill,1|PREVAREQ:SLA_SpearOfPurity_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_SpearOfPurity_LVL|Spear of Purity,SLA_SpearOfPurity_DC|PREVAREQ:SLA_SpearOfPurity_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SpearOfPurity_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SpearOfPurity_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SpearOfPurity_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SpearOfPurity_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SpearOfPurity_DC|10+SLA_SpearOfPurity_SpellLVL+SLA_SpearOfPurity_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 98,
+    "record_key": "Spear of Purity"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

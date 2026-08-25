@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Undead Bloodline ~ Grasp of the Dead",
     "name": "Grasp of the Dead",
-    "class": "Undead Bloodline",
+    "class": "Sorcerer",
     "description": "You can cause a swarm of skeletal arms to burst from the ground to rip and tear at your foes. The skeletal arms erupt from the ground in a 20-foot-radius burst. Anyone in this area takes %1d6 points of slashing damage. Those caught in the area receive a Reflex save for half damage. Those who fail the save are unable to move for 1 round. The DC of this save is %2. The skeletal arms disappear after 1 round. The arms must burst up from a solid surface.|Sorcerer_UndeadGraspOfTheDead_Dice|Sorcerer_UndeadGraspOfTheDead_DC",
     "raw_tokens": [
       {
@@ -116,5 +116,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Fickle Attack",
+    "name": "Fickle Attack",
+    "description": "Whenever you roll damage for a melee or ranged attack with a weapon or alchemical item, you can treat any natural 1s on the damage dice as if they were the highest possible number on those dice. You can select this ability up to three times. The second time you select it, treat 1s and 2s as the highest value. The third time, treat 1s, 2s, and 3s as the highest value. [Treat %1s or lower as the highest value]|Fickle_Attack_Count",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Fickle Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Fickle_Attack_Count,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Fickle_Attack_Count|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you roll damage for a melee or ranged attack with a weapon or alchemical item, you can treat any natural 1s on the damage dice as if they were the highest possible number on those dice. You can select this ability up to three times. The second time you select it, treat 1s and 2s as the highest value. The third time, treat 1s, 2s, and 3s as the highest value. [Treat %1s or lower as the highest value]|Fickle_Attack_Count"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Fickle_Attack_Count|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 321,
+    "record_key": "Mythic Path Ability ~ Fickle Attack"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

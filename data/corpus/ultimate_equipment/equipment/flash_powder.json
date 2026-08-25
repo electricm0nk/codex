@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 50.0,
+    "description": "Creatures within a 10-foot-radius burst are blinded for 1 round (Fortitude DC 13 negates).",
+    "key": "Flash Powder",
+    "name": "Flash Powder",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Splash Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemical.Consumable.Weapon.Ranged.Thrown.Splash"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "SPROP",
+        "value": "Creatures within a 10-foot-radius burst are blinded for 1 round (Fortitude DC 13 negates)."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 680,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Flash Powder",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

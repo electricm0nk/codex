@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Tempest Druid ~ Nature Bond",
     "name": "Nature Bond",
-    "class": "Tempest Druid",
+    "class": "Druid",
     "description": "A tempest druid may not choose an animal companion, and must instead select a domain when she gains the Nature Bond ability. A tempest druid must choose the Air or Weather domain, the Cloud, Storm, or Wind subdomain, or the Aquatic or Swamp domain.",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

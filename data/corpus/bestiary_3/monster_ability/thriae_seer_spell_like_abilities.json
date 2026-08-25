@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thriae Seer ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 14th; concentration +22) Constant-detect secret doors At will-calm emotions (DC 20), detect thoughts (DC 20), sound burst (DC 20) 3/day-divination, invisibility purge, locate object, misdirection (DC 20), symbol of sleep (DC 23) 1/day-summon bees (level 5, 1d3 giant queen bees or 1d4 wasp swarms), true seeing",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:thriae_seer_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 14th; concentration +22) Constant-detect secret doors At will-calm emotions (DC 20), detect thoughts (DC 20), sound burst (DC 20) 3/day-divination, invisibility purge, locate object, misdirection (DC 20), symbol of sleep (DC 23) 1/day-summon bees (level 5, 1d3 giant queen bees or 1d4 wasp swarms), true seeing"
+      },
+      {
+        "key": "KEY",
+        "value": "Thriae Seer ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "ThriaeSeerRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ThriaeSeerRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1608,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Thriae Seer ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

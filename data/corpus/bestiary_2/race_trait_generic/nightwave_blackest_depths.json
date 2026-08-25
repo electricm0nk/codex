@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Nightwave ~ Blackest Depths",
+    "name": "Blackest Depths",
+    "description": "The waters in which a nightwave swims become as chill, dark, and heavy as those in the ocean's deepest reaches.  All waters within 60 feet are completely dark (as deeper darkness), and creatures within this radius take 6d6 points of damage (half cold, half bludgeoning) at the end of their turn each round if they remain in the area at this time.  A DC %1 Fortitude save negates the crushing damage.  Incorporeal creatures and creatures with the aquatic or water subtypes native to deep waters do not take this damage, and freedom of movement protects completely against the damage.  Any magical light effect within this radius at the beginning of the nightwave's turn is dispelled (treat as greater dispel magic).  This effect does not extend out of the water.|NightwaveBlackestDepthsDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nightwave ~ Blackest Depths"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NightwaveBlackestDepthsDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The waters in which a nightwave swims become as chill, dark, and heavy as those in the ocean's deepest reaches.  All waters within 60 feet are completely dark (as deeper darkness), and creatures within this radius take 6d6 points of damage (half cold, half bludgeoning) at the end of their turn each round if they remain in the area at this time.  A DC %1 Fortitude save negates the crushing damage.  Incorporeal creatures and creatures with the aquatic or water subtypes native to deep waters do not take this damage, and freedom of movement protects completely against the damage.  Any magical light effect within this radius at the beginning of the nightwave's turn is dispelled (treat as greater dispel magic).  This effect does not extend out of the water.|NightwaveBlackestDepthsDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Blackest Depths"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NightwaveBlackestDepthsDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NightwaveBlackestDepthsDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Blackest Depths)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(60 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 899,
+    "record_key": "Nightwave ~ Blackest Depths"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Foo Creature ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "description": "A foo creature gains DR/bludgeoning based on its Hit Dice. A foo creature with up to 10 HD gains DR 5/bludgeoning. A foo creature with 11 or more HD gains DR 10/bludgeoning.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Foo Creature ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.RaceAbility.SpecialQuality.FooCreatureRacialAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "A foo creature gains DR/bludgeoning based on its Hit Dice. A foo creature with up to 10 HD gains DR 5/bludgeoning. A foo creature with 11 or more HD gains DR 10/bludgeoning."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 876,
+    "record_key": "Foo Creature ~ Damage Reduction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

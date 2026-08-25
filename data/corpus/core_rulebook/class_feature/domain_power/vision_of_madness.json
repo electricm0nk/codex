@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Vision of Madness",
     "name": "Vision of Madness",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can give a creature a vision of madness as a melee touch attack. Choose one of the following; attack rolls, saving throws, or skill checks. The target receives a +%1 bonus to the chosen rolls and a -%1 penalty to the other two types of rolls. This effect fades after 3 rounds. You can use this ability %2 times per day.|max(DomainMadnessLVL/2,1)|VisionofMadnessTimes",
     "raw_tokens": [
       {
@@ -63,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dual Path ~ Hierophant",
+    "name": "Hierophant",
+    "description": "Those who draw upon a god's power find themselves becoming closer to the divine. Some aspire to become immortal servants of their gods, and others reach for apotheosis itself. A hierophant could be either of these, channeling divine power directly or indirectly--whether from a deity, the spirit of nature, or the power of life itself--and eventually becoming more like a patron of divine power than a mere devotee.&nl;Role: As a hierophant, your role in the group is to act as a conduit to the divine, healing and helping your allies through the miracles that you bestow. This focus is just as strong if you are instead a servant of nature, using the powers granted to you by this path to protect the wilderness and bring its fury to those who would dare to defile it.&nl;Classes: Members of any class that draws upon divine magic will find the path of the hierophant useful-- particularly clerics, druids, and oracles. Even classes with limited divine spellcasting, such as the inquisitor and paladin, have a number of useful options in this path.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual Path ~ Hierophant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dual Path.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Mythic Feat,Dual Path"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "DESC",
+        "value": "Those who draw upon a god's power find themselves becoming closer to the divine. Some aspire to become immortal servants of their gods, and others reach for apotheosis itself. A hierophant could be either of these, channeling divine power directly or indirectly--whether from a deity, the spirit of nature, or the power of life itself--and eventually becoming more like a patron of divine power than a mere devotee.&nl;Role: As a hierophant, your role in the group is to act as a conduit to the divine, healing and helping your allies through the miracles that you bestow. This focus is just as strong if you are instead a servant of nature, using the powers granted to you by this path to protect the wilderness and bring its fury to those who would dare to defile it.&nl;Classes: Members of any class that draws upon divine magic will find the path of the hierophant useful-- particularly clerics, druids, and oracles. Even classes with limited divine spellcasting, such as the inquisitor and paladin, have a number of useful options in this path."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mythic Path Feature ~ Divine Surge|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 50,
+    "record_key": "Dual Path ~ Hierophant"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

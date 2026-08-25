@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Dare ~ Frantically Nimble",
     "name": "Frantically Nimble",
-    "class": "Dare",
+    "class": "Gunslinger",
     "description": "While this dare is active, you gain a +2 dodge bonus to AC. You regain 1 grit or panache point when any enemy making a ranged or melee attack against you misses you three consecutive times. The attacks need not come from the same enemy.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

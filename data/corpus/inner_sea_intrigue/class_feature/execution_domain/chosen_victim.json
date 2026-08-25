@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Execution Domain ~ Chosen Victim",
     "name": "Chosen Victim",
-    "class": "Execution Domain",
+    "class": "Cleric",
     "description": "Once per day, you can designate a creature as your chosen victim. You gain a +2 bonus on Diplomacy checks to gather information about your target, on Bluff and Intimidate checks against your target, and on Survival checks to track your target. The benefits of your destruction, piercing, purity, and smiting judgments against your chosen victim increase as if your inquisitor level were 3 higher.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

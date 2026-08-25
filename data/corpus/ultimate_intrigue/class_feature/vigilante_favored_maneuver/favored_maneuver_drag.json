@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Favored Maneuver ~ Drag",
     "name": "Favored Maneuver (Drag)",
-    "class": "Vigilante Favored Maneuver",
+    "class": "Vigilante",
     "description": "You gain the Improved Drag feat. You also gains a +2 circumstance bonus on CMB checks to Drag a foe that is unaware of you at the start of your combat maneuver.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

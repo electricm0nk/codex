@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Flame Mystery ~ Fire Storm",
     "name": "Fire Storm",
-    "class": "Flame Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can cause fire to erupt around you. You can create %1 10-foot cubes of fire. These cubes can be arranged in any pattern you desire, but each cube must be adjacent to another and one must be adjacent to you. Any creature caught in these flames takes %2d6 points of fire damage per oracle level, with a Reflex save resulting in half damage. This fire lasts for a number of round equal to your Charisma modifier. You can use this ability once per day.|classlevel(\"Oracle\")|classlevel(\"Oracle\")",
     "raw_tokens": [
       {
@@ -49,5 +49,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

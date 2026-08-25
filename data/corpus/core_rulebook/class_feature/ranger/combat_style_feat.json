@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger ~ Combat Style Feat",
     "name": "Combat Style Feat",
@@ -67,6 +67,26 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.65"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleFeatCount|-1|PREVARGTEQ:RangerLVL,2|PREVAREQ:Ranger_CF_CombatStyleFeat2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleFeatCount|-1|PREVARGTEQ:RangerLVL,6|PREVAREQ:Ranger_CF_CombatStyleFeat6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleFeatCount|-1|PREVARGTEQ:RangerLVL,10|PREVAREQ:Ranger_CF_CombatStyleFeat10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleFeatCount|-1|PREVARGTEQ:RangerLVL,14|PREVAREQ:Ranger_CF_CombatStyleFeat14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangerCombatStyleFeatCount|-1|PREVARGTEQ:RangerLVL,18|PREVAREQ:Ranger_CF_CombatStyleFeat18,1"
       }
     ]
   },
@@ -84,5 +104,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

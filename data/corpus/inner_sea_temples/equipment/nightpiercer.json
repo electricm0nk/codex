@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Nightpiercer",
+    "category": "ArmsArmor",
+    "name": "Nightpiercer",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Applies the ghost touch weapon special ability to all bolts fired from it. If a bolt deals damage to an incorporeal undead creature, the bolt remains embedded in the creature, reducing all of the target's speeds by half (to a minimum of 5 feet) for 1 round."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_arm_armor.lst",
+    "sha256": "4a217ae48fc457d728a35c5934a9eea02f94fa67ca7285c7638ce33dc42752ce",
+    "line": 14,
+    "record_key": "Nightpiercer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

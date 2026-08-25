@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elementalist Shifter ~ Volcanic Stride",
     "name": "Volcanic Stride",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "By combining earth and fire, the elementalist shifter can damage the ground around herself. As a standard action, she can deform a region of natural or artificial rock in her space, turning it into difficult terrain and causing creatures that pass through it to take an amount of fire damage equal to that dealt by her elemental strike with no save. Affected terrain remains transformed until the shifter ends her elemental aspect.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,164 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Bloodline Tracker",
+    "name": "Bloodline Tracker",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_EctoplasmicSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_EctoplasmicSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Enforcer|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ExpandedArcana|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_FastHealer|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_FocusedSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_HeroicDefiance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_HeroicRecovery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_LingeringPerformance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_LingeringSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SickeningSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_AqueousOrb_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BlessingofFervor_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_CallLightningStormStarsoul_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ClashingRocks_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_CreatePit_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DragonsBreath_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ElementalAuraColdOnly_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ExpeditiousExcavation_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FeastofAshes_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Firebrand_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FireSnake_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FluidForm_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Geyser_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_HydraulicPush_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MeteorSwarmDealingColdDamage_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Seamantle_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShiftingSand_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Slipstream_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SummonMonsterIIIReptilesOnly_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SummonMonsterVIIReptilesOnly_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ThreefoldAspect_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WallofLava_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WorldWave_L9|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3009,
+    "record_key": "Bloodline Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

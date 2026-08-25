@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Destined Bloodline ~ Within Reach",
     "name": "Within Reach",
-    "class": "Destined Bloodline",
+    "class": "Sorcerer",
     "description": "Your ultimate destiny is drawing near. Once per day, when an attack or spell that causes damage would result in your death, you may attempt a DC 20 Will save. If successful, you are instead reduced to -1 hit points and are automatically stabilized. The bonus from your fated ability applies to this save.",
     "raw_tokens": [
       {
@@ -71,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

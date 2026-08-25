@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Body Snatcher ~ The Flesh Remembers",
+    "name": "The Flesh Remembers",
+    "class": "Body Snatcher",
+    "description": "You can connect with a host's kinaesthetic memories (\"muscle memories\") and draw upon learned physical capabilities.  While under the influence of mind switch, you gain the host body's weapon and armor proficiencies.  Additionally, you may choose to use your host's ranks in skills keyed to Strength, Dexterity, or Constitution instead of your own.  Your training limites how completely you can draw upon your host, though - you cannot emulate a higher rank than %1.|FleshRemembersSkillRankLimit",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Body Snatcher ~ The Flesh Remembers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BodySnatcherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FleshRemembersSkillRankLimit|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can connect with a host's kinaesthetic memories (\"muscle memories\") and draw upon learned physical capabilities.  While under the influence of mind switch, you gain the host body's weapon and armor proficiencies.  Additionally, you may choose to use your host's ranks in skills keyed to Strength, Dexterity, or Constitution instead of your own.  Your training limites how completely you can draw upon your host, though - you cannot emulate a higher rank than %1.|FleshRemembersSkillRankLimit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FleshRemembersSkillRankLimit|BodySnatcherPrimeStat+BodySnatcherLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.352"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1153,
+    "record_key": "Body Snatcher ~ The Flesh Remembers"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

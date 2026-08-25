@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Diseased Bite Gift",
+    "name": "Diseased Bite Gift",
+    "description": "Creatures damaged by your bite attack must succeed at a Fortitude save (DC %1) or contract ghoul fever (Bestiary 146). A humanoid who dies of ghoul fever rises as a ghoul at the next midnight, as described in the ghoul fever entry.|10+TL/2+GhoulManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Diseased Bite Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulDiseasedBiteGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures damaged by your bite attack must succeed at a Fortitude save (DC %1) or contract ghoul fever (Bestiary 146). A humanoid who dies of ghoul fever rises as a ghoul at the next midnight, as described in the ghoul fever entry.|10+TL/2+GhoulManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 227,
+    "record_key": "Ghoul Corruption ~ Diseased Bite Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

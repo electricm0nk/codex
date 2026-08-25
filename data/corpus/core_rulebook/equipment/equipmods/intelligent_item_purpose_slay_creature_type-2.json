@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:45:01Z",
+  "data": {
+    "key": "Intelligent Item Purpose (Slay Creature Type)",
+    "category": "Equipmods",
+    "name": "Intelligent Item Purpose (Slay Creature Type)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Defeat/slay a particular creature type (see the bane special ability for choices)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
+    "line": 890,
+    "record_key": "Intelligent Item Purpose (Slay Creature Type)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

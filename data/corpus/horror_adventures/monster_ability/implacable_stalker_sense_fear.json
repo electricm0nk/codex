@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Implacable Stalker ~ Sense Fear",
+    "delivery": "Supernatural",
+    "description": "An implacable stalker is able to sense the fear of nearby living creatures. This functions similarly to blindsight, with a range of 120 feet, except it only allows the implacable stalker to detect creatures that are currently experiencing any level of fear ranging from spooked to horrified (see page 10). Additionally, this ability allows the implacable stalker to detect such creatures even through solid barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:implacable_stalker_sense_fear",
+    "name": "Sense Fear",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An implacable stalker is able to sense the fear of nearby living creatures. This functions similarly to blindsight, with a range of 120 feet, except it only allows the implacable stalker to detect creatures that are currently experiencing any level of fear ranging from spooked to horrified (see page 10). Additionally, this ability allows the implacable stalker to detect such creatures even through solid barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it."
+      },
+      {
+        "key": "DESC",
+        "value": "You sense the fear of those nearby, feeling it in the air around you. You can detect spooked, shaken, scared, frightened, panicked, terrified, and horrified creatures within 30 feet, and you immediately know what level of fear they are experiencing. You determine the creatures' approximate direction from you, though you do not sense a given creature's identity or know which squares the creatures occupy. If you're within 5 feet of a creature whose fear you sense, you pinpoint that creature's location, as if using blindsense. [Material Components] a patch of fur.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "KEY",
+        "value": "Implacable Stalker ~ Sense Fear"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.ImplacableStalker.Senses"
+      }
+    ],
+    "source_page": "p.238",
+    "traits": [
+      "ImplacableStalker",
+      "Senses"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 289,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Implacable Stalker ~ Sense Fear",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

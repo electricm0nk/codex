@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Quick Trapsmith",
+    "name": "Quick Trapsmith",
+    "class": "Insight",
+    "description": "As a full-round action, you can set a simple trap with a CR no greater than %1.  To do this, you must purchase the components, spend the required time constructing the trap in advance, and have its components at hand.  The type of trap that can be constructed in this way is subject to GM discretion.|QuickTrapsmithCR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Quick Trapsmith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.CrypticInsight"
+      },
+      {
+        "key": "DEFINE",
+        "value": "QuickTrapsmithCR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, you can set a simple trap with a CR no greater than %1.  To do this, you must purchase the components, spend the required time constructing the trap in advance, and have its components at hand.  The type of trap that can be constructed in this way is subject to GM discretion.|QuickTrapsmithCR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|QuickTrapsmithCR|floor(CrypticInsightLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 210,
+    "record_key": "Insight ~ Quick Trapsmith"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

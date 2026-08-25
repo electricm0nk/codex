@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wind Mystery ~ Air Barrier",
     "name": "Air Barrier",
-    "class": "Wind Mystery",
+    "class": "Oracle",
     "description": "You can create an invisible shell of air that grants you a +%1 armor bonus. At 13th level, this barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against you to have a 50%% miss chance. You can use this barrier for %2 hour(s) per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|OracleAirBarrierACBonus|OracleAirBarrierDuration",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Ice Subdomain",
+    "name": "Ice Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Ice Subdomain],[PREVARLT:WaterDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Ice Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Ice Subdomain=1|Obscuring Mist|Ice Subdomain=2|Fog Cloud|Ice Subdomain=3|Water Breathing|Ice Subdomain=4|Control Water|Ice Subdomain=5|Ice Storm|Ice Subdomain=6|Cone of Cold|Ice Subdomain=7|Freezing Sphere|Ice Subdomain=8|Horrid Wilting|Ice Subdomain=9|Polar Ray"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 42,
+    "record_key": "Ice Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

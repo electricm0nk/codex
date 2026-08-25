@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Artifice",
+    "name": "Artifice",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainArtifice,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Artifice Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.ArtificeDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainArtificeAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "DESC",
+        "value": "You can repair damage to objects, animate objects with life, and create objects from nothing."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Artifice=1|Animate Rope|Artifice=2|Wood Shape|Artifice=3|Stone Shape|Artifice=4|Minor Creation|Artifice=5|Fabricate|Artifice=6|Major Creation|Artifice=7|Wall of Iron|Artifice=8|Statue|Artifice=9|Prismatic Sphere"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 14,
+    "record_key": "Artifice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

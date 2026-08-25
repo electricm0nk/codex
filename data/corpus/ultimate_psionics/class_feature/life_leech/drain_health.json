@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Life Leech ~ Drain Health",
+    "name": "Drain Health",
+    "class": "Life Leech",
+    "description": "You can steal hit points from members of your collective and transfer them as healing to other members of the collective.  As a standard action, one member of the collective takes %1 damage and another member of the collective heals the same amount.  If used on an unwilling target, a successful Will save halves the amount of damage taken and healed.  This ability mjay only be used on creatures with a Constitution score and may not be used against creatures with less than %2 hit dice.|DrainHealthDamage|DrainHealthHD",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Life Leech ~ Drain Health"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DrainHealthDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DrainHealthHD|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can steal hit points from members of your collective and transfer them as healing to other members of the collective.  As a standard action, one member of the collective takes %1 damage and another member of the collective heals the same amount.  If used on an unwilling target, a successful Will save halves the amount of damage taken and healed.  This ability mjay only be used on creatures with a Constitution score and may not be used against creatures with less than %2 hit dice.|DrainHealthDamage|DrainHealthHD"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DrainHealthDamage|WIS+(2*VitalistLVL)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DrainHealthHD|VitalistLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2317,
+    "record_key": "Life Leech ~ Drain Health"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

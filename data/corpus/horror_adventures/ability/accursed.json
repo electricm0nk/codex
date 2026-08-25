@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Corruption ~ Accursed",
+    "name": "Accursed",
+    "description": "A foul curse has a deep hold on your body and soul. Your resentment toward the one who cursed you has taken on a life of its own. You notice slights against you by everyone around you, and can gain solace only by punishing them. The progression is tied to spiteful actions you take that have lasting consequences. When you inflict a permanent or long-lasting curse, such as bestow curse, or engage in brutal retaliation (what constitutes brutal retaliation is up to the GM, but usually includes disproportionate acts of violence against living creatures), you must attempt a Will saving throw (DC %1). You must also attempt a saving throw after any month in which you have failed to perform a number of spiteful retaliations equal to or greater than your manifestation level. If you fail any of these saving throws, you must use the most severe punishment at your disposal against the next creature that wrongs you, even in a minor way. If you fail the save but your allies or others prevent you from exacting your retribution for three consecutive slights, you shake off this urge. You avoid having to exact retribution for the time being, and your corruption doesn't progress. However, the DC of the Will save against your corruption progressing increases by 2. These increases stack each time you shake off this urge, and they last until your corruption reaches the next corruption stage.|15+AccursedManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Corruption ~ Accursed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CorruptionType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AccursedCorruptionResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "DESC",
+        "value": "A foul curse has a deep hold on your body and soul. Your resentment toward the one who cursed you has taken on a life of its own. You notice slights against you by everyone around you, and can gain solace only by punishing them. The progression is tied to spiteful actions you take that have lasting consequences. When you inflict a permanent or long-lasting curse, such as bestow curse, or engage in brutal retaliation (what constitutes brutal retaliation is up to the GM, but usually includes disproportionate acts of violence against living creatures), you must attempt a Will saving throw (DC %1). You must also attempt a saving throw after any month in which you have failed to perform a number of spiteful retaliations equal to or greater than your manifestation level. If you fail any of these saving throws, you must use the most severe punishment at your disposal against the next creature that wrongs you, even in a minor way. If you fail the save but your allies or others prevent you from exacting your retribution for three consecutive slights, you shake off this urge. You avoid having to exact retribution for the time being, and your corruption doesn't progress. However, the DC of the Will save against your corruption progressing increases by 2. These increases stack each time you shake off this urge, and they last until your corruption reaches the next corruption stage.|15+AccursedManifestationLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 circumstance bonus on saving throws related to the corruption progressing.|AccursedCorruptionResistance|PREVARGTEQ:AccursedCorruptionResistance,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Accursed Corruption Counter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 24,
+    "record_key": "Corruption ~ Accursed"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

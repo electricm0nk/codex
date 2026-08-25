@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Great Old One ~ Insanity",
+    "delivery": null,
+    "description": "Any creature that attempts to interact directly with a Great Old One's thoughts (such as via detect thoughts or telepathy) must succeed at a Will save or be driven permanently insane. The save DC is %1. This duplicates the effect of the insanity spell, or the insanity rules in the GameMastery Guide (in which case the save DC is also the ongoing insanity DC). A Great Old One using its telepathy to communicate doesn't activate this ability unless it spends a standard action to focus its mind on one opponent. This is a mind-affecting effect.",
+    "description_variables": [
+      "10+HD/2+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:great_old_one_insanity",
+    "name": "Insanity",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature that attempts to interact directly with a Great Old One's thoughts (such as via detect thoughts or telepathy) must succeed at a Will save or be driven permanently insane. The save DC is %1. This duplicates the effect of the insanity spell, or the insanity rules in the GameMastery Guide (in which case the save DC is also the ongoing insanity DC). A Great Old One using its telepathy to communicate doesn't activate this ability unless it spends a standard action to focus its mind on one opponent. This is a mind-affecting effect.|10+HD/2+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Great Old One ~ Insanity"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 133,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Great Old One ~ Insanity",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

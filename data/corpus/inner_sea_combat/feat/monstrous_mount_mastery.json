@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Monstrous Mount Mastery",
+    "category": "Monstrous Mount",
+    "name": "Monstrous Mount Mastery",
+    "description": "Your monstrous mount has developed an ability that only its wild kin would normally possess. Your monstrous mount gains the abilities and bonuses listed under Mastery in its stat block. You must be of at least the indicated level for the mount to use these abilities, so if you dismiss a mount and gain a new mount of a different type, you retain the feat but might not yet be of sufficient level for the new mount to gain its Mastery benefits. Normal: A monstrous mount is unable to use its Mastery abilities regardless of its advancement.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Monstrous Mount",
+      "PRETEXT:Prerequisites: Monstrous Mount, character level equal to or higher than that listed in your mount's Mastery entry."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 34,
+    "record_key": "Monstrous Mount Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

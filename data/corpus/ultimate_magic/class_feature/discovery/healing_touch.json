@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Healing Touch",
     "name": "Healing Touch",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You gain the ability to heal other creatures. As a standard action, you may touch a creature and apply 1 round's effect of your spontaneous healing discovery to that creature; this counts toward your spontaneous healing limit for the day. Your daily limit for hit points healed by spontaneous healing increases to 5 times your alchemist level. This ability only functions if the target is the same type of creature (humanoid, undead, and so on) as you.",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

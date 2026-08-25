@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Natural Invisibility ~ Su",
+    "name": "Natural Invisibility",
+    "description": "This ability is constant - the creature remains invisible at all times, even when attacking.  As this ability is inherent, it is not subject to the invisibility purge spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Natural Invisibility ~ Su"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability is constant - the creature remains invisible at all times, even when attacking.  As this ability is inherent, it is not subject to the invisibility purge spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1925,
+    "record_key": "Natural Invisibility ~ Su"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

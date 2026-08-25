@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Necrologist ~ Channel Negative Energy",
+    "name": "Channel Negative Energy",
+    "class": "Necrologist",
+    "description": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|NecrologistChannelDice|NecrologistChannelDieSize|NecrologistChannelDC|NecrologistChannelEnergyTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Necrologist ~ Channel Negative Energy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecrologistChannelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecrologistChannelDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecrologistChannelDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecrologistChannelLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecrologistChannelEnergyTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrologistChannelEnergyTimes|1+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrologistChannelDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrologistChannelDice|(NecrologistChannelLVL+1)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrologistChannelDC|10+(NecrologistChannelLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrologistChannelLVL|SpiritualistLVL-3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3, %4/day)|NecrologistChannelDice|NecrologistChannelDieSize|NecrologistChannelDC|NecrologistChannelEnergyTimes"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|NecrologistChannelDice|NecrologistChannelDieSize|NecrologistChannelDC|NecrologistChannelEnergyTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 323,
+    "record_key": "Necrologist ~ Channel Negative Energy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

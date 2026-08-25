@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Alseta ~ Portal to Safety",
+    "name": "Portal to Safety",
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can transform an open door or archway into a temporary one-way portal, connecting it to another open door or archway of your choice that you have seen or of which you have a reliable description. This portal functions as a greater teleport spell targeting any creature that passes through the first doorway until the end of your next turn. All creatures that pass through the doorway, up to the limit imposed by the spell and your Hit Dice, arrive at the same location, and the destination must include an open door or archway from which the targets exit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Alseta ~ Portal to Safety"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day as a standard action, you can transform an open door or archway into a temporary one-way portal, connecting it to another open door or archway of your choice that you have seen or of which you have a reliable description. This portal functions as a greater teleport spell targeting any creature that passes through the first doorway until the end of your next turn. All creatures that pass through the doorway, up to the limit imposed by the spell and your Hit Dice, arrive at the same location, and the destination must include an open door or archway from which the targets exit."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 53,
+    "record_key": "Sentinel Boon ~ Alseta ~ Portal to Safety"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

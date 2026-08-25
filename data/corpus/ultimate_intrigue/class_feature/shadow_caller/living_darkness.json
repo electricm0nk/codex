@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Caller ~ Living Darkness",
+    "name": "Living Darkness",
+    "class": "Spiritualist",
+    "description": "At 20th level, a shadow caller becomes a creature of absolute darkness. When using her incorporeal bonded manifestation, she is immune to cold and mind-affecting effects and gains an incorporeal touch attack that she can use as a standard action to deal 20d6 points of negative energy damage. When the shadow caller damages a creature with this ability, she gains 5d6 temporary hit points (Fortitude half; DC %1), so long as she doesn't already have any temporary hit points gained via this ability. Temporary hit points gained this way disappear after 1 hour.|20+WIS",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Caller ~ Living Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, a shadow caller becomes a creature of absolute darkness. When using her incorporeal bonded manifestation, she is immune to cold and mind-affecting effects and gains an incorporeal touch attack that she can use as a standard action to deal 20d6 points of negative energy damage. When the shadow caller damages a creature with this ability, she gains 5d6 temporary hit points (Fortitude half; DC %1), so long as she doesn't already have any temporary hit points gained via this ability. Temporary hit points gained this way disappear after 1 hour.|20+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 131,
+    "record_key": "Shadow Caller ~ Living Darkness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

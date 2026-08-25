@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Penanggalen ~ Separate",
+    "name": "Separate (Su)",
+    "description": "During the day, a penanggalen has the same appearance as she did in life, and does not detect as undead (though she is still an undead creature). At night, she can detach her head and entrails as a full-round action. Her physical but now hollow body exists as dead flesh, but can be destroyed if it suffers damage equal to the penanggalen's normal hit point total. Before a penanggalen can return to her body, she must soak her entrails in vinegar for 1 hour-she can then reattach to her body, at which point any damage done to the body immediately heals (although damage the penanggalen herself suffered remains). A penanggalen whose body is destroyed can never again walk the day in living form, but is otherwise unharmed (save for no longer having a safe way to travel in direct sunlight). When a penanggalen wears her body, she cannot use her natural attacks, her fly speed, or any of her special penanggalen attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Penanggalen ~ Separate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.PenanggalenRacialAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "During the day, a penanggalen has the same appearance as she did in life, and does not detect as undead (though she is still an undead creature). At night, she can detach her head and entrails as a full-round action. Her physical but now hollow body exists as dead flesh, but can be destroyed if it suffers damage equal to the penanggalen's normal hit point total. Before a penanggalen can return to her body, she must soak her entrails in vinegar for 1 hour-she can then reattach to her body, at which point any damage done to the body immediately heals (although damage the penanggalen herself suffered remains). A penanggalen whose body is destroyed can never again walk the day in living form, but is otherwise unharmed (save for no longer having a safe way to travel in direct sunlight). When a penanggalen wears her body, she cannot use her natural attacks, her fly speed, or any of her special penanggalen attacks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1404,
+    "record_key": "Penanggalen ~ Separate"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

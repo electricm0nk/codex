@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cleric Archetype ~ Hidden Priest",
     "name": "Hidden Priest",
-    "class": "Cleric Archetype",
+    "class": "Cleric",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -55,6 +55,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cleric"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Hidden Priest],[!PREFACT:1,ABILITIES,Cleric_Archetype_Domains=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Domains|true"
       }
     ]
   },
@@ -71,5 +83,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

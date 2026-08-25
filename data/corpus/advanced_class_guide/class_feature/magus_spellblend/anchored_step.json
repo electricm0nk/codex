@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Anchored Step",
+    "name": "Anchored Step",
+    "class": "Magus",
+    "description": "Vines beneath your feet stabilize you but slow you down.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Anchored Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellBlend.MagusSpellBlendLVL3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=3|Anchored Step"
+      },
+      {
+        "key": "DESC",
+        "value": "Vines beneath your feet stabilize you but slow you down.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMD_BullRush,CMD_Overrun,CMD_Pull,CMD_Push,CMD_Reposition,CMD_Trip|10"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|MOVEADD|TYPE.Walk|-10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 4071,
+    "record_key": "Magus Spellblend ~ Anchored Step"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

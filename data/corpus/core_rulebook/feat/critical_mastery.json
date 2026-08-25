@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Critical Mastery",
+    "category": "Combat",
+    "name": "Critical Mastery",
+    "description": "Your critical hits cause two additional effects.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Critical Focus",
+      "PREABILITY:2,CATEGORY=FEAT,TYPE.Critical",
+      "PREVARGTEQ:CriticalMasteryQualify,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 42,
+    "record_key": "Critical Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pyrokineticist ~ Hand Afire",
+    "name": "Hand Afire",
+    "class": "Pyrokineticist",
+    "description": "Unarmed attacks treated as armed and do an extra %1d6 fire damage.|HandAfire",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pyrokineticist ~ Hand Afire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PyrokineticistClassFeatures.SpecialAttack.Psilike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HandAfire|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Unarmed attacks treated as armed and do an extra %1d6 fire damage.|HandAfire"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HandAfire|2*floor((PyrokineticistLVL+4)/6)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.375"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1460,
+    "record_key": "Pyrokineticist ~ Hand Afire"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

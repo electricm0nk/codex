@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Octopus Companion ~ Jet",
+    "delivery": "Extraordinary",
+    "description": "An octopus can jet backward once per round as a full-round action, at a speed of 200 ft. It must move in a straight line while jetting, and does not provoke attacks of opportunity when it does so.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:octopus_companion_jet",
+    "name": "Jet",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An octopus can jet backward once per round as a full-round action, at a speed of 200 ft. It must move in a straight line while jetting, and does not provoke attacks of opportunity when it does so."
+      },
+      {
+        "key": "KEY",
+        "value": "Octopus Companion ~ Jet"
+      },
+      {
+        "key": "MOVE",
+        "value": "Jet,200"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ModifyMovement"
+      }
+    ],
+    "source_page": "p.219",
+    "traits": [
+      "ModifyMovement"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2188,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Octopus Companion ~ Jet",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

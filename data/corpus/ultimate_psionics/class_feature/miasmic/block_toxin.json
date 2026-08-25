@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Miasmic ~ Block Toxin",
+    "name": "Block Toxin",
+    "class": "Miasmic",
+    "description": "Members of your collective can request assistance against poisons or diseases.  As an immediate action, the collective member can request you grant immunity to a specific disease or poison that they are currently affected by.  You can grant this immunity by spending %2 power points as a free action even if it is not your turn and making a manifester level check against the save DC of the poison or disease.  If the check is successful, the collective member is treated as immune to that specific application of poison or disease.  This does not cure any damage suffered prior to the request being made.  You can do this %1/day.|BlockToxinTimes|BlockToxinPPCost",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Miasmic ~ Block Toxin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlockToxinTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BlockToxinPPCost|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Members of your collective can request assistance against poisons or diseases.  As an immediate action, the collective member can request you grant immunity to a specific disease or poison that they are currently affected by.  You can grant this immunity by spending %2 power points as a free action even if it is not your turn and making a manifester level check against the save DC of the poison or disease.  If the check is successful, the collective member is treated as immune to that specific application of poison or disease.  This does not cure any damage suffered prior to the request being made.  You can do this %1/day.|BlockToxinTimes|BlockToxinPPCost"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlockToxinPPCost|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlockToxinTimes|3+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BlockToxinTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2325,
+    "record_key": "Miasmic ~ Block Toxin"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

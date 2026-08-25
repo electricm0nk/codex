@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dominator ~ Always There",
+    "name": "Always There",
+    "class": "Dominator",
+    "description": "You can sense the general direction to any creature under the effect of lingering presence, as well as a sense of its physical and mental states.  This allows you to know if the creature has been injured or is shaken or any higher state of fear.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dominator ~ Always There"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can sense the general direction to any creature under the effect of lingering presence, as well as a sense of its physical and mental states.  This allows you to know if the creature has been injured or is shaken or any higher state of fear."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.312"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1996,
+    "record_key": "Dominator ~ Always There"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

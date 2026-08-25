@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Shabti ~ Resist Level Drain",
+    "name": "Resist Level Drain",
+    "description": "A shabti takes no penalties from energy drain effects, though it can still be killed if it accrues more negative levels than it has Hit Dice. After 24 hours, any negative levels a shabti takes are automatically removed without the need for additional saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shabti ~ Resist Level Drain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A shabti takes no penalties from energy drain effects, though it can still be killed if it accrues more negative levels than it has Hit Dice. After 24 hours, any negative levels a shabti takes are automatically removed without the need for additional saving throws."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 213,
+    "record_key": "Shabti ~ Resist Level Drain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

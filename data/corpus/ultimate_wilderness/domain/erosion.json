@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:11Z",
+  "data": {
+    "key": "Erosion",
+    "name": "Erosion",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Rusting Touch|PREVARGTEQ:DomainErosionAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Erosion Aura|PREVARGTEQ:DomainErosionAbilityTriggerLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainErosionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainErosionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainErosionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainErosionAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainErosionLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainErosionDC|10+(DomainErosionLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainErosionTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainErosionAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Erosion=1|Expeditious Excavation|Erosion=2|Soften Earth and Stone|Erosion=3|Disable Construct|Erosion=4|Rusting Grasp|Erosion=5|Transmute Rock to Mud|Erosion=6|Sympathetic Vibration|Erosion=7|Disintegrate|Erosion=8|Earthquake|Erosion=9|Implosion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_domains.lst",
+    "sha256": "b2f97a67e5a1d0671916f982443913c453e92e1cadbc3a94795340f1f4593112",
+    "line": 6,
+    "record_key": "Erosion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

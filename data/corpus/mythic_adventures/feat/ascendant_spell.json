@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Ascendant Spell",
+    "category": "Metamagic",
+    "name": "Ascendant Spell",
+    "description": "You have learned how to emulate mythic spells using non-mythic forces. You can modify a spell to imitate the mythic version of that spell. An ascendant spell uses the mythic version of the spell, but doesn't count as a mythic spell for the purposes of effects that interact with the spell, unless you are a mythic creature. You can't use the augmented version of the mythic spell, or use spells effects that require you to expend uses of mythic power (even if you have uses of mythic power available).\nAn ascendant spell uses up a spell slot 5 levels higher than the spell's actual level.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 15,
+    "record_key": "Ascendant Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

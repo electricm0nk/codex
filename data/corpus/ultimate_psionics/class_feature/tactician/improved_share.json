@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Tactician ~ Improved Share",
+    "name": "Improved Share",
+    "class": "Tactician",
+    "description": "You can maintain %1 powers with the Shared descriptor at a time.|ImprovedSharePowers",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactician ~ Improved Share"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImprovedSharePowers|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can maintain %1 powers with the Shared descriptor at a time.|ImprovedSharePowers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImprovedSharePowers|1+(TacticianLVL+1)/6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 917,
+    "record_key": "Tactician ~ Improved Share"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

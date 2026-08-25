@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Lifemonger ~ I Know Best",
+    "name": "I Know Best",
+    "class": "Lifemonger",
+    "description": "Once every ten minutes, you can expend your psionic focus to manifest mind control without paying a power point cost, but my only target creatures that are sleeping.  Whether the creature makes the save or not, it wakes up.  You can manifest mind control normally over your collective regardless of range.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lifemonger ~ I Know Best"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every ten minutes, you can expend your psionic focus to manifest mind control without paying a power point cost, but my only target creatures that are sleeping.  Whether the creature makes the save or not, it wakes up.  You can manifest mind control normally over your collective regardless of range."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Vitalist=4|Mind Control"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2338,
+    "record_key": "Lifemonger ~ I Know Best"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Tactics Subdomain",
+    "name": "Tactics Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Tactics Subdomain],[PREVARLT:WarDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Tactics Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Tactics Subdomain=1|Magic Weapon|Tactics Subdomain=2|Aid|Tactics Subdomain=3|Magic Vestment|Tactics Subdomain=4|Divine Power|Tactics Subdomain=5|Command (Greater)|Tactics Subdomain=6|Blade Barrier|Tactics Subdomain=7|Power Word Blind|Tactics Subdomain=8|Planar Ally (Greater)|Tactics Subdomain=9|Power Word Kill"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 69,
+    "record_key": "Tactics Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

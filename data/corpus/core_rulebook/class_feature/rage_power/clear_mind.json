@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Clear Mind",
     "name": "Clear Mind",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "You may reroll a failed Will save. This power is used as an immediate action after the first save is attempted, but before the results are revealed by the GM. You must take the second result, even if it is worse. This power can only be used once per rage.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

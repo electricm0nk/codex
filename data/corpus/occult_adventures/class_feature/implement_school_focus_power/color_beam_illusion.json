@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Color Beam",
     "name": "Color Beam [Illusion]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to unleash a beam of cascading colors at any one target within 30 feet. Doing so requires a ranged touch attack. If the beam hits, the target is blinded for 1 round if it has a number of Hit Dice equal to or lower than %1. A foe with a number of Hit Dice greater than %1 is instead dazzled for 1 round. The foe can attempt a Will save to negate the effect. Regardless of whether it succeeds at its save, the target is then immune to this effect for 1 day. This is a mind-affecting illusion effect.|OccultistLVL",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

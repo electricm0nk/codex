@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Fighter Archetype ~ Psionic Fighter",
+    "name": "Psionic Fighter",
+    "class": "Fighter",
+    "description": "You unlock the psionic potential in yourself instead of developing the techniques that most fighters choose.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Psionic Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterBonusFeat1.FighterBravery.FighterWeaponTraining2.FighterWeaponTraining3"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Psionic Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat1,TYPE.FighterBravery,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You unlock the psionic potential in yourself instead of developing the techniques that most fighters choose."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Psionic Fighter ~ Psionic Feats|PRECLASS:1,Fighter=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Psionic Fighter ~ Willpower|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Psionic Fighter ~ Telekinetic Draw|PRECLASS:1,Fighter=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Psionic Fighter ~ Combat Focus|PRECLASS:1,Fighter=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Psionic Fighter ~ Double Imbue|PRECLASS:1,Fighter=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Psionic Fighter],[!PREFACT:1,ABILITIES,Fighter_Archetype_BonusFeats=True,Fighter_Archetype_Bravery=True,Fighter_Archetype_WeaponTraining=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining3|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2479,
+    "record_key": "Fighter Archetype ~ Psionic Fighter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

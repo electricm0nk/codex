@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Powerful Connection",
     "name": "Powerful Connection [Divination]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "When casting a divination spell (such as scrying) that imposes a penalty on saving throws based on the physical connection you have to the target, you can expend 1 point of mental focus to double the penalty from a possession, garment, or body part. In addition, when casting any other divination spell that allows a saving throw, you can increase the DC of that save by 2 by adding an object, garment, or body part that belonged to the target as a focus component for the spell and expending 1 point of mental focus.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

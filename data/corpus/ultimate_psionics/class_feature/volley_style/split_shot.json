@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Volley Style ~ Split Shot",
+    "name": "Split Shot",
+    "class": "Volley Style",
+    "description": "Split damage between two targets, %1/day.  Use the same attack roll for both targets.|SplitShotTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Volley Style ~ Split Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SplitShotTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Split damage between two targets, %1/day.  Use the same attack roll for both targets.|SplitShotTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SplitShotTimes|3+MarksmanStyleStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SplitShotTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 378,
+    "record_key": "Volley Style ~ Split Shot"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

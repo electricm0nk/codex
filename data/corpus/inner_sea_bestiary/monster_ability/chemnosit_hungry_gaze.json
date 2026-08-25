@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Chemnosit ~ Hungry Gaze",
+    "delivery": "Supernatural",
+    "description": "3d6 nonlethal plus fatigue (Fort DC 30 negates). Affected creatures gain an overwhelming compulsion to eat flesh of creatures of its type (its own if none others available). Will DC 30 negates.[DC %1]",
+    "description_variables": [
+      "HungryGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:chemnosit_hungry_gaze",
+    "name": "Hungry Gaze",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Hungry Gaze"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HungryGazeDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HungryGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Hungry Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HungryGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "3d6 nonlethal plus fatigue (Fort DC 30 negates). Affected creatures gain an overwhelming compulsion to eat flesh of creatures of its type (its own if none others available). Will DC 30 negates.[DC %1]|HungryGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Chemnosit ~ Hungry Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.47",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 322,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Chemnosit ~ Hungry Gaze",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

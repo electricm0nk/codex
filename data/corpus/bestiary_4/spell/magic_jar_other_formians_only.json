@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:59:53Z",
+  "data": {
+    "key": "Magic Jar (other formians only)",
+    "school": "Necromancy",
+    "level": null,
+    "description": "By casting magic jar, you place your soul in a gem or large crystal (known as the magic jar), leaving your body lifeless."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
+    "sha256": "312f9985c63265cc827a6b622e9c5f326c3b6460170e7aa289c687019c37b7cd",
+    "line": 20,
+    "record_key": "Magic Jar (other formians only)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

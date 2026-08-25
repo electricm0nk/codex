@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Daring Infiltrator",
     "name": "Daring Infiltrator",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "Not known for their flashy entrances or for standing out in a crowd, a daring infiltrator uses stealth, disguise, and ruthless guile to pursue her goals. Some of these swashbucklers work to undermine evil organizations, while others are master thieves or mysterious assassins.",
     "raw_tokens": [
       {
@@ -71,6 +71,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Daring Infiltrator],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_ClassSkills=True,Swashbuckler_Archetype_BonusFeats=True,Swashbuckler_Archetype_CharmedLife=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_CharmedLife|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklersInitiativeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_MenacingSwordplayDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_CharmedLife|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
       }
     ]
   },
@@ -87,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Destined Bloodrager Bloodline ~ Defy Death",
     "name": "Defy Death",
-    "class": "Destined Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Once per day when an attack or spell that causes damage would result in your death, you may attempt a DC 20 Will save. If successful, you are instead reduced to 1 hit point; if you succeed and already have fewer than 1 hit point, you take no damage instead.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

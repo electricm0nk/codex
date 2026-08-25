@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Isolation Subdomain",
+    "name": "Isolation Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Isolation Subdomain],[PREVARLT:VoidDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Guarded Mind|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Void)|PREVARGTEQ:DomainVoidAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Aura of Isolation|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Void"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "DESC",
+        "value": "You find strength in the solitude found in the remote corners of the universe."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=1|Feather Fall"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=2|Levitate"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=3|Fly"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=4|Crushing Despair"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=5|Overland Flight"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=6|Wall of Force"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=7|Reverse Gravity"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=8|Prismatic Wall"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Isolation Subdomain=9|Interplanetary Teleport"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Void"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 14,
+    "record_key": "Isolation Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

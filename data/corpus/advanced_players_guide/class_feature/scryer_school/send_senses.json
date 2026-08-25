@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Scryer School ~ Send Senses",
     "name": "Send Senses",
@@ -67,6 +67,10 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Wizard_CF_SchoolPower1,1"
       }
     ]
   },
@@ -83,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

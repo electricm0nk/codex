@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Magic",
+    "name": "Magic",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainMagic,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Magic Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.MagicDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMagicAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a true student of all things mystical, and see divinity in the purity of magic."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Magic=1|Identify|Magic=2|Magic Mouth|Magic=3|Dispel Magic|Magic=4|Imbue with Spell Ability|Magic=5|Spell Resistance|Magic=6|Antimagic Field|Magic=7|Spell Turning|Magic=8|Protection from Spells|Magic=9|Mage's Disjunction"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 32,
+    "record_key": "Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

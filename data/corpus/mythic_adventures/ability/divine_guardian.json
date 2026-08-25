@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Divine Guardian",
+    "name": "Divine Guardian",
+    "description": "As a full-round action, you can expend one use of mythic power to summon one extraplanar creature as if using a summon monster or summon nature's ally spell, with the level of the summoning spell equal to %1. Your caster level for this ability is %2. You can have only one creature that has been summoned using this ability at a time; summoning another causes the previous one to disappear. If you expend two uses of mythic power, the level of the summoning spell is %3 instead. For example, if you are a 10th-level druid, 5th-tier hierophant, you can use this ability to summon one creature from the summon monster II or summon nature's ally II list (or a lower-level list) for 10 rounds; if you expend two uses, you can instead summon one creature from the summon monster V or summon nature's ally V list (or a lower-level list).|HalfMythicLevel|TL|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Divine Guardian"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, you can expend one use of mythic power to summon one extraplanar creature as if using a summon monster or summon nature's ally spell, with the level of the summoning spell equal to %1. Your caster level for this ability is %2. You can have only one creature that has been summoned using this ability at a time; summoning another causes the previous one to disappear. If you expend two uses of mythic power, the level of the summoning spell is %3 instead. For example, if you are a 10th-level druid, 5th-tier hierophant, you can use this ability to summon one creature from the summon monster II or summon nature's ally II list (or a lower-level list) for 10 rounds; if you expend two uses, you can instead summon one creature from the summon monster V or summon nature's ally V list (or a lower-level list).|HalfMythicLevel|TL|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 157,
+    "record_key": "Mythic Path Ability ~ Divine Guardian"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

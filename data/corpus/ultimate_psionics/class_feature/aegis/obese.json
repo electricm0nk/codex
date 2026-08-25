@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Obese",
+    "name": "Obese",
+    "class": "Aegis",
+    "description": "Your base movement is reduced as if you were wearing heavy armor,but you gain %1 extra hit points and your damage reduction improves by 1.|ObeseHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Obese"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ObeseHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your base movement is reduced as if you were wearing heavy armor,but you gain %1 extra hit points and your damage reduction improves by 1.|ObeseHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|ObeseHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ObeseHP|AstralSuitLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisDR|1"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1724,
+    "record_key": "Aegis ~ Obese"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

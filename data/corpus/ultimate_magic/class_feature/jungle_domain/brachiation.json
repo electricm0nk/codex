@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Jungle Domain ~ Brachiation",
     "name": "Brachiation",
-    "class": "Jungle Domain",
+    "class": "Cleric",
     "description": "As a free action for %1 rounds per day, you may climb with a climb speed equal to your land speed, and gain a +%2 bonus on Acrobatics checks.  These rounds do not have to be consecutive.|BrachiationTimes|BrachiationBonus",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

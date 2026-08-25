@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Disciple of the Raging Sea ~ Eye of the Storm",
+    "name": "Eye of the Storm",
+    "class": "Disciple of the Raging Sea",
+    "description": "You can choose to gain a rage power in place of one of your monk bonus feats.  You must meet any prerequisites of the range power, and your barbarian level is considered to be your monk level for the purposes of which range powers you can select.  Your rage powers activate when you are under the effects of your racial outburst ability.  After you end your racial outburst ability, you must wait one minute before beginning another outburst.  You may spend 2 ki points as a swift action to ignore this resting period.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Disciple of the Raging Sea ~ Eye of the Storm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagePowersPrereqLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose to gain a rage power in place of one of your monk bonus feats.  You must meet any prerequisites of the range power, and your barbarian level is considered to be your monk level for the purposes of which range powers you can select.  Your rage powers activate when you are under the effects of your racial outburst ability.  After you end your racial outburst ability, you must wait one minute before beginning another outburst.  You may spend 2 ki points as a swift action to ignore this resting period."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Disciple of the Raging Sea Feat or Rage Power|MonkBonusFeatCount-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Monk Bonus Feat|1-MonkBonusFeatCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersPrereqLVL|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2529,
+    "record_key": "Disciple of the Raging Sea ~ Eye of the Storm"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Improved Resistance",
+    "name": "Improved Resistance",
+    "description": "Choose one energy resistance type you have:  Increase that resistance to 10. Can be taken again, each time, choose a different resistance, and increase RP cost by 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Improved Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Advanced"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose one energy resistance type you have:  Increase that resistance to 10. Can be taken again, each time, choose a different resistance, and increase RP cost by 1."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|2"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Internal|TYPE=Energy Resistance 5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|10|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Builder Racial Trait ~ Improved Resistance(TYPE.Acid Energy Resistance 5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Builder Racial Trait ~ Improved Resistance(TYPE.Cold Energy Resistance 5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|10|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Builder Racial Trait ~ Improved Resistance(TYPE.Electricity Energy Resistance 5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Builder Racial Trait ~ Improved Resistance(TYPE.Fire Energy Resistance 5)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 247,
+    "record_key": "Builder Racial Trait ~ Improved Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

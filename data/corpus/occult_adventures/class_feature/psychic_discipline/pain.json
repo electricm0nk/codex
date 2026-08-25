@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Psychic Discipline ~ Pain",
     "name": "Pain",
-    "class": "Psychic Discipline",
+    "class": "Psychic",
     "description": "Mental blocks prevent your immense inborn psychic energies from flowing freely. They are unleashed only when you suffer pain. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers allow you to cause and endure pain.",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

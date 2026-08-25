@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit ~ Waves",
     "name": "Waves (Spirit)",
-    "class": "Shaman Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: hydraulic push (1st), slipstream (2nd), water breathing (3rd), wall of ice (4th), geyser (5th), fluid form (6th), vortex (7th), seamantle (8th), tsunami (9th)",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

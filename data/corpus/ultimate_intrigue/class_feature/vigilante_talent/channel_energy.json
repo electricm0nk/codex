@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Channel Energy",
     "name": "Channel Energy",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "A zealot who takes this talent can channel energy with an effective cleric level equal to his vigilante level - 4 (minimum 1) while in his vigilante identity. If good in his vigilante identity (or if he worships a good deity), the vigilante channels positive energy and can choose to deal damage to undead creatures or to heal living creatures. If evil in his vigilante identity (or if he worships an evil deity), the vigilante channels negative energy and can choose to deal damage to living creatures or to heal undead creatures. If the vigilante is neutral in his vigilante identity and worships a neutral deity, the vigilante must choose whether he channels positive or negative energy. Once this choice is made, it can't be reversed.",
     "raw_tokens": [
       {
@@ -76,5 +76,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

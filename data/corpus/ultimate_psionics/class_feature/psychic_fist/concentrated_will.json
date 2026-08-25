@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Fist ~ Concentrated Will",
+    "name": "Concentrated Will",
+    "class": "Psychic Fist",
+    "description": "Spend 2 ki points to make Autohypnosis check to ignore damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Fist ~ Concentrated Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicFistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Spend 2 ki points to make Autohypnosis check to ignore damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.374"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1438,
+    "record_key": "Psychic Fist ~ Concentrated Will"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

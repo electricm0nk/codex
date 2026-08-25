@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Psychic Discipline ~ Abomination",
     "name": "Abomination",
-    "class": "Psychic Discipline",
+    "class": "Psychic",
     "description": "Your mind is impure, tainted by outside forces. These might be monstrous ancestors whose blood still flows within you, or powerful and unknowable psychic forces that intrude upon your mind. Like a psychic disease, this inf luence consumes part of your brain, creating a dark counterpart to your normal self. Every time you call forth a psychic spell, you're drawing on this dangerous forceand potentially giving it a greater hold on you. This malign inf luence might stem from creatures like rakshasas and aboleths, or perhaps malign entities that dwell in the voids between the stars. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers allow the dark influences to take over, and it can be difficult to come back from the brink.",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

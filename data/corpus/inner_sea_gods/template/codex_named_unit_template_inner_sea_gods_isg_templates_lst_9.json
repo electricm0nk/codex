@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Codex-Named Unit (template_inner_sea_gods_isg_templates_lst_9)",
+    "name": "Codex-Named Unit (template_inner_sea_gods_isg_templates_lst_9)",
+    "raw_tokens": [
+      {
+        "key": "PRERACE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Ability Drain"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "[redacted PI]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_templates.lst",
+    "sha256": "cb983228e637a1ddf9db963952dd43e607197b9ea4f89c6070f810e3fcf6fc4d",
+    "line": 9,
+    "record_key": "Codex-Named Unit (template_inner_sea_gods_isg_templates_lst_9)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_templates.lst:9"
+  }
+}

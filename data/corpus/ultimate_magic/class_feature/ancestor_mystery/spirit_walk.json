@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ancestor Mystery ~ Spirit Walk",
     "name": "Spirit Walk",
-    "class": "Ancestor Mystery",
+    "class": "Oracle",
     "description": "You can become incorporeal and invisible. While in this form, you can move in any direction and pass through solid objects (see page 301 of the Pathfinder RPG Bestiary). You can take no action other than to move while in this form. You remain in this form for %1 rounds, but you can end this effect prematurely as a standard action. You can use this ability %2/day.|SpiritWalkDuration|SpiritWalkTimes",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

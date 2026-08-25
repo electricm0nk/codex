@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Plague Zombie ~ Disease",
+    "delivery": "Supernatural",
+    "description": "The slam attack--as well as any other natural attacks--of a plague zombie carries the zombie rot disease. Zombie rot: slam; save Fort DC %1; onset 1d4 days; frequency 1/day; effect 1d2 Con, this damage cannot be healed while the creature is infected; cure 2 consecutive saves. Anyone who dies while infected rises as a plague zombie in 2d6 hours.",
+    "description_variables": [
+      "PlagueZombieDiseaseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:plague_zombie_disease",
+    "name": "Disease",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Zombie rot&colon; slam; save Fort DC %1; onset 1d4 days; frequency 1/day; effect 1d2 Con)|PlagueZombieDiseaseDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PlagueZombieDiseaseDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PlagueZombieDiseaseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The slam attack--as well as any other natural attacks--of a plague zombie carries the zombie rot disease. Zombie rot: slam; save Fort DC %1; onset 1d4 days; frequency 1/day; effect 1d2 Con, this damage cannot be healed while the creature is infected; cure 2 consecutive saves. Anyone who dies while infected rises as a plague zombie in 2d6 hours.|PlagueZombieDiseaseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Plague Zombie ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.289",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1296,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Plague Zombie ~ Disease",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

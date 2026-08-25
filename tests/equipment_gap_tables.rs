@@ -40,7 +40,10 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // new books below) caught a genuine, pre-existing PI leak this cycle
     // did not introduce: `ultimate_equipment:"Elysian Shield"` declares
     // `NAMEISPI:YES` in the real corpus and was shipping unscreened here.
-    ("UE", 64),
+    // SD-32 `decisions.md §24`: 64 -> 65. The declared-PI row above is no
+    // longer excluded whole -- it is INCLUDED under a Codex-generated
+    // neutral name (`name_pi_citation` carries its real citation).
+    ("UE", 65),
     ("UPSI", 113),
     ("UW", 127),
     // `SD31-E6-F10-003`: 8 further already-compiled books extended into the
@@ -61,12 +64,16 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // `ingested_record_keys_match_their_cited_line` caught.
     ("OA", 119),
     ("HA", 117),
-    ("ISR", 71),
-    ("ISWG", 46),
+    // SD-32 `decisions.md §24`: 71 -> 72 (`inner_sea_races`), 46 -> 53
+    // (`inner_sea_world_guide`, +7), 5 -> 8 (`bestiary_4`, +3) -- each
+    // book's declared-PI/blacklist exclusions are no longer excluded
+    // whole; they are INCLUDED under a Codex-generated neutral name.
+    ("ISR", 72),
+    ("ISWG", 53),
     ("MC", 49),
     ("B2", 7),
     ("B3", 8),
-    ("B4", 5),
+    ("B4", 8),
     // `SD31-E6-F10-004`: 5 further already-compiled books, the ones
     // `SD31-E6-F10-003` deliberately left out of the batch above because
     // their real corpus text hit `screen_generated_table`'s whole-file
@@ -78,11 +85,70 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // (`ISG` -2, `MYTHIC` -4, no hits for the other 3) and the new
     // blacklist screen (9 name/key exclusions corpus-wide across the 5) net
     // out.
-    ("ISG", 125),
-    ("MYTHIC", 252),
-    ("ISC", 65),
-    ("ISI", 34),
-    ("BOTD2", 5),
+    // SD-32 `decisions.md §24`: each book's declared-PI/blacklist name
+    // exclusions are no longer excluded whole -- they are INCLUDED under a
+    // Codex-generated neutral name (`name_pi_citation` carries the real
+    // citation). 125 -> 150 (`inner_sea_gods`, +25), 252 -> 255
+    // (`mythic_adventures`, +3), 65 -> 72 (`inner_sea_combat`, +7),
+    // 34 -> 42 (`inner_sea_intrigue`, +8), 5 -> 6
+    // (`book_of_the_damned_volume_2`, +1).
+    ("ISG", 150),
+    ("MYTHIC", 255),
+    ("ISC", 72),
+    ("ISI", 42),
+    ("BOTD2", 6),
+    // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off: two
+    // more already-compiled books extended into the gap lane. Both figures
+    // are that book's `not-ingested` equipment population, re-derived
+    // directly against `fresh_inventory.json`, net of the generator's own
+    // declared-PI/blacklist screens (0 hits for either book -- confirmed
+    // via this generator's own stdout at the pinned oracle).
+    ("ISTEM", 43),
+    // SD-32 T9 residual (`decisions.md §20`): 6 -> 68. `cache_gen::equipment_
+    // gap`'s `book_routing` had no arm for `"ISM"` (nor `"ISTEM"`/`"AG"`
+    // above/below) at all -- the config table generated these rows but the
+    // cache writer's `let Some(..) = book_routing(book) else { continue }`
+    // silently dropped every one before it ever reached `data/corpus/`.
+    // Fixed in `cache_gen::equipment_gap::book_routing`. Separately,
+    // `ism_equipmods.lst` was deliberately left out of this book's citation
+    // files on a stale "zero not-ingested equipment units for that file"
+    // claim; re-derived against the pinned oracle, 62 `not-ingested`
+    // `equipment_modifier` units cite it. Both fixed together: 6 + 62 = 68.
+    ("ISM", 68),
+    // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUT` entry at
+    // all before this cycle -- the single largest un-covered `equipment`
+    // population (115 `not-ingested` units, re-derived against the pinned
+    // oracle). 97 of the 115 resolve to a real citation and clear PI
+    // screening; the remainder are unresolved citations or PI exclusions,
+    // both reported by the generator's own stdout, not fabricated to close
+    // the gap.
+    // SD-32 `decisions.md §24`: 97 -> 115 (+18). The PI exclusions above
+    // are no longer excluded whole -- they are INCLUDED under a
+    // Codex-generated neutral name.
+    // SD-32 T9 onboarding (card 11) group C, `decisions.md §20` residual:
+    // `ag_equipmods.lst` was simply absent from `adventurers_guide`'s
+    // `BOOK_INPUTS` `files` list -- the book's one real `equipment_modifier`
+    // object ("Medium Grey Maiden Plate" ~ "Special Ability ~ Agile Maiden
+    // ~ Armor") was never read at all. Added back in: 115 -> 116 (+1).
+    ("AG", 116),
+    // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already
+    // routed in the compiled catalog) had no `BOOK_INPUT` entry either, but
+    // its real residual (19 `not-ingested` equipment units) turns out to be
+    // status `unknown`/`ingested-magnitude` in `docs/work-inventory.json`,
+    // not `status == "not-ingested"` -- this generator's own selection
+    // predicate (see its module doc comment) only covers the latter, so 0
+    // rows land here. The config entry is added (harmless, additive) and
+    // the real residual is named as a next-cycle item rather than widening
+    // this generator's predicate untested in the same cycle.
+    ("UM", 0),
+    // SD-32 `sd32-beginner-box-ingest` (`decisions.md §27b`): `beginner_box`
+    // had no `BOOK_INPUT` entry at all -- an inherited "will not be brought
+    // in" carve-out `§27b` overturns. 19 = the book's whole `equipment`-kind
+    // population (`docs/work-inventory.json`), all 19 resolve to a real
+    // citation and clear PI screening except one (`bbox_equip_magic_items.
+    // lst:16`, a declared/blacklisted name INCLUDED under a Codex-generated
+    // neutral identity per `decisions.md §24`, not excluded).
+    ("BB", 19),
 ];
 
 #[test]
@@ -95,9 +161,23 @@ fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
          re-derive the per-book figures from docs/work-inventory.json before changing them"
     );
     assert_eq!(
-        total, 1671,
-        "1671 = 1190 + 481 new (5 books, `SD31-E6-F10-004`) - 35 declared-PI exclusions - \
-         9 blacklist name/key exclusions (both net of redactions, which keep the record)"
+        total, 1973,
+        "1973 = 1954 + 19 (SD-32 `sd32-beginner-box-ingest`, `decisions.md §27b`: `beginner_box` \
+         had no BOOK_INPUT entry at all -- see EXPECTED_PER_BOOK's `BB` entry above). \
+         1954 = 1953 + 1 (SD-32 T9 onboarding card 11 group C, `decisions.md §20` residual: \
+         `ag_equipmods.lst` was absent from adventurers_guide's BOOK_INPUTS, so its one real \
+         equipment_modifier object was never read; AG 115 -> 116, see EXPECTED_PER_BOOK above). \
+         1953 = 1879 + 74 (SD-32 `decisions.md §24`: a declared-PI or blacklisted-name row is \
+         no longer excluded from this table whole -- it is INCLUDED under a Codex-generated \
+         neutral name/key, `name_pi_citation` carrying its real citation forward so `cache_gen::\
+         equipment_gap` can still resolve it; 65 declared + 9 blacklist across 10 books: UE +1, \
+         ISR +1, ISWG +7, B4 +3, ISG +25, MYTHIC +3, ISC +7, ISI +8, BOTD2 +1, AG +18). \
+         1879 = 1720 + 159 new (SD-32 T9 residual, `decisions.md §20`: ISM's routing fix + \
+         its recovered ism_equipmods.lst citations raise ISM 6 -> 68 (+62), the new AG book \
+         adds 97, the new UM book adds 0). 1720 = 1671 + 49 (2 books, SD-32 T9 onboarding \
+         card 11: inner_sea_temples 43 + inner_sea_magic 6) = 1190 + 481 new (5 books, \
+         `SD31-E6-F10-004`) - 35 declared-PI exclusions - 9 blacklist name/key exclusions \
+         (both net of redactions, which keep the record)"
     );
 }
 

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcane Trickster",
     "name": "Arcane Trickster",
-    "class": null,
+    "class": "Arcane Trickster",
     "description": null,
     "raw_tokens": [
       {
@@ -19,6 +19,30 @@
       {
         "key": "BONUS",
         "value": "VAR|ArcaneTrickster_CFP_Level|ArcaneTricksterLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Trickster ~ Ranged Legerdemain|PREVARGTEQ:ArcaneTrickster_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Trickster ~ Sneak Attack|PREVARGTEQ:ArcaneTrickster_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Trickster ~ Impromptu Sneak Attack|PREVARGTEQ:ArcaneTrickster_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Trickster ~ Tricky Spells|PREVARGTEQ:ArcaneTrickster_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Trickster ~ Invisible Thief|PREVARGTEQ:ArcaneTrickster_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Arcane Trickster ~ Surprise Spells|PREVARGTEQ:ArcaneTrickster_CFP_Level,10"
       }
     ]
   },
@@ -35,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

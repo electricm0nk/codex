@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "data": {
+    "key": "Dragon Age Category (Young Adult)",
+    "name": "Dragon Age Category (Young Adult)",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "7"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Dragon (Tiny)|Dragon (Small)|Dragon (Medium)|Dragon (Large)|Dragon (Huge)|Dragon (Gargantuan)|Dragon (Colossal)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragonAgeCategory|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|12|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonAgeCategory|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|DragonAgeCategory*30"
+      },
+      {
+        "key": "ADDLEVEL",
+        "value": "Dragon|8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33",
+    "line": 1021,
+    "record_key": "Dragon Age Category (Young Adult)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

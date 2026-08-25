@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Intercept Charge",
     "name": "Intercept Charge",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "When an opponent charges your ally with this feat, as an immediate action you can move up to your speed toward any square in the path of the charge. If you end your movement in the path of the charge, the opponent must stop when it becomes adjacent to you and then attack you instead of your ally. Your movement from using this feat counts toward your movement on your next turn.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

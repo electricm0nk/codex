@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Community Domain",
     "name": "Community",
-    "class": null,
+    "class": "Cleric",
     "description": "Your touch can heal wounds, and your presence instills unity and strengthens emotional bonds.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Community=1|Bless|Community=2|Shield Other|Community=3|Prayer|Community=4|Imbue with Spell Ability|Community=5|Telepathic Bond|Community=6|Heroes' Feast|Community=7|Refuge|Community=8|Cure Critical Wounds (Mass)|Community=9|Miracle"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Community],[PREVARLT:CommunityDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

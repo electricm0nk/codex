@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcanist Archetype ~ School Savant",
     "name": "School Savant",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "Some arcanists specialize in a school of magic and trade flexibility for focus. School savants are able to prepare more spells per day than typical arcanists, but their selection is more limited.",
     "raw_tokens": [
       {
@@ -47,6 +47,38 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Arcanist"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ School Savant],[!PREFACT:1,ABILITIES,Arcanist_Archetype_ArcanistExploit1=True,Arcanist_Archetype_ArcanistExploit3=True,Arcanist_Archetype_ArcanistExploit7=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit7|true"
       }
     ]
   },
@@ -63,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Unraveling",
     "name": "Unraveling [Abjuration]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to unravel a magical effect. This functions as a targeted dispel magic spell, but you must be adjacent to the effect to unravel it. If the effect is created by psychic magic, you receive a +5 bonus on your caster level check to unravel it. If the effect targets an object in your possession, you automatically succeed at the check. You must be at least 5th level to select this focus power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

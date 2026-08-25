@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Haunted Fey Aspect",
+    "name": "Haunted Fey Aspect",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Haunted Fey Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Haunted Fey Aspect"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_HauntedFeyAspect_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_HauntedFeyAspect_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_HauntedFeyAspect_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_HauntedFeyAspect_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_HauntedFeyAspect_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_HauntedFeyAspect_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_HauntedFeyAspect_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_HauntedFeyAspect_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_HauntedFeyAspect_LVL|Haunted Fey Aspect,RacialSLA_HauntedFeyAspect_DC|PREVAREQ:RacialSLA_HauntedFeyAspect_AtWill,0|PREVAREQ:RacialSLA_HauntedFeyAspect_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_HauntedFeyAspect_LVL|Haunted Fey Aspect,RacialSLA_HauntedFeyAspect_DC|PREVAREQ:RacialSLA_HauntedFeyAspect_AtWill,1|PREVAREQ:RacialSLA_HauntedFeyAspect_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_HauntedFeyAspect_LVL|Haunted Fey Aspect,RacialSLA_HauntedFeyAspect_DC|PREVAREQ:RacialSLA_HauntedFeyAspect_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_HauntedFeyAspect_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_HauntedFeyAspect_SpellLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_HauntedFeyAspect_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_HauntedFeyAspect_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_HauntedFeyAspect_DC|10+RacialSLA_HauntedFeyAspect_SpellLVL+RacialSLA_HauntedFeyAspect_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_race.lst",
+    "sha256": "050469da246336c7a39e58b3cb25f4ee8e07398ba099186fce009840a557579a",
+    "line": 17,
+    "record_key": "Racial SLA ~ Haunted Fey Aspect"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Beast ~ Havoc",
     "name": "Havoc",
-    "class": "Order of the Beast",
+    "class": "Cavalier",
     "description": "At 8th level, the cavalier's mount gains the trample monster special ability. If the cavalier's mount has trample from another source, damage from the mount's trample attack instead increases as though the mount were one size category larger (see Table 3-1 on page 302 of the Pathfinder RPG Bestiary); this does not alter the damage dealt by the mount's slam attack. A creature that attempts a Reflex saving throw to avoid damage from the mount's trample attack provokes an attack of opportunity from the cavalier.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

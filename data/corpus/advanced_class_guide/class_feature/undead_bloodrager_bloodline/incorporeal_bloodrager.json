@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Undead Bloodrager Bloodline ~ Incorporeal Bloodrager",
     "name": "Incorporeal Bloodrager",
-    "class": "Undead Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Once per day you can choose to become incorporeal. You only take half damage from corporeal sources as long as they are magic (you take no damage from non-magic weapons and objects). Your attacks deal normal damage due to your ghost strike bloodrage power.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gnome ~ Gift of Tongues",
+    "name": "Gift of Tongues",
+    "description": "Gnomes love languages and learning about those they meet. Gnomes with this racial trait gain a +1 bonus on Bluff and Diplomacy checks, and they learn one additional language every time they put a rank in the Linguistics skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Gift of Tongues"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Gift of Tongues],[!PREFACT:1,ABILITIES,Gnome_ReplaceDefensiveTraining=true,Gnome_ReplaceHatred=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes love languages and learning about those they meet. Gnomes with this racial trait gain a +1 bonus on Bluff and Diplomacy checks, and they learn one additional language every time they put a rank in the Linguistics skill."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the defensive training and hatred racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Gift of Tongues"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Linguisitcs_NumLanguages|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceDefensiveTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 47,
+    "record_key": "Gnome ~ Gift of Tongues"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

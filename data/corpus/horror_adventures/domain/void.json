@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Void",
+    "name": "Void",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainVoid,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Void],[PREVARLT:VoidDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Void Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.VoidDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoidDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidTimes|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Void=1|Feather Fall|Void=2|Levitate|Void=3|Fly|Void=4|Planar Binding (Lesser)|Void=5|Overland Flight|Void=6|Planar Binding|Void=7|Reverse Gravity|Void=8|Planar Binding (Greater)|Void=9|Interplanetary Teleport"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_domains.lst",
+    "sha256": "b8c01136992e561c1fcb5fa29bb42e5fcd196fc608770b7e2c90e9bf00588c1b",
+    "line": 3,
+    "record_key": "Void"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

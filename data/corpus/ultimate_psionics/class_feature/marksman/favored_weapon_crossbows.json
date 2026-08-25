@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman ~ Favored Weapon Crossbows",
+    "name": "Favored Weapon (Crossbows)",
+    "class": "Marksman",
+    "description": "Gain +%1 bonus to ranged attack bonus from crossbows.|FavoredWeaponCrossbows",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman ~ Favored Weapon Crossbows"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.FavoredWeapon"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredWeaponCrossbows|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 bonus to ranged attack bonus from crossbows.|FavoredWeaponCrossbows"
+      },
+      {
+        "key": "MULT",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Crossbow|FavoredWeaponCrossbows|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredWeaponCrossbows|FavoredWeaponBase"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 343,
+    "record_key": "Marksman ~ Favored Weapon Crossbows"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

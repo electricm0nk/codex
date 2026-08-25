@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Feature ~ True Archmage",
+    "name": "True Archmage",
+    "description": "Whenever you cast an arcane spell that targets one or more non-mythic creatures, each of those creatures must roll any saving throws against the spell twice and take the lower result. You gain spell resistance %1, but only against arcane spells. Once per round when your spell resistance protects you from a spell cast by an enemy mythic creature, you regain one use of mythic power.|Ability_TrueArchmage_SR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Feature ~ True Archmage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Feature.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_TrueArchmage_SR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast an arcane spell that targets one or more non-mythic creatures, each of those creatures must roll any saving throws against the spell twice and take the lower result. You gain spell resistance %1, but only against arcane spells. Once per round when your spell resistance protects you from a spell cast by an enemy mythic creature, you regain one use of mythic power.|Ability_TrueArchmage_SR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_TrueArchmage_SR|15+Caster_Level_Highest__Arcane"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Spell resistance %1, but only against arcane spells.|Ability_TrueArchmage_SR"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 98,
+    "record_key": "Mythic Path Feature ~ True Archmage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

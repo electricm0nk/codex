@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Improved Disengage",
+    "category": "Combat",
+    "name": "Improved Disengage",
+    "description": "When you expend your psionic focus to activate your disengage class feature, you may move 5 feet as a free action that does not provoke an attack of opportunity. This movement does not provoke attacks of opportunity and does not count as a 5-foot step. You may only use this ability when leaving a threatened square.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Marksman ~ Disengage",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 168,
+    "record_key": "Improved Disengage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

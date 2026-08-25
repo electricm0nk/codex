@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gnome ~ Magical Linguist",
+    "name": "Magical Linguist",
+    "description": "Gnomes study languages in both their mundane and supernatural manifestations. Gnomes with this racial trait add +1 to the DC of spells they cast with the language-dependent descriptor or those that create glyphs, symbols, or other magical writings. They gain a +2 racial bonus on saving throws against such spells. Gnomes with a Charisma of 11 or higher also gain the following spell-like abilities: 1/day--arcane mark, comprehend languages, message, read magic. The caster level for these effects is equal to the gnome's level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Magical Linguist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Magical Linguist],[!PREFACT:1,ABILITIES,Gnome_ReplaceGnomeMagic=true,Gnome_ReplaceIllusionResistance=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes study languages in both their mundane and supernatural manifestations. Gnomes with this racial trait add +1 to the DC of spells they cast with the language-dependent descriptor or those that create glyphs, symbols, or other magical writings. They gain a +2 racial bonus on saving throws against such spells. Gnomes with a Charisma of 11 or higher also gain the following spell-like abilities: 1/day--arcane mark, comprehend languages, message, read magic. The caster level for these effects is equal to the gnome's level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the gnome magic and illusion resistance racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Magical Linguist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Arcane Mark|Racial SLA ~ Comprehend Languages|Racial SLA ~ Message|Racial SLA ~ Read Magic|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|DESCRIPTOR.Language-Dependent|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SaveBonus_vs_LanguageSpells|2|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Add +1 to the DC of spells that create glyphs, symbols, or other magical writings that don't have the language-dependent descriptor."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against spells with the language-dependent descriptor or those that create glyphs, symbols, or other magical writings."
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceGnomeMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceIllusionResistance|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 48,
+    "record_key": "Gnome ~ Magical Linguist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

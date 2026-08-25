@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Unwilling Participant",
+    "category": "Psionic",
+    "name": "Unwilling Participant",
+    "description": "You can attempt to force others into your collective. You may attempt to force a living creature into your collective.  The target may attempt a Will save (DC %1) to resist.  If the target fails the save, it may attempt another Will save at the same DC every 24 hours thereafter, but is otherwise unable to leave the collective unless you allow it.  Special: Creatures forced into your collective using Unwilling Participant are considered willing members for any collective-related effects unless they succeed on another Will save at the same DC to resist being forced into the collective.  A successful save means the creature resisted the speciifc effect but is still a member of the collective.|UnwillingParticipantDC",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 346,
+    "record_key": "Unwilling Participant"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

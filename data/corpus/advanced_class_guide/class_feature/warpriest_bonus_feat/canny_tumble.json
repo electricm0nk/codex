@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Canny Tumble",
     "name": "Canny Tumble",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "When you use Acrobatics to move through an opponent's threatened area or space without provoking an attack of opportunity from that opponent, you gain a +2 circumstance bonus on your next melee attack roll against that opponent and that opponent is denied its Dexterity bonus to AC, as long as you make that attack before the start of your next turn.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

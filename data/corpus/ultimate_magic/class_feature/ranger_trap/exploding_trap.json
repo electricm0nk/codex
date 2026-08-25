@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ranger Trap ~ Exploding Trap",
     "name": "Exploding Trap",
-    "class": "Ranger Trap",
+    "class": "Ranger",
     "description": "You can only add this to a fire trap. The trap explodes in fire, filling all squares adjacent to the trap and dealing 1d6+%1 points of fire damage (Reflex negates). If it is an extraordinary trap, the ranger must use an explosive material such as alchemist's fire when setting the trap.|ExplodingTrapBonusDamage",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

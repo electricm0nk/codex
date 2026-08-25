@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rakshasa Bloodline ~ Outsider",
     "name": "Outsider",
-    "class": "Rakshasa Bloodline",
+    "class": "Sorcerer",
     "description": "Your natural form becomes that of an animal-headed humanoid, like a true rakshasa. This does not affect your ability to speak or cast spells. You can use your alter self or other disguise and polymorph abilities to assume your original form or other forms when it suits you. You are forevermore treated as a native outsider rather than as a humanoid (or whatever your original type was) for the purpose of spells and other magical effects. Unlike other outsiders, you can still be brought back from the dead as if you were a member of your previous creature type. You gain DR 10/piercing.",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

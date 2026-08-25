@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Musketeer",
     "name": "Musketeer",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "A number of organizations and kingdoms search for warriors who are brave (or foolish) enough to wield firearms on the battlefield. The daring nature of swashbucklers often makes them ideal candidates for such service.",
     "raw_tokens": [
       {
@@ -55,6 +55,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Musketeer],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_SwashbucklerFinesse=True,Swashbuckler_Archetype_Proficiencies=True,Swashbuckler_Archetype_Deeds=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_DodgingPanacheDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
       }
     ]
   },
@@ -71,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

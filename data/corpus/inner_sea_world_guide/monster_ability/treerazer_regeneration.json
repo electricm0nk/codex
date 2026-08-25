@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:40Z",
+  "data": {
+    "corpus_key": "Treerazer ~ Regeneration",
+    "delivery": "Extraordinary",
+    "description": "You are difficult to kill. You heal damage at %1 points per round, and you cannot die as long as your regeneration is still functioning (although you still fall unconscious when your hit points are below 0). Good aligned damage causes your regeneration to stop functioning on the round following the attack: you cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+    "description_variables": [
+      "RegenerationRate"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_world_guide:monster_ability:treerazer_regeneration",
+    "name": "Regeneration",
+    "owners": [],
+    "source_page": "p.315",
+    "traits": [
+      "ModifyHP"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 81,
+    "record_key": "Treerazer ~ Regeneration"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

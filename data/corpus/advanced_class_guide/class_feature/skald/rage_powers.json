@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald ~ Rage Powers",
     "name": "Rage Powers",
@@ -51,6 +51,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "P.51"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|-1|PREVARGTEQ:SkaldLVL,3|PREVAREQ:Skald_CF_RagePower3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|-1|PREVARGTEQ:SkaldLVL,6|PREVAREQ:Skald_CF_RagePower6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|-1|PREVARGTEQ:SkaldLVL,9|PREVAREQ:Skald_CF_RagePower9,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|-1|PREVARGTEQ:SkaldLVL,12|PREVAREQ:Skald_CF_RagePower12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|-1|PREVARGTEQ:SkaldLVL,15|PREVAREQ:Skald_CF_RagePower15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|-1|PREVARGTEQ:SkaldLVL,18|PREVAREQ:Skald_CF_RagePower18,1"
       }
     ]
   },
@@ -69,5 +93,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Nature Mystery ~ Undo Artifice",
     "name": "Undo Artifice",
-    "class": "Nature Mystery",
+    "class": "Oracle",
     "description": "You gain the ability to reduce a nonliving item to its component parts, essentially erasing the hand of artifice and rendering the item into a pile of raw natural materials. This effect acts as the spell polymorph any object, working on both magical and nonmagical nonliving objects. The duration is always permanent. Unlike polymorph any object, it cannot be used to mimic the effects of other spells. Items subject to this effect receive a Fortitude saving (DC %1) throw to negate the effect. Magic items receive a circumstance bonus on this save equal to +1 for every 5,000 gp in the itemUs value. You may use undo artifice %2 times per day.|OracleRevelationDC|OracleUndoArtificeTimes",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

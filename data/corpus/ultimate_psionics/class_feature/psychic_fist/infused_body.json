@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Fist ~ Infused Body",
+    "name": "Infused Body",
+    "class": "Psychic Fist",
+    "description": "Gain DR %1/- while focused.|InfusedBody",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Fist ~ Infused Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicFistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InfusedBody|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain DR %1/- while focused.|InfusedBody"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InfusedBody|floor(PsychicFistLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.373"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1436,
+    "record_key": "Psychic Fist ~ Infused Body"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

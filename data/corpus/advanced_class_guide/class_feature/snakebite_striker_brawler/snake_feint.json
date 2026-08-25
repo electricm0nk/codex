@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Snakebite Striker Brawler ~ Snake Feint",
     "name": "Snake Feint",
@@ -35,6 +35,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.88"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round she can declare her square and one adjacent square as the origin of her attacks until her next turn (allowing her to use one or both squares to determine whether she or allies are flanking an opponent).|PREVAREQ:CalltoArmsProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round she can declare her square and two squares adjacent to her as the origin of her attacks until her next turn (allowing her to use any of number of those squares to determine whether she or allies are flanking an opponent).|PREVAREQ:CalltoArmsProgression,3"
       }
     ]
   },
@@ -51,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

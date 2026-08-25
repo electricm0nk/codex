@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bogeyman ~ Terrible Rejuvenation",
+    "delivery": "Supernatural",
+    "description": "A bogeyman gains fast healing 5 while any creature within its deepest fear aura is suffering from a fear effect, including any fear effect created by the aura itself.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bogeyman_terrible_rejuvenation",
+    "name": "Terrible Rejuvenation",
+    "owners": [
+      "bestiary_3:monster:bogeyman"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A bogeyman gains fast healing 5 while any creature within its deepest fear aura is suffering from a fear effect, including any fear effect created by the aura itself."
+      },
+      {
+        "key": "KEY",
+        "value": "Bogeyman ~ Terrible Rejuvenation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "TYPE",
+        "value": "BogeymanRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.42",
+    "traits": [
+      "BogeymanRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 509,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bogeyman ~ Terrible Rejuvenation",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

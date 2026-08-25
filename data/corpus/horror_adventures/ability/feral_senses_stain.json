@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lycanthropy Corruption ~ Feral Senses Stain",
+    "name": "Feral Senses Stain",
+    "description": "Creatures of the animal type (except those of your lycanthrope type) are unnerved by your lycanthropic presence, causing you to take a -%1 penalty on Handle Animal and Ride skill checks.|LycanthropyCorruptionFeralSensesPenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lycanthropy Corruption ~ Feral Senses Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LycanthropyFeralSensesStain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LycanthropyCorruptionFeralSensesPenalty|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures of the animal type (except those of your lycanthrope type) are unnerved by your lycanthropic presence, causing you to take a -%1 penalty on Handle Animal and Ride skill checks.|LycanthropyCorruptionFeralSensesPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LycanthropyCorruptionFeralSensesPenalty|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LycanthropyCorruptionFeralSensesPenalty|2|PREVARGTEQ:LycanthropyManifestationLevel,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Handle Animal,Ride|-LycanthropyCorruptionFeralSensesPenalty"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 570,
+    "record_key": "Lycanthropy Corruption ~ Feral Senses Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

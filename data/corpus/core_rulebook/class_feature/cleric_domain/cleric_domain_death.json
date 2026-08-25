@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cleric Domain ~ Death",
+    "name": "Cleric Domain ~ Death",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Cleric=1|Cause Fear|Cleric=2|Death Knell|Cleric=3|Animate Dead|Cleric=4|Death Ward|Cleric=5|Slay Living|Cleric=6|Create Undead|Cleric=7|Destruction|Cleric=8|Create Greater Undead|Cleric=9|Wail of the Banshee|PREVAREQ:DeathDomainAllowed,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3152,
+    "record_key": "Cleric Domain ~ Death"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

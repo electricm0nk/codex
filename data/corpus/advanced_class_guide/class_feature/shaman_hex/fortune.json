@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Hex ~ Fortune",
     "name": "Fortune",
-    "class": "Shaman Hex",
+    "class": "Shaman",
     "description": "The shaman grants a creature within 30 feet a bit of good luck for %1 rounds. The target can call upon this good luck once per round, allowing it to reroll any ability check, attack roll, saving throw, or skill check, taking the better result. The target creature must to decide to use this ability before the first roll is made. Once a creature has benefited from the fortune hex, it cannot benefit from it again for 24 hours.|ShamanFortuneHexDuration",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Sacred Conduit",
+    "name": "Sacred Conduit",
+    "description": "Your birth was particularly painful and difficult for your mother, who needed potent divine magic to ensure you survived; your mother may or may not have survived. In any event, the magic infused you from an early age, and you now channel divine energy with greater ease than most. Whenever you channel energy, you gain a +1 trait bonus to the save DC of your channeled energy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Sacred Conduit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.FaithTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Sacred Conduit],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.FaithTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your birth was particularly painful and difficult for your mother, who needed potent divine magic to ensure you survived; your mother may or may not have survived. In any event, the magic infused you from an early age, and you now channel divine energy with greater ease than most. Whenever you channel energy, you gain a +1 trait bonus to the save DC of your channeled energy."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleChannelDC|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UndeadServitudeDC|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelPositiveEnergyDC|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelPositiveEnergyDC|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelNegativeEnergyDC|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerOverUndeadCommandUndeadDC|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerOverUndeadTurnDC|1|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 34,
+    "record_key": "Trait ~ Sacred Conduit"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

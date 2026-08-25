@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Heavens Mystery ~ Coat of Many Stars",
     "name": "Coat of Many Stars",
-    "class": "Heavens Mystery",
+    "class": "Oracle",
     "description": "You conjure a coat of starry radiance that grants you a +%1 armor bonus. At 13th level, this armor grants you DR 5/slashing. You can use this coat for %2 hour(s) per day. The duration does not need to be consecutive; it can instead be spent in 1-hour increments.|OracleCoatofManyStarsACBonus|OracleCoatofManyStarsDuration",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

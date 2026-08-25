@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "False Arcanist ~ Wizard",
     "name": "False Arcanist ~ Wizard",
-    "class": "False Arcanist",
+    "class": "Arcanist",
     "description": "The Hidden Priest must make a Knowledge (arcana) skill check (DC 10 + twice the level of the spell) to disguise his casting as a wizard and successfully cast the spell. Using Spellcraft to identify the spell works normally, though unless the observer beats the DC by 10 or more, she doesn't suspect the source of the magic is divine.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Double",
     "name": "Double",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "An illusion makes either the cult master's cohort or one of his followers appear to be him. The cult master can trigger this trick when he is targeted by an attack, provided he is adjacent to the subject, to give the attack a 50%% miss chance. If the attack misses the cult master, it targets the subject instead. This is an illusion (glamer) effect. This trick can be implanted only in a cohort or follower of the cult master.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

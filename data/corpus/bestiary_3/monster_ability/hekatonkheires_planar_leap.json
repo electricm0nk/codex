@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Hekatonkheires ~ Planar Leap",
+    "delivery": "Supernatural",
+    "description": "A hekatonkheires traverses the planes by physically smashing through planar boundaries and crashing devastatingly into the target plane itself. Once per year as a full-round action, a hekatonkheires can, as part of a jump, plane shift to any other plane (as per the spell of the same name). It can only bring itself and its gear when it travels in this manner. When the hekatonkheires reaches its destination plane, it falls from the sky and crashes to the ground, creating a devastating explosion of thunder and fire. Any creature within 300 feet of the point where the hekatonkheires lands (including the titan itself ) takes 20d6 points of bludgeoning damage and 20d6 points of sonic damage (Reflex DC 38 for half ). The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:hekatonkheires_planar_leap",
+    "name": "Planar Leap",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hekatonkheires traverses the planes by physically smashing through planar boundaries and crashing devastatingly into the target plane itself. Once per year as a full-round action, a hekatonkheires can, as part of a jump, plane shift to any other plane (as per the spell of the same name). It can only bring itself and its gear when it travels in this manner. When the hekatonkheires reaches its destination plane, it falls from the sky and crashes to the ground, creating a devastating explosion of thunder and fire. Any creature within 300 feet of the point where the hekatonkheires lands (including the titan itself ) takes 20d6 points of bludgeoning damage and 20d6 points of sonic damage (Reflex DC 38 for half ). The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Hekatonkheires ~ Planar Leap"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      },
+      {
+        "key": "TYPE",
+        "value": "HekatonkheiresRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.268",
+    "traits": [
+      "HekatonkheiresRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1617,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Hekatonkheires ~ Planar Leap",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Zealot Smite",
     "name": "Zealot Smite",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "%1 times per day, a zealot with this talent can use this power to smite a foe. Zealots that are good in their vigilante identity (or worship a good deity) can smite evil creatures, those that are evil in their vigilante identity (or worship an evil deity) can smite good creatures, those that are chaotic in their vigilante identity (or worship a chaotic deity) can smite lawful creatures, and those that are lawful in their vigilante identity (or worship a lawful deity) can smite chaotic creatures. A zealot that is neutral when in his vigilante identity and that worships a neutral deity can pick to smite any one of the four alignments; other zealots must select from the alignments available based on their own alignment or their deity's. Once that choice is made, it can't be changed. As a swift action, the zealot chooses one target within sight to smite. If this target is of the proper alignment, the zealot adds +%2 on his attack rolls and +%3 on all damage rolls against the target of his smite. If the target of smite is an outsider with an alignment subtype of the zealot's smite, a similarly aligned dragon, or an undead creature (if the zealot's smite is against evil creatures), a good-aligned cleric or paladin (if the zealot's smite is against good creatures), a chaotic aberration (if the zealot's smite is against chaotic creatures), or a lawful-aligned cleric or paladin (if the zealot's smite is against lawful creatures), the bonus to damage on the first successful attack increases to +%3 points of damage. Regardless of the target, the zealot's smite attacks bypass the creature's DR as if it were a weapon with a +5 enhancement bonus.|min(7,(VigilanteLVL+1)/3)|min(CHA,(VigilanteLVL/2))|VigilanteLVL|VigilanteLVL*2",
     "raw_tokens": [
       {
@@ -53,5 +53,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

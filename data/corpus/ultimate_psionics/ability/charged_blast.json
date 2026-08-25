@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cannoneer ~ Charged Blast",
+    "name": "Charged Blast",
+    "description": "You can expend your psionic focus when making a ranged attack at a single creature; target must save (Reflex DC %1) or be knocked prone and dazed for one round.|ChargedBlastDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cannoneer ~ Charged Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChargedBlastDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus when making a ranged attack at a single creature; target must save (Reflex DC %1) or be knocked prone and dazed for one round.|ChargedBlastDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChargedBlastDC|10+floor(MarksmanLVL/2)+MarksmanPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 29,
+    "record_key": "Cannoneer ~ Charged Blast"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

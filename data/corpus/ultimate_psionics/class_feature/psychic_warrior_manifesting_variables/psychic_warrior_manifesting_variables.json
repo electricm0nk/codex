@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Warrior Manifesting Variables",
+    "name": "Psychic Warrior Manifesting Variables",
+    "class": "Psychic Warrior",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicWarriorML|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaxManifesterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicWarriorPLStatScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicWarriorPKL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicWarriorMPL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicWarriorPowersKnown|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicWarriorMaxPowerLevel|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorML|PsychicWarriorLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorML|var(\"BL=Psychic Warrior\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaxManifesterLVL|PsychicWarriorML|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorPLStatScore|WISSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorPKL|PsychicWarriorLVL+var(\"BL=Psychic Warrior\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorMPL|PsychicWarriorLVL+var(\"BL=Psychic Warrior\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorPowersKnown|PsychicWarriorPKL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorMaxPowerLevel|min(6,floor((PsychicWarriorMPL+2)/3),PsychicWarriorPLStatScore-10)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 531,
+    "record_key": "Psychic Warrior Manifesting Variables"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

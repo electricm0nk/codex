@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Frog",
+    "name": "Frog",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frog Domain ~ Familiar|PREVARGTEQ:DomainFrogAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frog Domain ~ Sticky Strike"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Frog Domain ~ Webfoot|PREVARGTEQ:DomainFrogAbilityTriggerLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFrogLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFrogDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFrogTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainFrogAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFrogLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFrogDC|10+(DomainFrogLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFrogTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainFrogAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Frog=1|Jump|Frog=2|Delay Poison|Frog=3|Lily Pad Stride|Frog=4|Shout|Frog=5|Blessing of the Salamander|Frog=6|Confusion|Frog=7|Animal Shapes (Amphibians Only)|Frog=8|Shout (Greater)|Frog=9|Summon Froghemoth"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
+    "line": 16,
+    "record_key": "Frog"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

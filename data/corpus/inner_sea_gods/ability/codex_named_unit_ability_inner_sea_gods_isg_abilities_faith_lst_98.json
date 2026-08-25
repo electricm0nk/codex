@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:06:01Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_98)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_98)",
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can summon a pair of bralani azatas to aid you. You gain telepathy with the bralanis to a range of 100 feet. The bralanis follow your commands perfectly for %1 minutes before vanishing back to their home in Elysium. The bralanis don't follow commands that would cause them to commit evil acts or restrict freedom solely for the sake of law. Such commands not only earn refusal and scorn from the bralanis, but could cause the bralanis to attack you if the command is particularly egregious.|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day as a standard action, you can summon a pair of bralani azatas to aid you. You gain telepathy with the bralanis to a range of 100 feet. The bralanis follow your commands perfectly for %1 minutes before vanishing back to their home in Elysium. The bralanis don't follow commands that would cause them to commit evil acts or restrict freedom solely for the sake of law. Such commands not only earn refusal and scorn from the bralanis, but could cause the bralanis to attack you if the command is particularly egregious.|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 98,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_98)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:98"
+  }
+}

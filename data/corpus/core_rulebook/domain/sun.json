@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Sun",
+    "name": "Sun",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainSun,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Sun Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.SunDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSunLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSunDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSunTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSunAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "You see truth in the pure and burning light of the sun, and can call upon its blessing or wrath to work great deeds."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Sun=1|Endure Elements|Sun=2|Heat Metal|Sun=3|Searing Light|Sun=4|Fire Shield|Sun=5|Flame Strike|Sun=6|Fire Seeds|Sun=7|Sunbeam|Sun=8|Sunburst|Sun=9|Prismatic Sphere"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 39,
+    "record_key": "Sun"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

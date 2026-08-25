@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Karmic Bloodline ~ Fate's Retribution",
     "name": "Fate's Retribution",
-    "class": "Karmic Bloodline",
+    "class": "Sorcerer",
     "description": "When you are hit by a melee attack, as an immediate action, you can curse the creature that struck you. The target takes a -2 penalty on all attack and damage rolls for 1d4 rounds. A Will save (DC %1) negates this effect. You can use this ability %2 times per day. This bloodline power replaces touch of destiny.|Sorcerer_KarmicFatesRetribution_DC|Sorcerer_Destined_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -84,5 +84,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

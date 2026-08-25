@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist ~ Obedience",
+    "name": "Obedience",
+    "description": "In order to maintain the abilities granted by this prestige class, including all abilities gained from aligned class (see below), an evangelist must perform a daily obedience to her chosen deity (see page 10).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Obedience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Evangelist Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "In order to maintain the abilities granted by this prestige class, including all abilities gained from aligned class (see below), an evangelist must perform a daily obedience to her chosen deity (see page 10)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 13,
+    "record_key": "Evangelist ~ Obedience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

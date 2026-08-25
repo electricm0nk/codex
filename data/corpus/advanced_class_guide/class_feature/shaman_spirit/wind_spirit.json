@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit ~ Wind",
     "name": "Wind (Spirit)",
-    "class": "Shaman Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: alter winds (1st), gust of wind (2nd), cloak of winds (3rd), river of wind (4th), control winds (5th), sirocco (6th), control weather (7th), whirlwind (8th), winds of vengeance (9th)",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

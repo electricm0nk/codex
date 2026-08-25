@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deathtouched ~ Mind-Affecting",
+    "name": "Mind-Affecting",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deathtouched ~ Mind-Affecting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Deathtouched Choice"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 vs. mind-affecting effects"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 240,
+    "record_key": "Deathtouched ~ Mind-Affecting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Empyreal Lord in Home Realm",
+    "name": "Empyreal Lord in Home Realm",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "B4 p.87"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|10|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|10|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Rank|10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Power|Surge"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=TL|Demand|Discern Location|Fabricate|Major Creation"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Dimensional Lock|Miracle (Divine Realm)|Power Word Stun"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 106,
+    "record_key": "Empyreal Lord in Home Realm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

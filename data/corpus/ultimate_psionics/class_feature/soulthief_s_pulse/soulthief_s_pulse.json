@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulthief's Pulse",
+    "name": "Soulthief's Pulse",
+    "class": null,
+    "description": "Attacks by collective members heal attacker, up to %1 hit points.|SoulthiefsPulseHP",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulthiefsPulseHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Attacks by collective members heal attacker, up to %1 hit points.|SoulthiefsPulseHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulthiefsPulseHP|(MethodLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1016,
+    "record_key": "Soulthief's Pulse"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

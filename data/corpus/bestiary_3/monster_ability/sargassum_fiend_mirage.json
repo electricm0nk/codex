@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sargassum Fiend ~ Mirage",
+    "delivery": "Supernatural",
+    "description": "A sargassum fiend emits a powerful scent that causes specific, miragelike hallucinations. All creatures within 300 feet of a sargassum fiend must make a DC 18 Will save or become enraptured by the scent. An enraptured creature sees the monster as whatever would most compel it to approach. This might be a lost loved one, a child in need of help, an enchanting mermaid, the promise of dry land, and so on. The extent of this illusion functions as mirage arcana (CL equals the sargassum's CR), but is a mindaffecting phantasm, not a glamer. This effect ends immediately if the plant makes an attack against any target. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:sargassum_fiend_mirage",
+    "name": "Mirage",
+    "owners": [
+      "bestiary_3:monster:sargassum_fiend"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A sargassum fiend emits a powerful scent that causes specific, miragelike hallucinations. All creatures within 300 feet of a sargassum fiend must make a DC 18 Will save or become enraptured by the scent. An enraptured creature sees the monster as whatever would most compel it to approach. This might be a lost loved one, a child in need of help, an enchanting mermaid, the promise of dry land, and so on. The extent of this illusion functions as mirage arcana (CL equals the sargassum's CR), but is a mindaffecting phantasm, not a glamer. This effect ends immediately if the plant makes an attack against any target. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Sargassum Fiend ~ Mirage"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "TYPE",
+        "value": "SargassumFiendRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.235",
+    "traits": [
+      "SargassumFiendRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1485,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Sargassum Fiend ~ Mirage",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

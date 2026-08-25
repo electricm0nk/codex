@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:11Z",
+  "data": {
+    "key": "Vermin",
+    "name": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Vermin Whisperer|PREVARGTEQ:DomainVerminAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Sudden Sting|PREVARGTEQ:DomainVerminAbilityTriggerLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVerminLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVerminDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVerminTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVerminAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVerminLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVerminDC|10+(DomainVerminLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVerminTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVerminAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Vermin=1|Ant Haul|Vermin=2|Summon Swarm|Vermin=3|Vermin Shape I|Vermin=4|Vermin Shape II|Vermin=5|Insect Plague|Vermin=6|Swarm Skin|Vermin=7|Creeping Doom|Vermin=8|Verminous Transformation|Vermin=9|Summon Nature's Ally IX (1d3 purple worms only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_domains.lst",
+    "sha256": "b2f97a67e5a1d0671916f982443913c453e92e1cadbc3a94795340f1f4593112",
+    "line": 7,
+    "record_key": "Vermin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

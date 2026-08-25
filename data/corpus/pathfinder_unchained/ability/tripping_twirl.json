@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Tripping Twirl",
+    "name": "Tripping Twirl",
+    "description": "You can select this feat even if you don't meet the ability score prerequisite (Intelligence 13). You gain the benef its of this feat only as long as you have at least 1 stamina point in your stamina pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Tripping Twirl"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "You can select this feat even if you don't meet the ability score prerequisite (Intelligence 13). You gain the benef its of this feat only as long as you have at least 1 stamina point in your stamina pool."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UM"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_um.lst",
+    "sha256": "52264633ebbabc8179a0da1df51302ddcb1aa0a66b4d2a5bb983e450c9373c03",
+    "line": 6,
+    "record_key": "Combat Trick ~ Tripping Twirl"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

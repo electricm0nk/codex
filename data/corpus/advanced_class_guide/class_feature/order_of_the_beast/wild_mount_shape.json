@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Beast ~ Wild Mount Shape",
     "name": "Wild Mount Shape",
-    "class": "Order of the Beast",
+    "class": "Cavalier",
     "description": "At 8th level, an order of the of the beast cavalier gains the ability to turn his mount into a different Medium or Large animal and back again. His options for new forms include all creatures with the animal type. This ability functions as beast shape II, except as noted here. The effect lasts for %1 hours per cavalier level, or until the cavalier chooses to change his mount back. Changing the mount's form requires the cavalier to touch his mount as a standard action that does not provoke an attack of opportunity. The form chosen must be that of an animal the cavalier is familiar with. The mount does not change size, but does receive the bonuses (not the penalty) presented in beast shape II for the Large animal. The cavalier can use this ability %2 times per day. At 15th level, the cavalier can use wild mount shape to change his mount into a Medium or Large dragon. When taking this form, the cavalier's wild mount shape now functions as form of the dragon I, except as above.|CavalierLVL|1+(CavalierLVL>=10)+(CavalierLVL>=14)+(CavalierLVL>=18)",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

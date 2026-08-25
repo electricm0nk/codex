@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Slapping Tail",
+    "name": "Slapping Tail",
+    "description": "Can make tail attacks of opportunity (1d6/1d8/1d10 damage for Small/Medium/Large; Large gets *1.5 Str bonus; reach as creature's).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Slapping Tail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "Can make tail attacks of opportunity (1d6/1d8/1d10 damage for Small/Medium/Large; Large gets *1.5 Str bonus; reach as creature's)."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Tail Slap"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 495,
+    "record_key": "Builder Racial Trait ~ Slapping Tail"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

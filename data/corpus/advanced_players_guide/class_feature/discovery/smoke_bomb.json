@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Smoke Bomb",
     "name": "Smoke Bomb*",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "When the alchemist creates a bomb, he can choose to have it create a cloud of thick smoke when it detonates. The cloud functions as fog cloud, filling an area equal to twice the bomb's splash radius for 1 round per level.",
     "raw_tokens": [
       {
@@ -40,5 +40,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

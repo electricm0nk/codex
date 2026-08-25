@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fear Projector ~ Power from Fear",
+    "name": "Power from Fear",
+    "class": "Fear Projector",
+    "description": "Your allies are able to tap into your fear-based power.  When a member of the collective causes a creature to have the shaken, panicked, or frightened condition, the collective member gains a +%1 morale bonus to attack rolls and saving throws for %2 rounds.|PowerFromFearBonus|PowerFromFearDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fear Projector ~ Power from Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerFromFearBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerFromFearDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your allies are able to tap into your fear-based power.  When a member of the collective causes a creature to have the shaken, panicked, or frightened condition, the collective member gains a +%1 morale bonus to attack rolls and saving throws for %2 rounds.|PowerFromFearBonus|PowerFromFearDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerFromFearBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerFromFearBonus|floor((TacticianLVL-2)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerFromFearDuration|TacticianSecondaryStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2279,
+    "record_key": "Fear Projector ~ Power from Fear"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

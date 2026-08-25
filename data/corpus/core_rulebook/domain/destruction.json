@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Destruction",
+    "name": "Destruction",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainDestruction,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Destruction Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.DestructionDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDestructionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDestructionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDestructionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDestructionAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "DESC",
+        "value": "You revel in ruin and devastation, and can deliver particularly destructive attacks."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Destruction=1|True Strike|Destruction=2|Shatter|Destruction=3|Rage|Destruction=4|Inflict Critical Wounds|Destruction=5|Shout|Destruction=6|Harm|Destruction=7|Disintegrate|Destruction=8|Earthquake|Destruction=9|Implosion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 20,
+    "record_key": "Destruction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

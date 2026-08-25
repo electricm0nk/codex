@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist ~ Skilled",
+    "name": "Skilled",
+    "description": "Evangelists possess a range of skills across multiple disciplines. At 1st level, an evangelist selects two skills to add to her class skill list. Once selected, these class skills can't be changed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Evangelist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Evangelists possess a range of skills across multiple disciplines. At 1st level, an evangelist selects two skills to add to her class skill list. Once selected, these class skills can't be changed."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 14,
+    "record_key": "Evangelist ~ Skilled"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

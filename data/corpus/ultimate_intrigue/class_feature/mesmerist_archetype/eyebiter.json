@@ -1,0 +1,132 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Eyebiter",
+    "name": "Eyebiter",
+    "class": "Mesmerist",
+    "description": "Mesmerists focus their abilities through the eyes, drawing forth their power as the windows to the mind and soul. Eyebiters take this a step further. An eyebiter's eyes become so infused with psychic might that they can leave the eyebiter's body and move about on their own.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Eyebiter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MesmeristArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Eyebiter],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_ConsummateLiar=True,Mesmerist_Archetype_MesmeristTrick1=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_MentalPotency=True,Mesmerist_Archetype_GlibLie=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Mesmerists focus their abilities through the eyes, drawing forth their power as the windows to the mind and soul. Eyebiters take this a step further. An eyebiter's eyes become so infused with psychic might that they can leave the eyebiter's body and move about on their own."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eyebiter ~ Eyeball Familiar|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eyebiter ~ Ocular Occlusion|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eyebiter ~ Clouded Vision|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eyebiter ~ Cause or Cure Blindness|PRECLASS:1,Mesmerist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eyebiter ~ Eyeless Horror|PRECLASS:1,Mesmerist=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eyebiter ~ Spellblight|PRECLASS:1,Mesmerist=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eyebiter ~ Staring Eye|PRECLASS:1,Mesmerist=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eyebiter ~ Omnivisual|PRECLASS:1,Mesmerist=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MesmeristTrick1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MentalPotency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_GlibLie|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ConsummateLiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_MesmeristTrick1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_TouchTreatment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_MentalPotency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_GlibLie|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 45,
+    "record_key": "Mesmerist Archetype ~ Eyebiter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

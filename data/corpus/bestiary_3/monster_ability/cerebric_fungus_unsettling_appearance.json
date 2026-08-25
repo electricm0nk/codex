@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Cerebric Fungus ~ Unsettling Appearance",
+    "delivery": "Supernatural",
+    "description": "A cerebric fungus constantly scans the minds of those around it, projecting around itself a confusing collage of images gleaned from their thoughts. Creatures within 60 feet that can see the fungus must succeed at a DC 14 Will save or take a -2 penalty on attack rolls. This is a mind-affecting effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:cerebric_fungus_unsettling_appearance",
+    "name": "Unsettling Appearance",
+    "owners": [
+      "bestiary_3:monster:cerebric_fungus"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A cerebric fungus constantly scans the minds of those around it, projecting around itself a confusing collage of images gleaned from their thoughts. Creatures within 60 feet that can see the fungus must succeed at a DC 14 Will save or take a -2 penalty on attack rolls. This is a mind-affecting effect. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Cerebric Fungus ~ Unsettling Appearance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "TYPE",
+        "value": "CerebricFungusRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.52",
+    "traits": [
+      "CerebricFungusRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 563,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Cerebric Fungus ~ Unsettling Appearance",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

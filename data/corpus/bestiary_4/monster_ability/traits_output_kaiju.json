@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Kaiju",
+    "delivery": "Extraordinary",
+    "description": "A kaiju's natural attacks count as epic and magic for the purpose of overcoming damage reduction. &nl; When a kaiju damages a Huge or smaller foe with one of its natural attacks, it can try to hurl the foe as part of that attack by attempting a combat maneuver check. &nl; A kaiju ignores most difficult terrain, but considers forests or settlements difficult terrain. Huge or smaller creature can move through any square occupied by a kaiju, or vice-versa. A kaiju can make attacks of opportunity only against foes that are Huge or larger, and can be flanked only by Huge or larger foes. &nl; A kaiju reattempts failed saving throws against any mind-affecting, paralysis, petrification, polymorph, or immobilizing effects  at the end of its turn to remove the effect. Once per year, if a kaiju takes an amount of damage that would normally kill it, the damage instead heals it of twice the amount of damage but leaves the kaiju disoriented and demoralized. The creature becomes nauseated and seeks only to return to its lair unless attacked.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:traits_output_kaiju",
+    "name": "Kaiju Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A kaiju ignores most difficult terrain, but considers forests or settlements difficult terrain. Huge or smaller creature can move through any square occupied by a kaiju, or vice-versa. A kaiju can make attacks of opportunity only against foes that are Huge or larger, and can be flanked only by Huge or larger foes."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A kaiju reattempts failed saving throws against any mind-affecting, paralysis, petrification, polymorph, or immobilizing effects  at the end of its turn to remove the effect. Once per year, if a kaiju takes an amount of damage that would normally kill it, the damage instead heals it of twice the amount of damage but leaves the kaiju disoriented and demoralized. The creature becomes nauseated and seeks only to return to its lair unless attacked."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; When a kaiju damages a Huge or smaller foe with one of its natural attacks, it can try to hurl the foe as part of that attack by attempting a combat maneuver check."
+      },
+      {
+        "key": "DESC",
+        "value": "A kaiju's natural attacks count as epic and magic for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Kaiju"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:59:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 103,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Traits Output ~ Kaiju",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

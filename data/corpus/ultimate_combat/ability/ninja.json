@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ninja",
+    "name": "Ninja",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ninja_CFP_Level|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ninja_CFP_Level|NinjaLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ninja Archetype|AUTOMATIC|Archetype Ninja"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ninja ~ Class Skill|PREVAREQ:Ninja_CF_ClassSkills,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+    "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+    "line": 7,
+    "record_key": "Ninja"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

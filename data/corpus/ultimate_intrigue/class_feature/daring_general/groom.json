@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Daring General ~ Cohort ~ Groom",
     "name": "Groom",
-    "class": "Daring General",
+    "class": "Cavalier",
     "description": "The groom cares for the daring general's mount. She does not take an armor check penalty on Ride checks while riding the cavalier's mount. Additionally, once per day, the groom can spend 10 minutes preparing the daring general's mount for battle. If she does, the mount's speed increases by 10 feet and its Dexterity score increases by 2. These benefits last for 1 hour.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

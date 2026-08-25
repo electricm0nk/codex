@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Anarchic Bloodline ~ Wild Feedback",
     "name": "Wild Feedback",
-    "class": "Anarchic Bloodline",
+    "class": "Sorcerer",
     "description": "When you successfully dispel or counterspell an opponent's spell, the caster (if it is within 100 feet) takes 1d6 points of damage +1 per level of the spell affected. This bloodline power replaces protean resistances.",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

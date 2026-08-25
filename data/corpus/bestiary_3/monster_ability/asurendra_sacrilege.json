@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Asurendra ~ Sacrilege",
+    "delivery": null,
+    "description": "Blasphemy is joy to any asura, but truly impious asurendras learn talents that mimic divine miracles. Cults to these asurendras, which almost always seem benevolent on first glance, turn people from the worship of real deities. These asurendras do not possess a spirit blade special attack, but can use miracle as a spell-like ability once per day as long as the miracle granted is in keeping with their blasphemous design.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:asurendra_sacrilege",
+    "name": "Sacrilege",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Blasphemy is joy to any asura, but truly impious asurendras learn talents that mimic divine miracles. Cults to these asurendras, which almost always seem benevolent on first glance, turn people from the worship of real deities. These asurendras do not possess a spirit blade special attack, but can use miracle as a spell-like ability once per day as long as the miracle granted is in keeping with their blasphemous design."
+      },
+      {
+        "key": "KEY",
+        "value": "Asurendra ~ Sacrilege"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.AsurendraAdditional.AsurendraSpiritBlades"
+      }
+    ],
+    "source_page": "p.",
+    "traits": [
+      "RaceAbility",
+      "AsurendraAdditional",
+      "AsurendraSpiritBlades"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 407,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Asurendra ~ Sacrilege",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

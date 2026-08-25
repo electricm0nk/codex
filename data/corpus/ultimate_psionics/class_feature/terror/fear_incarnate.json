@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Fear Incarnate",
+    "name": "Fear Incarnate",
+    "class": "Terror",
+    "description": "Gain a +%1 bonus to Intimidate when using the nightmare form terror.|FearIncarnateBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Fear Incarnate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Terror ~ Nightmare Form"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearIncarnateBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a +%1 bonus to Intimidate when using the nightmare form terror.|FearIncarnateBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearIncarnateBonus|TerrorAugmentLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Intimidate|FearIncarnateBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 285,
+    "record_key": "Terror ~ Fear Incarnate"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

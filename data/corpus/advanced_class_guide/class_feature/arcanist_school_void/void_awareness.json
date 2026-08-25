@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Arcanist School Void ~ Void Awareness",
     "name": "Void Awareness",
-    "class": "Arcanist School Void",
+    "class": "Arcanist",
     "description": "Your ability to recognize the void allows your body to react to magical manifestations before you're even aware of them. You gain a +%1 insight bonus on saving throws against spells and spell-like abilities.|VoidAwarenessBonus",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

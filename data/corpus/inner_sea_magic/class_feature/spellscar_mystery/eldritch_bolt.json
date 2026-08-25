@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Spellscar Mystery ~ Eldritch Bolt",
     "name": "Eldritch Bolt",
-    "class": "Spellscar Mystery",
+    "class": "Oracle",
     "description": "You can damage foes with a bolt of raw magical energy. Make a ranged touch attack against any foe within %1 feet.|EldritchBoltRange",
     "raw_tokens": [
       {
@@ -92,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order Of The Eastern Star ~ Pierce the Guard",
     "name": "Pierce the Guard",
-    "class": "Order Of The Eastern Star",
+    "class": "Cavalier",
     "description": "[not impemented]At 8th level, when attacking with a light or one-handed weapon, the cavalier ignores the penalty for fighting defensively or using Combat Expertise on his first melee attack roll each round. If fighting with two weapons, he ignores the penalty for the first attack with each weapon, as long as the off-hand weapon is a light weapon. The cavalier can't use this ability with double weapons.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

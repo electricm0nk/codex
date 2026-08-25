@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Manananggal ~ Separate",
+    "delivery": "Supernatural",
+    "description": "During the day, a manananggal looks like a living human woman. She does not detect as undead during the day, but is still an undead creature. At night, her upper torso rips away (this is a full round action that occurs at sunset), leaving her lower torso behind. Her lower torso is helpless, but her upper torso gains its fly speed and natural attacks at this time. The upper and lower portions share the same pool of hit points (despite any intervening distance), and if the helpless lower portion is damaged, the manananggal is immediately aware of the attack. Since manananggals can be destroyed by damage to their lower bodies, they prefer to hide their lower torsos when separated. A manananggal must return to its lower torso and reattach to it (a full-round action) within the hour before sunrise-each round a manananggal remains separated after sunrise, it takes 1d6 points of damage until it rejoins its lower torso or it crumbles into dust.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:manananggal_separate",
+    "name": "Separate",
+    "owners": [
+      "bestiary_3:monster:manananggal"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "During the day, a manananggal looks like a living human woman. She does not detect as undead during the day, but is still an undead creature. At night, her upper torso rips away (this is a full round action that occurs at sunset), leaving her lower torso behind. Her lower torso is helpless, but her upper torso gains its fly speed and natural attacks at this time. The upper and lower portions share the same pool of hit points (despite any intervening distance), and if the helpless lower portion is damaged, the manananggal is immediately aware of the attack. Since manananggals can be destroyed by damage to their lower bodies, they prefer to hide their lower torsos when separated. A manananggal must return to its lower torso and reattach to it (a full-round action) within the hour before sunrise-each round a manananggal remains separated after sunrise, it takes 1d6 points of damage until it rejoins its lower torso or it crumbles into dust."
+      },
+      {
+        "key": "KEY",
+        "value": "Manananggal ~ Separate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "TYPE",
+        "value": "ManananggalRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.190",
+    "traits": [
+      "ManananggalRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1256,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Manananggal ~ Separate",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

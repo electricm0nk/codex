@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Yuki-Onna ~ Snowstorm",
+    "delivery": "Supernatural",
+    "description": "A yuki-onna is surrounded by whirling blasts of snow, even in areas that wouldn't allow for such weather, that comprise a 200-foot-radius spread. Within this area, the snowfall and wind gusts cause a -4 penalty on Perception checks and ranged attacks. The wind itself blows in a clockwise rotation around the yuki-onna, and functions as severe wind (Core Rulebook 439). A yuki-onna is unaffected by snowstorms or blizzards of any kind. Any effect that causes these winds to drop below severe (such as control weather or control winds) cancels the snowstorm effect entirely.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:yuki_onna_snowstorm",
+    "name": "Snowstorm",
+    "owners": [
+      "bestiary_3:monster:yuki_onna"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A yuki-onna is surrounded by whirling blasts of snow, even in areas that wouldn't allow for such weather, that comprise a 200-foot-radius spread. Within this area, the snowfall and wind gusts cause a -4 penalty on Perception checks and ranged attacks. The wind itself blows in a clockwise rotation around the yuki-onna, and functions as severe wind (Core Rulebook 439). A yuki-onna is unaffected by snowstorms or blizzards of any kind. Any effect that causes these winds to drop below severe (such as control weather or control winds) cancels the snowstorm effect entirely."
+      },
+      {
+        "key": "KEY",
+        "value": "Yuki-Onna ~ Snowstorm"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      },
+      {
+        "key": "TYPE",
+        "value": "YukionnaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.287",
+    "traits": [
+      "YukionnaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1693,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Yuki-Onna ~ Snowstorm",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

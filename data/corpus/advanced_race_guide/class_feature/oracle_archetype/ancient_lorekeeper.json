@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle Archetype ~ Ancient Lorekeeper",
     "name": "Ancient Lorekeeper",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "The ancient lorekeeper is a repository for all the beliefs and vast knowledge of an elven people. She shows a strong interest in and understanding of histories and creation legends at a young age, and as she matures her calling to serve as the memory of her long-lived people becomes clear to all who know her.",
     "raw_tokens": [
       {
@@ -59,6 +59,90 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Oracle"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Ancient Lorekeeper],[!PREFACT:1,ABILITIES,Oracle_Archetype_MysterySkills=True,Oracle_Archetype_MysterySpell2=True,Oracle_Archetype_MysterySpell4=True,Oracle_Archetype_MysterySpell6=True,Oracle_Archetype_MysterySpell8=True,Oracle_Archetype_MysterySpell10=True,Oracle_Archetype_MysterySpell12=True,Oracle_Archetype_MysterySpell14=True,Oracle_Archetype_MysterySpell16=True,Oracle_Archetype_MysterySpell18=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell18|true"
       }
     ]
   },
@@ -75,5 +159,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

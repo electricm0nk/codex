@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Elemental Armor",
     "name": "Elemental Armor",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "When in her vigilante identity, the warlock gains armor made of elemental energy. She is surrounded by a nimbus of ice, lightning, or flames, granting her resistance 5 to cold, electricity, or fire, respectively. The damage type must be chosen when she selects this talent, and it can't be changed.|VigilanteElementalArmorResist",
     "raw_tokens": [
       {
@@ -96,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Psionic",
+    "name": "Psionic",
+    "description": "Total Power Points %1; Base Power Points %2; Bonus Power Points %3|TotalPowerPoints|BasePowerPoints|BonusPowerPoints",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BasePowerPoints|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BonusPowerPoints|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotalPowerPoints|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionicFocusActive|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaxManifesterLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Total Power Points %1; Base Power Points %2; Bonus Power Points %3|TotalPowerPoints|BasePowerPoints|BonusPowerPoints"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Psionic Focus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotalPowerPoints|BasePowerPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotalPowerPoints|BonusPowerPoints"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 159,
+    "record_key": "Psionic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

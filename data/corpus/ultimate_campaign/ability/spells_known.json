@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retrain ~ Spells Known",
+    "name": "Spells Known",
+    "description": "[not implemeted] You retrained one or more spells known. Take this ability once for ever spell level retrained.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retrain ~ Spells Known"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Retraining"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RetrainingDaysSpent|0"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemeted] You retrained one or more spells known. Take this ability once for ever spell level retrained."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITY|Special Ability|TYPE=RetrainingSpellsKnown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RetrainingDaysSpent|2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643",
+    "line": 23,
+    "record_key": "Retrain ~ Spells Known"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

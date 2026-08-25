@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Casterbane Shot",
+    "category": "Combat",
+    "name": "Casterbane Shot",
+    "description": "Life in the Mana Wastes, where magic has unpredictable and often fatal effects, has taught you to disable spellcasters with your firearms. If you ready a ranged attack with a firearm to attack a spellcaster when he begins casting a spell and successfully hit your opponent, you can expend 1 grit point to increase the target's concentration check DC for being injured while casting by 5.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Precise Shot",
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Amateur Gunslinger],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Grit,Gunslinger ~ Grit]",
+      "PRETEXT:Prerequisites: Amateur Gunslingeruc or the grit class feature, Point-Blank Shot, Precise Shot, base attack bonus +4.",
+      "PRETOTALAB:4"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 46,
+    "record_key": "Casterbane Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

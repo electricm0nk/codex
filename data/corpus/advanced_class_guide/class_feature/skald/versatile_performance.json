@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald ~ Versatile Performance",
     "name": "Versatile Performance",
@@ -39,6 +39,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.51"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Skald Versatile Performance|-1|PREVARGTEQ:SkaldLVL,2|PREVAREQ:Skald_CF_VersatilePerformance2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Skald Versatile Performance|-1|PREVARGTEQ:SkaldLVL,7|PREVAREQ:Skald_CF_VersatilePerformance7,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Skald Versatile Performance|-1|PREVARGTEQ:SkaldLVL,12|PREVAREQ:Skald_CF_VersatilePerformance12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Skald Versatile Performance|-1|PREVARGTEQ:SkaldLVL,17|PREVAREQ:Skald_CF_VersatilePerformance17,1"
       }
     ]
   },
@@ -57,5 +73,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

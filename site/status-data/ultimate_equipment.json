@@ -3,13 +3,351 @@
   "title": "Ultimate Equipment",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 45,
+      "denominator": 45,
+      "pct": 0.0,
+      "excluded_from_percentage": 1,
+      "standing_breakdown": {
+        "origin": 45,
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "All Automatic Proficiencies",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "All Automatic Proficiencies"
+        },
+        {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
+        },
+        {
+          "name": "Demon Prince Armor Languages",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Demon Prince Armor Languages"
+        },
+        {
+          "name": "Equipment ~ Deliquescent Gloves",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Equipment ~ Deliquescent Gloves"
+        },
+        {
+          "name": "Equipment ~ Medusa Mask",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Equipment ~ Medusa Mask"
+        },
+        {
+          "name": "Equipment ~ Perform Bonus",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Equipment ~ Perform Bonus"
+        },
+        {
+          "name": "Headband of Intellect Knowledge Skill Selection",
+          "doneness": "not-started",
+          "type_facet": "HeadbandKnowledgeSkill",
+          "standing": "origin",
+          "display_name": "Headband of Intellect Knowledge Skill Selection"
+        },
+        {
+          "name": "Merform Belt Merfolk Form",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Merform Belt Merfolk Form"
+        },
+        {
+          "name": "Unarmed Benevolent",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Benevolent"
+        },
+        {
+          "name": "Unarmed Conductive",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Conductive"
+        },
+        {
+          "name": "Unarmed Corrosive",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Corrosive"
+        },
+        {
+          "name": "Unarmed Corrosive Burst",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Corrosive Burst"
+        },
+        {
+          "name": "Unarmed Cruel",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Cruel"
+        },
+        {
+          "name": "Unarmed Cunning",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Cunning"
+        },
+        {
+          "name": "Unarmed Dispelling",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Dispelling"
+        },
+        {
+          "name": "Unarmed Dispelling Burst",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Dispelling Burst"
+        },
+        {
+          "name": "Unarmed Furious",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Furious"
+        },
+        {
+          "name": "Unarmed Furyborn",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Furyborn"
+        },
+        {
+          "name": "Unarmed Glorious",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Glorious"
+        },
+        {
+          "name": "Unarmed Grayflame",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Grayflame"
+        },
+        {
+          "name": "Unarmed Grounding",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Grounding"
+        },
+        {
+          "name": "Unarmed Guardian",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Guardian"
+        },
+        {
+          "name": "Unarmed Heartseeker",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Heartseeker"
+        },
+        {
+          "name": "Unarmed Huntsman",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Huntsman"
+        },
+        {
+          "name": "Unarmed Igniting",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Igniting"
+        },
+        {
+          "name": "Unarmed Impact",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Impact"
+        },
+        {
+          "name": "Unarmed Invigorating",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Invigorating"
+        },
+        {
+          "name": "Unarmed Jurist",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Jurist"
+        },
+        {
+          "name": "Unarmed Ki Intensifying",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Ki Intensifying"
+        },
+        {
+          "name": "Unarmed Lifesurge",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Lifesurge"
+        },
+        {
+          "name": "Unarmed Limning",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Limning"
+        },
+        {
+          "name": "Unarmed Menacing",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Menacing"
+        },
+        {
+          "name": "Unarmed Mimetic",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Mimetic"
+        },
+        {
+          "name": "Unarmed Negating",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Negating"
+        },
+        {
+          "name": "Unarmed Neutralizing",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Neutralizing"
+        },
+        {
+          "name": "Unarmed Nullifying",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Nullifying"
+        },
+        {
+          "name": "Unarmed Ominous",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Ominous"
+        },
+        {
+          "name": "Unarmed Phase locking",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Phase locking"
+        },
+        {
+          "name": "Unarmed Planar",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Planar"
+        },
+        {
+          "name": "Unarmed Quenching",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Quenching"
+        },
+        {
+          "name": "Unarmed Repositioning",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Repositioning"
+        },
+        {
+          "name": "Unarmed Seaborne",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Seaborne"
+        },
+        {
+          "name": "Unarmed Spellstealing",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Spellstealing"
+        },
+        {
+          "name": "Unarmed Stalking",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Stalking"
+        },
+        {
+          "name": "Unarmed Thawing",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Thawing"
+        },
+        {
+          "name": "Unarmed Valiant",
+          "doneness": "not-started",
+          "type_facet": "UnarmedDisplay",
+          "standing": "origin",
+          "display_name": "Unarmed Valiant"
+        }
+      ]
+    },
+    {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 1126,
+      "done": 1128,
       "partial": 28,
-      "not_started": 85,
+      "not_started": 83,
       "denominator": 1239,
-      "pct": 90.9,
+      "pct": 91.0,
       "excluded_from_percentage": 185,
       "standing_breakdown": {
         "origin": 1239,
@@ -81,7 +419,7 @@
         },
         {
           "name": "Aklys",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Exotic.Bludgeoning",
           "standing": "unclassified",
           "display_name": "Aklys"
@@ -158,7 +496,7 @@
         },
         {
           "name": "Alchemist's Kit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Kit",
           "standing": "unclassified",
           "display_name": "Alchemist's Kit"
@@ -431,7 +769,7 @@
         },
         {
           "name": "Assisting Gloves",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Glove.LesserMinor.Consumable",
           "standing": "unclassified",
           "display_name": "Assisting Gloves"
@@ -1012,7 +1350,7 @@
         },
         {
           "name": "Belt of Foraging",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Belt.GreaterMinor",
           "standing": "unclassified",
           "display_name": "Belt of Foraging"
@@ -1033,7 +1371,7 @@
         },
         {
           "name": "Belt of Stoneskin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Belt.GreaterMajor",
           "standing": "unclassified",
           "display_name": "Belt of Stoneskin"
@@ -1362,7 +1700,7 @@
         },
         {
           "name": "Boots of Escape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Boot.LesserMedium",
           "standing": "unclassified",
           "display_name": "Boots of Escape"
@@ -1523,7 +1861,7 @@
         },
         {
           "name": "Bracers of Sworn Vengeance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Bracer.GreaterMedium",
           "standing": "unclassified",
           "display_name": "Bracers of Sworn Vengeance"
@@ -1824,7 +2162,7 @@
         },
         {
           "name": "Cap of Human Guise",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear.LesserMinor",
           "standing": "unclassified",
           "display_name": "Cap of Human Guise"
@@ -1915,7 +2253,7 @@
         },
         {
           "name": "Cat's Eye Crown",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear.GreaterMedium",
           "standing": "unclassified",
           "display_name": "Cat's Eye Crown"
@@ -1978,7 +2316,7 @@
         },
         {
           "name": "Celestial Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield.Magic.Specific.GreaterMedium.Light",
           "standing": "unclassified",
           "display_name": "Celestial Shield"
@@ -2167,28 +2505,28 @@
         },
         {
           "name": "Cloak of Fangs",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak.LesserMinor",
           "standing": "unclassified",
           "display_name": "Cloak of Fangs"
         },
         {
           "name": "Cloak of Fiery Vanishing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak.LesserMinor",
           "standing": "unclassified",
           "display_name": "Cloak of Fiery Vanishing"
         },
         {
           "name": "Cloak of Human Guise",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak.LesserMinor",
           "standing": "unclassified",
           "display_name": "Cloak of Human Guise"
         },
         {
           "name": "Cloak of the Diplomat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak.GreaterMedium",
           "standing": "unclassified",
           "display_name": "Cloak of the Diplomat"
@@ -2258,7 +2596,7 @@
         },
         {
           "name": "Cloak of the Scuttling Rat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak.GreaterMinor",
           "standing": "unclassified",
           "display_name": "Cloak of the Scuttling Rat"
@@ -2419,7 +2757,7 @@
         },
         {
           "name": "Corset of the Vishkanya",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMinor.Bodywear",
           "standing": "unclassified",
           "display_name": "Corset of the Vishkanya"
@@ -2482,7 +2820,7 @@
         },
         {
           "name": "Crown of Conquest",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear.GreaterMedium",
           "standing": "unclassified",
           "display_name": "Crown of Conquest"
@@ -2496,7 +2834,7 @@
         },
         {
           "name": "Crown of Swords",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear.GreaterMinor",
           "standing": "unclassified",
           "display_name": "Crown of Swords"
@@ -2748,7 +3086,7 @@
         },
         {
           "name": "Dogslicer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Martial.Slashing.Sword",
           "standing": "unclassified",
           "display_name": "Dogslicer"
@@ -2895,14 +3233,14 @@
         },
         {
           "name": "Dungeon Ring (Jailers)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.LesserMedium",
           "standing": "unclassified",
           "display_name": "Dungeon Ring (Jailers)"
         },
         {
           "name": "Dungeon Ring (Prisoners)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.LesserMinor",
           "standing": "unclassified",
           "display_name": "Dungeon Ring (Prisoners)"
@@ -3336,7 +3674,7 @@
         },
         {
           "name": "Flash Powder",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Alchemical.Consumable.Weapon.Ranged.Thrown.Splash",
           "standing": "unclassified",
           "display_name": "Flash Powder"
@@ -3560,14 +3898,14 @@
         },
         {
           "name": "Gecko (Riding)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Mount.Goods.Transportation.Container",
           "standing": "unclassified",
           "display_name": "Gecko (Riding)"
         },
         {
           "name": "Gecko (Riding/Combat Trained)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Mount.Goods.Transportation.Container",
           "standing": "unclassified",
           "display_name": "Gecko (Riding/Combat Trained)"
@@ -3798,8 +4136,8 @@
         },
         {
           "name": "Griffon Egg",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Mount.Goods",
           "standing": "origin",
           "display_name": "Griffon Egg"
         },
@@ -3889,14 +4227,14 @@
         },
         {
           "name": "Halo of Inner Calm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear.LesserMedium",
           "standing": "unclassified",
           "display_name": "Halo of Inner Calm"
         },
         {
           "name": "Halo of Menace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear.GreaterMajor",
           "standing": "unclassified",
           "display_name": "Halo of Menace"
@@ -4309,8 +4647,8 @@
         },
         {
           "name": "Hippogriff Egg",
-          "doneness": "not-started",
-          "type_facet": "PFSNotLegal",
+          "doneness": "done",
+          "type_facet": "Mount.Goods.Transportation",
           "standing": "origin",
           "display_name": "Hippogriff Egg"
         },
@@ -4442,7 +4780,7 @@
         },
         {
           "name": "Horsechopper",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Piercing.Slashing.Polearm",
           "standing": "unclassified",
           "display_name": "Horsechopper"
@@ -4470,35 +4808,35 @@
         },
         {
           "name": "Horseshoes of Crushing Blows +1",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Feet.GreaterMinor",
           "standing": "unclassified",
           "display_name": "Horseshoes of Crushing Blows +1"
         },
         {
           "name": "Horseshoes of Crushing Blows +2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Feet.LesserMedium",
           "standing": "unclassified",
           "display_name": "Horseshoes of Crushing Blows +2"
         },
         {
           "name": "Horseshoes of Crushing Blows +3",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Feet.LesserMajor",
           "standing": "unclassified",
           "display_name": "Horseshoes of Crushing Blows +3"
         },
         {
           "name": "Horseshoes of Crushing Blows +4",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Feet.GreaterMajor",
           "standing": "unclassified",
           "display_name": "Horseshoes of Crushing Blows +4"
         },
         {
           "name": "Horseshoes of Crushing Blows +5",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Feet.GreaterMajor",
           "standing": "unclassified",
           "display_name": "Horseshoes of Crushing Blows +5"
@@ -5163,7 +5501,7 @@
         },
         {
           "name": "Lucerne Hammer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Bludgeoning.Piercing.Reach.Polearm",
           "standing": "unclassified",
           "display_name": "Lucerne Hammer"
@@ -5338,7 +5676,7 @@
         },
         {
           "name": "Mask of Stony Demeanor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear.LesserMinor",
           "standing": "unclassified",
           "display_name": "Mask of Stony Demeanor"
@@ -5478,7 +5816,7 @@
         },
         {
           "name": "Meridian Belt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Belt.LesserMinor",
           "standing": "unclassified",
           "display_name": "Meridian Belt"
@@ -5597,7 +5935,7 @@
         },
         {
           "name": "Mithral Heavy Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield.Magic.Specific.LesserMinor.Heavy",
           "standing": "unclassified",
           "display_name": "Mithral Heavy Shield"
@@ -5905,7 +6243,7 @@
         },
         {
           "name": "Necklace of Ki Serenity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Amulet.LesserMedium",
           "standing": "unclassified",
           "display_name": "Necklace of Ki Serenity"
@@ -6983,7 +7321,7 @@
         },
         {
           "name": "Ring of Craft Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.LesserMedium",
           "standing": "unclassified",
           "display_name": "Ring of Craft Magic"
@@ -7039,7 +7377,7 @@
         },
         {
           "name": "Ring of Ferocious Action",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.LesserMinor",
           "standing": "unclassified",
           "display_name": "Ring of Ferocious Action"
@@ -7095,14 +7433,14 @@
         },
         {
           "name": "Ring of Maniacal Devices",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.GreaterMinor",
           "standing": "unclassified",
           "display_name": "Ring of Maniacal Devices"
         },
         {
           "name": "Ring of Rat Fangs",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.GreaterMinor",
           "standing": "unclassified",
           "display_name": "Ring of Rat Fangs"
@@ -7193,7 +7531,7 @@
         },
         {
           "name": "Ring of Swarming Stabs",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.GreaterMinor",
           "standing": "unclassified",
           "display_name": "Ring of Swarming Stabs"
@@ -7235,7 +7573,7 @@
         },
         {
           "name": "Ring of the Sophisticate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.LesserMedium",
           "standing": "unclassified",
           "display_name": "Ring of the Sophisticate"
@@ -7256,7 +7594,7 @@
         },
         {
           "name": "Robe of Arcane Heritage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMedium.Robe",
           "standing": "unclassified",
           "display_name": "Robe of Arcane Heritage"
@@ -7970,7 +8308,7 @@
         },
         {
           "name": "Seafoam Shawl",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak.GreaterMinor",
           "standing": "unclassified",
           "display_name": "Seafoam Shawl"
@@ -8054,7 +8392,7 @@
         },
         {
           "name": "Shackles of Durance Vile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Bracer.LesserMedium",
           "standing": "unclassified",
           "display_name": "Shackles of Durance Vile"
@@ -8096,7 +8434,7 @@
         },
         {
           "name": "Shawl of Life-Keeping",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak.LesserMinor",
           "standing": "unclassified",
           "display_name": "Shawl of Life-Keeping"
@@ -8390,7 +8728,7 @@
         },
         {
           "name": "Slippers of the Triton",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Boot.GreaterMajor",
           "standing": "unclassified",
           "display_name": "Slippers of the Triton"
@@ -8411,7 +8749,7 @@
         },
         {
           "name": "Snag Net",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Exotic.Piercing.Thrown",
           "standing": "unclassified",
           "display_name": "Snag Net"
@@ -8929,7 +9267,7 @@
         },
         {
           "name": "Stonemist Cloak",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak.LesserMinor",
           "standing": "unclassified",
           "display_name": "Stonemist Cloak"
@@ -9440,14 +9778,14 @@
         },
         {
           "name": "Underwater Crossbow (Heavy)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Simple.Piercing.Crossbow",
           "standing": "unclassified",
           "display_name": "Underwater Crossbow (Heavy)"
         },
         {
           "name": "Underwater Crossbow (Light)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Simple.Piercing.Crossbow",
           "standing": "unclassified",
           "display_name": "Underwater Crossbow (Light)"
@@ -10198,7 +10536,7 @@
         },
         {
           "name": "Cruel",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Ammunition.Melee.Ranged",
           "standing": "unclassified",
           "display_name": "Cruel (Weapon.Ammunition.Melee.Ranged)"
@@ -10212,14 +10550,14 @@
         },
         {
           "name": "Darkleaf Cloth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "unclassified",
           "display_name": "Darkleaf Cloth (BaseMaterial.MasterworkQuality.Armor)"
         },
         {
           "name": "Darkleaf Cloth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "unclassified",
           "display_name": "Darkleaf Cloth (BaseMaterial.MasterworkQuality.Armor) #2"
@@ -10240,7 +10578,7 @@
         },
         {
           "name": "Deadly",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "unclassified",
           "display_name": "Deadly"
@@ -11333,6 +11671,28 @@
       ]
     },
     {
+      "kind": "skill",
+      "label": "Skills",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 1,
+      "standing_breakdown": {
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Craft (Tattoos)",
+          "doneness": "not-started",
+          "type_facet": "Intelligence.Craft.Base",
+          "standing": "unclassified",
+          "display_name": "Craft (Tattoos)"
+        }
+      ]
+    },
+    {
       "kind": "spell",
       "label": "Spells",
       "done": 0,
@@ -11351,6 +11711,49 @@
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Medusa Mask Gaze"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 4,
+      "denominator": 4,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 4
+      },
+      "items": [
+        {
+          "name": "Bard's Instrument",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bard's Instrument"
+        },
+        {
+          "name": "Bard's Instrument (Choose)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bard's Instrument (Choose)"
+        },
+        {
+          "name": "Bard's Instrument (Random)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bard's Instrument (Random)"
+        },
+        {
+          "name": "The Shield of the Sun",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "The Shield of the Sun"
         }
       ]
     }

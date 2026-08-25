@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Chameleon",
+    "name": "Chameleon",
+    "class": "Aegis",
+    "description": "Gain a +%1 bonus to Stealth.|AegisChameleonBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Chameleon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisChameleonBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a +%1 bonus to Stealth.|AegisChameleonBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|AegisChameleonBonus|TYPE=Circumstance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisChameleonBonus|4"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 91,
+    "record_key": "Aegis ~ Chameleon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

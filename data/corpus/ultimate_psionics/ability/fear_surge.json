@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Nightmare Constructor ~ Fear Surge",
+    "name": "Fear Surge",
+    "description": "When you are within %1 ft. of a creature that suffers from the shaken, frightened, or panicked condition, you gain %2 additional evolution points to spend on the horror.  These evolution points only last while there is a creature within %1 ft. of the horror with the shaken, frightened, or panicked condition.|FearSurgeRange|FearSurgeEvolutionPoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nightmare Constructor ~ Fear Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearSurgeRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FSEPhandler|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearSurgeEvolutionPoints|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you are within %1 ft. of a creature that suffers from the shaken, frightened, or panicked condition, you gain %2 additional evolution points to spend on the horror.  These evolution points only last while there is a creature within %1 ft. of the horror with the shaken, frightened, or panicked condition.|FearSurgeRange|FearSurgeEvolutionPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearSurgeRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearSurgeEvolutionPoints|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|FSEPhandler|FearSurgeEvolutionPoints"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 14,
+    "record_key": "Nightmare Constructor ~ Fear Surge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sedition Domain ~ Undermine Authority",
     "name": "Undermine Authority",
-    "class": "Sedition Domain",
+    "class": "Cleric",
     "description": "%1 times per day, you can worsen the attitude of a character toward any governmental officer or leader acting against your religion. This likewise reduces that officer's or leader's influence with that character. The persuasion requires enough conversation to attempt a Diplomacy check (usually 1 minute) and you attempt a Diplomacy check as normal to influence the target's attitude. However, if you succeed at the check, the target is subject to a mind-affecting compulsion that alters its attitude for %2 days. The target can resist the compulsion with a successful Will saving throw (DC %3). If the target is under a mind-affecting effect from that officer or leader, the effect is automatically suppressed for 1 minute.|WIS|DomainSeditionLVL|DomainSeditionDC",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

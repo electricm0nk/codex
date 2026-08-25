@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Horse Master",
+    "name": "Horse Master",
+    "description": "You blend horsemanship skills from disparate traditions into a seamless mounted combat technique.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Cavalier ~ Expert Trainer"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Ride=6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NonCavalierLevel|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You blend horsemanship skills from disparate traditions into a seamless mounted combat technique."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NonCavalierLevel|TL-classlevel(\"Cavalier\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CavalierLevel|NonCavalierLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Use your character level to determine your effective druid level for determining the powers and abilities of your mount. &nl; [Normal] You use your cavalier level to determine your effective druid level for determining the powers and abilities of your mount (NCL=%2) (CL=%1).|CavalierLevel|NonCavalierLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 175,
+    "record_key": "Horse Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Elemental Defense ~ Flesh of Wood",
+    "name": "Flesh of Wood",
+    "class": "Elemental Defense",
+    "description": "Element wood; Type defense (Su); Level -; Burn 0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elemental Defense ~ Flesh of Wood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Defense Wild Talent"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type defense (Su); Level -; Burn 0"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Your skin toughens like timber and can turn aside some blows. You gain a +1 enhancement bonus to your existing natural armor bonus. By accepting 1 point of burn, you can increase this enhancement bonus by 1. For every 3 levels beyond 2nd, you can accept 1 additional point of burn to further increase this enhancement bonus by 1 (to a maximum of +7 at 17th level). Whenever you accept burn while using a wood wild talent, phytokinetic power causes your full natural armor bonus to apply to your touch AC for 1 round. You can dismiss and restore this effect as an immediate action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 61,
+    "record_key": "Elemental Defense ~ Flesh of Wood"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

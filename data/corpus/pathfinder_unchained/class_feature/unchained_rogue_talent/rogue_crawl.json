@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rogue Talent ~ Rogue Crawl",
+    "name": "Rogue Crawl",
+    "class": "Unchained Rogue Talent",
+    "description": "While prone, you can move at half speed. This movement provokes attacks of opportunity as normal. You can take a 5-foot steps while crawling and you reduce you attack roll and AC penalties for being prone by 2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue Talent ~ Rogue Crawl"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Unchained Rogue Talent"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue Talent ~ Rogue Crawl"
+      },
+      {
+        "key": "DESC",
+        "value": "While prone, you can move at half speed. This movement provokes attacks of opportunity as normal. You can take a 5-foot steps while crawling and you reduce you attack roll and AC penalties for being prone by 2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 653,
+    "record_key": "Unchained Rogue Talent ~ Rogue Crawl"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

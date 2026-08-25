@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:39Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_14)",
+    "name": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_14)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Good,Liberation,Void|PREALIGN:NG,CG,CN"
+      },
+      {
+        "key": "DESC",
+        "value": "Empyreal lord of distance, silence, space"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Silence Between"
+      },
+      {
+        "key": "FACT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Empyreal Lords"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Starknife"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CG"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_deities.lst",
+    "sha256": "4efea24653a7d3bd8d418ad934f8b0f1294ff22c4e0c6649460e1bb39a77d8c3",
+    "line": 14,
+    "record_key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_14)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_6:b6_deities.lst:14"
+  }
+}

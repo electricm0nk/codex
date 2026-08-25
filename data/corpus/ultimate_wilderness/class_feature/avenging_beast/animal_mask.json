@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Avenging Beast ~ Animal Mask",
+    "name": "Animal Mask",
+    "class": "Vigilante",
+    "description": "An avenging beast gains an ornate animal-headed mask that is a focus for his power and must be worn when assuming his vigilante identity. This mask symbolizes one specific animal, and the animal cannot be changed once chosen. Without this mask, an avenging beast cannot assume his vigilante identity. An avenging beast who loses his mask can replace it after 1 week through a specialized ritual that takes 8 hours to complete and costs 200 gp per avenging beast level. This alters dual identity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Avenging Beast ~ Animal Mask"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.AvengingBeastClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An avenging beast gains an ornate animal-headed mask that is a focus for his power and must be worn when assuming his vigilante identity. This mask symbolizes one specific animal, and the animal cannot be changed once chosen. Without this mask, an avenging beast cannot assume his vigilante identity. An avenging beast who loses his mask can replace it after 1 week through a specialized ritual that takes 8 hours to complete and costs 200 gp per avenging beast level. This alters dual identity."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_ui.lst",
+    "sha256": "82bfd1c734f1fc071a7e3de22959a711631bdcab7e0e9a921b109e9ee49fe46d",
+    "line": 13,
+    "record_key": "Avenging Beast ~ Animal Mask"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

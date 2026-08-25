@@ -41,6 +41,20 @@ wheel"* — they also said they did not recall making the original ruling.
 That is the failure this doctrine prevents. Not a wrong decision: **a decision that was right when
 made, whose expiry condition was satisfied and never checked.**
 
+## What this doctrine does NOT cover — blockers
+
+This doctrine governs a **capability deferral**: a deliberate, up-front scoping choice of the form
+*"we are not building X yet"*, made while planning, with a stated revisit condition.
+
+It does **not** cover a **blocker** — something discovered *during execution* that stands between
+the bundle and its own stated Definition of Done. Those are governed by
+`./blocker-closure-doctrine.md`: clear it, or escalate to the operator and wait. Never defer it.
+
+The two are easy to conflate, and conflating them is exactly how a blocker gets laundered into a
+deferral — it acquires a "named owner" and a forward-scope-register row and stops looking like
+unfinished work. **The test: was this scope in the Definition of Done when the bundle launched?**
+If yes, it is a blocker and this doctrine does not apply to it.
+
 ## What it does not mean
 
 It is **not** a licence to relitigate settled decisions. A ruling with no stated condition is simply

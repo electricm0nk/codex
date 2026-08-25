@@ -1,0 +1,81 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Trompe l'Oeil ~ Attacks",
+    "delivery": null,
+    "description": "A trompe l'oeil retains all weapon proficiencies and natural weapons. If it's depicted wielding any manufactured weapons, the weapons are masterwork and gain a +%1 enhancement bonus (or equivalent weapon special abilities) when wielded by it. The bonus is based on its HD. A trompe l'oeil's weapons melt into puddles of nonmagical paint when the creature is destroyed.",
+    "description_variables": [
+      "TrompeLOeilWeapon"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:trompe_l_oeil_attacks",
+    "name": "Attacks",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|TrompeLOeilWeapon|1|PREHD:MIN=4,MAX=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrompeLOeilWeapon|2|PREHD:MIN=7,MAX=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrompeLOeilWeapon|3|PREHD:MIN=10,MAX=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrompeLOeilWeapon|4|PREHD:MIN=13,MAX=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrompeLOeilWeapon|5|PREHD:MIN=16"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrompeLOeilWeapon|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A trompe l'oeil retains all weapon proficiencies and natural weapons. If it's depicted wielding any manufactured weapons, the weapons are masterwork and gain a +%1 enhancement bonus (or equivalent weapon special abilities) when wielded by it. The bonus is based on its HD. A trompe l'oeil's weapons melt into puddles of nonmagical paint when the creature is destroyed.|TrompeLOeilWeapon"
+      },
+      {
+        "key": "KEY",
+        "value": "Trompe l'Oeil ~ Attacks"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.242"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.TrompeLOeil"
+      }
+    ],
+    "source_page": "p.242",
+    "traits": [
+      "TrompeLOeil"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 330,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Trompe l'Oeil ~ Attacks",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

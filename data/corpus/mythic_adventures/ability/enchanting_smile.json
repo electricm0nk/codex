@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Flexible School Power ~ Enchantment ~ Enchanting Smile",
+    "name": "Enchanting Smile",
+    "description": "You gain a +%1 enhancement bonus on Bluff, Diplomacy, and Intimidate skill checks.|EnchantmentEnchantingSmileBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flexible School Power ~ Enchantment ~ Enchanting Smile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Enchantment School ~ Enchanting Smile"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnchantmentEnchantingSmileBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus on Bluff, Diplomacy, and Intimidate skill checks.|EnchantmentEnchantingSmileBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you succeed at a saving throw against a spell of the enchantment school, that spell is reflected back at its caster, as per Spell Turning.|PREVARGTEQ:Ability_FlexibleSchool_EnchantmentLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy,Intimidate|EnchantmentEnchantingSmileBonus|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnchantmentEnchantingSmileBonus|min(6,Ability_FlexibleSchool_EnchantmentLVL/5+2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 458,
+    "record_key": "Flexible School Power ~ Enchantment ~ Enchanting Smile"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

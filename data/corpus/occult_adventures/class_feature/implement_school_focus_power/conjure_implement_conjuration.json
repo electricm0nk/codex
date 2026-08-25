@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Conjure Implement",
     "name": "Conjure Implement [Conjuration]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "You can expend 1 point of mental focus to conjure any item that qualifies as an implement that you know how to use. This implement can be used as the item in question, functioning as a masterwork version of that item, and can also be used to cast your psychic spells, even though you did not select it at the beginning of the day. If you have more than one implement for the same school, decide which set of spells the conjured implement will grant when you first conjure it. The implement can't be used to store mental focus or create any effects that require mental focus. The implement lasts for %1 minutes.|10*OccultistLVL",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

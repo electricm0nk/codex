@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Transformed Flesh Stain",
+    "name": "Transformed Flesh Stain",
+    "description": "The entirety of your flesh darkens and mutates to look more like that of a hive creature. You take a -2 penalty to your Charisma score.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Transformed Flesh Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveTransformedFleshStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "DESC",
+        "value": "The entirety of your flesh darkens and mutates to look more like that of a hive creature. You take a -2 penalty to your Charisma score."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 452,
+    "record_key": "Hive Corruption ~ Transformed Flesh Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

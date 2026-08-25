@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bloodrager ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Bloodrager",
+    "description": "The bloodrager's class skills are Acrobatics (Dex), Climb (Str), Craft (Int), Handle Animal (Cha), Intimidate (Cha), Knowledge (arcana) (Int), Perception (Wis), Ride (Dex), Spellcraft (Int), Survival (Wis), and Swim (Str).&nl;Skill Ranks per Level: 4 + Int modifier.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Bloodrager Class Feature"
+      },
+      {
+        "key": "DESC",
+        "value": "The bloodrager's class skills are Acrobatics (Dex), Climb (Str), Craft (Int), Handle Animal (Cha), Intimidate (Cha), Knowledge (arcana) (Int), Perception (Wis), Ride (Dex), Spellcraft (Int), Survival (Wis), and Swim (Str).&nl;Skill Ranks per Level: 4 + Int modifier."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Acrobatics|Climb|Craft|Handle Animal|Intimidate|Knowledge (Arcana)|Perception|Ride|Spellcraft|Survival|Swim"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 331,
+    "record_key": "Bloodrager ~ Class Skills"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

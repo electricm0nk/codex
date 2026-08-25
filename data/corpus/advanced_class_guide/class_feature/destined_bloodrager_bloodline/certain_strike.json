@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Destined Bloodrager Bloodline ~ Certain Strike",
     "name": "Certain Strike",
-    "class": "Destined Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Once during a bloodrage, you may reroll any one attack roll. You must decide to use this ability after the first roll is made, but before the GM reveals the results. You must take the second result, even if it is worse.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

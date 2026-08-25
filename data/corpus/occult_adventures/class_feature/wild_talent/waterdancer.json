@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Waterdancer",
     "name": "Waterdancer",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element water; Type utility (Sp); Level 3; Burn 0 You call forth a current of water to increase your speed and allow you to swim with ease, as if under the effects of slipstreamAPG with unlimited duration.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Brutal Bloodline ~ Wings of the Abyss",
     "name": "Wings of the Abyss",
-    "class": "Brutal Bloodline",
+    "class": "Sorcerer",
     "description": "You can sprout leathery wings and fly for %1 minutes per day, with a speed of 60 feet and good maneuverability. This duration does not need to be consecutive, but it must be used in 1-minute increments. This bloodline power replaces strength of the abyss.|Sorcerer_BrutalWingsOfTheAbyss_Duration",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

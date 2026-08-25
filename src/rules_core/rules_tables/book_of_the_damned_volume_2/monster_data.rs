@@ -111,6 +111,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Brimorak)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 7,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Brimorak ~ Breath Weapon",
@@ -124,6 +127,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Brimorak)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 8,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Brimorak ~ Burning Hooves",
@@ -137,6 +143,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Brimorak)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 9,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Brimorak ~ Flaming Weapon",
@@ -150,6 +159,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Brimorak)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 10,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Brimorak ~ Smoke Breath",
@@ -163,6 +175,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Brimorak)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 11,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Seraptis ~ Bloodless",
@@ -176,6 +191,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Seraptis)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 15,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Seraptis ~ Compelling Domination",
@@ -189,6 +207,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Seraptis)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 16,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Seraptis ~ Gaze of Despair",
@@ -202,6 +223,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Seraptis)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 17,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Seraptis ~ Grab",
@@ -215,6 +239,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Seraptis)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 18,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Seraptis ~ Ravenous Embrace",
@@ -228,6 +255,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Seraptis)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 19,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vavakia ~ Breath Weapon",
@@ -241,6 +271,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Vavakia)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 23,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vavakia ~ Smoking Wound",
@@ -254,6 +287,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Vavakia)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 24,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vavakia ~ Stun",
@@ -267,6 +303,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Vavakia)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 25,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vermlek ~ Abandon Flesh",
@@ -280,6 +319,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Vermlek)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 29,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vermlek ~ Flesh Armor",
@@ -293,6 +335,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Vermlek)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 30,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vermlek ~ Inhabit Body",
@@ -306,6 +351,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Vermlek)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 31,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Vermlek ~ Negative Energy Affinity",
@@ -319,5 +367,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Demon (Vermlek)"],
         source_file: "botd2_abilities_race.lst",
         source_line: 32,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
 ];

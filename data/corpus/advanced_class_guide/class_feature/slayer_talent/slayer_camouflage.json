@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Slayer Talent ~ Slayer Camouflage",
     "name": "Slayer Camouflage",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "A slayer can use the Stealth skill to hide in any of his favored terrains, even if the terrain doesn't grant cover or concealment.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -305,7 +305,10 @@ fn ranger_level_19_to_20_crosses_the_capstone_threshold_with_master_hunter() {
             plan.automatic_features
         )
     });
-    assert_eq!(master_hunter_grant.effects[0].value, 0);
+    // SD-32 Epic 1 (compute-library wiring): `human_ranger_input`'s Wisdom 12
+    // (modifier +1) now resolves through the corpus's own
+    // `BONUS:VAR|MasterHunterDC|10+(MasterHunterLVL/2)+WIS` formula: 10 + 20/2 + 1 = 21.
+    assert_eq!(master_hunter_grant.effects[0].value, 21);
 
     let fifth_favored_enemy_grant = grant("favored enemy 5").unwrap_or_else(|| {
         panic!(

@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:11Z",
+  "data": {
+    "key": "Leshy Subdomain",
+    "name": "Leshy Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Leshy Subdomain],[PREVARLT:PlantDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Leshy Caller|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Plant)|PREVARGTEQ:DomainPlantAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Bramble Armor|PREVARGTEQ:DomainPlantAbilityTriggerLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Plant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a strong connection to these little manifestations of nature spirits."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Leshy Subdomain=1|Tree Shape|Leshy Subdomain=2|Barkskin|Leshy Subdomain=3|Plant Growth|Leshy Subdomain=4|Command Plants|Leshy Subdomain=5|Commune with Nature|Leshy Subdomain=6|Repel Wood|Leshy Subdomain=7|Animate Plants|Leshy Subdomain=8|Control Plants|Leshy Subdomain=9|Shambler"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Plant"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_domains.lst",
+    "sha256": "b2f97a67e5a1d0671916f982443913c453e92e1cadbc3a94795340f1f4593112",
+    "line": 9,
+    "record_key": "Leshy Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

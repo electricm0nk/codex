@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bard Archetype ~ Savage Skald",
     "name": "Savage Skald",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Far from civilization, furious tribes have their own war-singers, work-chanters, and lore-keepers, savaging enemies with song and sword alike.",
     "raw_tokens": [
       {
@@ -63,6 +63,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bard"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Savage Skald],[!PREFACT:1,ABILITIES,Bard_Archetype_Fascinate=True,Bard_Archetype_Suggestion=True,Bard_Archetype_JackOfAllTrades=True,Bard_Archetype_SoothingPerformance=True,Bard_Archetype_MassSuggestion=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_JackOfAllTrades|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_SoothingPerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_MassSuggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Fascinate|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_JackOfAllTrades|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_SoothingPerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_MassSuggestion|true"
       }
     ]
   },
@@ -79,5 +123,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

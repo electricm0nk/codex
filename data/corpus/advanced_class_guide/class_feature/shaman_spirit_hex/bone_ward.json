@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Bone Ward",
     "name": "Bone Ward",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "A shaman touches a willing creature (including herself) and grants a bone ward. The warded creature becomes encircled by a group of flying bones that grant it a +%1 deflection bonus to AC for|ShamanBoneWardBonus",
     "raw_tokens": [
       {
@@ -84,5 +84,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

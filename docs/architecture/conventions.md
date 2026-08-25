@@ -1,7 +1,10 @@
 # Conventions
 
 > Scope: the repo-wide idiom catalog — the structural patterns every plane converges on independently, and what to do when adding new code.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure). **Path correction 2026-08-22**
+> (SD-32 closure epilogue): pilot_compute.rs (old path src/rules_core/pilot_compute.rs, no longer valid) updated to
+> `src/rules_core/pilot_compute/mod.rs` — the module became a directory during SD-31; no other
+> content in this doc re-verified.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This is the doc to point an agent (or a new contributor) at for "how do we
@@ -15,7 +18,7 @@ Every computed value carries an explanation record proving how it was
 derived; every diagnostic carries `claim_blocking: bool`; a computation is
 blocked iff at least one claim-blocking diagnostic exists. Nothing fabricates
 a value it cannot prove. See `compute_total_saves` and
-`build_pilot_headless_receipt` in `src/rules_core/pilot_compute.rs`, and
+`build_pilot_headless_receipt` in `src/rules_core/pilot_compute/mod.rs`, and
 `printed_sheet_cell_map` in `src/rules_core/contract.rs`. **When adding a new
 computed field**: push a real explanation record on the supported path, or a
 named claim-blocking diagnostic and a zeroed/absent value on the unsupported
@@ -141,7 +144,7 @@ resolution."
 
 ## Gate-then-explain pairing
 
-Per-class/per-race compute functions in `src/rules_core/pilot_compute.rs`
+Per-class/per-race compute functions in `src/rules_core/pilot_compute/mod.rs`
 pair a `supported_<class>_level(input) -> Option<u8>` gate with an
 `explain_*`/`compute_*` function that either produces real explanation
 records or pushes a named claim-blocking diagnostic and stops. **When adding

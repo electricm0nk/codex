@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Inner Peace",
+    "name": "Inner Peace",
+    "description": "Knowledge (Religion) and Knowledge (Psionics) are class skills; gain +1 on them if they are already class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Inner Peace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.MaenadTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Inner Peace],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Maenad,RACESUBTYPE=Maenad],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Maenad]"
+      },
+      {
+        "key": "DESC",
+        "value": "Knowledge (Religion) and Knowledge (Psionics) are class skills; gain +1 on them if they are already class skills."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Inner Peace both|Inner Peace religion|Inner Peace psionics|Inner Peace neither"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 192,
+    "record_key": "Trait ~ Inner Peace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

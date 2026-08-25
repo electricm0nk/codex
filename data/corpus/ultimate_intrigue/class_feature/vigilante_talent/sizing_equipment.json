@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Sizing Equipment",
     "name": "Sizing Equipment",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The brute has learned how to adjust his magic armor so that it provides him some protection while in his vigilante identity. Magic armor the brute wears that is sized for his social identity provides an armor bonus equal to its normal armor bonus - 1 while he is in his vigilante identity. In addition, wielding a magic weapon properly sized for his social identity deals damage as if it were a magic weapon properly sized for his vigilante identity, but it imposes a -1 penalty on attack rolls. This talent only applies to magic arms and armor; inappropriately sized mundane arms and armor are not affected.|!PRECLASS:1,Vigilante=6",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

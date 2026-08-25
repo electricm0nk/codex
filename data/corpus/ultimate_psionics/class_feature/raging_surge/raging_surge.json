@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Raging Surge",
+    "name": "Raging Surge",
+    "class": null,
+    "description": "Cannot wild surge unless raging, but wild surge rounds don't count against rage limit.  Psychic enervation: lose %1 hit points.|RagingHPLoss",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.SurgeType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagingHPLoss|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Cannot wild surge unless raging, but wild surge rounds don't count against rage limit.  Psychic enervation: lose %1 hit points.|RagingHPLoss"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Raging Surge Bond Trigger|!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderSurgeBond|PREABILITY:1,CATEGORY=Special Ability,Raging Surge"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rage Power|ImpSurgeBond|PREABILITY:1,CATEGORY=Internal,Wilder ~ Improved Surge Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagingHPLoss|SurgeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1054,
+    "record_key": "Raging Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

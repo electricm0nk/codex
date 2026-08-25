@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Mindlock",
+    "name": "Mindlock",
+    "class": "Terror",
+    "description": "Make a melee touch attack to mindlock a target for %1 minutes (Will DC %2 negates).  The mindlock allows you to either channel devastating touch at range or Intimidate out of normal range.  Mindlock range is %3 feet; neither line of effect nor line of sight needed.  This is a mind-affecting effect.  Number of active mindlocks: %4.|MindlockDuration|MindlockDC|MindlockRange|ActiveMindlocks",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Mindlock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindlockDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindlockDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindlockRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ActiveMindlocks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Make a melee touch attack to mindlock a target for %1 minutes (Will DC %2 negates).  The mindlock allows you to either channel devastating touch at range or Intimidate out of normal range.  Mindlock range is %3 feet; neither line of effect nor line of sight needed.  This is a mind-affecting effect.  Number of active mindlocks: %4.|MindlockDuration|MindlockDC|MindlockRange|ActiveMindlocks"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindlockDuration|TerrorAugmentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindlockDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindlockRange|10*TerrorAugmentLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ActiveMindlocks|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindlockDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Mindlock)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 300,
+    "record_key": "Terror ~ Mindlock"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

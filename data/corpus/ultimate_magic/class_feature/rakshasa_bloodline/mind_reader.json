@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rakshasa Bloodline ~ Mind Reader",
     "name": "Mind Reader",
-    "class": "Rakshasa Bloodline",
+    "class": "Sorcerer",
     "description": "You can read minds as a spell-like ability. This ability acts like detect thoughts, except it lasts only 1 round, you use it on a single target as a standard action, and if the target fails its Will save, you gain information as if you had concentrated on it for 3 rounds.",
     "raw_tokens": [
       {
@@ -92,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

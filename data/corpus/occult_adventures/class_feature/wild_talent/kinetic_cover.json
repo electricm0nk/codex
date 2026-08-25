@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Kinetic Cover",
     "name": "Kinetic Cover",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element aether, earth, or water; Type utility (Sp); Level 1; Burn 0 You call up elemental matter to defend yourself and your allies from attacks. As a standard action, you can select one face of a square within 30 feet of you and move elemental matter to block that face, providing total cover from that direction. The face you select must be supported by the ground, and the kinetic cover cannot support more than 5 pounds of weight. Water, ice, and telekinetic force are translucent, but earth, metal, mud, and the like are opaque and block line of sight. A creature who strikes the cover can easily destroy it. Regardless of its composition, the cover has hardness 0, AC 5, and 2 hit points per kineticist level you possess. You can have a number of kinetic covers in existence equal to your Constitution modifier + 1/2 your kineticist level.",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

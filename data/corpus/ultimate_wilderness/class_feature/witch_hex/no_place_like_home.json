@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Witch Hex ~ No Place Like Home",
     "name": "No Place Like Home",
-    "class": "Witch Hex",
+    "class": "Witch",
     "description": "The witch fills an ally with the safety he feels at home or inflicts pangs of homesickness to hamper an enemy's defenses. She chooses a target for the hex within 30 feet. If she chooses an ally, that ally gains a +%1 dodge bonus to AC against traps and on Reflex saves against traps. If she chooses an opponent, that opponent takes a -%1 penalty to AC against traps and on Reflex saves against traps. Either way, the effects last for 1 minute. The target can attempt a Will save to negate the effects of the hex. A creature targeted by this hex cannot be targeted again by this hex for 1 day.|WitchNoPlaceLikeHome",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

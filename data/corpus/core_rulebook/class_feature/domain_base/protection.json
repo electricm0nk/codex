@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Domain Base ~ Protection",
+    "name": "Protection",
+    "class": "Domain Base",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Base ~ Protection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ProtectionDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainProtectionAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ProtectionDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionSaveBonus|(DomainProtectionLVL/5)+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionDC|10+(DomainProtectionLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainProtectionAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Protection],[PREVARLT:ProtectionDomain,1]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 638,
+    "record_key": "Domain Base ~ Protection"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

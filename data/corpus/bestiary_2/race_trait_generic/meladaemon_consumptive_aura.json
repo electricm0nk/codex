@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Meladaemon ~ Consumptive Aura",
+    "name": "Consumptive Aura",
+    "description": "A meladaemon radiates an aura of hunger to a radius of 20 feet.  Every round a creature begins its turn within this aura, it must succeed on a DC %1 Fortitude save or take 1d6 nonlethal damage and become fatigued from extreme hunger.  Creatures that do not need to eat are immune to this effect.|MeladaemonConsumptiveAuraDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Meladaemon ~ Consumptive Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MeladaemonConsumptiveAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A meladaemon radiates an aura of hunger to a radius of 20 feet.  Every round a creature begins its turn within this aura, it must succeed on a DC %1 Fortitude save or take 1d6 nonlethal damage and become fatigued from extreme hunger.  Creatures that do not need to eat are immune to this effect.|MeladaemonConsumptiveAuraDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Consumptive Aura"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeladaemonConsumptiveAuraDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MeladaemonConsumptiveAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Consumptive Aura)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(20 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 308,
+    "record_key": "Meladaemon ~ Consumptive Aura"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

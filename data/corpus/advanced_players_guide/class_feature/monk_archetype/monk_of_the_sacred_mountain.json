@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Monk of the Sacred Mountain",
     "name": "Monk of the Sacred Mountain",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "The monk of the sacred mountain finds strength and power in the earth beneath his feet. Rather than spinning though the battlefield with the fluid motion of the river, he roots himself to the ground, as immovable and unshakable as the stones of the mountain. A monk of the sacred mountain has the following class features.",
     "raw_tokens": [
       {
@@ -63,6 +63,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Sacred Mountain],[!PREFACT:1,ABILITIES,Monk_Archetype_Evasion=True,Monk_Archetype_SlowFall=True,Monk_Archetype_HighJump=True,Monk_Archetype_ImprovedEvasion=True,Monk_Archetype_TongueOfTheSunAndMoon=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TongueOfTheSunAndMoon|true"
       }
     ]
   },
@@ -79,5 +123,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

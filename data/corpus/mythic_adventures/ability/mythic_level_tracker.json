@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Level Tracker",
+    "name": "Mythic Level Tracker",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMythic"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicTierLevel|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 01|PREVARGTEQ:MythicTierLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 02|PREVARGTEQ:MythicTierLevel,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 03|PREVARGTEQ:MythicTierLevel,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 04|PREVARGTEQ:MythicTierLevel,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 05|PREVARGTEQ:MythicTierLevel,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 06|PREVARGTEQ:MythicTierLevel,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 07|PREVARGTEQ:MythicTierLevel,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 08|PREVARGTEQ:MythicTierLevel,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 09|PREVARGTEQ:MythicTierLevel,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier 10|PREVARGTEQ:MythicTierLevel,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mythic Tier|PREVARGTEQ:MythicTierLevel,1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LegendaryItemTaken|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LegendaryItemCap|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LegendaryItemCap|1+(MythicTierLevel>=3)+(MythicTierLevel>=6)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 8,
+    "record_key": "Mythic Level Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

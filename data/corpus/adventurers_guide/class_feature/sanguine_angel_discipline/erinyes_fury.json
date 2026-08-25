@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sanguine Angel Discipline ~ Erinyes Fury",
     "name": "Erinyes Fury",
-    "class": "Sanguine Angel Discipline",
+    "class": "Sanguine Angel",
     "description": "The sanguine angel can enter a dispassionate, murderous state as a free action, granting her additional combat prowess. This functions as rage, but the sanguine angel gains only half the usual bonuses from her rage but takes no penalty to her AC, can use all her normal skills and effects that require concentration, and is not fatigued when her rage ends. The sanguine angel cannot enter a rage for 1 minute after she ends her rage, and she cannot charge or run while under the effects of her rage. This fury is usable for a number of rounds each day equal to twice her class level. If the sanguine angel has levels in barbarian and has the dreadnought archetype, her sanguine angel levels instead stack with her barbarian levels to determine the duration of her rage.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

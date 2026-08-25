@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Maenad ~ Tempestuous Temper",
+    "delivery": null,
+    "description": "You are treated as Lawful when focused, Chaotic when not.  You may expend focus to gain +2 Strength, -2 Intelligence, -2 Wisdom for a turn.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:maenad_tempestuous_temper",
+    "name": "Tempestuous Temper",
+    "owners": [
+      "ultimate_psionics:monster:maenad"
+    ],
+    "source_page": "p.331",
+    "traits": [
+      "RacialTraits",
+      "MaenadRacialTrait",
+      "MaenadOutburst",
+      "MaenadInnerRage"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 260,
+    "record_key": "Maenad ~ Tempestuous Temper"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Carnivorous Crystal ~ Crystallize",
+    "delivery": "Extraordinary",
+    "description": "A creature entrapped by a carnivorous crystal's attack must succeed at a DC 22 Fortitude save each round or become helpless. If a helpless creature fails this save, it becomes petrified as its body crystallizes. In 1d4 hours, the petrified victim shatters and a new carnivorous crystal emerges from the remains. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:carnivorous_crystal_crystallize",
+    "name": "Crystallize",
+    "owners": [
+      "bestiary_3:monster:carnivorous_crystal"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature entrapped by a carnivorous crystal's attack must succeed at a DC 22 Fortitude save each round or become helpless. If a helpless creature fails this save, it becomes petrified as its body crystallizes. In 1d4 hours, the petrified victim shatters and a new carnivorous crystal emerges from the remains. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Carnivorous Crystal ~ Crystallize"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "TYPE",
+        "value": "CarnivorousCrystalRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.45",
+    "traits": [
+      "CarnivorousCrystalRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 527,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Carnivorous Crystal ~ Crystallize",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

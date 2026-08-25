@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Fey Creature ~ Spell-Like Abilities",
+    "name": "Spell-Like Abilities",
+    "description": "A fey creature with an Intelligence or Wisdom score of 8 or more has a cumulative number of spell-like abilities depending on its Hit Dice. Unless otherwise noted, an ability is usable once per day. Caster level equals the creature's HD (or the caster level of the base creature's spell-like abilities, whichever is higher).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Creature ~ Spell-Like Abilities"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.FeyCreatureRacialTrait.SpecialQuality"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Dancing Lights,10+CHA|PRELEVEL:MIN=1|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Faerie Fire,11+CHA|PRELEVEL:MIN=1|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Entangle,11+CHA|Glitterdust,12+CHA|PRELEVEL:MIN=3|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Deep Slumber,13+CHA|PRELEVEL:MIN=5|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Major Image,13+CHA|PRELEVEL:MIN=7|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Confusion,14+CHA|PRELEVEL:MIN=9|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Feeblemind,15+CHA|PRELEVEL:MIN=11|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Mislead,16+CHA|PRELEVEL:MIN=13|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Project Image,17+CHA|PRELEVEL:MIN=15|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Irresistible Dance,18+CHA|PRELEVEL:MIN=17|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Scintillating Pattern,18+CHA|PRELEVEL:MIN=19|PRESTAT:1,INT=8,WIS=8"
+      },
+      {
+        "key": "DESC",
+        "value": "A fey creature with an Intelligence or Wisdom score of 8 or more has a cumulative number of spell-like abilities depending on its Hit Dice. Unless otherwise noted, an ability is usable once per day. Caster level equals the creature's HD (or the caster level of the base creature's spell-like abilities, whichever is higher)."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 862,
+    "record_key": "Fey Creature ~ Spell-Like Abilities"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

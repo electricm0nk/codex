@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel ~ Practiced Combatant",
+    "name": "Practiced Combatant",
+    "description": "At 7th level, the sentinel displays increased combat ability thanks to his extensive training and experience. He gains a +2 sacred or profane bonus on combat maneuvers he performs with his deity's favored weapon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Practiced Combatant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sentinel Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 7th level, the sentinel displays increased combat ability thanks to his extensive training and experience. He gains a +2 sacred or profane bonus on combat maneuvers he performs with his deity's favored weapon."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 sacred or profane bonus on combat maneuvers he performs with his deity's favored weapon."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 117,
+    "record_key": "Sentinel ~ Practiced Combatant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

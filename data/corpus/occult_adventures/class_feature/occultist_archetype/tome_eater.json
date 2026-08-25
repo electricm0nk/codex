@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Occultist Archetype ~ Tome Eater",
     "name": "Tome Eater",
-    "class": "Occultist Archetype",
+    "class": "Occultist",
     "description": "Tome eaters have learned how to tap into the latent psychic energy of the written word by physically devouring books and scrolls to create magical effects and gain mystical insights. They use their bonded tomes to gain access to all sorts of magic, and as they grow in power, they gain an innate sense of the books and writings around them.",
     "raw_tokens": [
       {
@@ -135,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

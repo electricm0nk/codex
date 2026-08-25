@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Flame Spirit ~ Fiery Soul",
     "name": "Fiery Soul",
-    "class": "Flame Spirit",
+    "class": "Shaman",
     "description": "The shaman gains fire resistance 10. In addition, as a standard action she can unleash a 15-foot cone of flame from her mouth, dealing %1d4 points of fire damage. A successful Reflex saving throw (DC %2) halves this damage. The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.|ShamanFierySoulDice|ShamanFierySoulDC",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

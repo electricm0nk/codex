@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shadow Bloodline ~ Shadow Well",
     "name": "Shadow Well",
-    "class": "Shadow Bloodline",
+    "class": "Sorcerer",
     "description": "You can use the Stealth skill even while being observed and without cover or concealment, as long as you are within 10 feet of a shadow other than your own. In addition, when within an area of darkness or dim light, as a standard action you may choose to switch places with a willing ally within 60 feet, who must also be in darkness or dim light.",
     "raw_tokens": [
       {
@@ -104,5 +104,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

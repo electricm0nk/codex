@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Madness",
+    "name": "Madness",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainMadness,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Madness Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.MadnessDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMadnessAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "DESC",
+        "value": "You embrace the madness that lurks deep in your heart, and can unleash it to drive your foes insane or to sacrifice certain abilities to hone others."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Madness=1|Confusion (Lesser)|Madness=2|Touch of Idiocy|Madness=3|Rage|Madness=4|Confusion|Madness=5|Nightmare|Madness=6|Phantasmal Killer|Madness=7|Insanity|Madness=8|Scintillating Pattern|Madness=9|Weird"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 31,
+    "record_key": "Madness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

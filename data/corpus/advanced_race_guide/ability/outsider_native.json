@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Type ~ Outsider (native)",
+    "name": "Outsider (Native)",
+    "description": "[Cost: %1]|3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial Type ~ Outsider (native)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Racial Traits"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialQuality.RaceTypeQuality.AltRaceTypeQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Racial Traits,Racial Type ~ Outsider (native)],[!PREABILITY:1,CATEGORY=Racial Traits,TYPE.AltRaceTypeQuality]"
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|3"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Outsider|Native"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Outsider Plane Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 35,
+    "record_key": "Racial Type ~ Outsider (native)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

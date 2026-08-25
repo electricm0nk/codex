@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:04Z",
+  "data": {
+    "key": "Bones (Spirit)",
+    "name": "Bones (Spirit)",
+    "raw_tokens": [
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Bones (Spirit)=1|cause fear|Bones (Spirit)=2|false life|Bones (Spirit)=3|animate dead|Bones (Spirit)=4|fear|Bones (Spirit)=5|slay living|Bones (Spirit)=6|circle of death|Bones (Spirit)=7|control undead|Bones (Spirit)=8|horrid wilting|Bones (Spirit)=9|wail of the banshee"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
+    "sha256": "80e1bd9e91ad02c2653b6faf0a94bc92b528c0e89b6bfeb60c379ec40d4e64fd",
+    "line": 6,
+    "record_key": "Bones (Spirit)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Poison ~ Vile Disjunction",
+    "delivery": "Supernatural",
+    "description": "Bite-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect targeted greater dispel magic (CL 18th) on creature; cure 2 consecutive saves.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:poison_vile_disjunction",
+    "name": "Poison (Vile Disjunction)",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Fort DC %1; 1/round for 6 rounds; targeted greater dispel magic (CL 18); 2 consecutive saves)|PoisonSaveDC"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PoisonSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect targeted greater dispel magic (CL 18th) on creature; cure 2 consecutive saves.|PoisonSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Poison ~ Vile Disjunction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.288",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1396,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Poison ~ Vile Disjunction",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

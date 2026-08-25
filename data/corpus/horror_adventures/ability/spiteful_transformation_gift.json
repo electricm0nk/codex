@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption ~ Spiteful Transformation Gift",
+    "name": "Spiteful Transformation Gift",
+    "description": "Add 1 to the DCs of your spells and abilities that have the curse descriptor (Pathfinder RPG Ultimate Magic 137). Once per day as a standard action, you can use baleful polymorph as a spell-like ability, with a caster level equal to your character level. This counts as a curse, and the DC of any caster level check to remove it increases by 5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Accursed Corruption ~ Spiteful Transformation Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AccursedSpitefulTransformationGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "DESC",
+        "value": "Add 1 to the DCs of your spells and abilities that have the curse descriptor (Pathfinder RPG Ultimate Magic 137). Once per day as a standard action, you can use baleful polymorph as a spell-like ability, with a caster level equal to your character level. This counts as a curse, and the DC of any caster level check to remove it increases by 5."
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|DESCRIPTOR.Curse|1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Baleful Polymorph,10+TL/2+AccursedManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 74,
+    "record_key": "Accursed Corruption ~ Spiteful Transformation Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

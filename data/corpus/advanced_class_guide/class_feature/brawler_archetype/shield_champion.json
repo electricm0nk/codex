@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler Archetype ~ Shield Champion",
     "name": "Shield Champion",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "Stalwart in battle, a shield champion has perfected an entire martial discipline relying on only her hand-to-hand fighting skills and her ever-present shield. What she forgoes in weapon versatility and improved combat maneuvering, she makes up for in her ability to turn her defense into a weapon.",
     "raw_tokens": [
       {
@@ -59,6 +59,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Shield Champion],[!PREFACT:1,ABILITIES,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_WeaponProficiencies=True,Brawler_Archetype_BrawlersStrike=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Stalwart in battle, a shield champion has perfected an entire martial discipline relying on only her hand-to-hand fighting skills and her ever-present shield. What she forgoes in weapon versatility and improved combat maneuvering, she makes up for in her ability to turn her defense into a weapon."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shield Champion Brawler ~ Weapon and Armor Proficiency|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shield Champion Brawler ~ Throw Shield|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shield Champion Brawler ~ Champion Defense|PRECLASS:1,Brawler=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shield Champion Brawler ~ Returning Shield|PRECLASS:1,Brawler=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BrawlersStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BrawlersStrike|true"
       }
     ]
   },
@@ -75,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

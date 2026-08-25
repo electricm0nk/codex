@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unfettered Eidolon Evolution ~ Resistance",
+    "name": "Resistance",
+    "description": "Gains resistance 5 against one energy type (acid, cold, electricity, fire, or sonic).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unfettered Eidolon Evolution ~ Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Gains resistance 5 against one energy type (acid, cold, electricity, fire, or sonic)."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Acid|Cold|Electricity|Fire|Sonic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Acid|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Acid)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Cold|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Electricity|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Electricity)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Fire)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Sonic|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Sonic)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|5|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Acid)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|5|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Cold)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|5|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Electricity)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|5|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Fire)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SonicResistanceBonus|5|TYPE=Resistance|PREABILITY:1,CATEGORY=Special Ability,Unfettered Eidolon Evolution ~ Resistance (Sonic)"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1749,
+    "record_key": "Unfettered Eidolon Evolution ~ Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

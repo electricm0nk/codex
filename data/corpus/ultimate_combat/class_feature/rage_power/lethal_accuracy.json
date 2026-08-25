@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Lethal Accuracy",
     "name": "Lethal Accuracy",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "When using her surprise accuracy rage power, the barbarian's critical multiplier for damage increases by 1 (a ?2 multiplier becomes ?3, a 19-20/?2 multiplier becomes 19-20/?3, a x3 multiplier becomes x4, and a x4 multiplier becomes x5). A barbarian must have the surprise accuracy and deadly accuracy rage powers and be 16th level before selecting this rage power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

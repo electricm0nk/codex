@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Nightshade ~ Light Aversion",
+    "name": "Light Aversion",
+    "description": "A nightshade in bright light becomes sickened - the penalties form this condition are doubled when the nightshade is in natural sunlight.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nightshade ~ Light Aversion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A nightshade in bright light becomes sickened - the penalties form this condition are doubled when the nightshade is in natural sunlight."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1974,
+    "record_key": "Nightshade ~ Light Aversion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

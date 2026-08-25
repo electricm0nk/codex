@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Witch Hex ~ Summer's Heat",
     "name": "Summer's Heat",
-    "class": "Witch Hex",
+    "class": "Witch",
     "description": "The witch surrounds her target with oppressive heat, dealing %1 points of nonlethal damage and causing the target to become fatigued. The target can attempt a Fortitude save to reduce this nonlethal damage by half and negate the fatigued condition. Whether or not the target succeeds at this save, it can't be the target of this hex again for 1 day.|WitchHexAbilityLVL",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

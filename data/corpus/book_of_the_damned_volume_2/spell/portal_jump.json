@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Portal Jump",
+    "school": "Conjuration",
+    "level": null,
+    "description": "You step through one doorway, arch, or window and emerge from another at any point within 500 feet. This is a teleportation effect similar to dimension door, but you do not become disoriented when you use this ability."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_spells.lst",
+    "sha256": "cec56af35e0cda5fa61a508cd76ff21a42f9720dd11c459dec81cc3279d094ea",
+    "line": 7,
+    "record_key": "Portal Jump"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

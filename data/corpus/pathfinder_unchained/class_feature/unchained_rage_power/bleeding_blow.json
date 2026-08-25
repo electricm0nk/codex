@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Bleeding Blow",
+    "name": "Bleeding Blow",
+    "class": "Unchained Barbarian",
+    "description": "While in the powerful stance, you can make an attack that causes your enemies to bleed profusely. Once per round, you can have one of your attacks deal an amount of bleed damage equal to 1/2 your bonus damage from powerful stance (+%1). This bleed damage bypasses damage reduction. This bleed damage doesn't stack with itself. A barbarian must have the powerful stance rage power and be at least 8th level to select this rage power.|floor(PowerfulStanceBonus/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Bleeding Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Rage Power ~ Powerful Stance"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Bleeding Blow"
+      },
+      {
+        "key": "DESC",
+        "value": "While in the powerful stance, you can make an attack that causes your enemies to bleed profusely. Once per round, you can have one of your attacks deal an amount of bleed damage equal to 1/2 your bonus damage from powerful stance (+%1). This bleed damage bypasses damage reduction. This bleed damage doesn't stack with itself. A barbarian must have the powerful stance rage power and be at least 8th level to select this rage power.|floor(PowerfulStanceBonus/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 344,
+    "record_key": "Unchained Rage Power ~ Bleeding Blow"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

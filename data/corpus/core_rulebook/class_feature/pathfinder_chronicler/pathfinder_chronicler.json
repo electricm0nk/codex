@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Pathfinder Chronicler",
     "name": "Pathfinder Chronicler",
-    "class": null,
+    "class": "Pathfinder Chronicler",
     "description": null,
     "raw_tokens": [
       {
@@ -19,6 +19,42 @@
       {
         "key": "BONUS",
         "value": "VAR|PathfinderChronicler_CFP_Level|PathfinderChroniclerLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Bardic Knowledge|Pathfinder Chronicler ~ Deep Pockets|Pathfinder Chronicler ~ Master Scribe|PREVARGTEQ:PathfinderChronicler_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Live to Tell the Tale|Pathfinder Chronicler ~ Pathfinding|PREVARGTEQ:PathfinderChronicler_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Bardic Performance|Pathfinder Chronicler ~ Improved Aid|PREVARGTEQ:PathfinderChronicler_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Epic Tales|PREVARGTEQ:PathfinderChronicler_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Whispering Campaign|PREVARGTEQ:PathfinderChronicler_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Inspire Action|PREVARGTEQ:PathfinderChronicler_CFP_Level,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Call down the Legends|PREVARGTEQ:PathfinderChronicler_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Greater Epic Tales|PREVARGTEQ:PathfinderChronicler_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Lay of the Exalted Dead|PREVARGTEQ:PathfinderChronicler_CFP_Level,10"
       }
     ]
   },
@@ -35,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Topple Giant",
     "name": "Topple Giant",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "When raging, the giant stalker does not provoke attacks of opportunity when she attempts to trip a giant, and can attempt to trip a giant that is up to two size categories larger than she is.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

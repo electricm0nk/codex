@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Eidolon 1 ~ L",
+    "name": "Eidolon 1 ~ Large",
+    "class": "Eidolon",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eidolon 1 ~ L"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Broodmaster Eidolon.Eidolon1"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,Larger Brood ~ Huge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=13"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Internal,TYPE=Eidolon1],[PREABILITY:1,CATEGORY=Internal,Eidolon 1 ~ L]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonCompanionLVLA|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonCount|1"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Eidolon 1|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Eidolon 1|Eidolon"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1843,
+    "record_key": "Eidolon 1 ~ L"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Telepathy ~ Miles",
+    "delivery": "Supernatural",
+    "description": "You can mentally communicate with any other creature within %1 miles that has a language. You can mentally communicate with any other creature within %2 mile that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time. You can mentally communicate with any other creature within %3 miles that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time.",
+    "description_variables": [
+      "TelepathyMilesRange",
+      "TelepathyMilesRange",
+      "TelepathyMilesRange"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:telepathy_miles",
+    "name": "Telepathy",
+    "owners": [
+      "bestiary_2:monster:wendigo"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1 miles|TelepathyMilesRange|PREVARGT:TelepathyMilesRange,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1 mile|TelepathyMilesRange|PREVAREQ:TelepathyMilesRange,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyMilesRange|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|100"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TelepathyMilesRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can mentally communicate with any other creature within %1 mile that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time.|TelepathyMilesRange|PRERULE:1,DisplayFullAbility|PREVAREQ:TelepathyMilesRange,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can mentally communicate with any other creature within %1 miles that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time.|TelepathyMilesRange|PRERULE:1,DisplayFullAbility|PREVARGT:TelepathyMilesRange,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can mentally communicate with any other creature within %1 miles that has a language.|TelepathyMilesRange|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Telepathy ~ Miles"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.305"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Communicate"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.305",
+    "traits": [
+      "Communicate"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1955,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Telepathy ~ Miles",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

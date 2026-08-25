@@ -1,28 +1,134 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "bab": "level",
     "class_id": "Paladin",
     "maxlevel": 20,
-    "bab": "level",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "10"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "EXCLASS",
+        "value": "Ex-Paladin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinDomainCount|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CasterLevelBLPaladin|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|PaladinDomainCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABFull|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_BL_Stripped_Paladin|Caster_Level_Paladin-CasterLevelBLPaladin"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Paladin|CL+Caster_Level_Bonus-3+CasterLevelBLPaladin"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CasterLevelBL_x_Paladin|charbonusto(\"PCLEVEL\",\"Paladin\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Highest__Divine|Caster_Level_Paladin|TYPE=Base"
+      },
+      {
+        "key": "ROLE",
+        "value": "None"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Pld"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Divine"
+      }
+    ],
     "save_fort": "level/2+2",
     "save_ref": "level/3",
     "save_will": "level/2+2"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
-    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
     "line": 164,
-    "record_key": "CLASS:Paladin"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "record_key": "CLASS:Paladin",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

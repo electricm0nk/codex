@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Bushwhacker",
     "name": "Bushwhacker",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "The bushwhacker specializes in the art of the ambush. For her, gunplay works best when it comes from a concealed position and is directed against a target that falls with the very first volley and is dead before the smoke clears. A bushwhacker has the following class features.",
     "raw_tokens": [
       {
@@ -63,6 +63,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Gunslinger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Bushwhacker],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_Grit=True,Gunslinger_Archetype_UtilityShotDeed=True,Gunslinger_Archetype_TargetingDeed=True,Gunslinger_Archetype_BonusFeat4=True,Gunslinger_Archetype_BonusFeat8=True,Gunslinger_Archetype_BonusFeat12=True,Gunslinger_Archetype_BonusFeat16=True,Gunslinger_Archetype_BonusFeat20=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Grit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_UtilityShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_TargetingDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeat4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeat16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeat20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Grit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_UtilityShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_TargetingDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeat4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeat16|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeat20|true"
       }
     ]
   },
@@ -79,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

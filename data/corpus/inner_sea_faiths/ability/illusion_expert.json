@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist Boon ~ Sivanah ~ Illusion Expert",
+    "name": "Illusion Expert",
+    "description": "If you have performed your daily obedience, you gain a +4 sacred or profane bonus (of the same type as that provided by your obedience) on Will saves to disbelieve illusions. If you successfully disbelieve an illusion and communicate this fact to others, such viewers gain a +6 bonus (of the same type as above) on their saving throws to disbelieve the illusion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist Boon ~ Sivanah ~ Illusion Expert"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, you gain a +4 sacred or profane bonus (of the same type as that provided by your obedience) on Will saves to disbelieve illusions. If you successfully disbelieve an illusion and communicate this fact to others, such viewers gain a +6 bonus (of the same type as above) on their saving throws to disbelieve the illusion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 317,
+    "record_key": "Evangelist Boon ~ Sivanah ~ Illusion Expert"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

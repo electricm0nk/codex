@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Winged Marauder ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Alchemist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Winged Marauder ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Features.WingedMarauderClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Appraise|TYPE=Craft|Fly|Handle Animal|Heal|Knowledge (Arcana)|Knowledge (Nature)|Perception|TYPE=Profession|Ride|Spellcraft|Survival"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+    "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+    "line": 21,
+    "record_key": "Winged Marauder ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

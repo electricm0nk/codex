@@ -1,0 +1,93 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Breath Weapon ~ Cone of Negative Energy",
+    "delivery": "Supernatural",
+    "description": "%1' Cone of Negative Energy %2d%3 negative energy, DC %4, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.  Although it deals negative energy damage, this breath weapon does not heal undead creatures.",
+    "description_variables": [
+      "BreathWeaponCone",
+      "BreathWeaponDice",
+      "BreathWeaponDamageDie",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:breath_weapon_cone_of_negative_energy",
+    "name": "Breath Weapon",
+    "owners": [
+      "bestiary_2:monster:dragon_umbral"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 neg. energy, DC %4)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponCone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDamageDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1' Cone of Negative Energy %2d%3 negative energy, DC %4, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.  Although it deals negative energy damage, this breath weapon does not heal undead creatures.|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Breath Weapon ~ Cone of Negative Energy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.298",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1860,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Breath Weapon ~ Cone of Negative Energy",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

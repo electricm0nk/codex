@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Pyromaniac",
+    "name": "Pyromaniac",
+    "description": "+1 to level with fire spells, Fire domain powers, fire elemental bloodline powers, flame mystery revelations.  If Cha 11+, SLAs: 1/day - Dancing Lights, Flare, Prestidigitation, Produce Flame. CL = Character Level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Pyromaniac"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Dancing Lights|Flare|Prestidigitation|Produce Flame|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 to level with fire spells, Fire domain powers, fire elemental bloodline powers, flame mystery revelations.  If Cha 11+, SLAs: 1/day - Dancing Lights, Flare, Prestidigitation, Produce Flame. CL = Character Level."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|DESCRIPTOR.Fire|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 356,
+    "record_key": "Builder Racial Trait ~ Pyromaniac"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -539,5 +539,44 @@ class LoadUnitsByKindTests(unittest.TestCase):
             bps.load_units_by_kind(self.scratch.root)
 
 
+class LiveKindCoverageTests(unittest.TestCase):
+    """SITE-PUBSTATUS-002: the sibling pf1e-dashboard-producer lane
+    regenerated site/dashboard/units/*.json with 8 newly-classified kinds
+    the committed shard index had never carried (ability, deity, domain,
+    language, power, skill, template, trait) -- 4,337 `ability` rows alone
+    -- and build_public_status.py's own load_units_by_kind fail-loud check
+    (KIND_LABELS is a curated allow-list, deliberately not "every kind
+    seen") crashed on the very first of them before writing anything.
+
+    This test reads the REAL, checked-in site/dashboard/units/ ledger
+    (not a scratch fixture -- the defect is specifically that the curated
+    label map fell behind the real, committed kind set) and proves every
+    kind it contains has a KIND_LABELS entry, so load_units_by_kind can
+    actually load the whole live ledger without raising."""
+
+    UNITS_DIR = pathlib.Path(__file__).resolve().parent.parent.parent / "site" / "dashboard" / "units"
+
+    def test_every_live_unit_kind_has_a_curated_label(self):
+        live_kinds = set()
+        for path in sorted(self.UNITS_DIR.glob("PF1e-units-*.json")):
+            import json
+
+            live_kinds.add(json.loads(path.read_text())["kind"])
+        self.assertTrue(live_kinds, "no PF1e-units-*.json ledgers found -- check UNITS_DIR")
+        missing = sorted(live_kinds - set(bps.KIND_LABELS))
+        self.assertEqual(
+            missing, [],
+            f"KIND_LABELS is missing curated label(s) for live kind(s) {missing} -- "
+            "load_units_by_kind will raise KeyError on the real ledger",
+        )
+
+    def test_load_units_by_kind_succeeds_against_the_real_live_ledger(self):
+        # The actual crash site: not just a set-difference check, but the
+        # real function running over the real, committed directory.
+        by_kind = bps.load_units_by_kind(self.UNITS_DIR)
+        self.assertIn("ability", by_kind)
+        self.assertGreater(len(by_kind["ability"]), 0)
+
+
 if __name__ == "__main__":
     unittest.main()

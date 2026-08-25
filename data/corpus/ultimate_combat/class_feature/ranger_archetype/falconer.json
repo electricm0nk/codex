@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Falconer",
     "name": "Falconer",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Rangers have always enjoyed a special bond with a specific animal, but the falconer takes this bond to a deeper level. Falconers begin with their companion earlier than other rangers, and have the ability to teach their companions special tricks.",
     "raw_tokens": [
       {
@@ -55,6 +55,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ FALCONER],[!PREFACT:1,ABILITIES,Ranger_Archetype_CombatStyleFeat6=True,Ranger_Archetype_WildEmpathy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
       }
     ]
   },
@@ -72,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Knockdown Stance",
+    "name": "Knockdown Stance",
+    "class": "Unchained Barbarian",
+    "description": "You can focus on toppling your foes. Once per round, your can make a trip attack against one target in place of a melee attack. If you succeed, the target is knocked prone. This trip attempt doesn't provoke an attack of opportunity. This is a stance rage power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Knockdown Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You can focus on toppling your foes. Once per round, your can make a trip attack against one target in place of a melee attack. If you succeed, the target is knocked prone. This trip attempt doesn't provoke an attack of opportunity. This is a stance rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 364,
+    "record_key": "Unchained Rage Power ~ Knockdown Stance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

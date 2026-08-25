@@ -179,18 +179,25 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
     // display-plumbing twins (PCGen's own duplicate-for-PDF-export rows,
     // never independently selectable): 358 -> 199.
     assert_eq!(
-        added, 531,
-        "the gap lane is 531 rows: 83 from the original 7-book lane \
-         (`SD31-E6-F8-001`) + 242 from the five books `SD31-E6-F8-002` added \
-         (horror_adventures 61 + inner_sea_races 50 + occult_adventures 68 + \
-         inner_sea_world_guide 31 + monster_codex 32) + 199 from Mythic \
-         Adventures (`SD31-E6-F2-007`, 358 raw minus 159 `VISIBLE:EXPORT` \
-         twins excluded by `SD31-W10-INTEGRATE-001`) + 7 from two more \
-         already-compiled books `SD31-E6-F8-003` added (inner_sea_intrigue 6 \
-         + book_of_the_damned_volume_2 1; neither carries a `NAMEISPI:YES` \
-         record, unlike `inner_sea_world_guide`'s remaining 6 `not-ingested` \
-         feats, which all do and correctly stay dropped), verbatim from \
-         `gen_feat_gap_tables`'s own stdout at the pinned oracle"
+        added, 649,
+        "the gap lane is 649 rows: 540 as of `a50b7da04` (83 from the \
+         original 7-book lane `SD31-E6-F8-001` + 242 from the five books \
+         `SD31-E6-F8-002` added (horror_adventures 61 + inner_sea_races 50 \
+         + occult_adventures 68 + inner_sea_world_guide 31 + monster_codex \
+         32) + 199 from Mythic Adventures (`SD31-E6-F2-007`, 358 raw minus \
+         159 `VISIBLE:EXPORT` twins excluded by `SD31-W10-INTEGRATE-001`) + \
+         7 from two more already-compiled books `SD31-E6-F8-003` added \
+         (inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) + 9 from \
+         `inner_sea_taverns`, AT-32-G0-003) + 109 from SD-32 T9 onboarding \
+         (card 11, `decisions.md §19` PI sign-off): inner_sea_combat 23 \
+         (24 raw minus 1 `NAMEISPI:YES` record dropped) + inner_sea_gods 86 \
+         (deity-name prerequisites redacted in place by the generator's \
+         existing blacklist screen, not dropped -- neither book's population \
+         is the `.MOD`/`VISIBLE:EXPORT` continuation shape found blocking \
+         `horror_adventures`/`mythic_adventures`, whose own `not-ingested` \
+         feat counts stay at this same 61/199 pin because that population is \
+         not real feat content -- see this cycle's own receipt), verbatim \
+         from `gen_feat_gap_tables`'s own stdout at the pinned oracle"
     );
 }
 

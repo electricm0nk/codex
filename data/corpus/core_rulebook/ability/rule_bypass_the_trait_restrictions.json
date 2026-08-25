@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Rule - Bypass the Trait Restrictions",
+    "name": "Rule - Bypass the Trait Restrictions",
+    "description": "This allows the PC to bypass the restrictions on taking only 1 trait from any given category.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BypassTraitRestriction|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This allows the PC to bypass the restrictions on taking only 1 trait from any given category."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassTraitRestriction|1|TYPE=Rule"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 541,
+    "record_key": "Rule - Bypass the Trait Restrictions"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

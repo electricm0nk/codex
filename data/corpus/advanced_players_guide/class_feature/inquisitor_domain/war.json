@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Inquisitor Domain ~ War",
     "name": "War",
-    "class": "Inquisitor Domain",
+    "class": "Inquisitor",
     "description": null,
     "raw_tokens": [
       {
@@ -96,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

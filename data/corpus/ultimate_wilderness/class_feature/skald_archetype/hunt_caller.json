@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Skald Archetype ~ Hunt Caller",
     "name": "Hunt Caller",
-    "class": "Skald Archetype",
+    "class": "Skald",
     "description": "Hunt callers are skalds whose songs draw their allies into the animal world. They can invoke the inner beasts of those who observe their supernatural performances-a talent that causes many to mistake the hunt caller and her allies for lycanthropes or other shapechanging creatures.",
     "raw_tokens": [
       {
@@ -119,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

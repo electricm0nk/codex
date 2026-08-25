@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Extra Mythic Feat",
+    "name": "Extra Mythic Feat",
+    "description": "You gain an extra mythic feat. You can take this ability a number of times equal to half your mythic tier (minimum 1). Each time you do, you gain another mythic feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Extra Mythic Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Ability_ExtraMythicFeat_Count,Extra_Mythic_Feat_Cap"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_ExtraMythicFeat_Count|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain an extra mythic feat. You can take this ability a number of times equal to half your mythic tier (minimum 1). Each time you do, you gain another mythic feat."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mythic Feat|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_ExtraMythicFeat_Count|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 167,
+    "record_key": "Mythic Path Ability ~ Extra Mythic Feat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

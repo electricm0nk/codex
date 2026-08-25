@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Fog Cloud",
+    "name": "Fog Cloud",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Fog Cloud"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Fog Cloud"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_FogCloud_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_FogCloud_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_FogCloud_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_FogCloud_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_FogCloud_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_FogCloud_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_FogCloud_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_FogCloud_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_FogCloud_LVL|Fog Cloud,RacialSLA_FogCloud_DC|PREVAREQ:RacialSLA_FogCloud_AtWill,0|PREVAREQ:RacialSLA_FogCloud_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_FogCloud_LVL|Fog Cloud,RacialSLA_FogCloud_DC|PREVAREQ:RacialSLA_FogCloud_AtWill,1|PREVAREQ:RacialSLA_FogCloud_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_FogCloud_LVL|Fog Cloud,RacialSLA_FogCloud_DC|PREVAREQ:RacialSLA_FogCloud_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_FogCloud_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_FogCloud_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_FogCloud_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_FogCloud_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_FogCloud_DC|10+RacialSLA_FogCloud_SpellLVL+RacialSLA_FogCloud_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 255,
+    "record_key": "Racial SLA ~ Fog Cloud"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

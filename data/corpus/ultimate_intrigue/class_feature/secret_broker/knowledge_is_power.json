@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Secret Broker ~ Knowledge Is Power",
+    "name": "Knowledge Is Power",
+    "class": "Occultist",
+    "description": "The secret broker starts play possessing a single divination implement, typically a ledger of secrets. She gains new implements as normal at 2nd level and every 4 levels thereafter, and they can be of any school. A secret broker's third eye resonant power grants an insight bonus on Profession and Sense Motive checks equal to the bonus it grants on Perception checks, and an insight bonus on all Knowledge checks equal to half that bonus. She must select divination with implement mastery. This ability alters implements and implement mastery.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secret Broker ~ Knowledge Is Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The secret broker starts play possessing a single divination implement, typically a ledger of secrets. She gains new implements as normal at 2nd level and every 4 levels thereafter, and they can be of any school. A secret broker's third eye resonant power grants an insight bonus on Profession and Sense Motive checks equal to the bonus it grants on Perception checks, and an insight bonus on all Knowledge checks equal to half that bonus. She must select divination with implement mastery. This ability alters implements and implement mastery."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Occultist Implement School ~ Divination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 106,
+    "record_key": "Secret Broker ~ Knowledge Is Power"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

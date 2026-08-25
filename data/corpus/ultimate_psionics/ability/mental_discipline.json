@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Mental Discipline",
+    "name": "Mental Discipline",
+    "description": "You have had some basic training in mental control.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Mental Discipline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.PsionicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Mental Discipline],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.PsionicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have had some basic training in mental control."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Autohypnosis|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Autohypnosis"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 133,
+    "record_key": "Trait ~ Mental Discipline"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

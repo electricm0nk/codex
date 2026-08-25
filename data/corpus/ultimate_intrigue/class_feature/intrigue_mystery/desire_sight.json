@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Intrigue Mystery ~ Desire Sight",
     "name": "Desire Sight",
-    "class": "Intrigue Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can learn the desires of any creature you can see within 100 feet, as if you had concentrated until the third round of the detect desires spell. As usual for detect desires, the target can attempt a Will save to negate the effect. You can use this ability %1 times per day.|1+OracleLVL/5",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

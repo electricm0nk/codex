@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Devilbound Creature ~ Contract Bound",
+    "delivery": "Supernatural",
+    "description": "The creature has signed a contract of service in return for this template. The devil must reveal its nature as a creature of Hell when it offers a contract, and it can't hide the details of the contract in any way. The creature must enter the agreement willingly (without magical compulsion). Usually the creature must perform one or more tasks for the devil, and in exchange the creature gains the template's abilities, whether immediately, after a specific amount of time, or once the tasks are completed. The contract always includes a clause that damns the creature's soul to Hell when the creature dies, with credit for the act and possession of the soul going to the devil signing the contract. When the creature dies, its soul is automatically imprisoned in a gem, which immediately appears in Hell as one of the devil's belongings. If the devil is dead when the creature dies, the creature's soul is destroyed, and can't be restored to life except by miracle or wish. If the creature fails to perform the tasks in the allotted time, its soul is still damned and the devil is not obligated to provide the promised abilities. Many contracts state that the devil, its agents, and its allies will not attempt to kill the creature. This doesn't protect against all devils, but does offer the creature a measure of protection against treachery from the signatory devil. Breaking a contract with a devil is difficult and dangerous. Furthermore, as long as the contract remains in effect, a slain victim can't be restored to life after death except by a miracle or wish. If the devilbound creature is restored to life, the devil immediately senses the name and location (as discern location) of the creature responsible.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:devilbound_creature_contract_bound",
+    "name": "Contract Bound",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 on saves vs. poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature has signed a contract of service in return for this template. The devil must reveal its nature as a creature of Hell when it offers a contract, and it can't hide the details of the contract in any way. The creature must enter the agreement willingly (without magical compulsion). Usually the creature must perform one or more tasks for the devil, and in exchange the creature gains the template's abilities, whether immediately, after a specific amount of time, or once the tasks are completed. The contract always includes a clause that damns the creature's soul to Hell when the creature dies, with credit for the act and possession of the soul going to the devil signing the contract. When the creature dies, its soul is automatically imprisoned in a gem, which immediately appears in Hell as one of the devil's belongings. If the devil is dead when the creature dies, the creature's soul is destroyed, and can't be restored to life except by miracle or wish. If the creature fails to perform the tasks in the allotted time, its soul is still damned and the devil is not obligated to provide the promised abilities. Many contracts state that the devil, its agents, and its allies will not attempt to kill the creature. This doesn't protect against all devils, but does offer the creature a measure of protection against treachery from the signatory devil. Breaking a contract with a devil is difficult and dangerous. Furthermore, as long as the contract remains in effect, a slain victim can't be restored to life after death except by a miracle or wish. If the devilbound creature is restored to life, the devil immediately senses the name and location (as discern location) of the creature responsible."
+      },
+      {
+        "key": "KEY",
+        "value": "Devilbound Creature ~ Contract Bound"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 478,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Devilbound Creature ~ Contract Bound",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

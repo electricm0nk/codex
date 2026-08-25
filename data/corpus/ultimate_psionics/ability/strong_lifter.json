@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cannoneer ~ Strong Lifter",
+    "name": "Strong Lifter",
+    "description": "%1/day, as a swift action, you can add +%2 to either your attack or damage rolls made with the culverin.|StrongLifterTimes|StrongLifterBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cannoneer ~ Strong Lifter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrongLifterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrongLifterBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day, as a swift action, you can add +%2 to either your attack or damage rolls made with the culverin.|StrongLifterTimes|StrongLifterBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrongLifterTimes|3+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrongLifterBonus|STR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|StrongLifterTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 22,
+    "record_key": "Cannoneer ~ Strong Lifter"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

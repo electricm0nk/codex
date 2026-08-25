@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "War",
+    "name": "War",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainWar,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ War Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WarDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWarLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWarDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWarTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWarAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a crusader for your god, always ready and willing to fight to defend your faith."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|War=1|Magic Weapon|War=2|Spiritual Weapon|War=3|Magic Vestment|War=4|Divine Power|War=5|Flame Strike|War=6|Blade Barrier|War=7|Power Word Blind|War=8|Power Word Stun|War=9|Power Word Kill"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 42,
+    "record_key": "War"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

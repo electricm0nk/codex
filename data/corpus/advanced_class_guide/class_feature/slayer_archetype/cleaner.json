@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer Archetype ~ Cleaner",
     "name": "Cleaner",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "A cleaner is responsible for destroying or removing incriminating evidence from a crime scene, disposing of corpses and eliminating witnesses to make a crime look like an accident or a mere disappearance.",
     "raw_tokens": [
       {
@@ -67,6 +67,34 @@
       {
         "key": "FACT",
         "value": "Slayer_Archetype_Talent4|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Cleaner],[!PREFACT:1,ABILITIES,Slayer_Archetype_Track=True,Slayer_Archetype_Stalker=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Stalker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Stalker|true"
       }
     ]
   },
@@ -83,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

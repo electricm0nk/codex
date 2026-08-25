@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Blast Rune",
     "name": "Blast Rune",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "As a standard action, you can create a Blast Rune in any adjacent square. Any creature entering this square takes 1d6 points of damage. This rune deals either acid, cold, electricity, or fire damage, decided when you create the rune. The rune is invisible and lasts %1 rounds or until discharged. You cannot create a Blast Rune in a square occupied by another creature. This rune counts as a 1st-level spell for the purposes of dispelling. It can be discovered wit at DC26 Perception skill check and disarmed with a DC 26 Disable Device skill check. You can use this ability %2 times per day.|DomainRuneLVL|BlastRuneTimes|PREVARLT:DomainRuneLVL,2",
     "raw_tokens": [
       {
@@ -68,5 +73,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

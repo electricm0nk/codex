@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Divine Source",
+    "name": "Divine Source",
+    "description": "You can grant divine spells to those who follow your cause, allowing them to select you as their deity for the purposes of determining their spells and domains. Select two domains upon taking this ability. These domains must be alignment domains matching your alignment if possible, unless your alignment is neutral. You grant access to these domains as if you were a deity. Creatures that gain spells from you don't receive any spells per day of levels higher than your tier; they lose those spell slots. In addition, you can cast spells from domains you grant as long as their level is equal to or less than your tier. Each day as a spell-like ability, you can cast one spell of each level equal to or less than your tier (selecting from those available to you from your divine source domains). If you're a cleric or you venerate a deity, you may change your spell domains to those you grant others. At 6th tier and 9th tier, you can select this ability again, adding one domain and two subdomains to your list each time and adding their spells to the list of those that you can cast.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Divine Source"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can grant divine spells to those who follow your cause, allowing them to select you as their deity for the purposes of determining their spells and domains. Select two domains upon taking this ability. These domains must be alignment domains matching your alignment if possible, unless your alignment is neutral. You grant access to these domains as if you were a deity. Creatures that gain spells from you don't receive any spells per day of levels higher than your tier; they lose those spell slots. In addition, you can cast spells from domains you grant as long as their level is equal to or less than your tier. Each day as a spell-like ability, you can cast one spell of each level equal to or less than your tier (selecting from those available to you from your divine source domains). If you're a cleric or you venerate a deity, you may change your spell domains to those you grant others. At 6th tier and 9th tier, you can select this ability again, adding one domain and two subdomains to your list each time and adding their spells to the list of those that you can cast."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "DOMAIN|ALL"
+      },
+      {
+        "key": "SELECT",
+        "value": "2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 310,
+    "record_key": "Mythic Path Ability ~ Divine Source"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

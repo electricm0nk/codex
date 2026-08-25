@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Angelbane Strike",
+    "category": "General",
+    "name": "Angelbane Strike",
+    "description": "You channel the power of your Abyssal patron through your weapon to punish the righteous. When you use Channel Smite against a living creature with a good alignment, you treat all is on the channel smite damage dice as 2s. If your target is either a good outsider or a divine caster who serves a good deity, you are considered 2 levels higher when determining how many channel energy damage dice you roll when using Channel Smite.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Channel Smite",
+      "PREABILITY:1,CATEGORY=Special Ability,Channel Negative Energy",
+      "PRECLASS:1,SPELLCASTER.Divine=5",
+      "PRETEXT:Demon lord patron deity."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 5,
+    "record_key": "Angelbane Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

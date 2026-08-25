@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 500.0,
+    "description": "+5 Weapon's HP",
+    "key": "Material ~ Whipwood",
+    "name": "Whipwood",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "CMD_Sunder",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Whipwood"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Whipwood"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Wooden"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Artisan,Spell Component"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 Weapon's HP"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Material ~ Whipwood",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

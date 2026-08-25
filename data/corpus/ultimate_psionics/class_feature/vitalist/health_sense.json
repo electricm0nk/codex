@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist ~ Health Sense",
+    "name": "Health Sense",
+    "class": "Vitalist",
+    "description": "You can know collective member's hit point damage, and can use Heal check to: determine if member is poisoned or diseased",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist ~ Health Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HealthSenseLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can know collective member's hit point damage, and can use Heal check to: determine if member is poisoned or diseased"
+      },
+      {
+        "key": "DESC",
+        "value": " stabilize dying, treat caltrops|PREVARGT:HealthSenseLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": " treat poison|PREVARGT:HealthSenseLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": " treat disease|PREVARGT:HealthSenseLVL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HealthSenseLVL|VitalistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 958,
+    "record_key": "Vitalist ~ Health Sense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

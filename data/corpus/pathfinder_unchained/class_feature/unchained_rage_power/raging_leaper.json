@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Raging Leaper",
+    "name": "Raging Leaper",
+    "class": "Unchained Barbarian",
+    "description": "You are always considered to have a running start when attempting an Acrobatics check to jump. In addition, you gains a +8 bonus on Acrobatics checks to jump. Finally, if you fall, you halve the total distance fallen for the purposes of determining damage taken from the fall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Raging Leaper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Raging Leaper"
+      },
+      {
+        "key": "DESC",
+        "value": "You are always considered to have a running start when attempting an Acrobatics check to jump. In addition, you gains a +8 bonus on Acrobatics checks to jump. Finally, if you fall, you halve the total distance fallen for the purposes of determining damage taken from the fall."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Acrobatics=When Jumping|8|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 375,
+    "record_key": "Unchained Rage Power ~ Raging Leaper"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

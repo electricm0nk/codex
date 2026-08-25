@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Flood Walker ~ River Stride",
+    "name": "River Stride",
+    "class": "Witch",
+    "description": "A flood walker and his familiar can walk on the surface of water and other liquids as if under the effects of a water walk spell. The flood walker chooses at the beginning of his turn each round whether this ability is active or suppressed (for himself and his familiar separately), allowing him to walk on water or swim.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flood Walker ~ River Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.FloodWalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A flood walker and his familiar can walk on the surface of water and other liquids as if under the effects of a water walk spell. The flood walker chooses at the beginning of his turn each round whether this ability is active or suppressed (for himself and his familiar separately), allowing him to walk on water or swim."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_arg.lst",
+    "sha256": "54f3a2c057555c56328ef47ef1d86dfb30eeebc9b377516682828d26ea076021",
+    "line": 17,
+    "record_key": "Flood Walker ~ River Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

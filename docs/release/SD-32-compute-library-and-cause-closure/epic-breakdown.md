@@ -32,19 +32,32 @@ do not compute.
 
 ## Epic 1 — The compute library
 
-**Ceiling: 3,201 of 24,914 units (12.8%). Nine of the ten families are already evaluable.**
+**Ceiling: 3,201 of 24,914 units (12.8%). All nine formula-bearing families (F1-F9) are already
+evaluable by grammar; one of them (F4) additionally needs a binding layer to resolve values.**
 
-`formula_interpreter.rs` (authorised by ruling §20) evaluates nine of the ten families today. The
-tenth needs a binding layer, and one already exists: wave 26's `bonus_stack_reader.rs`, 329 lines,
-proving the "read the producers of a named variable and sum them" pattern — generalizable to
-**77.2%** of the corpus's distinct custom identifiers. One lane framed the binding layer at 46.8%
-using a narrower mechanism; the broader already-proven one reaches 77.2%. The correction ran in both
-directions, which is why both were re-derived.
+The canonical shape-family vocabulary lives in `scripts/shape_ledger.py`
+(`artifacts/gate-1-shape-closure/family-vocabulary.md` is its reconciliation write-up, card
+`family-vocabulary-reconciliation`, `decisions.md §12a`) — this section's F1/F2/F3 rows below are
+work items, not a second family-count table; do not diff a family's unit count against them.
+
+`formula_interpreter.rs` (authorised by ruling §20) evaluates all nine formula-bearing families
+(F1..F9) directly by grammar today. **F4**'s producer-bound bare-identifier subset additionally
+needs a binding layer to resolve what value the identifier holds before that grammar can run on
+it, and one already exists: wave 26's `bonus_stack_reader.rs`, 329 lines, proving the "read the
+producers of a named variable and sum them" pattern — generalizable to **77.2% (893/1,156)** of
+the corpus's distinct custom identifiers (SD-31 wave 31 measurement, identifier-wide walk) or
+**92.4% (390/422)** on the canonical F4-predicate-scoped population
+(`family-vocabulary.md` §3, independently re-derived). F10 is a separate, 3-unit
+level-threshold step-count family with no binding-layer need at all — earlier bundle drafts
+conflated "the tenth family" (F10, by list position) with F4 (the actual binding-layer target);
+that labelling defect is fixed by card `family-vocabulary-reconciliation`. One lane framed the
+binding layer at 46.8% using a narrower mechanism; the broader already-proven one reaches the
+figures above. The correction ran in both directions, which is why both were re-derived.
 
 | F# | Work | Units |
 |---|---|---:|
 | F1 | Extract the general form of each family from the ~166 already-proven hand-modelled functions, rather than writing fresh. Each was verified byte-exact against the corpus when written. | — |
-| F2 | Generalise `bonus_stack_reader.rs` to the tenth family's binding pattern | up to 77.2% of custom identifiers |
+| F2 | Generalise `bonus_stack_reader.rs` to F4's binding pattern (the producer-bound bare-identifier subset) | up to 77.2%/92.4% of custom identifiers (two denominators — see `family-vocabulary.md` §3) |
 | F3 | Wire the library behind the consumers, every value clearing `derived_evaluator_fixture_check` | 3,201 ceiling |
 
 **Do not plan on 20%.** And do not spend effort on the 1,747-unit flat-constant family expecting
@@ -54,7 +67,12 @@ leverage — it is the biggest and the least helped.
 
 ## Epic 2 — Cause closure
 
-Twelve blocker shapes, closed **by class rather than by instance**. Ranked by measured population.
+Eleven named blocker shapes — ten with measured populations in the table below plus T10 (no unit
+count) — closed **by class rather than by instance**. Epic 2's closure targets are the eight
+measured shapes T2a, T2b, T9, T4, T12, T5, T1, T3 (T5 is credited via Epic 4 / card 4 and T3 via
+Epic 5 / card 1; Epic 2 cites those receipts rather than re-closing them); T8/T7 are sub-20-unit
+residuals closed opportunistically (`acceptance-and-verification.md` AT-32-E2-001, `kanban.md` #11).
+Ranked by measured population.
 
 | T# | Shape | Units | Note |
 |---|---|---:|---|

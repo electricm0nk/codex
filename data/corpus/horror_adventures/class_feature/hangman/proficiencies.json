@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hangman ~ Proficiencies",
+    "name": "Proficiencies",
+    "class": "Vigilante",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hangman ~ Proficiencies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.HangmanClassFeatures"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Net|Whip"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 24,
+    "record_key": "Hangman ~ Proficiencies"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

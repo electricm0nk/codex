@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Psionic Precise Shot",
+    "category": "Psionic",
+    "name": "Psionic Precise Shot",
+    "description": "To use this feat, you must expend your psionic focus.  You can attempt to make a single ranged attack as a standard action against a target that is sheltered behind a wall, wall of force effect, or similar barrier.  Your attack briefly skips through the Astral Plane to bypass the barrier.  You must still have line of sight to the target.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Improved Precise Shot,Point-Blank Shot,Precise Shot",
+      "PREMULT:1,[PRETOTALAB:11],[PREVARGTEQ:PrereqBAB,11]",
+      "PRESTAT:1,DEX=19",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 260,
+    "record_key": "Psionic Precise Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pattern Breaker ~ Disable Lock",
+    "name": "Disable Lock",
+    "class": "Pattern Breaker",
+    "description": "You gain the ability to disable a lock %1/day.  Using this ability is a standard action with a range of %2 ft.  You make a manifester level check with a +10 bonus against the DC of the lock.  If the check is successful, you successfully open the lock.|DisableLockTimes|DisableLockRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pattern Breaker ~ Disable Lock"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisableLockTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisableLockRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to disable a lock %1/day.  Using this ability is a standard action with a range of %2 ft.  You make a manifester level check with a +10 bonus against the DC of the lock.  If the check is successful, you successfully open the lock.|DisableLockTimes|DisableLockRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisableLockRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisableLockTimes|3+CrypticPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DisableLockTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1839,
+    "record_key": "Pattern Breaker ~ Disable Lock"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

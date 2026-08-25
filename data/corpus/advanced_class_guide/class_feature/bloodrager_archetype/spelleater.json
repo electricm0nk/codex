@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Archetype ~ Spelleater",
     "name": "Spelleater",
-    "class": "Bloodrager Archetype",
+    "class": "Bloodrager",
     "description": "Where other bloodragers learn to avoid or shrug off minor damage of all sorts, spelleaters tap into the power of their bloodline in order to heal damage as it comes, and can even cannibalize their own magical energy to heal more damage and continue taking the fight to the enemy.",
     "raw_tokens": [
       {
@@ -51,6 +51,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Spelleater],[!PREFACT:1,ABILITIES,Bloodrager_Archetype_UncannyDodge=True,Bloodrager_Archetype_DamageReduction=True,Bloodrager_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Where other bloodragers learn to avoid or shrug off minor damage of all sorts, spelleaters tap into the power of their bloodline in order to heal damage as it comes, and can even cannibalize their own magical energy to heal more damage and continue taking the fight to the enemy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Spelleater ~ Blood of Life|PRECLASS:1,Bloodrager=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Bloodrager Class Feature|AUTOMATIC|Spelleater ~ Spell Eating|PRECLASS:1,Bloodrager=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Bloodrager"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bloodrager_Archetype_ImprovedUncannyDodge|true"
       }
     ]
   },
@@ -67,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

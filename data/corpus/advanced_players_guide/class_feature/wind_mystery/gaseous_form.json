@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wind Mystery ~ Gaseous Form",
     "name": "Gaseous Form",
-    "class": "Wind Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can assume gaseous form (as the spell). You can remain gaseous for %1 minute. This duration does not need to be consecutive, but it must be spent in 1-minute increments. You can bring other creatures with you in gaseous form, but each passenger costs an additional minute per minute of travel.|OracleGaseousFormDuration",
     "raw_tokens": [
       {
@@ -39,6 +39,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.53"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Cloud Subdomain,Wind Subdomain=3"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool"
       }
     ]
   },
@@ -56,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Purifier ~ Purifier Manifesting",
+    "name": "Purifier Manifesting",
+    "class": "Purifier",
+    "description": "Purifier Powers Known: %1; Purifier Maximum Power Level Known: %2|PurifierPowersKnown|PurifierMaxPowerLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ Purifier Manifesting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Purifier Powers Known: %1; Purifier Maximum Power Level Known: %2|PurifierPowersKnown|PurifierMaxPowerLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Purifier Manifesting Variables|Purifier Power Points"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.296"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2546,
+    "record_key": "Purifier ~ Purifier Manifesting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

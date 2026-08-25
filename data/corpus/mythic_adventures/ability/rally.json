@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Feature ~ Rally",
+    "name": "Rally",
+    "description": "As a swift action, you can expend one use of mythic power to rally your allies. This gives you and each of your allies within 30 feet the option to reroll any one d20 roll after the roll is made. The granted reroll must be used before the beginning of your next turn, and the creature must take the result of the reroll, even if it is lower.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Feature ~ Rally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Feature.Marshal Path Feature.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend one use of mythic power to rally your allies. This gives you and each of your allies within 30 feet the option to reroll any one d20 roll after the roll is made. The granted reroll must be used before the beginning of your next turn, and the creature must take the result of the reroll, even if it is lower."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 89,
+    "record_key": "Mythic Path Feature ~ Rally"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

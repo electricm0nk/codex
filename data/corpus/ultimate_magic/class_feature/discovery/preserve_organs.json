@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Preserve Organs",
     "name": "Preserve Organs",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You learn how to preserve and protect your vital organs, reducing the chance of a mortal wound. When a critical hit or sneak attack is scored on you, there is a %1%% chance that the critical hit or sneak attack is negated and damage is instead rolled normally. This does not stack with similar abilities that negate critical hits and sneak attacks (such as fortification armor).|25*count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"NAME=Preserve Organs\")",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

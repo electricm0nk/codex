@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mystic Archer ~ Heightened Senses",
+    "name": "Heightened Senses",
+    "class": "Mystic Archer",
+    "description": "Add %1 ft. to the range of ranged sneak attack and sense abilities.|HeightenedSensesRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Archer ~ Heightened Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MysticArcherClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeightenedSensesRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Add %1 ft. to the range of ranged sneak attack and sense abilities.|HeightenedSensesRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeightenedSensesRange|5*(MysticArcherLVL-2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.365"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1318,
+    "record_key": "Mystic Archer ~ Heightened Senses"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

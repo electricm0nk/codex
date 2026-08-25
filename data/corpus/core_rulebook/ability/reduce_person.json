@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Reduce Person",
+    "name": "Reduce Person",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_ReducePerson_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_ReducePerson_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_ReducePerson_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_ReducePerson_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_ReducePerson_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_ReducePerson_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_ReducePerson_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_ReducePerson_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_ReducePerson_LVL|Reduce Person,SLA_ReducePerson_DC|PREVAREQ:SLA_ReducePerson_AtWill,0|PREVAREQ:SLA_ReducePerson_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_ReducePerson_LVL|Reduce Person,SLA_ReducePerson_DC|PREVAREQ:SLA_ReducePerson_AtWill,1|PREVAREQ:SLA_ReducePerson_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_ReducePerson_LVL|Reduce Person,SLA_ReducePerson_DC|PREVAREQ:SLA_ReducePerson_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_ReducePerson_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_ReducePerson_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_ReducePerson_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_ReducePerson_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_ReducePerson_DC|10+SLA_ReducePerson_SpellLVL+SLA_ReducePerson_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 765,
+    "record_key": "Reduce Person"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

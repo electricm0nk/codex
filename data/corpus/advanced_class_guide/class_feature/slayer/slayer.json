@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer",
     "name": "Slayer",
-    "class": null,
+    "class": "Slayer",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,278 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Slayer\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slayer ~ Class Skills|PREVAREQ:Slayer_CF_ClassSkills,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_LightArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_MediumArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_ShieldProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_StudiedTarget|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Track|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talents|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_SneakAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Stalker|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_SwiftTracker|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_SlayersAdvance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Quarry|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_ImprovedQuarry|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_MasterSlayer|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Slayer_CF_Talent20|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent2|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent2=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talent20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talent20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_LightArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_LightArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_MediumArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_MediumArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_ShieldProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_ShieldProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_StudiedTarget|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_StudiedTarget=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Track|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Track=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talents|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Talents=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_SneakAttack|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_SneakAttack=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Stalker|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Stalker=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_SwiftTracker|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_SwiftTracker=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_SlayersAdvance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_SlayersAdvance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Quarry|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_Quarry=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_ImprovedQuarry|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_ImprovedQuarry=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_MasterSlayer|1|TYPE=Boolean|PREFACT:1,ABILITIES,Slayer_CF_MasterSlayer=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_ArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerArmorProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_LightArmorProficiency|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerLightArmorProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_MediumArmorProficiency|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerMediumArmorProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_ShieldProficiency|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerShieldProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_StudiedTarget|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerStudiedTarget"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Track|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerTrack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Talents|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerTalents"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_SneakAttack|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerSneakAttack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Stalker|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerStalker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_SwiftTracker|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerSwiftTracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_SlayersAdvance|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerSlayersAdvance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_Quarry|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerQuarry"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_ImprovedQuarry|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerImprovedQuarry"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Slayer_CF_MasterSlayer|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SlayerMasterSlayer"
       }
     ]
   },
@@ -49,5 +321,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

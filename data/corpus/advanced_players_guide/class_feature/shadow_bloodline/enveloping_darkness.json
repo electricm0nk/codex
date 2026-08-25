@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shadow Bloodline ~ Enveloping Darkness",
     "name": "Enveloping Darkness",
-    "class": "Shadow Bloodline",
+    "class": "Sorcerer",
     "description": "You may create an area of deeper darkness that you can see through without penalty. All creatures except you are entangled within this darkness unless using freedom of movement or a similar effect. You may use this ability once per day.",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

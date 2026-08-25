@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Stalwart",
+    "name": "Stalwart",
+    "description": "You adopt a defensive stance that allows you to absorb and redirect hits.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Diehard,Endurance"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StalwartMaxDRBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StalwartDRBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StalwartDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You adopt a defensive stance that allows you to absorb and redirect hits."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StalwartMaxDRBonus|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StalwartDR|StalwartDRBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While using the total defense action, fighting defensively action, or Combat Expertise, you can forgo the dodge bonus to AC you would normally gain to instead gain an equivalent amount of DR, to a maximum of DR 5/-, until the start of your next turn. This damage reduction stacks with DR you gain from class features, such as the barbarian's, but not with DR from any other source. If you are denied your Dexterity bonus to AC, you are also denied this DR."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 322,
+    "record_key": "Stalwart"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

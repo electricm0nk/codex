@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Brute ~ Brutish Fortitude",
+    "name": "Brutish Fortitude",
+    "class": "Vigilante",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Brute ~ Brutish Fortitude"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|VigilanteLVL/2+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|VigilanteLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|VigilanteLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|VigilanteLVL|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|VigilanteLVL|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Will|VigilanteLVL|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 979,
+    "record_key": "Brute ~ Brutish Fortitude"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

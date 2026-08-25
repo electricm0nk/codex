@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Armor Master",
     "name": "Armor Master",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "All fighters have two main tools of their trade-weapons and armor. While many fighters hone their weapon skills to a point of inescapable grace and lethality, there are those who live under the maxim that a good offense can be accomplished though an impenetrable defense. To these fighters, proper use of armor and shields ensures that they can fight another day, and that the frustration of enemies who can't seem to crack an armor master's superior defenses is just the first symptom of his foes' eventual defeat.",
     "raw_tokens": [
       {
@@ -59,6 +59,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Fighter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ ARMOR MASTER],[!PREFACT:1,ABILITIES,Fighter_Archetype_Bravery=True,Fighter_Archetype_WeaponTraining=True,Fighter_Archetype_WeaponTraining1=True,Fighter_Archetype_WeaponTraining2=True,Fighter_Archetype_WeaponTraining3=True,Fighter_Archetype_WeaponTraining4=True,Fighter_Archetype_ArmorMastery=True,Fighter_Archetype_WeaponMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponMastery|true"
       }
     ]
   },
@@ -75,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

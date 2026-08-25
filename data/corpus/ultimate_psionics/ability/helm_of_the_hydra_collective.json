@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Helm of the Hydra Collective",
+    "name": "Helm of the Hydra Collective",
+    "description": "Join %1 minds, plus your own, within %2 feet; can manifest some powers through collective.|TacticianCollectiveMinds|TacticianCollectiveRange|!PREABILITY:1,CATEGORY=Internal,Tactician ~ Collective Range Unlimited",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Collective.ThrallherdLinkMinds"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianCollectiveMinds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianCollectiveRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianCollectiveLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Join %1 minds, plus your own, within %2 feet; can manifest some powers through collective.|TacticianCollectiveMinds|TacticianCollectiveRange|!PREABILITY:1,CATEGORY=Internal,Tactician ~ Collective Range Unlimited"
+      },
+      {
+        "key": "DESC",
+        "value": "Join %1 minds, plus your own, on own plane; can manifest some powers through collective.|TacticianCollectiveMinds|PREMULT:2,[PREABILITY:1,CATEGORY=Internal,Tactician ~ Collective Range Unlimited],[!PREABILITY:1,CATEGORY=Internal,Tactician ~ Collective Range Planar]"
+      },
+      {
+        "key": "DESC",
+        "value": "Join %1 minds, plus your own, across planar boundaries; can manifest some powers through collective.|TacticianCollectiveMinds|TacticianCollectiveRange|PREABILITY:1,CATEGORY=Internal,Tactician ~ Collective Range Planar"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianCollectiveMinds|max(INT,TacticianCollectiveLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianCollectiveRange|100+10*TacticianCollectiveLVL|!PREABILITY:1,CATEGORY=FEAT,Enlarged Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveRange|400+(40*EnlargedCollectiveLVL)|PREABILITY:1,CATEGORY=FEAT,Enlarged Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianCollectiveLVL|TL|!PREABILITY:1,CATEGORY=FEAT,Expansive Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianCollectiveLVL|HD|PREABILITY:1,CATEGORY=FEAT,Expansive Collective"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.438"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 224,
+    "record_key": "Helm of the Hydra Collective"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

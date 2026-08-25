@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Ifrit",
+    "name": "Racial Traits ~ Ifrit",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Ifrit_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ifrit Racial Trait|AUTOMATIC|Ifrit ~ Ability Scores|PREVAREQ:Ifrit_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ifrit/ifrit_abilities_globalvar.lst",
+    "sha256": "9cbd6b20a6a7db818219c3df5f8ec521b9abfb31bc1fb168758069712661bc4e",
+    "line": 10,
+    "record_key": "Racial Traits ~ Ifrit"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

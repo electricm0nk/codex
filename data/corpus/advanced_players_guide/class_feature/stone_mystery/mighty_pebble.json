@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Stone Mystery ~ Mighty Pebble",
     "name": "Mighty Pebble",
-    "class": "Stone Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can charge and throw a pebble (or other stone of similar size) that detonates when it strikes a target as a ranged attack. The pebble has a range increment of 20 feet and has a +%1 enhancement bonus to attack and damage. Any creature struck by the pebble takes %2d6 points of bludgeoning damage. Creatures in squares adjacent to the target take half damage, or no damage if they make a Reflex saving throw (DC %3). If the attack roll misses, treat the pebble as a thrown splash weapon to determine where it lands. You can use this ability %4 time(s) per day.|OracleMightyPebbleBonus|OracleMightyPebbleDamageDice|OracleRevelationDC|OracleMightyPebbleTimes",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

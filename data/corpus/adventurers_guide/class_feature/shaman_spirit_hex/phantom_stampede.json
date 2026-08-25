@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Phantom Stampede",
     "name": "Phantom Stampede",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman summons a host of ghostly herd beasts to trample a single creature. These phantom beasts affect only the target creature, which is buffeted and pummeled by their passing. The creature takes no damage from the ability, but takes a -4 penalty to its CMD versus bull rush, overrun, and trip attempts. Additionally, spellcasters under the effect of this ability take a -4 penalty on concentration checks. The target receives no saving throw to negate this effect. This effect lasts %1 rounds. The creature can't be the target of this hex again for 24 hours.|ShamanLVL",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

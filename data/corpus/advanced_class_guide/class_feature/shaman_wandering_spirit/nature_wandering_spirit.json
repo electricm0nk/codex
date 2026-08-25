@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Wandering Spirit ~ Nature",
     "name": "Nature (Wandering Spirit)",
-    "class": "Shaman Wandering Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: charm animal (1st), barkskin (2nd), speak with plants (3rd), grove of respite (4th), awaken (5th), stone tell (6th), creeping doom (7th), animal shapes (8th), world wave (9th)",
     "raw_tokens": [
       {
@@ -43,6 +43,50 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.44"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "Spirit Magic Spells: charm animal (1st), barkskin (2nd), speak with plants (3rd), grove of respite (4th), animal growth (5th), stone tell (6th), creeping doom (7th), animal shapes (8th), world wave (9th)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=1|charm animal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=2|barkskin"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=3|speak with plants"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=4|grove of respite"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=5|awaken"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=6|stone tell"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=7|creeping doom"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=8|animal shapes"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=9|world wave"
       }
     ]
   },
@@ -59,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

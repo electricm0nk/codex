@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest",
     "name": "Warpriest",
-    "class": null,
+    "class": "Warpriest",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,282 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Warpriest\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Warpriest ~ Class Skills|PREVAREQ:Warpriest_CF_ClassSkills,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_LightArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_MediumArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_HeavyArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_ShieldProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_Aura|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_Blessings|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_FocusWeapon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_Orisons|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_SacredWeapon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_SpontaneousCasting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_BonusLanguages|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_Fervor|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_BonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_ChannelEnergy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_SacredArmor|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_AspectOfWar|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_BonusFeat3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_BonusFeat6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_BonusFeat9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_BonusFeat12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_BonusFeat15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Warpriest_CF_BonusFeat18|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_LightArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_LightArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_MediumArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_MediumArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_HeavyArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_HeavyArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_ShieldProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_ShieldProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_Aura|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_Aura=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_Blessings|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_Blessings=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_FocusWeapon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_FocusWeapon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_Orisons|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_Orisons=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_SacredWeapon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_SacredWeapon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_SpontaneousCasting|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_SpontaneousCasting=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusLanguages|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_BonusLanguages=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_Fervor|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_Fervor=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusFeats|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_BonusFeats=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_ChannelEnergy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_ChannelEnergy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_SacredArmor|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_SacredArmor=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_AspectOfWar|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_AspectOfWar=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusFeat3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_BonusFeat3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusFeat6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_BonusFeat6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusFeat9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_BonusFeat9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusFeat12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_BonusFeat12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusFeat15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_BonusFeat15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusFeat18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Warpriest_CF_BonusFeat18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_ArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestArmorProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_LightArmorProficiency|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestLightArmorProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_MediumArmorProficiency|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestMediumArmorProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_HeavyArmorProficiency|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestHeavyArmorProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_ShieldProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestShieldProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_Aura|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestAura"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_Blessings|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestBlessings"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_FocusWeapon|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestFocusWeapon"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_Orisons|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestOrisons"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_SacredWeapon|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestSacredWeapon"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_SpontaneousCasting|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestSpontaneousCasting"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusLanguages|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestBonusLanguages"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_Fervor|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestFervor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_BonusFeats|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestBonusFeats"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_ChannelEnergy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestChannelEnergy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_SacredArmor|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestSacredArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Warpriest_CF_AspectOfWar|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WarpriestAspectOfWar"
       }
     ]
   },
@@ -49,5 +325,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

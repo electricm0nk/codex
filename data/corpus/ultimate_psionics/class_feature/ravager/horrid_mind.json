@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ravager ~ Horrid Mind",
+    "name": "Horrid Mind",
+    "class": "Ravager",
+    "description": "Any time you are an unwilling target of a mind-affecting effect that is not harmless, the creature who targeted you takes 1 point of Wisdom damage.  If you succeed on any applicable Will save allowed by the effect, the creature instead takes 1d6 points of Wisdom damage.  If you expend your psionic focus and make the save, the creature takes 2d6 points of Wisdom damage.  This ability cannot be used in conjunction with Ravage the Mind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ravager ~ Horrid Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Any time you are an unwilling target of a mind-affecting effect that is not harmless, the creature who targeted you takes 1 point of Wisdom damage.  If you succeed on any applicable Will save allowed by the effect, the creature instead takes 1d6 points of Wisdom damage.  If you expend your psionic focus and make the save, the creature takes 2d6 points of Wisdom damage.  This ability cannot be used in conjunction with Ravage the Mind."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1850,
+    "record_key": "Ravager ~ Horrid Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

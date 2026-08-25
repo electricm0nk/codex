@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fiendish Creature ~ Smite Good",
+    "delivery": "Supernatural",
+    "description": "%1/day as a swift action. Add +%2 to attack rolls and +%3 damage bonus against good foes; smite persists until target is dead or the fiendish creature rests.",
+    "description_variables": [
+      "SmiteGoodTimes",
+      "SmiteGoodAttackBonus",
+      "SmiteGoodDamageBonus"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:fiendish_creature_smite_good",
+    "name": "Smite Good",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1/day (+%2 attack, +%3 damage)|SmiteGoodTimes|SmiteGoodAttackBonus|SmiteGoodDamageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodAttackBonus|max(CHA,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodDamageBonus|max(mastervar(\"TL\"),TL)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodTimes|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteGoodAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteGoodDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteGoodTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day as a swift action. Add +%2 to attack rolls and +%3 damage bonus against good foes; smite persists until target is dead or the fiendish creature rests.|SmiteGoodTimes|SmiteGoodAttackBonus|SmiteGoodDamageBonus"
+      },
+      {
+        "key": "KEY",
+        "value": "Fiendish Creature ~ Smite Good"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Supernatural"
+      }
+    ],
+    "source_page": "p.294",
+    "traits": [
+      "Special Attack"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1556,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Fiendish Creature ~ Smite Good",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

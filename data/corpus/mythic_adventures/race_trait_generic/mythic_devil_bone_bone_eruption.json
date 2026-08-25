@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Devil (Bone) ~ Bone Eruption",
+    "name": "Bone Eruption",
+    "description": "As a standard action, a mythic bone devil can expend two uses of mythic power to call to the bones of all enemies within a 20-foot-radius burst. The bones shudder and twist within each creature, dealing 10d6 points of damage and giving each creature the sickened condition for 1d6 rounds. A successful DC 20 Fortitude save halves the damage and negates the sickened condition. If this damage kills a creature, some of its bones tear free from its body and fuse with the bone devil, healing it for 1d6 points of damage per Hit Die of the slain creature. Creatures immune to critical hits are immune to this ability. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Devil (Bone) ~ Bone Eruption"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Devil (Bone) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a mythic bone devil can expend two uses of mythic power to call to the bones of all enemies within a 20-foot-radius burst. The bones shudder and twist within each creature, dealing 10d6 points of damage and giving each creature the sickened condition for 1d6 rounds. A successful DC 20 Fortitude save halves the damage and negates the sickened condition. If this damage kills a creature, some of its bones tear free from its body and fuse with the bone devil, healing it for 1d6 points of damage per Hit Die of the slain creature. Creatures immune to critical hits are immune to this ability. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 106,
+    "record_key": "Mythic Devil (Bone) ~ Bone Eruption"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Golem (Flesh) ~ Sparking Slams",
+    "name": "Sparking Slams",
+    "description": "If a mythic flesh golem strikes an opponent twice in 1 round with its slams, that creature takes an additional 2d10 points of electricity damage. A flesh golem cannot use its electricity attacks to deal electricity damage to itself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Golem (Flesh) ~ Sparking Slams"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Golem (Flesh) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If a mythic flesh golem strikes an opponent twice in 1 round with its slams, that creature takes an additional 2d10 points of electricity damage. A flesh golem cannot use its electricity attacks to deal electricity damage to itself."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 180,
+    "record_key": "Mythic Golem (Flesh) ~ Sparking Slams"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

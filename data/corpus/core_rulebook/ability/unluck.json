@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Unluck",
+    "name": "Unluck",
+    "description": "Curse; Save Will DC 20 negates, no save to avoid effects; Frequency 1/hour; Effect target must reroll any roll decided by the GM and take the worse result",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "Curse.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "Curse; Save Will DC 20 negates, no save to avoid effects; Frequency 1/hour; Effect target must reroll any roll decided by the GM and take the worse result"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.557"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 33,
+    "record_key": "Unluck"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

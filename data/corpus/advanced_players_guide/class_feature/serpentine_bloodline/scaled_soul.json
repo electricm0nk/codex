@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Serpentine Bloodline ~ Scaled Soul",
     "name": "Scaled Soul",
-    "class": "Serpentine Bloodline",
+    "class": "Sorcerer",
     "description": "You gain the shapechanger subtype, and you can assume the form of a reptilian humanoid (as alter self ) or snake of Diminutive to Huge size (as beast shape III) at will. You retain the power of speech and the ability to use somatic spell components when transformed. You also become immune to poison and paralysis. You may use serpent's fang as often as desired, and you may choose to inflict damage to any ability score.",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

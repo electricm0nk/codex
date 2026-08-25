@@ -36,6 +36,13 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from codex_neutral_name import (  # noqa: E402
+    divergence_entry,
+    neutral_key,
+    neutral_name,
+)
+
 # Book id -> path of the book's directory relative to the PCGen `data/` root.
 # The two `.lst` file names are read from the inventory units themselves, so
 # they are deliberately NOT repeated here.
@@ -214,6 +221,92 @@ BOOKS = {
     # are a generic hive-insect species set (Hive Larva Swarm, Hive Queen, Hive
     # Warrior), not named personae.
     "horror_adventures": "pathfinder/paizo/roleplaying_game/horror_adventures",
+    # `decisions.md §20` no_record-to-zero, round 3: the first five of nine
+    # ZERO-monster books this lane had never registered at all (the prior
+    # receipt's "no further apply-the-mechanism-to-book-N cycles remain" was
+    # re-derived and found stale -- `python3 scripts/classify_monster_ability_
+    # rows.py` shows 171 orphan rows across 8 unregistered books with zero
+    # monster rows of their own, so nothing can ever own them and every row
+    # ships owner-less by construction, the identical shape this script
+    # already handles generically). `mythic_adventures` (21 rows) is deferred
+    # here still: its `rules_tables/` module directory does not exist yet and
+    # needs real scaffolding, not just a registry row.
+    #
+    # Zero Product Identity rows in the abilities file for 4 of 5 (`grep -c
+    # 'NAMEISPI:YES\|DESCISPI:YES' <file>` -> 0); `ultimate_wilderness`
+    # carries 1 hit in its 296-line file, screened per-record by the
+    # transcriber's own `ability_pi_reason` exactly like every other book
+    # (not assumed clear here).
+    "ultimate_wilderness": "pathfinder/paizo/roleplaying_game/ultimate_wilderness",
+    "ultimate_intrigue": "pathfinder/paizo/roleplaying_game/ultimate_intrigue",
+    "ultimate_magic": "pathfinder/paizo/roleplaying_game/ultimate_magic",
+    "bestiary_6": "pathfinder/paizo/roleplaying_game/bestiary_6",
+    "bestiary_5": "pathfinder/paizo/roleplaying_game/bestiary_5",
+    # `decisions.md §20` no_record-to-zero, round 4: the two remaining
+    # zero-monster books of the original 8, now registered. Both already have
+    # a dedicated hand-rolled `gen_book_cache.rs` function
+    # (`gen_pathfinder_unchained`/`gen_advanced_race_guide`) that emits their
+    # OTHER families (feats, equipment, ...); this transcription is unaffected
+    # by that and still only writes `monster_data.rs` -- the generator
+    # function itself is extended (round 4) to also call `gen_monster_book`
+    # after its existing writes, reusing the identical `MonsterBookSpec`-driven
+    # mechanism every other book here uses. `pu_abilities_race.lst` (72 rows)
+    # and `arg_abilities_race.lst` (1 row) both load UNGATED at their book's
+    # own `.pcc` root (`grep -n 'ABILITY:pu_abilities_race.lst'
+    # _pathfinder_unchained.pcc` -> line 43, no `PRECAMPAIGN`; `grep -n
+    # 'ABILITY:arg_abilities_race.lst' advanced_race_guide.pcc` -> line 57, no
+    # `PRECAMPAIGN`). Zero Product Identity rows in either file (`grep -c
+    # NAMEISPI:YES pu_abilities_race.lst arg_abilities_race.lst` -> 0, 0).
+    "pathfinder_unchained": "pathfinder/paizo/roleplaying_game/pathfinder_unchained",
+    "advanced_race_guide": "pathfinder/paizo/roleplaying_game/advanced_race_guide",
+    # `decisions.md §20` no_record-to-zero, round 5: the last of the original
+    # ZERO-monster books this lane had never registered, deferred by round 4
+    # ("its `rules_tables/` module directory does not exist yet"). That
+    # deferral is now stale -- a sibling T2 (`spell`) lane already created
+    # `rules_tables/mythic_adventures/` (for `spell_list`, `decisions.md §20`
+    # spell round), so this cycle only adds `mod monster_data;` to the
+    # existing module, not a whole new directory. Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py mythic_adventures` ->
+    # `mythic_adventures 0 21 0 0 21 0 0` (0 monster rows, 21 ability rows, all
+    # 21 orphan, 0 PI, 0 `.COPY=`) -- the identical zero-monster shape every
+    # other book in this dict already handles. `ma_abilities_race.lst` (21
+    # rows) loads UNGATED at the book's own `.pcc` root (`grep -n
+    # 'ABILITY:ma_abilities_race.lst' _mythic_adventures.pcc` -> line 40, no
+    # `PRECAMPAIGN`). Zero Product Identity rows (`grep -c
+    # 'NAMEISPI:YES\|DESCISPI:YES' ma_abilities_race.lst` -> 0).
+    "mythic_adventures": "pathfinder/paizo/roleplaying_game/mythic_adventures",
+    # `decisions.md §27b` -- EVERYTHING: the repeatedly-reconfirmed
+    # "correctly out of scope" disposition for this book is OVERTURNED.
+    # "Not applicable to the modelled campaign set" was a reachability
+    # statement about the negated `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` gate on
+    # `support/oa_races_b3.lst`/`support/oa_abilities_race_b3.lst`
+    # (`_occult_adventures.pcc:74-75`), never an ingest statement -- the
+    # objects exist in the book and are ingested here like every other book.
+    # Reachability stays a SEPARATE number (`decisions.md §16`), reported
+    # honestly as 0 by `monster_chassis.rs`'s reach-gate: no owning race row
+    # in this dict's scope claims any of the 5 in-scope ability rows by name
+    # (`grep -n 'Homunculus Companion ~\|Shikigami ~' oa_abilities_race.lst
+    # support/oa_abilities_race_b3.lst` shows only CATEGORY:Internal umbrella
+    # rows referencing them, which this generator does not resolve into
+    # ownership), so all 5 ship owner-less, the identical honest shape
+    # `mythic_adventures`/`ultimate_wilderness`/`ultimate_intrigue`/
+    # `ultimate_magic` above already ship.
+    #
+    # `races_lsts: []` deliberately, matching those same four precedent rows:
+    # this book's `race`/`monster`-kind rows (`oa_races.lst`'s 4,
+    # `oa_races_b3.lst`'s 1) are a DIFFERENT `docs/work-inventory.json` kind
+    # (`race`/`monster`, not `monster_ability`) and outside this cycle's
+    # scope -- registering them here would risk emitting `MonsterStatBlock`
+    # records into a sibling lane's territory rather than the 5
+    # `monster_ability` units this cycle closes. Derived, never assumed:
+    # `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
+    # cross-referenced against `docs/work-inventory.json`'s own
+    # `book=="occult_adventures"` rows -- exactly 5 `monster_ability` units,
+    # all `not-ingested`; the `race`(4)/`monster`(1) rows are a separate kind
+    # this cycle does not touch. Zero Product Identity rows in either
+    # abilities file (`grep -c 'NAMEISPI:YES\|DESCISPI:YES'
+    # oa_abilities_race.lst support/oa_abilities_race_b3.lst` -> 0, 0).
+    "occult_adventures": "pathfinder/paizo/roleplaying_game/occult_adventures",
 }
 
 # Books part of whose monster rows another compiled table of THIS repo already
@@ -238,9 +331,27 @@ BOOKS = {
 # rows, not all 330.
 CROSS_TABLE_MONSTER_RECORDS = {"bestiary": "beastiary"}
 
-# The `TYPE:` first segment that names which facet of `monster_ability` a row
-# is. Spelled exactly as the corpus spells it.
-FACETS = {"SpecialAttack": "SpecialAttack", "SpecialQuality": "SpecialQuality"}
+# The `TYPE:` segment that names which facet of `monster_ability` a row is.
+# Spelled exactly as the corpus spells it. `Weakness`/`Defensive`/`Aura`/
+# `Sense`/`Communicate` were added by the T9 five-book widening cycle
+# (`decisions.md §16`'s caution applied): each is a distinct, repeated,
+# corpus-native facet label -- never a semantic remapping onto
+# `SpecialAttack`/`SpecialQuality` -- verified against
+# `bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/`inner_sea_gods`'s
+# own PI-cleared population before being added (the cycle's own receipt has
+# the per-shape counts). A bare delivery-only `TYPE:` (no facet segment at
+# all), the `CATEGORY:Internal` shape and one-off non-facet strings are
+# deliberately NOT in this dict -- each needs a per-record read, not a
+# vocabulary entry guessed from one sample.
+FACETS = {
+    "SpecialAttack": "SpecialAttack",
+    "SpecialQuality": "SpecialQuality",
+    "Weakness": "Weakness",
+    "Defensive": "Defensive",
+    "Aura": "Aura",
+    "Sense": "Sense",
+    "Communicate": "Communicate",
+}
 # The `TYPE:` segment naming how the ability is delivered, when the row says.
 DELIVERIES = {
     "Supernatural": "Supernatural",
@@ -836,6 +947,65 @@ class UnmodelledDesc(Exception):
     """
 
 
+def _concat_desc_variants(descs: list[str]) -> tuple[str, list[str]]:
+    """The generalised SIXTH `parse_desc` shape (`decisions.md §27b`, round
+    6/7/8's own docstring naming this exact gap): concatenate every `DESC:`
+    token's own text, verbatim, in the row's own order.
+
+    Every branch above this one resolves a row where the corpus states ONE
+    global criterion that picks a single winning token (the `DisplayFullAbility`
+    ruleset toggle, a literal-superset containment, or a lone token whose pipe
+    entries name this row's own `DEFINE:`d variables). The **56**-unit
+    `PRERULE`/`PREVAREQ`/`PREVARGT`/`PRESIZE*`/`PREHD`/`PRERACE`/`PRETEMPLATE`/
+    `PREABILITY`-gated group this branch closes is different: its gate tests a
+    property of the *owning monster instance* (its CR, HD, size, template,
+    race subtype, or a feat it has) -- a fact this per-ability-KEY table row,
+    shared verbatim across every monster that owns it, cannot resolve once and
+    for all. There is no single row-level "the" value to trace for these
+    gates (unlike a row's own unconditionally-set `BONUS:VAR`, which the
+    `PREVAREQ:EnergyDrainNoHP,0`-style rows below already resolve before ever
+    reaching here -- see `parse_type_or_provisional_default`'s sibling
+    resolution for the analogous `TYPE:` gap). Picking ONE variant here would
+    be exactly the guess `§1a` forbids; omitting the gated ones would silently
+    drop mechanics the way the original single-`DESC:`-only parser did.
+
+    So every token's text ships, concatenated in the corpus's own order --
+    the same "verbatim corpus text, corpus's own order, never a composition"
+    principle round 7's CONTINUATION shape already established, generalised
+    to also carry a token's own PRE-gate condition (dropped from the emitted
+    text -- gates are not player-facing prose) and its own `%N` variables
+    alongside the plain, ungated continuation case CONTINUATION already
+    covers. A single space joins adjacent tokens' text (the corpus supplies
+    every WORD; a plain ASCII space between two already-punctuated sentences
+    is formatting hygiene, not invented content -- the alternative, gluing
+    two sentences together with no separator at all, is the actual defect).
+
+    Each token's own `%N` placeholders are renumbered so a single, ordered,
+    GLOBAL `description_variables` list can back them: token 2's own `%1`
+    (which names token 2's own first pipe-declared variable, NOT token 1's)
+    becomes `%(N+1)` where `N` is the count of variables already collected
+    from every earlier token. This is pure bookkeeping -- the renumbered text
+    still names exactly the variables the corpus's own pipe entries declared,
+    in the corpus's own order, nothing added or guessed.
+    """
+    joined_parts: list[str] = []
+    global_vars: list[str] = []
+    for d in descs:
+        segments = d.split("|")
+        text = segments[0]
+        row_vars = [p for p in segments[1:] if p and not is_prerequisite(p)]
+        if row_vars:
+            offset = len(global_vars)
+            text = re.sub(
+                r"%(\d+)",
+                lambda m, _offset=offset: f"%{_offset + int(m.group(1))}",
+                text,
+            )
+            global_vars.extend(row_vars)
+        joined_parts.append(text)
+    return " ".join(joined_parts), global_vars
+
+
 def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
     """The `DESC:` text a player should read, plus the variables its `%N` name.
 
@@ -961,21 +1131,96 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
                     # Strength damage -- `decisions.md §46`'s loss again.
                     descs = piped
                 else:
-                    raise UnmodelledDesc(
-                        f"row carries {len(descs)} DESC: tokens, none gated on "
-                        f"{FULL_ABILITY_RULE}, no continuation, no superset and no single "
-                        "token bearing this row's own DEFINEd variables; the transcriber "
-                        f"refuses to pick one by position. Tokens: {descs!r}"
-                    )
+                    return _concat_desc_variants(descs)
         assert len(descs) == 1, "every branch above narrows to exactly one token"
     parts = descs[0].split("|")
     return parts[0], [p for p in parts[1:] if p and not is_prerequisite(p)]
 
 
+def type_segments(row: list[str]) -> list[str]:
+    """Every dot-separated segment across EVERY `TYPE:` token on the row, in
+    field order.
+
+    A row can carry more than one `TYPE:` token — `bestiary_3`'s dragon
+    subtypes state `TYPE:Supernatural` and `TYPE:RaceAbility.SpecialQuality`
+    as two separate fields on the same line (`Forest Dragon ~ Change Shape`
+    and 26 more). `token()` returns only the first field with a given prefix,
+    which silently discarded the SECOND token's facet for those 27 rows
+    before this existed — not a vocabulary gap, a parsing bug, found and
+    fixed by the T9 `MonsterAbilityFacet`-widening cycle while deriving the
+    real refusal population (`decisions.md §17a`: re-derive, don't trust).
+
+    **`decisions.md §22` — two upstream shapes, inherited and resolved here,
+    not perpetuated.** Re-derived live against the round-6 refusal
+    population (`no_record` monster_ability round 6), previously named only
+    as "2 corpus typos and a comma-delimiter anomaly" with no fix landed:
+
+    1. **Comma-delimiter anomaly** — `bestiary`'s `b1_abilities_race.lst:1138`
+       (`Spectre ~ Create Spawn`) states `TYPE:SpecialAttack,Supernatural`:
+       PCGen's own delimiter is `.`, and every other row in every book this
+       script has ever read uses it; this single row uses `,` instead. Two
+       facet-bearing rows cannot both be right about the delimiter their own
+       shared vocabulary uses, so this is exactly `§22`'s "two rows that
+       cannot both be right" — Codex resolves it by treating `,` as an
+       additional segment separator, corpus-wide, rather than mirroring the
+       one row's typo.
+    2. **Misspelled facet/delivery segments** — `bestiary_2`'s
+       `b2_abilities_race.lst:1259` (`Tick Swarm ~ Cling`) states
+       `TYPE:SpecialAttck.Extraordinary` (missing the `a`), and
+       `b2_abilities_race.lst:851` (`Mothman ~ Agent of Fate`) states
+       `TYPE:Spelllike` (missing the capital `L`) where every other book's
+       equivalent field reads `SpellLike`. Both are single-row spelling
+       defects in the oracle's own data, corrected here by an explicit,
+       named substitution table (`_TYPE_SEGMENT_TYPO_FOLDS` below) — never a
+       fuzzy/heuristic match, so no *other* segment can ever be silently
+       "corrected" into a different vocabulary word.
+
+    Both corrections are applied only inside this function, before facet/
+    delivery classification, so `parse_type`'s own vocabulary
+    (`FACETS`/`DELIVERIES`) never has to special-case either shape.
+    """
+    segments: list[str] = []
+    for field in row:
+        if field.startswith("TYPE:"):
+            for raw in field[len("TYPE:") :].split("."):
+                for part in raw.split(","):
+                    part = _TYPE_SEGMENT_TYPO_FOLDS.get(part, part)
+                    if part:
+                        segments.append(part)
+    return segments
+
+
+# `decisions.md §22` — named, single-row corrections for confirmed upstream
+# spelling defects (never a fuzzy match). Adding an entry here is a
+# licensing/correctness-relevant divergence from the oracle's own bytes:
+# name the exact row it was found on in a comment, the way the two entries
+# below do.
+_TYPE_SEGMENT_TYPO_FOLDS: dict[str, str] = {
+    # `bestiary_2/b2_abilities_race.lst:1259` (`Tick Swarm ~ Cling`).
+    "SpecialAttck": "SpecialAttack",
+    # `bestiary_2/b2_abilities_race.lst:851` (`Mothman ~ Agent of Fate`).
+    "Spelllike": "SpellLike",
+}
+
+
+class UnmodelledFacet(Exception):
+    """A row's `TYPE:` segments name no facet the chassis models.
+
+    Raised rather than exiting so the caller can decide whether the row
+    matters — same fix, same reason, as `UnmodelledDesc`
+    (`SD31-E6-F9-005`'s doc comment above `unscreenable_shipping`): a row
+    this cannot resolve is fine to drop, but must never crash every OTHER
+    row in the same book. Before this existed, `parse_type` raised
+    `SystemExit` directly and stopped `bestiary`/`bestiary_2`/`bestiary_3`/
+    `inner_sea_bestiary`/`inner_sea_gods` from transcribing ANY ability row
+    at all, not just the ones carrying an unmodelled shape — the identical
+    defect class, found again in the same script.
+    """
+
+
 def parse_type(row: list[str]) -> tuple[str, str | None, list[str]]:
     """`TYPE:SpecialAttack.Supernatural.Aura` -> facet, delivery, traits."""
-    raw = token(row, "TYPE:") or ""
-    segments = [s for s in raw.split(".") if s]
+    segments = type_segments(row)
     facet = None
     delivery = None
     traits: list[str] = []
@@ -987,11 +1232,219 @@ def parse_type(row: list[str]) -> tuple[str, str | None, list[str]]:
         else:
             traits.append(segment)
     if facet is None:
-        raise SystemExit(
-            f"row carries no `monster_ability` facet in TYPE:{raw!r} — the chassis "
-            "models SpecialAttack/SpecialQuality only; widen it deliberately"
+        raise UnmodelledFacet(
+            f"row carries no `monster_ability` facet in TYPE segments {segments!r} — the "
+            "chassis models SpecialAttack/SpecialQuality/Weakness/Defensive/Aura/Sense/"
+            "Communicate only; widen it deliberately"
         )
     return facet, delivery, traits
+
+
+# `decisions.md §27`'s provisional default, unblocked by the operator ruling
+# (T9 round 6 escalated this exact population and refused to invent a
+# default unilaterally; §27 grants it, conditioned on every defaulted unit
+# carrying a machine-countable marker naming WHY -- `workflow-instruction.md
+# §6a`'s contract, enforced by `scripts/shape_provisional_marker.py`, the
+# ONLY sanctioned place that writes the marker fields).
+PROVISIONAL_FACET_DEFAULT = "SpecialQuality"
+
+
+# `decisions.md §27a`/`§27b` — kanban.md row 17's final categorization pass
+# (`epic-7-shape-categorization-100`). Every row `provisional_facet_reason`
+# would otherwise have to default (per-book/`§27`) has now been individually
+# re-derived against the corpus/oracle, keyed by the row's own `KEY:` value.
+# A row with an entry here NEVER goes through the `§27` provisional-default
+# path: `parse_type` returns this facet directly, exactly as if the row's
+# own `TYPE:` segments had declared it (`§27a`: "F0/no-formula reached by
+# fallthrough is not an answer... derived by measurement or it is not
+# done" — the same standard applies to a facet default). Each entry cites
+# the corpus/oracle evidence it rests on so a future reader can re-verify
+# it without re-deriving from scratch. Never a guess; where genuinely
+# ambiguous, the majority-convention reading is used and named as such.
+#
+# Group 1 — reclassified to `SpecialAttack` (the `§27` `SpecialQuality`
+# default was wrong for these four; corroborated by a genuinely-declared
+# sibling record elsewhere in the corpus, not by domain recall):
+#   * "Aurumvorax ~ Rake" — the universal monster rule "Rake" is
+#     `SpecialAttack` corpus-wide and unanimously: the base rule record
+#     itself (`data/corpus/beastiary/monster_ability/rake.json`,
+#     `TYPE:SpecialAttack.Extraordinary.AttackOption`) plus every other
+#     book's own "~ Rake" row (`gynosphinx_rake.json`,
+#     `bandersnatch_rake.json`) all genuinely declare `SpecialAttack`.
+#   * "Bunyip ~ Blood Rage" — same shape: the universal rule's own base
+#     record (`data/corpus/bestiary_2/monster_ability/blood_rage.json`,
+#     `TYPE:SpecialAttack.Extraordinary`) and `inner_sea_bestiary`'s
+#     `volnagur_blood_rage.json` both genuinely declare `SpecialAttack`.
+#   * "Yrthak ~ Sonic Lance" — the SAME creature's sibling ability
+#     `Yrthak ~ Explosion` (`b2_abilities_race.lst:1416`) genuinely
+#     declares `TYPE:SpecialAttack.Extraordinary` and its own `DESC:`
+#     names the identical mechanic ("a yrthak can fire its sonic lance at
+#     the ground...") — the two rows describe one ability from two angles.
+#   * "Howler ~ Abyssal Strike" — identical shape ("natural weapons treated
+#     as aligned for the purpose of overcoming damage reduction") to
+#     `inner_sea_world_guide`'s genuinely-declared
+#     `nascent_demon_lord_aligned_strike.json` (`SpecialAttack`); the same
+#     creature's siblings `Howl`/`Pain`
+#     (`b2_abilities_race.lst:696`-`:697`) are also both `SpecialAttack`.
+#
+# Group 2 — confirmed `SpecialQuality` (the `§27` default was already the
+# genuinely-correct answer; marker removed because it is now a measurement,
+# not a placeholder):
+#   * "Adlet ~ Spell-Like Abilities", "Lorthact ~ Spell-Like Abilities",
+#     "Mothman ~ Agent of Fate" — an unqualified "Spell-Like Abilities" row
+#     (no facet segment declared) is `SpecialQuality` corpus-wide by a
+#     large majority: of the 277 genuinely-declared (non-provisional)
+#     "Spell-Like Abilities" `monster_ability` records in the corpus, 255
+#     declare `SpecialQuality.SpellLike` against 22 `SpecialAttack.
+#     SpellLike` — the majority-convention reading, named as such.
+#   * "Denizen of Leng ~ Planar Fast Healing" — Fast Healing is a passive
+#     defensive trait, not an attack; this is `decisions.md §27`'s own
+#     cited example (`ModifyHP.Supernatural`) and the corpus's own
+#     genuinely-declared Fast-Healing-shaped records agree.
+#   * "Xocothian ~ Speed Burst" — a self-only movement ability usable as a
+#     full-round action; not an attack, so `SpecialQuality` by exclusion
+#     among the seven modeled facets.
+#   * "Carnivorous Blob ~ Split" — the universal monster rule "Split" is
+#     `SpecialQuality` corpus-wide: 4 of 5 genuinely-declared "~ Split"
+#     records (`carnivorous_crystal_split.json`, `plasma_ooze_split.json`,
+#     `black_pudding_split.json`, `ocher_jelly_split.json`) declare
+#     `SpecialQuality`; the fifth (`amphisbaena_split.json`) declares
+#     `Defensive`, a distinguishable creature-specific variant, not a
+#     counter-example to this row.
+#   * "Lamia Matriarch ~ Spells", "Royal Naga ~ Spells", "Water Naga ~
+#     Spells", "Lunar Naga ~ Spells" — a bare "casts spells as an Nth-level
+#     sorcerer" racial spellcasting grant; none of the other six modeled
+#     facets fit a passive granted capability, so `SpecialQuality` by
+#     exclusion (matches the three siblings' own shared shape).
+#   * "Asurendra ~ None" — a content-less placeholder row (no `DESC:`,
+#     `TYPE:AsurendraAdditional` alone) sitting among sibling
+#     `AsurendraAdditional`-tagged rows (`Death`/`Sacrilege`/`Shaping`) that
+#     all genuinely declare `SpecialQuality`; `SpecialQuality` by structural
+#     analogy to those siblings.
+#   * "Unfettered Eidolon ~ Con/Str/Wis/Dex/Cha/Int" (6 rows) — a flat
+#     `BONUS:STAT` ability-score-choice row (`CHOOSE:NOCHOICE`); none of
+#     the other six modeled facets describe a stat bonus, so
+#     `SpecialQuality` by exclusion.
+#   * "Petrified Maiden ~ Weapon Selection" — a granted weapon-proficiency
+#     choice (`CHOOSE:WEAPONPROFICIENCY`), the same shape as the eidolon
+#     stat-selection rows above; `SpecialQuality` by exclusion.
+#   * "Morlock ~ Sneak Attack" — an invisible (`VISIBLE:NO`) internal
+#     numeric feed (`BONUS:VAR|SneakAttackDice|1`), `TYPE:Internal` (round
+#     6's own "genuinely novel shape" — no other genuinely-declared
+#     `monster_ability` record anywhere in the corpus carries the
+#     `Internal` trait to compare against). None of `SpecialAttack`/
+#     `Weakness`/`Defensive`/`Aura`/`Sense`/`Communicate` describe a hidden
+#     numeric feed either, so `SpecialQuality` is the only fit within the
+#     seven modeled facets, matching the row's own `CATEGORY:Special
+#     Ability` declaration.
+_MONSTER_ABILITY_FACET_OVERRIDES: dict[str, str] = {
+    "Aurumvorax ~ Rake": "SpecialAttack",
+    "Bunyip ~ Blood Rage": "SpecialAttack",
+    "Yrthak ~ Sonic Lance": "SpecialAttack",
+    "Howler ~ Abyssal Strike": "SpecialAttack",
+    "Adlet ~ Spell-Like Abilities": "SpecialQuality",
+    "Lorthact ~ Spell-Like Abilities": "SpecialQuality",
+    "Mothman ~ Agent of Fate": "SpecialQuality",
+    "Denizen of Leng ~ Planar Fast Healing": "SpecialQuality",
+    "Xocothian ~ Speed Burst": "SpecialQuality",
+    "Carnivorous Blob ~ Split": "SpecialQuality",
+    "Lamia Matriarch ~ Spells": "SpecialQuality",
+    "Royal Naga ~ Spells": "SpecialQuality",
+    "Water Naga ~ Spells": "SpecialQuality",
+    "Lunar Naga ~ Spells": "SpecialQuality",
+    "Asurendra ~ None": "SpecialQuality",
+    "Unfettered Eidolon ~ Con": "SpecialQuality",
+    "Unfettered Eidolon ~ Str": "SpecialQuality",
+    "Unfettered Eidolon ~ Wis": "SpecialQuality",
+    "Unfettered Eidolon ~ Dex": "SpecialQuality",
+    "Unfettered Eidolon ~ Cha": "SpecialQuality",
+    "Unfettered Eidolon ~ Int": "SpecialQuality",
+    "Petrified Maiden ~ Weapon Selection": "SpecialQuality",
+    "Morlock ~ Sneak Attack": "SpecialQuality",
+}
+
+
+def provisional_facet_reason(row: list[str]) -> str:
+    """Classify WHY a row's `TYPE:` segments name no modeled facet, for the
+    `§27` provisional-default marker. Never guesses a real facet -- only
+    names which of four shapes T9 round 6/7's own re-derivation found in
+    this population, so the eventual `row 17` real-categorization pass
+    (`§27a`) starts from a labeled bucket rather than one undifferentiated
+    pile. Four shapes, corpus-wide re-derived (`§17a`), not four guesses:
+
+    * **`copy_row_base_ability_type_unresolved`** -- the row carries NO
+      `TYPE:` token at all because its identity field is a `.COPY=` overlay
+      (`CATEGORY=Special Ability|Rake.COPY=Rake`), and the bare-named base
+      ability (`Rake`, unqualified) it copies from does not exist as its
+      own row in ANY book this script reads -- confirmed by a corpus-wide
+      search, not assumed absent.
+    * **`missing_type_token_no_facet`** -- the row carries no `TYPE:` token
+      and is not a `.COPY=` row either (`Lamia Matriarch ~ Spells`: a
+      `CATEGORY:`/`DESC:` row PCGen itself never gave a `TYPE:`).
+    * **`type_internal_only_no_facet_no_delivery`** -- the row's ONLY
+      segment is `Internal` (PCGen's own `CATEGORY:Internal` bundle-row
+      marker, not a delivery or a facet), naming a hidden bonus-granter a
+      player never sees (`VISIBLE:NO`), round 6's own "genuinely novel
+      shape".
+    * **`delivery_only_no_facet_segment`** -- the row states HOW the
+      ability is delivered (`SpellLike`, `Extraordinary`, `Supernatural`)
+      but never states WHAT facet it is -- exactly `decisions.md §27`'s own
+      cited example (`ModifyHP.Supernatural`).
+    * **`book_specific_type_label_no_facet_vocabulary_gap`** -- none of the
+      above: a genuine book-specific one-off `TYPE:` string
+      (`AsurendraAdditional`, `Unfettered Eidolon Stat Selection`, …) that
+      would need its own per-record policy call to assign a real facet,
+      round 6's own residual bucket.
+    """
+    segments = type_segments(row)
+    if not segments:
+        if ".COPY=" in row[0]:
+            return "copy_row_base_ability_type_unresolved"
+        return "missing_type_token_no_facet"
+    if segments == ["Internal"]:
+        return "type_internal_only_no_facet_no_delivery"
+    if any(segment in DELIVERIES for segment in segments):
+        return "delivery_only_no_facet_segment"
+    return "book_specific_type_label_no_facet_vocabulary_gap"
+
+
+def parse_type_or_provisional_default(
+    row: list[str],
+) -> tuple[str, str | None, list[str], str | None]:
+    """`parse_type`, widened by `decisions.md §27`'s provisional default.
+
+    A row that genuinely declares a modeled facet returns exactly what
+    `parse_type` would, with a `None` fourth value -- this function changes
+    NOTHING for the ~96% of rows that already resolve cleanly. A row with
+    no modeled facet ships anyway (`facet` forced to
+    `PROVISIONAL_FACET_DEFAULT`, `delivery`/`traits` read off the row's own
+    segments exactly as `parse_type` would have, had it not raised) and the
+    fourth value names why, via `provisional_facet_reason`.
+
+    This function only classifies and returns the facet/reason -- it never
+    touches a corpus record. The caller stamps the returned reason onto the
+    shipped JSON record via `scripts/shape_provisional_marker.py`'s
+    `stamp_provisional_default`, the only sanctioned place that writes the
+    marker (`workflow-instruction.md §6a`).
+
+    `decisions.md §27a`/`§27b` (kanban.md row 17): a row whose `KEY:` value
+    matches `_MONSTER_ABILITY_FACET_OVERRIDES` is a genuinely-derived
+    answer, not a placeholder -- it is returned with a `None` fourth value
+    (never provisional) exactly like a row whose own `TYPE:` segments
+    resolved cleanly, even though its segments alone could not resolve it.
+    """
+    try:
+        facet, delivery, traits = parse_type(row)
+        return facet, delivery, traits, None
+    except UnmodelledFacet:
+        segments = type_segments(row)
+        delivery = next((segment for segment in segments if segment in DELIVERIES), None)
+        traits = [segment for segment in segments if segment != delivery]
+        key = token(row, "KEY:")
+        override = _MONSTER_ABILITY_FACET_OVERRIDES.get(key) if key else None
+        if override is not None:
+            return override, delivery, traits, None
+        return PROVISIONAL_FACET_DEFAULT, delivery, traits, provisional_facet_reason(row)
 
 
 def cross_table_served_monster_keys(corpus_dir: str) -> set[str]:
@@ -1025,7 +1478,15 @@ def cross_table_served_monster_keys(corpus_dir: str) -> set[str]:
     return served
 
 
-def transcribe(book: str) -> str:
+def transcribe(book: str, provisional_facets: dict[str, str] | None = None) -> str:
+    """`provisional_facets`, if given, is filled IN PLACE with
+    `{corpus_key: reason}` for every ability row this call defaults via
+    `decisions.md §27` (see `parse_type_or_provisional_default`). Optional
+    and defaults to a throwaway dict so every existing caller's
+    `transcribe(book) -> str` signature is unchanged -- only `write_book`
+    passes a real dict, to hand the population to the stamping step."""
+    if provisional_facets is None:
+        provisional_facets = {}
     book_relative = BOOKS[book]
     root = os.path.join(corpus_root(), book_relative)
     inventory = json.load(open("docs/work-inventory.json", encoding="utf-8"))
@@ -1176,23 +1637,50 @@ def transcribe(book: str) -> str:
     # transcription, because they are about to be emitted.
     unscreenable: set[str] = set()
 
+    # Ability rows whose `TYPE:` segments name no facet the chassis models
+    # USED to be dropped here (`UnmodelledFacet`, `SD31-E6-F9-005`'s fix).
+    # `decisions.md §27` now grants a provisional default instead -- see
+    # `parse_type_or_provisional_default` -- so this population ships.
+    # Populated here, in `ability_pi_reason`'s own pre-pass (which already
+    # runs once per ability, before the header block below is written), not
+    # in the emission loop -- the header needs the final count and the
+    # emission loop runs after it. The caller's dict (already substituted
+    # for `None` at the top of this function) is mutated IN PLACE, never
+    # rebound, so a caller-supplied dict (`write_book`) stays valid.
+
     # Ability rows whose `DESC:` text is declared Product Identity
-    # (`DESCISPI:YES`) but whose ROW is not otherwise dropped -- these ship,
-    # with `description` (and its variables) replaced by
+    # (`DESCISPI:YES`) OR whose description text carries an undeclared
+    # blacklist-term hit -- either way the ROW is not otherwise dropped:
+    # these ship, with `description` (and its variables) replaced by
     # `REDACTED_PI_MARKER` at emission time below, mirroring
     # `ingest_race_traits.rs`/`ingest_pu_classes.rs`'s "a description CAN be
     # redacted and the record still works" rule (`decisions.md §39.4`). A row
-    # that is ALSO `NAMEISPI:YES` is dropped outright by `ability_pi_reason`
-    # below and never reaches this set -- the name-drop always takes priority
-    # over the description-redact, because a dropped row has no description
-    # to redact.
+    # whose NAME carries PI is renamed, not dropped, either (see
+    # `name_renamed` below) -- a dropped row exists only when a hit lands
+    # in a field neither mechanism can fix.
     desc_redacted: set[str] = set()
+
+    # Ability rows whose bare NAME (an emitted value, not a PCGen
+    # declaration) hits the blacklist term list -- `decisions.md §24`'s "the
+    # name itself is PI" case. Value is `(codex_name, codex_key)`, both
+    # derived ONLY from `(kind, book, source_file, source_line)` via
+    # `scripts/codex_neutral_name.py` -- see that module's own docstring for
+    # the `§24b`-1 proof this cannot be influenced by the original name.
+    # Deliberately narrower than PCGen's OWN `NAMEISPI:YES` declaration
+    # (still handled by the early-return branch below, unchanged: dropped,
+    # not renamed) -- this branch only fires when the ROW ITSELF never
+    # declared its name PI and the term scan found it anyway, which is
+    # exactly the population T9 round 6 named and this cycle closes.
+    name_renamed: dict[str, tuple[str, str]] = {}
+    renamed_divergence: list[dict] = []
 
     def ability_pi_reason(unit: dict) -> str | None:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         if token(row, "NAMEISPI:") == "YES":
             return "NAMEISPI:YES"
-        _facet, _delivery, traits = parse_type(row)
+        _facet, _delivery, traits, reason = parse_type_or_provisional_default(row)
+        if reason:
+            provisional_facets[unit["corpus_key"]] = reason
         try:
             description, variables = parse_desc(row)
         except UnmodelledDesc:
@@ -1217,19 +1705,45 @@ def transcribe(book: str) -> str:
         # for the two screens. Every OTHER emitted value is still screened
         # exactly as before.
         desc_declared = token(row, "DESCISPI:") == "YES"
-        if desc_declared:
-            desc_redacted.add(unit["corpus_key"])
-        hits = pi_hits(
+
+        # The name and key are the ONE field a hit here cannot be redacted
+        # away from -- `decisions.md §24` is the fix, screened separately
+        # from every other emitted value so a name-only hit renames rather
+        # than drops.
+        name_hits = pi_hits(terms, unit["corpus_key"], unit["name"])
+        desc_hits = [] if desc_declared else pi_hits(terms, description)
+        other_hits = pi_hits(
             terms,
-            unit["corpus_key"],
-            unit["name"],
-            None if desc_declared else description,
             token(row, "SOURCEPAGE:"),
             *traits,
             *variables,
             *owners[unit["corpus_key"]],
         )
-        return f"{len(hits)} PI_BLACKLIST_TERMS hit(s) in emitted values" if hits else None
+        if other_hits:
+            # A hit outside the name/description fields is not something
+            # either the `§24` rename or the redact-and-ship path can fix
+            # (an owner's name, a trait/variable value) -- unchanged from
+            # the prior behaviour: dropped.
+            return f"{len(other_hits)} PI_BLACKLIST_TERMS hit(s) in emitted values"
+
+        if name_hits:
+            codex_name = neutral_name("monster_ability", book, unit["source_file"], unit["source_line"])
+            codex_key = neutral_key("monster_ability", book, unit["source_file"], unit["source_line"])
+            name_renamed[unit["corpus_key"]] = (codex_name, codex_key)
+            renamed_divergence.append(
+                divergence_entry(
+                    "monster_ability", book, unit["source_file"], unit["source_line"], reason="name_pi_blocked"
+                )
+            )
+            if desc_declared or desc_hits:
+                desc_redacted.add(unit["corpus_key"])
+            return None
+
+        if desc_declared or desc_hits:
+            desc_redacted.add(unit["corpus_key"])
+            return None
+
+        return None
 
     # Monsters first, and the ability screen runs only AFTER their owners are
     # withdrawn. `owners` is an emitted field, so an ability whose owner is a
@@ -1262,6 +1776,13 @@ def transcribe(book: str) -> str:
         # first), but a term-blacklist hit on another field runs AFTER that
         # line, so this cleanup is not a no-op.
         desc_redacted -= dropped_ability_keys
+        # Symmetric safety net for the rename map -- structurally unreachable
+        # today (`ability_pi_reason` returns on `other_hits` before it ever
+        # populates `name_renamed`), kept so a future branch reordering
+        # cannot silently ship a renamed row alongside a drop for the same
+        # key.
+        for key in dropped_ability_keys:
+            name_renamed.pop(key, None)
         # stderr may name the keys: it is a console message, not a checked-in
         # file, and an operator ruling on the exclusion needs to know what was
         # excluded.
@@ -1432,20 +1953,35 @@ def transcribe(book: str) -> str:
         )
 
     # An ability row no monster row of this book claims is an ORPHAN: the
-    # catalog renders an ability underneath its owning monster, so a record with
-    # no owner would load and never be shown -- the stub class `decisions.md
-    # §44.2` was written about. Round 2 dodged the question by taking the only
-    # two remaining orphan-free books; from round 3 on, every candidate book has
-    # orphans, and the rule is `kanban.md`'s: transcribe the LINKED subset and
-    # carry the orphans as an `OPEN_FINDINGS` entry naming their remedy. They
-    # stay `not-ingested` in the work inventory, which is the honest status --
-    # not `grounded`, and not silently emitted as unreachable rows.
+    # catalog renders an ability underneath its owning monster, so a record
+    # with no owner loads and is never shown by `list_monster_catalog` --
+    # never the stub class `decisions.md §44.2` was written about, because a
+    # stub is a record a player's screen SHOWS empty, and an owner-less
+    # record here reaches no screen at all (verified: `list_monster_catalog`
+    # only ever walks a monster's OWN `ability_keys`, `monster_catalog.rs`,
+    # never a bare scan of every `MonsterAbilityRecord`).
+    #
+    # `decisions.md §20` (2026-08-23) is dispositive: `no_record` means
+    # never-ingested, and an un-ingested row's shape cannot be measured --
+    # Gate 1's DoD is that every unit's shape IS measured, which is a
+    # strictly weaker claim than "reaches a player". Rounds 2-through-T9
+    # dropped orphans because a `not-ingested` row is honest about BOTH
+    # claims failing; that conflated the two. `§20`'s own text says to
+    # "claim reachability separately from ingestion, and only where
+    # `reach_gate.rs` actually proves it" -- which this cycle now does: an
+    # orphan SHIPS (owners: &[], shape measurable, `no_record` cleared) and
+    # is pinned as a **named, provable non-reach** in
+    # `reach_gate.rs::UNREACHED_RECORD_FINDINGS`, not silently claimed
+    # reachable. `unreached_records_are_exactly_the_recorded_findings` fails
+    # the build the moment an unpinned key stops reaching, so this cannot
+    # rot into a silent stub the way an unchecked drop could.
     orphans = [u for u in abilities if not owners[u["corpus_key"]]]
-    abilities = [u for u in abilities if owners[u["corpus_key"]]]
     if orphans:
         print(
-            f"{book}: {len(orphans)} orphan ability row(s) NOT transcribed "
-            "(no monster row of this book owns them): "
+            f"{book}: {len(orphans)} orphan ability row(s) transcribed WITHOUT an owner "
+            "(no monster row of this book claims them; ingested for shape measurement per "
+            "decisions.md §20, reachability NOT claimed -- see reach_gate.rs "
+            "UNREACHED_RECORD_FINDINGS): "
             + ", ".join(u["corpus_key"] for u in orphans),
             file=sys.stderr,
         )
@@ -1502,11 +2038,34 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
+    # A row whose `TYPE:` segments name no facet this chassis models USED to
+    # be dropped here exactly like `unscreenable` above. `decisions.md §27`
+    # now grants a provisional `SpecialQuality` default instead of a drop --
+    # the row SHIPS, `parse_type_or_provisional_default` supplies the
+    # default facet, and the emission loop below records which corpus_keys
+    # were defaulted (and why) into `provisional_facets` for the caller to
+    # stamp via `shape_provisional_marker.stamp_provisional_default`. No
+    # rows are removed from `abilities` for this reason any more.
+
     # Finalized against whatever `abilities` actually ships after every screen
     # above (the `.COPY=`/`.MOD`/cross-table/orphan passes can each remove a
     # row this set was computed before) -- an ability no longer shipping has
-    # no description left to redact either.
-    desc_redacted &= {u["corpus_key"] for u in abilities}
+    # no description left to redact either, and one dropped for an unrelated
+    # reason (e.g. `unscreenable`) has no name left to rename.
+    shipping_keys = {u["corpus_key"] for u in abilities}
+    desc_redacted &= shipping_keys
+    name_renamed = {k: v for k, v in name_renamed.items() if k in shipping_keys}
+    # Same reason, applied to `provisional_facets` -- IN PLACE (never
+    # rebound: `write_book` holds a reference to this exact dict).
+    for key in [k for k in provisional_facets if k not in shipping_keys]:
+        del provisional_facets[key]
+
+    # Every ability key this table emits, after renaming: the identity a
+    # cross-reference (a monster's own `ability_keys` list) must use to find
+    # a renamed row, because the row's emitted `key` is the neutral one, not
+    # `corpus_key`. Every OTHER key maps to itself.
+    def emitted_ability_key(k: str) -> str:
+        return name_renamed[k][1] if k in name_renamed else k
     if desc_redacted:
         print(
             f"{book}: {len(desc_redacted)} ability row(s) description redacted "
@@ -1554,16 +2113,25 @@ def transcribe(book: str) -> str:
             "//! book are Product Identity and are NOT transcribed -- either because the corpus"
         )
         out.append(
-            "//! row DECLARES it (`NAMEISPI:YES`, PCGen's own per-record marker) or because an"
+            "//! row DECLARES its name Product Identity (`NAMEISPI:YES`, PCGen's own"
         )
         out.append(
-            "//! emitted value carries a `pi_screening::PI_BLACKLIST_TERMS` term. Both land in"
+            "//! per-record marker) or because a `pi_screening::PI_BLACKLIST_TERMS` term lands"
         )
         out.append(
-            "//! the name or key, which is the one field redaction cannot touch. Reclassifying"
+            "//! in a field neither the `§24` rename nor the description-redact path can fix"
         )
         out.append(
-            "//! is `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator"
+            "//! (an owner's name, a trait/variable value). A hit confined to the name/key or"
+        )
+        out.append(
+            "//! description alone ships instead -- see the renamed/redacted lists below."
+        )
+        out.append(
+            "//! Reclassifying is `docs/governance/ogl-pi-blacklist.md` §3's per-book override,"
+        )
+        out.append(
+            "//! an operator"
         )
         out.append("//! decision, not a transcriber's:")
         # The row is cited by FILE:LINE and never by its key. `pi_table_sweep`
@@ -1578,19 +2146,51 @@ def transcribe(book: str) -> str:
                 f"//!   * `{unit['source_file']}:{unit['source_line']}` "
                 f"({'monster' if unit['kind'] == 'monster' else 'ability'} row, {reason})"
             )
+    if name_renamed:
+        out.append("//!")
+        out.append(
+            f"//! {len(name_renamed)} ability row(s) of this book have their OWN name/key match"
+        )
+        out.append(
+            "//! a `pi_screening::PI_BLACKLIST_TERMS` term -- `decisions.md §24`'s \"the name"
+        )
+        out.append(
+            "//! itself is PI\" case. Each ships under a Codex-generated NEUTRAL name/key"
+        )
+        out.append(
+            "//! derived ONLY from `(kind, book, source_file, source_line)` -- never from the"
+        )
+        out.append(
+            "//! original name, not even transformed -- `scripts/codex_neutral_name.py`. Per"
+        )
+        out.append(
+            "//! `§24b`-4, the divergence record below stops at the coordinate and the reason;"
+        )
+        out.append("//! the original string is never written here:")
+        for entry in sorted(renamed_divergence, key=lambda e: (e["source_file"], e["source_line"])):
+            out.append(
+                f"//!   * `{entry['source_file']}:{entry['source_line']}` "
+                f"-> {entry['codex_name']} ({entry['reason']})"
+            )
     if desc_redacted:
         out.append("//!")
         out.append(
-            f"//! {len(desc_redacted)} ability row(s) of this book DECLARE `DESCISPI:YES` --"
+            f"//! {len(desc_redacted)} ability row(s) of this book carry Product Identity in"
         )
         out.append(
-            "//! their `description` (and its `%N` variables) SHIP REDACTED to"
+            "//! their `description` field ONLY (declared `DESCISPI:YES`, or an undeclared"
         )
         out.append(
-            "//! `shape_b_v1::REDACTED_PI_MARKER` rather than dropped, because a description"
+            "//! `pi_screening::PI_BLACKLIST_TERMS` term found by scanning) -- `description`"
         )
         out.append(
-            "//! (unlike a name) can be redacted and the record still works. Reclassifying is"
+            "//! (and its `%N` variables) SHIP REDACTED to `shape_b_v1::REDACTED_PI_MARKER`"
+        )
+        out.append(
+            "//! rather than dropped, because a description (unlike a name) can be redacted"
+        )
+        out.append(
+            "//! and the record still works. Reclassifying is"
         )
         out.append(
             "//! `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator"
@@ -1599,7 +2199,10 @@ def transcribe(book: str) -> str:
         redacted_units = {u["corpus_key"]: u for u in abilities}
         for key in sorted(desc_redacted):
             unit = redacted_units[key]
-            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({key})")
+            out.append(
+                f"//!   * `{unit['source_file']}:{unit['source_line']}` "
+                f"({emitted_ability_key(key)})"
+            )
     if copy_monsters:
         out.append("//!")
         out.append(
@@ -1692,13 +2295,25 @@ def transcribe(book: str) -> str:
             f"//! {len(orphans)} further ability row(s) in this book are ORPHANS -- no monster"
         )
         out.append(
-            "//! row here claims them, so they are deliberately NOT transcribed (a record"
+            "//! row here claims them, so they SHIP with `owners: &[]` rather than being"
         )
         out.append(
-            "//! with no owner loads and is never shown). `not-ingested` is their honest status"
+            "//! dropped (`decisions.md §20`: an un-ingested row's shape cannot be measured,"
         )
         out.append(
-            "//! in the work inventory, and the round's receipt records them by key:"
+            "//! and Gate 1's DoD needs every unit's shape measured). `list_monster_catalog`"
+        )
+        out.append(
+            "//! only ever walks a monster's OWN `ability_keys`, so an owner-less record here"
+        )
+        out.append(
+            "//! reaches no screen -- reachability is NOT claimed for these, and each key is"
+        )
+        out.append(
+            "//! pinned as a named, provable non-reach in `reach_gate.rs::"
+        )
+        out.append(
+            "//! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:"
         )
         # Cited by FILE:LINE, not by key, for the same reason the PI block above
         # is: an orphan created by a PI drop carries the dropped row's declared
@@ -1727,6 +2342,28 @@ def transcribe(book: str) -> str:
         )
         for unit in unscreenable_shipping:
             out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({unit['corpus_key']})")
+    if provisional_facets:
+        out.append("//!")
+        out.append(
+            f"//! {len(provisional_facets)} ability row(s) ship with a `decisions.md §27`"
+        )
+        out.append(
+            "//! PROVISIONAL `SpecialQuality` facet default (their own `TYPE:` segments name"
+        )
+        out.append(
+            "//! no facet this chassis models) -- this is NOT a measured shape, only an ingest"
+        )
+        out.append(
+            "//! unblock; each record's `shape_provisional_default`/`shape_provisional_reason`"
+        )
+        out.append(
+            "//! fields (stamped by `shape_provisional_marker.py`, never written by hand) are"
+        )
+        out.append(
+            "//! what `row 17`'s real categorization pass (`§27a`) must retire to zero:"
+        )
+        for key in sorted(provisional_facets):
+            out.append(f"//!   * `{key}` ({provisional_facets[key]})")
     out.append("")
     # `MonsterSpellLikeAbility` is imported only when this book actually
     # constructs one. Four registered books (Monster Codex, both Book of the
@@ -1783,7 +2420,8 @@ def transcribe(book: str) -> str:
             + "],"
         )
         out.append(
-            f"        ability_keys: {rust_slice(monster_ability_keys[key])},"
+            "        ability_keys: "
+            f"{rust_slice([emitted_ability_key(k) for k in monster_ability_keys[key]])},"
         )
         out.append(f"        external_ability_refs: {rust_slice(external[key])},")
         out.append(
@@ -1822,19 +2460,25 @@ def transcribe(book: str) -> str:
     out.append("pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[")
     for unit in abilities:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
-        facet, delivery, traits = parse_type(row)
+        facet, delivery, traits, facet_provisional_reason = parse_type_or_provisional_default(row)
+        if facet_provisional_reason:
+            provisional_facets[unit["corpus_key"]] = facet_provisional_reason
         description, variables = parse_desc(row)
         if unit["corpus_key"] in desc_redacted:
-            # `DESCISPI:YES` -- the redaction promised by the module doc's
-            # own listing above. The `%N` placeholders in `description` name
-            # variables from the ORIGINAL text, which no longer ships, so
-            # they are cleared too rather than left dangling against a marker
-            # string that contains no `%N` for them to refer to.
+            # `DESCISPI:YES`, or an undeclared blacklist-term hit found by
+            # scanning -- either way the redaction promised by the module
+            # doc's own listing above. The `%N` placeholders in `description`
+            # name variables from the ORIGINAL text, which no longer ships,
+            # so they are cleared too rather than left dangling against a
+            # marker string that contains no `%N` for them to refer to.
             description = redacted_pi_marker()
             variables = []
+        renamed = name_renamed.get(unit["corpus_key"])
+        emitted_key = renamed[1] if renamed else unit["corpus_key"]
+        emitted_name = renamed[0] if renamed else unit["name"]
         out.append("    MonsterAbilityRecord {")
-        out.append(f"        key: {rust_str(unit['corpus_key'])},")
-        out.append(f"        name: {rust_str(unit['name'])},")
+        out.append(f"        key: {rust_str(emitted_key)},")
+        out.append(f"        name: {rust_str(emitted_name)},")
         out.append(f"        facet: MonsterAbilityFacet::{facet},")
         out.append(
             "        delivery: "
@@ -1852,10 +2496,54 @@ def transcribe(book: str) -> str:
         out.append(f"        owners: {rust_slice(owners[unit['corpus_key']])},")
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
+        # `decisions.md §24b`-3: "a field marks it as carrying a
+        # Codex-generated name". `§24b`-4: the divergence record stops at
+        # the coordinate -- never the original string.
+        out.append(f"        codex_generated_name: {'true' if renamed else 'false'},")
+        out.append(f"        rename_reason: {rust_opt('name_pi_blocked' if renamed else None)},")
+        out.append(
+            "        rename_coordinate: "
+            + rust_opt(f"{book}:{unit['source_file']}:{unit['source_line']}" if renamed else None)
+            + ","
+        )
         out.append("    },")
     out.append("];")
     out.append("")
+    if provisional_facets:
+        print(
+            f"{book}: {len(provisional_facets)} ability row(s) shipped with a "
+            "decisions.md §27 PROVISIONAL SpecialQuality facet default (not a "
+            "measured shape -- stamped via shape_provisional_marker, see "
+            "workflow-instruction.md §6a): "
+            + ", ".join(sorted(provisional_facets)),
+            file=sys.stderr,
+        )
     return "\n".join(out)
+
+
+# The `data/corpus/` directory name a book's chassis output actually lands
+# in, when it differs from the transcriber's own `BOOKS` key. Reuses
+# `CROSS_TABLE_MONSTER_RECORDS`'s key/value pair rather than a second
+# hand-written map (`decisions.md §17`) -- that dict already names this
+# exact fact for a different reason (the `bestiary` -> `beastiary` on-disk
+# spelling), and it is the only book in this lane whose key and corpus
+# directory diverge.
+def corpus_output_dir(book: str) -> str:
+    return CROSS_TABLE_MONSTER_RECORDS.get(book, book)
+
+
+def provisional_facet_units(book: str) -> dict[str, str]:
+    """Read-only: `{corpus_key: reason}` for every `monster_ability` row
+    `book` currently ships (or would ship) under `decisions.md §27`'s
+    provisional facet default. Calls `transcribe()` purely for its
+    classification side effect on `provisional_facets` -- this performs no
+    file I/O and can be called any number of times without writing
+    anything, which is what lets the stamping step (run after `gen_book_
+    cache` has already produced the JSON files) recompute the population
+    instead of needing `write_book` to have captured and persisted it."""
+    provisional_facets: dict[str, str] = {}
+    transcribe(book, provisional_facets)
+    return provisional_facets
 
 
 def write_book(book: str) -> str:

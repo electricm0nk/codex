@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wizard Archetype ~ Spirit Whisperer",
     "name": "Spirit Whisperer",
-    "class": "Wizard Archetype",
+    "class": "Wizard",
     "description": "Spirit whisperers are a breed apart among wizards, and are often mistaken for witches. While spirit whisperers do gain and store their spells by communing with familiars, the spirits they gain guidance from are somewhat closer to the world and more direct than the powers with which witches typically traffic. These wizards treat such spirits as mentors and friends, conversing with them rather than appeasing them in the effort to gain and use arcane knowledge.",
     "raw_tokens": [
       {
@@ -99,6 +99,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Wizard"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Spirit Whisperer],[!PREFACT:1,ABILITIES,Wizard_Archetype_SpellBook=True,Wizard_Archetype_ArcaneBond=True,Wizard_Archetype_ArcaneSchool=True,Wizard_Archetype_BonusFeats=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_SpellBook|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_SpellBook|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeats|true"
       }
     ]
   },
@@ -115,5 +155,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Accursed Bloodline ~ Dream Walking",
     "name": "Dream Walking",
-    "class": "Accursed Bloodline",
+    "class": "Sorcerer",
     "description": "You can enter the ethereal plane. This functions like ethereal jaunt, but with a duration of %1 minutes. Once during this trip, you may cast nightmare as a spell-like ability on a creature you see on the Material Plane. (This is an exception to the normal rule that ethereal creatures cannot affect targets on the Material Plane).|Sorcerer_AccursedDreamWalking_Duration",
     "raw_tokens": [
       {
@@ -88,5 +88,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

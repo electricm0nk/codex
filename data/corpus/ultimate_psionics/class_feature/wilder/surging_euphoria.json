@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wilder ~ Surging Euphoria",
+    "name": "Surging Euphoria",
+    "class": "Wilder",
+    "description": "Gain +%1 morale bonus on attack rolls, damage rolls, and saves for %2 rounds on successful wild surge.|SurgingEuphoria|SurgingEuphoriaDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wilder ~ Surging Euphoria"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SurgingEuphoria|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SurgingEuphoriaDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 morale bonus on attack rolls, damage rolls, and saves for %2 rounds on successful wild surge.|SurgingEuphoria|SurgingEuphoriaDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SurgingEuphoriaDuration|WildSurge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SurgingEuphoria|(WilderLVL+4)/8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|ALL|SurgingEuphoria|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|SurgingEuphoria|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE|SurgingEuphoria|TYPE=Morale"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1041,
+    "record_key": "Wilder ~ Surging Euphoria"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

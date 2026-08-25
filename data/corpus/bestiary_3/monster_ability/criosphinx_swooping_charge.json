@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Criosphinx ~ Swooping Charge",
+    "delivery": "Extraordinary",
+    "description": "A charging criosphinx deals 4d4+12 points of damage with its gore attack. A flying criosphinx who drops at least 20 feet in altitude as part of a charge deals 6d4+18 points instead.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:criosphinx_swooping_charge",
+    "name": "Swooping Charge",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A charging criosphinx deals 4d4+12 points of damage with its gore attack. A flying criosphinx who drops at least 20 feet in altitude as part of a charge deals 6d4+18 points instead."
+      },
+      {
+        "key": "KEY",
+        "value": "Criosphinx ~ Swooping Charge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.252"
+      },
+      {
+        "key": "TYPE",
+        "value": "CriosphinxRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.252",
+    "traits": [
+      "CriosphinxRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1558,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Criosphinx ~ Swooping Charge",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

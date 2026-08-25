@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Manifesting Variables",
+    "name": "Psion Manifesting Variables",
+    "class": "Psion",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionML|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaxManifesterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionPLStatScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionPKL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionMPL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionPowersKnown|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionMaxPowerLevel|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionML|PsionLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionML|var(\"BL=Psion\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaxManifesterLVL|PsionML|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionPLStatScore|INTSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionPKL|PsionLVL+var(\"BL=Psion\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionMPL|PsionLVL+var(\"BL=Psion\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionPowersKnown|min(21,(2*PsionPKL)+1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionPowersKnown|floor((PsionPKL-10)*3/2)|PREVARGTEQ:PsionPKL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionMaxPowerLevel|min(9,floor((PsionMPL+1)/2),PsionPLStatScore-10)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 392,
+    "record_key": "Psion Manifesting Variables"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

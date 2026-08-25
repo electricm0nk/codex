@@ -6,6 +6,7 @@ mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
+mod class_catalog_generic;
 mod class_feature_descriptions;
 mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
@@ -17,11 +18,13 @@ mod equipment_catalog;
 mod feat_catalog;
 mod authoring_workbench;
 mod companion_catalog;
+mod companion_pool_catalog;
 mod intelligent_item_catalog;
 mod monster_catalog;
 mod pf1_adapter;
 mod race_catalog;
 mod race_trait_picker;
+mod reference_library_catalog;
 /// Test-only: the reach gate, which fails when ingested content has no
 /// consumer carrying it to a player. Compiled out of the shipping binary
 /// because it is a verification surface, not a runtime one.
@@ -63,6 +66,7 @@ use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
 use companion_catalog::list_companion_catalog;
+use reference_library_catalog::list_reference_library_catalog;
 use intelligent_item_catalog::list_intelligent_item_catalog;
 use monster_catalog::list_monster_catalog;
 use race_catalog::list_race_catalog;
@@ -206,6 +210,12 @@ fn main() {
             // reached no surface at all until this catalog landed.
             list_monster_catalog,
             list_companion_catalog,
+            // SD-32 row 19 cycle 4: the twelve corpus content-kind
+            // directories (ability/class_generic/deity/domain/feat_generic/
+            // language/monster_generic/power/race_generic/skill/template/
+            // trait_generic) that reached no surface at all -- a browsable
+            // reference library, generic across every book and kind.
+            list_reference_library_catalog,
             // SD31-W18: the intelligent/legendary item build system's own
             // ability scores, Ego and alignment components -- reached no
             // screen at all before this catalog landed.

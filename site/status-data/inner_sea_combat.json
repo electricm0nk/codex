@@ -3,17 +3,61 @@
   "title": "Inner Sea Combat",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 1,
+      "denominator": 1,
+      "pct": 0.0,
+      "excluded_from_percentage": 3,
+      "standing_breakdown": {
+        "origin": 1,
+        "unclassified": 3
+      },
+      "items": [
+        {
+          "name": "Cannon Master",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Cannon Master"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Perfect Style House of Perfection",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Perfect Style House of Perfection)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Perfect Style House of Perfection",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Perfect Style House of Perfection) #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Perfect Style House of Perfection",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Perfect Style House of Perfection) #3"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
       "done": 9,
       "partial": 0,
-      "not_started": 139,
-      "denominator": 148,
+      "not_started": 138,
+      "denominator": 147,
       "pct": 6.1,
-      "excluded_from_percentage": 166,
+      "excluded_from_percentage": 169,
       "standing_breakdown": {
-        "origin": 148,
-        "unclassified": 166
+        "origin": 147,
+        "unclassified": 169
       },
       "items": [
         {
@@ -549,6 +593,13 @@
           "display_name": "Deeds (Gunslinger Class Feature.SpecialQuality) #2"
         },
         {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
+        },
+        {
           "name": "Deflect Arrows",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
@@ -713,7 +764,7 @@
           "name": "Endurance",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Endurance"
         },
         {
@@ -997,6 +1048,13 @@
           "display_name": "Hippogriff Companion"
         },
         {
+          "name": "Hippogriff Companion Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hippogriff Companion Tracker"
+        },
+        {
           "name": "Home Ground Advantage",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
@@ -1245,7 +1303,7 @@
           "name": "Jury-Rig",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Jury-Rig"
         },
         {
@@ -2847,6 +2905,212 @@
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "[redacted PI] #4"
+        }
+      ]
+    },
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 14,
+      "partial": 4,
+      "not_started": 1,
+      "denominator": 19,
+      "pct": 73.7,
+      "excluded_from_percentage": 5,
+      "standing_breakdown": {
+        "origin": 19,
+        "unclassified": 5
+      },
+      "items": [
+        {
+          "name": "Awe-Inspiring Smash",
+          "doneness": "done",
+          "type_facet": "Combat.Performance",
+          "standing": "origin",
+          "display_name": "Awe-Inspiring Smash"
+        },
+        {
+          "name": "Black Powder Spectacle",
+          "doneness": "done",
+          "type_facet": "Combat.Grit.Performance",
+          "standing": "origin",
+          "display_name": "Black Powder Spectacle"
+        },
+        {
+          "name": "Cannon Master",
+          "doneness": "done",
+          "type_facet": "Combat",
+          "standing": "origin",
+          "display_name": "Cannon Master"
+        },
+        {
+          "name": "Casterbane Shot",
+          "doneness": "done",
+          "type_facet": "Combat.Grit",
+          "standing": "origin",
+          "display_name": "Casterbane Shot"
+        },
+        {
+          "name": "Duelist of the Roaring Falls",
+          "doneness": "partial",
+          "type_facet": "Combat",
+          "standing": "unclassified",
+          "display_name": "Duelist of the Roaring Falls"
+        },
+        {
+          "name": "Duelist of the Shrouded Lake",
+          "doneness": "done",
+          "type_facet": "Combat",
+          "standing": "unclassified",
+          "display_name": "Duelist of the Shrouded Lake"
+        },
+        {
+          "name": "Falling Water Gambit",
+          "doneness": "done",
+          "type_facet": "Combat",
+          "standing": "unclassified",
+          "display_name": "Falling Water Gambit"
+        },
+        {
+          "name": "Grand Duchy Familiarity",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Grand Duchy Familiarity"
+        },
+        {
+          "name": "Masterful Flourish",
+          "doneness": "done",
+          "type_facet": "Combat.Performance",
+          "standing": "origin",
+          "display_name": "Masterful Flourish"
+        },
+        {
+          "name": "Monstrous Mount",
+          "doneness": "not-started",
+          "type_facet": "Monstrous Mount",
+          "standing": "origin",
+          "display_name": "Monstrous Mount"
+        },
+        {
+          "name": "Monstrous Mount Mastery",
+          "doneness": "done",
+          "type_facet": "Monstrous Mount",
+          "standing": "origin",
+          "display_name": "Monstrous Mount Mastery"
+        },
+        {
+          "name": "Ostentatious Weakness",
+          "doneness": "done",
+          "type_facet": "Combat.Performance",
+          "standing": "origin",
+          "display_name": "Ostentatious Weakness"
+        },
+        {
+          "name": "Perfect Style",
+          "doneness": "partial",
+          "type_facet": "Combat.Style",
+          "standing": "unclassified",
+          "display_name": "Perfect Style"
+        },
+        {
+          "name": "Redirected Shot",
+          "doneness": "partial",
+          "type_facet": "Combat.Grit",
+          "standing": "origin",
+          "display_name": "Redirected Shot"
+        },
+        {
+          "name": "Savage Surge",
+          "doneness": "done",
+          "type_facet": "Combat.Performance",
+          "standing": "origin",
+          "display_name": "Savage Surge"
+        },
+        {
+          "name": "Spectacular Exit",
+          "doneness": "done",
+          "type_facet": "Combat.Performance",
+          "standing": "origin",
+          "display_name": "Spectacular Exit"
+        },
+        {
+          "name": "Thrilling Vengeance",
+          "doneness": "done",
+          "type_facet": "Combat.Performance",
+          "standing": "origin",
+          "display_name": "Thrilling Vengeance"
+        },
+        {
+          "name": "Unblinking Flame Feint",
+          "doneness": "done",
+          "type_facet": "Combat.Style",
+          "standing": "origin",
+          "display_name": "Unblinking Flame Feint"
+        },
+        {
+          "name": "Unblinking Flame Fist",
+          "doneness": "done",
+          "type_facet": "Combat.Style",
+          "standing": "origin",
+          "display_name": "Unblinking Flame Fist"
+        },
+        {
+          "name": "Unfolding Wind Rush",
+          "doneness": "done",
+          "type_facet": "Combat.Style",
+          "standing": "origin",
+          "display_name": "Unfolding Wind Rush"
+        },
+        {
+          "name": "Unfolding Wind Strike",
+          "doneness": "partial",
+          "type_facet": "Combat.Style",
+          "standing": "origin",
+          "display_name": "Unfolding Wind Strike"
+        },
+        {
+          "name": "Untwisting Iron Skin",
+          "doneness": "partial",
+          "type_facet": "Combat.Style",
+          "standing": "origin",
+          "display_name": "Untwisting Iron Skin"
+        },
+        {
+          "name": "Untwisting Iron Strength",
+          "doneness": "partial",
+          "type_facet": "Combat.Style",
+          "standing": "origin",
+          "display_name": "Untwisting Iron Strength"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Combat",
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 1,
+      "denominator": 1,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 1
+      },
+      "items": [
+        {
+          "name": "Ouat Weapon Proficiency",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ouat Weapon Proficiency"
         }
       ]
     }

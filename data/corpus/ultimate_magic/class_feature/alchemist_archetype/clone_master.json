@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Clone Master",
     "name": "Clone Master",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Clone masters practice duplicating existing creatures in order to better understand how to create new life.",
     "raw_tokens": [
       {
@@ -63,6 +63,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Clone Master],[!PREFACT:1,ABILITIES,Alchemist_Archetype_PoisonResistance6=True,Alchemist_Archetype_PoisonImmunity=True,Alchemist_Archetype_BombReduction=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BombReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombReduction|true"
       }
     ]
   },
@@ -79,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

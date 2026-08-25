@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Evolution ~ Keen Scent",
+    "name": "Keen Scent",
+    "description": "Your sense of smell becomes even more acute. You can notice other creatures by scent in a 180-foot radius underwater and can detect blood in the water at ranges of up to a mile.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Keen Scent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Gills,Evolution ~ Scent"
+      },
+      {
+        "key": "DESC",
+        "value": "Your sense of smell becomes even more acute. You can notice other creatures by scent in a 180-foot radius underwater and can detect blood in the water at ranges of up to a mile."
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 99,
+    "record_key": "Evolution ~ Keen Scent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

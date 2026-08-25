@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Refined Education Unlock ~ Diplomacy",
+    "name": "Diplomacy",
+    "class": "Refined Education Unlock",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Refined Education Unlock ~ Diplomacy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RefinedEducationUnlock"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "DiplomacyRefinedEducationUnlock,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DiplomacyRefinedEducationUnlockLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ diplomacy 05 Ranks|PREVARGTEQ:DiplomacyRefinedEducationUnlockLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ diplomacy 10 Ranks|PREVARGTEQ:DiplomacyRefinedEducationUnlockLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ diplomacy 15 Ranks|PREVARGTEQ:DiplomacyRefinedEducationUnlockLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ diplomacy 20 Ranks|PREVARGTEQ:DiplomacyRefinedEducationUnlockLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DiplomacyRefinedEducationUnlockLVL|RogueLVL/2+skillinfo(\"RANK\", \"Diplomacy\")"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Bargain with a conjured creature"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Bribery attempts"
+      },
+      {
+        "key": "SITUATION",
+        "value": "Interacting with criminals"
+      },
+      {
+        "key": "SITUATION",
+        "value": "In Social Identity"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 42,
+    "record_key": "Refined Education Unlock ~ Diplomacy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

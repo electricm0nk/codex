@@ -165,7 +165,39 @@ mod tests {
     #[test]
     fn the_shipped_counts_are_the_reachable_ones() {
         assert_eq!(monsters().len(), 39, "every corpus monster row of this book ships");
-        assert_eq!(monster_abilities().len(), 154);
+        // 154 -> 156 (T9 `MonsterAbilityFacet` widening cycle, +2): the
+        // widened facet vocabulary shipped `Mother's Maw ~ Desecrate Aura`
+        // (`TYPE:Aura.Supernatural`) and `Orsheval ~ Truespeech`
+        // (`TYPE:Communicate.Supernatural`) — the exact `Communicate` shape
+        // the widening cycle's own dispatch brief named. 1 owned row remains
+        // excluded and named on stderr (`Xocothian ~ Speed Burst`,
+        // `TYPE:ModifyMovement.Extraordinary`).
+        // 156 owned + 2 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 158. The owner-less count is pinned separately
+        // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        // 156 owned -> 158 owned (`decisions.md §24`/round 7, +2): two
+        // OWNED rows whose clean name/key had an undeclared blacklist hit
+        // confined to `DESC:` now ship with the description redacted
+        // instead of being dropped (`Grim White Stag ~ Bugle`,
+        // `Thyrlien ~ Starlight Blast` — clean names, the "2
+        // description-only PI" group T9 round 6 named). 2 owner-less -> 5
+        // owner-less (+3): three ability rows at
+        // `isg_abilities_races.lst:43/44/45`, whose own KEY namespace
+        // matched the blacklist, now ship under a Codex-generated neutral
+        // key instead of being dropped; all three are orphans here (no
+        // monster row of this book claims them), pinned below. 158 -> 163
+        // total (+2 owned +3 owner-less).
+        // 158/163 -> 159/164 (`decisions.md §27`/round 8, +1 owned): the
+        // one previously-excluded `Xocothian ~ Speed Burst` row (this
+        // comment's own paragraph above, `TYPE:ModifyMovement.
+        // Extraordinary`, delivery-only) now ships with a PROVISIONAL
+        // `SpecialQuality` facet default instead of being dropped.
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 159);
+        assert_eq!(monster_abilities().len(), 164);
     }
 
     /// The three `support/` monster rows ship, and they are the reason this
@@ -223,19 +255,16 @@ mod tests {
         }
     }
 
-    /// Every shipped ability has at least one owner, and every owner ships.
+    /// Every OWNED ability's owner ships.
     ///
-    /// The orphan screen is what keeps the first half true; this asserts it on
-    /// the table rather than trusting the transcriber's report of its own work.
+    /// **Superseded `decisions.md §20` for the owner-less half** (previously
+    /// asserted every ability has a non-empty `owners`; the 2 genuinely
+    /// orphaned rows named in this module's header now ship for shape
+    /// measurement instead, pinned separately below).
     #[test]
     fn every_ability_has_a_shipped_owner() {
         let monster_keys: HashSet<&str> = monsters().iter().map(|m| m.key).collect();
         for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} ships with no owner -- an orphan reached the table",
-                ability.key
-            );
             for owner in ability.owners {
                 assert!(
                     monster_keys.contains(owner),
@@ -244,6 +273,59 @@ mod tests {
                 );
             }
         }
+    }
+
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// `Herald ~ Always Armed` and `Herald ~ Emissary` — neither bundle- nor
+    /// row-/prefix-reachable — now ship with `owners: &[]` for shape
+    /// measurement instead of being dropped. `list_monster_catalog` never
+    /// walks these directly (only a monster's own `ability_keys`), so
+    /// shipping them does not surface a stub; each key is pinned separately,
+    /// by name, in `reach_gate.rs::UNREACHED_RECORD_FINDINGS` under
+    /// `("inner_sea_gods", "monster_abilities")` as a proven non-reach, not a
+    /// silent claim of reachability.
+    #[test]
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            5,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py inner_sea_gods` run, and update the matching \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set. 2 -> 5 \
+             (`decisions.md §24`/round 7, +3): three name-PI ability rows now ship under a \
+             neutral key instead of being dropped -- see `the_shipped_counts_are_the_reachable_\
+             ones`'s own comment."
+        );
+        assert_eq!(
+            unowned,
+            vec![
+                "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_43)",
+                "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44)",
+                "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45)",
+                "Herald ~ Always Armed",
+                "Herald ~ Emissary",
+            ]
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0x137d_2d8a_116e_9f2b,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+        );
     }
 
     /// The `Race Traits ~` bundle finding, RESOLVED (`SD31-W21-MONSTER-001`):

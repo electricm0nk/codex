@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Thoqqua ~ Molten Body",
+    "delivery": "Supernatural",
+    "description": "A thoqqua's body is hot enough to melt stone.  Anyone striking a thoqqua with a natural weapon or unarmed strike takes 1d6 points of fire damage.  A creature that grapples a thoqqua or is grappled by one takes 3d6 points of fire damage each round the grapple persists.  A creature that strikes a thoqqua with a manufactured weapon can attempt a DC %1 Reflex save to pull the weapon away from the creature's molten body quickly enough to avoid having the weapon take 1d6 points of fire damage - damage caused to a weapon in this manner is not halved as is normal for damage caused to items, and ignores the first 5 points of hardness possessed by the item.  As a result, most metal weapons can generally safely strike a thoqqua without taking much damage, but wooden weapons have a significant chance of burning away if used against one of these creatures.",
+    "description_variables": [
+      "ThoqquaMoltenBodyDC"
+    ],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:thoqqua_molten_body",
+    "name": "Molten Body",
+    "owners": [
+      "bestiary_2:monster:thoqqua"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Molten Body"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThoqquaMoltenBodyDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThoqquaMoltenBodyDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Molten Body)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThoqquaMoltenBodyDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A thoqqua's body is hot enough to melt stone.  Anyone striking a thoqqua with a natural weapon or unarmed strike takes 1d6 points of fire damage.  A creature that grapples a thoqqua or is grappled by one takes 3d6 points of fire damage each round the grapple persists.  A creature that strikes a thoqqua with a manufactured weapon can attempt a DC %1 Reflex save to pull the weapon away from the creature's molten body quickly enough to avoid having the weapon take 1d6 points of fire damage - damage caused to a weapon in this manner is not halved as is normal for damage caused to items, and ignores the first 5 points of hardness possessed by the item.  As a result, most metal weapons can generally safely strike a thoqqua without taking much damage, but wooden weapons have a significant chance of burning away if used against one of these creatures.|ThoqquaMoltenBodyDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Thoqqua ~ Molten Body"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1238,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Thoqqua ~ Molten Body",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Spellscar Mystery ~ Primal Manipulation",
     "name": "Primal Manipulation",
-    "class": "Spellscar Mystery",
+    "class": "Oracle",
     "description": "Whenever you cast a spell that deals acid, cold, electricity, or fire damage, you may change it to deal one of the other listed damage types. You may use this ability %1 times per day.|PrimalManipulationTimes",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Corruption Stages",
+    "name": "Accursed Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Accursed Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AccursedCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|AccursedCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-The first time you engage in disproportionate punishment (voluntarily or because of a failed save), your alignment shifts one step toward evil and your face changes, making you memorably ugly or beautiful."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-The second time you engage in this behavior, your alignment shifts another step toward evil and you take on an inhuman appearance, increasingly resembling the type of creature that cursed you."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-The third time you engage in this behavior, you are utterly consumed by your hatred and become an NPC under the GM's control."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Accursed Corruption Stage %1|AccursedCorruptionStage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 27,
+    "record_key": "Accursed Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Archetype ~ Lion Shaman",
     "name": "Lion Shaman",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "A shaman with this totem calls upon the proud lion, imposing and majestic, the mighty leader of deadly hunters.",
     "raw_tokens": [
       {
@@ -79,6 +79,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Druid"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Lion Shaman],[!PREFACT:1,ABILITIES,Druid_Archetype_AThousandFaces=True,Druid_Archetype_VenomImmunity=True,Druid_Archetype_WildShape=True,Druid_Archetype_NatureBond=true]"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_DruidDomain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_AThousandFaces|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_AThousandFaces|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_VenomImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
       }
     ]
   },
@@ -96,5 +132,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

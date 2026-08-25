@@ -1,0 +1,134 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Animal Lord ~ Crocodile Lord",
+    "name": "Crocodile Lord (Crocodile)",
+    "description": "Crocodile lords have reptilian eyes, sharp teeth, and a scaly ridge along the spine. Crocodile lords gain the following additional ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Lord ~ Crocodile Lord"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality"
+      },
+      {
+        "key": "PREBASESIZEGTEQ",
+        "value": "M"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalSTRScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalDEXScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCONScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalINTScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalWISScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCHAScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalBaseCR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Crocodile lords have reptilian eyes, sharp teeth, and a scaly ridge along the spine. Crocodile lords gain the following additional ability."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Swim,30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crocodile Lord ~ Thick Skin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crocodile ~ Death Roll|Crocodile ~ Hold Breath|Crocodile ~ Sprint|Grab|Trip"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In water|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalSTRScore|19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalDEXScore|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCONScore|17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalINTScore|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalWISScore|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCHAScore|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalBaseCR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathRollDie|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Grab,*1,1d8|Tail Slap,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*1,1d12"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 345,
+    "record_key": "Animal Lord ~ Crocodile Lord"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

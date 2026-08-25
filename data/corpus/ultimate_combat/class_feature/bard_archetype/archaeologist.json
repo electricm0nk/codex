@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bard Archetype ~ Archaeologist",
     "name": "Archaeologist",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "No stodgy researcher, this Archaeologist meets his research head-on in the field. Archaeologists sacrifice the bard's inspirational performance for a smattering of rogue talents. This archetype also fits roguelike characters that focus more on learning than on stabbing foes in the back.",
     "raw_tokens": [
       {
@@ -75,6 +75,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bard"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Archaeologist],[!PREFACT:1,ABILITIES,Bard_Archetype_BardicPerformance=True,Bard_Archetype_VersatilePerformance=True,Bard_Archetype_WellVersed=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardicPerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicPerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_VersatilePerformance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_WellVersed|true"
       }
     ]
   },
@@ -91,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -64,6 +64,7 @@ use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
+use codex::rules_core::pilot_compute::race_trait_formula_binding::resolve_same_row_formula;
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceCacheData, RaceTraitCacheData, RawBonusChain,
     RawToken,
@@ -337,6 +338,36 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     // (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/`NAMEISPI:` grep across the
     // whole directory: zero hits.
     RaceSpec { dir: "rougarou", book: "bestiary_6" },
+    // Dhampir, SD-32 card-11 T2b lane (2026-08-22/23). This module's own
+    // header doc comment excluded Dhampir because `core_essentials/races/
+    // dhampir/` carries a `dhampir_abilities_subrace.lst` (a real
+    // heritage/subrace file, confirmed present on disk -- unlike Rougarou,
+    // which has none). That heritage file is a genuinely different shape
+    // this loop does not model and stays deferred, per the identical
+    // Skinwalker precedent above: **chassis + the 11 unconditional
+    // `###Block: Racial Traits` rows only**, not the heritage block.
+    // Verified directly against the pinned oracle (not assumed): all 11
+    // trait rows in `dhampir_abilities_race.lst` carry
+    // `TYPE:RacialTraits.Dhampir Racial Trait.Dhampir Racial Default...`
+    // (the identical flat, self-gating shape Fetchling/Grippli/etc. above
+    // already use), and `dhampir_abilities_globalvar.lst` states all 11
+    // matching `PREVAREQ:Dhampir_Replace*,0` gates under `CATEGORY=
+    // Internal|Racial Traits ~ Dhampir.MOD` (same convention Fetchling's
+    // globalvar file uses) -- so the existing cross-check between the two
+    // sources (this loop's `gates`/`row_flags` reconciliation) covers
+    // Dhampir with no new code. The `###Block: Favored Enemies` and
+    // `###Block: Universal Monster Rules Descriptions` rows in the same
+    // file are NOT captured by this batch (`is_standard_racial_trait`
+    // correctly does not match either -- no `RacialTraits`-leading `TYPE:`
+    // token on the Favored Enemy row, no `TYPE:` token at all on the two
+    // `.MOD` description rows), matching how Grippli's own `Favored Enemy
+    // ~ Humanoid (Grippli)` row is likewise left open by this same loop
+    // today -- a separate, smaller residual, not silently dropped.
+    // `data/corpus/bestiary_2/` is the same real, registered corpus book
+    // directory the other 6 B2 races above already file under.
+    // PI-blacklist scan (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/
+    // `NAMEISPI:` grep across the whole `dhampir/` directory: zero hits.
+    RaceSpec { dir: "dhampir", book: "bestiary_2" },
 ];
 
 /// `TYPE:` markers that lead with `RacialTraits` (so
@@ -488,13 +519,17 @@ fn raw_bonus_chains(row: &LstRow) -> Vec<RawBonusChain> {
 /// on the same row, the variable is a constant written across two tokens:
 /// Dwarf's Defensive Training row carries `DEFINE:RacialDefensiveTrainingBonus|0`
 /// and `BONUS:VAR|RacialDefensiveTrainingBonus|4`, so the value is 4 and
-/// reading it is transcription, not evaluation. `decisions.md §24`'s ban
-/// on a formula interpreter is therefore not engaged.
+/// reading it is transcription, not evaluation. Where `<value>` is instead a
+/// formula over variables THIS row already resolved,
+/// [`resolve_same_row_formula`] evaluates it via
+/// `formula_interpreter::PcgenFormulaEvaluator` (`SD-31 decisions.md`
+/// Decision 20 overturned `SD-27 decisions.md §24.1`'s ban on 2026-08-21).
 ///
-/// The instant any contribution stops being a same-row literal — a
-/// formula (`BONUS:VAR|X|OtherVar`), a conditional bonus (a trailing
-/// `PRE...` qualifier), or a base declared elsewhere in the corpus — the
-/// variable is marked unresolvable and **no value is guessed**.
+/// The instant any contribution stops being resolvable purely from this
+/// row's own tokens — a conditional bonus (a trailing `PRE...` qualifier), a
+/// formula naming a variable this row never defines, or a base declared
+/// elsewhere in the corpus — the variable is marked unresolvable and **no
+/// value is guessed**.
 fn same_row_vars(row: &LstRow) -> BTreeMap<String, Option<i64>> {
     let mut vars: BTreeMap<String, Option<i64>> = BTreeMap::new();
 
@@ -510,7 +545,7 @@ fn same_row_vars(row: &LstRow) -> BTreeMap<String, Option<i64>> {
         }
         let (Some(names), Some(amount)) = (quals.get(1), quals.get(2)) else { continue };
         let conditional = quals[3..].iter().any(|q| q.starts_with("PRE") || q.starts_with("!PRE"));
-        let amount = if conditional { None } else { amount.trim().parse::<i64>().ok() };
+        let amount = if conditional { None } else { resolve_same_row_formula(amount.trim(), &vars) };
         for name in names.split(',') {
             let name = name.trim().to_string();
             match vars.get_mut(&name) {
@@ -544,13 +579,15 @@ fn is_prerequisite_arg(arg: &str) -> bool {
 /// the row's own variable table, honouring a leading `!` as negation and
 /// requiring every pair to hold.
 ///
-/// This compares two same-row constants; it is not formula evaluation.
-/// An operand must be an integer literal or a variable [`same_row_vars`]
-/// already resolved to one. Anything undecidable — an unknown comparison,
-/// a prerequisite kind this does not model, an operand defined elsewhere —
-/// is an `Err`, never a coin flip: a gate decides what the rules text
-/// *says* ("Once" vs "Twice per day"), so guessing it would ship a false
-/// statement rather than merely an incomplete one.
+/// Each operand may be a same-row constant, a bare variable name
+/// [`same_row_vars`] already resolved, or (via [`resolve_same_row_formula`])
+/// a formula over other same-row-resolved variables — it is not free-form
+/// formula evaluation against arbitrary character state. Anything
+/// undecidable — an unknown comparison, a prerequisite kind this does not
+/// model, an operand this row cannot resolve — is an `Err`, never a coin
+/// flip: a gate decides what the rules text *says* ("Once" vs "Twice per
+/// day"), so guessing it would ship a false statement rather than merely an
+/// incomplete one.
 fn eval_prevar_gate(token: &str, vars: &BTreeMap<String, Option<i64>>) -> Result<bool, String> {
     let (negated, body) = match token.strip_prefix('!') {
         Some(rest) => (true, rest),
@@ -561,13 +598,8 @@ fn eval_prevar_gate(token: &str, vars: &BTreeMap<String, Option<i64>>) -> Result
 
     let operand = |raw: &str| -> Result<i64, String> {
         let raw = raw.trim();
-        if let Ok(n) = raw.parse::<i64>() {
-            return Ok(n);
-        }
-        vars.get(raw)
-            .copied()
-            .flatten()
-            .ok_or_else(|| format!("DESC gate {token:?}: {raw:?} is not a same-row literal"))
+        resolve_same_row_formula(raw, vars)
+            .ok_or_else(|| format!("DESC gate {token:?}: {raw:?} does not resolve from this row's own tokens"))
     };
 
     let parts: Vec<&str> = args.split(',').collect();
@@ -627,6 +659,10 @@ fn collapse_whitespace(text: &str) -> String {
 /// `equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax`
 /// caught the literal `%%` reaching the served description text.
 ///
+/// An argument may be a bare literal, a bare same-row variable name, or (via
+/// [`resolve_same_row_formula`]) a formula over other same-row-resolved
+/// variables.
+///
 /// An unresolvable argument is **dropped, never guessed**: the
 /// placeholder goes, the `+`/`-` sign that introduced it goes with it,
 /// and the whitespace is closed up so the sentence still reads. The raw
@@ -652,10 +688,7 @@ fn substitute_placeholders(prose: &str, args: &[&str], vars: &BTreeMap<String, O
             && digit >= 1
         {
             let arg = args.get(digit as usize - 1).copied();
-            let value = arg.and_then(|name| {
-                let name = name.trim();
-                name.parse::<i64>().ok().or_else(|| vars.get(name).copied().flatten())
-            });
+            let value = arg.and_then(|name| resolve_same_row_formula(name.trim(), vars));
             match value {
                 Some(v) => out.push_str(&v.to_string()),
                 None => {
@@ -2142,9 +2175,15 @@ mod tests {
         // standard-tier traits: Ability Scores/Type/Size/Speed/Vision/
         // Change Shape/Natural Weapon/Languages) -- 38 races / 363
         // standard racial trait records, re-measured 2026-08-20 by running
-        // this binary against the real corpus, not invented.
-        assert_eq!(races, 38, "38 in-scope race chassis records");
-        assert_eq!(traits, 363, "363 standard racial trait records");
+        // this binary against the real corpus, not invented. Plus SD-32
+        // card-11 T2b lane's Dhampir (Bestiary 2, 2026-08-23, chassis + 12
+        // standard-tier traits: Ability Scores/Type/Size/Speed/Vision/
+        // Skilled/Undead Resistance/Weakness/Negative Energy Affinity/
+        // Spell-Like Ability/Resist Level Drain/Languages) -- 39 races /
+        // 375 standard racial trait records, re-measured by running this
+        // binary against the real corpus.
+        assert_eq!(races, 39, "39 in-scope race chassis records");
+        assert_eq!(traits, 375, "375 standard racial trait records");
     }
 
     // -----------------------------------------------------------------
@@ -2197,9 +2236,12 @@ mod tests {
         assert_eq!(vars.get("RacialDefensiveTrainingBonus"), Some(&Some(4)));
     }
 
-    /// A `BONUS:VAR` whose value is another variable is a formula, and
-    /// `decisions.md §24` forbids interpreting one. The honest result is
-    /// "unresolvable", never a guessed number.
+    /// A `BONUS:VAR` whose value is another variable this row never itself
+    /// defines (`FavoredBaseBonus` is a cross-record variable, no `DEFINE:`
+    /// for it appears here) is genuinely unresolvable, formula interpreter
+    /// or not: [`resolve_same_row_formula`] refuses because the reference is
+    /// unbound, not because the row's own arithmetic capability is missing.
+    /// The honest result is "unresolvable", never a guessed number.
     #[test]
     fn same_row_vars_refuse_a_non_literal_bonus_var_formula() {
         let row = one_row(&padded_line(&[

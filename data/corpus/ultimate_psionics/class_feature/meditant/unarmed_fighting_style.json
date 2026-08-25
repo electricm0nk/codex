@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Meditant ~ Unarmed Fighting Style",
+    "name": "Unarmed Fighting Style",
+    "class": "Meditant",
+    "description": "You can choose whether to focus your fighting style to take advantage of natural attacks or to use specialized weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Meditant ~ Unarmed Fighting Style"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose whether to focus your fighting style to take advantage of natural attacks or to use specialized weapons."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Meditant Fighting Style|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2068,
+    "record_key": "Meditant ~ Unarmed Fighting Style"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

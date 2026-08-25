@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Waves Mystery ~ Water Form",
     "name": "Water Form",
-    "class": "Waves Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can assume the form of a Small water elemental, as elemental body I. At 9th level, you can assume the form of a Medium water elemental, as elemental body II. At 11th level, you can assume the form of a Large water elemental, as elemental body III. At 13th level, you can assume the form of a Huge water elemental, as elemental body IV. You can use this ability once per day, but the duration is %1 hour.|OracleWaterFormDuration",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

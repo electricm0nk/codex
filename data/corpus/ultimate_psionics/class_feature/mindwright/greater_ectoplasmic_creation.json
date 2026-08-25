@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mindwright ~ Greater Ectoplasmic Creation",
+    "name": "Greater Ectoplasmic Creation",
+    "class": "Mindwright",
+    "description": "You can use major ectoplasmic creation as a psi-like ability %1/day, but you can only have %2 of such objects in existence at any given time.|GreaterEctoplasmicCreationTimes|GreaterEctoplasmicCreationObjects",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindwright ~ Greater Ectoplasmic Creation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.PsiLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreaterEctoplasmicCreationTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreaterEctoplasmicCreationObjects|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=GreaterEctoplasmicCreationTimes|Ectoplasmic Creation (Major)"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use major ectoplasmic creation as a psi-like ability %1/day, but you can only have %2 of such objects in existence at any given time.|GreaterEctoplasmicCreationTimes|GreaterEctoplasmicCreationObjects"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreaterEctoplasmicCreationTimes|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreaterEctoplasmicCreationObjects|INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|GreaterEctoplasmicCreationTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1989,
+    "record_key": "Mindwright ~ Greater Ectoplasmic Creation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shadowdancer",
     "name": "Shadowdancer",
-    "class": null,
+    "class": "Shadowdancer",
     "description": null,
     "raw_tokens": [
       {
@@ -19,6 +19,50 @@
       {
         "key": "BONUS",
         "value": "VAR|Shadowdancer_CFP_Level|ShadowdancerLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Weapon and Armor Proficiency|PREVARGTEQ:Shadowdancer_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Hide in Plain Sight|PREVARGTEQ:Shadowdancer_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Darkvision|PREVARGTEQ:Shadowdancer_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Evasion|PREVARGTEQ:Shadowdancer_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Uncanny Dodge|PREVARGTEQ:Shadowdancer_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Rogue Talents|Shadowdancer ~ Shadow Illusion|Shadowdancer ~ Summon Shadow|PREVARGTEQ:Shadowdancer_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Shadow Call|Shadowdancer ~ Shadow Jump|PREVARGTEQ:Shadowdancer_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Defensive Roll|PREVARGTEQ:Shadowdancer_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Slippery Mind|PREVARGTEQ:Shadowdancer_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Shadow Power|PREVARGTEQ:Shadowdancer_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Shadowdancer Class Feature|AUTOMATIC|Shadowdancer ~ Improved Evasion|Shadowdancer ~ Shadow Master|PREVARGTEQ:Shadowdancer_CFP_Level,10"
       }
     ]
   },
@@ -35,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

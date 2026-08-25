@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Monk of the Four Winds ~ Aspect of the Carp",
     "name": "Aspect of the Carp",
-    "class": "Monk of the Four Winds",
+    "class": "Monk",
     "description": "The monk's skin becomes a coat of golden, iridescent fish scales, his neck grows gills, and his fingers become webbed. He can breathe water and gains a swim speed equal to his land speed. The carp is heroic and adventurous - a monk must be nonevil to take on the aspect of the carp.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

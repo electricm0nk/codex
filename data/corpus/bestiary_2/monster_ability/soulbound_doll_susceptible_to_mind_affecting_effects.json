@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Soulbound Doll ~ Susceptible to Mind-Affecting Effects",
+    "delivery": "Extraordinary",
+    "description": "The weakened conviction of a soulbound doll's soul make it susceptible to mind-affecting effects, despite the fact that it is a construct.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:soulbound_doll_susceptible_to_mind_affecting_effects",
+    "name": "Susceptible to Mind-Affecting Effects",
+    "owners": [
+      "bestiary_2:monster:soulbound_doll"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The weakened conviction of a soulbound doll's soul make it susceptible to mind-affecting effects, despite the fact that it is a construct."
+      },
+      {
+        "key": "KEY",
+        "value": "Soulbound Doll ~ Susceptible to Mind-Affecting Effects"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.255",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1200,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Soulbound Doll ~ Susceptible to Mind-Affecting Effects",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

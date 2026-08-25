@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel ~ Divine Boon",
+    "name": "Divine Boon",
+    "description": "As the sentinel gains levels, he gains boons from his chosen deity. The nature of these boons varies depending on the sentinel's chosen deity. Each deity grants three boons, each more powerful than the last. At 3rd level, the sentinel gains the first boon. At 6th level, he gains the second boon, and at 9th level, he gains the third boon. Consult the Deific Obedience feat on page 210 and the core deity descriptions in Chapter 1 for details on these divine boons. When a divine boon grants a spell-like ability, the sentinel's caster level for the spell-like ability equals his total character level. This ability allows a sentinel to access these boons earlier than with the Deific Obedience feat alone; it does not grant additional uses of the boons once the character reaches the necessary Hit Dice to earn the boons normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Divine Boon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sentinel Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SentinelBoonLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As the sentinel gains levels, he gains boons from his chosen deity. The nature of these boons varies depending on the sentinel's chosen deity. Each deity grants three boons, each more powerful than the last. At 3rd level, the sentinel gains the first boon. At 6th level, he gains the second boon, and at 9th level, he gains the third boon. Consult the Deific Obedience feat on page 210 and the core deity descriptions in Chapter 1 for details on these divine boons. When a divine boon grants a spell-like ability, the sentinel's caster level for the spell-like ability equals his total character level. This ability allows a sentinel to access these boons earlier than with the Deific Obedience feat alone; it does not grant additional uses of the boons once the character reaches the necessary Hit Dice to earn the boons normally."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SentinelBoonLVL|SentinelLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 113,
+    "record_key": "Sentinel ~ Divine Boon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

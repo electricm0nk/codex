@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Broken Soul ~ Agonized Wail",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a broken soul can emit an agonized wail that inspires terror in those who hear it. All creatures within 120 feet must succeed at a Will save (DC %1) or become shaken for as long as they remain within 120 feet of the broken soul. A successful save renders a creature immune to that broken soul's agonized wail for 24 hours. This is a sonic mind-affecting fear effect.",
+    "description_variables": [
+      "BrokenSoulAbilitiesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:broken_soul_agonized_wail",
+    "name": "Agonized Wail",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|BrokenSoulAbilitiesDC|10+TL/2+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BrokenSoulAbilitiesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a broken soul can emit an agonized wail that inspires terror in those who hear it. All creatures within 120 feet must succeed at a Will save (DC %1) or become shaken for as long as they remain within 120 feet of the broken soul. A successful save renders a creature immune to that broken soul's agonized wail for 24 hours. This is a sonic mind-affecting fear effect.|BrokenSoulAbilitiesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Broken Soul ~ Agonized Wail"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 338,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Broken Soul ~ Agonized Wail",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

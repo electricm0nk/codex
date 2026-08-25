@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Necromantic Servant",
     "name": "Necromantic Servant [Necromancy]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to raise a single human skeleton (Pathfinder RPG Bestiary 250) or human zombie (Bestiary 288) from the ground to serve you for 10 minutes per occultist level you possess or until it is destroyed, whichever comes first. This servant has a number of hit points equal to 1/2 your maximum hit point total (not adjusted for temporary hit points or other temporary increases). It also uses your base attack bonus and gains a bonus on damage rolls equal to 1/2 your occultist level. At 5th level, whenever the necromantic servant would be destroyed, if you are within medium range (100 feet + 10 feet per level) of the servant, you can expend 1 point of mental focus as an immediate action to cause the servant to return to full hit points. At 9th level, you can choose to give the servant the bloody or burning simple template (if it's a skeleton) or the fast simple template (if it's a zombie). At 13th level, when you take an immediate action to restore your servant, it splits into two servants. You can have a maximum number of servants in existence equal to 1/2 your occultist level. At 17th level, the servant gains a teamwork feat of your choice.",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

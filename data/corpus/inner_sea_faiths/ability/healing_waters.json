@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist Boon ~ Naderi ~ Healing Waters",
+    "name": "Healing Waters",
+    "description": "If you have performed your daily obedience, three times per day, you can hold a creature underwater for %1 rounds. Each round, as long as the creature is submerged and holding its breath, it is healed of 1d8 + 5 points of damage. If the creature doesn't hold its breath, it doesn't receive healing that round. If you submerge a creature and heal it for fewer than %1 rounds, it still counts as one use of this ability.|TL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist Boon ~ Naderi ~ Healing Waters"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, three times per day, you can hold a creature underwater for %1 rounds. Each round, as long as the creature is submerged and holding its breath, it is healed of 1d8 + 5 points of damage. If the creature doesn't hold its breath, it doesn't receive healing that round. If you submerge a creature and heal it for fewer than %1 rounds, it still counts as one use of this ability.|TL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.77"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 295,
+    "record_key": "Evangelist Boon ~ Naderi ~ Healing Waters"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

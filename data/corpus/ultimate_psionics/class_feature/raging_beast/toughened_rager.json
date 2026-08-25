@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Raging Beast ~ Toughened Rager",
+    "name": "Toughened Rager",
+    "class": "Raging Beast",
+    "description": "You gain a +%1 enhancement bonus to your natural armor as long as you are raging.|ToughenedRagerBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raging Beast ~ Toughened Rager"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ToughenedRagerBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus to your natural armor as long as you are raging.|ToughenedRagerBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|ToughenedRagerBonus*Raging|TYPE=NaturalArmorEnhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ToughenedRagerBonus|min(4,floor((BarbarianLVL-6)/3))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2417,
+    "record_key": "Raging Beast ~ Toughened Rager"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

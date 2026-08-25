@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Elemental Bond",
+    "name": "Elemental Bond",
+    "description": "You are connected to one of the elemental planes. Select one elemental plane: air, earth, fire, or water. Whenever you cast a spell with a descriptor matching that plane, add your tier to your caster level for that spell. You gain resistance 10 against an energy type associated with your chosen plane--electricity for air, acid for earth, fire for fire, and cold for water. At 6th tier, this resistance increases to 20. At 9th tier, this resistance increases to 30.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Elemental Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_ElementalBond_ResistanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are connected to one of the elemental planes. Select one elemental plane: air, earth, fire, or water. Whenever you cast a spell with a descriptor matching that plane, add your tier to your caster level for that spell. You gain resistance 10 against an energy type associated with your chosen plane--electricity for air, acid for earth, fire for fire, and cold for water. At 6th tier, this resistance increases to 20. At 9th tier, this resistance increases to 30."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|STRING|Air|Earth|Fire|Water"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Mythic Elemental Bond ~ Air|PREABILITY:1,CATEGORY=Special Ability,Mythic Path Ability ~ Elemental Bond (Air)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Mythic Elemental Bond ~ Earth|PREABILITY:1,CATEGORY=Special Ability,Mythic Path Ability ~ Elemental Bond (Earth)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Mythic Elemental Bond ~ Fire|PREABILITY:1,CATEGORY=Special Ability,Mythic Path Ability ~ Elemental Bond (Fire)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Mythic Elemental Bond ~ Water|PREABILITY:1,CATEGORY=Special Ability,Mythic Path Ability ~ Elemental Bond (Water)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_ElementalBond_ResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_ElementalBond_ResistanceBonus|10|PREVARGTEQ:MythicTierLevel,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_ElementalBond_ResistanceBonus|10|PREVARGTEQ:MythicTierLevel,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 160,
+    "record_key": "Mythic Path Ability ~ Elemental Bond"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

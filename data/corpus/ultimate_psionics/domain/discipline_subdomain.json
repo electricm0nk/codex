@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Discipline Subdomain",
+    "name": "Discipline Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Discipline Subdomain],[PREVARLT:PsionicsDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Discipline Subdomain ~ Mind over Body|PREVARGTEQ:DomainPsionicsAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psionics Domain ~ Granted Power|PREVARGTEQ:DomainPsionicsAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psionics Domain ~ Dispelling Touch|PREVARGTEQ:DomainPsionicsAbilityTriggerLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionicsDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPsionicsAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionicsDomain|1|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPsionicsLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPsionicsDC|10+(DomainPsionicsLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPsionicsTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPsionicsAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Discipline Subdomain=1|Charm Person|Discipline Subdomain=2|Delay Pain|Discipline Subdomain=3|Magic Circle against Chaos|Discipline Subdomain=4|Charm Monster|Discipline Subdomain=5|Forbid Action (Greater)|Discipline Subdomain=6|Suggestion (Mass)|Discipline Subdomain=7|Insanity|Discipline Subdomain=8|Mind Blank|Discipline Subdomain=9|Foresight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_domains_um.lst",
+    "sha256": "637e91cfc2543485d0d2786b46faa543b4e48e55c570e9f5c696414abf4df84a",
+    "line": 7,
+    "record_key": "Discipline Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

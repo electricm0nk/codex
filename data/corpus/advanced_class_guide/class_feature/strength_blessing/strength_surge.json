@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Strength Blessing ~ Strength Surge",
     "name": "Strength Surge",
-    "class": "Strength Blessing",
+    "class": "Warpriest",
     "description": "As a swift action you can focus your own strength. You gain an enhancement bonus equal to %1 on melee attack rolls, combat maneuver checks that rely on Strength, Strength-based skills, and Strength checks for 1 round.|max(1,WarpriestLVL/2)",
     "raw_tokens": [
       {
@@ -40,5 +40,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

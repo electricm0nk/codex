@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hunter",
     "name": "Hunter",
-    "class": null,
+    "class": "Hunter",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,326 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Hunter\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Hunter ~ Class Skills|PREVAREQ:Hunter_CF_ClassSkills,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_AnimalCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_AnimalFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_NatureTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_Orisons|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_WildEmpathy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_PreciseCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_Track|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_HunterTactics|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_TeamworkFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_ImprovedEmpathicLink|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_WoodlandStride|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_BonusTricks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_SecondAnimalFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_SwiftTracker|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_RaiseAnimalCompanion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_SpeakWithMaster|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_GreaterEmpathicLink|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_OneWithTheWild|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_MasterHunter|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_AnimalCompanion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_AnimalCompanion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_AnimalFocus|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_AnimalFocus=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_NatureTraining|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_NatureTraining=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_Orisons|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_Orisons=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_WildEmpathy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_WildEmpathy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_PreciseCompanion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_PreciseCompanion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_Track|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_Track=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_HunterTactics|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_HunterTactics=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeats|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_TeamworkFeats=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_ImprovedEmpatheticLink|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_ImprovedEmpathicLink=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_WoodlandStride|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_WoodlandStride=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_BonusTricks|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_BonusTricks=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_SecondAnimalFocus|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_SecondAnimalFocus=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_SwiftTracker|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_SwiftTracker=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_RaiseAnimalCompanion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_RaiseAnimalCompanion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_SpeakWithMaster|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_SpeakWithMaster=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_GreaterEmpathicLink|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_GreaterEmpathicLink=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_OneWithTheWild|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_OneWithTheWild=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_MasterHunter|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_MasterHunter=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_ArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterArmorProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_AnimalCompanion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterAnimalCompanion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_AnimalFocus|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterAnimalFocus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_NatureTraining|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterNatureTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_Orisons|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterOrisons"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_WildEmpathy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterWildEmpathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_PreciseCompanion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterPreciseCompanion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_Track|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterTrack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_HunterTactics|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterHunterTactics"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeats|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterTeamworkFeats"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_ImprovedEmpatheticLink|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterImprovedEmpathicLink"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_WoodlandStride|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterWoodlandStride"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_BonusTricks|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterBonusTricks"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_SecondAnimalFocus|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterSecondAnimalFocus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_SwiftTracker|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterSwiftTracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_RaiseAnimalCompanion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterRaiseAnimalCompanion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_SpeakWithMaster|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterSpeakWithMaster"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_GreaterEmpathicLink|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterGreaterEmpathicLink"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_OneWithTheWild|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterOneWithTheWild"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_MasterHunter|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.HunterMasterHunter"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_TeamworkFeat3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_TeamworkFeat6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_TeamworkFeat8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_TeamworkFeat9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_TeamworkFeat12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_TeamworkFeat15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hunter_CF_TeamworkFeat18|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeat3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_TeamworkFeat3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeat6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_TeamworkFeat6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeat8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_TeamworkFeat8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeat9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_TeamworkFeat9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeat12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_TeamworkFeat12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeat15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_TeamworkFeat15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunter_CF_TeamworkFeat18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Hunter_CF_TeamworkFeat18=True"
       }
     ]
   },
@@ -49,5 +369,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Glass Golem ~ Reflect Spells",
+    "name": "Reflect Spells",
+    "description": "As a free action once every 1d4 rounds, a glass golem can align its internal structure to enhance its resistance to magic for 1 round.  During this time, the golem reflects spells (even spells that function differently against the golem as described in its immune to magic ability) as if under the effects of a spell turning spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Glass Golem ~ Reflect Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action once every 1d4 rounds, a glass golem can align its internal structure to enhance its resistance to magic for 1 round.  During this time, the golem reflects spells (even spells that function differently against the golem as described in its immune to magic ability) as if under the effects of a spell turning spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 615,
+    "record_key": "Glass Golem ~ Reflect Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

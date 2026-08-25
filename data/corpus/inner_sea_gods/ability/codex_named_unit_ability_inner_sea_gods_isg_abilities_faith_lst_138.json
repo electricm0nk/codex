@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_138)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_138)",
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can summon an exact double of your animal companion. The double acts and thinks like your animal companion in every way, and obeys your commands just as the original would. Your original animal companion and its double understand and trust each other perfectly. The double remains for %1 rounds, and then vanishes. If you don't have an animal companion, you instead gain the ability to use summon nature's ally V as a spell-like ability once per day.|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day as a standard action, you can summon an exact double of your animal companion. The double acts and thinks like your animal companion in every way, and obeys your commands just as the original would. Your original animal companion and its double understand and trust each other perfectly. The double remains for %1 rounds, and then vanishes. If you don't have an animal companion, you instead gain the ability to use summon nature's ally V as a spell-like ability once per day.|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 138,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_138)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:138"
+  }
+}

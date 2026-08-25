@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Phantom Thief ~ Refined Education",
+    "name": "Refined Education",
+    "class": "Rogue",
+    "description": "A phantom thief adds Handle Animal, Heal, Ride, Spellcraft, Survival, and all Knowledge skills to her list of class skills. Furthermore, she selects one of her rogue class skills and adds half her rogue level on all skill checks using that skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Phantom Thief ~ Refined Education"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Features.PhantomThiefClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RefinedEducationSkillCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A phantom thief adds Handle Animal, Heal, Ride, Spellcraft, Survival, and all Knowledge skills to her list of class skills. Furthermore, she selects one of her rogue class skills and adds half her rogue level on all skill checks using that skill."
+      },
+      {
+        "key": "DESC",
+        "value": " At 3rd level and every 2 rogue levels thereafter, she selects an additional rogue class skill and adds half her rogue level on all skill checks using that skill as well.|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "DESC",
+        "value": " Starting at 4th level, if the phantom thief is an unchained rogue, she gains rogue's edge skill unlocks with each of these skills rather than selecting one skill every 5 levels, and she adds half her rogue level to her number of ranks to determine when she receives a skill unlock (so a 7th level rogue (phantom thief) with 7 ranks in a chosen skill would count as having 10 ranks and receive the second skill unlock).|PRECLASS:1,Rogue=4"
+      },
+      {
+        "key": "DESC",
+        "value": " This ability alters the rogue's class skills."
+      },
+      {
+        "key": "DESC",
+        "value": " It also alters rogue's edge.|PRECLASS:1,Rogue=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Refined Education Skill Choice|RefinedEducationSkillCount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RefinedEducationSkillCount|(RogueLVL-1)/2"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Handle Animal|Heal|Ride|Spellcraft|Survival|TYPE=Knowledge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 34,
+    "record_key": "Unchained Phantom Thief ~ Refined Education"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

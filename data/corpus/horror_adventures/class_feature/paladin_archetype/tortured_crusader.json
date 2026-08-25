@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Paladin Archetype ~ Tortured Crusader",
     "name": "Tortured Crusader",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Though tortured crusaders may be beaten and battered, body, mind, and soul, they still somehow continue through torment and hardship. Despite setbacks and impossible odds, they shine like candles even in the darkest times. Somewhere in their minds, they realize that they can't win in the end, but this only strengthens their resolve to fight for what is right, rather than giving in to hopelessness.",
     "raw_tokens": [
       {
@@ -155,5 +155,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

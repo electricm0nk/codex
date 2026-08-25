@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Esoteric Training Yes ~ Guild",
+    "name": "Esoteric Training",
+    "description": "The bonus to caster level you gain from Eclectic Training increases to +3 (but is still limited by your total Hit Dice). You may select a second spellcasting class to gain a +1 bonus to effective caster level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Esoteric Training Yes ~ Guild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GuildEsotericTraining"
+      },
+      {
+        "key": "DESC",
+        "value": "The bonus to caster level you gain from Eclectic Training increases to +3 (but is still limited by your total Hit Dice). You may select a second spellcasting class to gain a +1 bonus to effective caster level."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "CLASS|SPELLCASTER"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Eclectic Training Choice|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|CHOICE|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 106,
+    "record_key": "Esoteric Training Yes ~ Guild"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

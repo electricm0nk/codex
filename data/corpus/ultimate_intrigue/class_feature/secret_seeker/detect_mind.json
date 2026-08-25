@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Secret Seeker ~ Detect Mind",
+    "name": "Detect Mind",
+    "class": "Inquisitor",
+    "description": "A secret seeker can detect anxieties, detect desires, or detect thoughts, as per the spells, for %1|SecretSeekerDetectMindsCount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secret Seeker ~ Detect Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.SecretSeekerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SecretSeekerDetectMindsCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A secret seeker can detect anxieties, detect desires, or detect thoughts, as per the spells, for %1|SecretSeekerDetectMindsCount"
+      },
+      {
+        "key": "DESC",
+        "value": " rounds per day. These rounds need not be consecutive.|!PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "DESC",
+        "value": " minutes per day. These minutes need not be consecutive but must be spent in 1-minute increments.|PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "DESC",
+        "value": " A creature that succeeds at a saving throw against this ability is immune to that secret seeker's detect mind ability for 24 hours."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SecretSeekerDetectMindsCount|InquisitorLVL*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SecretSeekerDetectMindsCount|InquisitorLVL*2|PREABILITY:1,Category=Special Ability,Inquisition ~ Secrets"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 14,
+    "record_key": "Secret Seeker ~ Detect Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

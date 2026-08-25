@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Shadow Shroud",
+    "category": "General",
+    "name": "Shadow Shroud",
+    "description": "Using a portion of your innate magic, you cloak your body in darkness to evade attacks. As an immediate action, you can create a shifting haze of darkness around yourself, granting you concealment against one attack. The haze dissipates after the attack is resolved. You can use this ability times per day.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Combat Reflexes",
+      "PREABILITY:1,CATEGORY=Spell-Like Ability,Racial SLA ~ Darkness"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 25,
+    "record_key": "Shadow Shroud"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

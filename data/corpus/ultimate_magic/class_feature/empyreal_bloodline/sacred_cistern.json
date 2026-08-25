@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Empyreal Bloodline ~ Sacred Cistern",
     "name": "Sacred Cistern",
-    "class": "Empyreal Bloodline",
+    "class": "Sorcerer",
     "description": "Your bloodline makes you a natural receptacle of divine energy. You can channel energy once per day as a cleric of %1th level. This bloodline power replaces wings of heaven.|Sorcerer_EmpyrealSacredCistern_ChannelEnergyLVL",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

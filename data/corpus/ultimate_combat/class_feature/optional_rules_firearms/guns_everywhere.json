@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Optional Rules Firearms ~ Guns Everywhere",
+    "name": "Guns Everywhere",
+    "class": "Optional Rules Firearms",
+    "description": "Guns are commonplace. Early firearms are seen as antiques, and advanced firearms are widespread. Firearms are simple weapons, and early firearms, advanced guns, and their ammunition are bought or crafted for 10%% of the cost listed in this chapter. The gunslinger loses the gunsmith class feature and instead gains the gun training class feature at 1st level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Optional Rules Firearms ~ Guns Everywhere"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules.FirearmsRule"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Internal,TYPE.FirearmsRule],[PREABILITY:1,CATEGORY=Internal,Optional Rules Firearms ~ Guns Everywhere]"
+      },
+      {
+        "key": "DESC",
+        "value": "Guns are commonplace. Early firearms are seen as antiques, and advanced firearms are widespread. Firearms are simple weapons, and early firearms, advanced guns, and their ammunition are bought or crafted for 10%% of the cost listed in this chapter. The gunslinger loses the gunsmith class feature and instead gains the gun training class feature at 1st level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gunslinger Class Feature|AUTOMATIC|Gunslinger ~ Gun Training|PREVAREQ:Gunslinger_CF_GunTraining,0|PRECLASS:1,Gunslinger=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Gunslinger_CF_Gunsmith|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1970,
+    "record_key": "Optional Rules Firearms ~ Guns Everywhere"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

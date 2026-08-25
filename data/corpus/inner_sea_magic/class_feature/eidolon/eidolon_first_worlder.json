@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Eidolon ~ First Worlder",
+    "name": "Eidolon ~ First Worlder",
+    "class": "Eidolon",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Fey|Extraplanar|First Worlder Eidolon HD"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|EidolonLVL*1/2|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Eidolon_CF_RaceType|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Eidolon_CF_BaseAB|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Eidolon_CF_Skills|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonFortGood|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonReflexGood|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonWillGood|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABPoor|EidolonLVL|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|-60|TYPE=Base"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Bluff|Climb|TYPE=Craft|Diplomacy|Disguise|Escape Artist|Fly|Knowledge (geography)|Knowledge (nature)|Perception|TYPE=Perform|Sense Motive|Sleight of Hand|Stealth|Swim|Use Magic Device"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+    "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+    "line": 382,
+    "record_key": "Eidolon ~ First Worlder"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

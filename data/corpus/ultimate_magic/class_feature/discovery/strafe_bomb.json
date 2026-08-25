@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Strafe Bomb",
     "name": "Strafe Bomb",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You can throw bombs that splash in a 40-foot line rather than affecting a radius. The line starts at you and extends away from you in the direction you choose. You designate one creature in the squares affected by the line to be the target of the bomb and make your attack roll against that creature; all other squares in the line take splash damage. If you have the explosive bomb discovery and throw an explosive strafe bomb, the line of splash damage is 80 feet long instead of 40 feet.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

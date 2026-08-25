@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption ~ Swimmer in the Deep",
+    "name": "Swimmer in the Deep",
+    "description": "The cold depths of the ocean are your home now.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Swimmer in the Deep"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DeepOneManifestation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "DESC",
+        "value": "The cold depths of the ocean are your home now."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Deep One Swimmer in the Deep Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Deep One Swimmer in the Deep Stain Choice|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 187,
+    "record_key": "Deep One Corruption ~ Swimmer in the Deep"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

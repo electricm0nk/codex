@@ -97,16 +97,55 @@ def corpus_root() -> str:
     )
 
 
+def _rebase_under_pcgen_corpus_root(stale_absolute_path: str) -> str:
+    """Strip whatever worktree-specific prefix a committed path carries up to
+    (and including) its own `.../data/` segment, and re-root the remainder
+    under this run's real `corpus_root()`.
+
+    `docs/work-inventory.json`'s `corpus_root` and `additional_book_dirs`
+    fields are both written as ABSOLUTE paths by whichever worktree last
+    regenerated the inventory -- exactly the "oracle cited by literal local
+    path" shape `AGENTS.md` forbids. Every fresh worktree's `PCGEN_CORPUS_ROOT`
+    points at that same `pcgen/data` directory under a DIFFERENT worktree
+    path, so the relative structure below `.../data/` is what actually
+    transfers; the absolute prefix above it never does.
+    """
+    marker = f"{os.sep}data{os.sep}"
+    idx = stale_absolute_path.find(marker)
+    if idx == -1:
+        # No `/data/` segment to rebase from (e.g. already relative, or a
+        # differently-shaped path) -- pass it through unchanged rather than
+        # guess.
+        return stale_absolute_path
+    relative_suffix = stale_absolute_path[idx + len(marker) :]
+    return os.path.join(corpus_root(), relative_suffix)
+
+
 def book_dirs() -> dict[str, str]:
-    """Book id -> its PCGen source directory, read from the inventory itself."""
+    """Book id -> its PCGen source directory.
+
+    **SD-32 T9-onboarding fix (`decisions.md §17a`-shaped correction):** this
+    used to read `inv["corpus_root"]` and `inv["additional_book_dirs"]`
+    literally -- both ABSOLUTE paths baked into `docs/work-inventory.json` by
+    whichever worktree last regenerated it, exactly the "oracle cited by
+    literal local path" shape `AGENTS.md` forbids. Every fresh worktree's
+    `PCGEN_CORPUS_ROOT` points somewhere that stale path does not (the oracle
+    slot is git-ignored and re-fetched per-worktree), so
+    `transcribe_companion_tables.py` raised `FileNotFoundError`
+    unconditionally on a fresh checkout. Both fields are now rebased under
+    this run's own `corpus_root()` (already `PCGEN_CORPUS_ROOT`-env-var-aware,
+    and already how the sibling `classify_monster_ability_rows.py::book_dirs`
+    resolves its root) via `_rebase_under_pcgen_corpus_root`.
+    """
     inv = json.load(open(INVENTORY, encoding="utf-8"))
     dirs: dict[str, str] = {}
-    root = inv["corpus_root"]
+    root = _rebase_under_pcgen_corpus_root(inv["corpus_root"])
     for entry in os.listdir(root):
         if os.path.isdir(os.path.join(root, entry)):
             dirs[entry] = os.path.join(root, entry)
     for extra in inv.get("additional_book_dirs", []):
-        dirs[os.path.basename(extra)] = extra
+        rebased = _rebase_under_pcgen_corpus_root(extra)
+        dirs[os.path.basename(rebased)] = rebased
     return dirs
 
 
@@ -205,7 +244,22 @@ def resolve_source_file(directory: str, source_file: str) -> str:
 # What is out of scope is a gate naming a campaign this repo has not ingested.
 # `decisions.md §47.2` already ruled exactly this for Horror Adventures'
 # `ha_abilities_race_oa.lst`, and `RuleSetId::Ha`'s doc comment records it.
-UNINGESTED_CAMPAIGN_GATES = ("Occult Adventures",)
+#
+# Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): Occult Adventures
+# left this tuple 2026-08-24 -- it IS an ingested book now
+# (`reach_gate.rs::CORPUS_BOOK_IDS` carries `("occult_adventures",
+# "occult_adventures")`, landed by an SD-31 wave-4 lane; `RuleSetId::Oa`
+# drives real `feats`/`spells`/`class_feature` reach claims). Its own
+# module doc comments (e.g. `bestiary_5/companion_data.rs`) that cited "not
+# ingested" as the reason for a PRECAMPAIGN exclusion were stale the moment
+# that landed; `decisions.md §27b` ("EVERYTHING", 2026-08-23) separately
+# overturned "not applicable to the modelled campaign set" as an INGEST
+# disposition for this exact shape (occult_adventures-gated monster_ability
+# units) -- the same reasoning applies here. Leave this tuple EMPTY, not
+# repopulated with a different name, unless a future book is genuinely
+# unmodelled by this repo's ingest roster; check `CORPUS_BOOK_IDS` before
+# adding one back.
+UNINGESTED_CAMPAIGN_GATES: tuple[str, ...] = ()
 
 _PCC_LOAD = re.compile(r"^[A-Z]+:(?P<path>[^|\t]+\.lst)\|(?P<rest>.*)$")
 

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Archetype ~ Master of Disguise",
     "name": "Master of Disguise",
-    "class": "Rogue Archetype",
+    "class": "Rogue",
     "description": "A master of disguise feels no need to advertise her skills to build a reputation. Instead, she believes that never letting her adversaries know her true identity protects her from bad luck or missteps on a job.",
     "raw_tokens": [
       {
@@ -87,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_15)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_15)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Glory,Good,Law,Sun,War|PREALIGN:LG,LN,NG"
+      },
+      {
+        "key": "DESC",
+        "value": "Goddess of honor, justice, rulership, valor"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Inheritor"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Sword and sun"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Lion"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Red|White"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Pathfinder Chronicles"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Longsword"
+      },
+      {
+        "key": "ALIGN",
+        "value": "LG"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 15,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_15)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:15"
+  }
+}

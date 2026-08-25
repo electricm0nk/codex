@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Summon Mantis",
+    "school": "Conjuration",
+    "level": null,
+    "description": "This spell summons your choice of one extraplanar advanced fiendish giant mantis, 1d3 fiendish giant mantises, or 1d4+1 giant mantises. They appear where you designate and act immediately, on your turn. You can mentally direct the actions of these summoned vermin as a free action. All mantises summoned by this spell-like ability are blood red, and gain no racial bonus on Stealth checks in forests. Creatures cannot be summoned into an environment that cannot support them. If you use this spell to summon fiendish mantises, it is an evil spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_spells.lst",
+    "sha256": "fb24dc5c39b2ce49f3152d22af6dbab4ddc5fc272a08170b6d43337aa184048b",
+    "line": 59,
+    "record_key": "Summon Mantis"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

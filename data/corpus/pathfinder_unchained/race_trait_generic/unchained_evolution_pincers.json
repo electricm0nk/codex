@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Pincers",
+    "name": "Pincers",
+    "description": "An eidolon grows large pincers at the ends of one pair of its limbs, giving it two pincer attacks. These attacks are secondary attacks. The pincers deal 1d6 points of damage (1d8 if Large, 2d6 if Huge). Eidolons with the grab evolution linked to their pincers gain a +2 bonus on combat maneuver checks to grapple. The eidolon must have the limbs (arms) evolution to take this evolution. Alternatively, the eidolon can replace the claws from its base form with pincers (this still costs 1 evolution point). This evolution can be selected more than once, up to the number of limbs (arms) evolutions the eidolon possesses.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Pincers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Eidolon Subtype ~ Agathion,Eidolon Subtype ~ daemon,Eidolon Subtype ~ demon,Eidolon Subtype ~ devil,Eidolon Subtype ~ div,Eidolon Subtype ~ elemental,Eidolon Subtype ~ protean,Eidolon Subtype ~ psychopomp"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Agathion, daemon, demon, devil, div, elemental, protean, or psychopomp subtype."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidMaxAttacks,EidUsedAttacks+2"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidArms,EidArmsUsed+2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidPincerCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An eidolon grows large pincers at the ends of one pair of its limbs, giving it two pincer attacks. These attacks are secondary attacks. The pincers deal 1d6 points of damage (1d8 if Large, 2d6 if Huge). Eidolons with the grab evolution linked to their pincers gain a +2 bonus on combat maneuver checks to grapple. The eidolon must have the limbs (arms) evolution to take this evolution. Alternatively, the eidolon can replace the claws from its base form with pincers (this still costs 1 evolution point). This evolution can be selected more than once, up to the number of limbs (arms) evolutions the eidolon possesses."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Pincers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidPincerCount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidUsedAttacks|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidArmsUsed|2"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 204,
+    "record_key": "Unchained Evolution ~ Pincers"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

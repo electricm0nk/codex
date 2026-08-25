@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Wereshark_STATS",
+    "name": "Wereshark_STATS",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|STR|19"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|DEX|12"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|CON|15"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|INT|1"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|WIS|14"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|CHA|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 146,
+    "record_key": "Wereshark_STATS"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

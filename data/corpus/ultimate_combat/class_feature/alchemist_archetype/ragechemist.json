@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Ragechemist",
     "name": "Ragechemist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Some alchemists create mutagens that tap into a primal anger that fuels their physical transformation. These alchemists have little control over their altered selves.",
     "raw_tokens": [
       {
@@ -59,6 +59,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ RAGECHEMIST],[!PREFACT:1,ABILITIES,Alchemist_Archetype_PoisonUse=True,Alchemist_Archetype_SwiftPoisoning=True,Alchemist_Archetype_PoisonImmunity=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonUse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_SwiftPoisoning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonUse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_SwiftPoisoning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonImmunity|true"
       }
     ]
   },
@@ -75,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

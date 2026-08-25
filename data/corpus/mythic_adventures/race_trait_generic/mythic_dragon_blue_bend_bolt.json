@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Dragon (Blue) ~ Bend Bolt",
+    "name": "Bend Bolt",
+    "description": "By expending one use of mythic power, a mythic blue dragon can bend the line of its breath weapon once up to 90 degrees, and cause any creature that fails its save against the breath weapon to be stunned for 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Dragon (Blue) ~ Bend Bolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Dragon (Blue) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "By expending one use of mythic power, a mythic blue dragon can bend the line of its breath weapon once up to 90 degrees, and cause any creature that fails its save against the breath weapon to be stunned for 1 round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 121,
+    "record_key": "Mythic Dragon (Blue) ~ Bend Bolt"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

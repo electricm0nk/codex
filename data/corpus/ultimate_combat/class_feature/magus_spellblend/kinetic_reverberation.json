@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Kinetic Reverberation",
+    "name": "Kinetic Reverberation",
+    "class": "Magus",
+    "description": "Channels the force of an enemy's attack back into its weapon.|!PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Kinetic Reverberation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL2"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=2|Kinetic Reverberation"
+      },
+      {
+        "key": "DESC",
+        "value": "Channels the force of an enemy's attack back into its weapon.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "ITEM",
+        "value": "POTION"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1806,
+    "record_key": "Magus Spellblend ~ Kinetic Reverberation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

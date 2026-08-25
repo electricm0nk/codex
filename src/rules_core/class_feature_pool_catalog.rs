@@ -27,17 +27,35 @@
 //! (`REGISTERED_POOL_GROUPS`) as the dispatch briefs asked: a precise answer
 //! per pool, not a stub across all of them.
 //!
-//! # Scope: Rogue Talent and Rage Power, deliberately no wider
+//! # Scope: every `" ~ "`-group-qualified pool (SD-32 T12 widening)
 //!
-//! `v06_work_inventory.rs`'s `CLASS_FEATURE_POOLS` registers 27 pools.
-//! Widening `REGISTERED_POOL_GROUPS` to all of them is mechanical — the same
-//! walk, the same render-and-refuse gate — but each pool's corpus rows would
-//! need the same one-pool spot-check wave 22 ran on Rogue Talent and this
-//! cycle (`SD31-W23-POOLMEMBER-002`) ran on Rage Power (are the `%N`
-//! argument shapes the same, is `data.class` really the bare pool name for
-//! every book that prints it) before being trusted at scale. Left named,
-//! not built, per the dispatch's own "report what it would cost to extend"
-//! ask.
+//! **Superseded, SD-32 T12 class-feature-pool-population cycle:** this
+//! section used to say "Rogue Talent and Rage Power, deliberately no
+//! wider", justified by a per-pool spot-check cost that `decisions.md §17`
+//! (serve the population "as a class... not one module per pool") and
+//! `§27b` ("EVERYTHING. No carve-outs survive.") no longer permit as a
+//! reason to stay narrow. The population this catalog was scoped away from
+//! is ~1,913 groups / ~16,350 records
+//! (`scripts/census_class_feature_pool_population.py`), not 27 — the
+//! `CLASS_FEATURE_POOLS` figure below is a DIFFERENT, narrower registry
+//! (owner-resolution only, `v06_work_inventory.rs`), not this catalog's own
+//! population.
+//!
+//! The per-pool spot-check this section used to require (are the `%N`
+//! argument shapes the same, is the owning class resolvable) is exactly
+//! what the safety gates below check GENERICALLY, per record, for every
+//! pool at once — they do not need to be re-verified by hand per group
+//! name, because they never trusted the group name for correctness in the
+//! first place (see [`REGISTERED_POOL_GROUPS`]'s doc comment). Two NEW
+//! generic gates this cycle added, generalizing the two hand-kept,
+//! Rage-Power-only precedents the spot-check style of scoping used to
+//! produce: [`carries_unimplemented_marker`] (a literal stub marker found
+//! baked into 17 `occult_adventures` records once the widening reached
+//! them) and [`carries_class_specific_level_phrase`] (generalizing
+//! `CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS`'s Rage-Power-only
+//! denylist to every group). `v06_work_inventory.rs`'s `CLASS_FEATURE_POOLS`
+//! (27 pools, a SEPARATE registry, owner-resolution only) is unaffected by
+//! this widening.
 //!
 //! **Rage Power's own wrinkle, not present for Rogue Talent:** its group
 //! text ("Rage Power") shares no prefix/suffix with its owning class's own
@@ -92,10 +110,96 @@ use serde_json::Value;
 
 use crate::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
 
-/// Corpus `data.class` values this catalog recognises as an option-pool
-/// group rather than a real engine-modelled class. See the module doc for
-/// why the list is only these two entries today.
+/// **SD-32 T12 class-feature-pool-population cycle:** this catalog used to
+/// hard-refuse any `" ~ "`-group-qualified `class_feature` record whose
+/// group prefix was not one of two hand-registered literal strings
+/// (`"Rogue Talent"`, `"Rage Power"`) -- `decisions.md §17` (serve the
+/// population "as a class... group-driven, config-shaped, not one module
+/// per pool") and `§27b` ("EVERYTHING. No carve-outs survive.") both
+/// forbid keeping that allowlist now that the population it excluded is
+/// known to be ~1,913 groups / ~16,350 records
+/// (`scripts/census_class_feature_pool_population.py`), not two. Every
+/// OTHER record this catalog refuses is refused by one of the SAFETY gates
+/// below (render-and-refuse, engine-effect-token, archetype-lock,
+/// multi-`DESC:`, bare-`%N`, the unimplemented-marker guard, and the
+/// generalized class-level-scaled-phrase guard) -- none of those gates
+/// cares what the group's name is, so the group-name allowlist was never
+/// load-bearing for correctness, only for the size of the population wave
+/// 22/23 had hand-verified. `is_registered_pool_group` below now accepts
+/// ANY `" ~ "`-group-qualified key; this constant is kept only as
+/// documentation of the two groups that received the original, deepest
+/// hand-verification (the wave 22/23 spot-checks the module doc above
+/// describes) and is no longer consulted by [`load_pool_catalog`]'s filter.
 pub const REGISTERED_POOL_GROUPS: &[&str] = &["Rogue Talent", "Rage Power"];
+
+/// `true` for any corpus `key` that is itself `" ~ "`-group-qualified at
+/// all (i.e. the key IS an option-pool member, regardless of which group).
+/// See [`REGISTERED_POOL_GROUPS`]'s doc comment for why this is no longer a
+/// curated allowlist: the safety gates below (not the group's name) are
+/// what decide whether a given record may be served. Deliberately checks
+/// the KEY, not the split-off group prefix -- `key.split(" ~ ").next()`
+/// returns the whole key unchanged (non-empty) for an UNqualified key too,
+/// so gating on the group string alone would silently admit every
+/// `class_feature` record in the corpus, not only pool members.
+fn is_registered_pool_group(key: &str) -> bool {
+    key.contains(" ~ ")
+}
+
+/// Literal stub/placeholder markers found injected directly into some
+/// `occult_adventures` `class_feature` records' `description` field itself
+/// (e.g. `Sha'ir ~ Jin`'s real corpus row: `"[not implemented]At 1st
+/// level, a sha'ir learns..."` -- `grep -rl '\[not implemented\]'
+/// data/corpus/*/class_feature/**/*.json` finds 16 such records,
+/// `'\[not enforced\]'` finds 1 more, all in `occult_adventures`). These
+/// predate this cycle's widening and were invisible while
+/// `REGISTERED_POOL_GROUPS` was a two-entry allowlist that never reached
+/// `occult_adventures`' pool groups (`Sha'ir`, `Toxitician`,
+/// `Necroccultist`, ...); widening the group match to universal
+/// (`is_registered_pool_group`) would otherwise ship this literal bracketed
+/// stub marker straight onto a player's character sheet -- exactly the
+/// defect `docs/governance/no-stub-mvp-doctrine.md` exists to catch. Refused
+/// here, structurally, same discipline as every other hand-found leak this
+/// module's gates already catch (multi-`DESC:`, bare-`%N`). This is an
+/// ingest-territory (`cache_gen::class_feature::generate`) defect this
+/// catalog cannot fix at its source without crossing file territory; the
+/// refusal here is the correct-for-this-file mitigation (never manufacture
+/// `text-complete` for a record this module can independently prove is
+/// broken), not a fix of the root cause.
+fn carries_unimplemented_marker(description: &str) -> bool {
+    description.contains("[not implemented]") || description.contains("[not enforced]")
+}
+
+/// Generalizes `CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS`'s hand-kept,
+/// Rage-Power-only denylist to every group this cycle's universal match
+/// (`is_registered_pool_group`) newly admits. The SD-31 wave 23 review
+/// found 16 Rage Power records whose description scales on `"barbarian
+/// level"` -- a class-specific phrasing `wiring_class.rs`'s shared
+/// `prose_scaling_phrases` list does not recognise (it only catches "your
+/// class level"/"your character level") -- and applies to a value this
+/// engine already computes elsewhere, so serving the raw description as
+/// `text-complete` would misreport a genuinely-needs-computation record as
+/// done. Hand-verifying that same "does the engine already compute this
+/// value" precondition for every one of ~1,900 newly-admitted groups is
+/// infeasible in one cycle, so this guard is deliberately the CONSERVATIVE
+/// half alone: refuse to serve ANY record whose description names its own
+/// owning class immediately followed by "level"/"levels" (optionally
+/// possessive), regardless of whether this engine happens to compute the
+/// referenced value. A false "not served" here costs nothing new -- the
+/// record simply stays `not_ingested`, exactly where it was before this
+/// cycle; a false "text-complete" would be a new, wrong answer (`§1a`).
+fn carries_class_specific_level_phrase(description: &str, class_name: &str) -> bool {
+    if class_name.trim().is_empty() {
+        return false;
+    }
+    let desc_lower = description.to_ascii_lowercase();
+    let class_lower = class_name.to_ascii_lowercase();
+    for suffix in ["'s level", "'s levels", " level", " levels"] {
+        if desc_lower.contains(&format!("{class_lower}{suffix}")) {
+            return true;
+        }
+    }
+    false
+}
 
 /// `raw_tokens` keys that carry a real, player-facing engine effect --
 /// wave-22 adversarial review CONFIRMED (finding, severity high) that 9 of
@@ -254,8 +358,9 @@ fn raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw: &str) -> 
 pub struct PoolCatalogEntry {
     /// The corpus book directory this record was read from.
     pub book: String,
-    /// The registered pool group this record belongs to (`data.class`,
-    /// verbatim — e.g. `"Rogue Talent"`).
+    /// The registered pool group this record belongs to (the corpus `key`'s
+    /// own `" ~ "`-split group prefix — e.g. `"Rogue Talent"`; SD-32 card 11:
+    /// no longer `data.class`, which now carries the TRUE owning class).
     pub pool_group: String,
     /// The corpus `KEY:` token verbatim (e.g. `"Rogue Talent ~ Ledge
     /// Walker"`).
@@ -373,12 +478,24 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             let Ok(text) = std::fs::read_to_string(&file) else { continue };
             let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
             let data = &doc["data"];
-            let (Some(key), Some(name), Some(class)) =
-                (data["key"].as_str(), data["name"].as_str(), data["class"].as_str())
-            else {
+            let (Some(key), Some(name)) = (data["key"].as_str(), data["name"].as_str()) else {
                 continue;
             };
-            if !REGISTERED_POOL_GROUPS.contains(&class) {
+            // SD-32 card 11 (`epic-2-cause-closure`, T2a/T12 combined
+            // cycle): the pool group this catalog needs is the corpus
+            // key's own `" ~ "`-split prefix, NOT `data.class` -- those two
+            // used to be interchangeable only because of the exact bug T2a
+            // names (`cache_gen::class_feature::generate` used to derive
+            // `class` FROM this same key-prefix text whenever no grant fact
+            // resolved it). Now that `generate` ships the TRUE owning class
+            // in `data.class` (e.g. `"Rogue"`, not `"Rogue Talent"`) so
+            // `class_feature_descriptions.rs`'s consumer can join it against
+            // a real `ExplanationDto.id`, this module's own filter must read
+            // the group text directly from `key` instead -- `key` is
+            // untouched by that fix, so `"Rogue Talent ~ Ledge Walker"` still
+            // splits to `"Rogue Talent"` exactly as before.
+            let group = key.split(" ~ ").next().unwrap_or(key);
+            if !is_registered_pool_group(key) {
                 continue;
             }
             if CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS.contains(&key) {
@@ -386,6 +503,13 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             }
             let Some(raw_desc) = data["description"].as_str() else { continue };
             if !is_real_description_value(raw_desc) {
+                continue;
+            }
+            if carries_unimplemented_marker(raw_desc) {
+                continue;
+            }
+            let owning_class = data["class"].as_str().unwrap_or("");
+            if carries_class_specific_level_phrase(raw_desc, owning_class) {
                 continue;
             }
             if !has_no_engine_effect_token(&data["raw_tokens"]) {
@@ -422,7 +546,7 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             let clean_name = name.trim_end_matches('*').trim().to_string();
             out.push(PoolCatalogEntry {
                 book: book.clone(),
-                pool_group: class.to_string(),
+                pool_group: group.to_string(),
                 key: key.to_string(),
                 name: clean_name,
                 description: rendered.text,
@@ -513,20 +637,85 @@ mod tests {
         assert!(entries.iter().any(|e| e.book == "core_rulebook"));
     }
 
-    /// Only registered pool groups are served — a real `Bloodline` or
-    /// `Hex` record (unregistered today) must never appear, proving the
-    /// scope guard is a real filter and not merely documentation.
+    /// SD-32 T12 class-feature-pool-population cycle: the group-name
+    /// allowlist is gone -- every `" ~ "`-group-qualified key is eligible,
+    /// filtered only by the safety gates. A record with NO `" ~ "` at all
+    /// (not a pool member) must still never appear; a clean record from a
+    /// group that was NOT one of the original two (`Vigilante Talent`,
+    /// unregistered before this cycle) now reaches the catalog, proving the
+    /// widening is real and not merely documentation.
     #[test]
-    fn unregistered_pool_groups_are_never_served() {
+    fn only_group_qualified_keys_are_ever_served_but_every_group_is_now_eligible() {
         let entries = load_pool_catalog(&repo_root());
         assert!(
-            entries.iter().all(|e| e.pool_group == "Rogue Talent" || e.pool_group == "Rage Power"),
-            "only REGISTERED_POOL_GROUPS may appear in the catalog"
+            entries.iter().all(|e| e.key.contains(" ~ ")),
+            "a record with no ' ~ ' group qualifier is not a pool member and must never appear"
         );
         assert!(
-            !entries.iter().any(|e| e.key.starts_with("Bloodline ~ ") || e.key.starts_with("Hex ~ ")),
-            "an unregistered pool's records must never leak into the catalog"
+            entries.iter().any(|e| e.pool_group == "Vigilante Talent"),
+            "a clean record from a newly-widened group must now reach the catalog"
         );
+    }
+
+    /// The real corpus loads a real, clean `Vigilante Talent` record --
+    /// proof the universal group match reaches a group that was NOT one of
+    /// the original two hand-registered pools.
+    #[test]
+    fn loads_a_real_clean_vigilante_talent_from_a_newly_widened_group() {
+        let entries = load_pool_catalog(&repo_root());
+        let turnabout = entries
+            .iter()
+            .find(|e| e.book == "inner_sea_intrigue" && e.key == "Vigilante Talent ~ Turnabout")
+            .expect("inner_sea_intrigue's real Vigilante Talent ~ Turnabout record must be in the catalog");
+        assert_eq!(turnabout.pool_group, "Vigilante Talent");
+        assert_eq!(turnabout.name, "Turnabout");
+        assert!(turnabout.description.starts_with("A vigilante with this talent"));
+    }
+
+    #[test]
+    fn carries_unimplemented_marker_catches_both_bracket_shapes() {
+        assert!(carries_unimplemented_marker("[not implemented]At 1st level, a sha'ir learns..."));
+        assert!(carries_unimplemented_marker("Some lead-in. [not enforced] the rest of it."));
+        assert!(!carries_unimplemented_marker("A vigilante with this talent can capitalize."));
+    }
+
+    /// Real defect this cycle's widening would otherwise have shipped: 16
+    /// `occult_adventures` records (plus 1 `[not enforced]`) carry a
+    /// literal stub marker baked into `data.description` itself. Proves the
+    /// live catalog refuses at least one, non-vacuously.
+    #[test]
+    fn a_record_carrying_a_literal_unimplemented_marker_is_refused_by_the_live_catalog() {
+        let entries = load_pool_catalog(&repo_root());
+        assert!(
+            !entries.iter().any(|e| e.key == "Sha'ir ~ Jin" && e.book == "occult_adventures"),
+            "a record whose description carries a literal '[not implemented]' stub marker \
+             must never reach the catalog"
+        );
+    }
+
+    #[test]
+    fn carries_class_specific_level_phrase_generalizes_the_rage_power_denylist() {
+        assert!(carries_class_specific_level_phrase(
+            "This ability improves at 6th barbarian level.",
+            "Barbarian"
+        ));
+        assert!(carries_class_specific_level_phrase(
+            "Scales with the witch's level in this class.",
+            "Witch"
+        ));
+        // A DIFFERENT class's name in the phrase must not trip the guard
+        // for THIS record's own owning class.
+        assert!(!carries_class_specific_level_phrase(
+            "This ability improves at 6th sorcerer level.",
+            "Barbarian"
+        ));
+        // No class name at all (owner unresolved) never matches.
+        assert!(!carries_class_specific_level_phrase("You gain a bonus at higher levels.", ""));
+        // A plain reference with no class-specific phrasing is unaffected.
+        assert!(!carries_class_specific_level_phrase(
+            "You move along narrow surfaces at full speed.",
+            "Rogue"
+        ));
     }
 
     /// The real corpus loads real, clean Rage Power records — proven
@@ -784,6 +973,39 @@ mod tests {
             Some(&"This ability allows you to move along narrow surfaces at full speed using the Acrobatics skill without penalty. In addition, you are not flat-footed when using Acrobatics to move along narrow surfaces.".to_string())
         );
         assert!(!index.contains_key(&("core_rulebook".to_string(), "Rogue Talent ~ Bleeding Attack".to_string())));
+    }
+
+    /// The real, current size of the widened catalog (SD-32 T12
+    /// class-feature-pool-population cycle) -- not a fixed pin (the corpus
+    /// grows), a FLOOR proving the widening is doing real, large-scale
+    /// work and not merely passing its own hand-picked test cases. Before
+    /// this cycle the entire catalog held ~71 records across exactly 2
+    /// groups; run with `--nocapture` to see the live count and group
+    /// spread.
+    #[test]
+    fn the_widened_catalog_serves_far_more_than_the_original_two_groups() {
+        let entries = load_pool_catalog(&repo_root());
+        let mut groups: std::collections::BTreeSet<&str> =
+            entries.iter().map(|e| e.pool_group.as_str()).collect();
+        eprintln!(
+            "class_feature_pool_catalog: {} entries across {} groups",
+            entries.len(),
+            groups.len()
+        );
+        assert!(
+            entries.len() > 500,
+            "expected the universal group match to serve well over the original ~71 \
+             Rogue-Talent/Rage-Power-only records; got {}",
+            entries.len()
+        );
+        assert!(
+            groups.len() > 50,
+            "expected far more than 2 distinct pool groups to be served; got {}",
+            groups.len()
+        );
+        // The original two groups must still be served -- no regression.
+        assert!(groups.remove("Rogue Talent"));
+        assert!(groups.remove("Rage Power"));
     }
 }
 

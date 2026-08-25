@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Mauler ~ Bond Forged in Blood",
+    "name": "Bond Forged in Blood",
+    "description": "A mauler isn't impressed by fancy words-only furious battle. A mauler can't speak or communicate via language in any way, even if it's a type of creature that normally could.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mauler ~ Bond Forged in Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mauler isn't impressed by fancy words-only furious battle. A mauler can't speak or communicate via language in any way, even if it's a type of creature that normally could."
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the mauler's master drops a foe whose Hit Dice are at least half its level to below 0 hit points, the mauler's empathic link surges with power, granting both the mauler and its master a +2 morale bonus on attack and damage rolls for 1 round.|PREVARGTEQ:MasterLevel,5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 594,
+    "record_key": "Mauler ~ Bond Forged in Blood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

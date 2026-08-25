@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Bleeding Attack",
     "name": "Bleeding Attack",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "You can cause living opponents to bleed when hitting them with a sneak attack. This attack causes the target to take %1 additional points of damage each round. Bleeding creatures that amount of damage every round at the start of their turns. The bleeding can be stopped by a DC 15 Heal check or the application of any effect that heals hit point damage. Bleeding damage from this ability does not stack with itself. Bleeding damage bypasses any damage reduction the creature might possess.|SneakAttackDice",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

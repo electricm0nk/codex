@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Psionic Lineage",
+    "name": "Psionic Lineage",
+    "description": "Metapsionic feats applied to chosen power cost 1 pp less.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Psionic Lineage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.BlueTrait"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.RaceTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Blue,RACESUBTYPE=Blue],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Blue]"
+      },
+      {
+        "key": "DESC",
+        "value": "Metapsionic feats applied to chosen power cost 1 pp less."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SPELLS|SPELLTYPE=Psionic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 173,
+    "record_key": "Trait ~ Psionic Lineage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

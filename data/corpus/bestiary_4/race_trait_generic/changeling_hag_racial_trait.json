@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Changeling ~ Hag Racial Trait",
+    "name": "Hag Racial Trait",
+    "description": "Each changeling inherits one of the following racial traits, depending on her mother's hag type. (As outsiders, night hags produce half-fiend children, not changelings.)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Hag Racial Trait"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Changeling_ReplaceHagRacialTrait=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Each changeling inherits one of the following racial traits, depending on her mother's hag type. (As outsiders, night hags produce half-fiend children, not changelings.)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Changeling Hag Racial Trait|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
+    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e",
+    "line": 19,
+    "record_key": "Changeling ~ Hag Racial Trait"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

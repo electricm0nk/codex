@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Eidolon Base Form ~ Quadruped",
+    "name": "Quadruped",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Eidolon Base Form ~ Quadruped"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Eidolon Base Form Selection"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "EidolonQuadruped,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|4|TYPE=Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4|TYPE=Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonFortGood,EidolonReflexGood|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 69,
+    "record_key": "Unchained Eidolon Base Form ~ Quadruped"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

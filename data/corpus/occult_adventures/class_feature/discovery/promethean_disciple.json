@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Promethean Disciple",
     "name": "Promethean Disciple",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "An alchemist with this discovery learns how to craft constructs by way of alchemical research rather than arcane magic. The alchemist gains Craft Construct as a bonus feat without needing to meet its requirements. The alchemist substitutes his number of ranks in Craft (alchemy) for his total caster level and must use Craft (alchemy) to create the construct. The DC to create the construct still increases for any necessary spells that the alchemist does not have access to (Pathfinder RPG Core Rulebook 549). However, the alchemist can use extracts in place of spells as spell prerequisites. An alchemist must be at least 6th level before selecting this discovery.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

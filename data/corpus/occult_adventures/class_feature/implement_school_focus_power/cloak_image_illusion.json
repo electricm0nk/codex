@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Cloak Image",
     "name": "Cloak Image [Illusion]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to hide your appearance behind an illusion, as disguise self. The effect lasts for %1 minutes. At 5th level, you can instead expend 2 points of mental focus to appear as a creature of a different type, but you must remain the same size. At 7th level, you can expend 1 additional point of mental focus to target a willing creature other than yourself with this ability.|OccultistLVL",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

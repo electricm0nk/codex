@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Investigator Archetype ~ Conspirator",
     "name": "Conspirator",
-    "class": "Investigator Archetype",
+    "class": "Investigator",
     "description": "A conspirator uses his knowledge of investigations to make sure he avoids any investigations that his rivals perform, carefully plotting acts of intrigue behind closed doors. Paranoid to a fault, a conspirator always seems to know when someone else is watching him, and he takes numerous precautions to prevent anyone from observing his most illict actions.",
     "raw_tokens": [
       {
@@ -91,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

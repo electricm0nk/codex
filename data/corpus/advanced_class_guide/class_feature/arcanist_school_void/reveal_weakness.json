@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Arcanist School Void ~ Reveal Weakness",
     "name": "Reveal Weakness",
-    "class": "Arcanist School Void",
+    "class": "Arcanist",
     "description": "When you activate this school power as a standard action, you select a foe within 30 feet. That creature takes a -%1 penalty to its AC and on saving throws for 1 round. You can use this ability %2 times per day|RevealWeaknessPenalty|RevealWeaknessTimes",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

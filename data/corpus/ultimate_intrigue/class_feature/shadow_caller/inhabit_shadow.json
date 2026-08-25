@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Caller ~ Inhabit Shadow",
+    "name": "Inhabit Shadow",
+    "class": "Spiritualist",
+    "description": "A shade resides within a shadow caller's own shadow. When the shade is summoned, the shadow caller does not cast a shadow under any circumstances. Creatures that don't normally cast shadows (such as vampires) cannot be shadow callers. While the shade inhabits its master's shadow, the shadow caller gains a +4 circumstance bonus on Stealth checks against creatures without darkvision or the see in darkness ability; at 12th level, this bonus increases to +8. Additionally, the shadow caller gains darkvision 60 feet while her shade inhabits her shadow. If the shadow caller already has darkvision, its range increases by 30 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Caller ~ Inhabit Shadow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A shade resides within a shadow caller's own shadow. When the shade is summoned, the shadow caller does not cast a shadow under any circumstances. Creatures that don't normally cast shadows (such as vampires) cannot be shadow callers. While the shade inhabits its master's shadow, the shadow caller gains a +4 circumstance bonus on Stealth checks against creatures without darkvision or the see in darkness ability; at 12th level, this bonus increases to +8. Additionally, the shadow caller gains darkvision 60 feet while her shade inhabits her shadow. If the shadow caller already has darkvision, its range increases by 30 feet."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 126,
+    "record_key": "Shadow Caller ~ Inhabit Shadow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

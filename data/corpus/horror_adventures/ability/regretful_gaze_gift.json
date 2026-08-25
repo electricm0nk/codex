@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Shadowbound Corruption ~ Regretful Gaze Gift",
+    "name": "Regretful Gaze Gift",
+    "description": "You gain a gaze attack that causes foes within 30 feet to become shaken for 1 round unless they succeed at a Will save (DC %1). You can suppress this ability as a free action and cause it to resume as a swift action. A creature that succeeds at the saving throw is immune to your regretful gaze for 24 hours.|10+TL/2+ShadowboundManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowbound Corruption ~ Regretful Gaze Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ShadowboundRegretfulGazeGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a gaze attack that causes foes within 30 feet to become shaken for 1 round unless they succeed at a Will save (DC %1). You can suppress this ability as a free action and cause it to resume as a swift action. A creature that succeeds at the saving throw is immune to your regretful gaze for 24 hours.|10+TL/2+ShadowboundManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 843,
+    "record_key": "Shadowbound Corruption ~ Regretful Gaze Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

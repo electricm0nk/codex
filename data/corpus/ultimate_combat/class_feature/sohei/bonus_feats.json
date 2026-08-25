@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sohei ~ Bonus Feat",
     "name": "Bonus Feats",
@@ -39,6 +39,34 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.60"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CavalryFormation|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_RideByAttack|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SpiritedCharge|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Trample|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Unseat|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MountedArchery|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_MountedCombat|1"
       }
     ]
   },
@@ -55,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

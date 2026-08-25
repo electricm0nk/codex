@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Sea-Souled",
+    "name": "Sea-Souled (Coastline or Island)",
+    "description": "You are at home at sea. You receive a +1 trait bonus on Swim checks, and you can always take 10 while Swimming.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Sea-Souled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.RegionalTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Sea-Souled],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RegionalTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are at home at sea. You receive a +1 trait bonus on Swim checks, and you can always take 10 while Swimming."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|1|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 259,
+    "record_key": "Trait ~ Sea-Souled"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

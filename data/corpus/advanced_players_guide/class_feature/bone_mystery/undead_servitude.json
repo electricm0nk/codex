@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bone Mystery ~ Undead Servitude",
     "name": "Undead Servitude",
-    "class": "Bone Mystery",
+    "class": "Oracle",
     "description": "You can channel negative energy %1 per day, but only to use Command Undead. You can command up to %2 hit dice of undead.  The will save DC of this ability is %3.|UndeadServitudeTimes|UndeadServitudeHD|UndeadServitudeDC",
     "raw_tokens": [
       {
@@ -91,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

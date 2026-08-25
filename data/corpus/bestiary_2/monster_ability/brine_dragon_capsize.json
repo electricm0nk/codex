@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brine Dragon ~ Capsize",
+    "delivery": "Extraordinary",
+    "description": "An old or older brine dragon can attempt to capsize a boat or ship by ramming it as a charge attack and making a CMB check.  The DC of this check is 25 or the result of the boat captain's Profession (sailor) check, whichever is higher.  For each size category larger the ship is than the brine dragon's size, the dragon takes a cumulative -10 penalty on the check.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:brine_dragon_capsize",
+    "name": "Capsize",
+    "owners": [
+      "bestiary_2:monster:dragon_brine"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An old or older brine dragon can attempt to capsize a boat or ship by ramming it as a charge attack and making a CMB check.  The DC of this check is 25 or the result of the boat captain's Profession (sailor) check, whichever is higher.  For each size category larger the ship is than the brine dragon's size, the dragon takes a cumulative -10 penalty on the check."
+      },
+      {
+        "key": "KEY",
+        "value": "Brine Dragon ~ Capsize"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.94",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 472,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Brine Dragon ~ Capsize",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

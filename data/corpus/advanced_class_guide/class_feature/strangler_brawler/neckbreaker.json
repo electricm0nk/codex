@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Strangler Brawler ~ Neckbreaker",
     "name": "Neckbreaker",
@@ -35,6 +35,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.89"
+      },
+      {
+        "key": "DESC",
+        "value": "The strangler can attempt this as a standard action.|PREVAREQ:NeckbreakerProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "The strangler can attempt this as a move or standard action.|PREVARGTEQ:NeckbreakerProgression,2"
       }
     ]
   },
@@ -51,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

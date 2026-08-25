@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Favored Class Bonus Output ~ Mesmerist ~ Ghoran",
+    "name": "Mesmerist Plant Trick",
+    "description": "[Mesmerist] Choose %1 mind-affecting mesmerist tricks that the mesmerist knows. The mesmerist can affect intelligent plant creatures with that trick or spell as if they weren't immune to mind-affecting effects.|GhoranMesmeristPlantTrick",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favored Class Bonus Output ~ Mesmerist ~ Ghoran"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "[Mesmerist] Choose %1 mind-affecting mesmerist tricks that the mesmerist knows. The mesmerist can affect intelligent plant creatures with that trick or spell as if they weren't immune to mind-affecting effects.|GhoranMesmeristPlantTrick"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 249,
+    "record_key": "Favored Class Bonus Output ~ Mesmerist ~ Ghoran"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

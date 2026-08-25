@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Servitor VI ~ Spontaneous",
+    "name": "Servitor VI",
+    "description": "Summon Monster/Nature's Ally VI; summoned creature is target of other effect words.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Servitor VI ~ Spontaneous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Words of Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "WordsOfPowerOutput.Effect.Summoning.Bard6.Oracle6.Sorcerer6.Summoner4"
+      },
+      {
+        "key": "DESC",
+        "value": "Summon Monster/Nature's Ally VI; summoned creature is target of other effect words."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 383,
+    "record_key": "Servitor VI ~ Spontaneous"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

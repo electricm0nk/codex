@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magic Domain ~ Hand of the Acolyte",
     "name": "Hand of the Acolyte",
-    "class": "Magic Domain",
+    "class": "Cleric",
     "description": "You can cause your melee weapon to fly from your grasp and strike a foe before instantly returning. As a standard action, you can make a single attack with a melee weapon at a range of 30 feet. This attack is treated as a ranged attack with a thrown weapon, except that you add your Wisdom modifier instead of your Dexterity modifier (damage still relies on Strength). This ability cannot be used to perform a combat maneuver. You can use this ability %1 times per day.|HandoftheAcolyteTimes",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

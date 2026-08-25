@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Greater Gathlain Magic",
+    "name": "Greater Gathlain Magic",
+    "description": "You have greatly developed your innate magical abilities.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Advanced Gathlain Magic"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=9"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGathlain=true"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CHA,15"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=TL|Command Plants,13+CHA|Thorny Entanglement,13+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "You have greatly developed your innate magical abilities."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain the following spells as spell-like abilities, each of which are usable 1/day: command plants, thorny entanglement."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 130,
+    "record_key": "Greater Gathlain Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

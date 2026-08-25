@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_92)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_92)",
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can create an illusory double of yourself that appears in a square adjacent to you. Your double acts on your initiative count, and can move up to your speed each round. It always attempts to flank with you against a single target you designate. If it must use Acrobatics to avoid an attack of opportunity during this movement, your double uses your bonus. Though your double can't attack, it is treated as threatening adjacent squares for the purposes of flanking with you. Anyone attacking your double or otherwise physically interacting with it can attempt a Will save (DC 25) to recognize the double as an illusion. The double has your AC, and if any hit would deal damage to it, the double dissipates. An opponent who recognizes your double as an illusion can't be flanked by it. The double lasts %1 rounds or until it is hit with an attack, whichever comes first.|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day as a standard action, you can create an illusory double of yourself that appears in a square adjacent to you. Your double acts on your initiative count, and can move up to your speed each round. It always attempts to flank with you against a single target you designate. If it must use Acrobatics to avoid an attack of opportunity during this movement, your double uses your bonus. Though your double can't attack, it is treated as threatening adjacent squares for the purposes of flanking with you. Anyone attacking your double or otherwise physically interacting with it can attempt a Will save (DC 25) to recognize the double as an illusion. The double has your AC, and if any hit would deal damage to it, the double dissipates. An opponent who recognizes your double as an illusion can't be flanked by it. The double lasts %1 rounds or until it is hit with an attack, whichever comes first.|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 92,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_92)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:92"
+  }
+}

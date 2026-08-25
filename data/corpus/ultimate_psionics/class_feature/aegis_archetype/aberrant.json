@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis Archetype ~ Aberrant",
+    "name": "Aberrant",
+    "class": "Aegis",
+    "description": "You have discovered that by directly altering your body, you can achieve results similar to a typical aegis using ectoplasm, although you might have a more grisly appearance.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis Archetype ~ Aberrant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AegisArchetype.AegisFormAstralSuit.AegisAstralRepair.AegisCraftsman.AegisMasterCraftsman"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Aegis=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Aberrant ~ Aegis Archetype],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AegisFormAstralSuit,TYPE.AegisAstralRepair,TYPE.AegisCraftsman,TYPE.AegisMasterCraftsman]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have discovered that by directly altering your body, you can achieve results similar to a typical aegis using ectoplasm, although you might have a more grisly appearance."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Aberrant ~ Transformed Body|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Aberrant ~ Vim|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Aberrant ~ Intimidate|PRECLASS:1,Aegis=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Aberrant ~ Psionic Form|PRECLASS:1,Aegis=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.261"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1624,
+    "record_key": "Aegis Archetype ~ Aberrant"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

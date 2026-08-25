@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Rift Drake ~ Clinging Corrosion",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a rift drake can spit a ball of caustic gas that bursts into a cloud upon impact. This attack has a range of 60 feet and deals 5d10 points of acid damage to all creatures within the resulting 15-foot-radius spread. Additionally, any creature damaged by this attack is affected as though by the spell slow for 1d4 rounds. A successful DC 20 Reflex save halves the damage and negates the slowing effect. Once a rift drake uses its breath weapon, it cannot do so again for 1d6 Creatures of the badlands and regions scarred by the gods, rift drakes are as savage and brutal as the lands they hunt. Their strength and savagery often make them seem like mere deadly beasts, but rift drakes simply delight in battle more than most drakes, frequently clashing even with other members of their own kind. They rarely deign to talk with other creatures, often doing so only as a cruel game in which they make more and more outrageous demands until their victims realize the drakes are toying with them or the manipulative drakes grow bored. A rift drake rarely stays on land for long, preferring to circle high above near ominous peaks or spires and roosting in the crevices of the same. When a rift drake spies prey from such heights, it breaks from its flight to dive onto victims, scattering groups and sowing terror with its sudden emergence. With particularly agile foes, a rift drake will use its breath to slow victims first, then pick them off one by one. Rift drakes enjoy the taste of blood, and focus their attacks on the fleshiest-looking creatures. A rift drake is around 14 feet long, end to end. Its burly, spiky body weighs about 2,500 pounds. rounds. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:rift_drake_clinging_corrosion",
+    "name": "Clinging Corrosion",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a rift drake can spit a ball of caustic gas that bursts into a cloud upon impact. This attack has a range of 60 feet and deals 5d10 points of acid damage to all creatures within the resulting 15-foot-radius spread. Additionally, any creature damaged by this attack is affected as though by the spell slow for 1d4 rounds. A successful DC 20 Reflex save halves the damage and negates the slowing effect. Once a rift drake uses its breath weapon, it cannot do so again for 1d6 Creatures of the badlands and regions scarred by the gods, rift drakes are as savage and brutal as the lands they hunt. Their strength and savagery often make them seem like mere deadly beasts, but rift drakes simply delight in battle more than most drakes, frequently clashing even with other members of their own kind. They rarely deign to talk with other creatures, often doing so only as a cruel game in which they make more and more outrageous demands until their victims realize the drakes are toying with them or the manipulative drakes grow bored. A rift drake rarely stays on land for long, preferring to circle high above near ominous peaks or spires and roosting in the crevices of the same. When a rift drake spies prey from such heights, it breaks from its flight to dive onto victims, scattering groups and sowing terror with its sudden emergence. With particularly agile foes, a rift drake will use its breath to slow victims first, then pick them off one by one. Rift drakes enjoy the taste of blood, and focus their attacks on the fleshiest-looking creatures. A rift drake is around 14 feet long, end to end. Its burly, spiky body weighs about 2,500 pounds. rounds. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Rift Drake ~ Clinging Corrosion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "TYPE",
+        "value": "RiftDrakeRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.106",
+    "traits": [
+      "RiftDrakeRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 809,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Rift Drake ~ Clinging Corrosion",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

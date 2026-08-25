@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Imperial Dragon Attacks HD (6)",
+    "name": "Imperial Dragon Attacks HD (6)",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "6-7:TEMPLATE:Imperial Dragon Attacks (Small)"
+      },
+      {
+        "key": "HD",
+        "value": "8-9:TEMPLATE:Imperial Dragon Attacks (Medium)"
+      },
+      {
+        "key": "HD",
+        "value": "10-13:TEMPLATE:Imperial Dragon Attacks (Large)"
+      },
+      {
+        "key": "HD",
+        "value": "14-19:TEMPLATE:Imperial Dragon Attacks (Huge)"
+      },
+      {
+        "key": "HD",
+        "value": "20-27:TEMPLATE:Imperial Dragon Attacks (Gargantuan)"
+      },
+      {
+        "key": "HD",
+        "value": "28+:TEMPLATE:Imperial Dragon Attacks (Colossal)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst",
+    "sha256": "2558383378bdc55d460faa927817343ff857be38c8ea7cf620f3a61c09e11b2b",
+    "line": 36,
+    "record_key": "Imperial Dragon Attacks HD (6)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

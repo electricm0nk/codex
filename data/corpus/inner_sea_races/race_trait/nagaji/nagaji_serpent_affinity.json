@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Nagaji ~ Serpent Affinity",
+    "name": "Serpent Affinity",
+    "race_key": "Nagaji",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Nagaji Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Nagaji_ReplaceResistant"
+    ],
+    "description": "Nagaji clerics with this racial trait and the Scalykind domain (Pathfinder Campaign Setting: The Inner Sea World Guide) use their domain powers and spells at +1 caster level. This increase is a racial bonus. This racial trait replaces resistant.",
+    "source_page": "p.216",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nagaji ~ Serpent Affinity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Nagaji Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Nagaji ~ Serpent Affinity],[!PREFACT:1,ABILITIES,Nagaji_ReplaceResistant=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Nagaji clerics with this racial trait and the Scalykind domain (Pathfinder Campaign Setting: The Inner Sea World Guide) use their domain powers and spells at +1 caster level. This increase is a racial bonus."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces resistant.|!PREABILITY:1,CATEGORY=Special Ability,Nagaji ~ Serpent Affinity"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "FACT",
+        "value": "Nagaji_ReplaceResistant|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DOMAIN.Scalykind",
+          "1",
+          "TYPE=Racial",
+          "PREMULT:2,[PRECLASS:1,Cleric=1],[PREDOMAIN:1,Scalykind]"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 964,
+    "record_key": "Nagaji ~ Serpent Affinity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

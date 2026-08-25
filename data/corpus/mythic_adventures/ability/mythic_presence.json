@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Mythic Presence",
+    "name": "Mythic Presence",
+    "description": "Your power unnerves ordinary mortals. By expending one use of mythic power, you gain an effect similar to frightful presence, except that creatures are affected according to their tier (or rank, in the case of monsters) instead of their Hit Dice. Non-mythic creatures that fail their saves are panicked for 1 minute, and those that succeed are shaken for 1 minute. Creatures with a mythic tier or rank equal to or less than your tier are unaffected if they succeed, and are shaken for 1 minute if they fail. Creatures with a mythic tier or rank higher than yours are unaffected by your mythic presence. The Will save against your mythic presence equals %1 [10 + your tier + your Charisma modifier]. This ability lasts for 1 minute and has a range of 30 feet.|MythicPresenceDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Mythic Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicPresenceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your power unnerves ordinary mortals. By expending one use of mythic power, you gain an effect similar to frightful presence, except that creatures are affected according to their tier (or rank, in the case of monsters) instead of their Hit Dice. Non-mythic creatures that fail their saves are panicked for 1 minute, and those that succeed are shaken for 1 minute. Creatures with a mythic tier or rank equal to or less than your tier are unaffected if they succeed, and are shaken for 1 minute if they fail. Creatures with a mythic tier or rank higher than yours are unaffected by your mythic presence. The Will save against your mythic presence equals %1 [10 + your tier + your Charisma modifier]. This ability lasts for 1 minute and has a range of 30 feet.|MythicPresenceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicPresenceDC|10+CHA+MythicLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 391,
+    "record_key": "Mythic Path Ability ~ Mythic Presence"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

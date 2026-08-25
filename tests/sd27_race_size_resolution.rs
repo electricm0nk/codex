@@ -167,6 +167,13 @@ const SIZE_TRUTH: &[(&str, &str, SizeCategory, SizeCategory)] = &[
     // Aasimar/Tiefling/Skinwalker-shaped disagreement).
     ("race:changeling", "Changeling", SizeCategory::Medium, SizeCategory::Medium),
     ("race:samsaran", "Samsaran", SizeCategory::Medium, SizeCategory::Medium),
+    // Bestiary 6's 1, SD-31 wave-24 (2026-08-20). Chassis and trait agree
+    // (`FACT:BaseSize|M` / `TEMPLATE:SIZE_M`, no Aasimar/Tiefling/
+    // Skinwalker-shaped disagreement).
+    ("race:rougarou", "Rougarou", SizeCategory::Medium, SizeCategory::Medium),
+    // Bestiary 2's Dhampir, SD-32 card-11 T2b lane (2026-08-23). Chassis
+    // and trait agree (`FACT:BaseSize|M` / `TEMPLATE:SIZE_M`).
+    ("race:dhampir", "Dhampir", SizeCategory::Medium, SizeCategory::Medium),
 ];
 
 fn all_books() -> RaceCorpus {
@@ -181,6 +188,14 @@ fn all_books() -> RaceCorpus {
         BookCorpusRoot { book_id: "bestiary_2", dir: Path::new("data/corpus/bestiary_2") },
         // Bestiary 5, the Skinwalker follow-on batch (2026-08-15).
         BookCorpusRoot { book_id: "bestiary_5", dir: Path::new("data/corpus/bestiary_5") },
+        // Bestiary 6, SD-31 wave-24 (2026-08-20) -- missing from this local
+        // hardcoded root list until SD-32 card-11 T2b lane (2026-08-23)
+        // found it: the exact "stale hardcoded roots" defect class
+        // `ingest_race_traits.rs`'s own module doc names (SD-29
+        // `decisions.md §44.2`/`§44.5`), masked here because the omission
+        // happened to leave this file's own count coincidentally matching
+        // `SIZE_TRUTH`'s 37 until Dhampir's landing (below) pushed it past.
+        BookCorpusRoot { book_id: "bestiary_6", dir: Path::new("data/corpus/bestiary_6") },
     ];
     let corpus = load_race_corpus(&roots);
     assert!(corpus.diagnostics().is_empty(), "clean load expected: {:?}", corpus.diagnostics());
@@ -196,13 +211,16 @@ fn the_expected_table_covers_all_eighteen_races_and_matches_the_on_disk_chassis_
     let corpus = all_books();
     assert_eq!(
         SIZE_TRUTH.len(),
-        37,
-        "37 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2) + \
+        39,
+        "39 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 7 (the original 6, SD-31 \
+         Epic 1-F2, plus Dhampir, SD-32 card-11 T2b lane, 2026-08-23) + \
          Bestiary 5's 1 (Skinwalker follow-on batch) + Advanced Race Guide's 12 \
          (SD-31-E6-F4-002, 2026-08-16 + SD31-E6-F4-004 + SD31-E6-F4-007, both 2026-08-17) -- \
-         the full `arg_races.lst` 37-row playable-race roster, closed"
+         the full `arg_races.lst` 37-row playable-race roster, closed -- plus Bestiary 6's 1 \
+         (Rougarou, SD-31 wave-24, 2026-08-20, missing from this file's own local `all_books()` \
+         root list until this cycle -- see that function's doc comment)"
     );
-    assert_eq!(corpus.race_keys().len(), 37, "and the corpus must carry all 37");
+    assert_eq!(corpus.race_keys().len(), 39, "and the corpus must carry all 39");
 
     for (_, key, chassis_size, _) in SIZE_TRUTH {
         let chassis = corpus.chassis(key).unwrap_or_else(|| panic!("{key} must have a chassis"));
@@ -354,8 +372,10 @@ fn an_unresolvable_race_token_is_none_rather_than_a_defaulted_medium() {
     assert_eq!(race_size_for_race_token("race:HALF-ORC"), Some(SizeCategory::Medium));
     assert_eq!(race_size_for_race_token("  race:goblin "), Some(SizeCategory::Small));
     assert_eq!(race_size_for_race_token("Goblin"), Some(SizeCategory::Small));
-    // A B2 race is not ingested; a real absence must stay an absence.
-    assert_eq!(race_size_for_race_token("race:dhampir"), None);
+    // Kasatha (ARG's reprint of an Inner Sea Races race) is not ingested; a
+    // real absence must stay an absence. Dhampir gained a chassis, SD-32
+    // card-11 T2b lane (2026-08-23), so it no longer stands in here.
+    assert_eq!(race_size_for_race_token("race:kasatha"), None);
     assert_eq!(race_size_for_race_token("race:nonexistent"), None);
     assert_eq!(race_size_for_race_token(""), None);
 }
@@ -367,13 +387,15 @@ fn an_unresolvable_race_token_is_none_rather_than_a_defaulted_medium() {
 /// says its carrying capacity is not real data.
 #[test]
 fn an_unknown_race_produces_a_claim_blocking_diagnostic_not_a_quiet_medium() {
-    let (size, diagnostic) = encumbrance_size_for_race("race:dhampir");
+    // Kasatha stands in here for the same reason noted above: Dhampir
+    // gained a chassis, SD-32 card-11 T2b lane (2026-08-23).
+    let (size, diagnostic) = encumbrance_size_for_race("race:kasatha");
     assert_eq!(size, SizeCategory::Medium, "the baseline still has to be something");
     let diagnostic = diagnostic.expect("an unresolvable race must be reported");
     assert_eq!(diagnostic.id, UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID);
     assert!(diagnostic.claim_blocking, "a guessed size makes the capacity numbers unclaimable");
     assert!(
-        diagnostic.message.contains("race:dhampir"),
+        diagnostic.message.contains("race:kasatha"),
         "the diagnostic must name the token it could not resolve: {}",
         diagnostic.message
     );

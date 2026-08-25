@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:40Z",
+  "data": {
+    "corpus_key": "Treerazer ~ Defoliation",
+    "delivery": "Supernatural",
+    "description": "As a standard action once every 1d4 rounds, Treerazer can exude a pulse of defoliating energy in a 30-ft.-radius spread. This pulse appears as a wave of sickly green energy, and causes all plants and plant creatures in the area to blacken and wither. Such creatures take 20d10 points of damage and 1d8 points of Strength drain, or half with a successful DC %1 Fort save. A plant that isn't a creature (such as a tree or a shrub) doesn't receive a save and immediately withers and dies. Treerazer can choose to exclude any number of plants in the area from this effect, and generally does so to preserve twisted and corrupted plants and fungus.",
+    "description_variables": [
+      "10+(HD/2)+CON",
+      "TYPE=Base"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:treerazer_defoliation",
+    "name": "Defoliation",
+    "owners": [],
+    "source_page": "p.315",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 83,
+    "record_key": "Treerazer ~ Defoliation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

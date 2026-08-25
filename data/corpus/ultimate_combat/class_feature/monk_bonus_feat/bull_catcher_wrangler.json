@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Monk Bonus Feat ~ Bull-Catcher Wrangler",
+    "name": "Bull-Catcher Wrangler",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk Bonus Feat ~ Bull-Catcher Wrangler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkBonusFeat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Bull-Catcher Wrangler"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MonkBonusFeat_Bull-CatcherWrangler,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Bull-Catcher Wrangler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_mhh.lst",
+    "sha256": "1b3ae473485ab830d2bc9806cbafc8d272bdb13f74884e4787245566f1eb3fe8",
+    "line": 7,
+    "record_key": "Monk Bonus Feat ~ Bull-Catcher Wrangler"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

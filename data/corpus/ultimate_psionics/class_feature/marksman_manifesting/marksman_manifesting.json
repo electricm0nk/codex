@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman Manifesting",
+    "name": "Marksman Manifesting",
+    "class": "Marksman",
+    "description": "Marksman Powers Known: %1; Marksman Maximum Power Level Known: %2|MarksmanPowersKnown|MarksmanMaxPowerLevel",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Marksman Powers Known: %1; Marksman Maximum Power Level Known: %2|MarksmanPowersKnown|MarksmanMaxPowerLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Marksman Manifesting Variables|Marksman Power Points"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 320,
+    "record_key": "Marksman Manifesting"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

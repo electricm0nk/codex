@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Two-Weapon Fighting",
+    "category": "Combat",
+    "name": "Greater Two-Weapon Fighting",
+    "description": "You are incredibly skilled at fighting with two weapons at the same time.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Two-Weapon Fighting,Two-Weapon Fighting",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,19],[PREVARGTEQ:FeatDexRequirement,19]",
+      "PRETOTALAB:11"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 86,
+    "record_key": "Greater Two-Weapon Fighting"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger Power ~ Necromantic Servant",
+    "name": "Necromantic Servant",
+    "class": "Gravedigger Power",
+    "description": "As a standard action, you can expend 1 point of inspiration to raise a single human skeleton (Pathfinder RPG Bestiary 250) or human zombie (Bestiary 288) from the ground to serve you for %1 minutes or until it is destroyed, whichever comes first. This servant has %2 hit points. It also has a %3 base attack bonus and gains a +%4 bonus on damage rolls.|10*InvestigatorLVL|HP/2|TOTALAB|InvestigatorLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger Power ~ Necromantic Servant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorTalent.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gravedigger ~ Relic Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend 1 point of inspiration to raise a single human skeleton (Pathfinder RPG Bestiary 250) or human zombie (Bestiary 288) from the ground to serve you for %1 minutes or until it is destroyed, whichever comes first. This servant has %2 hit points. It also has a %3 base attack bonus and gains a +%4 bonus on damage rolls.|10*InvestigatorLVL|HP/2|TOTALAB|InvestigatorLVL/2"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever the necromantic servant would be destroyed, if you are within medium range (%1 feet) of the servant, you can expend 1 point of inspiration as an immediate action to cause the servant to return to full hit points.|100+(10*InvestigatorLVL)|PRECLASS:1,Investigator=5"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose to give the servant the bloody or burning simple template (if it's a skeleton) or the fast simple template (if it's a zombie).|PRECLASS:1,Investigator=9"
+      },
+      {
+        "key": "DESC",
+        "value": "When you take an immediate action to restore your servant, it splits into two servants. You can have a maximum number of %1 servants in existence.|InvestigatorLVL/2|PRECLASS:1,Investigator=13"
+      },
+      {
+        "key": "DESC",
+        "value": "The servant gains a teamwork feat of your choice.|PRECLASS:1,Investigator=17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 46,
+    "record_key": "Gravedigger Power ~ Necromantic Servant"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

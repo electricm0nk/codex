@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Hanspur ~ River Champion",
+    "name": "River Champion",
+    "description": "If you have performed your daily obedience, three times per day as a standard action, you can sculpt water into the form of a melee weapon with which you are proficient (typically a trident, but it could also take the form of a dagger or another light weapon). You must have enough water to form the weapon, an amount equal to the weapon's normal weight. Once formed, the weapon behaves as a weapon of its type with an enhancement bonus of +%1. This weapon deals double the normal amount of damage to creatures with the fire subtype. The weapon dissolves into ordinary water after %2 rounds or as soon as it leaves your hand, whichever happens first.|min(4,TL/5)|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Hanspur ~ River Champion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, three times per day as a standard action, you can sculpt water into the form of a melee weapon with which you are proficient (typically a trident, but it could also take the form of a dagger or another light weapon). You must have enough water to form the weapon, an amount equal to the weapon's normal weight. Once formed, the weapon behaves as a weapon of its type with an enhancement bonus of +%1. This weapon deals double the normal amount of damage to creatures with the fire subtype. The weapon dissolves into ordinary water after %2 rounds or as soon as it leaves your hand, whichever happens first.|min(4,TL/5)|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 237,
+    "record_key": "Sentinel Boon ~ Hanspur ~ River Champion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

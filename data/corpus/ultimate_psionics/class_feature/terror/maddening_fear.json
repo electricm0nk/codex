@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Maddening Fear",
+    "name": "Maddening Fear",
+    "class": "Terror",
+    "description": "Your next successful attack imposes a -2 penalty to target's Wisdom score in addition to normal damage.  This is a mind-affecting fear effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Maddening Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "Your next successful attack imposes a -2 penalty to target's Wisdom score in addition to normal damage.  This is a mind-affecting fear effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 291,
+    "record_key": "Terror ~ Maddening Fear"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

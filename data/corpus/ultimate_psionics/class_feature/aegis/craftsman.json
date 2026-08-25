@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Craftsman",
+    "name": "Craftsman",
+    "class": "Aegis",
+    "description": "You gain a +%1 bonus to one craft skill of your choice.|CraftsmanBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Craftsman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CraftsmanBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus to one craft skill of your choice.|CraftsmanBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Craft Skill Bonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CraftsmanBonus|floor((AegisLVL+2)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 26,
+    "record_key": "Aegis ~ Craftsman"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

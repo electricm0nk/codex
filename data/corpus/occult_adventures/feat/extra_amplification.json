@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Extra Amplification",
+    "category": "General",
+    "name": "Extra Amplification",
+    "description": "You are a master at manipulating your mental energies to produce amplified effects. You gain one additional phrenic amplification. This can't be a major amplification. Special: You can take this feat multiple times. Each time you do, you gain another phrenic amplification.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Psychic ~ Phrenic Amplifications"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 25,
+    "record_key": "Extra Amplification"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

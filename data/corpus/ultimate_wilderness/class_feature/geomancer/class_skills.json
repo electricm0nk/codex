@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Geomancer ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Occultist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geomancer ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.GeomancerClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Appraise|TYPE=Craft|Diplomacy|Disguise|Fly|Knowledge (arcana)|Knowledge (geography)|Knowledge (history)|Knowledge (nature)|Knowledge (planes)|Linguistics|Perception|TYPE=Profession|Sense Motive|Sleight of Hand|Spellcraft|Survival|Use Magic Device"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 132,
+    "record_key": "Geomancer ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

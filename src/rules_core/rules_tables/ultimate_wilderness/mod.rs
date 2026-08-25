@@ -11,9 +11,21 @@
 pub mod archetype_tables;
 mod companion_data;
 pub mod feat_tables;
+mod monster_data;
+// SD-32 card 11 (T12), cycle 4: real per-feature compute functions for the
+// Shifter, this book's single magnitude-bearing class.
+pub mod shifter_features;
 pub mod spell_list;
 
 pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
+// `decisions.md §20` no_record-to-zero, round 3: this book's own `monster_ability`
+// orphans (`monster_data.rs`'s own header derives the count). Zero monster
+// rows of its own, so every one ships owner-less by construction -- see
+// `monster_data.rs`'s header for the exact keys and `reach_gate.rs::
+// UNREACHED_RECORD_FINDINGS` for the pinned non-reach.
+pub use super::monster_chassis::{
+    MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
+};
 
 // ---------------------------------------------------------------------------
 // SD-29 Epic 7 round 6 (`SD29-E7-F2-007`) -- this book's `companion` family.
@@ -77,4 +89,14 @@ pub fn companions() -> &'static [CompanionRecord] {
 /// Every companion ability record this book defines, in corpus row order.
 pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
     companion_abilities_static()
+}
+
+/// Every monster stat block this book defines (0 rows -- see `monster_data.rs`).
+pub const fn monsters_static() -> &'static [MonsterStatBlock] {
+    monster_data::MONSTERS
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub const fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
+    monster_data::MONSTER_ABILITIES
 }

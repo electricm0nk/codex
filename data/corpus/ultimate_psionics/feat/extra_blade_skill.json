@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Extra Blade Skill",
+    "category": "Psionic",
+    "name": "Extra Blade Skill",
+    "description": "Gain an extra blade skill.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.BladeSkill,Blade Skill",
+      "PREMULT:1,[PRETOTALAB:2],[PREVARGTEQ:PrereqBAB,2]",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 101,
+    "record_key": "Extra Blade Skill"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

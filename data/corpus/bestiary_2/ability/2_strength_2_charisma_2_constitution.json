@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Moroi-Born ~ Ability Scores",
+    "name": "+2 Strength, +2 Charisma, -2 Constitution",
+    "description": "These dhampirs are blessed with unnatural grace, beauty, and charm, and they often feel most at home among a region's aristocracy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Moroi-Born ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "DESC",
+        "value": "These dhampirs are blessed with unnatural grace, beauty, and charm, and they often feel most at home among a region's aristocracy."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CHA|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceAbilityScores|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
+    "line": 41,
+    "record_key": "Moroi-Born ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

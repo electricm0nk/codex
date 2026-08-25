@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Stone Mystery ~ Earth Glide",
     "name": "Earth Glide",
-    "class": "Stone Mystery",
+    "class": "Oracle",
     "description": "You can pass through stone, dirt, or almost any other sort of earth except worked stone and metal as easily as a fish swims through water. If protected against fire damage, you can even glide through lava. You glide at your base land speed. While gliding, you breathe stone as if it were air (you do not need to hold your breath). Your burrowing leaves behind no tunnel or hole, nor does it create any ripple or sign of your presence. A move earth spell cast on an area where you are flings you back 30 feet, stunning you for 1 round unless you succeed on a DC 15 Fortitude save. Activating this ability is a free action. You can glide for %1 minute per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. You must be at least 7th level to select this revelation. You can bring other creatures with you when you glide, but each passenger costs an additional minute per minute of travel.|OracleEarthGlideDuration",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

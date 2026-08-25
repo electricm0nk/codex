@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Esipil ~ Bewildering Assault",
+    "delivery": "Supernatural",
+    "description": "If an esipil makes a successful critical hit with one of its natural attacks, the target is confused for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:esipil_bewildering_assault",
+    "name": "Bewildering Assault",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If an esipil makes a successful critical hit with one of its natural attacks, the target is confused for 1 round."
+      },
+      {
+        "key": "KEY",
+        "value": "Esipil ~ Bewildering Assault"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.EsipilRacialTrait"
+      }
+    ],
+    "source_page": "p.213",
+    "traits": [
+      "EsipilRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Esipil ~ Bewildering Assault",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

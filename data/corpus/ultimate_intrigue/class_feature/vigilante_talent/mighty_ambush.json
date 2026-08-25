@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Mighty Ambush",
     "name": "Mighty Ambush*",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "Once per round, when the vigilante succeeds at a hidden strike, he can instantly drop the damaged enemy unconscious for 1d4 rounds. A successful Fortitude saving throw negates this effect (DC %1). Whether or not a creature's saving throw is successful, it can't be affected by that vigilante's mighty ambush again for 24 hours.|10+VigilanteTalentLVL/2+MAX(STR,DEX)",
     "raw_tokens": [
       {
@@ -57,5 +57,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

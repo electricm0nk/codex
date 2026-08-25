@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Magus Archetype ~ Words of Power",
+    "name": "Words of Power Magus",
+    "description": "A words of power using magus; %1 meta words/day.|MagusMetaWordsPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MagusMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using magus; %1 meta words/day.|MagusMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|Barrier|Boost|Burst|Cone|Line|Personal|Selected"
+      },
+      {
+        "key": "ABILITY",
+        "value": "0-Level Magus Word|AUTOMATIC|Magus Starter Word 0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "1st-Level Magus Word|AUTOMATIC|Magus Starter Word 1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "2nd-Level Magus Word|AUTOMATIC|Magus Starter Word 2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "3rd-Level Magus Word|AUTOMATIC|Magus Starter Word 3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "4th-Level Magus Word|AUTOMATIC|Magus Starter Word 4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "5th-Level Magus Word|AUTOMATIC|Magus Starter Word 5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "6th-Level Magus Word|AUTOMATIC|Magus Starter Word 6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MagusMetaWordsPerDay|max(1,classlevel(\"Magus\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 25,
+    "record_key": "Magus Archetype ~ Words of Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

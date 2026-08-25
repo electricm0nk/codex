@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Quick Clear",
     "name": "Quick Clear",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "Once per day as a standard action, the gunmaster can remove the broken condition from a single firearm he is currently wielding, as long as that condition was gained by a firearm misfire.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Catfolk ~ Natural Hunter",
+    "name": "Natural Hunter",
+    "description": "Catfolk receive a +2 racial bonus on Perception, Stealth, and Survival checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Natural Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Catfolk_ReplaceNaturalHunter=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Catfolk receive a +2 racial bonus on Perception, Stealth, and Survival checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Stealth,Survival|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Perception, +2 Stealth, +2 Survival"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_race.lst",
+    "sha256": "da1b87966e5404307d7f28d40f3aac9c8f9837de2151dfb307f446b0203d2d15",
+    "line": 20,
+    "record_key": "Catfolk ~ Natural Hunter"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

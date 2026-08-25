@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Hospitaler",
     "name": "Hospitaler",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Paladins are known for their charity and for tending to the sick. The hospitaler takes to this calling above all others, spending much of her time healing the poor, and giving aid and succor to those in need. The hospitaler has the following class features.",
     "raw_tokens": [
       {
@@ -55,6 +55,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Hospitaler],[!PREFACT:1,ABILITIES,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_ChannelPositiveEnergy=True,Paladin_Archetype_AuraOfJustice=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_ChannelPositiveEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
       }
     ]
   },
@@ -71,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

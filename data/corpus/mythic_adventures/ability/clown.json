@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Clown",
+    "name": "Clown",
+    "description": "As a standard action, you can expend one use of mythic power to make one creature laugh uncontrollably, as the hideous laughter spell. The saving throw against this effect is %1. If you aren't in combat when you use this ability, it can affect any number of creatures in a burst with a radius of %2.|Ability_Clown_DC|Ability_Clown_Radius",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Clown"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_Clown_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_Clown_Radius|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can expend one use of mythic power to make one creature laugh uncontrollably, as the hideous laughter spell. The saving throw against this effect is %1. If you aren't in combat when you use this ability, it can affect any number of creatures in a burst with a radius of %2.|Ability_Clown_DC|Ability_Clown_Radius"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Clown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_Clown_DC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Clown)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_Clown_DC|10+CHA+MythicLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_Clown_Radius|10*MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 133,
+    "record_key": "Mythic Path Ability ~ Clown"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

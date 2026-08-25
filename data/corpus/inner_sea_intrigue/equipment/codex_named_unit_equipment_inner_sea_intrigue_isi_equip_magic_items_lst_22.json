@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_22)",
+    "category": "MagicItems",
+    "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_22)",
+    "cost_gp": 720.0,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equip_magic_items.lst",
+    "sha256": "911512820caf3697f1fed49d28429a875dfbcbef65379a1c2860607afd200546",
+    "line": 22,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_22)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_intrigue:isi_equip_magic_items.lst:22"
+  }
+}

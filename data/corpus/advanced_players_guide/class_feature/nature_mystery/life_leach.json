@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Nature Mystery ~ Life Leach",
     "name": "Life Leach",
-    "class": "Nature Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can drain the life essence from one living target within 30 feet. The target takes %1d6 points of damage. You gain temporary hit points equal to the damage you deal. You can't gain more than the target's current hit points + the target's Constitution score (which is enough to kill the subject). The temporary hit points last %2 hours. The target receives a Fortitude save (DC %3) to halve the damage (and the temporary hit points you gain). You may use this ability %4 time(s) per day.|OracleLifeLeachDamageDice|OracleLifeLeachDuration|OracleRevelationDC|OracleLifeLeachTimes",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

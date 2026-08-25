@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Flamboyant Arcana",
     "name": "Flamboyant Arcana",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "A magus gains the derring-do and opportune parry and riposte deeds from the swashbuckler's list of deeds. The magus can spend only points from his arcane pool (not panache points) to use these deeds and any other deeds he gains from deed arcana. He can't use points from his arcane pool to use deeds from other classes or those gained by feats, nor can he regain points to his arcane pool as a swashbuckler would regain panache points. Effects that add to, reduce the cost of, or otherwise affect panache or grit don't affect the arcane pool of a magus with this arcana.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

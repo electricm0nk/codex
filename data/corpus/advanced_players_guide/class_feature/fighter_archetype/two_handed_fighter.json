@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Two-Handed Fighter",
     "name": "Two-Handed Fighter",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "Some fighters focus their efforts on finding the biggest, heaviest, most imposing weapon they can find and training to manage and harness the weight of their massive weapons for maximum impact. These fighting school benefits only apply when using two-handed weapons.",
     "raw_tokens": [
       {
@@ -71,6 +71,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Fighter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Two-Handed Fighter],[!PREFACT:1,ABILITIES,Fighter_Archetype_Bravery=True,Fighter_Archetype_ArmorTraining=True,Fighter_Archetype_ArmorMastery=True,Fighter_Archetype_WeaponTraining=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining|true"
       }
     ]
   },
@@ -87,5 +123,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

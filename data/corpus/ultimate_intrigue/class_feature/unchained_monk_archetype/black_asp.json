@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Monk Archetype ~ Black Asp",
+    "name": "Black Asp",
+    "class": "Unchained Monk Archetype",
+    "description": "The black asps are a sinister order of monks who train as assassins and infiltrators with no need for weapons to achieve their goals. Through meditation and study, they learn how to use poison, hide any magics they choose to employ, and even empty their minds of thought to protect themselves from divinations.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk Archetype ~ Black Asp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Unchained Monk Archetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Unchained Monk Archetype ~ Black Asp],[!PREFACT:1,ABILITIES,Monk_Archetype_StunningFist=True,Monk_Archetype_StillMind=True,Monk_Archetype_TongueOfTheSunAndMoon=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The black asps are a sinister order of monks who train as assassins and infiltrators with no need for weapons to achieve their goals. Through meditation and study, they learn how to use poison, hide any magics they choose to employ, and even empty their minds of thought to protect themselves from divinations."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Black Asp ~ Black Asp's Path|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Black Asp ~ Unchained Forbidden Powers|PRECLASS:1,Monk=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_TongueOfTheSunAndMoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_TongueOfTheSunAndMoon|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 15,
+    "record_key": "Unchained Monk Archetype ~ Black Asp"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

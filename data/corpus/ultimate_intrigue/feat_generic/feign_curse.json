@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Feign Curse",
+    "name": "Feign Curse",
+    "description": "You can fool others into believing you have ensorcelled them.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Deceitful"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Bluff=5,Spellcraft=1"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Deceitful, Bluff 5 ranks, Spellcraft 1 rank."
+      },
+      {
+        "key": "DESC",
+        "value": "You can fool others into believing you have ensorcelled them."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "As a standard action, you can feign placing a curse on a target. The target must attempt a Sense Motive or Spellcraft check (whichever skill that target has a higher bonus with) against a DC %1, with a bonus on his skill check equal to any conditional bonus he has on saving throws against hexes or curses (like from the spell hex ward). If he fails, he becomes plagued by self-doubt and second-guesses himself. For his next %2 attack rolls, saving throws, skill checks, or ability checks, he rolls twice and takes the lower result. This is a mind-affecting effect, and it doesn't work if the target is immune to curses. Once you attempt to feign putting a curse on a creature, you cannot do so again against the same creature for 24 hours, and if the target succeeds at detecting your ruse, he gains a +10 bonus against future attempts. Only creatues with an intelligecne score of 3 or higher can be affected by Feign Curse.|15+skillinfo(\"TOTALRANK\", \"Bluff\")+CHA|2+((skillinfo(\"TOTALRANK\", \"Bluff\"))-5)/5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 43,
+    "record_key": "Feign Curse"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

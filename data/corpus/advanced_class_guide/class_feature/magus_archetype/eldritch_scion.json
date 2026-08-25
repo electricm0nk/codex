@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Archetype ~ Eldritch Scion",
     "name": "Eldritch Scion",
-    "class": "Magus Archetype",
+    "class": "Magus",
     "description": "Unlike typical magi, eldritch scions do not study tomes of magic or spend time learning to combine martial and magical skills. Rather, eldritch scions find that their spells and abilities come to them instinctively.",
     "raw_tokens": [
       {
@@ -75,6 +75,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Eldritch Scion],[!PREFACT:1,ABILITIES,Magus_Archetype_Spells=True,Magus_Archetype_SpellRecall=True,Magus_Archetype_ArcanePool=True,Magus_Archetype_KnowledgePool=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_KnowledgePool|true"
       }
     ]
   },
@@ -91,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

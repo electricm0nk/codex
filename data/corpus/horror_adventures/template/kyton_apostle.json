@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Kyton (Apostle)",
+    "name": "Apostle Kyton",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kyton (Apostle)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.240"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Humanoid,RACETYPE=Monstrous Humanoid"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Kyton (Apostle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base.STACK"
+      },
+      {
+        "key": "SR",
+        "value": "11+CR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|HD/2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Kyton|Native|Augmented"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON,WIS,CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Heal,Intimidate|4|TYPE=Racial"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Infernal"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_templates.lst",
+    "sha256": "2bdc330c9f1d4fcc2fd799ba7dd02a4511dab172cf39abefcd480a3a0f9d2edb",
+    "line": 14,
+    "record_key": "Kyton (Apostle)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

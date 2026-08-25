@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serial Killer ~ Thwart Pursuit",
+    "name": "Thwart Pursuit",
+    "class": "Vigilante",
+    "description": "A serial killer adds a %1 bonus on all checks in a chase (GameMastery Guide 232) and to the DCs of Diplomacy checks to gather information about her and checks to track her or notice her tracks (though not to the DC of the profiler's expert profiler ability; see page 55).|VigilanteLVL/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serial Killer ~ Thwart Pursuit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "A serial killer adds a %1 bonus on all checks in a chase (GameMastery Guide 232) and to the DCs of Diplomacy checks to gather information about her and checks to track her or notice her tracks (though not to the DC of the profiler's expert profiler ability; see page 55).|VigilanteLVL/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 35,
+    "record_key": "Serial Killer ~ Thwart Pursuit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

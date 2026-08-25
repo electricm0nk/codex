@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Rogue Talent",
     "name": "Rogue Talent",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante gains a single rogue talent (not an advanced talent) of his choice. If he selects a rogue talent marked with an asterisk (*), that talent applies to his hidden strikes instead of to sneak attacks, and the talent counts as a stalker vigilante talent with an asterisk (*) for the limitation of only one applying to a given hidden strike.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

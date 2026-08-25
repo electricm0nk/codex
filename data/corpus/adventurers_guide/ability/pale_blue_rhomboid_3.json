@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Wayfinder Ioun Stone Resonant Power ~ Pale Blue Rhomboid",
+    "name": "Pale Blue Rhomboid",
+    "description": "+1 bonus on Fortitude saves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayfinder Ioun Stone Resonant Power ~ Pale Blue Rhomboid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Slotted Ioun Stone Resonant Power"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 bonus on Fortitude saves."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Equipment Bonus ~ Ioun Stone Save Bonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IounStoneFortitudeSaveResonantBonus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
+    "line": 111,
+    "record_key": "Wayfinder Ioun Stone Resonant Power ~ Pale Blue Rhomboid"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

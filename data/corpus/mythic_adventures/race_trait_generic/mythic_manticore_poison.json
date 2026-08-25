@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Manticore ~ Poison",
+    "name": "Poison",
+    "description": "Spike-injury; save Fort DC 17; frequency 1/round for 6 rounds; effect 1d4 Str; cure 2 consecutive saves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Manticore ~ Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Manticore Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Spike-injury; save Fort DC 17; frequency 1/round for 6 rounds; effect 1d4 Str; cure 2 consecutive saves."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 202,
+    "record_key": "Mythic Manticore ~ Poison"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

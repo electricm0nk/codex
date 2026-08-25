@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Free Spirit",
+    "category": "General",
+    "name": "Free Spirit",
+    "description": "Your strong belief in the value of freedom protects you from mental and physical shackles. +2 bonus on saves vs. mind-affecting and on escape attempts. Your strong belief in the value of freedom protects you from mental and physical shackles. You gain a +2 bonus on saving throws made against mind-affecting effects and on all Escape Artist or grapple checks made to escape a grapple or to escape from bonds.",
+    "prerequisites": [
+      "PREALIGN:CG,CN,CE",
+      "PRESTAT:1,CHA=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 24,
+    "record_key": "Free Spirit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vengeance Domain ~ Divine Retribution",
     "name": "Divine Retribution",
-    "class": "Vengeance Domain",
+    "class": "Cleric",
     "description": "As a standard action, you can point at one creature within 30 feet to indicate that it is the target of divine wrath. A mishap or an accident appropriate to the environment occurs, such as a branch falling on the creature, rocks falling from the ceiling, or some other nonmagical misfortune; regardless of the cause, the mishap deals 1d6+%1 points of damage (Reflex DC %2 half). The GM decides whether this damage is bludgeoning, piercing, or slashing damage. You can use this ability %3 times per day.|DivineRetributionBonusDamage|DivineRetributionDC|DomainVengeanceTimes",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

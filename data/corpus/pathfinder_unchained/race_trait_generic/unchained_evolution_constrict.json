@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Constrict",
+    "name": "Constrict",
+    "description": "The eidolon gains powerful muscles that allow it to crush those it grapples. Whenever the eidolon successfully grapples a foe using the grab evolution, it deals additional damage equal to the amount of damage dealt by the attack the grab evolution is tied to.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Constrict"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Eidolon Base Form ~ Serpentine"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Evolution ~ Grab"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Serpentine base form, grab evolution."
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon gains powerful muscles that allow it to crush those it grapples. Whenever the eidolon successfully grapples a foe using the grab evolution, it deals additional damage equal to the amount of damage dealt by the attack the grab evolution is tied to."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Special Ability|Unchained Evolution ~ Grab"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 222,
+    "record_key": "Unchained Evolution ~ Constrict"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

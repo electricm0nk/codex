@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Psychic Discipline ~ Lore",
     "name": "Lore",
-    "class": "Psychic Discipline",
+    "class": "Psychic",
     "description": "By collecting expert information and reading all sorts of treatises and chapbooks on occult subjects, you learn proper techniques and rituals to empower your mental abilities. Your abilities become stronger through study and science, not instinct. Phrenic Pool Ability: Wisdom. Discipline Powers: Your powers relate to your extensive knowledge and your ability to alter and adapt your memory.",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

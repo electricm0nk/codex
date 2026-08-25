@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Unarmed Frost",
+    "name": "Unarmed Frost",
+    "description": "unarmed and natural attacks do +1d6 cold damage",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "UnarmedDisplay"
+      },
+      {
+        "key": "DESC",
+        "value": "unarmed and natural attacks do +1d6 cold damage"
+      },
+      {
+        "key": "ASPECT",
+        "value": "UnarmedNotes|unarmed and natural attacks do +1d6 cold damage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 121,
+    "record_key": "Unarmed Frost"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

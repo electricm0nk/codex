@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Nagaji",
+    "name": "Racial Traits ~ Nagaji",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Nagaji_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Nagaji Racial Trait|AUTOMATIC|Nagaji ~ Ability Scores|PREVAREQ:Nagaji_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/nagaji/nagaji_abilities_globalvar.lst",
+    "sha256": "2b4ffa988468c3f25c5d6ebd4d6b8cf84c072350123968e208872ec73747b064",
+    "line": 10,
+    "record_key": "Racial Traits ~ Nagaji"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

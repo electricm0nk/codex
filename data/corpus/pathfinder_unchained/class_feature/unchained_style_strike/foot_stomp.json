@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Style Strike ~ Foot Stomp",
+    "name": "Foot Stomp",
+    "class": "Unchained Style Strike",
+    "description": "The monk stomps on a foe's foot, preventing the opponent from escaping. If the attack hits and the monk ends his turn adjacent to that foe, the foe's movement is restricted. Until the start of the monk's next turn, the target of this attack can move only in such a way that the space it occupies is adjacent to the monk. Alternatively, it can attempt a combat maneuver check (against the monk's CMD) as a standard action to break free. This strike does not work against foes that cannot be tripped. The monk must attack with a kick to use this style strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Style Strike ~ Foot Stomp"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Style Strike.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The monk stomps on a foe's foot, preventing the opponent from escaping. If the attack hits and the monk ends his turn adjacent to that foe, the foe's movement is restricted. Until the start of the monk's next turn, the target of this attack can move only in such a way that the space it occupies is adjacent to the monk. Alternatively, it can attempt a combat maneuver check (against the monk's CMD) as a standard action to break free. This strike does not work against foes that cannot be tripped. The monk must attack with a kick to use this style strike."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 565,
+    "record_key": "Unchained Style Strike ~ Foot Stomp"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

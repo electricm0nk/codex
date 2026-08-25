@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Redirect Trap",
+    "name": "Redirect Trap",
+    "class": "Insight",
+    "description": "You have learned how to alter the pattern of reality to psychoportively redirect the effect of a trap.  As a standard action, you can redirect the effect of a trap that you have claimed by Claim Pattern.  The effect can be redirected up to 60 ft. away from the location of the trap.  The destination must still be in your line of sight and this insight cannot be used on pit traps.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Redirect Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Insight ~ Claim Pattern"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to alter the pattern of reality to psychoportively redirect the effect of a trap.  As a standard action, you can redirect the effect of a trap that you have claimed by Claim Pattern.  The effect can be redirected up to 60 ft. away from the location of the trap.  The destination must still be in your line of sight and this insight cannot be used on pit traps."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 216,
+    "record_key": "Insight ~ Redirect Trap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

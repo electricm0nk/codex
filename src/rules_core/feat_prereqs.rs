@@ -499,16 +499,18 @@ mod prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        // 1578 hand-authored records + the 531 corpus gap rows the feat gap
+        // 1578 hand-authored records + the 649 corpus gap rows the feat gap
         // lane joined on (`SD31-E6-F8-001`'s original 83 + `SD31-E6-F8-002`'s
         // 242 + `SD31-E6-F2-007`'s 199 Mythic Adventures rows -- SD31-W10-
         // INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins
-        // from the original 358 -- + `SD31-E6-F8-003`'s 7). Every gap row's
-        // own `PRE`-family tokens are carried verbatim into
-        // `FeatCatalogRecord::prerequisites`, so the new rows are evaluated
-        // by this gate exactly like every other record — they are not
-        // offered unconditionally.
-        assert_eq!(reports.len(), 2109);
+        // from the original 358 -- + `SD31-E6-F8-003`'s 7 + SD-32 Gate 0
+        // book-onboarding precondition's 9 inner_sea_taverns rows + SD-32 T9
+        // onboarding's (card 11) 109: inner_sea_combat 23 + inner_sea_gods
+        // 86). Every gap row's own `PRE`-family tokens are carried verbatim
+        // into `FeatCatalogRecord::prerequisites`, so the new rows are
+        // evaluated by this gate exactly like every other record — they are
+        // not offered unconditionally.
+        assert_eq!(reports.len(), 2227);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which
@@ -562,7 +564,36 @@ mod prerequisite_tests {
         // rule reports rather than denies the whole clause, landing both in
         // `eligible` (unverified, not confirmed met) exactly like every
         // other unmodelled-alternative record already does.
-        assert_eq!(eligible, 696, "a starting Fighter's real eligible-feat count");
+        // +5 with SD-32 Gate 0 book-onboarding precondition's 9
+        // inner_sea_taverns rows joined on: `Drinking Buddy`, `Extreme Mood
+        // Swings`, `Implacable` and `Muddled Morals` carry no `PRE` token at
+        // all; `Tavern Regular`'s `PREVARGTEQ:PreStatScore_CHA,14` names an
+        // unmodelled variable this evaluator already treats as non-blocking
+        // for every book (`pre_tokens::tests::an_unrecognised_kind_never_
+        // blocks`), so it reports rather than denies. The other 4
+        // (`Drunken God's Blessings`, `Drunken Sing-Along`, `Hardy Liver`,
+        // `Read the Room`) each carry a modelled, AND-chained `PREDEITY`/
+        // `PRESKILL`/`PREABILITY` clause this level-1 build does not meet,
+        // and are correctly DENIED.
+        // +54 with commit fb4f28dad's 109 new corpus gap rows joined
+        // (inner_sea_combat 23 + inner_sea_gods 86, `decisions.md §17`/T9
+        // card 11). Verified by class, not by trust: isolating exactly the
+        // 109 keys that commit added and re-partitioning `reports` by that
+        // set reproduces the pre-commit population untouched
+        // (old_total_reports=2118, old_eligible=701, matching the values
+        // this assertion carried before that commit) plus a clean 109-row
+        // addition split 54 eligible / 55 denied -- every one of the 55
+        // newly-denied rows still carries a stated reason via the
+        // denial-reason loop below, run over the FULL joined `reports`,
+        // covering old and new rows alike. That commit's own sweep updated
+        // `reports.len()` (2118->2227, asserted above) but missed this
+        // eligible-count sibling assertion -- the same class of stale
+        // pinned-count-after-legitimate-growth defect `decisions.md §17a`
+        // and this bundle's four prior corrections already fixed elsewhere,
+        // not a real regression: most of the 109 new rows carry genuine
+        // Combat-style/Aldori/Rage-class-feature `PRE`-family prerequisites
+        // a fresh level-1 13-STR Fighter with no feats does not meet.
+        assert_eq!(eligible, 755, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

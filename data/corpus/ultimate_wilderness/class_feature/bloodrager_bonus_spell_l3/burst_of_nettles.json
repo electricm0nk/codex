@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Bloodrager Bonus Spell L3 ~ Burst of Nettles",
+    "name": "Burst of Nettles",
+    "class": "Bloodrager",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bloodrager Bonus Spell L3 ~ Burst of Nettles"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bloodrager Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Bloodrager_BonusSpell_L3_BurstofNettles,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodragerBloodlineCasterLVL,13"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Bloodrager=3|Burst of Nettles"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 341,
+    "record_key": "Bloodrager Bonus Spell L3 ~ Burst of Nettles"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

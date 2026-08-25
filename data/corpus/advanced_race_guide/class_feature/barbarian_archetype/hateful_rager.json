@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian Archetype ~ Hateful Rager",
     "name": "Hateful Rager",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "From a young age, many half-orcs are treated cruelly, bullied, ridiculed, and made outcasts. While some hide their shame, others foster a deep, burning hatred that they channel into a raw fury and unleash against their enemies. These half-orcs are called hateful ragers. A hateful rager has the following class features.",
     "raw_tokens": [
       {
@@ -67,6 +67,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Barbarian"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Hateful Rager],[!PREFACT:1,ABILITIES,Barbarian_Archetype_RagePower2=True,Barbarian_Archetype_RagePower8=True,Barbarian_Archetype_RagePower14=True,Barbarian_Archetype_RagePower20=True,Barbarian_Archetype_ImprovedUncannyDodge=True,Barbarian_Archetype_TrapSense3=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower20|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense3|true"
       }
     ]
   },
@@ -83,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Energy Resistance Cold",
+    "name": "Energy Resistance (Cold)",
+    "class": "Aegis",
+    "description": "You gain cold resistance %1.|AegisColdResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Energy Resistance Cold"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisColdResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain cold resistance %1.|AegisColdResistance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Cold"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|AegisColdResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisColdResistance|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisColdResistance|5|PREVARGT:AstralSuitPrereqLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisColdResistance|5|PREVARGT:AstralSuitPrereqLVL,9"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 51,
+    "record_key": "Aegis ~ Energy Resistance Cold"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Heartstaff Attunement",
+    "name": "Heartstaff Attunement",
+    "description": "Attuned to The Heartstaff",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Attuned to The Heartstaff"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Improved Mobility|PREVARGTEQ:TL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Willful Psicrystal|PREVARGTEQ:TL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Enhanced Psicrystal|PREVARGTEQ:TL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Blindsense|PREVARGTEQ:TL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Safe Dock|PREVARGTEQ:TL,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Alertness|PREVARGTEQ:TL,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Blindsight|PREVARGTEQ:TL,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Augment Psicrystal|PREVARGTEQ:TL,18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff ~ Cloud Mind|PREVARGTEQ:TL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeartstaffLVL|max(0,floor((TL-2)/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.437"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 210,
+    "record_key": "Heartstaff Attunement"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

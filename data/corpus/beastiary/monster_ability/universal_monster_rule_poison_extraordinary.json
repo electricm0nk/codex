@@ -1,0 +1,125 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Poison (Extraordinary)",
+    "delivery": "Extraordinary",
+    "description": "A creature with this ability can poison those it attacks. The effects of the poison, including its save, frequency, and cure, are included in the creature's description. The saving throw to resist a poison is usually a Fort save (DC 10 + 1/2 poisoning creature's racial HD + creature's Con modifier; the exact DC is given in the creature's descriptive text). Poisons can be removed through neutralize poison and similar effects.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_poison_extraordinary",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|UMR_Poison_DC"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Bite|PREVAREQ:UMR_Poison_ApplyBite,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Claw|PREVAREQ:UMR_Poison_ApplyClaw,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NaturalAttackBonus|Sting|PREVAREQ:UMR_Poison_ApplySting,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Poison_DC|PoisonSaveDC"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_ApplyBite|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_ApplyClaw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_ApplySting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Poison_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with this ability can poison those it attacks. The effects of the poison, including its save, frequency, and cure, are included in the creature's description. The saving throw to resist a poison is usually a Fort save (DC 10 + 1/2 poisoning creature's racial HD + creature's Con modifier; the exact DC is given in the creature's descriptive text). Poisons can be removed through neutralize poison and similar effects.|PREVAREQ:UMR_Poison_SpecificDesc,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite--injury; save Fort DC %1; frequency 1/minute for 60 minutes; effect sleep for 1 minute; cure 1 save. The save DC is Constitution-based and includes a +2 racial bonus.|UMR_Poison_DC|PREMULT:2,[PREVAREQ:UMR_Poison_SpecificDesc,1],[PRERACE:1,Homunculus]"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite--injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Con; cure 1 save.|UMR_Poison_DC|PREMULT:2,[PREVAREQ:UMR_Poison_SpecificDesc,1],[PRERACE:1,Viper]"
+      },
+      {
+        "key": "DESC",
+        "value": "Claw--injury; save Fortitude DC %1 (includes a +2 racial bonus); frequency 1/round for 6 rounds; effect 1d2 Dexterity; cure 2 consecutive saves.|UMR_Poison_DC|PREMULT:2,[PREVAREQ:UMR_Poison_SpecificDesc,1],[PRERACE:1,Demon (Quasit)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting--injury; save Fort DC %1; frequency 1/ round for 6 rounds; effect 1d2 Dex; cure 1 save. The save DC is Constitution-based, and includes a +2 racial bonus.|UMR_Poison_DC|PREMULT:2,[PREVAREQ:UMR_Poison_SpecificDesc,1],[PRERACE:1,Devil (Imp)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting--injury; save Fort DC %1; frequency 1/minute for 10 minutes; effect sleep for 1 minute; cure 1 save. The save DC is Constitution-based and includes a +2 racial bonus.|UMR_Poison_DC|PREMULT:2,[PREVAREQ:UMR_Poison_SpecificDesc,1],[PRERACE:1,Pseudodragon]"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Poison (Extraordinary)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.302"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.Special Ability.SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.302",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Ability"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2378,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Poison (Extraordinary)",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

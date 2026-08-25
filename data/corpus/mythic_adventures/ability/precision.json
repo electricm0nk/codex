@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Precision",
+    "name": "Precision",
+    "description": "Your deadly attacks are far more likely to hit their target than those of others. Whenever you make a full attack, your attack bonus on the additional attacks you gain by having a high base attack bonus is 5 higher. This ability can't give any of these attacks a higher attack bonus than your base attack bonus. For example, a 12th-level fighter normally has a base attack bonus of +12/+7/+2; with this ability, his base attack bonus is +12/+12/+7. This ability doesn't reduce the penalties from two-weapon fighting or other situational penalties on attack rolls (such as Combat Expertise, Power Attack, fighting defensively, or harmful conditions). You can select this ability more than once. Each time you select it, the attack bonus on additional attacks increases by another 5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Precision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Your deadly attacks are far more likely to hit their target than those of others. Whenever you make a full attack, your attack bonus on the additional attacks you gain by having a high base attack bonus is 5 higher. This ability can't give any of these attacks a higher attack bonus than your base attack bonus. For example, a 12th-level fighter normally has a base attack bonus of +12/+7/+2; with this ability, his base attack bonus is +12/+12/+7. This ability doesn't reduce the penalties from two-weapon fighting or other situational penalties on attack rolls (such as Combat Expertise, Power Attack, fighting defensively, or harmful conditions). You can select this ability more than once. Each time you select it, the attack bonus on additional attacks increases by another 5."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 348,
+    "record_key": "Mythic Path Ability ~ Precision"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

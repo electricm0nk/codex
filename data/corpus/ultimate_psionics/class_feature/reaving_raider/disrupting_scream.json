@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Reaving Raider ~ Disrupting Scream",
+    "name": "Disrupting Scream",
+    "class": "Reaving Raider",
+    "description": "You can activate your racial outburst ability and choose to forego the benefit of the ability (although you still suffer all appropriate penalties) to attempt to knowck an adjacent enemy off guard as a swift action.  The targeted enemy must make a save (Reflex DC %1) or be treated as flat-footed for your next attack made on your turn.|DisruptingScreamDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reaving Raider ~ Disrupting Scream"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptingScreamDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can activate your racial outburst ability and choose to forego the benefit of the ability (although you still suffer all appropriate penalties) to attempt to knowck an adjacent enemy off guard as a swift action.  The targeted enemy must make a save (Reflex DC %1) or be treated as flat-footed for your next attack made on your turn.|DisruptingScreamDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptingScreamDC|10+floor(RogueLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2617,
+    "record_key": "Reaving Raider ~ Disrupting Scream"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

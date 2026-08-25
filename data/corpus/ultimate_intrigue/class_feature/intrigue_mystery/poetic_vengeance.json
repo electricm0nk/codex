@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Intrigue Mystery ~ Poetic Vengeance",
     "name": "Poetic Vengeance",
-    "class": "Intrigue Mystery",
+    "class": "Oracle",
     "description": "You constantly plot and scheme to take your revenge against those who wrong you. %1/day as an immediate action, after an enemy successfully affects you with an attack (whether with a spell, a physical attack, or any other sort of attack), you can force the enemy to take half the effects of its own attack unless it succeeds on a Will save (DC %2). Any damage from the attack is halved, and non-damaging effects have a 50%% chance to apply. If the non-damaging effect has a DC, the enemy receives a saving throw against it, at either the DC of the original effect or the DC of this ability, whichever is lower.|1+OracleLVL/10|10+OracleLVL/2+CHA",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

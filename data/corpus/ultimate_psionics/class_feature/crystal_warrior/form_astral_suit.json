@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Crystal Warrior ~ Form Astral Suit",
+    "name": "Form Astral Suit",
+    "class": "Warrior",
+    "description": "To gain some abilities, your psicrystal must be physically touching you when you form your astral suit, and the psicrystal is consumed by the astral suit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Crystal Warrior ~ Form Astral Suit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "To gain some abilities, your psicrystal must be physically touching you when you form your astral suit, and the psicrystal is consumed by the astral suit."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|AUTOMATIC|Aegis ~ Ranged Attack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1741,
+    "record_key": "Crystal Warrior ~ Form Astral Suit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

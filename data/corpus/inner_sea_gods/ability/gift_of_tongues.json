@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist ~ Gift of Tongues",
+    "name": "Gift of Tongues",
+    "description": "At 4th level, the evangelist may select a new language as a gift from her chosen deity. She gains the ability to speak and write this new language fluently, so as to better communicate with those she meets in the course of her travels. At 8th level, the evangelist selects a second language to learn. The ability to comprehend these languages is an instantaneous divine gift, and spells and effects that dispel persistent effects can't remove the evangelist's gift of tongues.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Gift of Tongues"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Evangelist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, the evangelist may select a new language as a gift from her chosen deity. She gains the ability to speak and write this new language fluently, so as to better communicate with those she meets in the course of her travels. At 8th level, the evangelist selects a second language to learn. The ability to comprehend these languages is an instantaneous divine gift, and spells and effects that dispel persistent effects can't remove the evangelist's gift of tongues."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Add Spoken Language|1+(EvangelistLVL>=8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 18,
+    "record_key": "Evangelist ~ Gift of Tongues"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

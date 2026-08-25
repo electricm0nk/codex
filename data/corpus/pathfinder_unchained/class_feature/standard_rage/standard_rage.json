@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Standard Unchained Rage",
+    "name": "Standard Rage",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Standard Unchained Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "UnchainedRageSelection"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageACPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageBonusHP|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Grant Standard Unchained Rage Benefits|PREVARGTEQ:Raging,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageACPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageDuration|2+var(\"STAT.2.MOD.NOTEMP\")+(2*RageLVL)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageBonusHP|TL*2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 306,
+    "record_key": "Standard Unchained Rage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

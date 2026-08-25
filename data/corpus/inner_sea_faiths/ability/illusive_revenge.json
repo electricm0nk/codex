@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Sivanah ~ Illusive Revenge",
+    "name": "Illusive Revenge",
+    "description": "If you have performed your daily obedience, once per day, you can cast phantasmal revenge (APG p.235) as a spell-like ability upon a recently slain creature, which rises as a ghastly image to seek out its killer. This illusive ghost is always veiled, even if it never was so in life. After the target attempts its Will saving throw (DC %1), regardless of whether the attempt was successful, the ghost tears off its veil to reveal an image of the killer's own face.|17+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Sivanah ~ Illusive Revenge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day, you can cast phantasmal revenge (APG p.235) as a spell-like ability upon a recently slain creature, which rises as a ghastly image to seek out its killer. This illusive ghost is always veiled, even if it never was so in life. After the target attempts its Will saving throw (DC %1), regardless of whether the attempt was successful, the ghost tears off its veil to reveal an image of the killer's own face.|17+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 330,
+    "record_key": "Sentinel Boon ~ Sivanah ~ Illusive Revenge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Monk Unarmed Damage LVL 1 (Small)",
+    "name": "Monk Unarmed Damage LVL 1 (Small)",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "UDAM",
+        "value": "1d4"
+      },
+      {
+        "key": "UMULT",
+        "value": "2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrimaryAttackDamageDice|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrimaryAttackDamageSize|4|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1296,
+    "record_key": "Monk Unarmed Damage LVL 1 (Small)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

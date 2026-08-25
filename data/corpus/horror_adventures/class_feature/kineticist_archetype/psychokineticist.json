@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kineticist Archetype ~ Psychokineticist",
+    "name": "Psychokineticist",
+    "class": "Kineticist",
+    "description": "While most kineticists channel elemental power through their bodies, rare kineticists, such as elemental ascetics, overwhelming souls, and psychokineticists channel such power through their minds. Psychokineticists lack an overwhelming soul's strong spirit, and so this energy ravages their minds but unleashes power locked in their ruptured emotions. Sometimes a psychokineticist inadvertently unleashes his power when he experiences an outburst of strong emotion, potentially making a psychokineticist an outcast or even an accidental killer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Archetype ~ Psychokineticist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.KineticistArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "DESC",
+        "value": "While most kineticists channel elemental power through their bodies, rare kineticists, such as elemental ascetics, overwhelming souls, and psychokineticists channel such power through their minds. Psychokineticists lack an overwhelming soul's strong spirit, and so this energy ravages their minds but unleashes power locked in their ruptured emotions. Sometimes a psychokineticist inadvertently unleashes his power when he experiences an outburst of strong emotion, potentially making a psychokineticist an outcast or even an accidental killer."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Kineticist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Kineticist Archetype ~ Dark Elementalist],[!PREFACT:1,ABILITIES,Kineticist_Archetype_ClassSkills=True,Kineticist_Archetype_KeyAbilityScoreWildTalent=True,Kineticist_Archetype_Burn=True,Kineticist_Archetype_ElementalOverflow=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychokineticist ~ Emotional Intensity|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychokineticist ~ Mind Burn|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychokineticist ~ Mental Overflow|PRECLASS:1,Kineticist=3"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_KeyAbilityScoreWildTalent|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Burn|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ElementalOverflow|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 66,
+    "record_key": "Kineticist Archetype ~ Psychokineticist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kineticist Archetype ~ Leshykineticist",
+    "name": "Leshykineticist",
+    "class": "Kineticist",
+    "description": "Of all those who pursue the path of a kineticist, only leshykineticists are both made of plant matter and born of nature spirits. These curious creatures wield ancient powers unknown to any other kineticists.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Archetype ~ Leshykineticist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.KineticistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Kineticist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Kineticist Archetype ~ Leshykineticist],[!PREFACT:1,ABILITIES,Kineticist_Archetype_ElementalFocus=True,Kineticist_Archetype_ExpandedElement=True,Kineticist_Archetype_UtilityWildTalent6=True,Kineticist_Archetype_UtilityWildTalent10=True,Kineticist_Archetype_MaximizeMetakinesis=True,Kineticist_Archetype_InternalBuffer=True,Kineticist_Archetype_Omnikinesis=True]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Vine Leshy"
+      },
+      {
+        "key": "DESC",
+        "value": "Of all those who pursue the path of a kineticist, only leshykineticists are both made of plant matter and born of nature spirits. These curious creatures wield ancient powers unknown to any other kineticists."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Leshykineticist ~ Leshy Element|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Leshykineticist ~ Basic Leshykinesis|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Leshykineticist ~ Photosynthetic Buffer|PRECLASS:1,Kineticist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Leshykineticist ~ Green Rebirth|PRECLASS:1,Kineticist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ElementalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ExpandedElement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_UtilityWildTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_UtilityWildTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_MaximizeMetakinesis|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_InternalBuffer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Omnikinesis|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_UtilityWildTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_UtilityWildTalent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_MaximizeMetakinesis|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Omnikinesis|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 10,
+    "record_key": "Kineticist Archetype ~ Leshykineticist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

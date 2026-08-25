@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ectoplasm Bloodline ~ Ectoplasmic Reach",
     "name": "Ectoplasmic Reach",
-    "class": "Ectoplasm Bloodline",
+    "class": "Sorcerer",
     "description": "You can exude small tendrils of ectoplasm that can be used to make melee touch attacks as part of a spell with a range of touch. You can make melee touch attacks as if you had an additional %1 feet of reach. You must have a free hand with which to direct the ectoplasm.&nl;This ability does not otherwise increase your threatened area.|Sorcerer_EctoplasmEctoplasmicReach_Reach",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

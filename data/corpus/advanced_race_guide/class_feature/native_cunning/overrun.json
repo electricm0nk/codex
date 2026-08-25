@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Native Cunning ~ Grapple ~ Overrun",
+    "name": "Overrun",
+    "class": "Native Cunning",
+    "description": "The Feral Child gains a bonus of %1 to her CMD against the maneuver.|TrapSenseBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Native Cunning ~ Grapple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.NativeCunningOption"
+      },
+      {
+        "key": "DESC",
+        "value": "The Feral Child gains a bonus of %1 to her CMD against the maneuver.|TrapSenseBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Overrun|TrapSenseBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
+    "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
+    "line": 386,
+    "record_key": "Native Cunning ~ Grapple ~ Overrun"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

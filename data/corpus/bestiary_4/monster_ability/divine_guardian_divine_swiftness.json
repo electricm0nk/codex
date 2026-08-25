@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Divine Guardian ~ Divine Swiftness",
+    "delivery": "Extraordinary",
+    "description": "A divine guardian is gifted with incredible speed, granting it a +4 bonus on initiative rolls. In addition, each of the base creature's speeds is doubled. If the base creature has a fly speed, the divine guardian's maneuverability becomes perfect if it was not already. If the divine guardian acquires the air, earth, or water subtype, it gains a fly, burrow, or swim speed equal to its highest speed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:divine_guardian_divine_swiftness",
+    "name": "Divine Swiftness",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEMULT|TYPE.All|2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A divine guardian is gifted with incredible speed, granting it a +4 bonus on initiative rolls. In addition, each of the base creature's speeds is doubled. If the base creature has a fly speed, the divine guardian's maneuverability becomes perfect if it was not already. If the divine guardian acquires the air, earth, or water subtype, it gains a fly, burrow, or swim speed equal to its highest speed."
+      },
+      {
+        "key": "KEY",
+        "value": "Divine Guardian ~ Divine Swiftness"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 499,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Divine Guardian ~ Divine Swiftness",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

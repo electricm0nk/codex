@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inevitable Subdomain ~ Command",
     "name": "Command",
@@ -27,6 +27,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.92"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=1"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=1"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Toil Subdomain=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Devil Subdomain (Evil)=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Devil Subdomain (Law)=1"
       }
     ]
   },
@@ -43,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

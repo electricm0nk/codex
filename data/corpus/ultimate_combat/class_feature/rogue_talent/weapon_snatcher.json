@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Weapon Snatcher",
     "name": "Weapon Snatcher",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent can make a Sleight of Hand check in place of a combat maneuver check when attempting to disarm an opponent.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

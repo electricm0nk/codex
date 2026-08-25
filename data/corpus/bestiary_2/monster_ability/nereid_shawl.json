@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nereid ~ Shawl",
+    "delivery": "Extraordinary",
+    "description": "A nereid's shawl (hardness 2, hp 6) contains a portion of her life force.  If the shawl is ever destroyed, the nereid takes 1d6 points of Constitution drain per hour until she dies.  A nereid can craft a new shawl from water by making a DC 25 Will save, but each attempt takes 1d4 hours to complete.  Attempts to destroy or steal a nereid's shawl require the sunder or disarm attempts.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:nereid_shawl",
+    "name": "Shawl",
+    "owners": [
+      "bestiary_2:monster:nereid"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A nereid's shawl (hardness 2, hp 6) contains a portion of her life force.  If the shawl is ever destroyed, the nereid takes 1d6 points of Constitution drain per hour until she dies.  A nereid can craft a new shawl from water by making a DC 25 Will save, but each attempt takes 1d4 hours to complete.  Attempts to destroy or steal a nereid's shawl require the sunder or disarm attempts."
+      },
+      {
+        "key": "KEY",
+        "value": "Nereid ~ Shawl"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.198",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 875,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Nereid ~ Shawl",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

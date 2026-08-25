@@ -8,7 +8,7 @@ import {
   type WeaponDamageDto,
 } from '../boundary/loadSavedCharacterDetail';
 import { previewLevelUp as previewLevelUpGrants } from '../boundary/previewLevelUp';
-import { buildClassFeatureSurface } from './classFeaturesModel';
+import { buildClassFeatureSurface, unmatchedClassFeatureDescriptions } from './classFeaturesModel';
 import {
   loadClassFeatureDescriptions,
   type ClassFeatureDescriptionDto,
@@ -1931,12 +1931,86 @@ function ClassFeaturePoolReferenceSection(props: { heldClasses: HeldClass[] }) {
   );
 }
 
+/**
+ * T4 closure (`epic-breakdown.md` Epic 2 "built-but-unreachable render
+ * surface" / `classFeaturesModel.ts`'s `unmatchedClassFeatureDescriptions`).
+ *
+ * Every real corpus `class_feature` description for a held class that no
+ * engine explanation currently claims — content `class_feature_descriptions.rs`
+ * and `class_feature_feat_bridge.rs` already transcribe, PI-screen, and
+ * leak-check, but that `buildClassFeatureSurface` only ever attaches as
+ * enrichment on a row an `ExplanationDto` already created. Before this
+ * section existed, such a record reached no code path a player's screen
+ * renders, no matter how many of them the catalog held — this is the fix
+ * site the module's own doc comment (`class_feature_descriptions.rs`) names.
+ *
+ * Modelled directly on `ClassFeaturePoolReferenceSection`'s own browsable-
+ * reference shape (shown whenever the character holds the owning class,
+ * independent of whether an engine explanation exists) — but data-driven off
+ * `props.heldClasses` rather than a hand-maintained per-pool list, so it
+ * covers every class corpus-wide without a new entry per class.
+ */
+function ClassFeatureDescriptionReferenceSection(props: {
+  explanations: readonly ExplanationDto[];
+  heldClasses: readonly HeldClass[];
+  descriptions: readonly ClassFeatureDescriptionDto[];
+  selectedFeats: readonly string[];
+}) {
+  const heldLabels = new Map(
+    props.heldClasses.map((held) => [held.classId.split(':').pop() ?? held.classId, held.classLabel])
+  );
+  const unmatched = unmatchedClassFeatureDescriptions(
+    props.explanations,
+    props.heldClasses,
+    props.descriptions,
+    props.selectedFeats
+  );
+  if (unmatched.length === 0) {
+    return null;
+  }
+
+  return (
+    <div style={{ marginTop: '1.25rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+        Additional class features (reference)
+      </p>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
+        Real rulebook text for this build's classes that the rules engine has not computed a
+        derivation for yet. Shown so this content is never lost, only unwired.
+      </p>
+      {unmatched.map((description) => (
+        <div key={`${description.book}:${description.key}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
+          <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem' }}>
+            <span style={{ color: 'var(--color-text-muted)', flexShrink: 0, fontSize: '0.72rem', width: CLASS_FEATURE_GUTTER }}>
+              {heldLabels.get(description.classSlug) ?? description.classSlug}
+            </span>
+            <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{description.name}</span>
+          </div>
+          <p
+            style={{
+              color: 'var(--color-text-secondary)',
+              fontSize: '0.72rem',
+              margin: `0.15rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+            }}
+          >
+            {description.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ActionsTab(props: {
   levelEntries: LevelEntry[];
   explanations: readonly ExplanationDto[];
   heldClasses: HeldClass[];
   racialTraits: RacialTraitsSurface;
   raceLabel: string;
+  /** T4-L9 (`decisions.md §13`): the feat-held reachability arm needs the
+   * character's own selection list to check against — see
+   * `unmatchedClassFeatureDescriptions`'s own doc comment. */
+  selectedFeats: readonly string[];
 }) {
   // SD31-D7-PROSE-003: the real corpus `DESC:` text, fetched once and joined
   // in `buildClassFeatureSurface` -- a SECOND, additive data source
@@ -1985,6 +2059,12 @@ function ActionsTab(props: {
   const holdsRogue = props.heldClasses.some(
     (held) => held.classId.split(':').pop() === 'rogue'
   );
+  const unmatchedDescriptions = unmatchedClassFeatureDescriptions(
+    props.explanations,
+    props.heldClasses,
+    classFeatureDescriptions,
+    props.selectedFeats
+  );
 
   if (
     surface.features.length === 0 &&
@@ -1992,6 +2072,7 @@ function ActionsTab(props: {
     generalBenefits.length === 0 &&
     props.racialTraits.rows.length === 0 &&
     props.racialTraits.unavailableReason === null &&
+    unmatchedDescriptions.length === 0 &&
     !holdsRogue
   ) {
     return (
@@ -2133,6 +2214,12 @@ function ActionsTab(props: {
         </div>
       ) : null}
 
+      <ClassFeatureDescriptionReferenceSection
+        explanations={props.explanations}
+        heldClasses={props.heldClasses}
+        descriptions={classFeatureDescriptions}
+        selectedFeats={props.selectedFeats}
+      />
       <ClassFeaturePoolReferenceSection heldClasses={props.heldClasses} />
     </div>
   );
@@ -3875,6 +3962,7 @@ export function CharacterSheet(props: {
                   heldClasses={heldClasses}
                   racialTraits={racialTraits}
                   raceLabel={props.row.raceLabel}
+                  selectedFeats={props.detail?.selectedFeats ?? []}
                 />
               ) : (
                 <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>

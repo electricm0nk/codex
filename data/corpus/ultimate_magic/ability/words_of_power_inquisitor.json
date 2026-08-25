@@ -1,0 +1,152 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Words of Power",
+    "name": "Words of Power Inquisitor",
+    "description": "A words of power using inquisitor; %1 meta words/day.|InquisitorMetaWordsPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype.InquisitorSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InquisitorMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using inquisitor; %1 meta words/day.|InquisitorMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 1|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 2|PRECLASS:1,Inquisitor=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 3|PRECLASS:1,Inquisitor=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 4|PRECLASS:1,Inquisitor=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 5|PRECLASS:1,Inquisitor=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 6|PRECLASS:1,Inquisitor=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 7|PRECLASS:1,Inquisitor=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 8|PRECLASS:1,Inquisitor=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 9|PRECLASS:1,Inquisitor=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 10|PRECLASS:1,Inquisitor=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 11|PRECLASS:1,Inquisitor=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 12|PRECLASS:1,Inquisitor=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 13|PRECLASS:1,Inquisitor=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 14|PRECLASS:1,Inquisitor=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 15|PRECLASS:1,Inquisitor=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 16|PRECLASS:1,Inquisitor=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 17|PRECLASS:1,Inquisitor=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 18|PRECLASS:1,Inquisitor=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 19|PRECLASS:1,Inquisitor=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Inquisitor 20|PRECLASS:1,Inquisitor=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorMetaWordsPerDay|max(1,classlevel(\"Inquisitor\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 24,
+    "record_key": "Inquisitor Archetype ~ Words of Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

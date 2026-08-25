@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rogue Archetype ~ Eldritch Raider",
     "name": "Eldritch Raider",
-    "class": "Rogue Archetype",
+    "class": "Rogue",
     "description": "An eldritch raider is a rogue who seeks to unravel the mysteries of the destruction of the Gillman's homeland. They explore old ruins that date back to the days of the old human empire and track down relics and lore from its glory days.",
     "raw_tokens": [
       {
@@ -75,6 +75,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Rogue"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Eldritch Raider],[!PREFACT:1,ABILITIES,Rogue_Archetype_RogueTalent2=True,Rogue_Archetype_TrapSense=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense|true"
       }
     ]
   },
@@ -91,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

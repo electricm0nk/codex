@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:38Z",
+  "data": {
+    "key": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_13)",
+    "name": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_13)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,40"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Abyssal,Common,Infernal,Necril"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|9|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|(max(TL,1))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Great Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Slashing.Disease,*1,2d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Slashing,*1,1d8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "CR",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.309"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
+    "line": 13,
+    "record_key": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_lst_13)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_races.lst:13"
+  }
+}

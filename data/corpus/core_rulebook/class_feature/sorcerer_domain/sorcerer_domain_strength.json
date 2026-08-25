@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Domain ~ Strength",
+    "name": "Sorcerer Domain ~ Strength",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Sorcerer/Cleric (Arcane)=1|Enlarge Person|Sorcerer/Cleric (Arcane)=2|Bull's Strength|Sorcerer/Cleric (Arcane)=3|Magic Vestment|Sorcerer/Cleric (Arcane)=4|Spell Immunity|Sorcerer/Cleric (Arcane)=5|Righteous Might|Sorcerer/Cleric (Arcane)=6|Stoneskin|Sorcerer/Cleric (Arcane)=7|Grasping Hand|Sorcerer/Cleric (Arcane)=8|Clenched Fist|Sorcerer/Cleric (Arcane)=9|Crushing Hand|PREVAREQ:StrengthDomainAllowed,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3141,
+    "record_key": "Sorcerer Domain ~ Strength"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

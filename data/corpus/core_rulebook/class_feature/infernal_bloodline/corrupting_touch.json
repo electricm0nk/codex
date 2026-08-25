@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Infernal Bloodline ~ Corrupting Touch",
     "name": "Corrupting Touch",
-    "class": "Infernal Bloodline",
+    "class": "Sorcerer",
     "description": "You can cause a creature to become shaken as a melee touch attack. This effect persists for %1 rounds. Creatures shaken by this ability radiate an aura of evil, as if they were an evil outsider. Multiple touches do not stack, but they do add to the duration. You can use this ability %2 times per day.|Sorcerer_InfernalCorruptingTouch_Duration|Sorcerer_Infernal_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -88,5 +88,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

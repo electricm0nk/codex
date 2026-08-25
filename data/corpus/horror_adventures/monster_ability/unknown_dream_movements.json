@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Unknown ~ Dream Movements",
+    "delivery": "Supernatural",
+    "description": "To the unknown, all worlds are tinted with the shades of nightmares from the Dimension of Dreams, allowing them to defy the laws of physics as they move as if in a dream. An unknown gains an insight bonus to AC equal to its Charisma bonus. It can travel as if by dimension door as a move action at will, but only to enter or leave an area within line of sight of the target of its victimize ability. The victimized creature and the intended destination must both be within long range of the unknown.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:unknown_dream_movements",
+    "name": "Dream Movements",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|CHA|TYPE=Insight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "To the unknown, all worlds are tinted with the shades of nightmares from the Dimension of Dreams, allowing them to defy the laws of physics as they move as if in a dream. An unknown gains an insight bonus to AC equal to its Charisma bonus. It can travel as if by dimension door as a move action at will, but only to enter or leave an area within line of sight of the target of its victimize ability. The victimized creature and the intended destination must both be within long range of the unknown."
+      },
+      {
+        "key": "KEY",
+        "value": "Unknown ~ Dream Movements"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.UnknownTemplate"
+      }
+    ],
+    "source_page": "p.245",
+    "traits": [
+      "UnknownTemplate"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 341,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Unknown ~ Dream Movements",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

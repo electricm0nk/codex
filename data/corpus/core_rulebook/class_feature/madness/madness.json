@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Madness Domain",
     "name": "Madness",
-    "class": null,
+    "class": "Cleric",
     "description": "You embrace the madness that lurks deep in your heart, and can unleash it to drive your foes insane or to sacrifice certain abilities to hone others.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Madness=1|Confusion (Lesser)|Madness=2|Touch of Idiocy|Madness=3|Rage|Madness=4|Confusion|Madness=5|Nightmare|Madness=6|Phantasmal Killer|Madness=7|Insanity|Madness=8|Scintillating Pattern|Madness=9|Weird"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Madness],[PREVARLT:MadnessDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sage Bloodline ~ Arcane Bolt",
     "name": "Arcane Bolt",
-    "class": "Sage Bloodline",
+    "class": "Sorcerer",
     "description": "You can unleash a ray of magic force as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d4",
     "raw_tokens": [
       {
@@ -124,5 +124,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ My Word Is My Bond",
+    "name": "My Word Is My Bond",
+    "description": "Once per day, you can gain a +1 trait bonus on an attack roll, saving throw, or skill check if success on that check is directly relevant to fulfilling a verbal or written agreement you have made. You must choose to use this trait before rolling, and this ability does not work if you initiated the agreement for the purpose of activating this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ My Word Is My Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.TaldanRaceTrait"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Background,Taldan"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ My Word Is My Bond]"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, you can gain a +1 trait bonus on an attack roll, saving throw, or skill check if success on that check is directly relevant to fulfilling a verbal or written agreement you have made. You must choose to use this trait before rolling, and this ability does not work if you initiated the agreement for the purpose of activating this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 87,
+    "record_key": "Trait ~ My Word Is My Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

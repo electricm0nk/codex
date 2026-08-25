@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption Stages",
+    "name": "Promethean Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Promethean Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PrometheanCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|PrometheanCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-The first time your corruption progresses, you fall into routines easily, performing repetitive actions. Your alignment shifts one step toward neutral."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-The second time your corruption progresses, you find you can't bring yourself to care about things or even to love. Your alignment shifts to neutral."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-The third time your corruption progresses, too much of your body is gone for your soul to remain. You become a mindless, destructive automaton or free-willed evil construct under the GM's control."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Promethean Corruption Stage %1|PrometheanCorruptionStage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 709,
+    "record_key": "Promethean Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

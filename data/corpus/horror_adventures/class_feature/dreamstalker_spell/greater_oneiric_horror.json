@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dreamstalker Spell ~ Greater Oneiric Horror",
+    "name": "Greater Oneiric Horror",
+    "class": "Dreamstalker Spell",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamstalker Spell ~ Greater Oneiric Horror"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BonusDreamstalkerSpell"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Mesmerist=2|Oneiric Horror (Greater)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 155,
+    "record_key": "Dreamstalker Spell ~ Greater Oneiric Horror"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

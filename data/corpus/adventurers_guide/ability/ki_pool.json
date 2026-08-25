@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Ki Pool",
+    "name": "Ki Pool",
+    "description": "If a student of perfection has levels in a class that grants a ki pool, his student of perfection levels stack with his levels of that class to determine his total number of ki points. If the student of perfection has a ki pool from Perfect Style, he adds his Wisdom modifier to his ki pool. The student of perfection's ki pool also gains ki strike as per the ki pool of a monk of a level equal to his class level. This stacks with his levels in monk (if any).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Ki Pool"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Student of Perfection Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "DESC",
+        "value": "If a student of perfection has levels in a class that grants a ki pool, his student of perfection levels stack with his levels of that class to determine his total number of ki points. If the student of perfection has a ki pool from Perfect Style, he adds his Wisdom modifier to his ki pool. The student of perfection's ki pool also gains ki strike as per the ki pool of a monk of a level equal to his class level. This stacks with his levels in monk (if any)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPoolLVL|StudentOfPerfectionLVL|PREABILITY:1,CATEGORY=Special Ability,TYPE=Ki Pool"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PerfectStyleKiPool|WIS|!PREABILITY:1,CATEGORY=Special Ability,TYPE=Ki Pool"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Student of Perfection ~ Ki Strike|!PREABILITY:1,CATEGORY=Special Ability,Monk ~ Ki Pool"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 6,
+    "record_key": "Student of Perfection ~ Ki Pool"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

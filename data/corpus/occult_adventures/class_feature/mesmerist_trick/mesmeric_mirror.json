@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Mesmeric Mirror",
     "name": "Mesmeric Mirror",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "An illusory image appears near the subject to throw off attackers. The mesmerist can trigger this trick when the subject is attacked or becomes the target of a spell that requires an attack roll. %1 duplicate(s) of the subject appears, and the attacker must determine randomly which it hits (as mirror image). Each image lasts for %2 minute(s) or until destroyed. This is an illusion (figment) effect.|min(1+MesmeristLVL/5,5)|MesmeristLVL",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

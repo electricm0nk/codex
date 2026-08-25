@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Moldev ~ Suppression",
+    "name": "Suppression",
+    "description": "3/day on successful hit, make a targeted dispel psionics check against opponent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Moldev ~ Suppression"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "3/day on successful hit, make a targeted dispel psionics check against opponent."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.440"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 235,
+    "record_key": "Moldev ~ Suppression"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

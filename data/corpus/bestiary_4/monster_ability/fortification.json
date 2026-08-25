@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fortification",
+    "delivery": null,
+    "description": "The monster has an %1%% chance to treat any critical hit or sneak attack as a normal hit, as if wearing moderate fortification armor.",
+    "description_variables": [
+      "FortificationPercentage"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:fortification",
+    "name": "Fortification",
+    "owners": [
+      "bestiary_4:monster:elohim",
+      "bestiary_4:monster:guardian_dragon",
+      "bestiary_4:monster:yaoguai"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|FortificationPercentage|50"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FortificationPercentage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The monster has an %1%% chance to treat any critical hit or sneak attack as a normal hit, as if wearing moderate fortification armor.|FortificationPercentage"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 47,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Fortification",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

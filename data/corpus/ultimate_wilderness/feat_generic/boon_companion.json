@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Boon Companion",
+    "name": "Boon Companion",
+    "description": "Your bond with your animal companion or familiar is unusually close.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGT:AnimalCompanionLVL,0],[PREVARGT:FamiliarLVL,0],[PREVARGT:SpecialMountLVL,0],[PREVARGT:CavalierMountLVL,0],[PREVARGT:HuntmasterCompanionLVL,0],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion,TYPE.Familiar,TYPE.Mount,TYPE.Special Mount,TYPE.Huntmaster Companion]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your bond with your animal companion or familiar is unusually close."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Boon Companion Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Boon Companion Selection|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "The abilities of your animal companion or familiar are calculated as though your class were 4 levels higher, to a maximum effective druid level equal to your character level. If you have more than one animal companion or familiar, choose one to receive this benefit. If you lose or dismiss an animal companion or familiar that has received this benefit, you may apply this feat to the replacement creature. Special: You may select this feat more than once. The effects do not stack. Each time you take the feat, it applies to a different animal companion or familiar."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 21,
+    "record_key": "Boon Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

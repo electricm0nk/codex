@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Gyronna ~ Never Suffer Alone",
+    "name": "Never Suffer Alone",
+    "description": "If you have performed your daily obedience, three times per day, when an opponent successfully deals hit point damage to you, you can immediately make an attack of opportunity against the creature that damaged you, even if you could not normally make an attack of opportunity. You can attack normally with this attack of opportunity or target the triggering creature with one of the spells granted by the malice boon above (though doing so provokes an attack of opportunity if an opponent is in melee with you). You can use this ability only once per round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Gyronna ~ Never Suffer Alone"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, three times per day, when an opponent successfully deals hit point damage to you, you can immediately make an attack of opportunity against the creature that damaged you, even if you could not normally make an attack of opportunity. You can attack normally with this attack of opportunity or target the triggering creature with one of the spells granted by the malice boon above (though doing so provokes an attack of opportunity if an opponent is in melee with you). You can use this ability only once per round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 215,
+    "record_key": "Sentinel Boon ~ Gyronna ~ Never Suffer Alone"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

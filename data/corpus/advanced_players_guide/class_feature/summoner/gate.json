@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner ~ Gate",
     "name": "Gate",
@@ -23,6 +23,18 @@
       {
         "key": "DESC",
         "value": "You may cast Gate with your Summon Monster spell-like ability."
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Heroism Subdomain,Honor Subdomain=9"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Trade Subdomain=9"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "AirSchool|EarthSchool|FireSchool|WaterSchool"
       }
     ]
   },
@@ -39,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

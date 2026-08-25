@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lycanthropic Creature ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "A lycanthropic creature has two forms--a humanoid form and a hybrid form. Equipment does not meld with the new form between humanoid and hybrid form. A lycanthropic creature can assume hybrid form as a full-round action by making a DC 15 Constitution check, or humanoid form as a move action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:lycanthropic_creature_change_shape",
+    "name": "Change Shape",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A lycanthropic creature has two forms--a humanoid form and a hybrid form. Equipment does not meld with the new form between humanoid and hybrid form. A lycanthropic creature can assume hybrid form as a full-round action by making a DC 15 Constitution check, or humanoid form as a move action."
+      },
+      {
+        "key": "KEY",
+        "value": "Lycanthropic Creature ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.LycanthropicCreature"
+      }
+    ],
+    "source_page": "p.249",
+    "traits": [
+      "LycanthropicCreature"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 308,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Lycanthropic Creature ~ Change Shape",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

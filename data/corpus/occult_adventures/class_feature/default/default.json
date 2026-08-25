@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Default",
+    "name": "Default",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "OccultSkillUnlock|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Occult Skill Unlock|PREVAREQ:OccultSkillUnlock,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultSkillUnlock|1|TYPE=Base|PREMULT:1,[PRESPELLTYPE:1,Psychic=1],[PREABILITY:1,CATEGORY=FEAT,Psychic Sensitivity]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1928,
+    "record_key": "Default"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

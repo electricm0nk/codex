@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel Boon ~ Gyronna ~ Cloak of Curses",
+    "name": "Cloak of Curses",
+    "description": "If you have performed your daily obedience, you surround yourself in a shroud of whispered secrets and spiteful swearing, distorting the world around you and repelling others with the bitterness in your heart. Once per day, you can activate your cloak of curses as a standard action, and maintain it for up to %1 minutes. While the cloak is active, creatures of the animal and vermin type will not approach within 5 feet of you and move away if you approach them. Attacks from all other creatures suffer a 20%% miss chance. This miss chance increases to 30%% if the attacking creature is lawful or good (this miss chance does not stack). Creatures that succeed at a Will saving throw (DC %2) are not affected by your cloak of curses.|TL|10+TL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel Boon ~ Gyronna ~ Cloak of Curses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, you surround yourself in a shroud of whispered secrets and spiteful swearing, distorting the world around you and repelling others with the bitterness in your heart. Once per day, you can activate your cloak of curses as a standard action, and maintain it for up to %1 minutes. While the cloak is active, creatures of the animal and vermin type will not approach within 5 feet of you and move away if you approach them. Attacks from all other creatures suffer a 20%% miss chance. This miss chance increases to 30%% if the attacking creature is lawful or good (this miss chance does not stack). Creatures that succeed at a Will saving throw (DC %2) are not affected by your cloak of curses.|TL|10+TL/2+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 214,
+    "record_key": "Sentinel Boon ~ Gyronna ~ Cloak of Curses"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

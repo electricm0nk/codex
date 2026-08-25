@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Empower Symbol",
     "name": "Empower Symbol",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "As a standard action, the zealot can empower his holy symbol. If the zealot is of good alignment while in his vigilante identity (or worships a good deity), this works as if the holy symbol was the center of a consecrate effect. If the zealot is of evil alignment in his vigilante identity (or worships an evil deity), this works as if the holy symbol was the center of a desecrate effect. If the zealot is neutral in his vigilante identity and worships a neutral deity, he can choose whether this ability acts as per consecrate or desecrate, but once the choice is made, it cannot be changed.",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

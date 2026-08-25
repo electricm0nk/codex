@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bone Mystery ~ Death's Touch",
     "name": "Death's Touch",
-    "class": "Bone Mystery",
+    "class": "Oracle",
     "description": "You can cause terrible wounds to appear on a creature with a melee touch attack. This attack deals 1d6+%1 points of negative energy damage. If used against an undead creature, it heals damage and grants a +2 channel resistance for 1 minute. You can use this ability a %2 times per day.|OracleDeathTouchDamageBonus|OracleDeathTouchTimes",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

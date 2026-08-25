@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gaean ~ Gaean Communion",
+    "name": "Gaean Communion",
+    "class": "Gaean",
+    "description": "While maintaining psionic focus, you gain the ability to telepathically communicate with any animal or magical beast with an intelligence of 1 or 2 within 100 ft.  Any time you cast summon nature's ally, you can communicate telepathically with all of the creatures summoned by the spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gaean ~ Gaean Communion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "While maintaining psionic focus, you gain the ability to telepathically communicate with any animal or magical beast with an intelligence of 1 or 2 within 100 ft.  Any time you cast summon nature's ally, you can communicate telepathically with all of the creatures summoned by the spell."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2461,
+    "record_key": "Gaean ~ Gaean Communion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

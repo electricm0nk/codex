@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Mage ~ Arcane Power",
+    "name": "Arcane Power",
+    "class": "Psychic",
+    "description": "Your power point pool increases by 1 every time you take a psionic feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Mage ~ Arcane Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WizardClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your power point pool increases by 1 every time you take a psionic feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|count(\"ABILITIES\",\"CATEGORY=FEAT\",\"TYPE=Psionic\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.295"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2632,
+    "record_key": "Psychic Mage ~ Arcane Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

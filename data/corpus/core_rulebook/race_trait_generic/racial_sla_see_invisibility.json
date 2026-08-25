@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ See Invisibility",
+    "name": "See Invisibility",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ See Invisibility"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|See Invisibility"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SeeInvisibility_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SeeInvisibility_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SeeInvisibility_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SeeInvisibility_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SeeInvisibility_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SeeInvisibility_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SeeInvisibility_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_SeeInvisibility_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_SeeInvisibility_LVL|See Invisibility,RacialSLA_SeeInvisibility_DC|PREVAREQ:RacialSLA_SeeInvisibility_AtWill,0|PREVAREQ:RacialSLA_SeeInvisibility_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_SeeInvisibility_LVL|See Invisibility,RacialSLA_SeeInvisibility_DC|PREVAREQ:RacialSLA_SeeInvisibility_AtWill,1|PREVAREQ:RacialSLA_SeeInvisibility_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_SeeInvisibility_LVL|See Invisibility,RacialSLA_SeeInvisibility_DC|PREVAREQ:RacialSLA_SeeInvisibility_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SeeInvisibility_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SeeInvisibility_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SeeInvisibility_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SeeInvisibility_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SeeInvisibility_DC|10+RacialSLA_SeeInvisibility_SpellLVL+RacialSLA_SeeInvisibility_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 266,
+    "record_key": "Racial SLA ~ See Invisibility"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

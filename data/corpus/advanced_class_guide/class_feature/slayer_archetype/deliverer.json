@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer Archetype ~ Deliverer",
     "name": "Deliverer",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "Also known as a divine assassin, god's blade, or wrath-bringer, a deliverer is a weapon chosen by a god to punish those who have committed an affront to that deity. Evil deities are more likely to use assassins than deliverers, but some good deities use deliverers to deal with problems of a subtler nature than a cleric, inquisitor, paladin, or warpriest can typically handle.",
     "raw_tokens": [
       {
@@ -79,6 +79,30 @@
       {
         "key": "FACT",
         "value": "Slayer_Archetype_Talent10|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Deliverer],[!PREFACT:1,ABILITIES,Slayer_Archetype_Proficiencies=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_ArmorProficiencies|true"
       }
     ]
   },
@@ -95,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

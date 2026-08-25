@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Gulch Gunner",
     "name": "Gulch Gunner",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "Ratfolk warfare often occurs in cramped, claustrophobic spaces such as the ratfolk's own underground warrens and heavily trapped gulch fortresses, or the subterranean tunnels of goblins and similar foes. Since these battlegrounds often have tight corners and few areas with long lines of sight, those ratfolk who seek to master the use of firearms almost inevitably become experts in close-quarters combat. These gulch gunners often specialize in proficiency with a single pistol (easily handled in tight spaces) and wander from warren to warren selling their tunnel-shooting skills to the highest bidder.",
     "raw_tokens": [
       {
@@ -79,6 +79,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Gunslinger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Gulch Gunner],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_ClassSkills=true,Gunslinger_Archetype_Grit=True,Gunslinger_Archetype_DeadeyeDeed=True,Gunslinger_Archetype_PistolWhipDeed=True,Gunslinger_Archetype_MenacingShotDeed=True,Gunslinger_Archetype_GunTraining2=True,Gunslinger_Archetype_GunTraining3=True,Gunslinger_Archetype_GunTraining4=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Grit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_PistolWhipDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_MenacingShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Grit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_PistolWhipDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_MenacingShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_ClassSkills|true"
       }
     ]
   },
@@ -95,5 +163,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

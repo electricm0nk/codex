@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Bestial Leaper",
     "name": "Bestial Leaper",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the barbarian can take a move action to move and can take her normal standard action at any point during the move. A barbarian must have the raging leaper rage power and be at least 6th level before selecting this rage power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

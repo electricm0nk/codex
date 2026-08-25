@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Lore Spirit ~ Perfect Knowledge",
     "name": "Perfect Knowledge",
-    "class": "Lore Spirit",
+    "class": "Shaman",
     "description": "The shaman gains the benefit of the tongues spell permanently. She also gains a +10 competence bonus on all Knowledge, Linguistics, and Spellcraft checks.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

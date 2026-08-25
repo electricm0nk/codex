@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Mathematical Prodigy",
+    "name": "Mathematical Prodigy",
+    "description": "Mathematics has always come easily for you, and you have always been able to \"see the math\" in the physical and magical world. You gain a +1 trait bonus on Knowledge (Arcana) and Knowledge (Engineering) checks, and %1 is always a class skill for you.|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Mathematical Prodigy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.MagicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Mathematical Prodigy],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.MagicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "Mathematics has always come easily for you, and you have always been able to \"see the math\" in the physical and magical world. You gain a +1 trait bonus on Knowledge (Arcana) and Knowledge (Engineering) checks, and %1 is always a class skill for you.|%LIST"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|SKILL|Knowledge (Arcana)|Knowledge (Engineering)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Arcana),Knowledge (Engineering)|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 50,
+    "record_key": "Trait ~ Mathematical Prodigy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

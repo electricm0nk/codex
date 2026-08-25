@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Fey Bloodrager Bloodline ~ Fury of the Fey",
     "name": "Fury of the Fey",
-    "class": "Fey Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "When you enter a bloodrage, you can choose one type of creature (and subtype for humanoid and outsider) that can be affected by the bane magic weapon special ability. You may not choose animals, fey, magical beasts, or plants. All of your melee attacks are considered to have that bane ability of that type. This ability doesn't stack with other forms of the bane ability.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

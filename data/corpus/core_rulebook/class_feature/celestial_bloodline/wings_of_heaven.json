@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Celestial Bloodline ~ Wings of Heaven",
     "name": "Wings of Heaven",
-    "class": "Celestial Bloodline",
+    "class": "Sorcerer",
     "description": "You can sprout feathery wings and fly for %1 minutes per day, with a speed of 60 feet and good maneuverability. This duration does not need to be consecutive, but it must be used in 1 minute increments.|Sorcerer_CelestialWingsOfHeaven_TimeMinutes|!PREABILITY:1,CATEGORY=Special Ability,Celestial Bloodline ~ Ascension",
     "raw_tokens": [
       {
@@ -91,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bard Archetype ~ Flame Dancer",
     "name": "Flame Dancer",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "A flame dancer studies the movements of fire, adding its grace to his repertoire. He seeks truth in fire's burning essence, and uses his performance to unleash the power of fire against those who dare oppose him.",
     "raw_tokens": [
       {
@@ -59,6 +59,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bard"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Flame Dancer],[!PREFACT:1,ABILITIES,Bard_Archetype_BardicPerformance=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_Suggestion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicPerformance|true"
       }
     ]
   },
@@ -75,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

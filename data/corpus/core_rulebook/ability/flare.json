@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Flare",
+    "name": "Flare",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Flare_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Flare_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Flare_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Flare_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Flare_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Flare_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Flare_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_Flare_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_Flare_LVL|Flare,SLA_Flare_DC|PREVAREQ:SLA_Flare_AtWill,0|PREVAREQ:SLA_Flare_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_Flare_LVL|Flare,SLA_Flare_DC|PREVAREQ:SLA_Flare_AtWill,1|PREVAREQ:SLA_Flare_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_Flare_LVL|Flare,SLA_Flare_DC|PREVAREQ:SLA_Flare_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Flare_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Flare_SpellLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Flare_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Flare_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Flare_DC|10+SLA_Flare_SpellLVL+SLA_Flare_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 707,
+    "record_key": "Flare"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

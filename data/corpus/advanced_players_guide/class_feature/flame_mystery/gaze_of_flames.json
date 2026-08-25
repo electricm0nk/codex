@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Flame Mystery ~ Gaze of Flames",
     "name": "Gaze of Flames",
-    "class": "Flame Mystery",
+    "class": "Oracle",
     "description": "You can see through fire, fog, and smoke without penalty as long as the light is sufficient to allow you to see normally. At 7th level, you can gaze through any source of flame within 10 feet per oracle level, as if using clairvoyance. You can use this ability for %1 rounds per day, but these rounds do not need to be consecutive.|classlevel(\"Oracle\")",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

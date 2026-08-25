@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Spell Blending",
     "name": "Spell Blending",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "You select one spell from the wizard spell list that is of a magus spell level you can cast. You add this spell to your spellbook and list of magus spells known as a magus spell of its wizard spell level. You can instead select two spells to add in this way, but both must be at least one level lower than the highest-level magus spell you can cast. You can select this magus arcana more than once.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

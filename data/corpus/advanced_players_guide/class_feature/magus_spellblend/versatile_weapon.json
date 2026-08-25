@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Versatile Weapon",
+    "name": "Versatile Weapon",
+    "class": "Magus",
+    "description": "You transform the physical makeup of a weapon as you desire.  This spell functions like greater magic weapon, except that it subtly alters the physical properties of a weapon, enabling it to bypass damage reduction of one the following types: bludgeoning, cold iron, piercing, silver, or slashing. The affected weapon still inflicts damage of its normal type and its hardness and hit points are unchanged. This spell can be cast on a natural weapon or unarmed strike.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Versatile Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL3"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=3|Versatile Weapon"
+      },
+      {
+        "key": "DESC",
+        "value": "You transform the physical makeup of a weapon as you desire.  This spell functions like greater magic weapon, except that it subtly alters the physical properties of a weapon, enabling it to bypass damage reduction of one the following types: bludgeoning, cold iron, piercing, silver, or slashing. The affected weapon still inflicts damage of its normal type and its hardness and hit points are unchanged. This spell can be cast on a natural weapon or unarmed strike.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3631,
+    "record_key": "Magus Spellblend ~ Versatile Weapon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

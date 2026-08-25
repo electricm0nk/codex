@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Evolved Familiar",
+    "name": "Evolved Familiar",
+    "description": "Your familiar is different from others of its kind.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,INT=13,CHA=13"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FamiliarLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FamiliarEP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your familiar is different from others of its kind."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarEP|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.149"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Select an evolution from the list of 1-point evolutions available to a summoner's eidolon. Your familiar has this evolution. The familiar must conform to any limitations of the evolution. For instance, no familiars can benefit from the mount evolution and only familiars with wings can take the wing buffet evolution. If you gain a new familiar, your old familiar loses all evolutions, and you can select a new 1-point evolution for the new familiar."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 39,
+    "record_key": "Evolved Familiar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

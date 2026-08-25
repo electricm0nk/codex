@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "data": {
+    "key": "Dragon Age Category (Very Old)",
+    "name": "Dragon Age Category (Very Old)",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "12"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Dragon (Tiny)|Dragon (Small)|Dragon (Medium)|Dragon (Large)|Dragon (Huge)|Dragon (Gargantuan)|Dragon (Colossal)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DragonAgeCategory|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|24|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonAgeCategory|9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|DragonAgeCategory*30"
+      },
+      {
+        "key": "ADDLEVEL",
+        "value": "Dragon|16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33",
+    "line": 1025,
+    "record_key": "Dragon Age Category (Very Old)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

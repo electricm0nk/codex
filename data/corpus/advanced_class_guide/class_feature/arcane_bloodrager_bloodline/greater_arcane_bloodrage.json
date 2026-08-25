@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Arcane Bloodrager Bloodline ~ Greater Arcane Bloodrage",
     "name": "Greater Arcane Bloodrage",
-    "class": "Arcane Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "When you enter a bloodrage, you can choose to apply the effects of either Displacement or Haste to yourself. This is in addition to Arcane Bloodrage, and otherwise works as that ability.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

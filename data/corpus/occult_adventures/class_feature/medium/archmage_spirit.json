@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Medium ~ Archmage Spirit",
     "name": "Archmage Spirit",
@@ -55,6 +55,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.33"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Archetype,Medium Archetype ~ Kami Medium"
       }
     ]
   },
@@ -71,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

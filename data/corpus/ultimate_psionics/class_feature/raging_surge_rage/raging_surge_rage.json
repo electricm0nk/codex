@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Raging Surge Rage",
+    "name": "Raging Surge Rage",
+    "class": null,
+    "description": " You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours do not need to be consecutive. While in rage, you gain a +%2 morale bonus to your Strength and a +%3 morale bonus to Constitution, as well as a +%4 morale bonus on Will saves. In addition, you take a -2 penalty to Armor Class. The increase to Constitution grants you %5 hit points, but these disappear when the rage ends and are not lost first like temporary hit points. While in rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration. You can end your rage as a free action and are fatigued after rage for a number of rounds equal to 2 times the number of rounds spent in the rage. You cannot enter a new rage while fatigued or exhausted but can otherwise enter rage multiple times during a single encounter or combat. If you fall unconscious, your rage immediately ends, placing you in peril of death.|RageDuration|RageStrBonus|RageConBonus|RageSaveBonus|(RageConBonus/2)*TL",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Raging Surge Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.Extraordinary.Rage.AttackOption"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Raging|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageStrBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageConBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageSaveBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RageACPenalty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RagePowersLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": " You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours do not need to be consecutive. While in rage, you gain a +%2 morale bonus to your Strength and a +%3 morale bonus to Constitution, as well as a +%4 morale bonus on Will saves. In addition, you take a -2 penalty to Armor Class. The increase to Constitution grants you %5 hit points, but these disappear when the rage ends and are not lost first like temporary hit points. While in rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration. You can end your rage as a free action and are fatigued after rage for a number of rounds equal to 2 times the number of rounds spent in the rage. You cannot enter a new rage while fatigued or exhausted but can otherwise enter rage multiple times during a single encounter or combat. If you fall unconscious, your rage immediately ends, placing you in peril of death.|RageDuration|RageStrBonus|RageConBonus|RageSaveBonus|(RageConBonus/2)*TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageStrBonus,RageConBonus|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageACPenalty|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageSaveBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RageDuration|3+CHA+SurgeLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RagePowersLVL|SurgeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Will|RageSaveBonus|TYPE=Rage"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|RageACPenalty"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|RageStrBonus|TYPE=Rage"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|CON|RageConBonus|TYPE=Rage"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Raging|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1071,
+    "record_key": "Raging Surge Rage"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:prose_formula_segment",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

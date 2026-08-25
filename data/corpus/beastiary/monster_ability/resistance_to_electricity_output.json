@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Resistance to Electricity ~ Output",
+    "delivery": "Extraordinary",
+    "description": "You may ignore %1 points of Electricity damage each time you take electricity damage.",
+    "description_variables": [
+      "ElectricityResistanceBonus"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:resistance_to_electricity_output",
+    "name": "Resistance to Electricity ~ Output",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|ElectricityResistanceBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ResistanceOutput|Electricity %1|ElectricityResistanceBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Resistance|Electricity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You may ignore %1 points of Electricity damage each time you take electricity damage.|ElectricityResistanceBonus"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Resistance to Electricity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.303"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Resistance"
+      }
+    ],
+    "source_page": "p.303",
+    "traits": [
+      "Resistance"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1506,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Resistance to Electricity ~ Output",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

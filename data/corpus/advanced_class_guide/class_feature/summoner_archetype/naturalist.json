@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ Naturalist",
     "name": "Naturalist",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "A naturalist is a summoner who is in tune with the natural world, using his magic like a lens to focus various animal aspects onto his eidolon. More akin to a hunter than to other arcane spellcasters, a naturalist instinctively masters the power of such creatures as the bear, wolf, mouse, or tiger to make his exotic eidolon the perfect living tool for battle or stealth, and he eventually discovers how to apply these transformations to himself as well.",
     "raw_tokens": [
       {
@@ -63,6 +63,62 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Naturalist],[!PREFACT:1,ABILITIES,Summoner_Archetype_SummonMonster=True,Summoner_Archetype_ShieldAlly=True,Summoner_Archetype_GreaterShieldAlly=True,Summoner_Archetype_Aspect=True,Summoner_Archetype_LifeBond=True,Summoner_Archetype_GreaterAspect=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_SummonMonster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_ShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_GreaterShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_LifeBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_GreaterAspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_SummonMonster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_ShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_GreaterShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_LifeBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_GreaterAspect|true"
       }
     ]
   },
@@ -79,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

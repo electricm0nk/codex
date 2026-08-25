@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "High Magic Focus",
+    "category": "Teamwork",
+    "name": "High Magic Focus",
+    "description": "With the help of your fellow scholars, you can cast higher forms of magic, enhancing your spells by drawing upon their magical reserves rather than your own. With the help of allies who also have this feat, you can spontaneously apply metamagic feats to your spells without using a higher-level slot or increasing thecasting time. Each ally must ready an action to cast the same spell you intend to cast. For each other ally within 30 feet who does so, you reduce the cost of the spontaneous metamagic feat by 1 level (to a minimum of 0, and you must have at least one ally assist you, even if the metamagic feat is normally a +0 adjustment). The allies don't need to have the metamagic feat you choose to apply, and the effective level of the spell (after applying the metamagic feat) can't be higher than the highest level of spells you can cast. Lastly, when you use this ability, the spell each ally readies is lost, as if they had cast that spell.",
+    "prerequisites": [
+      "PREABILITY:[redacted PI]",
+      "PREABILITY:1,Category=Feat,TYPE.Metamagic",
+      "PRECLASS:1,SPELLCASTER.Arcane=2,Divine=2,Psychic=2",
+      "PRESKILL:1,Spellcraft=7",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 39,
+    "record_key": "High Magic Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

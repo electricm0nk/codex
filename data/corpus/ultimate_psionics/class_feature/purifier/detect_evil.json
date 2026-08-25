@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Purifier ~ Detect Evil",
+    "name": "Detect Evil",
+    "class": "Purifier",
+    "description": "You can manifest detect psionics as a psi-like ability in place of detect evil, although you can still use detect evil as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Purifier ~ Detect Evil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialQuality.PsiLike"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest detect psionics as a psi-like ability in place of detect evil, although you can still use detect evil as normal."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Paladin Class Feature|AUTOMATIC|Paladin ~ Detect Evil"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.296"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2542,
+    "record_key": "Purifier ~ Detect Evil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

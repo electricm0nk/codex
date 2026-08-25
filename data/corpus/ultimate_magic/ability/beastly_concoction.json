@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Beastly Concoction",
+    "name": "Beastly Concoction",
+    "description": "This journal grants you the ability to make an extremely potent and savage mutagen. Spend this boon when you imbibe your mutagen. The mutagen grants you a +6 alchemical bonus to your selected ability score instead of the normal +4; you take a -2 penalty to all of your mental ability scores (Intelligence, Wisdom, and Charisma) while the mutagen is in effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Beastly Concoction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "This journal grants you the ability to make an extremely potent and savage mutagen. Spend this boon when you imbibe your mutagen. The mutagen grants you a +6 alchemical bonus to your selected ability score instead of the normal +4; you take a -2 penalty to all of your mental ability scores (Intelligence, Wisdom, and Charisma) while the mutagen is in effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.123"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 38,
+    "record_key": "Preparation Ritual ~ Beastly Concoction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Leshykineticist ~ Leshy Element",
+    "name": "Leshy Element",
+    "class": "Kineticist",
+    "description": "A leshykineticist must select the wood element (see page 58) as her primary element and for both her expanded elements. She must choose wood blast as her first simple blast and positive blast as her second simple blast. At 6th level, she gains green tongue as a bonus utility wild talent, ignoring its prerequisites. At 7th level, when she first gains positive blast, she gains kinetic healer and the photokinetic infusion instead of the extra wild talent of 3rd level or lower for expanding in the same element. Her kinetic healer wild talent restores 1 extra hit point per die when healing plant creatures. At 9th level, she gains an extra wild talent of 3rd level or lower of her choice. At 10th level, she gains greater green tongue as a bonus utility wild talent, ignoring its prerequisites. This alters element and expanded element.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshykineticist ~ Leshy Element"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.LeshykineticistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A leshykineticist must select the wood element (see page 58) as her primary element and for both her expanded elements. She must choose wood blast as her first simple blast and positive blast as her second simple blast. At 6th level, she gains green tongue as a bonus utility wild talent, ignoring its prerequisites. At 7th level, when she first gains positive blast, she gains kinetic healer and the photokinetic infusion instead of the extra wild talent of 3rd level or lower for expanding in the same element. Her kinetic healer wild talent restores 1 extra hit point per die when healing plant creatures. At 9th level, she gains an extra wild talent of 3rd level or lower of her choice. At 10th level, she gains greater green tongue as a bonus utility wild talent, ignoring its prerequisites. This alters element and expanded element."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Primary Element ~ Wood"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Expanded Element ~ Wood|PRECLASS:1,Kineticist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Kineticist Expanded Element ~ Wood|PRECLASS:1,Kineticist=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ Wood Blast"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ Positive Blast|PRECLASS:1,Kineticist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ Green Tongue|PRECLASS:1,Kineticist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ Kinetic Healer|PRECLASS:1,Kineticist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ Photokinetic Infusion|PRECLASS:1,Kineticist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Wild Talent ~ Green Tongue (Greater)|PRECLASS:1,Kineticist=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Blast|-1|PRECLASS:1,Kineticist=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Infusion or Wild Talent Wood|-1|PRECLASS:1,Kineticist=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kineticist Infusion or Wild Talent Wood|1|PRECLASS:1,Kineticist=9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistElementalFocus|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistExpandedElement|-1|PRECLASS:1,Kineticist=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_KineticistExpandedElement|-1|PRECLASS:1,Kineticist=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 22,
+    "record_key": "Leshykineticist ~ Leshy Element"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

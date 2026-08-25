@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Silent Kill",
+    "category": "Combat",
+    "name": "Silent Kill",
+    "description": "You are quite adept at killing your prey without making noise or alerting others.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Slayer Talent ~ Assassinate,Ninja Trick ~ Assassinate",
+      "PRESKILL:1,Stealth=12"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 140,
+    "record_key": "Silent Kill"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

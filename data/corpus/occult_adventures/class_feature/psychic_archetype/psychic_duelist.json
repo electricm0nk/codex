@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Psychic Archetype ~ Psychic Duelist",
     "name": "Psychic Duelist",
-    "class": "Psychic Archetype",
+    "class": "Psychic",
     "description": "Psychic duelists hone their mental powers for combat, much as warriors do with their blades. They specialize in psychic duels, perfecting their thought-form creatures into mighty weapons.",
     "raw_tokens": [
       {
@@ -119,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

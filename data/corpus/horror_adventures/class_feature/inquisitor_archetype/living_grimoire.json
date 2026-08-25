@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Inquisitor Archetype ~ Living Grimoire",
     "name": "Living Grimoire",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "The living grimoire literally wields the sacred word of his deity, using his holy tome to smite the foes of his god with divine might. Unlike most inquisitors, a living grimoire focuses on careful study of divine scripture, valuing knowledge over intuition.",
     "raw_tokens": [
       {
@@ -143,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

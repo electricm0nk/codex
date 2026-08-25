@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blighted Defiler ~ Steal Life",
+    "name": "Steal Life",
+    "class": "Kineticist",
+    "description": "A blighted defiler who successfully uses steal power when gathering power as a move action can use a standard action on the same turn and choose a living creature within 30 feet. The creature must succeed at a Fortitude save (DC %1) or die; this is a death effect. If the creature dies and was CR 10 or higher, on the blighted defiler's next turn, she counts as if she had used a full round to gather power with steal power. If the target survives or was lower than CR 10, she loses all benefits from both her gather power and steal power, as normal at the end of her turn.|20+STR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blighted Defiler ~ Steal Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.BlightedDefilerClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A blighted defiler who successfully uses steal power when gathering power as a move action can use a standard action on the same turn and choose a living creature within 30 feet. The creature must succeed at a Fortitude save (DC %1) or die; this is a death effect. If the creature dies and was CR 10 or higher, on the blighted defiler's next turn, she counts as if she had used a full round to gather power with steal power. If the target survives or was lower than CR 10, she loses all benefits from both her gather power and steal power, as normal at the end of her turn.|20+STR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 19,
+    "record_key": "Blighted Defiler ~ Steal Life"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

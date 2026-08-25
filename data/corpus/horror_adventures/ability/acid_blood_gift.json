@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Acid Blood Gift",
+    "name": "Acid Blood Gift",
+    "description": "If a creature damages you with a slashing or piercing manufactured weapon, it must succeed at a Reflex saving throw (DC %1) or its weapon takes %2 points of acid damage; this damage is not halved before it is applied to the weapon's hardness. If a creature damages you with a slashing or piercing natural weapon, it must succeed at the save or take that amount of acid damage itself.|10+TL/2+HiveManifestationLevel|2*HiveManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Acid Blood Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveAcidBloodGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "DESC",
+        "value": "If a creature damages you with a slashing or piercing manufactured weapon, it must succeed at a Reflex saving throw (DC %1) or its weapon takes %2 points of acid damage; this damage is not halved before it is applied to the weapon's hardness. If a creature damages you with a slashing or piercing natural weapon, it must succeed at the save or take that amount of acid damage itself.|10+TL/2+HiveManifestationLevel|2*HiveManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 382,
+    "record_key": "Hive Corruption ~ Acid Blood Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

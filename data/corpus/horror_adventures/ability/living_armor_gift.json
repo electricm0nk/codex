@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Living Armor Gift",
+    "name": "Living Armor Gift",
+    "description": "As a move action, you can cause chitinous plates of armor to grow out of your flesh. This armor grants a +%1 natural armor bonus to your AC and persists as long you maintain concentration with a swift action each round. You must succeed at a concentration check as if concentrating on a 0-level spell, and your bonus to this concentration check is %2. If you fail a concentration check, the armor retracts.|HiveManifestationLevel/2|TL+HiveManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Living Armor Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveLivingArmorGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can cause chitinous plates of armor to grow out of your flesh. This armor grants a +%1 natural armor bonus to your AC and persists as long you maintain concentration with a swift action each round. You must succeed at a concentration check as if concentrating on a 0-level spell, and your bonus to this concentration check is %2. If you fail a concentration check, the armor retracts.|HiveManifestationLevel/2|TL+HiveManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 430,
+    "record_key": "Hive Corruption ~ Living Armor Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Corruption ~ Vampiric Grace Gift",
+    "name": "Vampiric Grace Gift",
+    "description": "You gain Dodge as a bonus feat and a +2 racial bonus on Stealth checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ Vampiric Grace Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VampirismVampiricGraceGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Dodge as a bonus feat and a +2 racial bonus on Stealth checks."
+      },
+      {
+        "key": "DESC",
+        "value": "You can climb walls (as per spider climb) at will.|PREVARGTEQ:VampirismManifestationLevel,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Dodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|2|TYPE=Racial"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 950,
+    "record_key": "Vampirism Corruption ~ Vampiric Grace Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

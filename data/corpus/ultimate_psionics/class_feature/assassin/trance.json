@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Assassin ~ Trance",
+    "name": "Trance",
+    "class": "Assassin",
+    "description": "Gain +%1 competence bonus on damage rolls when focused.|AssassinsPathTranceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Assassin ~ Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AssassinsPathTranceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 competence bonus on damage rolls when focused.|AssassinsPathTranceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AssassinsPathTranceBonus|(AssassinsPathTranceLVL+5)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|DAMAGE.Melee,DAMAGE.Ranged|AssassinsPathTranceBonus*PsionicFocusActive|TYPE=Competence"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 656,
+    "record_key": "Assassin ~ Trance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist ~ Divine Boon",
+    "name": "Divine Boon",
+    "description": "As the evangelist gains levels, she gains boons from her chosen deity. The nature of these boons varies depending on the evangelist's chosen deity. Each deity grants three boons, each more powerful than the last. At 3rd level, the evangelist gains the first boon. At 6th level, she gains the second boon, and at 9th level, she gains the third boon. Consult the Deific Obedience feat on page 210 and the core deity descriptions in Chapter 1 for details on these divine boons. When a divine boon grants a spelllike ability, the evangelist's caster level for the spell-like ability equals her total character level. This ability allows an evangelist to access these boons earlier than with the Deific Obedience feat alone; it does not grant additional uses of the boons once the character reaches the necessary Hit Dice to earn the boons normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist ~ Divine Boon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Evangelist Class Feature.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EvangelistBoonLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As the evangelist gains levels, she gains boons from her chosen deity. The nature of these boons varies depending on the evangelist's chosen deity. Each deity grants three boons, each more powerful than the last. At 3rd level, the evangelist gains the first boon. At 6th level, she gains the second boon, and at 9th level, she gains the third boon. Consult the Deific Obedience feat on page 210 and the core deity descriptions in Chapter 1 for details on these divine boons. When a divine boon grants a spelllike ability, the evangelist's caster level for the spell-like ability equals her total character level. This ability allows an evangelist to access these boons earlier than with the Deific Obedience feat alone; it does not grant additional uses of the boons once the character reaches the necessary Hit Dice to earn the boons normally."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvangelistBoonLVL|EvangelistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 17,
+    "record_key": "Evangelist ~ Divine Boon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

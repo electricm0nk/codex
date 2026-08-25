@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Spirit Animal ~ Flame",
     "name": "Spirit Animal",
-    "class": "Spirit Animal",
+    "class": "Animal",
     "description": "The spirit animal is surrounded by a nimbus of flame that gives off light like a candle.  This nimbus is warm to the touch, but doesn't cause any damage.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

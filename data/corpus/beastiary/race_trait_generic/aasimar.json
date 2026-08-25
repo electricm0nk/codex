@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Aasimar",
+    "name": "Aasimar",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Aasimar Subrace|1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Aasimar_RacialCastingStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Aasimar_RacialCastingMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Aasimar_RacialCasterlevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Aasimar_RacialConcentration|0"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Race ~ Aasimar"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Aasimar_RacialCastingStat|CHASCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Aasimar_RacialCastingMod|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Aasimar_RacialCasterlevel|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Aasimar_RacialConcentration|Aasimar_RacialCasterlevel+Aasimar_RacialCastingMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race.lst",
+    "sha256": "81f71066c67433e4b6734fc591aaa6b8df7eb833af1a08a2e86117432e778ae0",
+    "line": 10,
+    "record_key": "Aasimar"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

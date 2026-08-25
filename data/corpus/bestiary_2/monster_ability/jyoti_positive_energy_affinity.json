@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jyoti ~ Positive Energy Affinity",
+    "delivery": "Extraordinary",
+    "description": "A jyoti can exist comfortably on the Positive Energy Plane, and does not benefit (or suffer) from that plane's overwhelming infusions of life-giving energies.  Whenever a jyoti is subjected to a magical healing effect, that effect functions at its full potential, as if enhanced by Maximize Spell.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:jyoti_positive_energy_affinity",
+    "name": "Positive Energy Affinity",
+    "owners": [
+      "bestiary_2:monster:jyoti"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A jyoti can exist comfortably on the Positive Energy Plane, and does not benefit (or suffer) from that plane's overwhelming infusions of life-giving energies.  Whenever a jyoti is subjected to a magical healing effect, that effect functions at its full potential, as if enhanced by Maximize Spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Jyoti ~ Positive Energy Affinity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.171",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 742,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Jyoti ~ Positive Energy Affinity",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

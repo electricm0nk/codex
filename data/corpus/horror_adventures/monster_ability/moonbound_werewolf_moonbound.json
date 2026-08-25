@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Moonbound Werewolf ~ Moonbound",
+    "delivery": "Supernatural",
+    "description": "A moonbound werewolf gains benefits and drawbacks based on the current phase of the moon. For the purposes of this ability, the moon is in one of four phases at any given time: full, nearly full, new, and other. The moon is full for the 3-day period when the moon appears the largest in the sky, it is nearly full for 4 days before it is full and 4 days afterward, and it is new for a 3-day period when the moon appears the darkest in the sky. The \"other\" phase encompasses the rest of each month. GMs who need to randomly determine the phase of the moon can use the table below. [d8-Moon Phase] 1=New; 2-5=Other; 6-7=Nearly full; 8=Full",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:moonbound_werewolf_moonbound",
+    "name": "Moonbound",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A moonbound werewolf gains benefits and drawbacks based on the current phase of the moon. For the purposes of this ability, the moon is in one of four phases at any given time: full, nearly full, new, and other. The moon is full for the 3-day period when the moon appears the largest in the sky, it is nearly full for 4 days before it is full and 4 days afterward, and it is new for a 3-day period when the moon appears the darkest in the sky. The \"other\" phase encompasses the rest of each month. GMs who need to randomly determine the phase of the moon can use the table below. [d8-Moon Phase] 1=New; 2-5=Other; 6-7=Nearly full; 8=Full"
+      },
+      {
+        "key": "KEY",
+        "value": "Moonbound Werewolf ~ Moonbound"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.MoonboundWerewolf"
+      }
+    ],
+    "source_page": "p.251",
+    "traits": [
+      "MoonboundWerewolf"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 311,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Moonbound Werewolf ~ Moonbound",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

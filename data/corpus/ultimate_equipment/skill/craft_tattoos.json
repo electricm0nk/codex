@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "data": {
+    "key": "Craft (Tattoos)",
+    "name": "Craft (Tattoos)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "INT"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence.Craft.Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Tattoos)|3|TYPE=ClassSkill|PRECSKILL:1,Craft (Tattoos)|PRESKILL:1,Craft (Tattoos)=1"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Craft skill checks are made with a -2 circumstance penalty if improvised tools are used"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Craft (Tattoos)|-2|TYPE=Circumstance|!PREITEM:1,TYPE=CraftToolsTattoos"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_skills.lst",
+    "sha256": "aca2ee4373de0e0cc1e6b1041ee282e332bbaeca2c3045497b9d5bc7c01205fe",
+    "line": 4,
+    "record_key": "Craft (Tattoos)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

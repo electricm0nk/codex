@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Love Subdomain",
+    "name": "Love Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Love Subdomain],[PREVARLT:CharmDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Love Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Love Subdomain=1|Charm Person|Love Subdomain=2|Enthrall|Love Subdomain=3|Suggestion|Love Subdomain=4|Heroism|Love Subdomain=5|Charm Monster|Love Subdomain=6|Geas/Quest|Love Subdomain=7|Insanity|Love Subdomain=8|Euphoric Tranquility|Love Subdomain=9|Dominate Monster"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 49,
+    "record_key": "Love Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

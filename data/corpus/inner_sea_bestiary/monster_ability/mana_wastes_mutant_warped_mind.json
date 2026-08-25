@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mana Wastes Mutant ~ Warped Mind",
+    "delivery": null,
+    "description": "The mutant loses its +2 racial bonus to Con, but gains an additional +2 bonus to its natural armor.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:mana_wastes_mutant_warped_mind",
+    "name": "Warped Hide",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutant loses its +2 racial bonus to Con, but gains an additional +2 bonus to its natural armor."
+      },
+      {
+        "key": "KEY",
+        "value": "Mana Wastes Mutant ~ Warped Mind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.MutantDeformity"
+      }
+    ],
+    "source_page": "p.29",
+    "traits": [
+      "MutantDeformity"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 211,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Mana Wastes Mutant ~ Warped Mind",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

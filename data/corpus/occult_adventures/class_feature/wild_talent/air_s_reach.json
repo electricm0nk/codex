@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Air's Reach",
     "name": "Air's Reach",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element air; Type utility (Su); Level 1; Burn - When using air blasts, air wild talents, or composite blasts that include air, double the blast's effective range. This effect applies after altering the range due to effects such as the extended range infusion. This doubles only the blast's effective range, not the area of effect for infusions like cloud and cyclone.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T02:43:10Z",
+  "data": {
+    "key": "Ratfolk ~ Cheek Pouches",
+    "name": "Cheek Pouches",
+    "race_key": "Ratfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Ratfolk Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Ratfolk_ReplaceSwarming"
+    ],
+    "description": "Some ratfolk have developed stretchy cheek pouches that they can use to hold and carry small loads up to 1 cubic foot in volume and 10 pounds in weight, such as light weapons, potions, scrolls, and similar objects. Such a ratfolk can transfer a held object to his cheek pouches or extract an object from his cheek pouches as a swift action. As a move action that provokes an attack of opportunity, the ratfolk can instead massage all of the items held in the cheek pouches onto the ground in the square it occupies. As long as the ratfolk has at least one object in its cheek pouches, its speech is difficult to understand, and it has a 20% spell failure chance when casting spells with verbal components. This racial trait replaces swarming.",
+    "source_page": "p.176",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ratfolk ~ Cheek Pouches"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ratfolk ~ Cheek Pouches],[!PREFACT:1,ABILITIES,Ratfolk_ReplaceSwarming=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some ratfolk have developed stretchy cheek pouches that they can use to hold and carry small loads up to 1 cubic foot in volume and 10 pounds in weight, such as light weapons, potions, scrolls, and similar objects. Such a ratfolk can transfer a held object to his cheek pouches or extract an object from his cheek pouches as a swift action. As a move action that provokes an attack of opportunity, the ratfolk can instead massage all of the items held in the cheek pouches onto the ground in the square it occupies. As long as the ratfolk has at least one object in its cheek pouches, its speech is difficult to understand, and it has a 20%% spell failure chance when casting spells with verbal components."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces swarming.|!PREABILITY:1,CATEGORY=Special Ability,Ratfolk ~ Cheek Pouches"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "FACT",
+        "value": "Ratfolk_ReplaceSwarming|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30",
+    "line": 45,
+    "record_key": "Ratfolk ~ Cheek Pouches"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

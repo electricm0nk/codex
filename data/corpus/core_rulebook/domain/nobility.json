@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Nobility",
+    "name": "Nobility",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainNobility,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Nobility Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.NobilityDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainNobilityLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainNobilityDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainNobilityTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainNobilityAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a great leader, an inspiration to all who follow the teachings of your faith."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Nobility=1|Divine Favor|Nobility=2|Enthrall|Nobility=3|Magic Vestment|Nobility=4|Discern Lies|Nobility=5|Command (Greater)|Nobility=6|Geas/Quest|Nobility=7|Repulsion|Nobility=8|Demand|Nobility=9|Storm of Vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 33,
+    "record_key": "Nobility"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

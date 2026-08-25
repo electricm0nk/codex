@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Kineticist Element ~ Universal",
     "name": "Universal",
-    "class": "Kineticist Element",
+    "class": "Kineticist",
     "description": "The following wild talents are available to all kineticists. Wild Talents: 1st-draining infusion, extended range, kinetic blade, kinetic fist, skilled kineticist; 2nd-skilled kineticist (greater); 3rd-elemental grip, extreme range, flurry of blasts, kinetic whip, mobile blast, snake; 4th- expanded defense; 5th-grappling infusion, kinetic form, spark of life, wall; 6th-ride the blast; 8th-reverse shift.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

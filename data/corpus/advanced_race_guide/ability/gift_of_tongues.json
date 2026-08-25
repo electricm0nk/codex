@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Gift of Tongues",
+    "name": "Gift of Tongues",
+    "description": "+1 racial bonus on Bluff and Diplomacy checks, and learn one additional language each time they take a rank in Linguistics.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Gift of Tongues"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderFeatSkillTrait.Standard"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiftofTongues|0"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 racial bonus on Bluff and Diplomacy checks, and learn one additional language each time they take a rank in Linguistics."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Language|GiftofTongues"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy|1|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiftofTongues|skillinfo(\"TOTALRANK\",\"Linguistics\")"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 288,
+    "record_key": "Builder Racial Trait ~ Gift of Tongues"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

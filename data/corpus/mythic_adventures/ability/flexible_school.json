@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Flexible School",
+    "name": "Flexible School",
+    "description": "Select one wizard arcane school that is not your arcane school. You gain powers from that arcane school, treating your tier as your wizard level for the purposes of these powers. Once you have chosen the arcane school, it cannot be changed. You cannot select an arcane school that is one of your opposition schools. You must have the arcane school class feature to select this ability. You can choose this ability up to three times, each time selecting another arcane school other than your own.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Flexible School"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Arcane School"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"KEY=Mythic Path Ability ~ Flexible School\"),3"
+      },
+      {
+        "key": "DESC",
+        "value": "Select one wizard arcane school that is not your arcane school. You gain powers from that arcane school, treating your tier as your wizard level for the purposes of these powers. Once you have chosen the arcane school, it cannot be changed. You cannot select an arcane school that is one of your opposition schools. You must have the arcane school class feature to select this ability. You can choose this ability up to three times, each time selecting another arcane school other than your own."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Flexible School|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 174,
+    "record_key": "Mythic Path Ability ~ Flexible School"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

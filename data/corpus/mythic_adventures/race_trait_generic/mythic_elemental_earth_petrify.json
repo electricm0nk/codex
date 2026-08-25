@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Elemental (Earth) ~ Petrify",
+    "name": "Petrify",
+    "description": "If it hits a target with a slam attack, a mythic earth elemental can expend two uses of mythic power to permanently turn that target to stone. If the target succeeds at a DC 23 Fortitude save, it is slowed (as the spell) for 1d6 rounds instead of petrified. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Elemental (Earth) ~ Petrify"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Elemental (Earth) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If it hits a target with a slam attack, a mythic earth elemental can expend two uses of mythic power to permanently turn that target to stone. If the target succeeds at a DC 23 Fortitude save, it is slowed (as the spell) for 1d6 rounds instead of petrified. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 141,
+    "record_key": "Mythic Elemental (Earth) ~ Petrify"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

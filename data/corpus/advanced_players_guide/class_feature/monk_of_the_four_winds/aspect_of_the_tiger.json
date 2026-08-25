@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Monk of the Four Winds ~ Aspect of the Tiger",
     "name": "Aspect of the Tiger",
-    "class": "Monk of the Four Winds",
+    "class": "Monk",
     "description": "Dark stripes appear on the monk's skin, and his face becomes more feline. His eyes become catlike, with vertical pupils, and his canines enlarge. Once per hour, the monk can move at 10 times his normal land speed when he makes a charge and is treated as if he had the pounce ability. The tiger is swift, fierce, and deadly - a monk of any alignment can take on the aspect of the tiger.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

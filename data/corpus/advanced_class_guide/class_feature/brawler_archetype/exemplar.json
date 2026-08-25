@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler Archetype ~ Exemplar",
     "name": "Exemplar",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "A versatile soldier who inspires her companions with her fighting prowess, an exemplar is at home on the front lines of battles anywhere.",
     "raw_tokens": [
       {
@@ -55,6 +55,78 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Brawler=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Exemplar],[!PREFACT:1,ABILITIES,Brawler_Archetype_UnarmedStrike=True,Brawler_Archetype_ACBonus=True,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_BrawlersStrike=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A versatile soldier who inspires her companions with her fighting prowess, an exemplar is at home on the front lines of battles anywhere."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exemplar Brawler ~ Call to Arms|PRECLASS:1,Brawler=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exemplar Brawler ~ Inspiring Prowess|PRECLASS:1,Brawler=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exemplar Brawler ~ Field Instruction|PRECLASS:1,Brawler=5"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BrawlersStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_UnarmedStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_ACBonus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BrawlersStrike|true"
       }
     ]
   },
@@ -71,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

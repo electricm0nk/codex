@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Body Snatcher ~ Greater Melding Exchange",
+    "name": "Greater Melding Exchange",
+    "class": "Body Snatcher",
+    "description": "When you use your melding exchange ability, your draw far more knowledge from your target than usual. You may use the subject's ranks in Knowledge skills in place of your own, and you learns the command words or thoughts for any items the subject has (provided they were known to the subject). Additionally, as a standard action, you may expend your psionic focus to mentally \"ask\" your newfound memories one question, typically about the subject's past or personality. You learn the answer to that question to the best of the subject's knowledge. Asking about rote facts is often unnecessary, due to the granting of Knowledge ranks - this ability extends beyond the Knowledge skill.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Body Snatcher ~ Greater Melding Exchange"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BodySnatcherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use your melding exchange ability, your draw far more knowledge from your target than usual. You may use the subject's ranks in Knowledge skills in place of your own, and you learns the command words or thoughts for any items the subject has (provided they were known to the subject). Additionally, as a standard action, you may expend your psionic focus to mentally \"ask\" your newfound memories one question, typically about the subject's past or personality. You learn the answer to that question to the best of the subject's knowledge. Asking about rote facts is often unnecessary, due to the granting of Knowledge ranks - this ability extends beyond the Knowledge skill."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.353"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1159,
+    "record_key": "Body Snatcher ~ Greater Melding Exchange"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

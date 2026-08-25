@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Reanimator",
     "name": "Reanimator",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "A reanimator is an alchemist who has discovered how to infuse a corpse with a semblance of life. Many work in tandem with necromancers to explore the fine border between the worlds of the living and the dead.",
     "raw_tokens": [
       {
@@ -59,6 +59,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Reanimator],[!PREFACT:1,ABILITIES,Alchemist_Archetype_BombDamage7=True,Alchemist_Archetype_BombDamage13=True,Alchemist_Archetype_BombDamage15=True,Alchemist_Archetype_BombReduction=True,Alchemist_Archetype_BombDamage=True,Alchemist_Archetype_BombReduction=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BombDamage7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BombDamage13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BombDamage15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BombReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombDamage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombDamage7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombDamage13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombDamage15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombDamage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombReduction|true"
       }
     ]
   },
@@ -75,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

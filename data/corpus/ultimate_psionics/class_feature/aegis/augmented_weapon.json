@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Augmented Weapon",
+    "name": "Augmented Weapon",
+    "class": "Aegis",
+    "description": "Your weapon does damage as if it were one size larger.  This doesn't stack with other increases in size category.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Augmented Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialAttack"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,5"
+      },
+      {
+        "key": "DESC",
+        "value": "Your weapon does damage as if it were one size larger.  This doesn't stack with other increases in size category."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGESIZE|1|TYPE=SizeChange"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 87,
+    "record_key": "Aegis ~ Augmented Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

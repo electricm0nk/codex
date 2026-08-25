@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Mythic Arugment Summoning",
+    "name": "Augment Summoning (Mythic)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Arugment Summoning"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_templates.lst",
+    "sha256": "b8f0ee3a056b2302251f27bda2494492e59da70b3ee28c82c23082bca9cc1e9f",
+    "line": 30,
+    "record_key": "Mythic Arugment Summoning"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

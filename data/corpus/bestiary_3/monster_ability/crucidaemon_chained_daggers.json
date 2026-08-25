@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Crucidaemon ~ Chained Daggers",
+    "delivery": "Supernatural",
+    "description": "A crucidaemon fights with the two daggers chained to its wrists as if dual wielding daggers with a reach of 10 feet (although it can also attack adjacent foes with no penalty). It takes no penalty on attack or damage rolls while wielding both of these daggers at once. These daggers are considered to be +2 daggers that deal 2d6 points of bleed damage. The daggers become nonmagical upon the daemon's death, and cannot be disarmed. A crucidaemon may remanifest a destroyed dagger as a standard action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:crucidaemon_chained_daggers",
+    "name": "Chained Daggers",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT-PRIMARY|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT-SECONDARY|8"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A crucidaemon fights with the two daggers chained to its wrists as if dual wielding daggers with a reach of 10 feet (although it can also attack adjacent foes with no penalty). It takes no penalty on attack or damage rolls while wielding both of these daggers at once. These daggers are considered to be +2 daggers that deal 2d6 points of bleed damage. The daggers become nonmagical upon the daemon's death, and cannot be disarmed. A crucidaemon may remanifest a destroyed dagger as a standard action."
+      },
+      {
+        "key": "KEY",
+        "value": "Crucidaemon ~ Chained Daggers"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrucidaemonRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.62",
+    "traits": [
+      "CrucidaemonRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 606,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Crucidaemon ~ Chained Daggers",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

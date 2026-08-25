@@ -1,0 +1,144 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Psychometrist",
+    "name": "Psychometrist",
+    "class": "Vigilante",
+    "description": "Wise vigilantes know that there is power in certain seemingly unremarkable items. Psychometrists aren't spellcasters; instead, they collect strange items or create their own uncanny gadgets that seem to only work for them. Psychometrists often hide their clandestine activities behind the guise of an eccentric peddler, curator, tinker, or artificer.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Psychometrist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Psychometrist],[!PREFACT:1,ABILITIES,Vigilante_Archetype_ClassSkills=True,Vigilante_Archetype_SocialTalent1=True,Vigilante_Archetype_VigilanteTalent2=True,Vigilante_Archetype_VigilanteTalent6=True,Vigilante_Archetype_VigilanteTalent12=True,Vigilante_Archetype_VigilanteTalent18=True,Vigilante_Archetype_Unshakable=True,Vigilante_Archetype_VengeanceStrike=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Wise vigilantes know that there is power in certain seemingly unremarkable items. Psychometrists aren't spellcasters; instead, they collect strange items or create their own uncanny gadgets that seem to only work for them. Psychometrists often hide their clandestine activities behind the guise of an eccentric peddler, curator, tinker, or artificer."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Psychometrist ~ Class Skills|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Psychometrist ~ Occult Awareness|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychometrist ~ Implements and Focus Powers|PRECLASS:1,Vigilante=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychometrist ~ Mental Focus|PRECLASS:1,Vigilante=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychometrist ~ Object Reading|PRECLASS:1,Vigilante=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychometrist ~ Psychometric Strike|PRECLASS:1,Vigilante=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VengeanceStrike|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_Unshakable|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 148,
+    "record_key": "Vigilante Archetype ~ Psychometrist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

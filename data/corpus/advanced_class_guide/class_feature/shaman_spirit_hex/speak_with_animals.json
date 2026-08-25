@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Speak with Animals",
     "name": "Speak with Animals",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "Choose %1 specific kinds of animals: eagle, fox, dog, and so on. The shaman gains the ability to converse with those types of animal as if she were under the effects of speak with animals.|ShamanSpeakWithAnimalsChoices",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

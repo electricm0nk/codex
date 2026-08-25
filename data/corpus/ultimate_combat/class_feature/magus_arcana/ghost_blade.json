@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Ghost Blade",
     "name": "Ghost Blade",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "Whenever the magus enchants his weapon using his arcane pool, he may spend 1 additional point from his arcane pool to add the brilliant energy and ghost touch special abilities to the list of available options. The magus must be at least 9th level before selecting this arcana.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

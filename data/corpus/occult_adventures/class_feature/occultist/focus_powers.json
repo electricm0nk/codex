@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Occultist ~ Focus Powers",
     "name": "Focus Powers",
@@ -43,6 +43,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.47"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,3|PREVAREQ:Occultist_CF_FocusPowers3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,5|PREVAREQ:Occultist_CF_FocusPowers5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,7|PREVAREQ:Occultist_CF_FocusPowers7,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,9|PREVAREQ:Occultist_CF_FocusPowers9,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,11|PREVAREQ:Occultist_CF_FocusPowers11,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,13|PREVAREQ:Occultist_CF_FocusPowers13,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,15|PREVAREQ:Occultist_CF_FocusPowers15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,17|PREVAREQ:Occultist_CF_FocusPowers17,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OccultistFocusPower|-1|PREVARGTEQ:OccultistLVL,19|PREVAREQ:Occultist_CF_FocusPowers19,1"
       }
     ]
   },
@@ -60,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

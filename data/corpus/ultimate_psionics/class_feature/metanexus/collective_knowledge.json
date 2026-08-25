@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metanexus ~ Collective Knowledge",
+    "name": "Collective Knowledge",
+    "class": "Metanexus",
+    "description": "By taking a full-round action, you can manifest any power known by a member of your collective as if it were on your list of powers known.  If the power's manifesting time is longer than a standard action, that manifesting time is added to the time it takes to use this ability.  If the power is not on the tactician power list, this ability costs one daily use of the strategy ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metanexus ~ Collective Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "By taking a full-round action, you can manifest any power known by a member of your collective as if it were on your list of powers known.  If the power's manifesting time is longer than a standard action, that manifesting time is added to the time it takes to use this ability.  If the power is not on the tactician power list, this ability costs one daily use of the strategy ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2287,
+    "record_key": "Metanexus ~ Collective Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

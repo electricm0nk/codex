@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Investigator Archetype ~ Cartographer",
     "name": "Cartographer",
-    "class": "Investigator Archetype",
+    "class": "Investigator",
     "description": "Cartographers are eager trailblazers who explore uncharted terrain, study landmarks, and find new paths through the wilderness. They record this information meticulously so that those who follow in their footsteps can travel swiftly and safely within the studied area. Rather than studying poisons like many investigators do, cartographers use their alchemical expertise to create better inks that allow them to draw maps with incredible level of detail.",
     "raw_tokens": [
       {
@@ -99,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

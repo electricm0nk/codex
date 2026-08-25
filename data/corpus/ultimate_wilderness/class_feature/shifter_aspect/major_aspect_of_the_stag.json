@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Stag ~ Major",
     "name": "Major Aspect of the Stag",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a Large stag (Bestiary 4 p150), but its space changes to 10 feet. While in this form, you gain a gore attack (1d6 damage), two hoof attacks (1d4 damage), a base speed of 50 feet, low-light vision, and scent (30 feet).",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

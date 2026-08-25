@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -83,6 +83,26 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.56"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,4|PREVAREQ:Swashbuckler_CF_BonusFeat4,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,8|PREVAREQ:Swashbuckler_CF_BonusFeat8,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,12|PREVAREQ:Swashbuckler_CF_BonusFeat12,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,16|PREVAREQ:Swashbuckler_CF_BonusFeat16,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_SwashbucklerBonusFeat|1|PREVARGTEQ:SwashbucklerLVL,20|PREVAREQ:Swashbuckler_CF_BonusFeat20,0"
       }
     ]
   },
@@ -100,5 +120,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

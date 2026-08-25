@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Imp Companion Trick ~ Spell-like Ability At-will (Ghost Sound)",
+    "name": "Spell-like Ability At-will (Ghost Sound)",
+    "description": "The Imp gains the ability to use Ghost Sound as an at-will spell-like ability (CL 6).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imp Companion Trick ~ Spell-like Ability At-will (Ghost Sound)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ImpCompTrick"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=6|Ghost Sound"
+      },
+      {
+        "key": "DESC",
+        "value": "The Imp gains the ability to use Ghost Sound as an at-will spell-like ability (CL 6)."
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
+    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9",
+    "line": 29,
+    "record_key": "Imp Companion Trick ~ Spell-like Ability At-will (Ghost Sound)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

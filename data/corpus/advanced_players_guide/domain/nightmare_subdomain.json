@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Nightmare Subdomain",
+    "name": "Nightmare Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Nightmare Subdomain],[PREVARLT:MadnessDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Nightmare Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Nightmare Subdomain=1|Confusion (Lesser)|Nightmare Subdomain=2|Touch of Idiocy|Nightmare Subdomain=3|Rage|Nightmare Subdomain=4|Phantasmal Killer|Nightmare Subdomain=5|Nightmare|Nightmare Subdomain=6|Nightmare|Nightmare Subdomain=7|Insanity|Nightmare Subdomain=8|Scintillating Pattern|Nightmare Subdomain=9|Weird"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 56,
+    "record_key": "Nightmare Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

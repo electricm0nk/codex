@@ -1,25 +1,103 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Monk ~ Ki Powers",
-    "name": "Ki Powers",
-    "class_key": "Monk ~ Unchained Class",
     "base_class_key": "Monk",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Monk Class Feature",
-      "SpecialQuality",
-      "Supernatural",
-      "Ki Powers"
-    ],
-    "min_level": 4,
-    "is_granted": true,
-    "visible": null,
+    "class_key": "Monk ~ Unchained Class",
     "class_skills": [],
     "description": "At 4th level and every 2 levels thereafter, a monk can select one ki power. These powers allow the monk to perform amazing feats of mystical power and acrobatic prowess by expending points from his ki pool. Once a ki power is selected, it cannot be changed. Some ki powers require the monk to be of a specific level or higher before they can be chosen. Unless otherwise noted, a monk cannot select an individual ki power more than once.",
-    "source_page": "p.16",
+    "is_granted": true,
+    "key": "Unchained Monk ~ Ki Powers",
+    "min_level": 4,
+    "name": "Ki Powers",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "(MonkLVL-2)/2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "KiPowerLVL",
+          "MonkLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,4],[PREVAREQ:Monk_CF_KiPowers4,1]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,6],[PREVAREQ:Monk_CF_KiPowers6,1]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,8],[PREVAREQ:Monk_CF_KiPowers8,1]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,10],[PREVAREQ:Monk_CF_KiPowers10,1]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,12],[PREVAREQ:Monk_CF_KiPowers12,1]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,14],[PREVAREQ:Monk_CF_KiPowers14,1]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,16],[PREVAREQ:Monk_CF_KiPowers16,1]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,18],[PREVAREQ:Monk_CF_KiPowers18,1]"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Pool_Unchained_Ki_Power",
+          "-1",
+          "PREMULT:2,[PREVARGTEQ:MonkLVL,20],[PREVAREQ:Monk_CF_KiPowers20,1]"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -50,33 +128,27 @@
         "value": "p.16"
       }
     ],
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "VAR",
-          "Pool_Unchained_Ki_Power",
-          "(MonkLVL-2)/2"
-        ]
-      },
-      {
-        "qualifiers": [
-          "VAR",
-          "KiPowerLVL",
-          "MonkLVL"
-        ]
-      }
-    ]
+    "source_page": "p.16",
+    "type_tokens": [
+      "Unchained Monk Class Feature",
+      "SpecialQuality",
+      "Supernatural",
+      "Ki Powers"
+    ],
+    "visible": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 468,
-    "record_key": "Unchained Monk ~ Ki Powers"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 468,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Monk ~ Ki Powers",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",

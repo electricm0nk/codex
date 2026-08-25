@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Flame Mystery ~ Heat Aura",
     "name": "Heat Aura",
-    "class": "Flame Mystery",
+    "class": "Oracle",
     "description": "As a swift action, you can cause waves of heat to radiate from your body. This heat deals %1d4 points of fire damage to all creatures within 10 feet. A Reflex save halves this damage. In addition, your form wavers and blurs, granting you 20%% concealment until your next turn. You can use this ability %2 times per day|max(1,classlevel(\"Oracle\")/2)|1+(classlevel(\"Oracle\")/5)",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vermin Rider ~ Eternal Bond",
+    "name": "Eternal Bond",
+    "description": "Your life becomes linked to your mount's. As long as the mount is alive, you are protected from harm. Damage in excess of that which would reduce you to fewer than 0 hit points is instead transferred to the mount. This damage is transferred 1 point at a time, meaning that as soon as the mount is reduced to a number of negative hit points equal to its Constitution score, all excess damage remains with you. Effects that cause death but not damage are unaffected by this ability. This ability does not affect spells like baleful polymorph, flesh to stone, or imprisonment, or other effect that do not cause actual damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vermin Rider ~ Eternal Bond"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your life becomes linked to your mount's. As long as the mount is alive, you are protected from harm. Damage in excess of that which would reduce you to fewer than 0 hit points is instead transferred to the mount. This damage is transferred 1 point at a time, meaning that as soon as the mount is reduced to a number of negative hit points equal to its Constitution score, all excess damage remains with you. Effects that cause death but not damage are unaffected by this ability. This ability does not affect spells like baleful polymorph, flesh to stone, or imprisonment, or other effect that do not cause actual damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_um.lst",
+    "sha256": "dbd6f422e0e3106db6759299ddad5770b0038d66d7c34ed615f7838b632fdad3",
+    "line": 15,
+    "record_key": "Vermin Rider ~ Eternal Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

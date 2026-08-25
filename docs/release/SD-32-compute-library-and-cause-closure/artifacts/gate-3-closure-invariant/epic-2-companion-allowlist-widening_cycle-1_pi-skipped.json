@@ -1,0 +1,23 @@
+{
+  "population": 769,
+  "written": 215,
+  "pi_skipped": 2,
+  "skipped_existing_already_ingested": 552,
+  "unresolved": [],
+  "written_by_book": {
+    "advanced_players_guide": 17,
+    "advanced_race_guide": 3,
+    "bestiary": 1,
+    "book_of_the_damned_volume_1": 15,
+    "core_rulebook": 27,
+    "ultimate_magic": 23,
+    "ultimate_wilderness": 129
+  },
+  "pi_skipped_records": [
+    "advanced_race_guide:arg_abilities_companion.lst:31 'Earth Glide' (key: 'Shaitan Binder Eidolon ~ Earth Glide') -- still_undecidable: capitalized token(s) outside generic allowlist: ['Shaitan']",
+    "advanced_race_guide:arg_abilities_companion.lst:30 'Noble Eidolon' (key: 'Shaitan Binder Eidolon ~ Noble Eidolon') -- still_undecidable: lowercase creature-species-shaped reference(s): ['shaitan']"
+  ],
+  "pi_skipped_by_bucket": {
+    "still_undecidable": 2
+  }
+}

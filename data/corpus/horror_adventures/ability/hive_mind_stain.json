@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Hive Mind Stain",
+    "name": "Hive Mind Stain",
+    "description": "Your mind is cluttered with other disparate voices. You take a -2 penalty on concentration checks, as well as on Intelligence- and Wisdom-based ability checks and skill checks, and you can never take 10 on such checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Hive Mind Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveHiveMindStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mind is cluttered with other disparate voices. You take a -2 penalty on concentration checks, as well as on Intelligence- and Wisdom-based ability checks and skill checks, and you can never take 10 on such checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Intelligence,TYPE=Wisdom|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 424,
+    "record_key": "Hive Corruption ~ Hive Mind Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

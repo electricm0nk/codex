@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Menotherian ~ Implant",
+    "delivery": "Extraordinary",
+    "description": "1/day the Menotherian can implant eggs in a creature using its sting. The creature must succeed at a DC %1 Fortitude save to resist implantation. The target is nauseated for the next 2d4 rounds while the eggs gestate. When the eggs hatch, they form a chaotic neutral hellwasp swarm, kill the host in 1 round, and inhabit the corpse. The eggs can be surgically removed with a successful DC 30 Heal check (this check deals 2d6 damage to the host regardless of success) or by Remove Disease or similar spell.",
+    "description_variables": [
+      "ImplantDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:menotherian_implant",
+    "name": "Implant",
+    "owners": [
+      "inner_sea_gods:monster:the_menotherian"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 109,
+    "record_key": "Menotherian ~ Implant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

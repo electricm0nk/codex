@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Fortune Teller",
+    "category": "General",
+    "name": "Fortune Teller",
+    "description": "As a result of being raised in a land steeped in tradition and superstition, you are skilled at communicating with the spirit world. Cast some divination spells at +1 caster level. As a result of being raised in a land steeped in tradition and superstition, you are skilled at communicating with the spirit world. Whenever you cast a spell from the divination school, you may use your instead of the spell's material component, as long as the cost of the material component is no more than 1,000 gp. If you choose to perform the spell using your and the spell's normal material component (regardless of that component's cost), you cast the spell at +1 caster level.",
+    "prerequisites": [
+      "PRESPELLSCHOOL:1,Divination=0"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 23,
+    "record_key": "Fortune Teller"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

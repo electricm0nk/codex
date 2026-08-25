@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Fight On",
+    "name": "Fight On",
+    "description": "With an order or a determined look, you spur a wounded ally to keep fighting. As an immediate action, you can expend one use of mythic power to allow a creature other than yourself that is reduced to fewer than 0 hit points to remain conscious and alive. The creature can't die from hit point damage until after the start of your next turn. You can extend this effect for 1 round at the start of your next turn by expending another use of mythic power as a free action. Though the creature can't be killed by hit point damage, any damage it takes still applies to its current hit points. When this ability's effect ends, the creature falls unconscious or dies if its current hit points or other circumstances would otherwise cause it to do so. The creature must be within 30 feet for you to start or extend this effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Fight On"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "With an order or a determined look, you spur a wounded ally to keep fighting. As an immediate action, you can expend one use of mythic power to allow a creature other than yourself that is reduced to fewer than 0 hit points to remain conscious and alive. The creature can't die from hit point damage until after the start of your next turn. You can extend this effect for 1 round at the start of your next turn by expending another use of mythic power as a free action. Though the creature can't be killed by hit point damage, any damage it takes still applies to its current hit points. When this ability's effect ends, the creature falls unconscious or dies if its current hit points or other circumstances would otherwise cause it to do so. The creature must be within 30 feet for you to start or extend this effect."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 386,
+    "record_key": "Mythic Path Ability ~ Fight On"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

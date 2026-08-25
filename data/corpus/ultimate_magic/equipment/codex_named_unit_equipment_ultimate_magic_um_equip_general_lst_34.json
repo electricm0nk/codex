@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:27:07Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_34)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_34)",
+    "cost_gp": 11115.0,
+    "weight_lbs": 12.0,
+    "description": "Level 20 alchemist; Protection - The cover is treated with tears of death poison (contact; save Fort DC 22; onset 1 minute; frequency 1/minute for 6 minutes; effect 1d6 Con damage and paralyzed for 1 minute).; Formulae - 6.elemental body III, form of the dragon I, heal, shadow walk, transformation, twin form; 5.delayed consumption, dream, elude time, nightmare, overland flight, resurgent transformation, spell resistance; 4.detonate, dragon's breath, fire shield, fluid form, greater invisibility, neutralize poison, stoneskin, universal formula; 3.absorbing touch, amplify elixir, bloodhound, displacement, draconic reservoir, haste, heroism, seek thoughts, thorn body; 2.alchemical allocation, barkskin, bull's strength, cat's grace, elemental touch, fire breath, perceive cues, see invisibility, transmute potion to poison, vomit swarm; 1.bomber's eye, comprehend languages, crafter's fortune, disguise self, endure elements, keen senses, negate aroma, shield, stone fist, touch of the sea; Preparation Ritual - Spontaneous Bomb"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5",
+    "line": 34,
+    "record_key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_34)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_magic:um_equip_general.lst:34"
+  }
+}

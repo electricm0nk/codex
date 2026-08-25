@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ratfolk ~ Tinker",
+    "name": "Tinker",
+    "description": "Ratfolk gain a +2 racial bonus on Craft (alchemy), Perception, and Use Magic Device checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ratfolk ~ Tinker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Ratfolk_ReplaceTinker=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Ratfolk gain a +2 racial bonus on Craft (alchemy), Perception, and Use Magic Device checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Alchemy),Perception,Use Magic Device|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Craft (alchemy), +2 Perception, +2 Use Magic Device"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
+    "sha256": "7f0453b27d69754ce333cf8cdd0f68df62a37c205f79fa22d06d617dc45bc5a3",
+    "line": 21,
+    "record_key": "Ratfolk ~ Tinker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

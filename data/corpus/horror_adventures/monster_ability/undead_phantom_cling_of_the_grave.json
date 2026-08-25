@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Undead Phantom ~ Cling of the Grave",
+    "delivery": "Supernatural",
+    "description": "An undead phantom can hold the charge on a touch spell of the necromancy school up to a maximum of 1 round per spiritualist level of the necrologist. This ability alters share spells.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:undead_phantom_cling_of_the_grave",
+    "name": "Cling of the Grave",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An undead phantom can hold the charge on a touch spell of the necromancy school up to a maximum of 1 round per spiritualist level of the necrologist. This ability alters share spells."
+      },
+      {
+        "key": "KEY",
+        "value": "Undead Phantom ~ Cling of the Grave"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.69",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 345,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Undead Phantom ~ Cling of the Grave",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Oma ~ Starflight",
+    "delivery": "Extraordinary",
+    "description": "An oma can survive in the void of outer space, and soars through vacuum at incredible speed. Although exact travel times vary, a trip between two planets within a solar system should take 3d20 days, while one to another system should take 3d20 weeks (or more, at the GM's discretion), provided the oma knows the way to its destination.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:oma_starflight",
+    "name": "Starflight",
+    "owners": [
+      "bestiary_4:monster:oma"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An oma can survive in the void of outer space, and soars through vacuum at incredible speed. Although exact travel times vary, a trip between two planets within a solar system should take 3d20 days, while one to another system should take 3d20 weeks (or more, at the GM's discretion), provided the oma knows the way to its destination."
+      },
+      {
+        "key": "KEY",
+        "value": "Oma ~ Starflight"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oma Racial Trait.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Oma Racial Trait"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1147,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Oma ~ Starflight",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retrain ~ Hit Point",
+    "name": "Hit Point",
+    "description": "You retrained one or more hit points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retrain ~ Hit Point"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Retraining"
+      },
+      {
+        "key": "PREVARLTEQ",
+        "value": "RetrainHPLimit,999"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RetrainingDaysSpent|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RetrainHPLimit|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained one or more hit points."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RetrainingDaysSpent|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RetrainHPLimit|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643",
+    "line": 13,
+    "record_key": "Retrain ~ Hit Point"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

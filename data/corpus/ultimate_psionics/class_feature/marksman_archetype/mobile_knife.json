@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Marksman Archetype ~ Mobile Knife",
+    "name": "Mobile Knife",
+    "class": "Marksman",
+    "description": "You prefer the use of small blades and mobile attacks over standing still for extended periods of time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman Archetype ~ Mobile Knife"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MarksmanArchetype.MarksmanEvadeArrows.MarksmanCoverFire.MarksmanBonusFeat5.MarksmanStyleAbility8.MarksmanBonusFeat8"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Marksman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Marksman Archetype ~ Mobile Knife],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanEvadeArrows,TYPE.MarksmanCoverFire,TYPE.MarksmanBonusFeat5,TYPE.MarksmanStyleAbility8,TYPE.MarksmanBonusFeat8]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Xeph"
+      },
+      {
+        "key": "DESC",
+        "value": "You prefer the use of small blades and mobile attacks over standing still for extended periods of time."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Mobile Knife ~ Mobile Combat|PRECLASS:1,Marksman=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Mobile Knife ~ Additional Bursts|PRECLASS:1,Marksman=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Mobile Knife ~ Shot on the Run|PRECLASS:1,Marksman=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Mobile Knife ~ Fury of a Single Blade|PRECLASS:1,Marksman=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Mobile Knife ~ Returning Knives|PRECLASS:1,Marksman=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.341"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1900,
+    "record_key": "Marksman Archetype ~ Mobile Knife"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

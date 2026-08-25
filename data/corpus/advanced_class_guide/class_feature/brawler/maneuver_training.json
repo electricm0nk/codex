@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler ~ Maneuver Training",
     "name": "Maneuver Training",
@@ -139,6 +139,46 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to bull rush combat maneuvers.|BullRushManeuverTrainingBonus|PREVARGTEQ:BullRushManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to dirty trick combat maneuvers.|DirtyTrickManeuverTrainingBonus|PREVARGTEQ:DirtyTrickManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to disarm combat maneuvers.|DisarmManeuverTrainingBonus|PREVARGTEQ:DisarmManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to Drag combat maneuvers.|DragManeuverTrainingBonus|PREVARGTEQ:DragManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to Grapple combat maneuvers.|GrappleManeuverTrainingBonus|PREVARGTEQ:GrappleManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to Overrun combat maneuvers.|OverrunManeuverTrainingBonus|PREVARGTEQ:OverrunManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to Reposition combat maneuvers.|RepositionManeuverTrainingBonus|PREVARGTEQ:RepositionManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to Steal combat maneuvers.|StealManeuverTrainingBonus|PREVARGTEQ:StealManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to Sunder combat maneuvers.|SunderManeuverTrainingBonus|PREVARGTEQ:SunderManeuverTraining,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +%1 to CMB and CMD to Trip combat maneuvers.|TripManeuverTrainingBonus|PREVARGTEQ:TripManeuverTraining,1"
       }
     ]
   },
@@ -156,5 +196,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

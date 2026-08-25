@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Mobile Blast",
     "name": "Mobile Blast",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element universal; Type form infusion; Level 3; Burn 2 Associated Blasts any Saving Throw Reflex negates You send an elemental mass, energy ball, or object into a particular square within 30 feet, dealing 1/4 the normal amount of damage (or half the normal amount of damage, for an energy blast) to all creatures in that square. The mobile blast lasts until you dismiss it as a free action, lose consciousness, or move farther than 30 feet from it. Each round on your turn as a move action, you can move the mobile blast to another square within range; either way, it continues to deal damage to all creatures in its final square each round if they fail their saving throws. You can have only a single mobile blast in existence at a time. If the mobile blast's total burn cost before applying any reduction for gather power is 0, it has no maximum duration. Otherwise, it lasts for a maximum number of rounds equal to your Constitution modifier, and afterward you can't create another mobile blast for a number of minutes equal to the number of rounds it existed. A mobile blast is always extremely loud and visible. The saving throw DC is Dexterity-based.",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

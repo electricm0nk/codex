@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Breath Weapon Bomb",
     "name": "Breath Weapon Bomb*",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "Instead of drawing the components of, creating, and throwing a bomb, you can draw the components, drink them, mix them within your body, and then expel them as a breath weapon as a standard action. This breath weapon is a 15-foot cone. Each creature within the cone takes damage as if it had suffered a direct hit from your bomb, but succeeding at a Reflex save (DC = %1) halves the damage. Unlike throwing normal bombs, drawing, drinking, and expelling breath weapon bombs does not provoke attacks of opportunity.|AlchemistBombDC",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

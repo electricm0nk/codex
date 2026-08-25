@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Alchemist Archetype ~ Mad Scientist",
     "name": "Mad Scientist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "The mad scientist's colleagues laughed at her insights, mocked her theories, and hounded her from the halls of academia, simply because they were too weak and frightened to understand her work. They thought she was finished. They were wrong.",
     "raw_tokens": [
       {
@@ -87,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

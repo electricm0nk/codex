@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Part the Veil",
     "name": "Part the Veil",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can lace spells you cast with the raw madness that waits in the outer darkness. Activating this ability is a swift action that you must use as you cast a spell that targets a single creature and that allows a Will saving throw to negate or reduce the spell's primary effect. If the target fails to resist the spell, the target is also confused for a number of rounds equal to the spell's level as visions of the void cause temporary insanity. The victim can attempt a new saving throw each round to end the effect - these additional saving throws apply only to the additional confusion effect and not to the original spell effect. This is a mind-affecting effect. You can use this ability %1 times per day.|DomainVoidTimes",
     "raw_tokens": [
       {
@@ -55,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

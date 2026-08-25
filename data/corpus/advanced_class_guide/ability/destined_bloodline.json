@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Destined Bloodline",
+    "name": "Destined Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Raging Blood Feat Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "Raging Blood Feat Bloodline"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Eldritch Heritage Bloodline,Destined Bloodline],[PREABILITY:1,CATEGORY=Sorcerer Bloodline,Destined Bloodline]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Bloodrager Bloodline ~ Destined"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlineLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlineProgressionLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlinePower1Times|3+CHA+BloodragerBloodlinePower1TimesBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_Destined_BloodlinePower1|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_other.lst",
+    "sha256": "b4389e52c8d9361ee77d0885d92393d7bfa3e3289a78fc25dfd666f5402fa218",
+    "line": 25,
+    "record_key": "Destined Bloodline"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Genie's Blade",
+    "name": "Genie's Blade",
+    "description": "The student of perfection is proficient with the falchion, kukri, and scimitar and treats these weapons as if they had the monk special quality. The student of perfection can spend 1 ki point as a swift action to give a falchion, kukri, or scimitar he wields the ki strike special ability and have it deal damage equal to that of his unarmed strikes (if greater than its base damage). The student of perfection applies his full Strength modifier to his damage rolls for these attacks. These effects last 1 round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Genie's Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "DESC",
+        "value": "The student of perfection is proficient with the falchion, kukri, and scimitar and treats these weapons as if they had the monk special quality. The student of perfection can spend 1 ki point as a swift action to give a falchion, kukri, or scimitar he wields the ki strike special ability and have it deal damage equal to that of his unarmed strikes (if greater than its base damage). The student of perfection applies his full Strength modifier to his damage rolls for these attacks. These effects last 1 round."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Falchion|Kukri|Scimitar"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 20,
+    "record_key": "Student of Perfection ~ Genie's Blade"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

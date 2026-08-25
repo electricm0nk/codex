@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "War Domain",
     "name": "War",
-    "class": null,
+    "class": "Cleric",
     "description": "You are a crusader for your god, always ready and willing to fight to defend your faith.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|War=1|Magic Weapon|War=2|Spiritual Weapon|War=3|Magic Vestment|War=4|Divine Power|War=5|Flame Strike|War=6|Blade Barrier|War=7|Power Word Blind|War=8|Power Word Stun|War=9|Power Word Kill"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,War],[PREVARLT:WarDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

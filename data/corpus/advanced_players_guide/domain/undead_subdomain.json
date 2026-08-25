@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Undead Subdomain",
+    "name": "Undead Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Undead Subdomain],[PREVARLT:DeathDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Undead Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Undead Subdomain=1|Cause Fear|Undead Subdomain=2|Ghoul Touch|Undead Subdomain=3|Animate Dead|Undead Subdomain=4|Enervation|Undead Subdomain=5|Slay Living|Undead Subdomain=6|Create Undead|Undead Subdomain=7|Destruction|Undead Subdomain=8|Create Greater Undead|Undead Subdomain=9|Energy Drain"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 74,
+    "record_key": "Undead Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Spearman ~ Spear Expert",
+    "name": "Spear Expert",
+    "class": "Spearman",
+    "description": "You have learned to adeptly wield your spear in melee combat.  You can choose to deal bludgeoning damage when making melee attacks with your spear, and can choose to deal lethal or non-lethal damage when making melee attacks with a spear without suffering a penalty to your attack rolls.  In addition, you can treat a longspear as a quarterstaff for the purposes of feats such as Quarterstaff Master.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spearman ~ Spear Expert"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to adeptly wield your spear in melee combat.  You can choose to deal bludgeoning damage when making melee attacks with your spear, and can choose to deal lethal or non-lethal damage when making melee attacks with a spear without suffering a penalty to your attack rolls.  In addition, you can treat a longspear as a quarterstaff for the purposes of feats such as Quarterstaff Master."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1918,
+    "record_key": "Spearman ~ Spear Expert"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

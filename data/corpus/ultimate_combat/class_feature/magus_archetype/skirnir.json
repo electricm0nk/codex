@@ -1,0 +1,156 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Magus Archetype ~ Skirnir",
+    "name": "Skirnir",
+    "class": "Magus",
+    "description": "Sometimes called a shield-vassal or shieldmaiden, the skirnir has learned to infuse his power into his shield.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Archetype ~ Skirnir"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MagusArchetype.MagusSpellRecall.MagusSpellCombat.MagusKnowledgePool.MagusImprovedSpellCombat.MagusGreaterSpellCombat.MagusGreaterSpellAccess"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Magus=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Skirnir],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MagusSpellRecall,TYPE.MagusSpellCombat,TYPE.MagusKnowledgePool,TYPE.MagusImprovedSpellCombat,TYPE.MagusGreaterSpellCombat,TYPE.MagusGreaterSpellAccess]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sometimes called a shield-vassal or shieldmaiden, the skirnir has learned to infuse his power into his shield."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Diminished Spellcasting|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Arcane Bond|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Arcane Pool|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Sorcerous Shield|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Spellstrike|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Shield Pool|PRECLASS:1,Magus=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Spellshield|PRECLASS:1,Magus=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Shielded Spell Combat|PRECLASS:1,Magus=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Greater Spellshield|PRECLASS:1,Magus=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Magus Class Feature|AUTOMATIC|Skirnir ~ Magus Arcana|PRECLASS:1,Magus=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Skirnir],[!PREFACT:1,ABILITIES,Magus_Archetype_SpellRecall=True,Magus_Archetype_SpellCombat=True,Magus_Archetype_KnowledgePool=True,Magus_Archetype_ImprovedSpellCombat=True,Magus_Archetype_GreaterSpellCombat=True,Magus_Archetype_GreaterSpellAccess=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_SpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ImprovedSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_GreaterSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_GreaterSpellAccess|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_SpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_KnowledgePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ImprovedSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_GreaterSpellCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_GreaterSpellAccess|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 9,
+    "record_key": "Magus Archetype ~ Skirnir"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

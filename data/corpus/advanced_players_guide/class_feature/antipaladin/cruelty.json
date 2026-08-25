@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Antipaladin ~ Cruelty",
     "name": "Cruelty",
@@ -47,6 +47,30 @@
       {
         "key": "BONUS",
         "value": "VAR|Cruelties|min(CrueltyLVL/3,6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cruelty|-1|PREVARGTEQ:CrueltyLVL,3|PREVAREQ:Antipaladin_CF_Cruelty3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cruelty|-1|PREVARGTEQ:CrueltyLVL,6|PREVAREQ:Antipaladin_CF_Cruelty6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cruelty|-1|PREVARGTEQ:CrueltyLVL,9|PREVAREQ:Antipaladin_CF_Cruelty9,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cruelty|-1|PREVARGTEQ:CrueltyLVL,12|PREVAREQ:Antipaladin_CF_Cruelty12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cruelty|-1|PREVARGTEQ:CrueltyLVL,15|PREVAREQ:Antipaladin_CF_Cruelty15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Cruelty|-1|PREVARGTEQ:CrueltyLVL,18|PREVAREQ:Antipaladin_CF_Cruelty18,1"
       }
     ]
   },
@@ -64,5 +88,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

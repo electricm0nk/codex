@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psionic Advanced Rogue Talent ~ Dazing Shot",
+    "name": "Dazing Shot",
+    "class": "Psionic Advanced Rogue Talent",
+    "description": "You can expend your psionic focus to daze the target when you make a successful sneak attack on a ranged attack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Advanced Rogue Talent ~ Dazing Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.Supernatural.RogueAdvancedTalent"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Psionic Shot"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RogueTalentLVL,10"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "IsPsionic,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus to daze the target when you make a successful sneak attack on a ranged attack."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1091,
+    "record_key": "Psionic Advanced Rogue Talent ~ Dazing Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

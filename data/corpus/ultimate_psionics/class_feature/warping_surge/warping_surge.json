@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Warping Surge",
+    "name": "Warping Surge",
+    "class": null,
+    "description": "Psychic enervation:Sickened for %1 rounds; lose %2 power points.|WarpingDuration|WarpingPPLoss",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.SurgeType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpingDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpingPPLoss|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic enervation:Sickened for %1 rounds; lose %2 power points.|WarpingDuration|WarpingPPLoss"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wilder Class Feature|AUTOMATIC|Warping Surge Bond|!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderSurgeBond|PREABILITY:1,CATEGORY=Special Ability,Warping Surge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpingDuration|WildSurge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpingPPLoss|SurgeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1057,
+    "record_key": "Warping Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Charm Person",
+    "name": "Charm Person",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Charm Person"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Charm Person"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CharmPerson_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CharmPerson_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CharmPerson_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CharmPerson_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CharmPerson_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CharmPerson_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_CharmPerson_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_CharmPerson_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_CharmPerson_LVL|Charm Person,RacialSLA_CharmPerson_DC|PREVAREQ:RacialSLA_CharmPerson_AtWill,0|PREVAREQ:RacialSLA_CharmPerson_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_CharmPerson_LVL|Charm Person,RacialSLA_CharmPerson_DC|PREVAREQ:RacialSLA_CharmPerson_AtWill,1|PREVAREQ:RacialSLA_CharmPerson_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_CharmPerson_LVL|Charm Person,RacialSLA_CharmPerson_DC|PREVAREQ:RacialSLA_CharmPerson_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CharmPerson_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CharmPerson_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CharmPerson_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CharmPerson_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_CharmPerson_DC|10+RacialSLA_CharmPerson_SpellLVL+RacialSLA_CharmPerson_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 204,
+    "record_key": "Racial SLA ~ Charm Person"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

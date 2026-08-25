@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wizard Archetype ~ Scrollmaster",
     "name": "Scrollmaster",
-    "class": "Wizard Archetype",
+    "class": "Wizard",
     "description": "To some wizards, a scroll is not just a written form of a spell, it is a physical weapon meant to be used in combat like a sword or a shield. These strange wizards enter battle armed with scrolls, often one in each in each hand, practicing combat techniques resembling some monk martial arts.",
     "raw_tokens": [
       {
@@ -59,6 +59,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Wizard"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Scrollmaster],[!PREFACT:1,ABILITIES,Wizard_Archetype_ArcaneBond=True,Wizard_Archetype_BonusFeat10=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_BonusFeat10|true"
       }
     ]
   },
@@ -75,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

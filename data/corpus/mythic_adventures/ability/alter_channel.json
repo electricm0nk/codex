@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Alter Channel",
+    "name": "Alter Channel",
+    "description": "If you're in the area of an opponent's channel energy ability and the energy type is the opposite of yours, as an immediate action you can expend one use of mythic power to transform the opponent's channeled energy to the opposite type. You can cause the altered energy to either affect the opposite kind of targets (undead or living), or change whether it heals or harms, but not both. Channeled energy that has been changed in this way heals or deals half the normal amount of damage. For example, if an evil cleric attempts to channel negative energy to heal undead, you can expend one use of mythic power to convert that to channeled positive energy that either heals the living or harms undead. You must have the channel energy ability to select this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Alter Channel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Channel Energy"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "If you're in the area of an opponent's channel energy ability and the energy type is the opposite of yours, as an immediate action you can expend one use of mythic power to transform the opponent's channeled energy to the opposite type. You can cause the altered energy to either affect the opposite kind of targets (undead or living), or change whether it heals or harms, but not both. Channeled energy that has been changed in this way heals or deals half the normal amount of damage. For example, if an evil cleric attempts to channel negative energy to heal undead, you can expend one use of mythic power to convert that to channeled positive energy that either heals the living or harms undead. You must have the channel energy ability to select this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 111,
+    "record_key": "Mythic Path Ability ~ Alter Channel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

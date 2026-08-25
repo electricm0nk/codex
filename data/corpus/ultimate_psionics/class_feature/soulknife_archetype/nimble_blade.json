@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Nimble Blade",
+    "name": "Nimble Blade",
+    "class": "Soulknife",
+    "description": "Raw power is not the only way to overcome enemies in melee, and you are the proof of that.  You value finesse instead of power to make deadly melee attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Nimble Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifeMediumArmorProficiency.SoulknifeShieldProficiency.SoulknifeBonusFeat.SoulknifeBladeSkill2.SoulknifeMndBladeEnhancement7.SoulknifeBladeSkill10"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Nimble Blade],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeMediumArmorProficiency,TYPE.SoulknifeShieldProficiency,TYPE.SoulknifeBonusFeat,TYPE.SoulknifeBladeSkill2,TYPE.SoulknifeMndBladeEnhancement7,TYPE.SoulknifeBladeSkill10]"
+      },
+      {
+        "key": "DESC",
+        "value": "Raw power is not the only way to overcome enemies in melee, and you are the proof of that.  You value finesse instead of power to make deadly melee attacks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Nimble Blade ~ Weapon Finesse|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Nimble Blade ~ Mind Blade Finesse|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Nimble Blade ~ Piranha Strike|PRECLASS:1,Soulknife=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Nimble Blade ~ Agile Blade|PRECLASS:1,Soulknife=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Nimble Blade ~ Adaptive Form|PRECLASS:1,Soulknife=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Blade Skill|-1|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Blade Skill|-1|PRECLASS:1,Soulknife=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeEnhancement|-1|PRECLASS:1,Soulknife=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2138,
+    "record_key": "Soulknife Archetype ~ Nimble Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

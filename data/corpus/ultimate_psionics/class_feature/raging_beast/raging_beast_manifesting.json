@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Raging Beast ~ Raging Beast Manifesting",
+    "name": "Raging Beast Manifesting",
+    "class": "Raging Beast",
+    "description": "Psychic Warrior Powers Known: %1; Psychic Warrior Maximum Power Level Known: %2|PsychicWarriorPowersKnown|PsychicWarriorMaxPowerLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Raging Beast ~ Raging Beast Manifesting"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BarbarianClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic Warrior Powers Known: %1; Psychic Warrior Maximum Power Level Known: %2|PsychicWarriorPowersKnown|PsychicWarriorMaxPowerLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Psychic Warrior Manifesting Variables|Psychic Warrior Power Points"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorPKL|floor(BarbarianLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorMPL|floor(BarbarianLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicWarriorPPStat|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.296"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2419,
+    "record_key": "Raging Beast ~ Raging Beast Manifesting"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

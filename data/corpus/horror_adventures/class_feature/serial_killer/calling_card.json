@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serial Killer ~ Calling Card",
+    "name": "Calling Card",
+    "class": "Vigilante",
+    "description": "When a serial killer slays a humanoid with a coup de grace or death attack, she can leave a telltale token or clue behind identifying this death as her work. The serial killer chooses her calling card when she gains this ability, and the first time she uses it in an area where she has renown (as per the renown social talent), it becomes associated with her killings. After that, once citizens of a new settlement find this calling card, the serial killer immediately establishes the settlement as an area of renown for her vigilante identity without spending additional time to spread tales, and the Intimidate bonus from renown increases by 2. She still must spend time to establish her social identity's renown.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serial Killer ~ Calling Card"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "When a serial killer slays a humanoid with a coup de grace or death attack, she can leave a telltale token or clue behind identifying this death as her work. The serial killer chooses her calling card when she gains this ability, and the first time she uses it in an area where she has renown (as per the renown social talent), it becomes associated with her killings. After that, once citizens of a new settlement find this calling card, the serial killer immediately establishes the settlement as an area of renown for her vigilante identity without spending additional time to spread tales, and the Intimidate bonus from renown increases by 2. She still must spend time to establish her social identity's renown."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 39,
+    "record_key": "Serial Killer ~ Calling Card"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

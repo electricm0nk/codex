@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Druid Archetype ~ Rot Warden",
     "name": "Rot Warden",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "Harbingers of decay, rot wardens live in damp lands where insects and rot break down the dead to feed the living. They see in the process of rot the beauty of nature's capacity to recycle and repurpose material into something wondrous and new.",
     "raw_tokens": [
       {
@@ -127,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Accursed Manifestation Level",
+    "name": "Accursed Manifestation Level",
+    "description": "Your Accursed corruption is level %1.|AccursedManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=9|TITLE=Accursed Manifestation Level"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AccursedManifestationLevel|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|AccursedManifestationLevel|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Your Accursed corruption is level %1.|AccursedManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 28,
+    "record_key": "Accursed Manifestation Level"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

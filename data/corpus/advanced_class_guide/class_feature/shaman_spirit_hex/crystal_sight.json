@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Crystal Sight",
     "name": "Crystal Sight",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman sees through stone, earth, or sand as easily as if it were transparent crystal. Her gaze can penetrate %1 feet (or 1/12th this thickness of metal). The shaman can use this ability %2 rounds per day, but these rounds do not need to be consecutive.|ShamanCrystalSightRange|ShamanCrystalSightRounds",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

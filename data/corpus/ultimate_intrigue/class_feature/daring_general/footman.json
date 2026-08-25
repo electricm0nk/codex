@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Daring General ~ Follower ~ Footman",
     "name": "Footman",
-    "class": "Daring General",
+    "class": "Cavalier",
     "description": "Each follower gains a +2 bonus on attack and damage rolls, but takes a -2 penalty to her AC and on saving throws. A footman unit gains a +2 bonus to its OM and takes a -2 penalty to its DV in mass combat.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

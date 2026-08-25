@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trumps ~ Secret Society",
+    "name": "Trumps",
+    "description": "You learn to manipulate fate simply by drawing a card from the uniquely crafted harrow deck you gained when you became an augur. To use this ability, draw a card from a harrow deck as a standard action. You can draw a card from a harrow deck in this manner %1 times per day, but you can only have one trump active at any one time. If you draw a card to which you do not know the trump, you gain no bonus.|HarrowedTrumps",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trumps ~ Secret Society"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.TheHarrowedSocietyReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,The Harrowed Society ~ Secret Society"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TheHarrowedSocietyFame,20"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "HarrowedTrumps,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HarrowedTrumps|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn to manipulate fate simply by drawing a card from the uniquely crafted harrow deck you gained when you became an augur. To use this ability, draw a card from a harrow deck as a standard action. You can draw a card from a harrow deck in this manner %1 times per day, but you can only have one trump active at any one time. If you draw a card to which you do not know the trump, you gain no bonus.|HarrowedTrumps"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Harrowed Trumps|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HarrowedTrumps|1"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 166,
+    "record_key": "Trumps ~ Secret Society"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

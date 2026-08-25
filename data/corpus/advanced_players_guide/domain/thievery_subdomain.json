@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Thievery Subdomain",
+    "name": "Thievery Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Thievery Subdomain],[PREVARLT:TrickeryDomain,1]"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff|Disguise|Stealth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Thievery Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Thievery Subdomain=1|Disguise Self|Thievery Subdomain=2|Invisibility|Thievery Subdomain=3|Locate Object|Thievery Subdomain=4|Confusion|Thievery Subdomain=5|False Vision|Thievery Subdomain=6|Mislead|Thievery Subdomain=7|Ethereal Jaunt|Thievery Subdomain=8|Invisibility (Mass)|Thievery Subdomain=9|Time Stop"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 70,
+    "record_key": "Thievery Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

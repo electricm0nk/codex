@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Brute Stomp",
+    "category": "Combat",
+    "name": "Brute Stomp",
+    "description": "Few can avoid the brutal violence of your bone-crushing kicks and stomps. While using Brute Style, when you make a full attack with a prone opponent adjacent to you that includes at least one unarmed strike, you can make an additional unarmed strike at your highest base attack bonus against that prone creature. These additional attacks don't stack with those granted by Medusa's Wrath, and this does not allow you to make an additional attack against a creature you tripped during your full attack. Additionally, you can use your Vicious Stomp feat against any opponent within your natural reach regardless of whether it falls prone adjacent to you.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Brute Style",
+      "PRETOTALAB:8",
+      "PREVARGTEQ:PreStatScore_STR,19,PreStatScore_INT,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 10,
+    "record_key": "Brute Stomp"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

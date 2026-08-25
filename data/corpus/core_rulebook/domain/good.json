@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Good",
+    "name": "Good",
+    "raw_tokens": [
+      {
+        "key": "PREALIGN",
+        "value": "LG,NG,CG"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainGood,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Good Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.GoodDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGoodLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGoodDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGoodTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainGoodAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "DESC",
+        "value": "You have pledged your life and soul to goodness and purity."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Good=1|Protection from Evil|Good=2|Align Weapon (Good Only)|Good=3|Magic Circle against Evil|Good=4|Holy Smite|Good=5|Dispel Evil|Good=6|Blade Barrier|Good=7|Holy Word|Good=8|Holy Aura|Good=9|Summon Monster IX (Good Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 25,
+    "record_key": "Good"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

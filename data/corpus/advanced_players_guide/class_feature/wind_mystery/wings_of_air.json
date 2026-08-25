@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wind Mystery ~ Wings of Air",
     "name": "Wings of Air",
-    "class": "Wind Mystery",
+    "class": "Oracle",
     "description": "As a swift action, you can manifest a pair of translucent, cloud-like wings that grant you a fly speed of 60 feet with good maneuverability. You can use these wings for %1 minute(s) per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|OracleWingsofAirDuration|!PRECLASS:1,Oracle=10",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

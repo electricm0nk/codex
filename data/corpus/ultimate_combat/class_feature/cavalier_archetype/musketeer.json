@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Archetype ~ Musketeer",
     "name": "Musketeer",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "Some cavaliers are entrusted by their masters with the care and use of expensive and powerful oddities- firearms. Capable of inflicting shocking amounts of destruction without the aid of magic, these musketeers lead the advance of their troops, firing devastating fusillades long before the enemy can prepare for the armed charge that follows.",
     "raw_tokens": [
       {
@@ -55,6 +55,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cavalier"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ MUSKETEER],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Mount=True,Cavalier_Archetype_ExpertTrainer=True,Cavalier_Archetype_Proficiencies=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_ExpertTrainer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Proficiencies|true"
       }
     ]
   },
@@ -71,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

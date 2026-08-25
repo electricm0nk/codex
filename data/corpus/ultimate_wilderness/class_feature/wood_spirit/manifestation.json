@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wood Spirit ~ Manifestation",
     "name": "Manifestation",
-    "class": "Wood Spirit",
+    "class": "Shaman",
     "description": "Upon reaching 20th level, the shaman becomes a living creature of wood. She is forevermore treated as the plant type rather than her original creature type for the purposes of spells and magical effects. Her skin takes on the appearance of polished wood grain, and she gains a +4 natural armor bonus to her Armor Class and damage reduction 10/- against wooden weapons and the natural attacks of wooden or woodlike creature. She gains immunity to paralysis, poison, polymorph, sleep, and stun. At will, the shaman can meld with any tree or single block of wood (as meld into stone, except she can meld with wood only, and has no limit on how long she can remain in the wood).",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

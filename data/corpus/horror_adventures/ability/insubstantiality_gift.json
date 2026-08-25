@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Shadowbound Corruption ~ Insubstantiality Gift",
+    "name": "Insubstantiality Gift",
+    "description": "Your body sometimes shifts or blurs momentarily before resuming the appearance of solidity. You gain a + %1 deflection bonus to your AC. You have a 20%% chance to ignore (treat as a normal hit) confirmed critical hits and precision-based damage (such as sneak attack damage) from any weapon unless it has the ghost touch weapon special ability.|ShadowboundInsubstantialityAC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowbound Corruption ~ Insubstantiality Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ShadowboundInsubstantialityGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowboundInsubstantialityAC|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "DESC",
+        "value": "Your body sometimes shifts or blurs momentarily before resuming the appearance of solidity. You gain a + %1 deflection bonus to your AC. You have a 20%% chance to ignore (treat as a normal hit) confirmed critical hits and precision-based damage (such as sneak attack damage) from any weapon unless it has the ghost touch weapon special ability.|ShadowboundInsubstantialityAC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShadowboundInsubstantialityAC|ShadowboundManifestationLevel/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|ShadowboundInsubstantialityAC|TYPE=Deflection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 827,
+    "record_key": "Shadowbound Corruption ~ Insubstantiality Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

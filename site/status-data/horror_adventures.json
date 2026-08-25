@@ -3,17 +3,3890 @@
   "title": "Horror Adventures",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 548,
+      "denominator": 548,
+      "pct": 0.0,
+      "excluded_from_percentage": 3,
+      "standing_breakdown": {
+        "origin": 548,
+        "unclassified": 3
+      },
+      "items": [
+        {
+          "name": "Accursed",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Accursed"
+        },
+        {
+          "name": "Accursed Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Accursed Corruption Stages"
+        },
+        {
+          "name": "Accursed Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Accursed Manifestation Count"
+        },
+        {
+          "name": "Accursed Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Accursed Manifestation Level"
+        },
+        {
+          "name": "Acid Blood",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Acid Blood"
+        },
+        {
+          "name": "Acid Blood Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveAcidBloodGift",
+          "standing": "origin",
+          "display_name": "Acid Blood Gift"
+        },
+        {
+          "name": "Acid Blood Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveAcidBloodGift",
+          "standing": "origin",
+          "display_name": "Acid Blood Resistance"
+        },
+        {
+          "name": "Acid Blood Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveAcidBloodStain",
+          "standing": "origin",
+          "display_name": "Acid Blood Stain"
+        },
+        {
+          "name": "Agonizing Touch",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Agonizing Touch"
+        },
+        {
+          "name": "Agonizing Touch Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichAgonizingTouchGift",
+          "standing": "origin",
+          "display_name": "Agonizing Touch Gift"
+        },
+        {
+          "name": "Agonizing Touch Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichAgonizingTouchGift",
+          "standing": "origin",
+          "display_name": "Agonizing Touch Resistance"
+        },
+        {
+          "name": "Agonizing Touch Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichAgonizingTouchStain",
+          "standing": "origin",
+          "display_name": "Agonizing Touch Stain"
+        },
+        {
+          "name": "Allow 2nd Corruption",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Allow 2nd Corruption"
+        },
+        {
+          "name": "Allure",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "Allure"
+        },
+        {
+          "name": "Allure Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismAllureGift",
+          "standing": "origin",
+          "display_name": "Allure Gift"
+        },
+        {
+          "name": "Allure Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismAllureGift",
+          "standing": "origin",
+          "display_name": "Allure Resistance"
+        },
+        {
+          "name": "Allure Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismAllureStain",
+          "standing": "origin",
+          "display_name": "Allure Stain"
+        },
+        {
+          "name": "Animalistic Health",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Animalistic Health"
+        },
+        {
+          "name": "Animalistic Health Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyAnimalisticHealthGift",
+          "standing": "origin",
+          "display_name": "Animalistic Health Gift"
+        },
+        {
+          "name": "Animalistic Health Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyAnimalisticHealthGift",
+          "standing": "origin",
+          "display_name": "Animalistic Health Resistance"
+        },
+        {
+          "name": "Animalistic Health Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyAnimalisticHealthStain",
+          "standing": "origin",
+          "display_name": "Animalistic Health Stain"
+        },
+        {
+          "name": "Animalistic Might",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Animalistic Might"
+        },
+        {
+          "name": "Animalistic Might Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyAnimalisticMightGift",
+          "standing": "origin",
+          "display_name": "Animalistic Might Gift"
+        },
+        {
+          "name": "Animalistic Might Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyAnimalisticMightGift",
+          "standing": "origin",
+          "display_name": "Animalistic Might Resistance"
+        },
+        {
+          "name": "Animalistic Might Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyAnimalisticMightStain",
+          "standing": "origin",
+          "display_name": "Animalistic Might Stain"
+        },
+        {
+          "name": "Armored",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Armored"
+        },
+        {
+          "name": "Armored Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanArmoredGift",
+          "standing": "origin",
+          "display_name": "Armored Gift"
+        },
+        {
+          "name": "Armored Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanArmoredStain",
+          "standing": "origin",
+          "display_name": "Armored Stain"
+        },
+        {
+          "name": "Baleful Glare",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Baleful Glare"
+        },
+        {
+          "name": "Baleful Glare Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedBalefulGlareGift",
+          "standing": "origin",
+          "display_name": "Baleful Glare Gift"
+        },
+        {
+          "name": "Baleful Glare Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedBalefulGlareGift",
+          "standing": "origin",
+          "display_name": "Baleful Glare Resistance"
+        },
+        {
+          "name": "Baleful Glare Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedBalefulGlareStain",
+          "standing": "origin",
+          "display_name": "Baleful Glare Stain"
+        },
+        {
+          "name": "Berserk Fury",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Berserk Fury"
+        },
+        {
+          "name": "Berserk Fury Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanBerserkFuryGift",
+          "standing": "origin",
+          "display_name": "Berserk Fury Gift"
+        },
+        {
+          "name": "Berserk Fury Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanBerserkFuryStain",
+          "standing": "origin",
+          "display_name": "Berserk Fury Stain"
+        },
+        {
+          "name": "Bleak Aura",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Bleak Aura"
+        },
+        {
+          "name": "Bleak Aura Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichBleakAuraGift",
+          "standing": "origin",
+          "display_name": "Bleak Aura Gift"
+        },
+        {
+          "name": "Bleak Aura Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichBleakAuraGift",
+          "standing": "origin",
+          "display_name": "Bleak Aura Resistance"
+        },
+        {
+          "name": "Bleak Aura Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichBleakAuraStain",
+          "standing": "origin",
+          "display_name": "Bleak Aura Stain"
+        },
+        {
+          "name": "Blindsense",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "unclassified",
+          "display_name": "Blindsense"
+        },
+        {
+          "name": "Blindsense Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveBlindsenseGift",
+          "standing": "origin",
+          "display_name": "Blindsense Gift"
+        },
+        {
+          "name": "Blindsense Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveBlindsenseGift",
+          "standing": "origin",
+          "display_name": "Blindsense Resistance"
+        },
+        {
+          "name": "Blindsense Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveBlindsenseStain",
+          "standing": "origin",
+          "display_name": "Blindsense Stain"
+        },
+        {
+          "name": "Bloodthirst",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Bloodthirst"
+        },
+        {
+          "name": "Bloodthirst Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneBloodthirstGift",
+          "standing": "origin",
+          "display_name": "Bloodthirst Gift"
+        },
+        {
+          "name": "Bloodthirst Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneBloodthirstGift",
+          "standing": "origin",
+          "display_name": "Bloodthirst Resistance"
+        },
+        {
+          "name": "Bloodthirst Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneBloodthirstStain",
+          "standing": "origin",
+          "display_name": "Bloodthirst Stain"
+        },
+        {
+          "name": "Blurred Soul",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Blurred Soul"
+        },
+        {
+          "name": "Blurred Soul Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedBlurredSoulGift",
+          "standing": "origin",
+          "display_name": "Blurred Soul Gift"
+        },
+        {
+          "name": "Blurred Soul Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedBlurredSoulGift",
+          "standing": "origin",
+          "display_name": "Blurred Soul Resistance"
+        },
+        {
+          "name": "Blurred Soul Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedBlurredSoulStain",
+          "standing": "origin",
+          "display_name": "Blurred Soul Stain"
+        },
+        {
+          "name": "Brain Eater",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Brain Eater"
+        },
+        {
+          "name": "Brain Eater Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulBrainEaterGift",
+          "standing": "origin",
+          "display_name": "Brain Eater Gift"
+        },
+        {
+          "name": "Brain Eater Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulBrainEaterGift",
+          "standing": "origin",
+          "display_name": "Brain Eater Resistance"
+        },
+        {
+          "name": "Brain Eater Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulBrainEaterStain",
+          "standing": "origin",
+          "display_name": "Brain Eater Stain"
+        },
+        {
+          "name": "Bristling Spines",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Bristling Spines"
+        },
+        {
+          "name": "Bristling Spines Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveBristlingSpinesGift",
+          "standing": "origin",
+          "display_name": "Bristling Spines Gift"
+        },
+        {
+          "name": "Bristling Spines Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveBristlingSpinesGift",
+          "standing": "origin",
+          "display_name": "Bristling Spines Resistance"
+        },
+        {
+          "name": "Bristling Spines Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveBristlingSpinesStain",
+          "standing": "origin",
+          "display_name": "Bristling Spines Stain"
+        },
+        {
+          "name": "Cadaver's Countenance",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Cadaver's Countenance"
+        },
+        {
+          "name": "Cadaver's Countenance Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichCadaversCountenanceGift",
+          "standing": "origin",
+          "display_name": "Cadaver's Countenance Gift"
+        },
+        {
+          "name": "Cadaver's Countenance Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichCadaversCountenanceGift",
+          "standing": "origin",
+          "display_name": "Cadaver's Countenance Resistance"
+        },
+        {
+          "name": "Cadaver's Countenance Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichCadaversCountenanceStain",
+          "standing": "origin",
+          "display_name": "Cadaver's Countenance Stain"
+        },
+        {
+          "name": "Call of the Deep",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Call of the Deep"
+        },
+        {
+          "name": "Call of the Deep Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneCallOfTheDeepGift",
+          "standing": "origin",
+          "display_name": "Call of the Deep Gift"
+        },
+        {
+          "name": "Call of the Deep Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneCallOfTheDeepGift",
+          "standing": "origin",
+          "display_name": "Call of the Deep Resistance"
+        },
+        {
+          "name": "Call of the Deep Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneCallOfTheDeepStain",
+          "standing": "origin",
+          "display_name": "Call of the Deep Stain"
+        },
+        {
+          "name": "Children of the Night",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "Children of the Night"
+        },
+        {
+          "name": "Children of the Night Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismChildrenOfTheNightGift",
+          "standing": "origin",
+          "display_name": "Children of the Night Gift"
+        },
+        {
+          "name": "Children of the Night Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismChildrenOfTheNightGift",
+          "standing": "origin",
+          "display_name": "Children of the Night Resistance"
+        },
+        {
+          "name": "Children of the Night Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismChildrenOfTheNightStain",
+          "standing": "origin",
+          "display_name": "Children of the Night Stain"
+        },
+        {
+          "name": "Claws of the Deep",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Claws of the Deep"
+        },
+        {
+          "name": "Claws of the Deep Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneClawsOfTheDeepGift",
+          "standing": "origin",
+          "display_name": "Claws of the Deep Gift"
+        },
+        {
+          "name": "Claws of the Deep Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneClawsOfTheDeepGift",
+          "standing": "origin",
+          "display_name": "Claws of the Deep Resistance"
+        },
+        {
+          "name": "Claws of the Deep Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneClawsOfTheDeepStain",
+          "standing": "origin",
+          "display_name": "Claws of the Deep Stain"
+        },
+        {
+          "name": "Cold Iron Allergy",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Cold Iron Allergy"
+        },
+        {
+          "name": "Cold Iron Allergy Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedColdIronAllergyGift",
+          "standing": "origin",
+          "display_name": "Cold Iron Allergy Gift"
+        },
+        {
+          "name": "Cold Iron Allergy Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedColdIronAllergyGift",
+          "standing": "origin",
+          "display_name": "Cold Iron Allergy Resistance"
+        },
+        {
+          "name": "Cold Iron Allergy Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedColdIronAllergyStain",
+          "standing": "origin",
+          "display_name": "Cold Iron Allergy Stain"
+        },
+        {
+          "name": "Contaminated Personality",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Contaminated Personality"
+        },
+        {
+          "name": "Contaminated Personality Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedContaminatedPersonalityGift",
+          "standing": "origin",
+          "display_name": "Contaminated Personality Gift"
+        },
+        {
+          "name": "Contaminated Personality Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedContaminatedPersonalityGift",
+          "standing": "origin",
+          "display_name": "Contaminated Personality Resistance"
+        },
+        {
+          "name": "Contaminated Personality Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedContaminatedPersonalityStain",
+          "standing": "origin",
+          "display_name": "Contaminated Personality Stain"
+        },
+        {
+          "name": "Corpse Armor",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Corpse Armor"
+        },
+        {
+          "name": "Corpse Armor Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulCorpseArmorGift",
+          "standing": "origin",
+          "display_name": "Corpse Armor Gift"
+        },
+        {
+          "name": "Corpse Armor Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulCorpseArmorGift",
+          "standing": "origin",
+          "display_name": "Corpse Armor Resistance"
+        },
+        {
+          "name": "Corpse Armor Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulCorpseArmorStain",
+          "standing": "origin",
+          "display_name": "Corpse Armor Stain"
+        },
+        {
+          "name": "Cruel Deceiver",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Cruel Deceiver"
+        },
+        {
+          "name": "Cruel Deceiver Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedCruelDeceiverGift",
+          "standing": "origin",
+          "display_name": "Cruel Deceiver Gift"
+        },
+        {
+          "name": "Cruel Deceiver Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedCruelDeceiverGift",
+          "standing": "origin",
+          "display_name": "Cruel Deceiver Resistance"
+        },
+        {
+          "name": "Cruel Deceiver Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedCruelDeceiverStain",
+          "standing": "origin",
+          "display_name": "Cruel Deceiver Stain"
+        },
+        {
+          "name": "Darkest Desires",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Darkest Desires"
+        },
+        {
+          "name": "Darkest Desires Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDarkestDesiresGift",
+          "standing": "origin",
+          "display_name": "Darkest Desires Gift"
+        },
+        {
+          "name": "Darkest Desires Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDarkestDesiresStain",
+          "standing": "origin",
+          "display_name": "Darkest Desires Stain"
+        },
+        {
+          "name": "Death's Caress",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Death's Caress"
+        },
+        {
+          "name": "Death's Caress Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichDeathsCaressGift",
+          "standing": "origin",
+          "display_name": "Death's Caress Gift"
+        },
+        {
+          "name": "Death's Caress Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichDeathsCaressGift",
+          "standing": "origin",
+          "display_name": "Death's Caress Resistance"
+        },
+        {
+          "name": "Death's Caress Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichDeathsCaressStain",
+          "standing": "origin",
+          "display_name": "Death's Caress Stain"
+        },
+        {
+          "name": "Deathless",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Deathless"
+        },
+        {
+          "name": "Deathless Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichDeathlessGift",
+          "standing": "origin",
+          "display_name": "Deathless Gift"
+        },
+        {
+          "name": "Deathless Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichDeathlessGift",
+          "standing": "origin",
+          "display_name": "Deathless Resistance"
+        },
+        {
+          "name": "Deathless Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichDeathlessStain",
+          "standing": "origin",
+          "display_name": "Deathless Stain"
+        },
+        {
+          "name": "Deep Adaptation",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Deep Adaptation"
+        },
+        {
+          "name": "Deep Adaptation Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneDeepAdaptationGift",
+          "standing": "origin",
+          "display_name": "Deep Adaptation Gift"
+        },
+        {
+          "name": "Deep Adaptation Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneDeepAdaptationGift",
+          "standing": "origin",
+          "display_name": "Deep Adaptation Resistance"
+        },
+        {
+          "name": "Deep Adaptation Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneDeepAdaptationStain",
+          "standing": "origin",
+          "display_name": "Deep Adaptation Stain"
+        },
+        {
+          "name": "Deep One",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Deep One"
+        },
+        {
+          "name": "Deep One Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Deep One Corruption Stages"
+        },
+        {
+          "name": "Deep One Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Deep One Manifestation Count"
+        },
+        {
+          "name": "Deep One Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Deep One Manifestation Level"
+        },
+        {
+          "name": "Deepsight",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "unclassified",
+          "display_name": "Deepsight"
+        },
+        {
+          "name": "Deepsight Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneDeepsightGift",
+          "standing": "origin",
+          "display_name": "Deepsight Gift"
+        },
+        {
+          "name": "Deepsight Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneDeepsightGift",
+          "standing": "origin",
+          "display_name": "Deepsight Resistance"
+        },
+        {
+          "name": "Deepsight Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneDeepsightStain",
+          "standing": "origin",
+          "display_name": "Deepsight Stain"
+        },
+        {
+          "name": "Devil's Horns",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Devil's Horns"
+        },
+        {
+          "name": "Devil's Horns Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDevilsHornsGift",
+          "standing": "origin",
+          "display_name": "Devil's Horns Gift"
+        },
+        {
+          "name": "Devil's Horns Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDevilsHornsStain",
+          "standing": "origin",
+          "display_name": "Devil's Horns Stain"
+        },
+        {
+          "name": "Devil's Mark",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Devil's Mark"
+        },
+        {
+          "name": "Devil's Mark Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDevilsMarkGift",
+          "standing": "origin",
+          "display_name": "Devil's Mark Gift"
+        },
+        {
+          "name": "Devil's Mark Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDevilsMarkGift",
+          "standing": "origin",
+          "display_name": "Devil's Mark Resistance"
+        },
+        {
+          "name": "Devil's Mark Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDevilsMarkStain",
+          "standing": "origin",
+          "display_name": "Devil's Mark Stain"
+        },
+        {
+          "name": "Diabolical Servitor",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Diabolical Servitor"
+        },
+        {
+          "name": "Diabolical Servitor Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDiabolicalServitorGift",
+          "standing": "origin",
+          "display_name": "Diabolical Servitor Gift"
+        },
+        {
+          "name": "Diabolical Servitor Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDiabolicalServitorGift",
+          "standing": "origin",
+          "display_name": "Diabolical Servitor Resistance"
+        },
+        {
+          "name": "Diabolical Servitor Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDiabolicalServitorStain",
+          "standing": "origin",
+          "display_name": "Diabolical Servitor Stain"
+        },
+        {
+          "name": "Diseased Bite",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Diseased Bite"
+        },
+        {
+          "name": "Diseased Bite Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulDiseasedBiteGift",
+          "standing": "origin",
+          "display_name": "Diseased Bite Gift"
+        },
+        {
+          "name": "Diseased Bite Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulDiseasedBiteGift",
+          "standing": "origin",
+          "display_name": "Diseased Bite Resistance"
+        },
+        {
+          "name": "Diseased Bite Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulDiseasedBiteStain",
+          "standing": "origin",
+          "display_name": "Diseased Bite Stain"
+        },
+        {
+          "name": "Dreadful Charm",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "Dreadful Charm"
+        },
+        {
+          "name": "Dreadful Charm Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismDreadfulCharmGift",
+          "standing": "origin",
+          "display_name": "Dreadful Charm Gift"
+        },
+        {
+          "name": "Dreadful Charm Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismDreadfulCharmGift",
+          "standing": "origin",
+          "display_name": "Dreadful Charm Resistance"
+        },
+        {
+          "name": "Dreadful Charm Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismDreadfulCharmStain",
+          "standing": "origin",
+          "display_name": "Dreadful Charm Stain"
+        },
+        {
+          "name": "Eerie Perception",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Eerie Perception"
+        },
+        {
+          "name": "Eerie Perception Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundEeriePerceptionGift",
+          "standing": "origin",
+          "display_name": "Eerie Perception Gift"
+        },
+        {
+          "name": "Eerie Perception Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundEeriePerceptionGift",
+          "standing": "origin",
+          "display_name": "Eerie Perception Resistance"
+        },
+        {
+          "name": "Eerie Perception Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundEeriePerceptionStain",
+          "standing": "origin",
+          "display_name": "Eerie Perception Stain"
+        },
+        {
+          "name": "Emptiness of the Void",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Emptiness of the Void"
+        },
+        {
+          "name": "Emptiness of the Void Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundEmptinessOfTheVoidGift",
+          "standing": "origin",
+          "display_name": "Emptiness of the Void Gift"
+        },
+        {
+          "name": "Emptiness of the Void Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundEmptinessOfTheVoidGift",
+          "standing": "origin",
+          "display_name": "Emptiness of the Void Resistance"
+        },
+        {
+          "name": "Emptiness of the Void Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundEmptinessOfTheVoidStain",
+          "standing": "origin",
+          "display_name": "Emptiness of the Void Stain"
+        },
+        {
+          "name": "Fangs",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "Fangs"
+        },
+        {
+          "name": "Fangs Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismFangsGift",
+          "standing": "origin",
+          "display_name": "Fangs Gift"
+        },
+        {
+          "name": "Fangs Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismFangsGift",
+          "standing": "origin",
+          "display_name": "Fangs Resistance"
+        },
+        {
+          "name": "Fangs Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismFangsStain",
+          "standing": "origin",
+          "display_name": "Fangs Stain"
+        },
+        {
+          "name": "Feral Senses",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Feral Senses"
+        },
+        {
+          "name": "Feral Senses Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyFeralSensesGift",
+          "standing": "origin",
+          "display_name": "Feral Senses Gift"
+        },
+        {
+          "name": "Feral Senses Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyFeralSensesGift",
+          "standing": "origin",
+          "display_name": "Feral Senses Resistance"
+        },
+        {
+          "name": "Feral Senses Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyFeralSensesStain",
+          "standing": "origin",
+          "display_name": "Feral Senses Stain"
+        },
+        {
+          "name": "Fiendish Tutelage",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Fiendish Tutelage"
+        },
+        {
+          "name": "Fiendish Tutelage Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundFiendishTutelageGift",
+          "standing": "origin",
+          "display_name": "Fiendish Tutelage Gift"
+        },
+        {
+          "name": "Fiendish Tutelage Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundFiendishTutelageGift",
+          "standing": "origin",
+          "display_name": "Fiendish Tutelage Resistance"
+        },
+        {
+          "name": "Fiendish Tutelage Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundFiendishTutelageStain",
+          "standing": "origin",
+          "display_name": "Fiendish Tutelage Stain"
+        },
+        {
+          "name": "Frightful",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Frightful"
+        },
+        {
+          "name": "Frightful Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundFrightfulGift",
+          "standing": "origin",
+          "display_name": "Frightful Gift"
+        },
+        {
+          "name": "Frightful Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundFrightfulGift",
+          "standing": "origin",
+          "display_name": "Frightful Resistance"
+        },
+        {
+          "name": "Frightful Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundFrightfulStain",
+          "standing": "origin",
+          "display_name": "Frightful Stain"
+        },
+        {
+          "name": "Fur Armor",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Fur Armor"
+        },
+        {
+          "name": "Fur Armor Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyFurArmorGift",
+          "standing": "origin",
+          "display_name": "Fur Armor Gift"
+        },
+        {
+          "name": "Fur Armor Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyFurArmorGift",
+          "standing": "origin",
+          "display_name": "Fur Armor Resistance"
+        },
+        {
+          "name": "Fur Armor Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyFurArmorStain",
+          "standing": "origin",
+          "display_name": "Fur Armor Stain"
+        },
+        {
+          "name": "Ghoul",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Ghoul"
+        },
+        {
+          "name": "Ghoul Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Ghoul Corruption Stages"
+        },
+        {
+          "name": "Ghoul Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ghoul Manifestation Count"
+        },
+        {
+          "name": "Ghoul Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ghoul Manifestation Level"
+        },
+        {
+          "name": "Gnashing Bite",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Gnashing Bite"
+        },
+        {
+          "name": "Gnashing Bite Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGnashingBiteGift",
+          "standing": "origin",
+          "display_name": "Gnashing Bite Gift"
+        },
+        {
+          "name": "Gnashing Bite Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGnashingBiteGift",
+          "standing": "origin",
+          "display_name": "Gnashing Bite Resistance"
+        },
+        {
+          "name": "Gnashing Bite Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGnashingBiteStain",
+          "standing": "origin",
+          "display_name": "Gnashing Bite Stain"
+        },
+        {
+          "name": "Greater Acid Blood",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Greater Acid Blood"
+        },
+        {
+          "name": "Greater Acid Blood Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveGreaterAcidBloodGift",
+          "standing": "origin",
+          "display_name": "Greater Acid Blood Gift"
+        },
+        {
+          "name": "Greater Acid Blood Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveGreaterAcidBloodGift",
+          "standing": "origin",
+          "display_name": "Greater Acid Blood Resistance"
+        },
+        {
+          "name": "Greater Acid Blood Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveGreaterAcidBloodStain",
+          "standing": "origin",
+          "display_name": "Greater Acid Blood Stain"
+        },
+        {
+          "name": "Greater Armored",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Greater Armored"
+        },
+        {
+          "name": "Greater Armored Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterArmoredGift",
+          "standing": "origin",
+          "display_name": "Greater Armored Gift"
+        },
+        {
+          "name": "Greater Armored Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterArmoredGift",
+          "standing": "origin",
+          "display_name": "Greater Armored Resistance"
+        },
+        {
+          "name": "Greater Armored Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterArmoredStain",
+          "standing": "origin",
+          "display_name": "Greater Armored Stain"
+        },
+        {
+          "name": "Greater Cadaver's Countenance",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Greater Cadaver's Countenance"
+        },
+        {
+          "name": "Greater Cadaver's Countenance Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichGreaterCadaversCountenanceGift",
+          "standing": "origin",
+          "display_name": "Greater Cadaver's Countenance Gift"
+        },
+        {
+          "name": "Greater Cadaver's Countenance Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichGreaterCadaversCountenanceGift",
+          "standing": "origin",
+          "display_name": "Greater Cadaver's Countenance Resistance"
+        },
+        {
+          "name": "Greater Cadaver's Countenance Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichGreaterCadaversCountenanceStain",
+          "standing": "origin",
+          "display_name": "Greater Cadaver's Countenance Stain"
+        },
+        {
+          "name": "Greater Hive Mind",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Greater Hive Mind"
+        },
+        {
+          "name": "Greater Hive Mind Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveGreaterHiveMindGift",
+          "standing": "origin",
+          "display_name": "Greater Hive Mind Gift"
+        },
+        {
+          "name": "Greater Hive Mind Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveGreaterHiveMindGift",
+          "standing": "origin",
+          "display_name": "Greater Hive Mind Resistance"
+        },
+        {
+          "name": "Greater Hive Mind Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveGreaterHiveMindStain",
+          "standing": "origin",
+          "display_name": "Greater Hive Mind Stain"
+        },
+        {
+          "name": "Greater Paralysis",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Greater Paralysis"
+        },
+        {
+          "name": "Greater Paralysis Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGreaterParalysisGift",
+          "standing": "origin",
+          "display_name": "Greater Paralysis Gift"
+        },
+        {
+          "name": "Greater Paralysis Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGreaterParalysisGift",
+          "standing": "origin",
+          "display_name": "Greater Paralysis Resistance"
+        },
+        {
+          "name": "Greater Paralysis Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGreaterParalysisStain",
+          "standing": "origin",
+          "display_name": "Greater Paralysis Stain"
+        },
+        {
+          "name": "Greater Shattered Body",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Greater Shattered Body"
+        },
+        {
+          "name": "Greater Shattered Body Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterShatteredBodyGift",
+          "standing": "origin",
+          "display_name": "Greater Shattered Body Gift"
+        },
+        {
+          "name": "Greater Shattered Body Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterShatteredBodyGift",
+          "standing": "origin",
+          "display_name": "Greater Shattered Body Resistance"
+        },
+        {
+          "name": "Greater Shattered Body Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterShatteredBodyStain",
+          "standing": "origin",
+          "display_name": "Greater Shattered Body Stain"
+        },
+        {
+          "name": "Greater Shattered Mind",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Greater Shattered Mind"
+        },
+        {
+          "name": "Greater Shattered Mind Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterShatteredMindGift",
+          "standing": "origin",
+          "display_name": "Greater Shattered Mind Gift"
+        },
+        {
+          "name": "Greater Shattered Mind Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterShatteredMindGift",
+          "standing": "origin",
+          "display_name": "Greater Shattered Mind Resistance"
+        },
+        {
+          "name": "Greater Shattered Mind Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterShatteredMindStain",
+          "standing": "origin",
+          "display_name": "Greater Shattered Mind Stain"
+        },
+        {
+          "name": "Greater Shift Form",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Greater Shift Form"
+        },
+        {
+          "name": "Greater Shift Form Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyGreaterShiftFormGift",
+          "standing": "origin",
+          "display_name": "Greater Shift Form Gift"
+        },
+        {
+          "name": "Greater Shift Form Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyGreaterShiftFormGift",
+          "standing": "origin",
+          "display_name": "Greater Shift Form Resistance"
+        },
+        {
+          "name": "Greater Shift Form Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyGreaterShiftFormStain",
+          "standing": "origin",
+          "display_name": "Greater Shift Form Stain"
+        },
+        {
+          "name": "Greater Stench of the Grave",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Greater Stench of the Grave"
+        },
+        {
+          "name": "Greater Stench of the Grave Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGreaterStenchGift",
+          "standing": "origin",
+          "display_name": "Greater Stench of the Grave Gift"
+        },
+        {
+          "name": "Greater Stench of the Grave Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGreaterStenchGift",
+          "standing": "origin",
+          "display_name": "Greater Stench of the Grave Resistance"
+        },
+        {
+          "name": "Greater Stench of the Grave Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGreaterStenchStain",
+          "standing": "origin",
+          "display_name": "Greater Stench of the Grave Stain"
+        },
+        {
+          "name": "Greater Unlife",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "Greater Unlife"
+        },
+        {
+          "name": "Greater Unlife Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismGreaterUnlifeGift",
+          "standing": "origin",
+          "display_name": "Greater Unlife Gift"
+        },
+        {
+          "name": "Greater Unlife Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismGreaterUnlifeGift",
+          "standing": "origin",
+          "display_name": "Greater Unlife Resistance"
+        },
+        {
+          "name": "Greater Unlife Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismGreaterUnlifeStain",
+          "standing": "origin",
+          "display_name": "Greater Unlife Stain"
+        },
+        {
+          "name": "Grim Fate",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Grim Fate"
+        },
+        {
+          "name": "Grim Fate Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedGrimFateGift",
+          "standing": "origin",
+          "display_name": "Grim Fate Gift"
+        },
+        {
+          "name": "Grim Fate Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedGrimFateGift",
+          "standing": "origin",
+          "display_name": "Grim Fate Resistance"
+        },
+        {
+          "name": "Grim Fate Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedGrimFateStain",
+          "standing": "origin",
+          "display_name": "Grim Fate Stain"
+        },
+        {
+          "name": "Hateful Voices",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Hateful Voices"
+        },
+        {
+          "name": "Hateful Voices Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedHatefulVoicesGift",
+          "standing": "origin",
+          "display_name": "Hateful Voices Gift"
+        },
+        {
+          "name": "Hateful Voices Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedHatefulVoicesGift",
+          "standing": "origin",
+          "display_name": "Hateful Voices Resistance"
+        },
+        {
+          "name": "Hateful Voices Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedHatefulVoicesStain",
+          "standing": "origin",
+          "display_name": "Hateful Voices Stain"
+        },
+        {
+          "name": "Hellbound",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Hellbound"
+        },
+        {
+          "name": "Hellbound Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Hellbound Corruption Stages"
+        },
+        {
+          "name": "Hellbound Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hellbound Manifestation Count"
+        },
+        {
+          "name": "Hellbound Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hellbound Manifestation Level"
+        },
+        {
+          "name": "Hive",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Hive"
+        },
+        {
+          "name": "Hive Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Hive Corruption Stages"
+        },
+        {
+          "name": "Hive Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hive Manifestation Count"
+        },
+        {
+          "name": "Hive Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hive Manifestation Level"
+        },
+        {
+          "name": "Hive Mind",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Hive Mind"
+        },
+        {
+          "name": "Hive Mind Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveHiveMindGift",
+          "standing": "origin",
+          "display_name": "Hive Mind Gift"
+        },
+        {
+          "name": "Hive Mind Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveHiveMindGift",
+          "standing": "origin",
+          "display_name": "Hive Mind Resistance"
+        },
+        {
+          "name": "Hive Mind Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveHiveMindStain",
+          "standing": "origin",
+          "display_name": "Hive Mind Stain"
+        },
+        {
+          "name": "Horrific Shock",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Horrific Shock"
+        },
+        {
+          "name": "Horrific Shock Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedHorrificShockGift",
+          "standing": "origin",
+          "display_name": "Horrific Shock Gift"
+        },
+        {
+          "name": "Horrific Shock Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedHorrificShockGift",
+          "standing": "origin",
+          "display_name": "Horrific Shock Resistance"
+        },
+        {
+          "name": "Horrific Shock Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedHorrificShockStain",
+          "standing": "origin",
+          "display_name": "Horrific Shock Stain"
+        },
+        {
+          "name": "Insubstantiality",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Insubstantiality"
+        },
+        {
+          "name": "Insubstantiality Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundInsubstantialityGift",
+          "standing": "origin",
+          "display_name": "Insubstantiality Gift"
+        },
+        {
+          "name": "Insubstantiality Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundInsubstantialityGift",
+          "standing": "origin",
+          "display_name": "Insubstantiality Resistance"
+        },
+        {
+          "name": "Insubstantiality Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundInsubstantialityStain",
+          "standing": "origin",
+          "display_name": "Insubstantiality Stain"
+        },
+        {
+          "name": "Landwalker",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Landwalker"
+        },
+        {
+          "name": "Landwalker Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneLandwalkerGift",
+          "standing": "origin",
+          "display_name": "Landwalker Gift"
+        },
+        {
+          "name": "Landwalker Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneLandwalkerGift",
+          "standing": "origin",
+          "display_name": "Landwalker Resistance"
+        },
+        {
+          "name": "Landwalker Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneLandwalkerStain",
+          "standing": "origin",
+          "display_name": "Landwalker Stain"
+        },
+        {
+          "name": "Lich",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Lich"
+        },
+        {
+          "name": "Lich Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Lich Corruption Stages"
+        },
+        {
+          "name": "Lich Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lich Manifestation Count"
+        },
+        {
+          "name": "Lich Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lich Manifestation Level"
+        },
+        {
+          "name": "Life Drain",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "Life Drain"
+        },
+        {
+          "name": "Life Drain Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismLifeDrainGift",
+          "standing": "origin",
+          "display_name": "Life Drain Gift"
+        },
+        {
+          "name": "Life Drain Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismLifeDrainGift",
+          "standing": "origin",
+          "display_name": "Life Drain Resistance"
+        },
+        {
+          "name": "Life Drain Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismLifeDrainStain",
+          "standing": "origin",
+          "display_name": "Life Drain Stain"
+        },
+        {
+          "name": "Living Armor",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Living Armor"
+        },
+        {
+          "name": "Living Armor Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveLivingArmorGift",
+          "standing": "origin",
+          "display_name": "Living Armor Gift"
+        },
+        {
+          "name": "Living Armor Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveLivingArmorStain",
+          "standing": "origin",
+          "display_name": "Living Armor Stain"
+        },
+        {
+          "name": "Living Weapon",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Living Weapon"
+        },
+        {
+          "name": "Living Weapon Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveLivingWeaponGift",
+          "standing": "origin",
+          "display_name": "Living Weapon Gift"
+        },
+        {
+          "name": "Living Weapon Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveLivingWeaponGift",
+          "standing": "origin",
+          "display_name": "Living Weapon Resistance"
+        },
+        {
+          "name": "Living Weapon Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveLivingWeaponStain",
+          "standing": "origin",
+          "display_name": "Living Weapon Stain"
+        },
+        {
+          "name": "Loathsome Gills",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Loathsome Gills"
+        },
+        {
+          "name": "Loathsome Gills Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneLoathsomeGillsGift",
+          "standing": "origin",
+          "display_name": "Loathsome Gills Gift"
+        },
+        {
+          "name": "Loathsome Gills Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneLoathsomeGillsGift",
+          "standing": "origin",
+          "display_name": "Loathsome Gills Resistance"
+        },
+        {
+          "name": "Loathsome Gills Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneLoathsomeGillsStain",
+          "standing": "origin",
+          "display_name": "Loathsome Gills Stain"
+        },
+        {
+          "name": "Lunar Call",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Lunar Call"
+        },
+        {
+          "name": "Lunar Call Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyLunarCallGift",
+          "standing": "origin",
+          "display_name": "Lunar Call Gift"
+        },
+        {
+          "name": "Lunar Call Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyLunarCallGift",
+          "standing": "origin",
+          "display_name": "Lunar Call Resistance"
+        },
+        {
+          "name": "Lunar Call Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyLunarCallStain",
+          "standing": "origin",
+          "display_name": "Lunar Call Stain"
+        },
+        {
+          "name": "Lycanthropic Empathy",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Lycanthropic Empathy"
+        },
+        {
+          "name": "Lycanthropic Empathy Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyLycanthropicEmpathyGift",
+          "standing": "origin",
+          "display_name": "Lycanthropic Empathy Gift"
+        },
+        {
+          "name": "Lycanthropic Empathy Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyLycanthropicEmpathyGift",
+          "standing": "origin",
+          "display_name": "Lycanthropic Empathy Resistance"
+        },
+        {
+          "name": "Lycanthropic Empathy Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyLycanthropicEmpathyStain",
+          "standing": "origin",
+          "display_name": "Lycanthropic Empathy Stain"
+        },
+        {
+          "name": "Lycanthropy",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Lycanthropy"
+        },
+        {
+          "name": "Lycanthropy Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Lycanthropy Corruption Stages"
+        },
+        {
+          "name": "Lycanthropy Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lycanthropy Manifestation Count"
+        },
+        {
+          "name": "Lycanthropy Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lycanthropy Manifestation Level"
+        },
+        {
+          "name": "Malevolence",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Malevolence"
+        },
+        {
+          "name": "Malevolence Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichMalevolenceGift",
+          "standing": "origin",
+          "display_name": "Malevolence Gift"
+        },
+        {
+          "name": "Malevolence Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichMalevolenceGift",
+          "standing": "origin",
+          "display_name": "Malevolence Resistance"
+        },
+        {
+          "name": "Malevolence Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichMalevolenceStain",
+          "standing": "origin",
+          "display_name": "Malevolence Stain"
+        },
+        {
+          "name": "Master of the Dead",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Master of the Dead"
+        },
+        {
+          "name": "Master of the Dead Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichMasterOfTheDeadGift",
+          "standing": "origin",
+          "display_name": "Master of the Dead Gift"
+        },
+        {
+          "name": "Master of the Dead Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichMasterOfTheDeadGift",
+          "standing": "origin",
+          "display_name": "Master of the Dead Resistance"
+        },
+        {
+          "name": "Master of the Dead Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichMasterOfTheDeadStain",
+          "standing": "origin",
+          "display_name": "Master of the Dead Stain"
+        },
+        {
+          "name": "Murky Futures",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Murky Futures"
+        },
+        {
+          "name": "Murky Futures Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundMurkyFuturesGift",
+          "standing": "origin",
+          "display_name": "Murky Futures Gift"
+        },
+        {
+          "name": "Murky Futures Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundMurkyFuturesGift",
+          "standing": "origin",
+          "display_name": "Murky Futures Resistance"
+        },
+        {
+          "name": "Murky Futures Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundMurkyFuturesStain",
+          "standing": "origin",
+          "display_name": "Murky Futures Stain"
+        },
+        {
+          "name": "Necromantic Knowledge",
+          "doneness": "not-started",
+          "type_facet": "LichManifestation",
+          "standing": "origin",
+          "display_name": "Necromantic Knowledge"
+        },
+        {
+          "name": "Necromantic Knowledge Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichNecromanticKnowledgeGift",
+          "standing": "origin",
+          "display_name": "Necromantic Knowledge Gift"
+        },
+        {
+          "name": "Necromantic Knowledge Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichNecromanticKnowledgeGift",
+          "standing": "origin",
+          "display_name": "Necromantic Knowledge Resistance"
+        },
+        {
+          "name": "Necromantic Knowledge Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichNecromanticKnowledgeStain",
+          "standing": "origin",
+          "display_name": "Necromantic Knowledge Stain"
+        },
+        {
+          "name": "No Acid Blood Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveAcidBloodStain",
+          "standing": "origin",
+          "display_name": "No Acid Blood Stain"
+        },
+        {
+          "name": "No Agonizing Touch Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichAgonizingTouchStain",
+          "standing": "origin",
+          "display_name": "No Agonizing Touch Stain"
+        },
+        {
+          "name": "No Allure Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismAllureStain",
+          "standing": "origin",
+          "display_name": "No Allure Stain"
+        },
+        {
+          "name": "No Animalistic Health Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyAnimalisticHealthStain",
+          "standing": "origin",
+          "display_name": "No Animalistic Health Stain"
+        },
+        {
+          "name": "No Animalistic Might Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyAnimalisticMightStain",
+          "standing": "origin",
+          "display_name": "No Animalistic Might Stain"
+        },
+        {
+          "name": "No Baleful Glare Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedBalefulGlareStain",
+          "standing": "origin",
+          "display_name": "No Baleful Glare Stain"
+        },
+        {
+          "name": "No Bleak Aura Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichBleakAuraStain",
+          "standing": "origin",
+          "display_name": "No Bleak Aura Stain"
+        },
+        {
+          "name": "No Blindsense Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveBlindsenseStain",
+          "standing": "origin",
+          "display_name": "No Blindsense Stain"
+        },
+        {
+          "name": "No Bloodthirst Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneBloodthirstStain",
+          "standing": "origin",
+          "display_name": "No Bloodthirst Stain"
+        },
+        {
+          "name": "No Blurred Soul Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedBlurredSoulStain",
+          "standing": "origin",
+          "display_name": "No Blurred Soul Stain"
+        },
+        {
+          "name": "No Brain Eater Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulBrainEaterStain",
+          "standing": "origin",
+          "display_name": "No Brain Eater Stain"
+        },
+        {
+          "name": "No Bristling Spines Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveBristlingSpinesStain",
+          "standing": "origin",
+          "display_name": "No Bristling Spines Stain"
+        },
+        {
+          "name": "No Cadaver's Countenance Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichCadaversCountenanceStain",
+          "standing": "origin",
+          "display_name": "No Cadaver's Countenance Stain"
+        },
+        {
+          "name": "No Call of the Deep Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneCallOfTheDeepStain",
+          "standing": "origin",
+          "display_name": "No Call of the Deep Stain"
+        },
+        {
+          "name": "No Children of the Night Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismChildrenOfTheNightStain",
+          "standing": "origin",
+          "display_name": "No Children of the Night Stain"
+        },
+        {
+          "name": "No Claws of the Deep Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneClawsOfTheDeepStain",
+          "standing": "origin",
+          "display_name": "No Claws of the Deep Stain"
+        },
+        {
+          "name": "No Cold Iron Allergy Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedColdIronAllergyStain",
+          "standing": "origin",
+          "display_name": "No Cold Iron Allergy Stain"
+        },
+        {
+          "name": "No Contaminated Personality Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedContaminatedPersonalityStain",
+          "standing": "origin",
+          "display_name": "No Contaminated Personality Stain"
+        },
+        {
+          "name": "No Corpse Armor Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulCorpseArmorStain",
+          "standing": "origin",
+          "display_name": "No Corpse Armor Stain"
+        },
+        {
+          "name": "No Cruel Deceiver Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedCruelDeceiverStain",
+          "standing": "origin",
+          "display_name": "No Cruel Deceiver Stain"
+        },
+        {
+          "name": "No Death's Caress Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichDeathsCaressStain",
+          "standing": "origin",
+          "display_name": "No Death's Caress Stain"
+        },
+        {
+          "name": "No Deathless Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichDeathlessStain",
+          "standing": "origin",
+          "display_name": "No Deathless Stain"
+        },
+        {
+          "name": "No Deep Adaptation Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneDeepAdaptationStain",
+          "standing": "origin",
+          "display_name": "No Deep Adaptation Stain"
+        },
+        {
+          "name": "No Deepsight Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneDeepsightStain",
+          "standing": "origin",
+          "display_name": "No Deepsight Stain"
+        },
+        {
+          "name": "No Devil's Mark Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDevilsMarkStain",
+          "standing": "origin",
+          "display_name": "No Devil's Mark Stain"
+        },
+        {
+          "name": "No Diabolical Servitor Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundDiabolicalServitorStain",
+          "standing": "origin",
+          "display_name": "No Diabolical Servitor Stain"
+        },
+        {
+          "name": "No Diseased Bite Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulDiseasedBiteStain",
+          "standing": "origin",
+          "display_name": "No Diseased Bite Stain"
+        },
+        {
+          "name": "No Dreadful Charm Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismDreadfulCharmStain",
+          "standing": "origin",
+          "display_name": "No Dreadful Charm Stain"
+        },
+        {
+          "name": "No Eerie Perception Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundEeriePerceptionStain",
+          "standing": "origin",
+          "display_name": "No Eerie Perception Stain"
+        },
+        {
+          "name": "No Emptiness of the Void Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundEmptinessOfTheVoidStain",
+          "standing": "origin",
+          "display_name": "No Emptiness of the Void Stain"
+        },
+        {
+          "name": "No Fangs Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismFangsStain",
+          "standing": "origin",
+          "display_name": "No Fangs Stain"
+        },
+        {
+          "name": "No Feral Senses Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyFeralSensesStain",
+          "standing": "origin",
+          "display_name": "No Feral Senses Stain"
+        },
+        {
+          "name": "No Fiendish Tutelage Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundFiendishTutelageStain",
+          "standing": "origin",
+          "display_name": "No Fiendish Tutelage Stain"
+        },
+        {
+          "name": "No Frightful Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundFrightfulStain",
+          "standing": "origin",
+          "display_name": "No Frightful Stain"
+        },
+        {
+          "name": "No Fur Armor Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyFurArmorStain",
+          "standing": "origin",
+          "display_name": "No Fur Armor Stain"
+        },
+        {
+          "name": "No Gnashing Bite Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGnashingBiteStain",
+          "standing": "origin",
+          "display_name": "No Gnashing Bite Stain"
+        },
+        {
+          "name": "No Greater Acid Blood Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveGreaterAcidBloodStain",
+          "standing": "origin",
+          "display_name": "No Greater Acid Blood Stain"
+        },
+        {
+          "name": "No Greater Armored Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterArmoredStain",
+          "standing": "origin",
+          "display_name": "No Greater Armored Stain"
+        },
+        {
+          "name": "No Greater Cadaver's Countenance Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichGreaterCadaversCountenanceStain",
+          "standing": "origin",
+          "display_name": "No Greater Cadaver's Countenance Stain"
+        },
+        {
+          "name": "No Greater Hive Mind Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveGreaterHiveMindStain",
+          "standing": "origin",
+          "display_name": "No Greater Hive Mind Stain"
+        },
+        {
+          "name": "No Greater Paralysis Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGreaterParalysisStain",
+          "standing": "origin",
+          "display_name": "No Greater Paralysis Stain"
+        },
+        {
+          "name": "No Greater Shattered Body Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterShatteredBodyStain",
+          "standing": "origin",
+          "display_name": "No Greater Shattered Body Stain"
+        },
+        {
+          "name": "No Greater Shattered Mind Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanGreaterShatteredMindStain",
+          "standing": "origin",
+          "display_name": "No Greater Shattered Mind Stain"
+        },
+        {
+          "name": "No Greater Shift Form Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyGreaterShiftFormStain",
+          "standing": "origin",
+          "display_name": "No Greater Shift Form Stain"
+        },
+        {
+          "name": "No Greater Stench of the Grave Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulGreaterStenchStain",
+          "standing": "origin",
+          "display_name": "No Greater Stench of the Grave Stain"
+        },
+        {
+          "name": "No Greater Unlife Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismGreaterUnlifeStain",
+          "standing": "origin",
+          "display_name": "No Greater Unlife Stain"
+        },
+        {
+          "name": "No Grim Fate Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedGrimFateStain",
+          "standing": "origin",
+          "display_name": "No Grim Fate Stain"
+        },
+        {
+          "name": "No Hateful Voices Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedHatefulVoicesStain",
+          "standing": "origin",
+          "display_name": "No Hateful Voices Stain"
+        },
+        {
+          "name": "No Hive Mind Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveHiveMindStain",
+          "standing": "origin",
+          "display_name": "No Hive Mind Stain"
+        },
+        {
+          "name": "No Horrific Shock Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedHorrificShockStain",
+          "standing": "origin",
+          "display_name": "No Horrific Shock Stain"
+        },
+        {
+          "name": "No Insubstantiality Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundInsubstantialityStain",
+          "standing": "origin",
+          "display_name": "No Insubstantiality Stain"
+        },
+        {
+          "name": "No Landwalker Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneLandwalkerStain",
+          "standing": "origin",
+          "display_name": "No Landwalker Stain"
+        },
+        {
+          "name": "No Life Drain Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismLifeDrainStain",
+          "standing": "origin",
+          "display_name": "No Life Drain Stain"
+        },
+        {
+          "name": "No Living Weapon Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveLivingWeaponStain",
+          "standing": "origin",
+          "display_name": "No Living Weapon Stain"
+        },
+        {
+          "name": "No Loathsome Gills Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneLoathsomeGillsStain",
+          "standing": "origin",
+          "display_name": "No Loathsome Gills Stain"
+        },
+        {
+          "name": "No Lunar Call Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyLunarCallStain",
+          "standing": "origin",
+          "display_name": "No Lunar Call Stain"
+        },
+        {
+          "name": "No Lycanthropic Empathy Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyLycanthropicEmpathyStain",
+          "standing": "origin",
+          "display_name": "No Lycanthropic Empathy Stain"
+        },
+        {
+          "name": "No Malevolence Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichMalevolenceStain",
+          "standing": "origin",
+          "display_name": "No Malevolence Stain"
+        },
+        {
+          "name": "No Master of the Dead Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichMasterOfTheDeadStain",
+          "standing": "origin",
+          "display_name": "No Master of the Dead Stain"
+        },
+        {
+          "name": "No Murky Futures Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundMurkyFuturesStain",
+          "standing": "origin",
+          "display_name": "No Murky Futures Stain"
+        },
+        {
+          "name": "No Necromantic Knowledge Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LichNecromanticKnowledgeStain",
+          "standing": "origin",
+          "display_name": "No Necromantic Knowledge Stain"
+        },
+        {
+          "name": "No Paralysis Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulParalysisStain",
+          "standing": "origin",
+          "display_name": "No Paralysis Stain"
+        },
+        {
+          "name": "No Passage through the Pit Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundPassageThroughPitStain",
+          "standing": "origin",
+          "display_name": "No Passage through the Pit Stain"
+        },
+        {
+          "name": "No Promethean Transfiguration Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanPrometheanTransfigurationStain",
+          "standing": "origin",
+          "display_name": "No Promethean Transfiguration Stain"
+        },
+        {
+          "name": "No Rampage Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanRampageStain",
+          "standing": "origin",
+          "display_name": "No Rampage Stain"
+        },
+        {
+          "name": "No Refuge in Pain Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundRefugeInPainStain",
+          "standing": "origin",
+          "display_name": "No Refuge in Pain Stain"
+        },
+        {
+          "name": "No Regretful Gaze Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundRegretfulGazeStain",
+          "standing": "origin",
+          "display_name": "No Regretful Gaze Stain"
+        },
+        {
+          "name": "No Rending Claws Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulRendingClawsStain",
+          "standing": "origin",
+          "display_name": "No Rending Claws Stain"
+        },
+        {
+          "name": "No Replacement Limb Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanReplacementLimbStain",
+          "standing": "origin",
+          "display_name": "No Replacement Limb Stain"
+        },
+        {
+          "name": "No Serpent's Tongue Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundSerpentsTongueStain",
+          "standing": "origin",
+          "display_name": "No Serpent's Tongue Stain"
+        },
+        {
+          "name": "No Shattered Body Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanShatteredBodyStain",
+          "standing": "origin",
+          "display_name": "No Shattered Body Stain"
+        },
+        {
+          "name": "No Shattered Mind Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanShatteredMindStain",
+          "standing": "origin",
+          "display_name": "No Shattered Mind Stain"
+        },
+        {
+          "name": "No Siltsight Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSiltsightStain",
+          "standing": "origin",
+          "display_name": "No Siltsight Stain"
+        },
+        {
+          "name": "No Silver Allergy Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropySilverAllergyStain",
+          "standing": "origin",
+          "display_name": "No Silver Allergy Stain"
+        },
+        {
+          "name": "No Slow Aging Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSlowAgingStain",
+          "standing": "origin",
+          "display_name": "No Slow Aging Stain"
+        },
+        {
+          "name": "No Spiteful Transformation Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedSpitefulTransformationStain",
+          "standing": "origin",
+          "display_name": "No Spiteful Transformation Stain"
+        },
+        {
+          "name": "No Staggering Claw Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulStaggeringClawStain",
+          "standing": "origin",
+          "display_name": "No Staggering Claw Stain"
+        },
+        {
+          "name": "No Swimmer in the Deep Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSwimmerInTheDeepStain",
+          "standing": "origin",
+          "display_name": "No Swimmer in the Deep Stain"
+        },
+        {
+          "name": "No Temporary Clarity Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTemporaryClarityStain",
+          "standing": "origin",
+          "display_name": "No Temporary Clarity Stain"
+        },
+        {
+          "name": "No Tenuous Soul Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundTenuousSoulStain",
+          "standing": "origin",
+          "display_name": "No Tenuous Soul Stain"
+        },
+        {
+          "name": "No Touch of Ruin Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundTouchOfRuinStain",
+          "standing": "origin",
+          "display_name": "No Touch of Ruin Stain"
+        },
+        {
+          "name": "No Traitorous Hand Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTraitorousHandStain",
+          "standing": "origin",
+          "display_name": "No Traitorous Hand Stain"
+        },
+        {
+          "name": "No Transformed Flesh Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveTransformedFleshStain",
+          "standing": "origin",
+          "display_name": "No Transformed Flesh Stain"
+        },
+        {
+          "name": "No True Unlife Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismTrueUnlifeStain",
+          "standing": "origin",
+          "display_name": "No True Unlife Stain"
+        },
+        {
+          "name": "No Two Minds Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTwoMindsStain",
+          "standing": "origin",
+          "display_name": "No Two Minds Stain"
+        },
+        {
+          "name": "No Undying Hatred Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedUndyingHatredStain",
+          "standing": "origin",
+          "display_name": "No Undying Hatred Stain"
+        },
+        {
+          "name": "No Unlife Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismUnlifeStain",
+          "standing": "origin",
+          "display_name": "No Unlife Stain"
+        },
+        {
+          "name": "No Unrestrained Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedUnrestrainedStain",
+          "standing": "origin",
+          "display_name": "No Unrestrained Stain"
+        },
+        {
+          "name": "No Vampiric Grace Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismVampiricGraceStain",
+          "standing": "origin",
+          "display_name": "No Vampiric Grace Stain"
+        },
+        {
+          "name": "No Violent Will Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedViolentWillStain",
+          "standing": "origin",
+          "display_name": "No Violent Will Stain"
+        },
+        {
+          "name": "No Weakening Claws Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedWeakeningClawsStain",
+          "standing": "origin",
+          "display_name": "No Weakening Claws Stain"
+        },
+        {
+          "name": "No Weaver of Lies Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundWeaverOfLiesStain",
+          "standing": "origin",
+          "display_name": "No Weaver of Lies Stain"
+        },
+        {
+          "name": "No Weightlessness Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedWeightlessnessStain",
+          "standing": "origin",
+          "display_name": "No Weightlessness Stain"
+        },
+        {
+          "name": "No Wish Peddler Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedWishPeddlerStain",
+          "standing": "origin",
+          "display_name": "No Wish Peddler Stain"
+        },
+        {
+          "name": "No Wretched Pain Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundWretchedPainStain",
+          "standing": "origin",
+          "display_name": "No Wretched Pain Stain"
+        },
+        {
+          "name": "Paralysis",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Paralysis"
+        },
+        {
+          "name": "Paralysis Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulParalysisGift",
+          "standing": "origin",
+          "display_name": "Paralysis Gift"
+        },
+        {
+          "name": "Paralysis Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulParalysisGift",
+          "standing": "origin",
+          "display_name": "Paralysis Resistance"
+        },
+        {
+          "name": "Paralysis Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulParalysisStain",
+          "standing": "origin",
+          "display_name": "Paralysis Stain"
+        },
+        {
+          "name": "Passage through the Pit",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Passage through the Pit"
+        },
+        {
+          "name": "Passage through the Pit Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundPassageThroughPitGift",
+          "standing": "origin",
+          "display_name": "Passage through the Pit Gift"
+        },
+        {
+          "name": "Passage through the Pit Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundPassageThroughPitGift",
+          "standing": "origin",
+          "display_name": "Passage through the Pit Resistance"
+        },
+        {
+          "name": "Passage through the Pit Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundPassageThroughPitStain",
+          "standing": "origin",
+          "display_name": "Passage through the Pit Stain"
+        },
+        {
+          "name": "Possessed",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Possessed"
+        },
+        {
+          "name": "Possessed Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Possessed Corruption Stages"
+        },
+        {
+          "name": "Possessed Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Possessed Manifestation Count"
+        },
+        {
+          "name": "Possessed Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Possessed Manifestation Level"
+        },
+        {
+          "name": "Promethean",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Promethean"
+        },
+        {
+          "name": "Promethean Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Promethean Corruption Stages"
+        },
+        {
+          "name": "Promethean Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Promethean Manifestation Count"
+        },
+        {
+          "name": "Promethean Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Promethean Manifestation Level"
+        },
+        {
+          "name": "Promethean Transfiguration",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Promethean Transfiguration"
+        },
+        {
+          "name": "Promethean Transfiguration Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanPrometheanTransfigurationGift",
+          "standing": "origin",
+          "display_name": "Promethean Transfiguration Gift"
+        },
+        {
+          "name": "Promethean Transfiguration Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanPrometheanTransfigurationGift",
+          "standing": "origin",
+          "display_name": "Promethean Transfiguration Resistance"
+        },
+        {
+          "name": "Promethean Transfiguration Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanPrometheanTransfigurationStain",
+          "standing": "origin",
+          "display_name": "Promethean Transfiguration Stain"
+        },
+        {
+          "name": "Rampage",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Rampage"
+        },
+        {
+          "name": "Rampage Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanRampageGift",
+          "standing": "origin",
+          "display_name": "Rampage Gift"
+        },
+        {
+          "name": "Rampage Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanRampageGift",
+          "standing": "origin",
+          "display_name": "Rampage Resistance"
+        },
+        {
+          "name": "Rampage Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanRampageStain",
+          "standing": "origin",
+          "display_name": "Rampage Stain"
+        },
+        {
+          "name": "Refuge in Pain",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Refuge in Pain"
+        },
+        {
+          "name": "Refuge in Pain Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundRefugeInPainGift",
+          "standing": "origin",
+          "display_name": "Refuge in Pain Gift"
+        },
+        {
+          "name": "Refuge in Pain Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundRefugeInPainGift",
+          "standing": "origin",
+          "display_name": "Refuge in Pain Resistance"
+        },
+        {
+          "name": "Refuge in Pain Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundRefugeInPainStain",
+          "standing": "origin",
+          "display_name": "Refuge in Pain Stain"
+        },
+        {
+          "name": "Regretful Gaze",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Regretful Gaze"
+        },
+        {
+          "name": "Regretful Gaze Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundRegretfulGazeGift",
+          "standing": "origin",
+          "display_name": "Regretful Gaze Gift"
+        },
+        {
+          "name": "Regretful Gaze Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundRegretfulGazeGift",
+          "standing": "origin",
+          "display_name": "Regretful Gaze Resistance"
+        },
+        {
+          "name": "Regretful Gaze Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundRegretfulGazeStain",
+          "standing": "origin",
+          "display_name": "Regretful Gaze Stain"
+        },
+        {
+          "name": "Rending Claws",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "unclassified",
+          "display_name": "Rending Claws"
+        },
+        {
+          "name": "Rending Claws Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulRendingClawsGift",
+          "standing": "origin",
+          "display_name": "Rending Claws Gift"
+        },
+        {
+          "name": "Rending Claws Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulRendingClawsGift",
+          "standing": "origin",
+          "display_name": "Rending Claws Resistance"
+        },
+        {
+          "name": "Rending Claws Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulRendingClawsStain",
+          "standing": "origin",
+          "display_name": "Rending Claws Stain"
+        },
+        {
+          "name": "Replacement Limb",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Replacement Limb"
+        },
+        {
+          "name": "Replacement Limb Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanReplacementLimbGift",
+          "standing": "origin",
+          "display_name": "Replacement Limb Gift"
+        },
+        {
+          "name": "Replacement Limb Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanReplacementLimbGift",
+          "standing": "origin",
+          "display_name": "Replacement Limb Resistance"
+        },
+        {
+          "name": "Replacement Limb Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanReplacementLimbStain",
+          "standing": "origin",
+          "display_name": "Replacement Limb Stain"
+        },
+        {
+          "name": "Resin Secretion",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Resin Secretion"
+        },
+        {
+          "name": "Resin Secretion Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveResinSecretionGift",
+          "standing": "origin",
+          "display_name": "Resin Secretion Gift"
+        },
+        {
+          "name": "Resin Secretion Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveResinSecretionStain",
+          "standing": "origin",
+          "display_name": "Resin Secretion Stain"
+        },
+        {
+          "name": "Sanity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Sanity"
+        },
+        {
+          "name": "Serpent's Tongue",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Serpent's Tongue"
+        },
+        {
+          "name": "Serpent's Tongue Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundSerpentsTongueGift",
+          "standing": "origin",
+          "display_name": "Serpent's Tongue Gift"
+        },
+        {
+          "name": "Serpent's Tongue Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundSerpentsTongueGift",
+          "standing": "origin",
+          "display_name": "Serpent's Tongue Resistance"
+        },
+        {
+          "name": "Serpent's Tongue Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundSerpentsTongueStain",
+          "standing": "origin",
+          "display_name": "Serpent's Tongue Stain"
+        },
+        {
+          "name": "Shadowbound",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Shadowbound"
+        },
+        {
+          "name": "Shadowbound Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Shadowbound Corruption Stages"
+        },
+        {
+          "name": "Shadowbound Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shadowbound Manifestation Count"
+        },
+        {
+          "name": "Shadowbound Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shadowbound Manifestation Level"
+        },
+        {
+          "name": "Shattered Body",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Shattered Body"
+        },
+        {
+          "name": "Shattered Body Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanShatteredBodyGift",
+          "standing": "origin",
+          "display_name": "Shattered Body Gift"
+        },
+        {
+          "name": "Shattered Body Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanShatteredBodyGift",
+          "standing": "origin",
+          "display_name": "Shattered Body Resistance"
+        },
+        {
+          "name": "Shattered Body Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanShatteredBodyStain",
+          "standing": "origin",
+          "display_name": "Shattered Body Stain"
+        },
+        {
+          "name": "Shattered Mind",
+          "doneness": "not-started",
+          "type_facet": "PrometheanManifestation",
+          "standing": "origin",
+          "display_name": "Shattered Mind"
+        },
+        {
+          "name": "Shattered Mind Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanShatteredMindGift",
+          "standing": "origin",
+          "display_name": "Shattered Mind Gift"
+        },
+        {
+          "name": "Shattered Mind Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanShatteredMindGift",
+          "standing": "origin",
+          "display_name": "Shattered Mind Resistance"
+        },
+        {
+          "name": "Shattered Mind Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PrometheanShatteredMindStain",
+          "standing": "origin",
+          "display_name": "Shattered Mind Stain"
+        },
+        {
+          "name": "Shift Form",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Shift Form"
+        },
+        {
+          "name": "Shift Form Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyShiftFormGift",
+          "standing": "origin",
+          "display_name": "Shift Form Gift"
+        },
+        {
+          "name": "Shift Form Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropyShiftFormStain",
+          "standing": "origin",
+          "display_name": "Shift Form Stain"
+        },
+        {
+          "name": "Siltsight",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Siltsight"
+        },
+        {
+          "name": "Siltsight Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSiltsightGift",
+          "standing": "origin",
+          "display_name": "Siltsight Gift"
+        },
+        {
+          "name": "Siltsight Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSiltsightGift",
+          "standing": "origin",
+          "display_name": "Siltsight Resistance"
+        },
+        {
+          "name": "Siltsight Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSiltsightStain",
+          "standing": "origin",
+          "display_name": "Siltsight Stain"
+        },
+        {
+          "name": "Silver Allergy",
+          "doneness": "not-started",
+          "type_facet": "LycanthropyManifestation",
+          "standing": "origin",
+          "display_name": "Silver Allergy"
+        },
+        {
+          "name": "Silver Allergy Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropySilverAllergyGift",
+          "standing": "origin",
+          "display_name": "Silver Allergy Gift"
+        },
+        {
+          "name": "Silver Allergy Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropySilverAllergyGift",
+          "standing": "origin",
+          "display_name": "Silver Allergy Resistance"
+        },
+        {
+          "name": "Silver Allergy Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropySilverAllergyStain",
+          "standing": "origin",
+          "display_name": "Silver Allergy Stain"
+        },
+        {
+          "name": "Slow Aging",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Slow Aging"
+        },
+        {
+          "name": "Slow Aging Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSlowAgingGift",
+          "standing": "origin",
+          "display_name": "Slow Aging Gift"
+        },
+        {
+          "name": "Slow Aging Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSlowAgingGift",
+          "standing": "origin",
+          "display_name": "Slow Aging Resistance"
+        },
+        {
+          "name": "Slow Aging Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSlowAgingStain",
+          "standing": "origin",
+          "display_name": "Slow Aging Stain"
+        },
+        {
+          "name": "Sorcerer/Wizard Spell",
+          "doneness": "not-started",
+          "type_facet": "HellboundDevilsMarkSpell",
+          "standing": "origin",
+          "display_name": "Sorcerer/Wizard Spell"
+        },
+        {
+          "name": "Spiteful Transformation",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Spiteful Transformation"
+        },
+        {
+          "name": "Spiteful Transformation Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedSpitefulTransformationGift",
+          "standing": "origin",
+          "display_name": "Spiteful Transformation Gift"
+        },
+        {
+          "name": "Spiteful Transformation Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedSpitefulTransformationGift",
+          "standing": "origin",
+          "display_name": "Spiteful Transformation Resistance"
+        },
+        {
+          "name": "Spiteful Transformation Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedSpitefulTransformationStain",
+          "standing": "origin",
+          "display_name": "Spiteful Transformation Stain"
+        },
+        {
+          "name": "Staggering Claw",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Staggering Claw"
+        },
+        {
+          "name": "Staggering Claw Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulStaggeringClawGift",
+          "standing": "origin",
+          "display_name": "Staggering Claw Gift"
+        },
+        {
+          "name": "Staggering Claw Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulStaggeringClawGift",
+          "standing": "origin",
+          "display_name": "Staggering Claw Resistance"
+        },
+        {
+          "name": "Staggering Claw Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulStaggeringClawStain",
+          "standing": "origin",
+          "display_name": "Staggering Claw Stain"
+        },
+        {
+          "name": "Stench of the Grave",
+          "doneness": "not-started",
+          "type_facet": "GhoulManifestation",
+          "standing": "origin",
+          "display_name": "Stench of the Grave"
+        },
+        {
+          "name": "Stench of the Grave Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulStenchOfTheGraveGift",
+          "standing": "origin",
+          "display_name": "Stench of the Grave Gift"
+        },
+        {
+          "name": "Stench of the Grave Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.GhoulStenchOfTheGraveStain",
+          "standing": "origin",
+          "display_name": "Stench of the Grave Stain"
+        },
+        {
+          "name": "Swimmer in the Deep",
+          "doneness": "not-started",
+          "type_facet": "DeepOneManifestation",
+          "standing": "origin",
+          "display_name": "Swimmer in the Deep"
+        },
+        {
+          "name": "Swimmer in the Deep Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSwimmerInTheDeepGift",
+          "standing": "origin",
+          "display_name": "Swimmer in the Deep Gift"
+        },
+        {
+          "name": "Swimmer in the Deep Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSwimmerInTheDeepGift",
+          "standing": "origin",
+          "display_name": "Swimmer in the Deep Resistance"
+        },
+        {
+          "name": "Swimmer in the Deep Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeepOneSwimmerInTheDeepStain",
+          "standing": "origin",
+          "display_name": "Swimmer in the Deep Stain"
+        },
+        {
+          "name": "Temporary Clarity",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Temporary Clarity"
+        },
+        {
+          "name": "Temporary Clarity Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTemporaryClarityGift",
+          "standing": "origin",
+          "display_name": "Temporary Clarity Gift"
+        },
+        {
+          "name": "Temporary Clarity Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTemporaryClarityGift",
+          "standing": "origin",
+          "display_name": "Temporary Clarity Resistance"
+        },
+        {
+          "name": "Temporary Clarity Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTemporaryClarityStain",
+          "standing": "origin",
+          "display_name": "Temporary Clarity Stain"
+        },
+        {
+          "name": "Tenuous Soul",
+          "doneness": "not-started",
+          "type_facet": "HellboundManifestation",
+          "standing": "origin",
+          "display_name": "Tenuous Soul"
+        },
+        {
+          "name": "Tenuous Soul Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundTenuousSoulGift",
+          "standing": "origin",
+          "display_name": "Tenuous Soul Gift"
+        },
+        {
+          "name": "Tenuous Soul Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundTenuousSoulGift",
+          "standing": "origin",
+          "display_name": "Tenuous Soul Resistance"
+        },
+        {
+          "name": "Tenuous Soul Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HellboundTenuousSoulStain",
+          "standing": "origin",
+          "display_name": "Tenuous Soul Stain"
+        },
+        {
+          "name": "Touch of Ruin",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Touch of Ruin"
+        },
+        {
+          "name": "Touch of Ruin Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundTouchOfRuinGift",
+          "standing": "origin",
+          "display_name": "Touch of Ruin Gift"
+        },
+        {
+          "name": "Touch of Ruin Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundTouchOfRuinGift",
+          "standing": "origin",
+          "display_name": "Touch of Ruin Resistance"
+        },
+        {
+          "name": "Touch of Ruin Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundTouchOfRuinStain",
+          "standing": "origin",
+          "display_name": "Touch of Ruin Stain"
+        },
+        {
+          "name": "Traitorous Hand",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Traitorous Hand"
+        },
+        {
+          "name": "Traitorous Hand Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTraitorousHandGift",
+          "standing": "origin",
+          "display_name": "Traitorous Hand Gift"
+        },
+        {
+          "name": "Traitorous Hand Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTraitorousHandGift",
+          "standing": "origin",
+          "display_name": "Traitorous Hand Resistance"
+        },
+        {
+          "name": "Traitorous Hand Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTraitorousHandStain",
+          "standing": "origin",
+          "display_name": "Traitorous Hand Stain"
+        },
+        {
+          "name": "Transformed Flesh",
+          "doneness": "not-started",
+          "type_facet": "HiveManifestation",
+          "standing": "origin",
+          "display_name": "Transformed Flesh"
+        },
+        {
+          "name": "Transformed Flesh Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveTransformedFleshGift",
+          "standing": "origin",
+          "display_name": "Transformed Flesh Gift"
+        },
+        {
+          "name": "Transformed Flesh Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveTransformedFleshGift",
+          "standing": "origin",
+          "display_name": "Transformed Flesh Resistance"
+        },
+        {
+          "name": "Transformed Flesh Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.HiveTransformedFleshStain",
+          "standing": "origin",
+          "display_name": "Transformed Flesh Stain"
+        },
+        {
+          "name": "True Unlife",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "True Unlife"
+        },
+        {
+          "name": "True Unlife Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismTrueUnlifeGift",
+          "standing": "origin",
+          "display_name": "True Unlife Gift"
+        },
+        {
+          "name": "True Unlife Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismTrueUnlifeGift",
+          "standing": "origin",
+          "display_name": "True Unlife Resistance"
+        },
+        {
+          "name": "True Unlife Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismTrueUnlifeStain",
+          "standing": "origin",
+          "display_name": "True Unlife Stain"
+        },
+        {
+          "name": "Two Minds",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Two Minds"
+        },
+        {
+          "name": "Two Minds Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTwoMindsGift",
+          "standing": "origin",
+          "display_name": "Two Minds Gift"
+        },
+        {
+          "name": "Two Minds Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTwoMindsGift",
+          "standing": "origin",
+          "display_name": "Two Minds Resistance"
+        },
+        {
+          "name": "Two Minds Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedTwoMindsStain",
+          "standing": "origin",
+          "display_name": "Two Minds Stain"
+        },
+        {
+          "name": "Undying Hatred",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Undying Hatred"
+        },
+        {
+          "name": "Undying Hatred Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedUndyingHatredGift",
+          "standing": "origin",
+          "display_name": "Undying Hatred Gift"
+        },
+        {
+          "name": "Undying Hatred Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedUndyingHatredGift",
+          "standing": "origin",
+          "display_name": "Undying Hatred Resistance"
+        },
+        {
+          "name": "Undying Hatred Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedUndyingHatredStain",
+          "standing": "origin",
+          "display_name": "Undying Hatred Stain"
+        },
+        {
+          "name": "Unlife",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "Unlife"
+        },
+        {
+          "name": "Unlife Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismUnlifeGift",
+          "standing": "origin",
+          "display_name": "Unlife Gift"
+        },
+        {
+          "name": "Unlife Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismUnlifeGift",
+          "standing": "origin",
+          "display_name": "Unlife Resistance"
+        },
+        {
+          "name": "Unlife Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismUnlifeStain",
+          "standing": "origin",
+          "display_name": "Unlife Stain"
+        },
+        {
+          "name": "Unrestrained",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Unrestrained"
+        },
+        {
+          "name": "Unrestrained Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedUnrestrainedGift",
+          "standing": "origin",
+          "display_name": "Unrestrained Gift"
+        },
+        {
+          "name": "Unrestrained Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedUnrestrainedGift",
+          "standing": "origin",
+          "display_name": "Unrestrained Resistance"
+        },
+        {
+          "name": "Unrestrained Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedUnrestrainedStain",
+          "standing": "origin",
+          "display_name": "Unrestrained Stain"
+        },
+        {
+          "name": "Use Corruption (Standard)",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Use Corruption (Standard)"
+        },
+        {
+          "name": "Use Corruption (Useful)",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Use Corruption (Useful)"
+        },
+        {
+          "name": "Use Corruption (Vile)",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Use Corruption (Vile)"
+        },
+        {
+          "name": "Use Sanity",
+          "doneness": "not-started",
+          "type_facet": "OptionalRules",
+          "standing": "origin",
+          "display_name": "Use Sanity"
+        },
+        {
+          "name": "Vampiric Grace",
+          "doneness": "not-started",
+          "type_facet": "VampirismManifestation",
+          "standing": "origin",
+          "display_name": "Vampiric Grace"
+        },
+        {
+          "name": "Vampiric Grace Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismVampiricGraceGift",
+          "standing": "origin",
+          "display_name": "Vampiric Grace Gift"
+        },
+        {
+          "name": "Vampiric Grace Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismVampiricGraceGift",
+          "standing": "origin",
+          "display_name": "Vampiric Grace Resistance"
+        },
+        {
+          "name": "Vampiric Grace Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.VampirismVampiricGraceStain",
+          "standing": "origin",
+          "display_name": "Vampiric Grace Stain"
+        },
+        {
+          "name": "Vampirism",
+          "doneness": "not-started",
+          "type_facet": "CorruptionType",
+          "standing": "origin",
+          "display_name": "Vampirism"
+        },
+        {
+          "name": "Vampirism Corruption Stages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Vampirism Corruption Stages"
+        },
+        {
+          "name": "Vampirism Manifestation Count",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vampirism Manifestation Count"
+        },
+        {
+          "name": "Vampirism Manifestation Level",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vampirism Manifestation Level"
+        },
+        {
+          "name": "Violent Will",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Violent Will"
+        },
+        {
+          "name": "Violent Will Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedViolentWillGift",
+          "standing": "origin",
+          "display_name": "Violent Will Gift"
+        },
+        {
+          "name": "Violent Will Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedViolentWillGift",
+          "standing": "origin",
+          "display_name": "Violent Will Resistance"
+        },
+        {
+          "name": "Violent Will Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedViolentWillStain",
+          "standing": "origin",
+          "display_name": "Violent Will Stain"
+        },
+        {
+          "name": "Weakening Claws",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Weakening Claws"
+        },
+        {
+          "name": "Weakening Claws Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedWeakeningClawsGift",
+          "standing": "origin",
+          "display_name": "Weakening Claws Gift"
+        },
+        {
+          "name": "Weakening Claws Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedWeakeningClawsGift",
+          "standing": "origin",
+          "display_name": "Weakening Claws Resistance"
+        },
+        {
+          "name": "Weakening Claws Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedWeakeningClawsStain",
+          "standing": "origin",
+          "display_name": "Weakening Claws Stain"
+        },
+        {
+          "name": "Weaver of Lies",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Weaver of Lies"
+        },
+        {
+          "name": "Weaver of Lies Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundWeaverOfLiesGift",
+          "standing": "origin",
+          "display_name": "Weaver of Lies Gift"
+        },
+        {
+          "name": "Weaver of Lies Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundWeaverOfLiesGift",
+          "standing": "origin",
+          "display_name": "Weaver of Lies Resistance"
+        },
+        {
+          "name": "Weaver of Lies Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundWeaverOfLiesStain",
+          "standing": "origin",
+          "display_name": "Weaver of Lies Stain"
+        },
+        {
+          "name": "Weightlessness",
+          "doneness": "not-started",
+          "type_facet": "PossessedManifestation",
+          "standing": "origin",
+          "display_name": "Weightlessness"
+        },
+        {
+          "name": "Weightlessness Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedWeightlessnessGift",
+          "standing": "origin",
+          "display_name": "Weightlessness Gift"
+        },
+        {
+          "name": "Weightlessness Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedWeightlessnessGift",
+          "standing": "origin",
+          "display_name": "Weightlessness Resistance"
+        },
+        {
+          "name": "Weightlessness Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.PossessedWeightlessnessStain",
+          "standing": "origin",
+          "display_name": "Weightlessness Stain"
+        },
+        {
+          "name": "Wish Peddler",
+          "doneness": "not-started",
+          "type_facet": "AccursedManifestation",
+          "standing": "origin",
+          "display_name": "Wish Peddler"
+        },
+        {
+          "name": "Wish Peddler Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedWishPeddlerGift",
+          "standing": "origin",
+          "display_name": "Wish Peddler Gift"
+        },
+        {
+          "name": "Wish Peddler Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedWishPeddlerGift",
+          "standing": "origin",
+          "display_name": "Wish Peddler Resistance"
+        },
+        {
+          "name": "Wish Peddler Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.AccursedWishPeddlerStain",
+          "standing": "origin",
+          "display_name": "Wish Peddler Stain"
+        },
+        {
+          "name": "Witch Spell",
+          "doneness": "not-started",
+          "type_facet": "HellboundDevilsMarkSpell",
+          "standing": "origin",
+          "display_name": "Witch Spell"
+        },
+        {
+          "name": "Wretched Pain",
+          "doneness": "not-started",
+          "type_facet": "ShadowboundManifestation",
+          "standing": "origin",
+          "display_name": "Wretched Pain"
+        },
+        {
+          "name": "Wretched Pain Gift",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundWretchedPainGift",
+          "standing": "origin",
+          "display_name": "Wretched Pain Gift"
+        },
+        {
+          "name": "Wretched Pain Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundWretchedPainGift",
+          "standing": "origin",
+          "display_name": "Wretched Pain Resistance"
+        },
+        {
+          "name": "Wretched Pain Stain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ShadowboundWretchedPainStain",
+          "standing": "origin",
+          "display_name": "Wretched Pain Stain"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
       "done": 4,
       "partial": 0,
-      "not_started": 306,
-      "denominator": 310,
-      "pct": 1.3,
-      "excluded_from_percentage": 109,
+      "not_started": 281,
+      "denominator": 285,
+      "pct": 1.4,
+      "excluded_from_percentage": 146,
       "standing_breakdown": {
-        "unclassified": 109,
-        "origin": 310
+        "unclassified": 146,
+        "origin": 285
       },
       "items": [
         {
@@ -293,7 +4166,7 @@
           "name": "Cause Fear",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Cause Fear"
         },
         {
@@ -339,10 +4212,24 @@
           "display_name": "Chokehold"
         },
         {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.ExperimenterClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Vigilante Class Feature.ExperimenterClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.WitchKillerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Slayer Class Feature.WitchKillerClassFeatures)"
+        },
+        {
           "name": "Cloak of Dreams",
           "doneness": "not-started",
           "type_facet": "BonusDreamstalkerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Cloak of Dreams"
         },
         {
@@ -461,7 +4348,7 @@
           "name": "Crushing Despair",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Crushing Despair"
         },
         {
@@ -524,7 +4411,7 @@
           "name": "Curse of Disgust",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Curse of Disgust"
         },
         {
@@ -636,14 +4523,21 @@
           "name": "Deep Slumber",
           "doneness": "not-started",
           "type_facet": "BonusDreamstalkerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Deep Slumber"
+        },
+        {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
         },
         {
           "name": "Delusional Pride",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Delusional Pride"
         },
         {
@@ -671,7 +4565,7 @@
           "name": "Devolution",
           "doneness": "not-started",
           "type_facet": "Druid Class Feature.DevolutionistClassFeatures.SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Devolution"
         },
         {
@@ -867,7 +4761,7 @@
           "name": "Envious Urge",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Envious Urge"
         },
         {
@@ -930,7 +4824,7 @@
           "name": "Eyebite",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Eyebite"
         },
         {
@@ -986,7 +4880,7 @@
           "name": "Feast on Fear",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Feast on Fear"
         },
         {
@@ -1063,7 +4957,7 @@
           "name": "Forgetful Slumber",
           "doneness": "not-started",
           "type_facet": "BonusDreamstalkerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Forgetful Slumber"
         },
         {
@@ -1392,7 +5286,7 @@
           "name": "Insanity",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Insanity"
         },
         {
@@ -1602,7 +5496,7 @@
           "name": "Malicious Spite",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Malicious Spite"
         },
         {
@@ -1686,7 +5580,7 @@
           "name": "Minor Dream",
           "doneness": "not-started",
           "type_facet": "BonusDreamstalkerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Minor Dream"
         },
         {
@@ -1711,6 +5605,13 @@
           "display_name": "Mooncursed"
         },
         {
+          "name": "Mooncursed Crocodile Move",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Mooncursed Crocodile Move"
+        },
+        {
           "name": "Mooncursed Form (Huge)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality",
@@ -1730,6 +5631,13 @@
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Mooncursed Form (Medium)"
+        },
+        {
+          "name": "Mooncursed Shark Move",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Mooncursed Shark Move"
         },
         {
           "name": "Moth-Eaten",
@@ -2040,6 +5948,20 @@
           "display_name": "Pride and Penance"
         },
         {
+          "name": "Proficiencies",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.ExperimenterClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Proficiencies (Vigilante Class Feature.ExperimenterClassFeatures)"
+        },
+        {
+          "name": "Proficiencies",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.HangmanClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Proficiencies (Vigilante Class Feature.HangmanClassFeatures)"
+        },
+        {
           "name": "Profiler",
           "doneness": "not-started",
           "type_facet": "Archetype.InvestigatorArchetype",
@@ -2218,7 +6140,7 @@
           "name": "Scare",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Scare"
         },
         {
@@ -2255,6 +6177,13 @@
           "type_facet": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "See No Evil, Hear No Evil"
+        },
+        {
+          "name": "Self-Sufficient",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.TorturedCrusaderClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Self-Sufficient"
         },
         {
           "name": "Sense Madness",
@@ -2344,7 +6273,7 @@
           "name": "Sleep",
           "doneness": "not-started",
           "type_facet": "BonusDreamstalkerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Sleep"
         },
         {
@@ -2372,7 +6301,7 @@
           "name": "Smug Narcissism",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Smug Narcissism"
         },
         {
@@ -2428,7 +6357,7 @@
           "name": "Sow Thought",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Sow Thought"
         },
         {
@@ -2450,7 +6379,14 @@
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality",
           "standing": "unclassified",
-          "display_name": "Spells"
+          "display_name": "Spells (Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality)"
+        },
+        {
+          "name": "Spells",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.NecrologistClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Spells (Spiritualist Class Feature.NecrologistClassFeatures)"
         },
         {
           "name": "Spirit Bonus",
@@ -2554,7 +6490,7 @@
           "name": "Suffocation",
           "doneness": "not-started",
           "type_facet": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Suffocation"
         },
         {
@@ -2582,14 +6518,14 @@
           "name": "Symbol of Persuasion",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Symbol of Persuasion"
         },
         {
           "name": "Symbol of Sleep",
           "doneness": "not-started",
           "type_facet": "BonusDreamstalkerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Symbol of Sleep"
         },
         {
@@ -2729,7 +6665,7 @@
           "name": "Unadulterated Loathing",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Unadulterated Loathing"
         },
         {
@@ -2778,21 +6714,21 @@
           "name": "Unwilling Shield",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Unwilling Shield"
         },
         {
           "name": "Utter Contempt",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Utter Contempt"
         },
         {
           "name": "Vengeful Outrage",
           "doneness": "not-started",
           "type_facet": "BonusHateMongerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Vengeful Outrage"
         },
         {
@@ -2826,9 +6762,23 @@
         {
           "name": "Void",
           "doneness": "not-started",
+          "type_facet": "Internal.DomainAbility",
+          "standing": "unclassified",
+          "display_name": "Void (Internal.DomainAbility)"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "unclassified",
+          "display_name": "Void (Internal)"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
-          "display_name": "Void"
+          "display_name": "Void (InquisitorDomain)"
         },
         {
           "name": "Warding Seal",
@@ -2855,15 +6805,22 @@
           "name": "Waves of Exhaustion",
           "doneness": "not-started",
           "type_facet": "BonusDreamstalkerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Waves of Exhaustion"
         },
         {
           "name": "Waves of Fatigue",
           "doneness": "not-started",
           "type_facet": "BonusDreamstalkerSpell",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Waves of Fatigue"
+        },
+        {
+          "name": "Weapon Proficiency",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.TatterdemalionClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Weapon Proficiency"
         },
         {
           "name": "Weapon and Armor Proficiency",
@@ -2999,6 +6956,49 @@
           "type_facet": "CompanionAdvancement",
           "standing": "origin",
           "display_name": "Companion Advancement (Devolved Humanoid)"
+        }
+      ]
+    },
+    {
+      "kind": "domain",
+      "label": "Domains",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 4,
+      "standing_breakdown": {
+        "unclassified": 4
+      },
+      "items": [
+        {
+          "name": "Dark Tapestry Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Dark Tapestry Subdomain"
+        },
+        {
+          "name": "Isolation Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Isolation Subdomain"
+        },
+        {
+          "name": "Stars Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Stars Subdomain"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Void"
         }
       ]
     },
@@ -4413,29 +8413,58 @@
       ]
     },
     {
+      "kind": "language",
+      "label": "Languages",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 2,
+      "standing_breakdown": {
+        "unclassified": 2
+      },
+      "items": [
+        {
+          "name": "Aklo (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Aklo (cannot speak)"
+        },
+        {
+          "name": "Common (cannot speak)",
+          "doneness": "not-started",
+          "type_facet": "Understand",
+          "standing": "unclassified",
+          "display_name": "Common (cannot speak)"
+        }
+      ]
+    },
+    {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 3,
-      "partial": 0,
-      "not_started": 47,
-      "denominator": 50,
-      "pct": 6.0,
-      "excluded_from_percentage": 21,
+      "done": 24,
+      "partial": 16,
+      "not_started": 9,
+      "denominator": 49,
+      "pct": 49.0,
+      "excluded_from_percentage": 22,
       "standing_breakdown": {
-        "origin": 50,
-        "unclassified": 21
+        "unclassified": 22,
+        "origin": 49
       },
       "items": [
         {
           "name": "Acid Spit",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.HiveWarrior",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Acid Spit"
         },
         {
           "name": "Agonizing Prayer",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.ApostleKyton",
           "standing": "origin",
           "display_name": "Agonizing Prayer"
@@ -4449,105 +8478,105 @@
         },
         {
           "name": "Armor Class",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.TrompeLOeil",
           "standing": "origin",
           "display_name": "Armor Class"
         },
         {
           "name": "Assume Likeness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.UnknownTemplate",
           "standing": "origin",
           "display_name": "Assume Likeness"
         },
         {
           "name": "Attacks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.TrompeLOeil",
           "standing": "origin",
           "display_name": "Attacks"
         },
         {
           "name": "Autotelic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.TrompeLOeil",
           "standing": "origin",
           "display_name": "Autotelic"
         },
         {
           "name": "Bleeding Touch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.ApostleKyton",
           "standing": "origin",
           "display_name": "Bleeding Touch"
         },
         {
           "name": "Blind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Blind"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.BestialWerewolf",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural.BestialWerewolf)"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.LycanthropicCreature",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural.LycanthropicCreature)"
         },
         {
           "name": "Channel Resistance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Channel Resistance"
         },
         {
           "name": "Cling of the Grave",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cling of the Grave"
         },
         {
           "name": "Contract Bound",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.HellboundCreature",
           "standing": "unclassified",
           "display_name": "Contract Bound"
         },
         {
           "name": "Corrosive Blood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Corrosive Blood"
         },
         {
           "name": "Cursed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.AccursedCreature",
           "standing": "origin",
           "display_name": "Cursed"
         },
         {
           "name": "Death Throes",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Death Throes"
         },
         {
           "name": "Deep One Traits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Deep One Traits"
@@ -4561,7 +8590,7 @@
         },
         {
           "name": "Dream Movements",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.UnknownTemplate",
           "standing": "origin",
           "display_name": "Dream Movements"
@@ -4575,56 +8604,56 @@
         },
         {
           "name": "Enter Painting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.TrompeLOeil",
           "standing": "origin",
           "display_name": "Enter Painting"
         },
         {
           "name": "Familial Possession",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.FamilialLich",
           "standing": "origin",
           "display_name": "Familial Possession"
         },
         {
           "name": "Fear Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.DreadLordSpecialPower.Aura",
           "standing": "unclassified",
           "display_name": "Fear Aura (SpecialAttack.Supernatural.DreadLordSpecialPower.Aura)"
         },
         {
           "name": "Fear Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.ImplacableStalker.Aura",
           "standing": "unclassified",
           "display_name": "Fear Aura (SpecialAttack.Supernatural.ImplacableStalker.Aura)"
         },
         {
           "name": "Feral Counter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.BestialWerewolf",
           "standing": "origin",
           "display_name": "Feral Counter"
         },
         {
           "name": "Gory Display",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.ImplacableStalker",
           "standing": "origin",
           "display_name": "Gory Display"
         },
         {
           "name": "Hallucinatory Camouflage",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.UnknownTemplate",
           "standing": "origin",
           "display_name": "Hallucinatory Camouflage"
         },
         {
           "name": "Heat Adaptability",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Heat Adaptability"
@@ -4638,7 +8667,7 @@
         },
         {
           "name": "Hive Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hive Mind"
@@ -4652,7 +8681,7 @@
         },
         {
           "name": "Immortal Curse",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.CursedLord",
           "standing": "origin",
           "display_name": "Immortal Curse"
@@ -4666,21 +8695,21 @@
         },
         {
           "name": "Landlocked",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.DreadLord",
           "standing": "origin",
           "display_name": "Landlocked"
         },
         {
           "name": "Lifedrinker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Lifedrinker"
         },
         {
           "name": "Magical Mastery",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DreadLordSpecialPower",
           "standing": "origin",
           "display_name": "Magical Mastery"
@@ -4694,56 +8723,56 @@
         },
         {
           "name": "Moonbound",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.MoonboundWerewolf",
           "standing": "origin",
           "display_name": "Moonbound"
         },
         {
           "name": "Moonbound (Full Moon)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MoonboundWerewolf",
           "standing": "origin",
           "display_name": "Moonbound (Full Moon)"
         },
         {
           "name": "Moonbound (Near Full Moon)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MoonboundWerewolf",
           "standing": "origin",
           "display_name": "Moonbound (Near Full Moon)"
         },
         {
           "name": "Moonbound (New Moon)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MoonboundWerewolf",
           "standing": "origin",
           "display_name": "Moonbound (New Moon)"
         },
         {
           "name": "Moonbound (Other Moon)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.MoonboundWerewolf",
           "standing": "origin",
           "display_name": "Moonbound (Other Moon)"
         },
         {
           "name": "Nightmare Resurrection",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.ImplacableStalker",
           "standing": "origin",
           "display_name": "Nightmare Resurrection"
         },
         {
           "name": "One with the Land",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.DreadLord",
           "standing": "origin",
           "display_name": "One with the Land"
         },
         {
           "name": "Physical Mastery",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.DreadLordSpecialPower",
           "standing": "origin",
           "display_name": "Physical Mastery"
@@ -4764,7 +8793,7 @@
         },
         {
           "name": "Promethean Metabolism",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.PrometheanCreature",
           "standing": "origin",
           "display_name": "Promethean Metabolism"
@@ -4778,21 +8807,21 @@
         },
         {
           "name": "Refuge in Pain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.ShadowboundCreature",
           "standing": "origin",
           "display_name": "Refuge in Pain"
         },
         {
           "name": "Regretful Gaze",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.ShadowboundCreature",
           "standing": "origin",
           "display_name": "Regretful Gaze"
         },
         {
           "name": "Rejuvenation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.TrompeLOeil",
           "standing": "unclassified",
           "display_name": "Rejuvenation"
@@ -4806,7 +8835,7 @@
         },
         {
           "name": "Right Behind You",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.ImplacableStalker",
           "standing": "origin",
           "display_name": "Right Behind You"
@@ -4820,35 +8849,35 @@
         },
         {
           "name": "Sense Fear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.ImplacableStalker.Senses",
           "standing": "origin",
           "display_name": "Sense Fear"
         },
         {
           "name": "Shadow Traveler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.ApostleKyton",
           "standing": "unclassified",
           "display_name": "Shadow Traveler"
         },
         {
           "name": "Skills",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.TrompeLOeil",
           "standing": "unclassified",
           "display_name": "Skills"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike.ApostleKyton",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialAttack.SpellLike.ApostleKyton)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.UnknownTemplate",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike.UnknownTemplate)"
@@ -4862,42 +8891,42 @@
         },
         {
           "name": "Terrifying Inevitability",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.ImplacableStalker",
           "standing": "origin",
           "display_name": "Terrifying Inevitability"
         },
         {
           "name": "Touch Attack",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.LichCreature",
           "standing": "unclassified",
           "display_name": "Touch Attack"
         },
         {
           "name": "Trapped",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.CursedLord",
           "standing": "origin",
           "display_name": "Trapped"
         },
         {
           "name": "Two Minds",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.PossessedCreature",
           "standing": "origin",
           "display_name": "Two Minds"
         },
         {
           "name": "Unnatural Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Unnatural Aura"
         },
         {
           "name": "Unnerving Gaze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.ApostleKyton",
           "standing": "unclassified",
           "display_name": "Unnerving Gaze"
@@ -4911,14 +8940,14 @@
         },
         {
           "name": "Victimize",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.UnknownTemplate",
           "standing": "origin",
           "display_name": "Victimize"
         },
         {
           "name": "Weaver of Lies",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ShadowboundCreature",
           "standing": "origin",
           "display_name": "Weaver of Lies"
@@ -4964,15 +8993,15 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 38,
+      "done": 39,
       "partial": 0,
-      "not_started": 33,
-      "denominator": 71,
-      "pct": 53.5,
-      "excluded_from_percentage": 21,
+      "not_started": 34,
+      "denominator": 73,
+      "pct": 53.4,
+      "excluded_from_percentage": 19,
       "standing_breakdown": {
-        "origin": 71,
-        "unclassified": 21
+        "origin": 73,
+        "unclassified": 19
       },
       "items": [
         {
@@ -5042,7 +9071,7 @@
           "name": "Cold",
           "doneness": "not-started",
           "type_facet": "ElfSorcererFCB_HA",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Cold"
         },
         {
@@ -5462,7 +9491,7 @@
           "name": "Projection",
           "doneness": "done",
           "type_facet": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Projection"
         },
         {
@@ -5647,8 +9676,8 @@
       "kind": "spell",
       "label": "Spells",
       "done": 0,
-      "partial": 0,
-      "not_started": 70,
+      "partial": 70,
+      "not_started": 0,
       "denominator": 70,
       "pct": 0.0,
       "excluded_from_percentage": 2,
@@ -5659,238 +9688,238 @@
       "items": [
         {
           "name": "Absurdity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Absurdity"
         },
         {
           "name": "Alleviate Corruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Alleviate Corruption"
         },
         {
           "name": "Appearance of Life",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Appearance of Life"
         },
         {
           "name": "Assume Appearance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Assume Appearance"
         },
         {
           "name": "Assume Appearance (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Assume Appearance (Greater)"
         },
         {
           "name": "Ban Corruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine.Psychic",
           "standing": "origin",
           "display_name": "Ban Corruption"
         },
         {
           "name": "Barbed Chains",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Barbed Chains"
         },
         {
           "name": "Blood Ties",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine.Psychic",
           "standing": "origin",
           "display_name": "Blood Ties"
         },
         {
           "name": "Bloodbath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Bloodbath"
         },
         {
           "name": "Boneshaker",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Boneshaker"
         },
         {
           "name": "Borrow Corruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Borrow Corruption"
         },
         {
           "name": "Charnel House",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Charnel House"
         },
         {
           "name": "Compelling Rant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Compelling Rant"
         },
         {
           "name": "Contact Entity I",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Contact Entity I"
         },
         {
           "name": "Contact Entity II",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Contact Entity II"
         },
         {
           "name": "Contact Entity III",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Contact Entity III"
         },
         {
           "name": "Contact Entity IV",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Contact Entity IV"
         },
         {
           "name": "Cruel Jaunt",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Cruel Jaunt"
         },
         {
           "name": "Curse Terrain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Curse Terrain"
         },
         {
           "name": "Curse Terrain (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Curse Terrain (Greater)"
         },
         {
           "name": "Curse Terrain (Lesser)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Curse Terrain (Lesser)"
         },
         {
           "name": "Curse Terrain (Supreme)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Curse Terrain (Supreme)"
         },
         {
           "name": "Curse of Fell Seasons",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Curse of Fell Seasons"
         },
         {
           "name": "Curse of Night",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Curse of Night"
         },
         {
           "name": "Damnation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Damnation"
         },
         {
           "name": "Death Clutch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Death Clutch"
         },
         {
           "name": "Decapitate",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Decapitate"
         },
         {
           "name": "Decollate",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Decollate"
         },
         {
           "name": "Dreadscape",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Dreadscape"
         },
         {
           "name": "Flesh Puppet",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Flesh Puppet"
         },
         {
           "name": "Flesh Puppet Horde",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Flesh Puppet Horde"
         },
         {
           "name": "Flesh Wall",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Flesh Wall"
         },
         {
           "name": "Flickering Lights",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Flickering Lights"
         },
         {
           "name": "Grasping Corpse",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Grasping Corpse"
@@ -5904,231 +9933,231 @@
         },
         {
           "name": "Hedging Weapons",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Hedging Weapons"
         },
         {
           "name": "Holy Javelin",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Holy Javelin"
         },
         {
           "name": "Horrific Doubles",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Horrific Doubles"
         },
         {
           "name": "Hunger for Flesh",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Hunger for Flesh"
         },
         {
           "name": "Hunger for Flesh (Mass)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Hunger for Flesh (Mass)"
         },
         {
           "name": "Impossible Angles",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Impossible Angles"
         },
         {
           "name": "Life Blast",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Life Blast"
         },
         {
           "name": "Locate Gate",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Locate Gate"
         },
         {
           "name": "Mad Sultan's Melody",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Mad Sultan's Melody"
         },
         {
           "name": "Massacre",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Massacre"
         },
         {
           "name": "Maze of Madness and Suffering",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Maze of Madness and Suffering"
         },
         {
           "name": "Night Terrors",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Night Terrors"
         },
         {
           "name": "Pessimism",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Pessimism"
         },
         {
           "name": "Phantasmal Asphyxiation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Phantasmal Asphyxiation"
         },
         {
           "name": "Phantasmal Putrefaction",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Phantasmal Putrefaction"
         },
         {
           "name": "Phobia",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Phobia"
         },
         {
           "name": "Plundered Power",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Plundered Power"
         },
         {
           "name": "Profane Nimbus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Profane Nimbus"
         },
         {
           "name": "Pyrotechnic Eruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Pyrotechnic Eruption"
         },
         {
           "name": "Quick Change",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Quick Change"
         },
         {
           "name": "Rigor Mortis",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Rigor Mortis"
         },
         {
           "name": "Sacramental Seal",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sacramental Seal"
         },
         {
           "name": "Sacred Nimbus",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sacred Nimbus"
         },
         {
           "name": "Screaming Flames",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Screaming Flames"
         },
         {
           "name": "Sense Fear",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Sense Fear"
         },
         {
           "name": "Sense Madness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine.Psychic",
           "standing": "origin",
           "display_name": "Sense Madness"
         },
         {
           "name": "Sleepwalking Suggestion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Sleepwalking Suggestion"
         },
         {
           "name": "Slough",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Slough"
         },
         {
           "name": "Stave Off Corruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Stave Off Corruption"
         },
         {
           "name": "Straitjacket",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Straitjacket"
         },
         {
           "name": "Symbol of Exsanguination",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Symbol of Exsanguination"
         },
         {
           "name": "Temporary Graft",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Temporary Graft"
         },
         {
           "name": "Torpid Reanimation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Torpid Reanimation"
@@ -6142,24 +10171,235 @@
         },
         {
           "name": "Vile Dog Transformation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Vile Dog Transformation"
         },
         {
           "name": "Waves of Blood",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Waves of Blood"
         },
         {
           "name": "Wither Limb",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Wither Limb"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 28,
+      "denominator": 28,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 28
+      },
+      "items": [
+        {
+          "name": "Accursed Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Accursed Creature"
+        },
+        {
+          "name": "Add Darkvision",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Add Darkvision"
+        },
+        {
+          "name": "Apostle Kyton",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Apostle Kyton"
+        },
+        {
+          "name": "Bestial Werewolf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bestial Werewolf"
+        },
+        {
+          "name": "Cursed Lord",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Cursed Lord"
+        },
+        {
+          "name": "Deep Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Deep Creature"
+        },
+        {
+          "name": "Dread Lord",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Dread Lord"
+        },
+        {
+          "name": "Familial Lich",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Familial Lich"
+        },
+        {
+          "name": "Fleshwarped Burrow",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fleshwarped Burrow"
+        },
+        {
+          "name": "Fleshwarped Climb",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fleshwarped Climb"
+        },
+        {
+          "name": "Fleshwarped Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fleshwarped Creature"
+        },
+        {
+          "name": "Fleshwarped Fly",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fleshwarped Fly"
+        },
+        {
+          "name": "Fleshwarped Swim",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fleshwarped Swim"
+        },
+        {
+          "name": "Ghoulish Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ghoulish Creature"
+        },
+        {
+          "name": "Gingerbread Familiar",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Gingerbread Familiar"
+        },
+        {
+          "name": "Hellbound Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hellbound Creature"
+        },
+        {
+          "name": "Hive Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hive Creature"
+        },
+        {
+          "name": "Implacable Stalker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Implacable Stalker"
+        },
+        {
+          "name": "Improve Darkvision",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Improve Darkvision"
+        },
+        {
+          "name": "Lich Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lich Creature"
+        },
+        {
+          "name": "Lycanthropic Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lycanthropic Creature"
+        },
+        {
+          "name": "Moonbound Werewolf",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Moonbound Werewolf"
+        },
+        {
+          "name": "Possessed Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Possessed Creature"
+        },
+        {
+          "name": "Promethean Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Promethean Creature"
+        },
+        {
+          "name": "Shadowbound Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shadowbound Creature"
+        },
+        {
+          "name": "Trompe l'Oeil",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Trompe l'Oeil"
+        },
+        {
+          "name": "Unknown",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Unknown"
+        },
+        {
+          "name": "Vampiric Creature",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vampiric Creature"
         }
       ]
     }

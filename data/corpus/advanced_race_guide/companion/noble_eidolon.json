@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:38:48Z",
+  "data": {
+    "key": "Shaitan Binder Eidolon ~ Noble Eidolon",
+    "name": "Noble Eidolon",
+    "description": "A shaitan binder's eidolon gains the ability to grant its summoner's wishes. Once per day, the eidolon can cast limited wish as a spelllike ability. The eidolon's caster level is %1. The wish must be spoken aloud by the shaitan binder, beginning with the words \"I wish,\" and cannot duplicate a wish the eidolon has granted within the past 24 hours. If the eidolon uses this ability to duplicate a spell with a costly material component, the shaitan binder must provide that component.|MasterLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shaitan Binder Eidolon ~ Noble Eidolon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Shaitan Binder Eidolon"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=Day|CASTERLEVEL=MasterLevel|Limited Wish"
+      },
+      {
+        "key": "DESC",
+        "value": "A shaitan binder's eidolon gains the ability to grant its summoner's wishes. Once per day, the eidolon can cast limited wish as a spelllike ability. The eidolon's caster level is %1. The wish must be spoken aloud by the shaitan binder, beginning with the words \"I wish,\" and cannot duplicate a wish the eidolon has granted within the past 24 hours. If the eidolon uses this ability to duplicate a spell with a costly material component, the shaitan binder must provide that component.|MasterLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
+    "line": 30,
+    "record_key": "Shaitan Binder Eidolon ~ Noble Eidolon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

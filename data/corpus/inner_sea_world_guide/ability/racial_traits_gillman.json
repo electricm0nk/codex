@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Gillman",
+    "name": "Racial Traits ~ Gillman",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Gillman_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gillman Racial Trait|AUTOMATIC|Gillman ~ Ability Scores|PREVAREQ:Gillman_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gillman/gillman_abilities_globalvar.lst",
+    "sha256": "0a8a0613783ec0d222f554bcb9961989402223088b9ebdea2831917c9de1c7ce",
+    "line": 10,
+    "record_key": "Racial Traits ~ Gillman"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

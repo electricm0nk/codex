@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Mother's Maw ~ Desecrate Aura",
+    "delivery": "Supernatural",
+    "description": "The herald has a 20-foot-radius emanation equivalent to a Desecrate spell centered on a shrine of evil power.  Undead within this radius (including the Maw) gain a +2 profane bonus on attack and damage rolls and saving throws, as well as +2 hit points per die, and the save DC of channeled negative energy is increased by +6 (these adjustments are included for the Maw in its entry).  This aura can be negated by Dispel Evil, but the herald can reactivate it on its turn as a free action.  A desecrating aura suppresses and is suppressed by Consecrate or Hallow; both effects are negated within any overlapping area of effect.",
+    "description_variables": [],
+    "facet": "Aura",
+    "key": "inner_sea_gods:monster_ability:mother_s_maw_desecrate_aura",
+    "name": "Desecrate Aura",
+    "owners": [
+      "inner_sea_gods:monster:mother_s_maw"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 280,
+    "record_key": "Mother's Maw ~ Desecrate Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

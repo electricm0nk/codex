@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Outer Rifts Mystery ~ Planar Haze",
     "name": "Planar Haze",
-    "class": "Outer Rifts Mystery",
+    "class": "Oracle",
     "description": "You can fill an area with the smoky miasma of the Outer Rifts. %1 per day when you cast a spell that has an area, as a swift action you may also fill that area that acts as|PlanarHazeTimes",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

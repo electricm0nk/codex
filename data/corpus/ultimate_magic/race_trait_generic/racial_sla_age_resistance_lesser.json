@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Age Resistance (Lesser)",
+    "name": "Age Resistance (Lesser)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Age Resistance (Lesser)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Age Resistance (Lesser)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_AgeResistanceLesser_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_AgeResistanceLesser_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_AgeResistanceLesser_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_AgeResistanceLesser_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_AgeResistanceLesser_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_AgeResistanceLesser_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_AgeResistanceLesser_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_AgeResistanceLesser_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_AgeResistanceLesser_LVL|Age Resistance (Lesser),RacialSLA_AgeResistanceLesser_DC|PREVAREQ:RacialSLA_AgeResistanceLesser_AtWill,0|PREVAREQ:RacialSLA_AgeResistanceLesser_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_AgeResistanceLesser_LVL|Age Resistance (Lesser),RacialSLA_AgeResistanceLesser_DC|PREVAREQ:RacialSLA_AgeResistanceLesser_AtWill,1|PREVAREQ:RacialSLA_AgeResistanceLesser_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_AgeResistanceLesser_LVL|Age Resistance (Lesser),RacialSLA_AgeResistanceLesser_DC|PREVAREQ:RacialSLA_AgeResistanceLesser_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_AgeResistanceLesser_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_AgeResistanceLesser_SpellLVL|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_AgeResistanceLesser_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_AgeResistanceLesser_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_AgeResistanceLesser_DC|10+RacialSLA_AgeResistanceLesser_SpellLVL+RacialSLA_AgeResistanceLesser_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_race.lst",
+    "sha256": "b3c584d7f0a08fcebf18eec699ed8a95e5c57d7ef4958b588b9889ef05655e8b",
+    "line": 38,
+    "record_key": "Racial SLA ~ Age Resistance (Lesser)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

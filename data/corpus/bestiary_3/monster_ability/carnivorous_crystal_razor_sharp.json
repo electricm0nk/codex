@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Carnivorous Crystal ~ Razor Sharp",
+    "delivery": "Extraordinary",
+    "description": "A carnivorous crystal's slam attack deals devastating piercing and slashing damage, and threatens a critical hit on a roll of 18, 19, or 20.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:carnivorous_crystal_razor_sharp",
+    "name": "Razor Sharp",
+    "owners": [
+      "bestiary_3:monster:carnivorous_crystal"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A carnivorous crystal's slam attack deals devastating piercing and slashing damage, and threatens a critical hit on a roll of 18, 19, or 20."
+      },
+      {
+        "key": "KEY",
+        "value": "Carnivorous Crystal ~ Razor Sharp"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "TYPE",
+        "value": "CarnivorousCrystalRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.45",
+    "traits": [
+      "CarnivorousCrystalRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 528,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Carnivorous Crystal ~ Razor Sharp",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

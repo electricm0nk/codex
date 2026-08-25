@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bloodline Feat ~ Weapon Finesse",
+    "name": "Weapon Finesse",
+    "class": "Sorcerer",
+    "description": "You are trained in using your agility in melee combat, as opposed to brute strength.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bloodline Feat ~ Weapon Finesse"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Feat"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BloodlineFeat_WeaponFinesse,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are trained in using your agility in melee combat, as opposed to brute strength."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Weapon Finesse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.136"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "With a light weapon, rapier, whip, or spiked chain made for a creature of your size category, you may use your Dexterity modifier instead of your Strength modifier on attack rolls. If you carry a shield, its armor check penalty applies to your attack rolls."
+      },
+      {
+        "key": "DEFINE",
+        "value": "HasWeaponFinesseFeat|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasWeaponFinesseFeat|1|TYPE=Boolean"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2097,
+    "record_key": "Sorcerer Bloodline Feat ~ Weapon Finesse"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

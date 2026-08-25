@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Sunder",
+    "category": "Combat",
+    "name": "Greater Sunder",
+    "description": "Your devastating strikes cleave through weapons and into their wielders, damaging both item and wielder alike in a single terrific strike.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Sunder,Power Attack",
+      "PRETOTALAB:6",
+      "PREVARGTEQ:PreStatScore_STR,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 84,
+    "record_key": "Greater Sunder"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

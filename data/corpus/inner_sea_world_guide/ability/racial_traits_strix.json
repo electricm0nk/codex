@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Strix",
+    "name": "Racial Traits ~ Strix",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Strix_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Strix Racial Trait|AUTOMATIC|Strix ~ Ability Scores|PREVAREQ:Strix_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/strix/strix_abilities_globalvar.lst",
+    "sha256": "8671993f66059a523a765762e711c9aa8eb07c9d04c4bf8d850168f7bb04469d",
+    "line": 10,
+    "record_key": "Racial Traits ~ Strix"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

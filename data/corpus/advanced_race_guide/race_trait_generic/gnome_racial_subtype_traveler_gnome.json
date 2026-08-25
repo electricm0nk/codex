@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gnome Racial Subtype ~ Traveler Gnome",
+    "name": "Traveler Gnome",
+    "description": "These gnomes were born on the move, their families living on a ship or in a caravan wagon. These gnomes have the magical linguist and either the explorer or the gift of tongues alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome Racial Subtype ~ Traveler Gnome"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gnome Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome Racial Subtype ~ Traveler Gnome],[!PREFACT:1,ABILITIES,Gnome_ReplaceHatred=true,Gnome_ReplaceObsessive=true,Gnome_ReplaceDefensiveTraining=true,Gnome_ReplaceGnomeMagic=true,Gnome_ReplaceIllusionResistance=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "These gnomes were born on the move, their families living on a ship or in a caravan wagon. These gnomes have the magical linguist and either the explorer or the gift of tongues alternate racial traits."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Gnome Racial Trait|Gnome ~ Explorer|Gnome ~ Gift of Tongues"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Traveler Gnome"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gnome Racial Trait|NORMAL|Gnome ~ Magical Linguist|%LIST"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2170,
+    "record_key": "Gnome Racial Subtype ~ Traveler Gnome"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

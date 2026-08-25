@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Archetype ~ Fiendflesh Shifter",
     "name": "Fiendflesh Shifter",
-    "class": "Shifter Archetype",
+    "class": "Shifter",
     "description": "By forging dark pacts with extraplanar forces, fiendflesh shifters invoke sinister powers to assume the strengths of daemons, demons, or devils. Fiendflesh shifters care nothing for the natural world and are instead consumed by an ever-growing lust for power at any price. To other shifters, the fiendflesh shifter is often viewed as a monster herself-an intrusion into the natural order of things and a foe who must be sought out and destroyed. Very few druids will ever willingly ally with fiendflesh shifters; this leaves these outcasts to live bitter, lonely lives or to seek out fiendish cults or other abhorrent faiths for support and companionship.",
     "raw_tokens": [
       {
@@ -131,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

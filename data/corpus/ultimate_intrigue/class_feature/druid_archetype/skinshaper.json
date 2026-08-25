@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Druid Archetype ~ Skinshaper",
     "name": "Skinshaper",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "Using the same primal energy with which other druids assume animal forms, skinshapers can imitate some of the most dangerous beasts of all: humans and other humanoids. Rather than merely copying humanoids' shapes and abilities, skinshapers unlock brutal energies that push their borrowed bodies far beyond the capabilities of normal humanoid creatures. Their connection to humanoids bring skinshapers into settlements more often than typical druids, and their penchant for disguise allows them to excel at intrigue.",
     "raw_tokens": [
       {
@@ -91,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

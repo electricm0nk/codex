@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sadist ~ Lingering Pain",
+    "name": "Lingering Pain",
+    "class": "Sadist",
+    "description": "You learn to make wounds more painful than usual.  Any time you inflict hit point damage on a creature and you are maintaining focus, it also causes %1 bleed damage unless the target makes a successful Fortitude save (DC %2).|LingeringPainBleed|LingeringPainDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sadist ~ Lingering Pain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LingeringPainBleed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LingeringPainDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn to make wounds more painful than usual.  Any time you inflict hit point damage on a creature and you are maintaining focus, it also causes %1 bleed damage unless the target makes a successful Fortitude save (DC %2).|LingeringPainBleed|LingeringPainDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LingeringPainBleed|floor(VitalistLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LingeringPainDC|10+VitalistLVL/2+WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2330,
+    "record_key": "Sadist ~ Lingering Pain"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

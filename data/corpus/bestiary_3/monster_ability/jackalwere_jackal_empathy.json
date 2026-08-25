@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jackalwere ~ Jackal Empathy",
+    "delivery": "Extraordinary",
+    "description": "A jackalwere can communicate and empathize with jackals (use stats for Small dog; see Bestiary 87), and can use Bluff as if it were Diplomacy to change a jackal's attitude, receiving a +4 racial bonus to do so.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jackalwere_jackal_empathy",
+    "name": "Jackal Empathy",
+    "owners": [
+      "bestiary_3:monster:jackalwere"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A jackalwere can communicate and empathize with jackals (use stats for Small dog; see Bestiary 87), and can use Bluff as if it were Diplomacy to change a jackal's attitude, receiving a +4 racial bonus to do so."
+      },
+      {
+        "key": "KEY",
+        "value": "Jackalwere ~ Jackal Empathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "TYPE",
+        "value": "JackalwereRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.154",
+    "traits": [
+      "JackalwereRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1077,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Jackalwere ~ Jackal Empathy",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

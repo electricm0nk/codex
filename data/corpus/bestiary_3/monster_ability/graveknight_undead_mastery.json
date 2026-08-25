@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Graveknight ~ Undead Mastery",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a graveknight can attempt to bend any undead creature within 50 feet to its will. The targeted undead must succeed at a Will save or fall under the graveknight's control. This control is permanent for unintelligent undead; an undead with an Intelligence score is allowed an additional save every day to break free from the graveknight's control. A creature that successfully saves cannot be affected again by the same graveknight's undead mastery for 24 hours. A graveknight can control 5 Hit Dice of undead creatures for every Hit Die it has. If the graveknight exceeds this number, the excess from earlier uses of the ability becomes uncontrolled, as per animate dead.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_3:monster_ability:graveknight_undead_mastery",
+    "name": "Undead Mastery",
+    "owners": [
+      "bestiary_3:monster:graveknight"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a graveknight can attempt to bend any undead creature within 50 feet to its will. The targeted undead must succeed at a Will save or fall under the graveknight's control. This control is permanent for unintelligent undead; an undead with an Intelligence score is allowed an additional save every day to break free from the graveknight's control. A creature that successfully saves cannot be affected again by the same graveknight's undead mastery for 24 hours. A graveknight can control 5 Hit Dice of undead creatures for every Hit Die it has. If the graveknight exceeds this number, the excess from earlier uses of the ability becomes uncontrolled, as per animate dead."
+      },
+      {
+        "key": "KEY",
+        "value": "Graveknight ~ Undead Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "TYPE",
+        "value": "GraveknightRacialAbility.SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.139",
+    "traits": [
+      "GraveknightRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 965,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Graveknight ~ Undead Mastery",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

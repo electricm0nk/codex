@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Reincarnated Oracle ~ Spirit Memories",
     "name": "Spirit Memories",
-    "class": "Reincarnated Oracle",
+    "class": "Oracle",
     "description": "Once per day, you call upon the unfulfilled desires and goals of your past lives and project their frustration and despair through your eyes at a target. This is a gaze attack affecting one creature. The target must make a Will save (DC %1) or be sickened and staggered for 1 round. This is a mind-affecting compulsion effect. You can use this ability %2 times per day. You must take this revelation at 1st, 3rd, or 7th level.|10+OracleLVL/2+CHA|3+CHA",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

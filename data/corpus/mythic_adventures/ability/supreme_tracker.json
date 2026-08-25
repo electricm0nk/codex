@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Supreme Tracker",
+    "name": "Supreme Tracker",
+    "description": "If you have something that carries a creature's scent (such as a personal item or piece of flesh), you can expend one use of mythic power to create a supernatural bond that allows you track that individual. As a free action, you can sense the creature's general direction and distance, as well as know whether it is alive, dead, destroyed, dying, or undead. The creature must be on the same plane as you for this ability to function. For the purpose of spells and effects that block scrying and divination, your caster level for this effect is %1. At 6th tier, you can track the creature if it's on a different plane than you.|Ability_SupremeTracker_CL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Supreme Tracker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_SupremeTracker_CL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have something that carries a creature's scent (such as a personal item or piece of flesh), you can expend one use of mythic power to create a supernatural bond that allows you track that individual. As a free action, you can sense the creature's general direction and distance, as well as know whether it is alive, dead, destroyed, dying, or undead. The creature must be on the same plane as you for this ability to function. For the purpose of spells and effects that block scrying and divination, your caster level for this effect is %1. At 6th tier, you can track the creature if it's on a different plane than you.|Ability_SupremeTracker_CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_SupremeTracker_CL|MythicLevel*2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 263,
+    "record_key": "Mythic Path Ability ~ Supreme Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Hold Breath",
+    "name": "Hold Breath",
+    "description": "Hold breath for %1 rounds before drowning or suffocating.|HoldBreathDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Hold Breath"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderOtherTrait.Standard"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HoldBreathDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Hold breath for %1 rounds before drowning or suffocating.|HoldBreathDuration"
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HoldBreathDuration|4*CONSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 591,
+    "record_key": "Builder Racial Trait ~ Hold Breath"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

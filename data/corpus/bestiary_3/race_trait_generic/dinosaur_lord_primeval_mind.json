@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dinosaur Lord ~ Primeval Mind",
+    "name": "Primeval Mind",
+    "description": "A dinosaur lord is immune to charm effects and gains a +2 bonus on all Will saves.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dinosaur Lord ~ Primeval Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.DinosaurLordRacialTrait.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A dinosaur lord is immune to charm effects and gains a +2 bonus on all Will saves."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 360,
+    "record_key": "Dinosaur Lord ~ Primeval Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

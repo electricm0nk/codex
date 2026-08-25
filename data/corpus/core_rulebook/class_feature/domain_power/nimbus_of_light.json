@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Nimbus of Light",
     "name": "Nimbus of Light",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You can emit a 30-foot nimbus of light for %1 rounds per day. This acts as a Daylight spell. In addition, undead within this radius take %1 points of damage each round that they remain inside the nimbus. Spells and spell-like abilities with the Darkness descriptor are automatically dispelled if brought inside this nimbus. These rounds do not need to be consecutive.|SunNimbusOfLightRounds",
     "raw_tokens": [
       {
@@ -63,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

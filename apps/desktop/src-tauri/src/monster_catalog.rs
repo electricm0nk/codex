@@ -156,6 +156,45 @@ const BOOK_UPSI: &str = "UPSI";
 /// no ruling of its own.
 const BOOK_HA: &str = "HA";
 
+/// Ultimate Wilderness, Ultimate Intrigue, Ultimate Magic, Bestiary 6 and
+/// Bestiary 5 -- `decisions.md §20` no_record-to-zero, round 3. All five have
+/// **zero** monster rows of their own (`scripts/classify_monster_ability_
+/// rows.py`'s "ZERO-monster books" line), so every `monster_ability` record
+/// registered for them ships owner-less (`owners: &[]`) -- none reaches this
+/// catalog's per-monster rendering, only `reach_gate.rs`'s pinned non-reach.
+/// Each wire code is the same one this app already serves the book's OTHER
+/// families under: `companion_catalog::book_wire_code` for `UW`/`UM`/`B6`/`B5`,
+/// `equipment_catalog::BOOK_UI` for `UI` -- reused rather than invented, per
+/// `BOOK_UPSI`'s own precedent above of never letting one book carry two codes.
+const BOOK_UW: &str = "UW";
+const BOOK_UI: &str = "UI";
+const BOOK_UM: &str = "UM";
+const BOOK_B6: &str = "B6";
+const BOOK_B5: &str = "B5";
+
+/// `decisions.md §20` no_record-to-zero, round 4: `pathfinder_unchained` and
+/// `advanced_race_guide`, the last two of the original 8 zero-monster books.
+/// Both already serve OTHER families under these same wire codes --
+/// `equipment_catalog::BOOK_PU` for `PU`, `race_catalog`/`companion_catalog`'s
+/// own `advanced_race_guide => "ARG"` arm for `ARG` -- reused, not invented.
+const BOOK_PU: &str = "PU";
+const BOOK_ARG: &str = "ARG";
+
+/// `decisions.md §20` no_record-to-zero, round 5: `mythic_adventures`, the
+/// last of the original 8 zero-monster books. Already serves its `equipment`/
+/// `spell` families under this same wire code (`equipment_catalog`'s
+/// `"MYTHIC"` assertions, `reach_gate`'s `("mythic_adventures", "equipment")`
+/// arm) — reused, not invented.
+const BOOK_MYTHIC: &str = "MYTHIC";
+
+/// `decisions.md §27b` — EVERYTHING: `occult_adventures`'s 5 `monster_ability`
+/// units, overturning the repeatedly-reconfirmed "correctly out of scope"
+/// disposition (a reachability finding about a negated `PRECAMPAIGN` gate,
+/// not an ingest exemption). Already serves its `equipment`/`spell` families
+/// under this same wire code (`spell_catalog::BOOK_OA`, `reach_gate`'s
+/// `("occult_adventures", "equipment")` arm) — reused, not invented.
+const BOOK_OA: &str = "OA";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -191,6 +230,15 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "inner_sea_gods" => "Inner Sea Gods",
         "ultimate_psionics" => "Ultimate Psionics",
         "horror_adventures" => "Horror Adventures",
+        "ultimate_wilderness" => "Ultimate Wilderness",
+        "ultimate_intrigue" => "Ultimate Intrigue",
+        "ultimate_magic" => "Ultimate Magic",
+        "bestiary_6" => "Bestiary 6",
+        "bestiary_5" => "Bestiary 5",
+        "pathfinder_unchained" => "Pathfinder Unchained",
+        "advanced_race_guide" => "Advanced Race Guide",
+        "mythic_adventures" => "Mythic Adventures",
+        "occult_adventures" => "Occult Adventures",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -216,6 +264,15 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "inner_sea_gods" => BOOK_ISG,
         "ultimate_psionics" => BOOK_UPSI,
         "horror_adventures" => BOOK_HA,
+        "ultimate_wilderness" => BOOK_UW,
+        "ultimate_intrigue" => BOOK_UI,
+        "ultimate_magic" => BOOK_UM,
+        "bestiary_6" => BOOK_B6,
+        "bestiary_5" => BOOK_B5,
+        "pathfinder_unchained" => BOOK_PU,
+        "advanced_race_guide" => BOOK_ARG,
+        "mythic_adventures" => BOOK_MYTHIC,
+        "occult_adventures" => BOOK_OA,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -1012,14 +1069,97 @@ mod tests {
             .iter()
             .flat_map(|e| e.abilities.iter().map(|a| &a.key))
             .collect();
-        let records_held: usize = codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
-            .iter()
-            .map(|book| book.monster_abilities.len())
-            .sum();
+        // `decisions.md §20` (no_record-to-zero wave 2): the chassis now
+        // holds `owner: &[]` records too (no monster row of their book
+        // claims them; shipped for shape measurement, not for reach --
+        // `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_
+        // non_reach`, `reach_gate.rs`'s `("beastiary1", "monster_abilities")`
+        // `OPEN_FINDINGS`/`UNREACHED_RECORD_FINDINGS` entries). Those never
+        // reach `list_monster_catalog` (it only ever walks a monster's own
+        // `ability_keys`), so this invariant now compares against the OWNED
+        // subset only -- the owner-less count is asserted separately, so a
+        // record silently losing its owner (which WOULD move it here) still
+        // fails loudly, just under a different assertion.
+        let owned_records_held: usize =
+            codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
+                .iter()
+                .flat_map(|book| book.monster_abilities.iter())
+                .filter(|ability| !ability.owners.is_empty())
+                .count();
+        let owner_less_records_held: usize =
+            codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
+                .iter()
+                .flat_map(|book| book.monster_abilities.iter())
+                .filter(|ability| ability.owners.is_empty())
+                .count();
         assert_eq!(
             distinct_served.len(),
-            records_held,
-            "every ability record the chassis holds reaches the wire under its own key, once"
+            owned_records_held,
+            "every OWNED ability record the chassis holds reaches the wire under its own key, \
+             once"
+        );
+        // 180 -> 881 -> 957 (`decisions.md §20`, no_record-to-zero round 3,
+        // +76): five previously-unregistered ZERO-monster books
+        // (`ultimate_wilderness` +2, `ultimate_intrigue` +6, `ultimate_magic`
+        // +13, `bestiary_6` +16, `bestiary_5` +39 -- one owned row,
+        // `Traits Output ~ Sahkil`, is a multi-DESC: parse refusal and does
+        // NOT ship) registered via the identical owner-less-ship mechanism.
+        // 957 -> 1027 (`decisions.md §20` round 4, +70): the last two of the
+        // original 8 zero-monster books, `pathfinder_unchained` (+69, 3 of
+        // its 72 orphan candidates refused during transcription as an
+        // unscreenable multi-DESC: shape) and `advanced_race_guide` (+1).
+        // Re-derived: `python3 scripts/shape_ledger.py --inventory
+        // docs/work-inventory.json` -- `monster_ability` `no_record` 191 -> 121.
+        // 1027 -> 1048 (`decisions.md §20` round 5, +21): the last of the
+        // original 8 zero-monster books, `mythic_adventures` (+21, all 21
+        // orphan candidates shipped, 0 refused). Re-derived: `python3
+        // scripts/shape_ledger.py --inventory docs/work-inventory.json` --
+        // `monster_ability` `no_record` 121 -> 100.
+        // 1048 -> 1053 (`decisions.md §27b` — EVERYTHING, +5): `occult_
+        // adventures`, registered for the first time, overturning four
+        // cycles' worth of "correctly out of scope" for a REACHABILITY
+        // finding (negated `PRECAMPAIGN` gate), not an ingest exemption. All
+        // 5 orphan candidates shipped, 0 refused. Re-derived: `python3
+        // scripts/transcribe_monster_tables.py occult_adventures 2>&1
+        // >/dev/null` prints exactly these 5 keys as owner-less.
+        // 1053 -> 1066 (`decisions.md §24`/round 7, +13): the T9
+        // name-PI/desc-PI `monster_ability` group closes. 13 ability rows
+        // whose own name/key matched the blacklist now ship under a
+        // Codex-generated neutral name/key instead of being dropped, and
+        // every one of the 13 is an orphan (`inner_sea_bestiary` +7,
+        // `inner_sea_gods` +3, `inner_sea_world_guide` +3). The 2
+        // description-only-PI rows this same group closes are OWNED, not
+        // owner-less, so they do not move this count. Re-derived: `python3
+        // scripts/shape_ledger.py --inventory docs/work-inventory.json` --
+        // `monster_ability` `no_record` 98 -> 83 (before merging this
+        // cycle with `§27b`'s own separate 5-unit closure).
+        // 1066 -> 1076 (`decisions.md §27`/round 8, +10): the `TYPE:`-facet-
+        // vocabulary-gap group closes via the provisional `SpecialQuality`
+        // default. Of the 23 total defaulted rows (22 real `no_record`
+        // population + 1 bonus `.COPY=` row already `text-complete` by
+        // inventory evidence alone), 13 land OWNED (namespaced `<Monster> ~
+        // <Ability>` keys whose owner resolves through the existing prefix
+        // pass) and do not move this count; the remaining 10 are owner-less
+        // (all 10 in `bestiary_3`: `Asurendra ~ None`, `Lunar/Royal/Water
+        // Naga ~ Spells`, `Unfettered Eidolon ~
+        // Str/Dex/Con/Int/Wis/Cha`). Re-derived: `python3
+        // scripts/transcribe_monster_tables.py bestiary_3 2>&1 >/dev/null`.
+        // 1076 -> 1126 (`decisions.md §27b` round 9, +50): the multi-DESC:
+        // `PREVAREQ`/`PREVARGT`/`PRESIZE*`/`PREHD`/`PRERACE`/`PRETEMPLATE`/
+        // `PREABILITY`-gated parse-refusal group closes via `parse_desc`'s
+        // new generalised sixth branch across 8 books -- `bestiary` +17,
+        // `bestiary_3` +10, `bestiary_4` +7, `horror_adventures` +9,
+        // `inner_sea_bestiary` +3, `bestiary_5` +1, `pathfinder_unchained`
+        // +3, all owner-less (shared reference-library text no single stat
+        // block owns); `bestiary_2`'s 2 closed units are both OWNED and do
+        // not move this count. Re-derived: `python3 scripts/shape_ledger.py
+        // --inventory docs/work-inventory.json` -- `monster_ability`
+        // `no_record` 56 -> 0.
+        assert_eq!(
+            owner_less_records_held, 1126,
+            "the owner-less (shape-measured-but-not-reachable) record count moved -- re-derive \
+             from each book's own `scripts/transcribe_monster_tables.py <book>` stderr and \
+             update both this pin and `reach_gate.rs`'s matching entries"
         );
     }
 

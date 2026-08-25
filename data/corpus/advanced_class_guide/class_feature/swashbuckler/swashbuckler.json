@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler",
     "name": "Swashbuckler",
-    "class": null,
+    "class": "Swashbuckler",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,362 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Swashbuckler\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Swashbuckler ~ Class Skills|PREVAREQ:Swashbuckler_CF_ClassSkills,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_LightArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_ShieldProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_Panache|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_Deeds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_SwashbucklerFinesse|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_CharmedLife|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_Nimble|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_BonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponMastery|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_Proficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_LightArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_LightArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_ShieldProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_ShieldProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_Panache|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_Panache=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_Deeds|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_Deeds=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklerFinesse|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_SwashbucklerFinesse=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_CharmedLife|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_CharmedLife=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_Nimble|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_Nimble=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_BonusFeats|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_BonusFeats=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklerWeaponTraining|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_SwashbucklerWeaponTraining=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklerWeaponMastery|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_SwashbucklerWeaponMastery=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerWeaponProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_ArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerArmorProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_LightArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerLightArmorProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_ShieldProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerShieldProficiency"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_Panache|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerPanache"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_Deeds|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerDeeds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklerFinesse|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerSwashbucklerFinesse"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_CharmedLife|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerCharmedLife"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_Nimble|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerNimble"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_BonusFeats|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerBonusFeats"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklerWeaponTraining|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerSwashbucklerWeaponTraining"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklerWeaponMastery|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SwashbucklerSwashbucklerWeaponMastery"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_DerringDoDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_DodgingPanacheDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_OpportuneParryandRiposteDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_KipUpDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_MenacingSwordplayDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_PreciseStrikeDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_SwashbucklersInitiativeDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_SwashbucklersGraceDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_SuperiorFeintDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_TargetedStrikeDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_BleedingWoundDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_SubtleBladeDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_EvasiveDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_DizzyingDefenseDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_PerfectThrustDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_SwashbucklersEdgeDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_CheatDeathDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_DeadlyStabDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_StunningStabDeed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_BonusFeat4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_BonusFeat8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_BonusFeat12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_BonusFeat16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Swashbuckler_CF_BonusFeat20|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_DerringDoDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_DerringDoDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_DodgingPanacheDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_DodgingPanacheDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_OpportuneParryandRiposteDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_OpportuneParryandRiposteDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_KipUpDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_KipUpDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_MenacingSwordplayDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_MenacingSwordplayDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_PreciseStrikeDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_PreciseStrikeDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklersInitiativeDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_SwashbucklersInitiativeDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklersGraceDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_SwashbucklersGraceDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SuperiorFeintDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_SuperiorFeintDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_TargetedStrikeDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_TargetedStrikeDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_BleedingWoundDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_BleedingWoundDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SubtleBladeDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_SubtleBladeDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_EvasiveDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_EvasiveDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_DizzyingDefenseDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_DizzyingDefenseDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_PerfectThrustDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_PerfectThrustDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_SwashbucklersEdgeDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_SwashbucklersEdgeDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_CheatDeathDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_CheatDeathDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_DeadlyStabDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_DeadlyStabDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_StunningStabDeed|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_StunningStabDeed=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_BonusFeat4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_BonusFeat4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_BonusFeat8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_BonusFeat8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_BonusFeat12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_BonusFeat12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_BonusFeat16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_BonusFeat16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Swashbuckler_CF_BonusFeat20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Swashbuckler_CF_BonusFeat20=True"
       }
     ]
   },
@@ -49,5 +405,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_42)",
+    "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_42)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SPELLS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SPELLS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SPELLS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Disable Device=Unlock Door|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Find Secret Doors|4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 42,
+    "record_key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_42)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_faiths:isf_abilities_faith.lst:42"
+  }
+}

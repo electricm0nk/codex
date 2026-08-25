@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel ~ Symbolic Weapon",
+    "name": "Symbolic Weapon",
+    "description": "When wielding his deity's favored weapon, the sentinel gains a +1 sacred or profane bonus on attack and damage rolls. These bonuses increase by 1 for every 3 levels he has in the sentinel prestige class (maximum +4) * His deity's favored weapon also functions as a holy (or unholy) symbol when wielded by a sentinel.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Symbolic Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sentinel Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When wielding his deity's favored weapon, the sentinel gains a +1 sacred or profane bonus on attack and damage rolls. These bonuses increase by 1 for every 3 levels he has in the sentinel prestige class (maximum +4) * His deity's favored weapon also functions as a holy (or unholy) symbol when wielded by a sentinel."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 111,
+    "record_key": "Sentinel ~ Symbolic Weapon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

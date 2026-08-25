@@ -56,7 +56,7 @@
 //!   token list (mirroring `formula_interpreter::extract_formula_field`, which likewise takes one
 //!   already-identified token at a time rather than owning corpus traversal).
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use super::formula_reproduction_harness::{FormulaEvalError, FormulaEvaluator};
 
@@ -181,6 +181,195 @@ pub fn evaluate_stack(
         }
     }
     Ok(total)
+}
+
+/// A resolved producer chain for one target variable: an optional `DEFINE:<var>|<formula>` base
+/// (PCGen's own initial value for the variable, `PlayerCharacter.java`'s `getVariable` reads the
+/// `DEFINE:` value before any `BONUS:VAR` contribution is added — see module doc point 2's
+/// `getTotalBonusTo` citation, which sums ON TOP OF this base, never in place of it) plus every
+/// qualifying [`ConditionalAddend`] this reader has verified.
+///
+/// SD-31 wave 31's own worked example (`MEASURE-TWICE.md` §3.1) is exactly this shape, and is
+/// reproduced verbatim (byte-for-byte, not paraphrased) by
+/// `resolves_the_alchemist_bomb_lvl_producer_chain_across_two_real_corpus_records` below:
+/// `data/corpus/advanced_players_guide/class_feature/alchemist/bomb.json` carries
+/// `DEFINE:AlchemistBombLVL|0` AND `BONUS:VAR|AlchemistBombLVL|AlchemistLVL` on the SAME record,
+/// while `.../master_chymist/bomb_thrower.json` — a DIFFERENT record entirely — carries a THIRD
+/// producer, `BONUS:VAR|AlchemistBombLVL|MasterChymistLVL`. No single record holds every producer
+/// of `AlchemistBombLVL`; resolving it correctly requires reading across records, which is exactly
+/// what [`extract_addends`] and the wave-26 module this generalises could not do (it took one
+/// caller-selected record's tokens and nothing else — see this module's own doc, "Does not itself
+/// decide which corpus tokens belong to one record").
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct ProducerChain {
+    /// The `DEFINE:<var>|<formula>` base, if any record in the scanned set carries one. `None`
+    /// means no `DEFINE` was found for this variable in the scanned tokens — PCGen itself treats
+    /// an un-`DEFINE`d variable's base as 0 (every corpus `DEFINE:<var>|0` this module has read
+    /// states that default explicitly; this reader never invents a non-zero default in its
+    /// absence).
+    pub base: Option<String>,
+    /// Every qualifying `BONUS:VAR` addend found across the scanned tokens, in scan order.
+    pub addends: Vec<ConditionalAddend>,
+}
+
+/// Scans `tokens` for every `DEFINE:<target_var>|<formula>` entry (mirroring
+/// [`extract_addends`]'s own `BONUS:VAR` scan). More than one `DEFINE` for the SAME variable with
+/// DIFFERING formula text is refused, never silently resolved by "first wins" or "last wins" —
+/// this reader has not verified which record's `DEFINE` PCGen's own load order would keep, and a
+/// wrong guess here would poison every [`resolve_producer_chain_corpus_wide`] call for that
+/// variable. Identical duplicate `DEFINE`s (the same var, the same formula text, appearing more
+/// than once — e.g. a `.MOD` continuation restating its parent's `DEFINE`) are not an error.
+pub fn extract_define_base<'a>(
+    target_var: &str,
+    tokens: impl IntoIterator<Item = (&'a str, &'a str)>,
+) -> Result<Option<String>, FormulaEvalError> {
+    let mut found: Option<String> = None;
+    for (key, value) in tokens {
+        if key != "DEFINE" {
+            continue;
+        }
+        let Some((name, formula)) = value.split_once('|') else {
+            continue;
+        };
+        if name != target_var {
+            continue;
+        }
+        match &found {
+            None => found = Some(formula.to_string()),
+            Some(existing) if existing == formula => {}
+            Some(existing) => {
+                return Err(FormulaEvalError(format!(
+                    "DEFINE:{target_var}|... has two disagreeing bases in the scanned tokens \
+                     ({existing:?} vs {formula:?}) — this reader has not verified PCGen's own \
+                     load-order tiebreak and refuses to guess which one wins"
+                )))
+            }
+        }
+    }
+    Ok(found)
+}
+
+/// The data-driven generalisation levers.md L23 calls for (`MEASURE-TWICE.md` §3.1, "Generic
+/// formula-binding accumulator... generalized to be data-driven"): resolves `target_var`'s full
+/// producer chain — its `DEFINE:` base plus every qualifying `BONUS:VAR` addend — by scanning
+/// EVERY record's tokens in `records`, not just one caller-preselected record. `records` is any
+/// iterable of per-record token iterables (e.g. every corpus JSON record's `data.raw_tokens`,
+/// adapted the same way [`extract_addends`]'s own `tokens` parameter is); this reader still does
+/// not decide which records exist or which order they arrive in — the caller owns corpus
+/// traversal, this function owns aggregation.
+///
+/// Reuses [`extract_define_base`] and [`extract_addends`] unmodified per record and merges their
+/// results — this function adds no new per-token parsing, only the corpus-wide (multi-record)
+/// aggregation those two functions did not have. An addend whose gate this reader has not
+/// verified still refuses the WHOLE call (via [`extract_addends`]'s own refusal), now propagated
+/// across every record scanned, not just one.
+pub fn resolve_producer_chain_corpus_wide<'a, R, T>(
+    target_var: &str,
+    records: R,
+) -> Result<ProducerChain, FormulaEvalError>
+where
+    R: IntoIterator<Item = T>,
+    T: IntoIterator<Item = (&'a str, &'a str)> + Clone,
+{
+    let mut chain = ProducerChain::default();
+    for record_tokens in records {
+        if let Some(base) = extract_define_base(target_var, record_tokens.clone())? {
+            match &chain.base {
+                None => chain.base = Some(base),
+                Some(existing) if *existing == base => {}
+                Some(existing) => {
+                    return Err(FormulaEvalError(format!(
+                        "DEFINE:{target_var}|... disagrees across records ({existing:?} vs \
+                         {base:?}) — refusing to guess which record's base PCGen would load"
+                    )))
+                }
+            }
+        }
+        chain.addends.extend(extract_addends(target_var, record_tokens)?);
+    }
+    Ok(chain)
+}
+
+/// Evaluates a resolved [`ProducerChain`]: the `DEFINE:` base (0 if `chain.base` is `None`, per
+/// [`ProducerChain::base`]'s own doc) plus [`evaluate_stack`]'s gated sum of every addend. This is
+/// the full PCGen `getVariableValue` shape module doc point 2 cites — base first, active bonuses
+/// added on top — not a new arithmetic rule of this reader's own invention.
+pub fn evaluate_producer_chain(
+    evaluator: &dyn FormulaEvaluator,
+    chain: &ProducerChain,
+    vars: &BTreeMap<String, i64>,
+) -> Result<i64, FormulaEvalError> {
+    let base = match &chain.base {
+        Some(formula) => evaluator.evaluate(formula, vars)?,
+        None => 0,
+    };
+    Ok(base + evaluate_stack(evaluator, &chain.addends, vars)?)
+}
+
+/// One target variable's outcome from a corpus-wide sweep (kanban card 8,
+/// `gate-2-corpus-wide-runs`, AT-32-G2-004): either its resolved [`ProducerChain`], or the
+/// refusal reason [`resolve_producer_chain_corpus_wide`] returned for it. Kept as an enum rather
+/// than two parallel maps' worth of `Option` fields so a caller cannot accidentally read both a
+/// chain and a refusal reason for the same variable.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum CorpusWideOutcome {
+    Resolved(ProducerChain),
+    Refused(String),
+}
+
+/// The result of resolving every distinct F4-shaped (bare-identifier) target variable found across a corpus-wide record
+/// population — AT-32-G2-004's "run corpus-wide once" for this engine. `outcomes` is keyed by
+/// variable name so the CLI wrapper (`src/bin/bonus_stack_reader.rs`) can serialise it
+/// deterministically; `population` is `outcomes.len()`, restated explicitly so a caller checking
+/// "did this run examine anything" does not have to trust an empty map is intentional (mirrors
+/// `corpus_literal_sweep`'s own "an empty population asserts nothing" posture, `SweepTally`).
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct CorpusWideReport {
+    pub population: usize,
+    pub outcomes: BTreeMap<String, CorpusWideOutcome>,
+}
+
+/// Scans every record in `records` for the full F4 binding-layer population -- the bare-identifier subset of the canonical vocabulary (`scripts/shape_ledger.py`) that `bonus_stack_reader.rs` targets, not the unrelated F10 step-count family — every distinct
+/// variable name targeted by at least one `BONUS:VAR|<var>|...` token anywhere in the scanned
+/// set, the same "does this key/value pair look like a `BONUS:VAR` token" test
+/// [`extract_addends`] uses — and resolves EACH one's full producer chain via
+/// [`resolve_producer_chain_corpus_wide`] against the SAME full record population, not a
+/// per-variable subset. This is the corpus-wide entry point AT-32-G2-004 requires: the caller
+/// supplies the whole population once (e.g. every `data/corpus/**/*.json` record's
+/// `data.raw_tokens`), and every distinct F4-shaped target variable found in it is resolved — none
+/// picked by the caller, none silently skipped.
+///
+/// A variable whose resolution refuses (an unrecognised PRE-tag gate on any addend anywhere in
+/// the scanned set, or two records disagreeing on its `DEFINE` base) is recorded as
+/// [`CorpusWideOutcome::Refused`], not dropped — the report's own population count still counts
+/// it, so a caller cannot mistake "refused" for "never seen".
+pub fn resolve_all_producer_chains_corpus_wide<'a, T>(records: &[T]) -> CorpusWideReport
+where
+    T: IntoIterator<Item = (&'a str, &'a str)> + Clone,
+{
+    let mut vars: BTreeSet<String> = BTreeSet::new();
+    for record in records {
+        for (key, value) in record.clone() {
+            if key != "BONUS" {
+                continue;
+            }
+            let parts: Vec<&str> = value.split('|').collect();
+            if parts.len() >= 2 && parts[0] == "VAR" {
+                vars.insert(parts[1].to_string());
+            }
+        }
+    }
+
+    let mut outcomes = BTreeMap::new();
+    for var in &vars {
+        let outcome = match resolve_producer_chain_corpus_wide(var, records.iter().cloned()) {
+            Ok(chain) => CorpusWideOutcome::Resolved(chain),
+            Err(e) => CorpusWideOutcome::Refused(e.0),
+        };
+        outcomes.insert(var.clone(), outcome);
+    }
+
+    CorpusWideReport { population: vars.len(), outcomes }
 }
 
 #[cfg(test)]
@@ -325,5 +514,281 @@ mod tests {
         let expected: Vec<String> =
             ward_json_bonus_tokens().into_iter().map(|(_, v)| v.to_string()).collect();
         assert_eq!(bonus_values, expected, "the hand-transcribed fixture has drifted from the real file");
+    }
+
+    // --- Gate 2 / kanban card 7: generalising the binding layer to be data-driven ------------
+
+    /// Reads one corpus record's `data.raw_tokens` as owned `(key, value)` pairs, the same
+    /// `CARGO_MANIFEST_DIR`-relative pattern `wave_26_reads_the_real_ward_json_record_unmodified`
+    /// above already uses, generalised to any record path so the two-record proof below can read
+    /// BOTH real files it cites without inventing a second hand-transcribed fixture that could
+    /// itself drift.
+    fn read_raw_tokens_owned(relative_path: &str) -> Vec<(String, String)> {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(relative_path);
+        let text = std::fs::read_to_string(&path)
+            .unwrap_or_else(|e| panic!("read_raw_tokens_owned: {path:?} must be readable, got: {e}"));
+        let v: serde_json::Value = serde_json::from_str(&text)
+            .unwrap_or_else(|e| panic!("read_raw_tokens_owned: {path:?} must be valid JSON, got: {e}"));
+        v.pointer("/data/raw_tokens")
+            .and_then(|t| t.as_array())
+            .unwrap_or_else(|| panic!("read_raw_tokens_owned: {path:?} must have data.raw_tokens"))
+            .iter()
+            .map(|t| {
+                let key = t.get("key").and_then(|k| k.as_str()).unwrap_or_default().to_string();
+                let value = t.get("value").and_then(|v| v.as_str()).unwrap_or_default().to_string();
+                (key, value)
+            })
+            .collect()
+    }
+
+    #[test]
+    fn extract_define_base_finds_the_matching_define_and_ignores_others() {
+        let tokens = vec![
+            ("DEFINE", "AlchemistBombLVL|0"),
+            ("DEFINE", "AlchemistBombTimes|0"),
+            ("BONUS", "VAR|AlchemistBombLVL|AlchemistLVL"),
+        ];
+        assert_eq!(
+            extract_define_base("AlchemistBombLVL", tokens).unwrap(),
+            Some("0".to_string())
+        );
+    }
+
+    #[test]
+    fn extract_define_base_returns_none_when_no_define_matches() {
+        let tokens = vec![("DEFINE", "SomethingElse|3")];
+        assert_eq!(extract_define_base("AlchemistBombLVL", tokens).unwrap(), None);
+    }
+
+    #[test]
+    fn extract_define_base_refuses_on_disagreeing_duplicate_define() {
+        let tokens = vec![("DEFINE", "X|0"), ("DEFINE", "X|5")];
+        let err = extract_define_base("X", tokens).unwrap_err();
+        assert!(err.0.contains("disagreeing bases"), "got: {}", err.0);
+    }
+
+    #[test]
+    fn extract_define_base_allows_identical_duplicate_define() {
+        let tokens = vec![("DEFINE", "X|0"), ("DEFINE", "X|0")];
+        assert_eq!(extract_define_base("X", tokens).unwrap(), Some("0".to_string()));
+    }
+
+    /// The load-bearing proof: `AlchemistBombLVL` is `DEFINE:AlchemistBombLVL|0` PLUS
+    /// `BONUS:VAR|AlchemistBombLVL|AlchemistLVL` on
+    /// `advanced_players_guide/class_feature/alchemist/bomb.json`, PLUS a THIRD producer,
+    /// `BONUS:VAR|AlchemistBombLVL|MasterChymistLVL`, on an entirely different record
+    /// (`advanced_players_guide/class_feature/master_chymist/bomb_thrower.json`) — the exact
+    /// worked example `MEASURE-TWICE.md` §3.1 names as the reason the wave-26 reader (single
+    /// caller-selected record only) undercounts: it could never see the master_chymist producer
+    /// because nothing hands it that record's tokens for an `AlchemistBombLVL` lookup scoped to
+    /// `alchemist/bomb.json`.
+    #[test]
+    fn resolves_the_alchemist_bomb_lvl_producer_chain_across_two_real_corpus_records() {
+        let alchemist_tokens =
+            read_raw_tokens_owned("data/corpus/advanced_players_guide/class_feature/alchemist/bomb.json");
+        let master_chymist_tokens = read_raw_tokens_owned(
+            "data/corpus/advanced_players_guide/class_feature/master_chymist/bomb_thrower.json",
+        );
+        let records = vec![
+            alchemist_tokens.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect::<Vec<_>>(),
+            master_chymist_tokens.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect::<Vec<_>>(),
+        ];
+
+        let chain = resolve_producer_chain_corpus_wide("AlchemistBombLVL", records).unwrap();
+        assert_eq!(chain.base, Some("0".to_string()));
+        assert_eq!(
+            chain.addends,
+            vec![
+                ConditionalAddend { formula: "AlchemistLVL".to_string(), gate: None },
+                ConditionalAddend { formula: "MasterChymistLVL".to_string(), gate: None },
+            ],
+            "must find the alchemist/bomb.json addend AND the master_chymist/bomb_thrower.json \
+             addend, in scan order — a single-record reader can only ever see one of the two"
+        );
+
+        let e = PcgenFormulaEvaluator;
+        let both_classes =
+            vars(&[("AlchemistLVL", 6), ("MasterChymistLVL", 2)]);
+        assert_eq!(
+            evaluate_producer_chain(&e, &chain, &both_classes).unwrap(),
+            8,
+            "0 (DEFINE base) + 6 (AlchemistLVL) + 2 (MasterChymistLVL)"
+        );
+    }
+
+    /// Mutation proof (Decision 1(a) shape): resolving from only the `alchemist/bomb.json` record
+    /// — i.e. the wave-26 reader's own single-record scope — silently drops the
+    /// `master_chymist/bomb_thrower.json` producer and under-counts. This is the exact gap the
+    /// corpus-wide generalisation exists to close; a reviewer mutating
+    /// `resolve_producer_chain_corpus_wide` back down to "only ever look at the first record"
+    /// would make this test fail, proving the multi-record scan is load-bearing and not a no-op.
+    #[test]
+    fn single_record_scope_undercounts_the_alchemist_bomb_lvl_chain() {
+        let alchemist_tokens =
+            read_raw_tokens_owned("data/corpus/advanced_players_guide/class_feature/alchemist/bomb.json");
+        let single_record = vec![alchemist_tokens
+            .iter()
+            .map(|(k, v)| (k.as_str(), v.as_str()))
+            .collect::<Vec<_>>()];
+
+        let narrow_chain = resolve_producer_chain_corpus_wide("AlchemistBombLVL", single_record).unwrap();
+        let e = PcgenFormulaEvaluator;
+        let both_classes = vars(&[("AlchemistLVL", 6), ("MasterChymistLVL", 2)]);
+        assert_eq!(
+            evaluate_producer_chain(&e, &narrow_chain, &both_classes).unwrap(),
+            6,
+            "missing the master_chymist producer entirely — 0 (DEFINE base) + 6 (AlchemistLVL) \
+             only, silently dropping the 2 MasterChymistLVL contribution"
+        );
+    }
+
+    #[test]
+    fn evaluate_producer_chain_with_no_define_defaults_base_to_zero_and_matches_evaluate_stack() {
+        // WitchWardBonus's own real corpus tokens carry no DEFINE at all (verified by
+        // `wave_26_reads_the_real_ward_json_record_unmodified` above, which only asserts on the
+        // BONUS values — a real check that no DEFINE line was silently dropped by this test
+        // fixture would need a second guard, but ward.json's own directory listing has already
+        // been read via `ward_json_bonus_tokens()` for years with no DEFINE row ever surfacing).
+        let addends = extract_addends("WitchWardBonus", ward_json_bonus_tokens()).unwrap();
+        let chain = ProducerChain { base: None, addends: addends.clone() };
+        let e = PcgenFormulaEvaluator;
+        for level in [1, 7, 8, 15, 16, 20] {
+            let v = vars(&[("WitchHexAbilityLVL", level)]);
+            assert_eq!(
+                evaluate_producer_chain(&e, &chain, &v).unwrap(),
+                evaluate_stack(&e, &addends, &v).unwrap(),
+                "a chain with no DEFINE base must match the narrow evaluate_stack path exactly \
+                 (base defaults to 0, not a behavioural change) at level {level}"
+            );
+        }
+    }
+
+    #[test]
+    fn resolve_producer_chain_corpus_wide_over_one_record_matches_the_narrow_extract_addends() {
+        // Regression guard: scanning exactly the tokens the wave-26 reader already handled, via
+        // the new corpus-wide entry point, must reproduce the same addends the narrow
+        // `extract_addends` call already proves correct above — the generalisation must not
+        // change behaviour for the case it already handled.
+        let narrow = extract_addends("WitchWardBonus", ward_json_bonus_tokens()).unwrap();
+        let wide =
+            resolve_producer_chain_corpus_wide("WitchWardBonus", vec![ward_json_bonus_tokens()]).unwrap();
+        assert_eq!(wide.addends, narrow);
+        assert_eq!(wide.base, None);
+    }
+
+    #[test]
+    fn resolve_producer_chain_corpus_wide_refuses_when_an_addend_gate_is_unrecognised() {
+        // The whole-call refusal from extract_addends must propagate through the corpus-wide
+        // aggregator, not get silently swallowed while other records' addends are kept.
+        let bad_record = vec![("BONUS", "VAR|X|1|PREABILITY:1,CATEGORY=FEAT,Foo")];
+        let good_record = vec![("BONUS", "VAR|X|2")];
+        let err = resolve_producer_chain_corpus_wide("X", vec![bad_record, good_record]).unwrap_err();
+        assert!(err.0.contains("not PREVARGTEQ"), "got: {}", err.0);
+    }
+
+    #[test]
+    fn resolve_producer_chain_corpus_wide_refuses_on_cross_record_disagreeing_define() {
+        let record_a = vec![("DEFINE", "X|0")];
+        let record_b = vec![("DEFINE", "X|3")];
+        let err = resolve_producer_chain_corpus_wide("X", vec![record_a, record_b]).unwrap_err();
+        assert!(err.0.contains("disagrees across records"), "got: {}", err.0);
+    }
+
+    // --- Gate 2 / kanban card 8: `resolve_all_producer_chains_corpus_wide`, the corpus-wide ----
+    // --- sweep AT-32-G2-004 requires -----------------------------------------------------------
+
+    /// Real corpus bytes, three records: the `AlchemistBombLVL` cross-record chain (proven above,
+    /// resolves), `ward.json`'s own `WitchWardBonus` (resolves, no `DEFINE`) AND
+    /// `WitchHexDC_Ward` (refuses — its second `BONUS:VAR` token carries a `PREABILITY` gate this
+    /// reader has never verified, per `ward_json_bonus_tokens()` above). One sweep over all three
+    /// records must find and correctly classify all three distinct target variables — proving the
+    /// population-discovery step (find every `BONUS:VAR` target, not just ones a caller names)
+    /// and the per-variable resolution step both work end to end, and that a refusal for one
+    /// variable does not poison or hide the others.
+    #[test]
+    fn resolve_all_producer_chains_corpus_wide_finds_and_classifies_every_distinct_target_var() {
+        let alchemist_tokens =
+            read_raw_tokens_owned("data/corpus/advanced_players_guide/class_feature/alchemist/bomb.json");
+        let master_chymist_tokens = read_raw_tokens_owned(
+            "data/corpus/advanced_players_guide/class_feature/master_chymist/bomb_thrower.json",
+        );
+        let ward_tokens: Vec<(&str, &str)> = ward_json_bonus_tokens();
+
+        let records: Vec<Vec<(&str, &str)>> = vec![
+            alchemist_tokens.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect(),
+            master_chymist_tokens.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect(),
+            ward_tokens,
+        ];
+
+        let report = resolve_all_producer_chains_corpus_wide(&records);
+
+        // `bomb.json` carries several other `BONUS:VAR` targets besides `AlchemistBombLVL`
+        // (`AlchemistBombTimes`, `AlchemistBombDiceSize`, ...) — real corpus bytes, not this
+        // test's business to enumerate exhaustively. The assertion that matters is that the
+        // population INCLUDES all three named variables (proving population-discovery scans
+        // every record, not just the first) and that `outcomes.len()` always equals
+        // `population` (no variable found but silently unclassified).
+        assert_eq!(report.population, report.outcomes.len());
+        for expected in ["AlchemistBombLVL", "WitchWardBonus", "WitchHexDC_Ward"] {
+            assert!(
+                report.outcomes.contains_key(expected),
+                "expected {expected} in the discovered population, got: {:?}",
+                report.outcomes.keys().collect::<Vec<_>>()
+            );
+        }
+
+        match report.outcomes.get("AlchemistBombLVL") {
+            Some(CorpusWideOutcome::Resolved(chain)) => {
+                assert_eq!(chain.base, Some("0".to_string()));
+                assert_eq!(chain.addends.len(), 2, "both records' addends must be found");
+            }
+            other => panic!("expected AlchemistBombLVL to resolve, got {other:?}"),
+        }
+
+        match report.outcomes.get("WitchWardBonus") {
+            Some(CorpusWideOutcome::Resolved(chain)) => {
+                assert_eq!(chain.base, None);
+                assert_eq!(chain.addends.len(), 3);
+            }
+            other => panic!("expected WitchWardBonus to resolve, got {other:?}"),
+        }
+
+        match report.outcomes.get("WitchHexDC_Ward") {
+            Some(CorpusWideOutcome::Refused(reason)) => {
+                assert!(
+                    reason.contains("not PREVARGTEQ") || reason.contains("PRE-tag"),
+                    "expected the real PREABILITY-gate refusal reason, got: {reason}"
+                );
+            }
+            other => panic!("expected WitchHexDC_Ward to refuse (real PREABILITY gate), got {other:?}"),
+        }
+    }
+
+    /// Mutation-shaped proof: a sweep over only ONE of the two `AlchemistBombLVL`-carrying
+    /// records must resolve fewer addends than the full two-record sweep — proving
+    /// `resolve_all_producer_chains_corpus_wide` genuinely feeds every scanned record into the
+    /// per-variable resolution step rather than, say, only ever looking at `records[0]`.
+    #[test]
+    fn resolve_all_producer_chains_corpus_wide_uses_every_scanned_record_not_just_the_first() {
+        let alchemist_tokens =
+            read_raw_tokens_owned("data/corpus/advanced_players_guide/class_feature/alchemist/bomb.json");
+        let narrow: Vec<Vec<(&str, &str)>> =
+            vec![alchemist_tokens.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect()];
+
+        let report = resolve_all_producer_chains_corpus_wide(&narrow);
+        match report.outcomes.get("AlchemistBombLVL") {
+            Some(CorpusWideOutcome::Resolved(chain)) => {
+                assert_eq!(chain.addends.len(), 1, "only the alchemist/bomb.json addend is visible")
+            }
+            other => panic!("expected AlchemistBombLVL to resolve, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn resolve_all_producer_chains_corpus_wide_over_no_records_reports_zero_population() {
+        let empty: Vec<Vec<(&str, &str)>> = vec![];
+        let report = resolve_all_producer_chains_corpus_wide(&empty);
+        assert_eq!(report.population, 0);
+        assert!(report.outcomes.is_empty());
     }
 }

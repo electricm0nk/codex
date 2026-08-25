@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Wave Warden",
     "name": "Wave Warden",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "The wave warden patrols beneath the sea, preserving the safety and secrets of merfolk communities. Though he fares best beneath the water, dry land is no haven to his quarry.",
     "raw_tokens": [
       {
@@ -67,6 +67,90 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Wave Warden],[!PREFACT:1,ABILITIES,Ranger_Archetype_Track=True,Ranger_Archetype_CombatStyleFeat2=True,Ranger_Archetype_CombatStyleFeat6=True,Ranger_Archetype_CombatStyleFeat10=True,Ranger_Archetype_CombatStyleFeat14=True,Ranger_Archetype_CombatStyleFeat18=True,Ranger_Archetype_FavoredTerrain=True,Ranger_Archetype_WoodlandStride=True,Ranger_Archetype_SwiftTracker=True,Ranger_Archetype_CombatStyleFeat=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_CombatStyleFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredTerrain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_SwiftTracker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_CombatStyleFeat|true"
       }
     ]
   },
@@ -83,5 +167,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

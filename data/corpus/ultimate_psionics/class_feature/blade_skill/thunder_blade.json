@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Thunder Blade",
+    "name": "Thunder Blade",
+    "class": "Blade Skill",
+    "description": "When you make an attack with your mind blade, you can choose to have it deal sonic damage instead of its normal damage, although the damage of the attack is halved.  In addition, you can expend your psionic focus when you hit with an attack to stagger the target until the end of your next turn (Fort DC %1 negates).|ThunderBladeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Thunder Blade"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality.EnergyBladeSkill"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BladeSkillPrereqLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThunderBladeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make an attack with your mind blade, you can choose to have it deal sonic damage instead of its normal damage, although the damage of the attack is halved.  In addition, you can expend your psionic focus when you hit with an attack to stagger the target until the end of your next turn (Fort DC %1 negates).|ThunderBladeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThunderBladeDC|BladeSkillDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 798,
+    "record_key": "Blade Skill ~ Thunder Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

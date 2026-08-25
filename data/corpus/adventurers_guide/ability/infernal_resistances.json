@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Infernal Affinity ~ Infernal Resistances",
+    "name": "Infernal Resistances",
+    "description": "You gain resist fire %1 and a +%2 bonus on saving throws made against poison.|DevilBinderInfernalResistancesBonus|DevilBinderInfernalResistancesSaveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infernal Affinity ~ Infernal Resistances"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevilBinderInfernalResistancesBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevilBinderInfernalResistancesSaveBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevilBinderInfernalResistancesBonus|min(floor((SummonerLVL+3)/6),2)*5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevilBinderInfernalResistancesSaveBonus|min(floor((SummonerLVL+3)/6),2)*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|DevilBinderInfernalResistancesBonus|TYPE=Resistance"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain resist fire %1 and a +%2 bonus on saving throws made against poison.|DevilBinderInfernalResistancesBonus|DevilBinderInfernalResistancesSaveBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 vs. poison|DevilBinderInfernalResistancesSaveBonus|!PREABILITY:1,CATEGORY=Special Ability,Immunity to Poison"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 67,
+    "record_key": "Infernal Affinity ~ Infernal Resistances"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

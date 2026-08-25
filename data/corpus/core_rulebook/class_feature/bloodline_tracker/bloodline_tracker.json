@@ -1,0 +1,1262 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Bloodline Tracker",
+    "name": "Bloodline Tracker",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "BloodlineLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineLVL|SorcererLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineLVL|SorcererLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineCasterLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineCasterLVL|SorcererLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineProgressionLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineProgressionLVL|SorcererLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlinePowerTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlinePowerTimes|3+Sorcerer_Spells_StatBonus|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineFeatProgression|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineFeatProgression|BloodlineProgressionLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodlineFeatCount|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineFeatCount|-1|PREVARGTEQ:BloodlineFeatProgression,7|PREVAREQ:Sorcerer_CF_BloodlineFeat7,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineFeatCount|-1|PREVARGTEQ:BloodlineFeatProgression,13|PREVAREQ:Sorcerer_CF_BloodlineFeat13,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodlineFeatCount|-1|PREVARGTEQ:BloodlineFeatProgression,19|PREVAREQ:Sorcerer_CF_BloodlineFeat19,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_AcrobaticSteps|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_AgileManeuvers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Alertness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ArcaneArmorMastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ArcaneArmorTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ArcaneStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_AugmentSummoning|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_BlindFight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Cleave|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_CombatCasting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_CombatExpertise|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_CombatReflexes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_CraftRod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_CraftStaff|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_CraftWondrousItem|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_DeadlyAim|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Deceitful|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_DefensiveCombatTraining|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_DeftHands|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Diehard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Dodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_EmpowerSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Endurance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_EnlargeSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ExtendSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_FarShot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Fleet|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ForgeRing|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_GreaterSpellFocusEnchantment|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_GreatFortitude|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_HeightenSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedBullRush|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedCounterspell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedDisarm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedFeint|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedGrapple|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedGreatFortitude|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedInitiative|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedIronWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedOverrun|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedSunder|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ImprovedUnarmedStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_IntimidatingProwess|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_IronWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Leadership|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_LightArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_LightningReflexes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_MagicalAptitude|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_MartialWeaponProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_MaximizeSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Mobility|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_MountedCombat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_NimbleMoves|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Persuasive|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_PointBlankShot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_PowerAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_PreciseShot|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_QuickDraw|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_QuickenSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_RideByAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_ScribeScroll|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SilentSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusAcrobatics|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusBluff|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusCraft|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusFly|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusIntimidate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusKnowledgeArcana|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusKnowledgeDungeoneering|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusKnowledgeEngineering|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusKnowledgeHistory|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusKnowledgeNature|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusKnowledgePlanes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusKnowledgeReligion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusPerception|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusPerform|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusSenseMotive|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusStealth|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusSwim|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SpellFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SpellFocusEnchantment|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SpellFocusNecromancy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SpellPenetration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Stealthy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_StillSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_Toughness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_WeaponFinesse|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_WeaponFocus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_WidenSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_WindStance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Alarm_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_AnimateDead_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_AnimateObjects_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_AnimatePlants_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_AstralProjection_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Augury_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Banishment_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Barkskin_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BeastShapeIV_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BestowCurse_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BlackTentacles_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Bless_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Blight_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Blink_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Blur_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BreakEnchantment_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BullsStrength_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BurningHands_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BurningHandsAcid_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BurningHandsCold_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_BurningHandsElectricity_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_CauseFear_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ChainLightning_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_CharmMonster_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ChillTouch_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_CircleofDeath_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Cloudkill_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_CommandGreater_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_CommandPlants_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ConeofCold_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Confusion_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ConfusionLesser_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Contagion_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ControlUndead_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ControlWater_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ControlWeather_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Darkvision_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DeeperDarkness_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DeepSlumber_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DelayedBlastFireball_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DelayPoison_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DimensionalLock_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DimensionDoor_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DisguiseSelf_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Disintegrate_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Dismissal_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DispelMagic_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DispelMagicGreater_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Divination_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DominateMonster_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_DominatePerson_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Dream_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EaglesSplendor_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Earthquake_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ElementalBodyI_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ElementalBodyII_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ElementalBodyIII_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ElementalBodyIV_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ElementalSwarm_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EndureElements_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EnergyDrain_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EnlargePerson_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Entangle_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EntropicShield_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EtherealJaunt_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Etherealness_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ExplosiveRunes_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Eyebite_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Fabricate_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FalseLife_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Fear_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Feeblemind_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FingerofDeath_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Fireball_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FireShieldwarm_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FlameStrike_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Fly_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Foresight_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FormoftheDragonI_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FormoftheDragonII_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FormoftheDragonIII_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_FreedomofMovement_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_GaseousForm_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Gate_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_GiantFormI_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_GiantFormII_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Glitterdust_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_GuardsandWards_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_GustofWind_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Heroism_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_HeroismGreater_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_HideousLaughter_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_HoldMonster_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_HorridWilting_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Hypnotism_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Identify_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Imprisonment_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Insanity_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_InsectPlague_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Invisibility_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_IronBody_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_IrresistibleDance_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_LightningBolt_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MageArmor_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MagicCircleagainstEvil_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MagicVestment_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MagicWeapon_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MagicWeaponGreater_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MajorCreation_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MakeWhole_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MeteorSwarm_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MindBlank_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MinorCreation_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Mislead_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MomentofPrescience_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MoveEarth_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ObscuringMist_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_OverlandFlight_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PersistentImage_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PhaseDoor_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PlanarBinding_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PlanarBindingDevilsAndFiendishCreaturesOnly_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PlanarBindingGreater_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PlaneShift_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PlantShapeIII_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Poison_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PolarRay_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PolymorphAnyObject_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PolymorphGreater_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PowerWordBlind_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PowerWordStun_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ProtectionfromEnergy_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ProtectionfromGood_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PryingEyesGreater_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Rage_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_RayofEnfeeblement_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_RayofExhaustion_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_RemoveCurse_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_RepelMetalorStone_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Repulsion_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ResistEnergy_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ReverseGravity_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ScorchingRay_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ScorchingRayAcid_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ScorchingRayCold_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ScorchingRayElectricity_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SeeInvisibility_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Shades_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShadowConjuration_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShadowEvocation_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShadowEvocationGreater_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShadowWalk_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Shambler_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Shapechange_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShockingGrasp_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Shout_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShoutGreater_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_ShrinkItem_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Sleep_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SoulBind_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SpeakwithPlants_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SpellResistance_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SpellTurning_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SpikeStones_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Stoneskin_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_StoneTell_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_StormofVengeance_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Suggestion_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SuggestionMass_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SummonMonsterIX_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SummonMonsterVII_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SummonMonsterVIIIElementalsOnly_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Sunburst_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TeleportGreater_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Tongues_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TouchofIdiocy_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Transformation_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TransmuteRocktoMud_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TransportviaPlants_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TraptheSoul_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TreeStride_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TrueSeeing_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TrueStrike_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_UndeathToDeath_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_UnholyAura_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_UnseenServant_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_VampiricTouch_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Veil_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Ventriloquism_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Vision_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WailoftheBanshee_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WallofFire_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WallOfIce_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WallofIron_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WallofStone_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WallOfThorns_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WavesofExhaustion_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WavesOfFatigue_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Whirlwind_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Wish_L9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_SkillFocusDisguise|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 1705,
+    "record_key": "Bloodline Tracker"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

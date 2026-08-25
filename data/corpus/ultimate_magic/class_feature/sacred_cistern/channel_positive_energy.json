@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sacred Cistern ~ Channel Positive Energy",
     "name": "Channel Positive Energy",
-    "class": "Sacred Cistern",
+    "class": "Sorcerer",
     "description": "You can unleash a wave of positive energy. You must choose to deal %1d%2 points of positive energy damage to undead creatures or to heal living creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|Sorcerer_EmpyrealSacredCistern_ChannelPositiveEnergyDice|Sorcerer_EmpyrealSacredCistern_ChannelPositiveEnergyDieSize|Sorcerer_EmpyrealSacredCistern_ChannelPositiveEnergyDC|Sorcerer_EmpyrealSacredCistern_ChannelEnergyTimes",
     "raw_tokens": [
       {
@@ -120,5 +120,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

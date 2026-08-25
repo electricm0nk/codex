@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vermin Rider ~ Bound Vermin",
+    "name": "Bound Vermin",
+    "description": "You and your mount are under the permanent effects of mindlink.  While bound to each other, the mount gains the same energy resistances as those of you from your chitin.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vermin Rider ~ Bound Vermin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You and your mount are under the permanent effects of mindlink.  While bound to each other, the mount gains the same energy resistances as those of you from your chitin."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_um.lst",
+    "sha256": "dbd6f422e0e3106db6759299ddad5770b0038d66d7c34ed615f7838b632fdad3",
+    "line": 13,
+    "record_key": "Vermin Rider ~ Bound Vermin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

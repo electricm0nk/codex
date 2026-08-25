@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Rock Throwing",
+    "name": "Rock Throwing",
+    "description": "+1 racial bonus to attack with thrown rocks; can throw rocks up to 2 categories smaller than its size; 120 ft range increment, 2d6 + 1.5*Str damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Rock Throwing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderOffenseTrait.Monstrous"
+      },
+      {
+        "key": "DESC",
+        "value": "+1 racial bonus to attack with thrown rocks; can throw rocks up to 2 categories smaller than its size; 120 ft range increment, 2d6 + 1.5*Str damage."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|3"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Rock"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-3"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rock|TOHIT|1|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rock|DAMAGE|STR*1/2|TYPE=Racial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 548,
+    "record_key": "Builder Racial Trait ~ Rock Throwing"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

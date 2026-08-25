@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Soul Warrior",
+    "category": "General",
+    "name": "Soul Warrior",
+    "description": "Your manifester level which granted you the warrior's path class feature gains a +2 bonus as long as this bonus doesn't raise your manifester level above your current Hit Dice. Your soulknife level gains a +2 bonus, up to a maximum of your hit dice, for the purpose of your mind blade enhancement class feature. In addition, any time you perform a path maneuver while wielding your mind blade, you gain a +1 bonus to attack rolls with your mind blade for until the end of your next turn.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Soulknife ~ Enhanced Mind Blade,Warrior's Path ~ Psychic Warrior",
+      "PREVARGTEQ:MndBladeEnhancement,2"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 313,
+    "record_key": "Soul Warrior"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Arcane Bloodrager Bloodline ~ True Arcane Bloodrage",
     "name": "True Arcane Bloodrage",
-    "class": "Arcane Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "When you enter a bloodrage, you can choose one of the following spells and apply its effects on you: Beast Shape IV (choose a creature your size or larger only), Form of the Dragon I, or Transformation. This is in addition to Arcane Bloodrage and Greater Arcane Bloodrage, and otherwise works as those abilities.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

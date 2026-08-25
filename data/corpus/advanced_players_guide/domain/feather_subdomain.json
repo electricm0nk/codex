@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Feather Subdomain",
+    "name": "Feather Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Feather Subdomain],[PREVARLT:AnimalDomain,1]"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)|Fly"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Feather Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.90"
+      },
+      {
+        "key": "DESC",
+        "value": "Add Fly to your list of class skills. In addition, whenever you cast a spell that grants you a fly speed, your maneuverability increases by one step (up to perfect)."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Feather Subdomain=1|Calm Animals|Feather Subdomain=2|Feather Fall|Feather Subdomain=3|Fly|Feather Subdomain=4|Summon Nature's Ally IV (Animals Only)|Feather Subdomain=5|Beast Shape III (Animals Only)|Feather Subdomain=6|Fly (Mass)|Feather Subdomain=7|Animal Shapes|Feather Subdomain=8|Summon Nature's Ally VIII (Animals Only)|Feather Subdomain=9|Shapechange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 34,
+    "record_key": "Feather Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Feature ~ Visionary Commander",
+    "name": "Visionary Commander",
+    "description": "Whenever you or an ally within 30 feet rolls an initiative check, roll twice and take either result. If the first round of combat is a surprise round, you and all allies within 30 feet at the start of the combat can take a full round's worth of actions instead of just a move or standard action. Once per round, when you or an ally within 30 feet scores a critical hit against a mythic creature, you regain one use of mythic power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Feature ~ Visionary Commander"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Feature.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you or an ally within 30 feet rolls an initiative check, roll twice and take either result. If the first round of combat is a surprise round, you and all allies within 30 feet at the start of the combat can take a full round's worth of actions instead of just a move or standard action. Once per round, when you or an ally within 30 feet scores a critical hit against a mythic creature, you regain one use of mythic power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 100,
+    "record_key": "Mythic Path Feature ~ Visionary Commander"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

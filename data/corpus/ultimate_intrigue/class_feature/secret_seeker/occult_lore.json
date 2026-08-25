@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Secret Seeker ~ Occult Lore",
+    "name": "Occult Lore",
+    "class": "Inquisitor",
+    "description": "A secret seeker gains access to the prognostication and read aura occult skill unlocks (Occult Adventures p. 196-197), but not the other occult skill unlocks. If she ever chooses to gain the Psychic Sensitivity feat or otherwise gains access to all occult skill unlocks, she receives Psychic Maestro as a bonus feat, with prognostication and read aura as the two occult skill unlocks selected.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secret Seeker ~ Occult Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Inquisitor Class Features.SecretSeekerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A secret seeker gains access to the prognostication and read aura occult skill unlocks (Occult Adventures p. 196-197), but not the other occult skill unlocks. If she ever chooses to gain the Psychic Sensitivity feat or otherwise gains access to all occult skill unlocks, she receives Psychic Maestro as a bonus feat, with prognostication and read aura as the two occult skill unlocks selected."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Prognostication"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Unlock ~ Read Aura"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Psychic Maestro|PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Psychic Sensitivity],[PRESPELLCAST:TYPE=Psychic]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 13,
+    "record_key": "Secret Seeker ~ Occult Lore"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

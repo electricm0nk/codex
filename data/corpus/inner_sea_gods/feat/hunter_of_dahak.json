@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Hunter Of Dahak",
+    "category": "General",
+    "name": "Hunter Of Dahak",
+    "description": "You viciously hunt and sacrifice metallic dragons. Your favored enemy bonuses increase by 2 against metallic dragons.",
+    "prerequisites": [
+      "PREDEITY:1,Dahak",
+      "PRETEXT:Prerequisites: Favored enemy (dragon), worshiper of Dahak."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 54,
+    "record_key": "Hunter Of Dahak"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Martial Kineticist ~ Psionic Training",
+    "name": "Psionic Training",
+    "class": "Kineticist",
+    "description": "You can choose bonuses to Autohypnosis, Spellcraft, or Use Magic Device.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Kineticist ~ Psionic Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MartialKineticistSkillBonuses|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose bonuses to Autohypnosis, Spellcraft, or Use Magic Device."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Martial Kineticist Skill Bonus|MartialKineticistSkillBonuses"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MartialKineticistSkillBonuses|floor((PsychicWarriorLVL-1)/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2041,
+    "record_key": "Martial Kineticist ~ Psionic Training"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

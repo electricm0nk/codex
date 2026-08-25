@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Psionic Deed ~ Energized Ammunition",
+    "name": "Energized Ammunition",
+    "description": "At 11th level, when the gunslinger makes a ranged attack with a firearm, she can spend 1 grit point as a free action to change the damage of the attack to her active energy type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Deed ~ Energized Ammunition"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality.DeedsLvl11.DeedHasCost.Supernatural"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "IsPsionic,0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, when the gunslinger makes a ranged attack with a firearm, she can spend 1 grit point as a free action to change the damage of the attack to her active energy type."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 60,
+    "record_key": "Psionic Deed ~ Energized Ammunition"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

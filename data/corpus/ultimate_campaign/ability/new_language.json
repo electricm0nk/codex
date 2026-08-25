@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retrain ~ New Language",
+    "name": "New Language",
+    "description": "You retrained one or more new languages.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retrain ~ New Language"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Retraining"
+      },
+      {
+        "key": "PREVARLTEQ",
+        "value": "RetrainNewLanguage,1+INT"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RetrainingDaysSpent|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RetrainNewLanguage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained one or more new languages."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "LANG|ALL"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|%LIST"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RetrainingDaysSpent|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RetrainNewLanguage|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643",
+    "line": 14,
+    "record_key": "Retrain ~ New Language"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

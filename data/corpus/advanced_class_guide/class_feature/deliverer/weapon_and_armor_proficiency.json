@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Deliverer ~ Weapon and Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
@@ -26,7 +26,7 @@
       },
       {
         "key": "AUTO",
-        "value": "WEAPONPROF|DEITYWEAPONS|!PREDEITY:1,Irori,Korada,Lythertida"
+        "value": "[redacted PI]"
       },
       {
         "key": "AUTO",
@@ -34,7 +34,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "FEAT|AUTOMATIC|Improved Unarmed Strike|PREDEITY:1,Irori,Korada,Lythertida"
+        "value": "[redacted PI]"
       },
       {
         "key": "SOURCEPAGE",
@@ -53,7 +53,8 @@
   "wiring_class_signals": [
     "display:no_magnitude_token"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

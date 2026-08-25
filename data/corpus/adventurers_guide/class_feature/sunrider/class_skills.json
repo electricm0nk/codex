@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sunrider ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Druid",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sunrider ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Feature.SunriderClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Climb|TYPE=Craft|Fly|Handle Animal|Heal|Knowledge (Geography)|Knowledge (Local)|Knowledge (Nature)|Perception|Ride|Spellcraft|Survival|Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 800,
+    "record_key": "Sunrider ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

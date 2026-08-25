@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shadow Lord ~ Planar Thinning",
+    "delivery": "Supernatural",
+    "description": "Once per day as a full-round action, a shadow lord can thin the barriers between the Material Plane and Shadow Plane, making it considerably easier for creatures to cross between the two. This functions like the planar travel aspect of the gate spell (caster level equal to the shadow lord's Hit Dice). This planar thinning is immediately dispelled if in an area of normal or bright light.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:shadow_lord_planar_thinning",
+    "name": "Planar Thinning",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a full-round action, a shadow lord can thin the barriers between the Material Plane and Shadow Plane, making it considerably easier for creatures to cross between the two. This functions like the planar travel aspect of the gate spell (caster level equal to the shadow lord's Hit Dice). This planar thinning is immediately dispelled if in an area of normal or bright light."
+      },
+      {
+        "key": "KEY",
+        "value": "Shadow Lord ~ Planar Thinning"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1266,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Shadow Lord ~ Planar Thinning",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

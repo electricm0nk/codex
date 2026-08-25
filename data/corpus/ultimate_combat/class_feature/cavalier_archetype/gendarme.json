@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Archetype ~ Gendarme",
     "name": "Gendarme",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "The gendarme cares less for the finer points of tactical precision than he does for the exhilaration of the charge: the rush of wind through the visor of his helmet, the feel of his couched lance, the satisfying shriek of armor giving way before his weapon's force as the point drives past metal into his foes.",
     "raw_tokens": [
       {
@@ -51,6 +51,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cavalier"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Gendarme],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Tactician=True,Cavalier_Archetype_GreaterTactician=True,Cavalier_Archetype_MasterTactician=True,Cavalier_Archetype_BonusFeat=True,Cavalier_Archetype_SupremeCharge=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_BonusFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_SupremeCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MasterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_BonusFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_SupremeCharge|true"
       }
     ]
   },
@@ -67,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Energy Shield",
     "name": "Energy Shield [Abjuration]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a swift action, you can expend 1 point of mental focus to surround yourself with a shield that protects you from energy damage. Whenever you take acid, cold, electricity, or fire damage, the shield absorbs the damage (as protection from energy). The energy shield can absorb up to %1 points of energy damage. This shield lasts for 1 minute or until its power is exhausted. Its effect doesn't stack with itself, with protection from energy, or with resist energy. You can activate the energy shield as an immediate action by expending 2 points of mental focus instead of 1. You must be at least 3rd level to select this focus power.|5*OccultistLVL",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

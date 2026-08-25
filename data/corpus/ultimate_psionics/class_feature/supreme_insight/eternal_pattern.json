@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Supreme Insight ~ Eternal Pattern",
+    "name": "Eternal Pattern",
+    "class": "Supreme Insight",
+    "description": "You have discovered how to fix your physical pattern into its prime state, and from this point forward you take no penalty to your physical ability scores from advanced age.  If you are already taking such penalties, they are removed at this time.  You do not die from old age.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Supreme Insight ~ Eternal Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticSupremeInsight"
+      },
+      {
+        "key": "DESC",
+        "value": "You have discovered how to fix your physical pattern into its prime state, and from this point forward you take no penalty to your physical ability scores from advanced age.  If you are already taking such penalties, they are removed at this time.  You do not die from old age."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 232,
+    "record_key": "Supreme Insight ~ Eternal Pattern"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

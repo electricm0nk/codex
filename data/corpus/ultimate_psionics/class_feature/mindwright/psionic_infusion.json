@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mindwright ~ Psionic Infusion",
+    "name": "Psionic Infusion",
+    "class": "Mindwright",
+    "description": "You can temporarily add a special ability to a suit of armor, a shield, or a weapon.  Doing so takes a full-round action and a Spellcraft check (DC 25 + the manifester level of the special ability).  If the check is successful, the mindwright adds the special ability to the item for 1 minute.  The item does not need to have a +1 enhancement bonus to add a special ability.  You must spend 1 power point for every 500 gp of the special ability's base price (rounded up).  You can spend up to %1 power points.  If you use this ability to add a special ability to an existing psionic item, subtract the item's base price from the base price if would have if it had the ability to determine the number of power points needed to spend to add the special ability.  If you fail the Spellcraft check, the power points are not lost.|PsionicInfusionPowerPointLimit",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindwright ~ Psionic Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionicInfusionPowerPointLimit|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can temporarily add a special ability to a suit of armor, a shield, or a weapon.  Doing so takes a full-round action and a Spellcraft check (DC 25 + the manifester level of the special ability).  If the check is successful, the mindwright adds the special ability to the item for 1 minute.  The item does not need to have a +1 enhancement bonus to add a special ability.  You must spend 1 power point for every 500 gp of the special ability's base price (rounded up).  You can spend up to %1 power points.  If you use this ability to add a special ability to an existing psionic item, subtract the item's base price from the base price if would have if it had the ability to determine the number of power points needed to spend to add the special ability.  If you fail the Spellcraft check, the power points are not lost.|PsionicInfusionPowerPointLimit"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionicInfusionPowerPointLimit|PsionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1990,
+    "record_key": "Mindwright ~ Psionic Infusion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

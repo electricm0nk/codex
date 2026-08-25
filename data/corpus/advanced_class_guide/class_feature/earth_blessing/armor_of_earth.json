@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Earth Blessing ~ Armor of Earth",
     "name": "Armor of Earth",
-    "class": "Earth Blessing",
+    "class": "Warpriest",
     "description": "You can touch an ally and harden its armor or clothing. For 1 minute, the ally gains DR %1/-. This doesn't stack with any other damage resistance.|if(WarpriestLVL<19,1+((WarpriestLVL/2)-5),5)",
     "raw_tokens": [
       {
@@ -40,5 +40,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

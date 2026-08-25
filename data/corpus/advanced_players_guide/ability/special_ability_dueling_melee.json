@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Special Ability ~ Dueling ~ Melee",
+    "name": "Special Ability ~ Dueling ~ Melee",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Dueling grants +4 on initiative checks when in hand, +2 on disarm and feint checks, +2 to CMD to resist disarm, +2 to DC to feint against the wielder"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|INITIATIVE|4"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMD_Disarm|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 415,
+    "record_key": "Special Ability ~ Dueling ~ Melee"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

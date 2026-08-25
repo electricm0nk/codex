@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "data": {
+    "key": "Untrained Strength",
+    "name": "Untrained Strength",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "z"
+      },
+      {
+        "key": "KEYSTAT",
+        "value": "STR"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "UseUntrainedSkills,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_skills.lst",
+    "sha256": "4cb379aac1fcb20677623cecf3842a30eef88d79d4fe4fe00fbc0f49f856c9ea",
+    "line": 206,
+    "record_key": "Untrained Strength"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

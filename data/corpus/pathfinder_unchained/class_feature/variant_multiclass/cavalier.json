@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Cavalier",
+    "name": "Cavalier",
+    "class": "Variant Multiclass",
+    "description": "[Not Implemented]A character who chooses cavalier as his secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Cavalier"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[Not Implemented]A character who chooses cavalier as his secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Order: At 1st level, he chooses an order. He must follow the edicts of his order."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Challenge: At 3rd level, he gains the ability to issue a challenge as a cavalier of his character level - 2 once per day. He adds the appropriate order adjustment to his challenge based on the order he selected."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Order Ability: At 7th level, he gains the 2nd-level ability of his chosen order, treating his character level as his effective cavalier level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Tactician: At 11th level, he gains the tactician class feature, treating his character level as his effective cavalier level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Greater Order Ability: At 15th level, he gains the 8th-level ability of his chosen order, treating his character level as his effective cavalier level."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Greater Tactician: At 19th level, he gains the greater tactician class feature, treating his character level as his effective cavalier level."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Cavalier Order|1|PREVARGTEQ:TL,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 862,
+    "record_key": "Variant Multiclass ~ Cavalier"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

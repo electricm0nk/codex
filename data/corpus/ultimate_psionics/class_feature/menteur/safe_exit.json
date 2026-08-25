@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Menteur ~ Safe Exit",
+    "name": "Safe Exit",
+    "class": "Menteur",
+    "description": "You can set a location as a full-round action that provokes attacks of opportunity when standing in the location.  As long as you are within 400 feet of the location, you can teleport to it as a standard action.  You can bring along %1 additional creatures of the same size or smaller than yourself that you are physically touching, although if the creature or creatures touched are unwilling, a Will save (DC %2) leaves that creature behind.  Using this ability to teleport can only be done 1/day.|SafeExitExtraTargets|SafeExitDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Menteur ~ Safe Exit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SafeExitExtraTargets|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SafeExitDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can set a location as a full-round action that provokes attacks of opportunity when standing in the location.  As long as you are within 400 feet of the location, you can teleport to it as a standard action.  You can bring along %1 additional creatures of the same size or smaller than yourself that you are physically touching, although if the creature or creatures touched are unwilling, a Will save (DC %2) leaves that creature behind.  Using this ability to teleport can only be done 1/day.|SafeExitExtraTargets|SafeExitDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SafeExitExtraTargets|floor((RogueLVL-2)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SafeExitDC|10+floor(RogueLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.322"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2610,
+    "record_key": "Menteur ~ Safe Exit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

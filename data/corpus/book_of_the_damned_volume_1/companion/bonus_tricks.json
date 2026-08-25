@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Imp Companion ~ Bonus Tricks",
+    "name": "Bonus Tricks",
+    "description": "The Imp Companion has %1 other choices of bonus tricks. It can choose one alternate form, spell-like ability or telepathy per trick.|ImpCompBonusTricks",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imp Companion ~ Bonus Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImpCompBonusTricks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The Imp Companion has %1 other choices of bonus tricks. It can choose one alternate form, spell-like ability or telepathy per trick.|ImpCompBonusTricks"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Imp Companion Trick|var(\"ImpCompBonusTricks\")"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|ImpCompBonusTricks"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
+    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9",
+    "line": 5,
+    "record_key": "Imp Companion ~ Bonus Tricks"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

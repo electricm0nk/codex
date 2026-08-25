@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sacred Judgment ~ Piercing",
     "name": "Judgment / Piercing",
-    "class": "Sacred Judgment",
+    "class": "Inquisitor",
     "description": "This judgment gives the inquisitor great focus and makes her spells more potent. This benefit grants a +%1 sacred bonus on concentration checks and caster level checks made to overcome a target's spell resistance.|1+InqJudgePiercingLVL/3",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

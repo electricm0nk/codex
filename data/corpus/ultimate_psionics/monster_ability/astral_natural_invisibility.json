@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:10:45Z",
+  "data": {
+    "corpus_key": "Astral_Natural Invisibility",
+    "delivery": "Extraordinary",
+    "description": "This ability is constant--this astral construct remains invisible at all times, even when attacking. As this ability is inherent, it is not subject to the eradicate invisibility power. Against foes that cannot pinpoint it, this astral construct gains a +20 bonus on Stealth checks when moving, or +40 when standing still--these bonuses are not included in the statistics above.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:astral_natural_invisibility",
+    "name": "Natural Invisibility",
+    "owners": [],
+    "source_page": "p.444",
+    "traits": [
+      "AstralConstructMenuC",
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 697,
+    "record_key": "Astral_Natural Invisibility"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

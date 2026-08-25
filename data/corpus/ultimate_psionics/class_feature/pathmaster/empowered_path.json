@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pathmaster ~ Empowered Path",
+    "name": "Empowered Path",
+    "class": "Pathmaster",
+    "description": "You add +%1 to your manifester level when manifesting a path power.  If you expend your psionic focus when manifesting a power, the power is automatically augmented for the manifester level boost (minimum 1), but you pay no extra power points for this boost.|EmpoweredPathMLBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathmaster ~ Empowered Path"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EmpoweredPathMLBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 to your manifester level when manifesting a path power.  If you expend your psionic focus when manifesting a power, the power is automatically augmented for the manifester level boost (minimum 1), but you pay no extra power points for this boost.|EmpoweredPathMLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EmpoweredPathMLBonus|PsychicWarriorPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2080,
+    "record_key": "Pathmaster ~ Empowered Path"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

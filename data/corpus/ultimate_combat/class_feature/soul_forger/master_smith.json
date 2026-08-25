@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soul Forger ~ Master Smith",
+    "name": "Master Smith",
+    "class": "Soul Forger",
+    "description": "A soul forger adds his magus class level on Craft checks to manufacture armor, shields, and weapons. This bonus applies on skill checks required when using Craft Magic Arms and Armor. At 7th level, a soul forger uses the 1/10 gp value of armor, shields, and weapons to determine how much time it takes to craft mundane items, and he requires only half the normal amount of time to enchant magical arms and armor. This ability replaces knowledge pool.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soul Forger ~ Master Smith"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A soul forger adds his magus class level on Craft checks to manufacture armor, shields, and weapons. This bonus applies on skill checks required when using Craft Magic Arms and Armor. At 7th level, a soul forger uses the 1/10 gp value of armor, shields, and weapons to determine how much time it takes to craft mundane items, and he requires only half the normal amount of time to enchant magical arms and armor. This ability replaces knowledge pool."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 64,
+    "record_key": "Soul Forger ~ Master Smith"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

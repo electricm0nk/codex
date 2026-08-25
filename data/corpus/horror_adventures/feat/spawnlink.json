@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Spawnlink",
+    "category": "Monster",
+    "name": "Spawnlink",
+    "description": "You can see through the eyes of your spawned minions. As a full-round action, you can create a link with one of your spawn that you control on the same plane. When you do so, your spawn's eyes glow bright red. When linked in this way, you can see through your spawn's eyes with either the spawn's vision or yours, whichever is more beneficial. While looking through your spawn's eyes, your body is blinded. You can also speak though your spawn (if it can speak), using your own voice. You can maintain this link each round as a standard action as if concentrating to maintain a 3rd-level spell. If your spawn is reduced to 0 or fewer hit points while you use this ability, you become linded and dazed for 1d6 rounds with no saving throw.",
+    "prerequisites": [
+      "PREVARGTEQ:PreStatScore_INT,13",
+      "PRETEXT:Create spawn monster ability."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 53,
+    "record_key": "Spawnlink"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

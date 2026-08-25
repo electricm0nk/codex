@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Blighted Fey ~ Daughters of Arlantia",
+    "delivery": "Supernatural",
+    "description": "Blighted Fey dryads are no longer dependant upon a single tree, but must remain within 300 yards of any blighted tree.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:blighted_fey_daughters_of_arlantia",
+    "name": "Daughters of Arlantia",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Blighted Fey dryads are no longer dependant upon a single tree, but must remain within 300 yards of any blighted tree."
+      },
+      {
+        "key": "KEY",
+        "value": "Blighted Fey ~ Daughters of Arlantia"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.7"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.7",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 49,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Blighted Fey ~ Daughters of Arlantia",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

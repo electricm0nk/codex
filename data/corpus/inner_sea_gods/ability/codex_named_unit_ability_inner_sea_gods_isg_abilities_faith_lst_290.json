@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_290)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_290)",
+    "description": "If you have performed your daily obedience, a complex arcane sigil manifests on your skin. The location of this sigil varies by individual, but always appears in a place easily displayed. (Most commonly, the sigil resembles a third eye.) While the sigil remains uncovered, you gain a +%1 deflection bonus to AC. You lose the deflection bonus if the sigil becomes obscured, but it returns once the sigil is made visible once again.|1+min(5,TL/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, a complex arcane sigil manifests on your skin. The location of this sigil varies by individual, but always appears in a place easily displayed. (Most commonly, the sigil resembles a third eye.) While the sigil remains uncovered, you gain a +%1 deflection bonus to AC. You lose the deflection bonus if the sigil becomes obscured, but it returns once the sigil is made visible once again.|1+min(5,TL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 290,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_290)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:290"
+  }
+}

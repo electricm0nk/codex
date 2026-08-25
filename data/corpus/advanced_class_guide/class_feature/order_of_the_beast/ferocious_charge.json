@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Beast ~ Ferocious Charge",
     "name": "Ferocious Charge",
-    "class": "Order of the Beast",
+    "class": "Cavalier",
     "description": "At 15th level, the cavalier is the embodiment of nature's fury. When the cavalier charges a creature, he can attempt an Intimidate check to demoralize his enemy as a free action. If he succeeds, the target is frightened.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

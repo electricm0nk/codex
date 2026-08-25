@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Demon Subdomain (Evil)",
+    "name": "Demon Subdomain (Evil)",
+    "raw_tokens": [
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Demon Subdomain (Evil)],[!PREMULT:1,[PREVARGT:EvilDomain,0],[PREDOMAIN:1,Demon Subdomain (Chaos)]]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Demon Subdomain (Evil)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Demon Subdomain (Evil)=1|Doom|Demon Subdomain (Evil)=2|Align Weapon (Evil Only)|Demon Subdomain (Evil)=3|Rage|Demon Subdomain (Evil)=4|Unholy Blight|Demon Subdomain (Evil)=5|Dispel Good|Demon Subdomain (Evil)=6|Planar Binding|Demon Subdomain (Evil)=7|Blasphemy|Demon Subdomain (Evil)=8|Unholy Aura|Demon Subdomain (Evil)=9|Summon Monster IX (Evil Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 26,
+    "record_key": "Demon Subdomain (Evil)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Destined Bloodline ~ Touch of Destiny",
     "name": "Touch of Destiny",
-    "class": "Destined Bloodline",
+    "class": "Sorcerer",
     "description": "You can touch a creature as a standard action, giving it a +%1 insight bonus on attack rolls, skill checks, ability checks, and saving throws for 1 round. You can use this ability %2 times per day.|Sorcerer_DestinedTouchOfDestiny_Bonus|Sorcerer_Destined_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -84,5 +84,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

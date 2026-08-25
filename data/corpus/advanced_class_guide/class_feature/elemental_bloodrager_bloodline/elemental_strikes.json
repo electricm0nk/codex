@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elemental Bloodrager Bloodline ~ Elemental Strikes",
     "name": "Elemental Strikes",
-    "class": "Elemental Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "As a swift action up to %1 times a day, you can imbue your melee attacks with elemental energy. For 1 round, your|Bloodrager_Elemental_ElementalStrikes_Times|PREVARLT:Bloodrager_Elemental_BloodlineLVL,20",
     "raw_tokens": [
       {
@@ -111,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

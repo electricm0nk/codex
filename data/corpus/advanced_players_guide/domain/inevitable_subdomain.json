@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Inevitable Subdomain",
+    "name": "Inevitable Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREALIGN",
+        "value": "LG,LN,LE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Inevitable Subdomain],[PREVARLT:LawDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Inevitable Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Inevitable Subdomain=1|Protection from Chaos|Inevitable Subdomain=2|Align Weapon (Law Only)|Inevitable Subdomain=3|Command Undead|Inevitable Subdomain=4|Order's Wrath|Inevitable Subdomain=5|Command (Greater)|Inevitable Subdomain=6|Planar Binding (Inevitables Only)|Inevitable Subdomain=7|Dictum|Inevitable Subdomain=8|Shield of Law|Inevitable Subdomain=9|Summon Monster IX (Law Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 43,
+    "record_key": "Inevitable Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

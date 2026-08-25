@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "ABP ~ +1 Wisdom",
+    "name": "+1 Wisdom",
+    "class": "ABP",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "ABP ~ +1 Wisdom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ABP Legendary Ability"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|ABP_LegendaryAbility_WISInherent|TYPE=Inherent"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_LegendaryAbility_WISInherent|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Wis +%1|ABP_LegendaryAbility_WISInherent"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Legendary Ability"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 100,
+    "record_key": "ABP ~ +1 Wisdom"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

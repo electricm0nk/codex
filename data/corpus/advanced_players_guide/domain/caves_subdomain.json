@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Caves Subdomain",
+    "name": "Caves Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Caves Subdomain],[PREVARLT:EarthDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Caves Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Caves Subdomain=1|Magic Stone|Caves Subdomain=2|Create Pit|Caves Subdomain=3|Spiked Pit|Caves Subdomain=4|Spike Stones|Caves Subdomain=5|Wall of Stone|Caves Subdomain=6|Hungry Pit|Caves Subdomain=7|Elemental Body IV (Earth Only)|Caves Subdomain=8|Earthquake|Caves Subdomain=9|Elemental Swarm (Earth Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 17,
+    "record_key": "Caves Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fuath ~ Congeal Water",
+    "delivery": "Supernatural",
+    "description": "Once per day, a fuath can surround a creature in a thin layer of magically viscous water as a standard action at a range of 30 feet. A target that fails a DC 10 Reflex save becomes entangled and must hold its breath or risk drowning. The target or an adjacent creature can spend a full-round action on its turn scraping off the clinging fluid, allowing a new Reflex save with a +2 bonus; otherwise, the effect lasts for 1d4 minutes. A fuath can use this ability even if there is no source of water nearby. The save DC is Charisma-based and includes a +1 racial bonus.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:fuath_congeal_water",
+    "name": "Congeal Water",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a fuath can surround a creature in a thin layer of magically viscous water as a standard action at a range of 30 feet. A target that fails a DC 10 Reflex save becomes entangled and must hold its breath or risk drowning. The target or an adjacent creature can spend a full-round action on its turn scraping off the clinging fluid, allowing a new Reflex save with a +2 bonus; otherwise, the effect lasts for 1d4 minutes. A fuath can use this ability even if there is no source of water nearby. The save DC is Charisma-based and includes a +1 racial bonus."
+      },
+      {
+        "key": "KEY",
+        "value": "Fuath ~ Congeal Water"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "TYPE",
+        "value": "FuathRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.142",
+    "traits": [
+      "FuathRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1016,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Fuath ~ Congeal Water",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

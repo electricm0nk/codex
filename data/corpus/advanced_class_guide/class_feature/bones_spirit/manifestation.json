@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bones Spirit ~ Manifestation",
     "name": "Manifestation",
-    "class": "Bones Spirit",
+    "class": "Shaman",
     "description": "The shaman becomes a spirit of death. Once per round, she can cast bleed or stabilize as a free action. If she is reduced to below 0 hit points, she automatically stabilizes. She can cast animate dead at will without paying a material component cost, although she is still subject to the usual Hit Dice control limit. Once per day, she can cast power word kill, but the spell can target a creature with 150 hit points or fewer.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

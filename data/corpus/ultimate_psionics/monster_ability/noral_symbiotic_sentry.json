@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Noral ~ Symbiotic Sentry",
+    "delivery": null,
+    "description": "When you fail a save against a mind-affecting effect, you may immediately roll a second save; if the second save is successful, you are still affected by the effect, but you are at least aware of a psychic attack and your failure to block it, even if you do not know the exact attack or its consequences.  Once per day, if the second save is successful, you may choose to use that result in place of the first roll.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:noral_symbiotic_sentry",
+    "name": "Symbiotic Sentry",
+    "owners": [
+      "ultimate_psionics:monster:noral"
+    ],
+    "source_page": "p.333",
+    "traits": [
+      "RacialTraits",
+      "NoralRacialTrait",
+      "NoralSymbioticResistance",
+      "NoralSymbioticSurge"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 290,
+    "record_key": "Noral ~ Symbiotic Sentry"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

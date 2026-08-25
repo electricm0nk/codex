@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Flexible School Power ~ Evocation ~ Intense Spells",
+    "name": "Intense Spells",
+    "description": "Whenever you cast an evocation spell that deals hit point damage, add +%1 to the damage. This bonus only applies once to a spell, not once per missile or ray, and cannot be split between multiple missiles or rays. This bonus damage is not increased by Empower Spell or similar effects. This damage is of the same type as the spell.|EvocationIntenseSpellsBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flexible School Power ~ Evocation ~ Intense Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.WizardClassFeatures.SpecialAttack.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1.AttackOption"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Evocation School ~ Intense Spells"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EvocationIntenseSpellsBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast an evocation spell that deals hit point damage, add +%1 to the damage. This bonus only applies once to a spell, not once per missile or ray, and cannot be split between multiple missiles or rays. This bonus damage is not increased by Empower Spell or similar effects. This damage is of the same type as the spell.|EvocationIntenseSpellsBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you cast an evocation spell you can roll twice to penetrate a creature's spell resistance and take the better result.|PREVARGTEQ:Ability_FlexibleSchool_EvocationLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvocationIntenseSpellsBonus|max(1,Ability_FlexibleSchool_EvocationLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 459,
+    "record_key": "Flexible School Power ~ Evocation ~ Intense Spells"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

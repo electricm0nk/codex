@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Powerful Shape",
+    "category": "Mythic",
+    "name": "Powerful Shape (Mythic)",
+    "description": "The forms you take in wild shape tower over their natural counterparts. You can apply the giant simple template to any form you take with wild shape. This replaces the benefit from Powerful Shape.\nAs a free action, you can expend one use of mythic power to combine the benefit from this feat with the benefit from non-mythic Powerful Shape for a number of rounds equal to your tier.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Powerful Shape",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 139,
+    "record_key": "Powerful Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

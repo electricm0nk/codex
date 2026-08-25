@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Abundant Healing",
+    "name": "Abundant Healing",
+    "description": "When you use a spell or class ability to heal a creature's hit point damage, you can apply excess healing (over the target's full hit points) to one ally adjacent to you. You can continue to apply excess healing to other adjacent allies until no injured allies are adjacent or you run out of excess healing. For example, if you could cure 40 points of damage with your cure critical wounds spell and the target has taken only 20 points of damage, you can apply the remaining 20 points of healing to an adjacent ally; if that second ally has taken only 15 points of damage, you can apply the remaining 5 points of healing to another adjacent ally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Abundant Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use a spell or class ability to heal a creature's hit point damage, you can apply excess healing (over the target's full hit points) to one ally adjacent to you. You can continue to apply excess healing to other adjacent allies until no injured allies are adjacent or you run out of excess healing. For example, if you could cure 40 points of damage with your cure critical wounds spell and the target has taken only 20 points of damage, you can apply the remaining 20 points of healing to an adjacent ally; if that second ally has taken only 15 points of damage, you can apply the remaining 5 points of healing to another adjacent ally."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 285,
+    "record_key": "Mythic Path Ability ~ Abundant Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

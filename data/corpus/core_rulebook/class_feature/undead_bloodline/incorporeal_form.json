@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Undead Bloodline ~ Incorporeal Form",
     "name": "Incorporeal Form",
-    "class": "Undead Bloodline",
+    "class": "Sorcerer",
     "description": "You can become incorporeal for %1 rounds. While in this form, you gain the incorporeal subtype. You only take half damage from corporeal sources as long as they are magic (you take no damage from non-magic weapons and objects). Likewise, your spells deal only half damage to corporeal creatures. Spells and other effects that do not deal damage function normally. You can use this ability once per day.|Sorcerer_UndeadIncorporealForm_Duration",
     "raw_tokens": [
       {
@@ -87,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

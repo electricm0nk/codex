@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian Archetype ~ Savage Barbarian",
     "name": "Savage Barbarian",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Some barbarians are truly savage, having little training in modern arms. These savage barbarians learn to avoid blows and toughen up their skin.",
     "raw_tokens": [
       {
@@ -67,6 +67,26 @@
       {
         "key": "FACT",
         "value": "Barbarian_CF_DamageReduction|true"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Savage Barbarian],[!PREFACT:1,ABILITIES,Barbarian_Archetype_TrapSense=True,Barbarian_Archetype_DamageReduction=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_DamageReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_DamageReduction|true"
       }
     ]
   },
@@ -83,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

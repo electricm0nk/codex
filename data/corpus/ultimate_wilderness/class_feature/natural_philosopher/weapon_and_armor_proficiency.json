@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Natural Philosopher ~ Weapon Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class": "Investigator",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Natural Philosopher ~ Weapon Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.NaturalPhilosopherClassFeatures"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Handaxe|Kukri|Shortbow|Axe (Throwing)|Whip"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Simple"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 745,
+    "record_key": "Natural Philosopher ~ Weapon Proficiency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

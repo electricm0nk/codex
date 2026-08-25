@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Undead Subdomain",
     "name": "Undead Subdomain",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Cause Fear|Druid=2|Ghoul Touch|Druid=3|Animate Dead|Druid=4|Enervation|Druid=5|Slay Living|Druid=6|Create Undead|Druid=7|Destruction|Druid=8|Create Greater Undead|Druid=9|Energy Drain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sorcerer Domain ~ Knowledge",
+    "name": "Sorcerer Domain ~ Knowledge",
+    "class": "Sorcerer",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Sorcerer/Cleric (Arcane)=1|Detect Secret Doors|Sorcerer/Cleric (Arcane)=2|Detect Thoughts|Sorcerer/Cleric (Arcane)=3|Clairaudience/Clairvoyance|Sorcerer/Cleric (Arcane)=4|Divination|Sorcerer/Cleric (Arcane)=5|True Seeing|Sorcerer/Cleric (Arcane)=6|Find the Path|Sorcerer/Cleric (Arcane)=7|Legend Lore|Sorcerer/Cleric (Arcane)=8|Discern Location|Sorcerer/Cleric (Arcane)=9|Foresight|PREVAREQ:KnowledgeDomainAllowed,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 3137,
+    "record_key": "Sorcerer Domain ~ Knowledge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

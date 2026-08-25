@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer Archetype ~ Stygian Slayer",
     "name": "Stygian Slayer",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "A stygian slayer crawls out of the darkest shadows to strike fear into the hearts of civilized folk. He's a merciless killer who can control a sliver of magic, allowing him to arrive unseen, commit murder, and depart without detection.",
     "raw_tokens": [
       {
@@ -79,6 +79,42 @@
       {
         "key": "FACT",
         "value": "Slayer_Archetype_Stalker|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Stygian Slayer],[!PREFACT:1,ABILITIES,Slayer_Archetype_Proficiencies=True,Slayer_Archetype_Stalker=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Stalker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Stalker|true"
       }
     ]
   },
@@ -95,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

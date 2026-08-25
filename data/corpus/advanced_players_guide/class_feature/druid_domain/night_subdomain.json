@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Night Subdomain",
     "name": "Night Subdomain",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Sleep|Druid=2|Blindness/Deafness (Blindness Only)|Druid=3|Deeper Darkness|Druid=4|Shadow Conjuration|Druid=5|Summon Monster V (1d3 Shadows)|Druid=6|Nightmare|Druid=7|Power Word Blind|Druid=8|Shadow Evocation (Greater)|Druid=9|Shades"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Drakainia Spawn ~ Poison Glands",
+    "delivery": "Extraordinary",
+    "description": "The creature has a pair of poison sacs near its mouth. It gains immunity to poison, and three times per day it can spit a dose of poison up to 20 feet as a ranged touch attack. Poison; Contact-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d3 Con damage; cure 1 save.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:drakainia_spawn_poison_glands",
+    "name": "Poison Glands",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature has a pair of poison sacs near its mouth. It gains immunity to poison, and three times per day it can spit a dose of poison up to 20 feet as a ranged touch attack. Poison; Contact-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d3 Con damage; cure 1 save.|10+HD/2+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia Spawn ~ Poison Glands"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 562,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia Spawn ~ Poison Glands",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

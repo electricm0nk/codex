@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Scorpion Style",
     "name": "Scorpion Style",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "You can perform an unarmed strike that greatly hampers your target's movement.",
     "raw_tokens": [
       {
@@ -58,5 +58,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

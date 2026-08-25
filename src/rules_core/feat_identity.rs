@@ -188,15 +188,17 @@ mod tests {
                 }
             }
         }
-        // 1578 hand-authored records + the 531 corpus gap rows the feat gap
+        // 1578 hand-authored records + the 649 corpus gap rows the feat gap
         // lane joined on (`rules_tables::feat_gap_tables`: `SD31-E6-F8-001`'s
         // original 83 + `SD31-E6-F8-002`'s 242 + `SD31-E6-F2-007`'s 199
         // Mythic Adventures rows -- SD31-W10-INTEGRATE-001 excluded 159
         // VISIBLE:EXPORT display-plumbing twins from the original 358 --
         // + `SD31-E6-F8-003`'s 7 (inner_sea_intrigue 6 + book_of_the_
-        // damned_volume_2 1)). Re-derived from the live catalog, not
-        // incremented on faith.
-        assert_eq!(checked, 2109, "the whole ingested feat catalog must be checked");
+        // damned_volume_2 1) + SD-32 Gate 0 book-onboarding precondition's
+        // 9 inner_sea_taverns rows + SD-32 T9 onboarding's (card 11) 109
+        // (inner_sea_combat 23 + inner_sea_gods 86)). Re-derived from the
+        // live catalog, not incremented on faith.
+        assert_eq!(checked, 2227, "the whole ingested feat catalog must be checked");
     }
 
     /// A longer feat whose name merely begins with a grounded key must not

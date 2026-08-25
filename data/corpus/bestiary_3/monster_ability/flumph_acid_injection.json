@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Flumph ~ Acid Injection",
+    "delivery": "Extraordinary",
+    "description": "When a flumph strikes an opponent with its spikes, it injects a burning, irritating acid that deals 1d4 points of acid damage immediately and another 1d4 points of acid damage on the round after the attack. The target can end the acid's effects by submerging the wound in water for a round or by being treated with a DC 15 Heal check. A creature that grapples or swallows the flumph takes this acid damage automatically every round it maintains this contact with a living flumph.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:flumph_acid_injection",
+    "name": "Acid Injection",
+    "owners": [
+      "bestiary_3:monster:flumph"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a flumph strikes an opponent with its spikes, it injects a burning, irritating acid that deals 1d4 points of acid damage immediately and another 1d4 points of acid damage on the round after the attack. The target can end the acid's effects by submerging the wound in water for a round or by being treated with a DC 15 Heal check. A creature that grapples or swallows the flumph takes this acid damage automatically every round it maintains this contact with a living flumph."
+      },
+      {
+        "key": "KEY",
+        "value": "Flumph ~ Acid Injection"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "TYPE",
+        "value": "FlumphRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.119",
+    "traits": [
+      "FlumphRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 872,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Flumph ~ Acid Injection",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

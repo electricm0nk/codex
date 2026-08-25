@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retraining ~ Class Feature ~ Oracle Spell Choice",
+    "name": "Oracle Spell Choice",
+    "description": "You retrained your oracle spell choice concerning cure and inflict spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retraining ~ Class Feature ~ Oracle Spell Choice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RetrainingClassFeature"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained your oracle spell choice concerning cure and inflict spells."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining_apg.lst",
+    "sha256": "8aafd3214cd658a813da4806155ee538aadc836ef05463badb574de5ec570cdc",
+    "line": 15,
+    "record_key": "Retraining ~ Class Feature ~ Oracle Spell Choice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption ~ Replacement Limb Gift",
+    "name": "Replacement Limb Gift",
+    "description": "You gain one slam attack as a primary natural weapon. This slam deals 1d6 points of damage if your size is Medium (1d4 if Small).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Replacement Limb Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PrometheanReplacementLimbGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain one slam attack as a primary natural weapon. This slam deals 1d6 points of damage if your size is Medium (1d4 if Small)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamSize|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 768,
+    "record_key": "Promethean Corruption ~ Replacement Limb Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

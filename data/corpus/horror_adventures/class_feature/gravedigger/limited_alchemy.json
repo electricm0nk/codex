@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger ~ Limited Alchemy",
+    "name": "Limited Alchemy",
+    "class": "Investigator",
+    "description": "A gravedigger prepares and uses extracts as an investigator but gains no other benefits of the alchemy ability. This also means that a gravedigger can't take the alchemist discovery investigator talent or any discovery that affects or involves alchemy. This alters alchemy and investigator talents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger ~ Limited Alchemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DESC",
+        "value": "A gravedigger prepares and uses extracts as an investigator but gains no other benefits of the alchemy ability. This also means that a gravedigger can't take the alchemist discovery investigator talent or any discovery that affects or involves alchemy. This alters alchemy and investigator talents."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 34,
+    "record_key": "Gravedigger ~ Limited Alchemy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

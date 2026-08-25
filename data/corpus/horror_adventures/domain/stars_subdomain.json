@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Stars Subdomain",
+    "name": "Stars Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Stars Subdomain],[PREVARLT:VoidDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Void"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Guarded Mind|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Void)|PREVARGTEQ:DomainVoidAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ The Stars Are Right|PREVARGTEQ:DomainVoidAbilityTriggerLVL,8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "DESC",
+        "value": "The firmament provides you inspiration, and you draw power from the stars' distant light."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=1|Feather Fall|Stars Subdomain=2|Hypnotic Pattern|Stars Subdomain=3|Fly|Stars Subdomain=4|Planar Binding (Lesser)|Stars Subdomain=5|Overland Flight|Stars Subdomain=6|Planar Binding|Stars Subdomain=7|Sunbeam|Stars Subdomain=8|Planar Binding (Greater)|Stars Subdomain=9|Meteor Swarm"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Void"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_domains.lst",
+    "sha256": "b8c01136992e561c1fcb5fa29bb42e5fcd196fc608770b7e2c90e9bf00588c1b",
+    "line": 7,
+    "record_key": "Stars Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

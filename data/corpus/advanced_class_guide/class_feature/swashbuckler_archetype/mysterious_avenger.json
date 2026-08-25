@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Mysterious Avenger",
     "name": "Mysterious Avenger",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "While some swashbucklers fight for queen and country, and others for coin, glory, or just the enhancement of their own reputations, the mysterious avenger fights directly for a cause. Instead of gaining personal glory for her heroic deeds, she keeps her identity hidden in order to fight for those who cannot fight for themselves.",
     "raw_tokens": [
       {
@@ -75,6 +75,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Mysterious Avenger],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_ClassSkills=True,Swashbuckler_Archetype_Proficiencies=True,Swashbuckler_Archetype_SwashbucklerFinesse=True,Swashbuckler_Archetype_Nimble=True,Swashbuckler_Archetype_SwashbucklerWeaponTraining=True,Swashbuckler_Archetype_BonusFeats=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BonusFeat4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_BonusFeats|true"
       }
     ]
   },
@@ -91,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

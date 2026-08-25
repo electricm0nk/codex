@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Fey Bloodrager Bloodline ~ Blurring Movement",
     "name": "Blurring Movement",
-    "class": "Fey Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "You become a blur of motion when you move.  As long as you move at least 10 feet, you gain the effects of blur for 1 round.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

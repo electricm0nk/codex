@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Unraveling Infusion",
     "name": "Unraveling Infusion",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element fire; Type substance infusion; Level 5; Burn 3 Associated Blasts blue flame, fire Saving Throw none Your kinetic blast burns so hot that it melts away your foe's magical effects. Whenever your infused blast hits a foe and penetrates its spell resistance, you can attempt a caster level check as if using a targeted dispel magic before determining whether the foe takes damage from the blast. You can choose to reduce the blast's damage by half to increase your bonus on the caster level check by 2. If you don't choose a specific spell effect to attempt to dispel, you automatically attempt to dispel effects that would protect the target from fire damage before other spells.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mystic Archer ~ Unhindered Vision",
+    "name": "Unhindered Vision",
+    "class": "Mystic Archer",
+    "description": "Use pierce the veils for 1 minute every 10 minutes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Archer ~ Unhindered Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MysticArcherClassFeatures.SpecialQuality.Psilike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=ten minutes|Pierce the Veils"
+      },
+      {
+        "key": "DESC",
+        "value": "Use pierce the veils for 1 minute every 10 minutes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.365"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1321,
+    "record_key": "Mystic Archer ~ Unhindered Vision"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

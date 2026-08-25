@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Pale Stranger ~ Stranger's Shot",
+    "delivery": "Extraordinary",
+    "description": "As a full-round action, a pale stranger can take careful aim with one of its firearms and take a single, ruinous shot. This single shot always resolves as a touch attack, regardless of the actual range. If the pale stranger threatens a critical hit with this shot, it automatically confirms the critical hit. Regardless of whether the shot is a critical hit or not, it deals +6d6 points of damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:pale_stranger_stranger_s_shot",
+    "name": "Stranger's Shot",
+    "owners": [
+      "bestiary_3:monster:pale_stranger"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a pale stranger can take careful aim with one of its firearms and take a single, ruinous shot. This single shot always resolves as a touch attack, regardless of the actual range. If the pale stranger threatens a critical hit with this shot, it automatically confirms the critical hit. Regardless of whether the shot is a critical hit or not, it deals +6d6 points of damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Pale Stranger ~ Stranger's Shot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaleStrangerRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.214",
+    "traits": [
+      "PaleStrangerRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1383,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Pale Stranger ~ Stranger's Shot",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

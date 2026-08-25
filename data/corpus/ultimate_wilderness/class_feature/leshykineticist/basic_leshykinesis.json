@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Leshykineticist ~ Basic Leshykinesis",
+    "name": "Basic Leshykinesis",
+    "class": "Kineticist",
+    "description": "A vine leshy leshykineticist can use her basic phytokinesis to move while in her alternate vine form, with a base speed of 10 feet and a climb speed of 10 feet. The vine counts as a prehensile appendage for the purpose of aiming kinetic blasts and gathering power. At the GM's discretion, this ability might apply to leshykineticists of other leshy varieties as long as their alternate forms aren't rooted to the ground (and even then, they might be able to use something like a branch to aim kinetic blasts). This alters basic phytokinesis.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leshykineticist ~ Basic Leshykinesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.LeshykineticistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A vine leshy leshykineticist can use her basic phytokinesis to move while in her alternate vine form, with a base speed of 10 feet and a climb speed of 10 feet. The vine counts as a prehensile appendage for the purpose of aiming kinetic blasts and gathering power. At the GM's discretion, this ability might apply to leshykineticists of other leshy varieties as long as their alternate forms aren't rooted to the ground (and even then, they might be able to use something like a branch to aim kinetic blasts). This alters basic phytokinesis."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 23,
+    "record_key": "Leshykineticist ~ Basic Leshykinesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

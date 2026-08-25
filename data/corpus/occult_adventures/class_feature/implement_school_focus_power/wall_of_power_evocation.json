@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Wall of Power",
     "name": "Wall of Power [Evocation]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "By expending 1 point of mental focus as a standard action, you can create a wall of pure energy with a length of up to %1 feet. This wall is 10 feet high and 1 foot thick. It doesn't block passage, line of sight, or line of effect, but does deal damage to anyone passing through it. The wall deals 2d6+%2 points of energy damage. You must select acid, cold, electricity, or fire when you create the wall to determine the type of damage it deals. The wall must be straight, and can't pass through a creature's space when created. The wall lasts for %2 rounds. You must be at least 9th level to select this focus power.|5*OccultistLVL|OccultistLVL",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

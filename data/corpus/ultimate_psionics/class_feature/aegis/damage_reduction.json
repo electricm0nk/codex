@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Damage Reduction",
+    "name": "Damage Reduction",
+    "class": "Aegis",
+    "description": "DR %1/- when wearing your suit.|AegisDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Damage Reduction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DR %1/- when wearing your suit.|AegisDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisDR|floor((AegisDRLVL+4)/3)"
+      },
+      {
+        "key": "DR",
+        "value": "AegisDR/-"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 29,
+    "record_key": "Aegis ~ Damage Reduction"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

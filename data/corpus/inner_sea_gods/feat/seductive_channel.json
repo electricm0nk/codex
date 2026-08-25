@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Seductive Channel",
+    "category": "General",
+    "name": "Seductive Channel",
+    "description": "Even your healing is seductive. When you channel positive energy, those you heal can choose to take additional healing equal to your Charisma bonus (minimum 1), but in return they take a -2 penalty on Will saves against your charms, compulsions, and emotion effects and on Sense Motive checks against your Bluff checks. This penalty lasts for 24 hours. A creature cannot benefit from this feat again for the duration of this penalty.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,1],[PREVARGTEQ:ClericChannelNegativeEnergyDice,1],[PREVARGTEQ:OracleChannelDice,1]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 77,
+    "record_key": "Seductive Channel"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Favored Person ~ Ameiko",
+    "name": "Favored Son/Daughter / Ameiko Kaijitsu (local noble and owner of the Rusty Dragon Inn)",
+    "description": "Ameiko is one of Sandpoint's most influential and beloved nobles. Her inn/tavern is the most popular in town, and as one of her friends, you're guaranteed a place to eat and sleep for free. She's got lots of great contacts with merchants as well, and she'll sell any of your loot for you-as a result, you gain an additional 10%% over the amount of gp you normally would get from selling off treasure.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Favored Person ~ Ameiko"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.TraitCampaignChoice"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Trait ~ Favored Person"
+      },
+      {
+        "key": "DESC",
+        "value": "Ameiko is one of Sandpoint's most influential and beloved nobles. Her inn/tavern is the most popular in town, and as one of her friends, you're guaranteed a place to eat and sleep for free. She's got lots of great contacts with merchants as well, and she'll sell any of your loot for you-as a result, you gain an additional 10%% over the amount of gp you normally would get from selling off treasure."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.330"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 156,
+    "record_key": "Trait ~ Favored Person ~ Ameiko"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

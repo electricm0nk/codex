@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Sentinel ~ Righteous Leader",
+    "name": "Righteous Leader",
+    "description": "At 8th level, the sentinel's commitment to his faith and the deeds he does in the name ofhis god add to his reputation. He gains Leadership as a bonus feat, and is considered to qualify for that feat's special power leadership modifier. He takes no penalty for moving around a lot (normally this imposes a -1 penalty to a character's leadership score) but he takes double the usual penalty for recruiting a cohort of a different alignment (-2 instead of-1).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sentinel ~ Righteous Leader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sentinel Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, the sentinel's commitment to his faith and the deeds he does in the name ofhis god add to his reputation. He gains Leadership as a bonus feat, and is considered to qualify for that feat's special power leadership modifier. He takes no penalty for moving around a lot (normally this imposes a -1 penalty to a character's leadership score) but he takes double the usual penalty for recruiting a cohort of a different alignment (-2 instead of-1)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Leadership"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 118,
+    "record_key": "Sentinel ~ Righteous Leader"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

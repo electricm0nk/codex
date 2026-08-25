@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Claimed Turf",
     "name": "Claimed Turf",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "The rogue is well known in a specific community in which she gains the benefits of renown. She gains the renown vigilante social talent (Ultimate Intrigue 12). This community can be an entire settlement or portions of a settlement (such as a particular district or neighborhood), depending on the population as allowed by the renown social talent. Anytime she could select another rogue talent, the rogue can also select from the following list of social talents (from pages 10-13 of Ultimate Intrigue), using her rogue level as her vigilante level for the purpose meeting of prerequisites: celebrity discount, celebrity perks, gossip collector, great renown, incredible renown, loyal aid, and safe house. For the purposes of vigilante social talents, the rogue does not have a vigilante identity and is always considered to be in her social identity.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

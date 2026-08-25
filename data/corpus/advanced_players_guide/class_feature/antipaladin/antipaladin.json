@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Antipaladin",
     "name": "Antipaladin",
-    "class": null,
+    "class": "Antipaladin",
     "description": null,
     "raw_tokens": [
       {
@@ -23,6 +23,434 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Antipaladin\")"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Aura of Evil|PREVAREQ:Antipaladin_CF_AuraOfEvil,0|PREVARGTEQ:Antipaladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Detect Good|PREVAREQ:Antipaladin_CF_DetectGood,0|PREVARGTEQ:Antipaladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Smite Good|PREVAREQ:Antipaladin_CF_SmiteGood,0|PREVARGTEQ:Antipaladin_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Touch of Corruption|PREVAREQ:Antipaladin_CF_TouchOfCorruption,0|PREVARGTEQ:Antipaladin_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Unholy Resilience|PREVAREQ:Antipaladin_CF_UnholyResilience,0|PREVARGTEQ:Antipaladin_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Aura of Cowardice|PREVAREQ:Antipaladin_CF_AuraOfCowardice,0|PREVARGTEQ:Antipaladin_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Cruelty|PREVAREQ:Antipaladin_CF_Cruelty,0|PREVARGTEQ:Antipaladin_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Plague Bringer|PREVAREQ:Antipaladin_CF_PlagueBringer,0|PREVARGTEQ:Antipaladin_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Channel Negative Energy|PREVAREQ:Antipaladin_CF_ChannelNegativeEnergy,0|PREVARGTEQ:Antipaladin_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Fiendish Boon|PREVAREQ:Antipaladin_CF_FiendishBoon,0|PREVARGTEQ:Antipaladin_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Aura of Despair|PREVAREQ:Antipaladin_CF_AuraOfDespair,0|PREVARGTEQ:Antipaladin_CFP_Level,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Aura of Vengeance|PREVAREQ:Antipaladin_CF_AuraOfVengeance,0|PREVARGTEQ:Antipaladin_CFP_Level,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Aura of Sin|PREVAREQ:Antipaladin_CF_AuraOfSin,0|PREVARGTEQ:Antipaladin_CFP_Level,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Aura of Depravity|PREVAREQ:Antipaladin_CF_AuraOfDepravity,0|PREVARGTEQ:Antipaladin_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Class Feature|AUTOMATIC|Antipaladin ~ Unholy Champion|PREVAREQ:Antipaladin_CF_UnholyChampion,0|PREVARGTEQ:Antipaladin_CFP_Level,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfHeavy|TYPE=ShieldProf|PREVAREQ:Antipaladin_CF_ArmorProficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=WeaponProfMartial|PREVAREQ:Antipaladin_CF_WeaponProficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Antipaladin ~ Class Skills|PREVAREQ:Antipaladin_CF_ClassSkills,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DetectGoodLVL|AntipaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteGoodLVL|AntipaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfCorruptionLVL|AntipaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrueltyLVL|AntipaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AntipaladinChannelLVL|AntipaladinLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendishBoonLVL|AntipaladinLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_AuraOfEvil|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_DetectGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_SmiteGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_TouchOfCorruption|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_UnholyResilience|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_AuraOfCowardice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_Cruelty|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_PlagueBringer|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_ChannelNegativeEnergy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_FiendishBoon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_AuraOfDespair|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_AuraOfVengeance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_AuraOfSin|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_AuraOfDepravity|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_UnholyChampion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_SmiteGood1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_SmiteGood4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_SmiteGood7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_SmiteGood10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_SmiteGood13|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_SmiteGood16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_SmiteGood19|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_Cruelty3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_Cruelty6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_Cruelty9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_Cruelty12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_Cruelty15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Antipaladin_CF_Cruelty18|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfEvil|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_AuraOfEvil=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_DetectGood|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_DetectGood=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_SmiteGood=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_TouchOfCorruption|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_TouchOfCorruption=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_UnholyResilience|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_UnholyResilience=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfCowardice|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_AuraOfCowardice=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Cruelty|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_Cruelty=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_PlagueBringer|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_PlagueBringer=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_ChannelNegativeEnergy|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_ChannelNegativeEnergy=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_FiendishBoon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_FiendishBoon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfDespair|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_AuraOfDespair=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfVengeance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_AuraOfVengeance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfSin|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_AuraOfSin=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfDepravity|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_AuraOfDepravity=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_UnholyChampion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_UnholyChampion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Spells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_SmiteGood1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_SmiteGood4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood7|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_SmiteGood7=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_SmiteGood10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood13|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_SmiteGood13=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_SmiteGood16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood19|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_SmiteGood19=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Cruelty3|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_Cruelty3=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Cruelty6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_Cruelty6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Cruelty9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_Cruelty9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Cruelty12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_Cruelty12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Cruelty15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_Cruelty15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Cruelty18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Antipaladin_CF_Cruelty18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfEvil|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfEvil"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_DetectGood|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDetectGood"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_SmiteGood|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteGood"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_TouchOfCorruption|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinTouchOfCorruption"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_UnholyResilience|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinUnholyResilience"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfCowardice|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfCowardice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_Cruelty|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinCruelty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_PlagueBringer|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinPlagueBringer"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_ChannelNegativeEnergy|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinChannelNegativeEnergy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_FiendishBoon|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinFiendishBoon"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfDespair|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfDespair"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfVengeance|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfVengeance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfSin|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfSin"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_AuraOfDepravity|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfDepravity"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Antipaladin_CF_UnholyChampion|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinUnholyChampion"
       }
     ]
   },
@@ -41,5 +469,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

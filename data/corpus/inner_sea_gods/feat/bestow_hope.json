@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Bestow Hope",
+    "category": "General",
+    "name": "Bestow Hope",
+    "description": "You instill hope in the creatures you heal. When you heal a creature by channeling positive energy, you also relieve its fear. If a creature you heal is shaken, that condition ends. If the creature is frightened, it becomes shaken instead. If the creature is panicked, it becomes frightened instead.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Channel",
+      "PREDEITY:[redacted PI]",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,1],[PREVARGTEQ:ClericChannelNegativeEnergyDice,1],[PREVARGTEQ:OracleChannelDice,1]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 13,
+    "record_key": "Bestow Hope"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

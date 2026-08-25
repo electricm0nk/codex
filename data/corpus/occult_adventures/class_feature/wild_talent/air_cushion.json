@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Air Cushion",
     "name": "Air Cushion",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element air; Type utility (Sp); Level 1; Burn 0 You cushion a fall from any height. You are constantly under the effects of feather fall, and you count as one size category larger for the purpose of determining how you are affected by wind.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Summon Monster III (lantern archon only)",
+    "name": "Summon Monster III (lantern archon only)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Summon Monster III (lantern archon only)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SummonMonster3LanternArchonOnly_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SummonMonster3LanternArchonOnly_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SummonMonster3LanternArchonOnly_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SummonMonster3LanternArchonOnly_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SummonMonster3LanternArchonOnly_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SummonMonster3LanternArchonOnly_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_SummonMonster3LanternArchonOnly_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_SummonMonster3LanternArchonOnly_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_SummonMonster3LanternArchonOnly_LVL|Summon Monster III (lantern archon only),RacialSLA_SummonMonster3LanternArchonOnly_DC|PREVAREQ:RacialSLA_SummonMonster3LanternArchonOnly_AtWill,0|PREVAREQ:RacialSLA_SummonMonster3LanternArchonOnly_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_SummonMonster3LanternArchonOnly_LVL|Summon Monster III (lantern archon only),RacialSLA_SummonMonster3LanternArchonOnly_DC|PREVAREQ:RacialSLA_SummonMonster3LanternArchonOnly_AtWill,1|PREVAREQ:RacialSLA_SummonMonster3LanternArchonOnly_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_SummonMonster3LanternArchonOnly_LVL|Summon Monster III (lantern archon only),RacialSLA_SummonMonster3LanternArchonOnly_DC|PREVAREQ:RacialSLA_SummonMonster3LanternArchonOnly_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SummonMonster3LanternArchonOnly_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SummonMonster3LanternArchonOnly_SpellLVL|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SummonMonster3LanternArchonOnly_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SummonMonster3LanternArchonOnly_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SummonMonster3LanternArchonOnly_DC|10+RacialSLA_SummonMonster3LanternArchonOnly_SpellLVL+RacialSLA_SummonMonster3LanternArchonOnly_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 288,
+    "record_key": "Racial SLA ~ Summon Monster III (lantern archon only)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

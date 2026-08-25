@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Animal",
     "name": "Animal",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": "You can speak with and befriend animals with ease. In addition, you treat Knowledge (Nature) as a class skill.",
     "raw_tokens": [
       {
@@ -55,6 +55,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Calm Animals|Druid=2|Hold Animal|Druid=3|Dominate Animal|Druid=4|Summon Nature's Ally IV (Animals Only)|Druid=5|Beast Shape III (Animals Only)|Druid=6|Antilife Shell|Druid=7|Animal Shapes|Druid=8|Summon Nature's Ally VIII (Animals Only)|Druid=9|Shapechange"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Animal],[PREVARLT:AnimalDomain,1]"
       }
     ]
   },
@@ -71,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

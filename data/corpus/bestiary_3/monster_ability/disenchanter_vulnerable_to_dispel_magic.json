@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Disenchanter ~ Vulnerable to Dispel Magic",
+    "delivery": "Extraordinary",
+    "description": "A disenchanter targeted by dispel magic takes 1d6 points of damage per caster level (maximum 10d6, Fortitude save for half). Greater dispel magic functions similarly (maximum 20d6 damage, Fortitude save for half).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:disenchanter_vulnerable_to_dispel_magic",
+    "name": "Vulnerable to Dispel Magic",
+    "owners": [
+      "bestiary_3:monster:disenchanter"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A disenchanter targeted by dispel magic takes 1d6 points of damage per caster level (maximum 10d6, Fortitude save for half). Greater dispel magic functions similarly (maximum 20d6 damage, Fortitude save for half)."
+      },
+      {
+        "key": "KEY",
+        "value": "Disenchanter ~ Vulnerable to Dispel Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "TYPE",
+        "value": "DisenchanterRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.81",
+    "traits": [
+      "DisenchanterRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 697,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Disenchanter ~ Vulnerable to Dispel Magic",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

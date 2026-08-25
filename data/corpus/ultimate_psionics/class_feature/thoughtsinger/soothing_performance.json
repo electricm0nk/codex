@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thoughtsinger ~ Soothing Performance",
+    "name": "Soothing Performance",
+    "class": "Thoughtsinger",
+    "description": "You can use your performance to create an effect equivalent to a Mass Cure Serious Wounds (caster level %1). In addition, this performance removes the fatigued, sickened, and shaken conditions from all those affected. Using this ability requires 4 rounds of continuous performance, and the targets must be able to see and hear you throughout the performance. Soothing performance affects all targets that remain within 30 feet throughout the performance. Soothing performance relies on audible and visual components.|SoothingPerformanceLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thoughtsinger ~ Soothing Performance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.Thoughtsong"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoothingPerformanceLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to create an effect equivalent to a Mass Cure Serious Wounds (caster level %1). In addition, this performance removes the fatigued, sickened, and shaken conditions from all those affected. Using this ability requires 4 rounds of continuous performance, and the targets must be able to see and hear you throughout the performance. Soothing performance affects all targets that remain within 30 feet throughout the performance. Soothing performance relies on audible and visual components.|SoothingPerformanceLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoothingPerformanceLVL|ThoughtsongLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2449,
+    "record_key": "Thoughtsinger ~ Soothing Performance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

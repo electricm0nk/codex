@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Mental Discord",
     "name": "Mental Discord [Enchantment]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to disrupt the mind of one living creature within 30 feet. The creature can attempt a Will saving throw to negate the effect. If it fails the save, the creature can't concentrate on any spell effects and must succeed at a concentration check to cast any spell (DC = 15 + double the spell level). The affected creature takes a -4 penalty on this check if the spell includes a thought component. The creature takes a -2 penalty on all Will saving throws while under this effect. This effect lasts for %1 rounds.|OccultistLVL",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

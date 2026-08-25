@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Svirfneblin",
+    "name": "Racial Traits ~ Svirfneblin",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Svirfneblin_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Svirfneblin Racial Trait|AUTOMATIC|Svirfneblin ~ Ability Scores|PREVAREQ:Svirfneblin_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/svirfneblin/svirfneblin_abilities_globalvar.lst",
+    "sha256": "45d2af94b92cdc4b99f41f38fef9b6c896b755ca02f4759e094257a8c457e879",
+    "line": 10,
+    "record_key": "Racial Traits ~ Svirfneblin"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

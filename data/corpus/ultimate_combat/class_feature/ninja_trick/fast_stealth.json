@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ninja Trick ~ Fast Stealth",
     "name": "Fast Stealth",
-    "class": "Ninja Trick",
+    "class": "Ninja",
     "description": "A ninja with this trick can move at full speed using the Stealth skill without penalty.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

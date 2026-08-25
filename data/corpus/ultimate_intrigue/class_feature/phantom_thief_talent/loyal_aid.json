@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Loyal Aid",
     "name": "Loyal Aid",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief gains the service of a number of loyal allies who can help him gather information, cover for his two identities, or perform minor tasks. Inside his area of renown, a phantom thief with this talent gains a +%1 bonus on Diplomacy checks to gather information. In addition, if the phantom thief wants, he can task his friends to help cover for him by spreading false tales of his location and activities to others. This has the effect of increasing the DC of Diplomacy checks to gather information about the phantom thief and Survival checks to track him by %2. This lasts for 1 day, and can be used only once per week. Finally, once per day, the phantom thief can ask his allies to perform a minor task for him. This usually involves delivering a message, purchasing a piece of mundane gear worth 100 gp or less (which the phantom thief must pay for), or retrieving an object owned by the phantom thief (that would be easily accessible by the ally). This task might take other forms as well, subject to GM discretion, but can never involve combat or danger.|VigilanteTalentLVL/2|VigilanteTalentLVL",
     "raw_tokens": [
       {
@@ -57,5 +57,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

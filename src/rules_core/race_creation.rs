@@ -211,21 +211,32 @@ fn vision_reading(race: &ResolvedRace) -> Result<String, String> {
     let mut readings: Vec<String> = Vec::new();
     for resolved in &race.traits {
         for token in resolved.raw_tokens.iter().filter(|t| t.key == "VISION") {
-            let value = token.value.trim();
-            let reading = if let Some(range) =
-                value.strip_prefix("Darkvision (").and_then(|rest| rest.strip_suffix(')'))
-            {
-                range
-                    .parse::<u16>()
-                    .map(|feet| format!("Darkvision {feet} ft."))
-                    .map_err(|_| format!("{}: unreadable Darkvision range {value:?}", resolved.key))?
-            } else if value == "Low-Light Vision" {
-                "Low-light vision".to_owned()
-            } else {
-                return Err(format!("{}: unrecognized VISION token {value:?}", resolved.key));
-            };
-            if !readings.contains(&reading) {
-                readings.push(reading);
+            // PCGen states more than one sense on a single `VISION:` row two
+            // different ways: as separate `VISION:`-keyed fields on the same
+            // row (Svirfneblin's `VISION:Darkvision (120) VISION:Low-Light
+            // Vision`, two distinct `RawToken`s this loop already visits
+            // separately) or as one field with a `|`-joined tail (Dhampir's
+            // `VISION:Darkvision (60)|Low-Light Vision`, SD-32 card-11 T2b
+            // lane, 2026-08-23). Both are the same fact stated two ways, so
+            // both are split into segments here rather than only the first
+            // shape being read.
+            for segment in token.value.split('|') {
+                let value = segment.trim();
+                let reading = if let Some(range) =
+                    value.strip_prefix("Darkvision (").and_then(|rest| rest.strip_suffix(')'))
+                {
+                    range
+                        .parse::<u16>()
+                        .map(|feet| format!("Darkvision {feet} ft."))
+                        .map_err(|_| format!("{}: unreadable Darkvision range {value:?}", resolved.key))?
+                } else if value == "Low-Light Vision" {
+                    "Low-light vision".to_owned()
+                } else {
+                    return Err(format!("{}: unrecognized VISION token {value:?}", resolved.key));
+                };
+                if !readings.contains(&reading) {
+                    readings.push(reading);
+                }
             }
         }
     }

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Drakainia Spawn ~ Tentacles",
+    "delivery": "Extraordinary",
+    "description": "The creature's legs are replaced with multiple tentacles. It can't be tripped and gains a +8 racial bonus to CMD and a +8 racial bonus on combat maneuver checks to grapple.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_spawn_tentacles",
+    "name": "Tentacles",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD,CMB_Grapple|8|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature's legs are replaced with multiple tentacles. It can't be tripped and gains a +8 racial bonus to CMD and a +8 racial bonus on combat maneuver checks to grapple."
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia Spawn ~ Tentacles"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 567,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia Spawn ~ Tentacles",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

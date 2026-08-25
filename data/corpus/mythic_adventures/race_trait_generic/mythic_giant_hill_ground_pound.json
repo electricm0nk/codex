@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Giant (Hill) ~ Ground Pound",
+    "name": "Ground Pound",
+    "description": "As a standard action, a mythic hill giant can expend one use of mythic power and hit the ground with a bludgeoning weapon. Choose one intersection within reach; creatures touching the ground within a 20-foot burst centered on that intersection take double the damage normally dealt by that bludgeoning weapon (Reflex DC 23 for half). Creatures that fail their saves are knocked prone and moved 5 feet directly away from chosen intersection. This ability has no effect on creatures with the earth bond ability. The save DC is Strength-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Giant (Hill) ~ Ground Pound"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Giant (Hill) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a mythic hill giant can expend one use of mythic power and hit the ground with a bludgeoning weapon. Choose one intersection within reach; creatures touching the ground within a 20-foot burst centered on that intersection take double the damage normally dealt by that bludgeoning weapon (Reflex DC 23 for half). Creatures that fail their saves are knocked prone and moved 5 feet directly away from chosen intersection. This ability has no effect on creatures with the earth bond ability. The save DC is Strength-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 174,
+    "record_key": "Mythic Giant (Hill) ~ Ground Pound"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

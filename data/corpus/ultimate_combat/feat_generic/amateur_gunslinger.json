@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Amateur Gunslinger",
+    "name": "Amateur Gunslinger",
+    "description": "Although you are not a gunslinger, you have and can use grit.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gunslinger ~ Grit"
+      },
+      {
+        "key": "DESC",
+        "value": "Although you are not a gunslinger, you have and can use grit."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|ABILITY|Special Ability|TYPE=DeedsLVL1"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritPoints|1|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GritLimit|MAX(1,WIS)|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a small amount of grit and the ability to perform a single 1st-level deed from the gunslinger deed class feature. At the start of the day, you gain 1 grit point, though throughout the day you can gain grit points up to a maximum of your Wisdom modifier (%1) (minimum 1). You can regain grit using the rules for the gunslinger's grit class feature (see page 9). You can spend this grit to perform the 1st-level deed you chose upon taking this feat, and any other deed you have gained through feats or magic items. &nl; [Special]If you gain levels in a class that grants the grit class feature, you can immediately trade this feat for the Extra Grit feat.|WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 21,
+    "record_key": "Amateur Gunslinger"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

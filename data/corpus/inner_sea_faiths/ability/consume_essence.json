@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist Boon ~ Groetus ~ Consume Essence",
+    "name": "Consume Essence",
+    "description": "If you have performed your daily obedience, once per day, you can consume the essence of a dead creature. You must touch the target corpse, which can attempt a Fortitude saving throw (DC %1). If it fails this saving throw, the target is destroyed as per disintegrate, and you gain 1d8 temporary hit points. These temporary hit points last for %2 hours.|10+TL/2+CHA|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist Boon ~ Groetus ~ Consume Essence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day, you can consume the essence of a dead creature. You must touch the target corpse, which can attempt a Fortitude saving throw (DC %1). If it fails this saving throw, the target is destroyed as per disintegrate, and you gain 1d8 temporary hit points. These temporary hit points last for %2 hours.|10+TL/2+CHA|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 179,
+    "record_key": "Evangelist Boon ~ Groetus ~ Consume Essence"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

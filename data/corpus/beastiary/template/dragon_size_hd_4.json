@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "data": {
+    "key": "Dragon Size HD (4)",
+    "name": "Dragon Size HD (4)",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "4-5:TEMPLATE:Dragon (Tiny)"
+      },
+      {
+        "key": "HD",
+        "value": "6-7:TEMPLATE:Dragon (Small)"
+      },
+      {
+        "key": "HD",
+        "value": "8-11:TEMPLATE:Dragon (Medium)"
+      },
+      {
+        "key": "HD",
+        "value": "12-17:TEMPLATE:Dragon (Large)"
+      },
+      {
+        "key": "HD",
+        "value": "18-25:TEMPLATE:Dragon (Huge)"
+      },
+      {
+        "key": "HD",
+        "value": "26+:TEMPLATE:Dragon (Gargantuan)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33",
+    "line": 960,
+    "record_key": "Dragon Size HD (4)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

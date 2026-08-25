@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch Archetype ~ Mountain Witch",
     "name": "Mountain Witch",
-    "class": "Witch Archetype",
+    "class": "Witch",
     "description": "Mountains can be sanctuaries for witches hunted by society. Here they form bonds with the spirits of the lofty reaches.",
     "raw_tokens": [
       {
@@ -55,6 +55,22 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Witch"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Mountain Witch],[!PREFACT:1,ABILITIES,Witch_Archetype_Hex=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex|true"
       }
     ]
   },
@@ -71,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

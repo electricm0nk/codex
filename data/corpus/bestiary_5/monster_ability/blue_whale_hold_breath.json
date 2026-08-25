@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Blue Whale ~ Hold Breath",
+    "delivery": "Extraordinary",
+    "description": "A blue whale can hold its breath for %1 minutes before it risks drowning.",
+    "description_variables": [
+      "10*CONSCORE"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:blue_whale_hold_breath",
+    "name": "Hold Breath",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A blue whale can hold its breath for %1 minutes before it risks drowning.|10*CONSCORE"
+      },
+      {
+        "key": "KEY",
+        "value": "Blue Whale ~ Hold Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.BlueWhaleRacialTrait"
+      }
+    ],
+    "source_page": "p.276",
+    "traits": [
+      "BlueWhaleRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 64,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Blue Whale ~ Hold Breath",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

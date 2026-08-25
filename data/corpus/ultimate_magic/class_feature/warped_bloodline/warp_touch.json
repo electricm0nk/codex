@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warped Bloodline ~ Warp Touch",
     "name": "Warp Touch",
-    "class": "Warped Bloodline",
+    "class": "Sorcerer",
     "description": "You create brief, disorienting changes in a creature's physical form. This ability affects one creature within 30 feet, which is dazed for 1 round (Fortitude negates; DC %1). You can use this ability %2 times per day. This bloodline power replaces acidic ray.|Sorcerer_WarpedWarpTouch_DC|Sorcerer_Aberrant_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -84,5 +84,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

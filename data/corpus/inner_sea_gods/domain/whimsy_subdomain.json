@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Whimsy Subdomain",
+    "name": "Whimsy Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Whimsy Subdomain],[PREVARLT:ChaosDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Chaos|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Chaos)|PREVARGTEQ:DomainChaosAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Unexpected Whimsy|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Chaos"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "DESC",
+        "value": "You find the humor in all things, and enjoy spreading laughter through pranks and trickery, even in the direst of situations."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=1|Hideous Laughter"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=2|Align Weapon (Chaos Only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=3|Magic Circle against Law"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=4|Confusion"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=5|Dispel Law"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=6|Cloak of Dreams"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=7|Word of Chaos"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=8|Cloak of Chaos"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Whimsy Subdomain=9|Summon Monster IX (Chaos Spell Only)"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Chaos"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 26,
+    "record_key": "Whimsy Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

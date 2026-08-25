@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Radiance",
     "name": "Radiance [Evocation]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can touch a weapon to cause it to glow with light by expending 1 point of mental focus. The weapon produces light like a torch. For the purpose of darkness spells and abilities, this effect counts as a light spell of level %1. This light lasts for %2 minutes. In addition, whenever the weapon scores a critical hit against a foe, the wielder can choose to end the effect, causing the foe to be surrounded by the radiance for 1d4 rounds. While illuminated in this way, the target can't benefit from concealment or invisibility, nor can it attempt Stealth checks to avoid being seen. All attack rolls made against an illuminated foe receive a +2 circumstance bonus.|OccultistLVL/2|OccultistLVL",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

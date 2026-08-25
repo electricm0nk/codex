@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Corruption ~ Children of the Night Gift",
+    "name": "Children of the Night Gift",
+    "description": "%1 times per day, you can summon a rat swarm or a wolf, as if using summon nature's ally II with a caster level equal to your character level. The creature serves you for 10 minutes or until destroyed.|(VampirismManifestationLevel+1)/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ Children of the Night Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VampirismChildrenOfTheNightGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, you can summon a rat swarm or a wolf, as if using summon nature's ally II with a caster level equal to your character level. The creature serves you for 10 minutes or until destroyed.|(VampirismManifestationLevel+1)/2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend two daily uses of this ability to summon a bat swarm.|PREVARGTEQ:VampirismManifestationLevel,4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 894,
+    "record_key": "Vampirism Corruption ~ Children of the Night Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

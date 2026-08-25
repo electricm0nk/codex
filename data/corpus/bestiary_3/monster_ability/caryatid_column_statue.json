@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Caryatid Column ~ Statue",
+    "delivery": "Extraordinary",
+    "description": "A caryatid column can stand perfectly still, emulating a statue (usually one that is holding up the ceiling, like a carved column). An observer must succeed at a DC 20 Perception check to notice the caryatid column is alive. If a caryatid column initiates combat from this pose, it gains a +6 bonus on its initiative check.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:caryatid_column_statue",
+    "name": "Statue",
+    "owners": [
+      "bestiary_3:monster:caryatid_column"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A caryatid column can stand perfectly still, emulating a statue (usually one that is holding up the ceiling, like a carved column). An observer must succeed at a DC 20 Perception check to notice the caryatid column is alive. If a caryatid column initiates combat from this pose, it gains a +6 bonus on its initiative check."
+      },
+      {
+        "key": "KEY",
+        "value": "Caryatid Column ~ Statue"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TYPE",
+        "value": "CaryatidColumnRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.46",
+    "traits": [
+      "CaryatidColumnRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 535,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Caryatid Column ~ Statue",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

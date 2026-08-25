@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Pack Rage",
     "name": "Pack Rage",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "When a barbarian with this rage power enters a rage, any barbarian within 30 feet who also has this rage power can enter a rage. A barbarian that enters a rage outside of her turn spends 1 round of rage immediately and then spends another round of rage to maintain her rage at the beginning of her next turn.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

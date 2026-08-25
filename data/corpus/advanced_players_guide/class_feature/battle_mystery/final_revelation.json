@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Battle Mystery ~ Final Revelation",
     "name": "Final Revelation",
-    "class": "Battle Mystery",
+    "class": "Oracle",
     "description": "You have become an avatar of battle. You can take a full-attack action and move, before or after your attack, up to your speed as a full-round action. Whenever you score a critical hit, you can ignore any DR the target might possess. You gain a +4 insight bonus to your AC for the purpose of confirming critical hits against you. When you are below 0 hit points, you do not die until your negative total is in excess of twice your Constitution score.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Archetype ~ Standard Bearer",
     "name": "Standard Bearer",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "Not all cavaliers are content to ride at the head of a charge, leading from the front and facing down their enemies directly. Some prefer to stand away from the fray, their banners a beacon shining brightly over the battlefield, rallying their troops to victory. The standard bearer employs the banner of his order, his lord, or his own house to raise the spirits of his allies and warns enemies of impending doom.",
     "raw_tokens": [
       {
@@ -59,6 +59,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cavalier"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ STANDARD BEARER],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Mount=True,Cavalier_Archetype_Banner=True,Cavalier_Archetype_MightyCharge=True,Cavalier_Archetype_SupremeCharge=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_SupremeCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Mount|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_SupremeCharge|true"
       }
     ]
   },
@@ -75,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

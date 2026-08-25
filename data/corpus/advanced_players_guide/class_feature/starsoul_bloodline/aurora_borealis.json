@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Starsoul Bloodline ~ Aurora Borealis",
     "name": "Aurora Borealis",
-    "class": "Starsoul Bloodline",
+    "class": "Sorcerer",
     "description": "You can create a sheet of cascading colors. This power acts as a wall of fire, but it inflicts cold damage and does not radiate heat. However, one side of the aurora designated by you fascinates creatures within 10 feet, up to a maximum of %1 HD of creatures. A Will save negates this fascinate effect. The save DC is %2. You may use this ability for %3 rounds per day. These rounds do not need to be consecutive.|Sorcerer_StarsoulAuroraBorealis_HD|Sorcerer_StarsoulAuroraBorealis_DC|Sorcerer_StarsoulAuroraBorealis_Duration",
     "raw_tokens": [
       {
@@ -96,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

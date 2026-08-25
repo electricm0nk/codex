@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Mostly Human ~ Suli ~ Languages",
+    "name": "Languages",
+    "race_key": "Suli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Suli Racial Trait",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Mostly human sulis begin play speaking Common. Sulis with high Intelligence scores can choose from the following languages: Aquan, Auran, Draconic, Ignan, and Terran.",
+    "source_page": "p.215",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mostly Human ~ Suli ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Suli Racial Trait.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,Suli_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Mostly human sulis begin play speaking Common. Sulis with high Intelligence scores can choose from the following languages: Aquan, Auran, Draconic, Ignan, and Terran."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aquan|Bonus Language ~ Auran|Bonus Language ~ Draconic|Bonus Language ~ Ignan|Bonus Language ~ Terran"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 662,
+    "record_key": "Mostly Human ~ Suli ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

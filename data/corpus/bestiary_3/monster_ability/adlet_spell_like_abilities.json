@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Adlet ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 10th; concentration +11); Constant-pass without trace, ray of frost; 3/day-fog cloud, sleet storm; 1/day-ice storm, wind walk (self only)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:adlet_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:adlet"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 10th; concentration +11); Constant-pass without trace, ray of frost; 3/day-fog cloud, sleet storm; 1/day-ice storm, wind walk (self only)"
+      },
+      {
+        "key": "KEY",
+        "value": "Adlet ~ Spell-Like Abilities"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpellLike"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.9",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:08:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 301,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Adlet ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

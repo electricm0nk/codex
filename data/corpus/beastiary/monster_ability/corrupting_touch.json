@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Corrupting Touch",
+    "delivery": "Supernatural",
+    "description": "All ghosts gain this incorporeal touch attack. By passing part of its incorporeal body through a foe's body as a standard action, the ghost inflicts %1d6 damage. This damage is not negative energy--it manifests in the form of physical wounds and aches from supernatural aging. Creatures immune to magical aging are immune to this damage, but otherwise the damage bypasses all forms of damage reduction. A Fortitude save DC %2 halves the damage inflicted.",
+    "description_variables": [
+      "CR",
+      "CorruptingTouchDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:corrupting_touch",
+    "name": "Corrupting Touch",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Corrupting Touch"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorruptingTouchDC|10+(TL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorruptingTouchDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Corrupting Touch)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CorruptingTouchDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "All ghosts gain this incorporeal touch attack. By passing part of its incorporeal body through a foe's body as a standard action, the ghost inflicts %1d6 damage. This damage is not negative energy--it manifests in the form of physical wounds and aches from supernatural aging. Creatures immune to magical aging are immune to this damage, but otherwise the damage bypasses all forms of damage reduction. A Fortitude save DC %2 halves the damage inflicted.|CR|CorruptingTouchDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.GhostAbility.AttackOption.Supernatural"
+      }
+    ],
+    "source_page": "p.144",
+    "traits": [
+      "GhostAbility",
+      "AttackOption"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1303,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Corrupting Touch",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

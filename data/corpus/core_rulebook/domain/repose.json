@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Repose",
+    "name": "Repose",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainRepose,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Repose Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.ReposeDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainReposeAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "DESC",
+        "value": "You see death not as something to be feared, but as a final rest and reward for a life well spent. The taint of undeath is a mockery of what you hold dear."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Repose=1|Deathwatch|Repose=2|Gentle Repose|Repose=3|Speak with Dead|Repose=4|Death Ward|Repose=5|Slay Living|Repose=6|Undeath to Death|Repose=7|Destruction|Repose=8|Waves of Exhaustion|Repose=9|Wail of the Banshee"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 36,
+    "record_key": "Repose"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

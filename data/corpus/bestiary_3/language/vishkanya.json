@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:08Z",
+  "data": {
+    "key": "Vishkanya",
+    "name": "Vishkanya",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_languages.lst",
+    "sha256": "69e743ce3c54838c6b6d24cb9d4493342a480a01eab874271fdc9b5253231495",
+    "line": 6,
+    "record_key": "Vishkanya"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

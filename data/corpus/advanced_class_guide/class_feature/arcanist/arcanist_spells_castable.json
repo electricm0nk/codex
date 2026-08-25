@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Arcanist ~ Spells Castable",
+    "name": "Arcanist ~ Spells Castable",
+    "class": "Arcanist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArcanistCastLVL_9|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_1|(INTSCORE>=11)*(ArcanistCastingLVL>=1)*(2+(ArcanistCastingLVL>=2)+(ArcanistCastingLVL>=3)+max(0,floor((INT+3)/4)))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_2|(INTSCORE>=12)*(ArcanistCastingLVL>=4)*(2*(ArcanistCastingLVL>=4)+(ArcanistCastingLVL>=5)+(ArcanistCastingLVL>=6)+max(0,floor((INT+2)/4)))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_3|(INTSCORE>=13)*(ArcanistCastingLVL>=6)*(2*(ArcanistCastingLVL>=6)+(ArcanistCastingLVL>=7)+(ArcanistCastingLVL>=8)+max(0,floor((INT+1)/4)))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_4|(INTSCORE>=14)*(ArcanistCastingLVL>=8)*(2*(ArcanistCastingLVL>=8)+(ArcanistCastingLVL>=9)+(ArcanistCastingLVL>=10)+max(0,floor((INT)/4)))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_5|(INTSCORE>=15)*(ArcanistCastingLVL>=10)*(2*(ArcanistCastingLVL>=10)+(ArcanistCastingLVL>=11)+(ArcanistCastingLVL>=12)+max(0,floor((INT-1)/4)))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_6|(INTSCORE>=16)*(ArcanistCastingLVL>=12)*(2*(ArcanistCastingLVL>=12)+(ArcanistCastingLVL>=13)+(ArcanistCastingLVL>=14)+max(floor((INT-2)/4),0))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_7|(INTSCORE>=17)*(ArcanistCastingLVL>=14)*(2*(ArcanistCastingLVL>=14)+(ArcanistCastingLVL>=15)+(ArcanistCastingLVL>=16)+max(0,floor((INT-3)/4)))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_8|(INTSCORE>=18)*(ArcanistCastingLVL>=16)*(2*(ArcanistCastingLVL>=16)+(ArcanistCastingLVL>=17)+(ArcanistCastingLVL>=18)+max(0,floor((INT-4)/4)))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArcanistCastLVL_9|(INTSCORE>=19)*(ArcanistCastingLVL>=18)*(2*(ArcanistCastingLVL>=18)+(ArcanistCastingLVL>=19)+(ArcanistCastingLVL>=20)+max(0,floor((INT-5)/4)))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 77,
+    "record_key": "Arcanist ~ Spells Castable"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

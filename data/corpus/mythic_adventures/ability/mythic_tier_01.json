@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Tier 01",
+    "name": "Mythic Tier 01",
+    "description": "You have reached Mythic Tier 1",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicSurgeDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicSurgeDieCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have reached Mythic Tier 1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Mythic Ability|AUTOMATIC|Mythic Ability ~ Hard to Kill|Mythic Ability ~ Mythic Power|Mythic Ability ~ Surge"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mythic Feat|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mythic Path|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|CR|ceil(MythicLevel/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicSurgeDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicSurgeDieCount|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 26,
+    "record_key": "Mythic Tier 01"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Tetori",
     "name": "Tetori",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "The style of the tetori is that of the majestic wrestler-a warrior with a dizzying array of grabs, holds, and locks with which to bewilder and incapacitate his foes.",
     "raw_tokens": [
       {
@@ -67,6 +67,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Tetori],[!PREFACT:1,ABILITIES,Monk_Archetype_BonusFeats=True,Monk_Archetype_FlurryOfBlows=True,Monk_Archetype_SlowFall=True,Monk_Archetype_HighJump=True,Monk_Archetype_EmptyBody=True,Monk_Archetype_DiamondSoul=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_EmptyBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_DiamondSoul|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_SlowFall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_EmptyBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_DiamondSoul|true"
       }
     ]
   },
@@ -83,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

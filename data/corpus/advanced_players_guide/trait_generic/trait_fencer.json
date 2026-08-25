@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Fencer",
+    "name": "Fencer",
+    "description": "You trained long hours as a youth with blades, either taking lessons in the genteel art of fencing from tutors paid for by your parents or by being taken under the wing of a disenfranchised fencer who may have turned to a life of crime. You gain a +1 trait bonus on attacks of opportunity made with daggers, swords, and similar bladed weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Fencer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.CombatTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Fencer],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.CombatTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You trained long hours as a youth with blades, either taking lessons in the genteel art of fencing from tutors paid for by your parents or by being taken under the wing of a disenfranchised fencer who may have turned to a life of crime. You gain a +1 trait bonus on attacks of opportunity made with daggers, swords, and similar bladed weapons."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 20,
+    "record_key": "Trait ~ Fencer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

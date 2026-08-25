@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Serpentine Bloodline ~ Serpent's Fang",
     "name": "Serpent's Fang",
-    "class": "Serpentine Bloodline",
+    "class": "Sorcerer",
     "description": "You can grow fangs as a free action. These fangs are treated as a natural weapon inflicting 1d4 points of damage plus your Strength modifier (1d3 if you are Small) plus poison",
     "raw_tokens": [
       {
@@ -141,5 +141,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

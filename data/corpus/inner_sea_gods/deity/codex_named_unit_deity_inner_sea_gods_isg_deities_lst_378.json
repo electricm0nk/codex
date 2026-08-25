@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_378)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_378)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Destruction,Evil,Knowledge|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Qlippoth lord of blinding hunger, revealed secrets"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|Everglutton"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Triangular rune with teeth"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|None"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Green"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Qlippoth Lords"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Greatclub"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 378,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_378)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:378"
+  }
+}

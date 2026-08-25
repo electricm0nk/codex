@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Light",
+    "name": "Light",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Light_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Light_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Light_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Light_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Light_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Light_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_Light_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_Light_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_Light_LVL|Light,SLA_Light_DC|PREVAREQ:SLA_Light_AtWill,0|PREVAREQ:SLA_Light_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_Light_LVL|Light,SLA_Light_DC|PREVAREQ:SLA_Light_AtWill,1|PREVAREQ:SLA_Light_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_Light_LVL|Light,SLA_Light_DC|PREVAREQ:SLA_Light_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Light_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Light_SpellLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Light_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Light_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_Light_DC|10+SLA_Light_SpellLVL+SLA_Light_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 711,
+    "record_key": "Light"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

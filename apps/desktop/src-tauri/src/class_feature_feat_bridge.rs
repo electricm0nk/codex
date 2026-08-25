@@ -280,6 +280,16 @@ fn load_class_feature_feat_bridge_descriptions(repo_root: &Path) -> Vec<ClassFea
                 key: key.to_string(),
                 name: name.to_string(),
                 description: matched_description,
+                // T4-L9 (`decisions.md §13`): this module's `class_slug` is a
+                // synthetic pool-group name, never a real class token (module
+                // doc comment), so the class-held join can never match these
+                // records. `feat_target` is the EXACT, already-verified
+                // string `feat_description_by_exact_name` matched on above --
+                // carried here so the frontend can gate reachability on the
+                // character holding this feat instead (see
+                // `ClassFeatureDescriptionDto::granted_feat`'s own doc
+                // comment).
+                granted_feat: Some(feat_target),
             });
         }
     }
@@ -438,6 +448,52 @@ mod tests {
             swift_aid.description,
             "With a quick but harmless swipe, you can aid an ally's assault."
         );
+        assert_eq!(
+            swift_aid.granted_feat.as_deref(),
+            Some("Swift Aid"),
+            "T4-L9: the bridged record must carry the exact feat name it grants, so the \
+             frontend can gate reachability on the character holding THAT feat rather than \
+             the synthetic pool-group class_slug"
+        );
+    }
+
+    /// T4-L9 (`decisions.md §13`) -- closed by class, not by instance: every
+    /// one of the 612 records this module serves must carry `granted_feat`,
+    /// not merely the sampled `Golden Legionnaire ~ Swift Aid` case above.
+    /// A record reaching this DTO with `granted_feat: None` would be
+    /// invisible to the feat-held reachability gate
+    /// (`unmatchedClassFeatureDescriptions` in `classFeaturesModel.ts`) the
+    /// same way the class-held gate already misses it -- this proves the
+    /// fix covers the whole population, corpus-wide. 471 -> 612: see
+    /// `class_feature_feat_bridge_serves_the_full_corpus_wide_population`'s
+    /// own comment for the re-derivation (SD-32 row20-cycle3, 2026-08-24:
+    /// corrected from a stale 613 pin -- see that test's own comment).
+    #[test]
+    fn every_bridged_record_corpus_wide_carries_its_granted_feat() {
+        let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
+        assert_eq!(descriptions.len(), 612);
+        let missing: Vec<&str> = descriptions
+            .iter()
+            .filter(|d| d.granted_feat.is_none())
+            .map(|d| d.key.as_str())
+            .collect();
+        assert!(
+            missing.is_empty(),
+            "{} of {} bridged records carry no granted_feat (e.g. {:?}) -- these would be \
+             unreachable under the new feat-held gate exactly as they were under the old \
+             class-held one",
+            missing.len(),
+            descriptions.len(),
+            missing.iter().take(4).collect::<Vec<_>>()
+        );
+        for d in &descriptions {
+            assert!(
+                !d.granted_feat.as_deref().unwrap_or_default().trim().is_empty(),
+                "{:?}: granted_feat must never be an empty string -- that would silently \
+                 gate every character out of a record that genuinely reaches this DTO",
+                d.key
+            );
+        }
     }
 
     /// Reuse, not reinvention: the served text is IDENTICAL to what
@@ -499,9 +555,40 @@ mod tests {
     #[test]
     fn class_feature_feat_bridge_serves_the_full_corpus_wide_population() {
         let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): 471 -> 613
+        // as originally pinned. The T12 census/class-feature lanes' corpus
+        // growth (most sharply Pathfinder Unchained's `class_feature`
+        // population, 64 -> 604 on disk -- see
+        // `pathfinder_unchaineds_class_features_are_claimed_per_corpus_record`)
+        // added records matching this module's exact filter shape (a lone
+        // `ABILITY:FEAT|...` grant with no other engine-effect token).
+        // `granted_feat` is `Some(..)` by construction for every record this
+        // loader returns (`load_class_feature_feat_bridge_descriptions`'s
+        // last push literally sets it from the same `feat_target` the
+        // filter already matched), so this re-derivation and
+        // `every_bridged_record_corpus_wide_carries_its_granted_feat` below
+        // are the same structural guarantee, not two independent pins that
+        // could drift apart.
+        //
+        // **SD-32 row20-cycle3 (2026-08-24) correction**: the 613 pin above
+        // never actually matched this deterministic, corpus-file-driven
+        // computation at `$PIN` (`0dcd0481c3`) -- reproduced 612 on two
+        // independent runs (`--test-threads=1`, single-threaded, no
+        // filesystem race possible), cross-checked against an independent
+        // Python re-derivation of `sole_feat_grant_target`'s own filter over
+        // every `data/corpus/*/class_feature/**/*.json` record (940
+        // candidates before the feat-catalog-match gate, matching the Rust
+        // loader's own candidate count exactly via a temporary diagnostic
+        // dump), and confirmed no duplicate `(book, key)` pair in the 612
+        // served records. Two prior cycles' "538 passed, 0 failed" desktop-
+        // workspace claims did not catch this: this specific test was never
+        // independently re-run at the assertion level, only the aggregate
+        // pass count was carried forward. Corrected to the proven-live
+        // figure, not loosened -- see `docs/retro/events/` for the
+        // `retro.py correction` this cycle filed against the stale claim.
         assert_eq!(
             descriptions.len(),
-            471,
+            612,
             "the full corpus-wide bridge population -- exceeds the wave-28 census's own \
              type_facet-scoped 406 because that census's substring filter undercounts; see this \
              module's own doc comment"

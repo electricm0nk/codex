@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer Archetype ~ Grave Warden",
     "name": "Grave Warden",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "While paladins and inquisitors use their connection with the divine to fight undead hordes and other horrors of the night, a grave warden relies on knowledge, skill with weapons, and tenacity to put an end to these night-born terrors.",
     "raw_tokens": [
       {
@@ -67,6 +67,30 @@
       {
         "key": "FACT",
         "value": "Slayer_Archetype_Talent10|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Grave Warden],[!PREFACT:1,ABILITIES,Slayer_Archetype_Stalker=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Stalker|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Stalker|true"
       }
     ]
   },
@@ -83,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger ~ Gunsmith",
     "name": "Gunsmith",
@@ -39,6 +39,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.9"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;A musket master must take a musket when she chooses a battered firearm at 1st level.|PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ MUSKET MASTER"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;A pistolero must take a pistol when she chooses a battered firearm at 1st level.|PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ PISTOLERO"
       }
     ]
   },
@@ -55,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Catfolk",
+    "name": "Racial Traits ~ Catfolk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Catfolk_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Catfolk Racial Trait|AUTOMATIC|Catfolk ~ Ability Scores|PREVAREQ:Catfolk_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_globalvar.lst",
+    "sha256": "773b8b833592597dbb38d7d12b3517e48ac1a0f779efc9ae67f20a0f3fc564a7",
+    "line": 10,
+    "record_key": "Racial Traits ~ Catfolk"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

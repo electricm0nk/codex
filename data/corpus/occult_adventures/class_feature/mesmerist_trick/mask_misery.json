@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Mask Misery",
     "name": "Mask Misery",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "The subject can shrug off a condition for a short time before succumbing to it. The mesmerist can trigger this trick when the subject becomes affected by a minor",
     "raw_tokens": [
       {
@@ -71,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

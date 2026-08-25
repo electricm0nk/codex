@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Shadowbound Corruption ~ Emptiness of the Void Gift",
+    "name": "Emptiness of the Void Gift",
+    "description": "The darkness in your soul can draw in the life force of allies. Once per day when you take ability damage, ability drain, or hit point damage, you can divide the damage or drain evenly between you and one ally within 30 feet. You can do so only if the damage or drain would reduce your ability score or hit points to 0. The ally can attempt a Will save (DC %1) to resist the link. You can activate this ability as a free action, even if it isn't your turn.|10+TL/2+ShadowboundManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowbound Corruption ~ Emptiness of the Void Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ShadowboundEmptinessOfTheVoidGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "DESC",
+        "value": "The darkness in your soul can draw in the life force of allies. Once per day when you take ability damage, ability drain, or hit point damage, you can divide the damage or drain evenly between you and one ally within 30 feet. You can do so only if the damage or drain would reduce your ability score or hit points to 0. The ally can attempt a Will save (DC %1) to resist the link. You can activate this ability as a free action, even if it isn't your turn.|10+TL/2+ShadowboundManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 811,
+    "record_key": "Shadowbound Corruption ~ Emptiness of the Void Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ectoplasm Bloodline ~ Entangling Ectoplasm",
     "name": "Entangling Ectoplasm",
-    "class": "Ectoplasm Bloodline",
+    "class": "Sorcerer",
     "description": "You can create a ball of ectoplasm and hurl it at targets within 30 feet. This ectoplasm acts as a tanglefoot bag that can also entangle incorporeal creatures. The ectoplasm dissipates within 1d3 rounds. You can use this ability %1 times per day.|Sorcerer_Ectoplasm_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

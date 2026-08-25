@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Clairsentience ~ Alter the Waves",
+    "name": "Alter the Waves",
+    "class": "Clairsentience",
+    "description": "Gain +%2 insight bonus on any die roll %1/day.|AlterTheWavesTimes|AlterTheWavesBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Clairsentience ~ Alter the Waves"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlterTheWavesTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlterTheWavesBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%2 insight bonus on any die roll %1/day.|AlterTheWavesTimes|AlterTheWavesBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlterTheWavesTimes|(ClairsentienceDisciplineLVL-6)/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlterTheWavesBonus|(ClairsentienceDisciplineLVL-2)/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 417,
+    "record_key": "Clairsentience ~ Alter the Waves"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

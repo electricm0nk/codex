@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Fey Bloodrager Bloodline ~ Leaping Charger",
     "name": "Leaping Charger",
-    "class": "Fey Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "You are able to leap over overgrowth and similar impediments with ease when you charge. When you charge you ignore difficult terrain (but not other creatures). You can move through it at normal speed and it does not impede your charge.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

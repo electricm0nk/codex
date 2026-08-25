@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Counterpunch",
+    "category": "Combat",
+    "name": "Counterpunch",
+    "description": "Once per round, when you are fighting unarmed with both hands free and an opponent misses you with a melee attack, it provokes an attack of opportunity from you. You must use an unarmed strike for this attack of opportunity.",
+    "prerequisites": [
+      "PREMULT:2,[PREABILITY:3,CATEGORY=FEAT,Combat Reflexes,Weapon Focus (Unarmed Strike),Improved Unarmed Strike],[PREMULT:1,[PRETOTALAB:16],[PRECLASS:1,Brawler=12]]",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,18],[PREVARGTEQ:FeatDexRequirement,18]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 35,
+    "record_key": "Counterpunch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

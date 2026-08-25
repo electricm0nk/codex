@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ogrekin ~ Stunted Legs",
+    "delivery": null,
+    "description": "The ogrekin's base speed is reduced by 10 feet (minimum base speed of 5 feet).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:ogrekin_stunted_legs",
+    "name": "Stunted Legs",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|-10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The ogrekin's base speed is reduced by 10 feet (minimum base speed of 5 feet)."
+      },
+      {
+        "key": "KEY",
+        "value": "Ogrekin ~ Stunted Legs"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.OgrekinDisadvantageousDeformity"
+      }
+    ],
+    "source_page": "p.204",
+    "traits": [
+      "OgrekinDisadvantageousDeformity"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 923,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Ogrekin ~ Stunted Legs",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

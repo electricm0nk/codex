@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serpent Lord ~ Wild Shape",
+    "name": "Wild Shape",
+    "class": "Serpent Lord",
+    "description": "Your druid level is treated as two higher if you take the form of a snake, while your druid level is treated as two lower if you take on any form other than a snake.  In addition, when activating this ability, you can expend a daily use of your serpent's bite ability to either increase the damage dice of any bite attack gained from wild shape as if a creature one size category larger, or instead use the bite damage from your serpent's bite ability and increase the DC of any poison attacks by +2.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpent Lord ~ Wild Shape"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your druid level is treated as two higher if you take the form of a snake, while your druid level is treated as two lower if you take on any form other than a snake.  In addition, when activating this ability, you can expend a daily use of your serpent's bite ability to either increase the damage dice of any bite attack gained from wild shape as if a creature one size category larger, or instead use the bite damage from your serpent's bite ability and increase the DC of any poison attacks by +2."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.338"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2473,
+    "record_key": "Serpent Lord ~ Wild Shape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

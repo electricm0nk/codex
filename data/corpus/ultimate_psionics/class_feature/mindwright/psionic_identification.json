@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mindwright ~ Psionic Identification",
+    "name": "Psionic Identification",
+    "class": "Mindwright",
+    "description": "You add +%1 as a bonus on Spellcraft checks to identify psionic items.|PsionicIdentificationBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindwright ~ Psionic Identification"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionicIdentificationBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 as a bonus on Spellcraft checks to identify psionic items.|PsionicIdentificationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Spellcraft=to identify magic item properties|PsionicIdentificationBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionicIdentificationBonus|PsionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1988,
+    "record_key": "Mindwright ~ Psionic Identification"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

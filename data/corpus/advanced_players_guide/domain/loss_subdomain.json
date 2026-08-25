@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Loss Subdomain",
+    "name": "Loss Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Loss Subdomain],[PREVARLT:DarknessDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Loss Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Loss Subdomain=1|Obscuring Mist|Loss Subdomain=2|Blindness/Deafness (Blindness Only)|Loss Subdomain=3|Deeper Darkness|Loss Subdomain=4|Shadow Conjuration|Loss Subdomain=5|Enervation|Loss Subdomain=6|Modify Memory|Loss Subdomain=7|Power Word Blind|Loss Subdomain=8|Shadow Evocation (Greater)|Loss Subdomain=9|Energy Drain"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 48,
+    "record_key": "Loss Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

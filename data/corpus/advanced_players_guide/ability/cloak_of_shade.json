@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cloak of Shade",
+    "name": "Cloak of Shade",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CloakOfShade_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CloakOfShade_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CloakOfShade_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CloakOfShade_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CloakOfShade_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CloakOfShade_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_CloakOfShade_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_CloakOfShade_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_CloakOfShade_LVL|Cloak of Shade,SLA_CloakOfShade_DC|PREVAREQ:SLA_CloakOfShade_AtWill,0|PREVAREQ:SLA_CloakOfShade_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_CloakOfShade_LVL|Cloak of Shade,SLA_CloakOfShade_DC|PREVAREQ:SLA_CloakOfShade_AtWill,1|PREVAREQ:SLA_CloakOfShade_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_CloakOfShade_LVL|Cloak of Shade,SLA_CloakOfShade_DC|PREVAREQ:SLA_CloakOfShade_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CloakOfShade_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CloakOfShade_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CloakOfShade_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CloakOfShade_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CloakOfShade_DC|10+SLA_CloakOfShade_SpellLVL+SLA_CloakOfShade_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 388,
+    "record_key": "Cloak of Shade"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

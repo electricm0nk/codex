@@ -1,0 +1,448 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Drawback ~ Meticulous",
+    "name": "Meticulous",
+    "description": "You plan and prepare everything in detail, and aren't good at improvising when things don't go as planned. You take a -2 penalty on skill checks for skills with which you're untrained.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drawback ~ Meticulous"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Drawback"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassDrawbackRestriction,1],[PREABILITY:1,CATEGORY=Special Ability,Drawback ~ Meticulous],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.Drawback]"
+      },
+      {
+        "key": "DESC",
+        "value": "You plan and prepare everything in detail, and aren't good at improvising when things don't go as planned. You take a -2 penalty on skill checks for skills with which you're untrained."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|-2|!PRESKILL:1,Acrobatics=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Appraise|-2|!PRESKILL:1,Appraise=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff|-2|!PRESKILL:1,Bluff=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|-2|!PRESKILL:1,Climb=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Alchemy)|-2|!PRESKILL:1,Craft (Alchemy)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Armor)|-2|!PRESKILL:1,Craft (Armor)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Baskets)|-2|!PRESKILL:1,Craft (Baskets)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Blacksmithing)|-2|!PRESKILL:1,Craft (Blacksmithing)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Books)|-2|!PRESKILL:1,Craft (Books)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Bows)|-2|!PRESKILL:1,Craft (Bows)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Calligraphy)|-2|!PRESKILL:1,Craft (Calligraphy)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Carpentry)|-2|!PRESKILL:1,Craft (Carpentry)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Cloth)|-2|!PRESKILL:1,Craft (Cloth)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Clothing)|-2|!PRESKILL:1,Craft (Clothing)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Gemcutting)|-2|!PRESKILL:1,Craft (Gemcutting)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Glass)|-2|!PRESKILL:1,Craft (Glass)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Jewelry)|-2|!PRESKILL:1,Craft (Jewelry)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Leather)|-2|!PRESKILL:1,Craft (Leather)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Locks)|-2|!PRESKILL:1,Craft (Locks)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Paintings)|-2|!PRESKILL:1,Craft (Paintings)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Pottery)|-2|!PRESKILL:1,Craft (Pottery)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Sculptures)|-2|!PRESKILL:1,Craft (Sculptures)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Ships)|-2|!PRESKILL:1,Craft (Ships)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Shoes)|-2|!PRESKILL:1,Craft (Shoes)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Stonemasonry)|-2|!PRESKILL:1,Craft (Stonemasonry)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Traps)|-2|!PRESKILL:1,Craft (Traps)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Weapons)|-2|!PRESKILL:1,Craft (Weapons)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Untrained)|-2|!PRESKILL:1,Craft (Untrained)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy|-2|!PRESKILL:1,Diplomacy=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device|-2|!PRESKILL:1,Disable Device=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise|-2|!PRESKILL:1,Disguise=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|-2|!PRESKILL:1,Escape Artist=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Fly|-2|!PRESKILL:1,Fly=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Handle Animal|-2|!PRESKILL:1,Handle Animal=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Heal|-2|!PRESKILL:1,Heal=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|-2|!PRESKILL:1,Intimidate=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Arcana)|-2|!PRESKILL:1,Knowledge (Arcana)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Dungeoneering)|-2|!PRESKILL:1,Knowledge (Dungeoneering)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Engineering)|-2|!PRESKILL:1,Knowledge (Engineering)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Geography)|-2|!PRESKILL:1,Knowledge (Geography)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (History)|-2|!PRESKILL:1,Knowledge (History)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Local)|-2|!PRESKILL:1,Knowledge (Local)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nature)|-2|!PRESKILL:1,Knowledge (Nature)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Nobility)|-2|!PRESKILL:1,Knowledge (Nobility)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Planes)|-2|!PRESKILL:1,Knowledge (Planes)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Religion)|-2|!PRESKILL:1,Knowledge (Religion)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Untrained)|-2|!PRESKILL:1,Knowledge (Untrained)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Linguistics|-2|!PRESKILL:1,Linguistics=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|-2|!PRESKILL:1,Perception=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Act)|-2|!PRESKILL:1,Perform (Act)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Comedy)|-2|!PRESKILL:1,Perform (Comedy)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Dance)|-2|!PRESKILL:1,Perform (Dance)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Keyboard Instruments)|-2|!PRESKILL:1,Perform (Keyboard Instruments)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Oratory)|-2|!PRESKILL:1,Perform (Oratory)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Percussion Instruments)|-2|!PRESKILL:1,Perform (Percussion Instruments)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Sing)|-2|!PRESKILL:1,Perform (Sing)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (String Instruments)|-2|!PRESKILL:1,Perform (String Instruments)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Wind Instruments)|-2|!PRESKILL:1,Perform (Wind Instruments)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Untrained)|-2|!PRESKILL:1,Perform (Untrained)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Architect)|-2|!PRESKILL:1,Profession (Architect)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Baker)|-2|!PRESKILL:1,Profession (Baker)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Barrister)|-2|!PRESKILL:1,Profession (Barrister)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Brewer)|-2|!PRESKILL:1,Profession (Brewer)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Butcher)|-2|!PRESKILL:1,Profession (Butcher)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Clerk)|-2|!PRESKILL:1,Profession (Clerk)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Cook)|-2|!PRESKILL:1,Profession (Cook)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Courtesan)|-2|!PRESKILL:1,Profession (Courtesan)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Driver)|-2|!PRESKILL:1,Profession (Driver)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Engineer)|-2|!PRESKILL:1,Profession (Engineer)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Farmer)|-2|!PRESKILL:1,Profession (Farmer)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Fisherman)|-2|!PRESKILL:1,Profession (Fisherman)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Gambler)|-2|!PRESKILL:1,Profession (Gambler)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Gardener)|-2|!PRESKILL:1,Profession (Gardener)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Herbalist)|-2|!PRESKILL:1,Profession (Herbalist)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Innkeeper)|-2|!PRESKILL:1,Profession (Innkeeper)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Librarian)|-2|!PRESKILL:1,Profession (Librarian)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Merchant)|-2|!PRESKILL:1,Profession (Merchant)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Midwife)|-2|!PRESKILL:1,Profession (Midwife)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Miller)|-2|!PRESKILL:1,Profession (Miller)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Miner)|-2|!PRESKILL:1,Profession (Miner)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Porter)|-2|!PRESKILL:1,Profession (Porter)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Sailor)|-2|!PRESKILL:1,Profession (Sailor)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Scribe)|-2|!PRESKILL:1,Profession (Scribe)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Shepherd)|-2|!PRESKILL:1,Profession (Shepherd)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Soldier)|-2|!PRESKILL:1,Profession (Soldier)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Soothsayer)|-2|!PRESKILL:1,Profession (Soothsayer)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Stable Master)|-2|!PRESKILL:1,Profession (Stable Master)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Tanner)|-2|!PRESKILL:1,Profession (Tanner)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Trapper)|-2|!PRESKILL:1,Profession (Trapper)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Woodcutter)|-2|!PRESKILL:1,Profession (Woodcutter)=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Ride|-2|!PRESKILL:1,Ride=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|-2|!PRESKILL:1,Sense Motive=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sleight of Hand|-2|!PRESKILL:1,Sleight of Hand=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Spellcraft|-2|!PRESKILL:1,Spellcraft=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|-2|!PRESKILL:1,Stealth=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Survival|-2|!PRESKILL:1,Survival=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|-2|!PRESKILL:1,Swim=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Use Magic Device|-2|!PRESKILL:1,Use Magic Device=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_drawbacks.lst",
+    "sha256": "639ac624d4a49ce7d5125c407a7c6150d20450678d57d92b69577b5ebef2c7c1",
+    "line": 22,
+    "record_key": "Drawback ~ Meticulous"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

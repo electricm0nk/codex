@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fey Caller ~ Fey Eidolon",
+    "name": "Fey Eidolon",
+    "class": "Summoner",
+    "description": "A fey caller's eidolon is still an outsider, and its base statistics don't change, but it also counts as a fey. [Unable to force choice of Fey Eidolon at this time]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Caller ~ Fey Eidolon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Summoner Class Feature.FeyCallerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A fey caller's eidolon is still an outsider, and its base statistics don't change, but it also counts as a fey. [Unable to force choice of Fey Eidolon at this time]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 76,
+    "record_key": "Fey Caller ~ Fey Eidolon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

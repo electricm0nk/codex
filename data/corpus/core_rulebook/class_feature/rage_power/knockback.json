@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Knockback",
     "name": "Knockback",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "Once per round, you can make a bull rush attempt against one target in place of a melee attack. If successful, the target takes %1 points of damage and is moved back as normal. You do not need to move with the target if successful. This does not provoke an attack of opportunity.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

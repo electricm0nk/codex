@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_31)",
+    "name": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_31)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=3|CASTERLEVEL=TL|Lead Blades|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=2|CASTERLEVEL=TL|Spiritual Weapon|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon Choice|TIMES=1|CASTERLEVEL=TL|Keen Edge|PREVARGTEQ:SentinelBoonLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Divine Boon (quickened)|TIMES=3|CASTERLEVEL=TL|Bleed|PREVARGTEQ:SentinelBoonLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sawtooth Sabre|DAMAGE|2|PREVARGTEQ:SentinelBoonLVL,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 profane bonus to confirm critical hits while wielding a sawtooth sabre."
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Wounds you inflict with a sawtooth sabre deal 1d4 points of bleed damage.|PREVARGTEQ:SentinelBoonLVL,6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 31,
+    "record_key": "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_31)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_faiths:isf_abilities_faith.lst:31"
+  }
+}

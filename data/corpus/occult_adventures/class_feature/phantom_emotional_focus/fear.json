@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Phantom Emotional Focus ~ Fear",
     "name": "Fear",
-    "class": "Phantom Emotional Focus",
+    "class": "Phantom",
     "description": "A phantom with this emotional focus suffered from overwhelming fear in life. As a phantom, it is able to channel that fear into a terrifying weapon. Fear phantoms are often horrifying to behold. Sometimes they appear as ghostly figures in tattered funeral garb or wrapped in chains or other bindings. Their features may be distorted into gaunt and haunting forms, making them seem more like ghosts or spectres. A miasma of livid gray swirling motes often surrounds their forms as they stalk their surroundings, seeking to bestow their terror on others.",
     "raw_tokens": [
       {
@@ -35,6 +35,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.82"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Mesmerist=3|Medium,Spiritualist=4"
       }
     ]
   },
@@ -51,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

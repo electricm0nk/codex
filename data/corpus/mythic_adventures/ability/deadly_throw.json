@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Feature ~ Deadly Throw",
+    "name": "Deadly Throw",
+    "description": "As a swift action, you can expend one use of mythic power to draw a thrown weapon or alchemical item and make a ranged attack with it. This attack doesn't provoke attacks of opportunity. When making a deadly throw, roll twice for the attack, take the higher result, and add +%1 to the roll. If the attack misses, the weapon or alchemical item lands adjacent to the target, regardless of the range.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Feature ~ Deadly Throw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Feature.Trickster Path Feature.SpecialAttack"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend one use of mythic power to draw a thrown weapon or alchemical item and make a ranged attack with it. This attack doesn't provoke attacks of opportunity. When making a deadly throw, roll twice for the attack, take the higher result, and add +%1 to the roll. If the attack misses, the weapon or alchemical item lands adjacent to the target, regardless of the range.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 83,
+    "record_key": "Mythic Path Feature ~ Deadly Throw"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

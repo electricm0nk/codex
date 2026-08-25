@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Sanctified Slayer",
     "name": "Sanctified Slayer",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "While all inquisitors root out enemies of the faith, in many orders and churches there's a select group of these religious hunters devoted to one goal, and one goal alone-to terminate the enemies of the faith wherever they can be found. Sometimes these sanctified slayers are given special dispensation to commit ruthless murders for the faith's greater good. Other times, they're simply willing to take the initiative to revel in the zeal of such grisly work.",
     "raw_tokens": [
       {
@@ -55,6 +55,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Sanctified Slayer],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Judgment=True,Inquisitor_Archetype_TrueJudgment=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TrueJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TrueJudgment|true"
       }
     ]
   },
@@ -71,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

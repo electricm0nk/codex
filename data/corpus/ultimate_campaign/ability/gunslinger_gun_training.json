@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retraining ~ Class Feature ~ Gunslinger Gun Training",
+    "name": "Gunslinger Gun Training",
+    "description": "You retrained your gunslinger gun training to a different firearm type.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retraining ~ Class Feature ~ Gunslinger Gun Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RetrainingClassFeature"
+      },
+      {
+        "key": "DESC",
+        "value": "You retrained your gunslinger gun training to a different firearm type."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining_uc.lst",
+    "sha256": "c643e5efe4f4b70f275c1257a1522ed2da4f026c377e0d70910651be121a1041",
+    "line": 9,
+    "record_key": "Retraining ~ Class Feature ~ Gunslinger Gun Training"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ghoran ~ Natural Magic",
+    "name": "Natural Magic",
+    "description": "Ghorans with a Charisma score of 11 or higher gain the following spell-like abilities: 1/day--detect poison, goodberry (created berries bud from the ghoran's own body), and purify food and drink. The caster level is equal to the ghoran's level. The DC for these spells is equal to 10 + the spell's level + the ghoran's Charisma bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoran ~ Natural Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "TYPE",
+        "value": "BuilderMagicalTrait"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Ghoran_ReplaceNaturalMagic=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghorans with a Charisma score of 11 or higher gain the following spell-like abilities: 1/day--detect poison, goodberry (created berries bud from the ghoran's own body), and purify food and drink. The caster level is equal to the ghoran's level. The DC for these spells is equal to 10 + the spell's level + the ghoran's Charisma bonus."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Detect Poison|Racial SLA ~ Goodberry|Racial SLA ~ Purify Food and Drink|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Racial Points|2"
+      },
+      {
+        "key": "INFO",
+        "value": "Racial Points|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
+    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb",
+    "line": 20,
+    "record_key": "Ghoran ~ Natural Magic"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

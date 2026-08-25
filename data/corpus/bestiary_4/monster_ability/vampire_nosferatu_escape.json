@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vampire (Nosferatu) ~ Escape",
+    "delivery": "Supernatural",
+    "description": "If reduced to 0 hit points in combat, a nosferatu assumes its swarm form and attempts to escape. It must reach its coffin within 1 hour or be utterly destroyed. (In swarm form, it can normally travel up to 5 miles in 1 hour.) Additional damage dealt to a nosferatu forced into swarm form has no effect. Once at rest, the nosferatu is helpless. It regains 1 hit point after 1 hour, then is no longer helpless and resumes healing at the rate of 5 hit points per round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:vampire_nosferatu_escape",
+    "name": "Escape",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If reduced to 0 hit points in combat, a nosferatu assumes its swarm form and attempts to escape. It must reach its coffin within 1 hour or be utterly destroyed. (In swarm form, it can normally travel up to 5 miles in 1 hour.) Additional damage dealt to a nosferatu forced into swarm form has no effect. Once at rest, the nosferatu is helpless. It regains 1 hit point after 1 hour, then is no longer helpless and resumes healing at the rate of 5 hit points per round."
+      },
+      {
+        "key": "KEY",
+        "value": "Vampire (Nosferatu) ~ Escape"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1411,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Vampire (Nosferatu) ~ Escape",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

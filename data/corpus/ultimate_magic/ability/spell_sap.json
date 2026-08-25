@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Spellblight ~ Spell Sap",
+    "name": "Spell Sap",
+    "description": "A spellcaster with spell sap is subject to blackouts when casting spells. She may become mentally locked, distant, or catatonic, or may even slip into unconsciousness. Each time the afflicted spellcaster casts a spell or uses a spell-like ability, she must succeed at a Fortitude save (DC 14 + caster level) or become dazed until the end of her next turn. If she fails the save by 10 or more, she instead falls prone and lapses into unconsciousness for 1d4 rounds. Spell sap can be suppressed for 1 day with an effect that removes confusion or insanity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellblight ~ Spell Sap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "MajorSpellblight.Spellblight.Curse.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "A spellcaster with spell sap is subject to blackouts when casting spells. She may become mentally locked, distant, or catatonic, or may even slip into unconsciousness. Each time the afflicted spellcaster casts a spell or uses a spell-like ability, she must succeed at a Fortitude save (DC 14 + caster level) or become dazed until the end of her next turn. If she fails the save by 10 or more, she instead falls prone and lapses into unconsciousness for 1d4 rounds. Spell sap can be suppressed for 1 day with an effect that removes confusion or insanity."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 24,
+    "record_key": "Spellblight ~ Spell Sap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

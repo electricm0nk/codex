@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Resiliency",
     "name": "Resiliency",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "Once per day, you can gain %1 temporary hit points. Activating this ability is an immediate action that can only be performed when you are brought to below 0 hit points. This ability can be used to prevent yourself from dying. These temporary hit points last for 1 minute. If your hit points drop below 0 due to the loss of these temporary hit points, you fall unconscious and are dying as normal.|ResiliencyHitPoints",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

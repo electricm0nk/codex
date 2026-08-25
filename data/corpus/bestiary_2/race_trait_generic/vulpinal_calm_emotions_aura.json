@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vulpinal ~ Calm Emotions Aura",
+    "name": "Calm Emotions Aura",
+    "description": "A vulpinal's aura acts like a calm emotions spell with a radius of 30 feet.  Any creature entering this area must make a Will save (DC %1) to resist the effect.  A creature that makes its save is immune to that vulpinal's aura for 24 hours.|VulpinalCalmEmotionsAuraDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vulpinal ~ Calm Emotions Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VulpinalCalmEmotionsAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vulpinal's aura acts like a calm emotions spell with a radius of 30 feet.  Any creature entering this area must make a Will save (DC %1) to resist the effect.  A creature that makes its save is immune to that vulpinal's aura for 24 hours.|VulpinalCalmEmotionsAuraDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Calm Emotions Aura"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VulpinalCalmEmotionsAuraDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VulpinalCalmEmotionsAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Calm Emotions Aura)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 69,
+    "record_key": "Vulpinal ~ Calm Emotions Aura"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

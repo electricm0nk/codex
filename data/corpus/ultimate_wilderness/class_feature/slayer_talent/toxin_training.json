@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Slayer Talent ~ Toxin Training",
     "name": "Toxin Training",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "The slayer builds resistance to certain poisons over time. Each time he chooses this talent, he chooses one ability score. He gains a +4 bonus on saving throws against poisons that deal damage to the chosen ability score. The slayer can choose this talent multiple times. Each time he does, he chooses a new ability score and gains the bonus on saves against poisons that target that ability.",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Sacrificial Shield",
+    "name": "Sacrificial Shield",
+    "description": "Once per round when you would normally be hit by a weapon attack, you can use your shield to block the attack. You must be using a shield in order to use this ability. Subtract your shield's hardness and hit points (see Table 7-12 on page 175 of the Core Rulebook) from the damage of the attack and apply the remaining damage to your hit points. If the shield takes enough damage to destroy it, it's destroyed. Otherwise, it gains the broken condition, even if the damage was not enough to give it the broken condition under other circumstances. You can expend one use of mythic power when using this ability to negate any damage dealt to the shield, though you still take any damage that exceeds its hardness and hit points. You can choose to negate the damage after the damage is rolled.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Sacrificial Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per round when you would normally be hit by a weapon attack, you can use your shield to block the attack. You must be using a shield in order to use this ability. Subtract your shield's hardness and hit points (see Table 7-12 on page 175 of the Core Rulebook) from the damage of the attack and apply the remaining damage to your hit points. If the shield takes enough damage to destroy it, it's destroyed. Otherwise, it gains the broken condition, even if the damage was not enough to give it the broken condition under other circumstances. You can expend one use of mythic power when using this ability to negate any damage dealt to the shield, though you still take any damage that exceeds its hardness and hit points. You can choose to negate the damage after the damage is rolled."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 251,
+    "record_key": "Mythic Path Ability ~ Sacrificial Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

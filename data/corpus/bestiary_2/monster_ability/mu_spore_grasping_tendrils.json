@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mu Spore ~ Grasping Tendrils",
+    "delivery": "Extraordinary",
+    "description": "Sticky, arm-length tendrils cover a mu spore.  A mu spore can use these tendrils to attempt a grab as an immediate action when an adjacent creature hits it with a melee attack.  As it is only using the tendrils (instead of conducting the grapple normally), it takes a -20 penalty to its CMB to make and maintain the grapple (+31 CMB with tendrils).  The mu spore does not gain the grappled condition while grappling a creature with its tendrils.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:mu_spore_grasping_tendrils",
+    "name": "Grasping Tendrils",
+    "owners": [
+      "bestiary_2:monster:mu_spore"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sticky, arm-length tendrils cover a mu spore.  A mu spore can use these tendrils to attempt a grab as an immediate action when an adjacent creature hits it with a melee attack.  As it is only using the tendrils (instead of conducting the grapple normally), it takes a -20 penalty to its CMB to make and maintain the grapple (+31 CMB with tendrils).  The mu spore does not gain the grappled condition while grappling a creature with its tendrils."
+      },
+      {
+        "key": "KEY",
+        "value": "Mu Spore ~ Grasping Tendrils"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.195",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 856,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mu Spore ~ Grasping Tendrils",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

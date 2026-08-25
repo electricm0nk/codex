@@ -447,17 +447,27 @@ fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_trait
             let text = std::fs::read_to_string(&path).unwrap();
             let value: serde_json::Value = serde_json::from_str(&text).unwrap();
             checked += 1;
-            assert_eq!(
-                value["data"]["category"], "Special Ability",
-                "{path:?}: every already-ingested ARG alternate racial trait carries \
-                 CATEGORY:Special Ability, never CATEGORY:Choice"
+            let category = value["data"]["category"].as_str().unwrap_or_default();
+            // SD-32 card-11 T2b lane, 2026-08-23 (`decisions.md §16` item 2):
+            // `Human ~ Adoptive Parentage`'s 7 CHOOSE-pool members carry
+            // CATEGORY:Adoptive Parentage, a real third category this test's
+            // original "Special Ability, never Choice" binary did not
+            // anticipate -- named here rather than widening the assertion to
+            // accept anything, so a FUTURE unexpected category still fails
+            // loudly.
+            assert!(
+                category == "Special Ability" || category == "Adoptive Parentage",
+                "{path:?}: every already-ingested ARG race_trait record carries either \
+                 CATEGORY:Special Ability (the alternate/standard shape) or \
+                 CATEGORY:Adoptive Parentage (the 7 CHOOSE-pool members), never \
+                 CATEGORY:Choice or anything else; got {category:?}"
             );
         }
     }
     assert_eq!(
         checked,
-        414,
-        "414 already-ingested ARG race_trait records (156 -> 201 by SD-31 Epic 1-F2, \
+        421,
+        "421 already-ingested ARG race_trait records (156 -> 201 by SD-31 Epic 1-F2, \
          2026-08-15; 201 -> 259 by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by \
          SD-31-E6-F4-003's own alternate-trait batch for the same 6 races, both 2026-08-16; \
          283 -> 321 by SD31-E6-F4-004's own 4-race chassis batch, 2026-08-17; 321 -> 332 by \
@@ -465,7 +475,11 @@ fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_trait
          332 -> 350 by SD31-E6-F4-007's own 2-race chassis batch (Changeling, Samsaran), \
          2026-08-17, closing arg_races.lst's full 37-row playable-race roster -- every new \
          record also carries CATEGORY:Special Ability, same as every alternate this \
-         directory already held)"
+         directory already held; 350 -> 414 by the Core Essentials removal, 2026-08-18; \
+         414 -> 421 by SD-32 card-11 T2b lane, 2026-08-23, decisions.md §16 item 2: the 7 \
+         `Human ~ Adoptive Parentage` CHOOSE-pool members, the first records in this \
+         directory to carry CATEGORY:Adoptive Parentage rather than CATEGORY:Special \
+         Ability)"
     );
 }
 
@@ -902,6 +916,18 @@ const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     // subset it was reading, not the book's figure; see
     // `rules_tables::inner_sea_gods`'s header.
     "inner_sea_gods",
+    // SD-32 Gate 0 book-onboarding (`gate-0-book-onboarding-precondition`,
+    // AT-32-G0-003, `kanban.md` row 4, commit `a50b7da04`): each of these
+    // four books lands its first compiled `RuleSetId` -- `inner_sea_faiths`/
+    // `inner_sea_magic`/`inner_sea_temples` via a new spell family
+    // (`ingest_inner_sea_setting_spells.rs`), `inner_sea_taverns` via the
+    // existing generalised feat gap-row generator. All four move
+    // `future_state` -> `in_scope` the same way every book above this
+    // comment did; this is the fifth lane, not a new exemption shape.
+    "inner_sea_faiths",
+    "inner_sea_magic",
+    "inner_sea_taverns",
+    "inner_sea_temples",
 ];
 
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
@@ -1035,13 +1061,36 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
         .iter()
         .filter_map(|v| v.as_str().map(|s| s.to_string()))
         .collect();
+    // `decisions.md §17` / commit `8e98424eb`: `up_powers.lst` is now
+    // enumerated as its own `Kind::Power` -- structurally spell-shaped
+    // (`SCHOOL`/`CLASSES`/`CASTTIME`/`RANGE`/`DESC` fields) but filed under a
+    // PCGen naming convention distinct from `*_spells.lst`, so
+    // `15-card-15-other-kinds-memo.md` §3 ruled it a parallel kind rather
+    // than folding it into `spell` -- Epic 9's deferral named `Spell`
+    // specifically ("mapping it to Spell is deliberately deferred"), and that
+    // mapping never happened; `up_powers.lst` was never made to masquerade as
+    // `spell`. This assertion previously pinned the pre-§17 state where the
+    // file was simply unenumerated; that state no longer exists, so the
+    // assertion is inverted to pin the new, real one instead of being
+    // deleted or loosened (`decisions.md §1a`).
     assert!(
-        not_enumerated.iter().any(|f| f == "up_powers.lst"),
-        "up_powers.lst must land in files_not_enumerated -- mapping it to Spell \
-         is deliberately deferred to Epic 9. Saw: {not_enumerated:?}"
+        !not_enumerated.iter().any(|f| f == "up_powers.lst"),
+        "up_powers.lst must NOT land in files_not_enumerated any more -- \
+         decisions.md §17 / commit 8e98424eb enumerates it as Kind::Power via \
+         SIMPLE_FILENAME_KINDS. Saw files_not_enumerated: {not_enumerated:?}"
     );
 
     let kinds = book["kinds"].as_object().expect("kinds object");
+    let power_kind = kinds
+        .get("power")
+        .expect("ultimate_psionics must contribute a power kind now that up_powers.lst enumerates");
+    assert_eq!(
+        power_kind["units"].as_u64(),
+        Some(421),
+        "ultimate_psionics' power kind must carry all 421 up_powers.lst rows \
+         (15-card-15-other-kinds-memo.md §3), got {:?}",
+        power_kind["units"]
+    );
     for expected in ["class", "race", "feat", "equipment"] {
         assert!(
             kinds.contains_key(expected),
@@ -1086,5 +1135,29 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
         feat_statuses.contains("text-complete") || feat_statuses.contains("grounded"),
         "ultimate_psionics' landed feat catalog must produce at least one text-complete or \
          grounded feat unit, statuses seen were {feat_statuses:?}"
+    );
+
+    // Pins the new `power` kind's own real per-unit status (`decisions.md
+    // §17`, commit `8e98424eb`): 421 units, all `not-ingested` -- a real,
+    // engine-consulted verdict (never `not-started`, already covered by the
+    // loop above) reflecting that Epic 9 deferred mapping this kind's rows
+    // to `Spell`'s ingest pipeline, not that the file goes unenumerated.
+    let power_units: Vec<&serde_json::Value> =
+        up_units.iter().filter(|u| u["kind"].as_str() == Some("power")).copied().collect();
+    assert_eq!(
+        power_units.len(),
+        421,
+        "ultimate_psionics must contribute exactly 421 power units \
+         (15-card-15-other-kinds-memo.md §3), got {}",
+        power_units.len()
+    );
+    let power_statuses: std::collections::BTreeSet<&str> =
+        power_units.iter().filter_map(|u| u["status"].as_str()).collect();
+    assert_eq!(
+        power_statuses,
+        std::collections::BTreeSet::from(["not-ingested"]),
+        "ultimate_psionics' power units must all be not-ingested (Epic 9 deferred mapping \
+         them into an engine pipeline, not enumeration itself), statuses seen were \
+         {power_statuses:?}"
     );
 }

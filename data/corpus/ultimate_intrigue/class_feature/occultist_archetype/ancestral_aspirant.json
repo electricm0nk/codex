@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Occultist Archetype ~ Ancestral Aspirant",
+    "name": "Ancestral Aspirant",
+    "class": "Occultist",
+    "description": "It is common for a noble to possess a deep pride for his family's past, but when such self-importance gives way to obsession, an ancestral aspirant is born. Ancestral aspirants perform all the typical social functions of a noble, but they fill their conversations with stories of the great deeds of their family forebears, and they spend their nights researching old histories and primary sources, hungry for more.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occultist Archetype ~ Ancestral Aspirant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OccultistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Occultist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Occultist Archetype ~ Ancestral Aspirant],[!PREFACT:1,ABILITIES,Occultist_Archetype_ClassSkills=True,Occultist_Archetype_Implements=True,Occultist_Archetype_ObjectReading=True,Occultist_Archetype_OutsideContact=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "It is common for a noble to possess a deep pride for his family's past, but when such self-importance gives way to obsession, an ancestral aspirant is born. Ancestral aspirants perform all the typical social functions of a noble, but they fill their conversations with stories of the great deeds of their family forebears, and they spend their nights researching old histories and primary sources, hungry for more."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ancestral Aspirant ~ Class Skills|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancestral Aspirant ~ Family Jewels|PRECLASS:1,Occultist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancestral Aspirant ~ Emotional Reading|PRECLASS:1,Occultist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Ancestral Aspirant ~ Courtly Contacts|PRECLASS:1,Occultist=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_Implements|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_ObjectReading|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_Archetype_OutsideContact|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_ObjectReading|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Occultist_CF_OutsideContact|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 97,
+    "record_key": "Occultist Archetype ~ Ancestral Aspirant"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

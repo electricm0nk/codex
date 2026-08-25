@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Skilled Kineticist",
     "name": "Skilled Kineticist",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element universal; Type utility (Su); Level 1; Burn - You gain a bonus equal to 1/2 your kineticist level on skill checks with the skills your primary element added to your class skill list, and you can use the Knowledge skill associated with your primary element to identify elementals of your primary element's subtype.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

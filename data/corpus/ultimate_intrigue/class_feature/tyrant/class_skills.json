@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Tyrant ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Antipaladin",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tyrant ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Antipaladin Class Features.TyrantClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff|TYPE=Craft|Diplomacy|Disguise|Handle Animal|Intimidate|Knowledge (Religion)|TYPE=Profession|Sense Motive|Spellcraft|Stealth"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Antipaladin=1|Protection from Chaos|Antipaladin=2|Protection from Chaos (Communal)|Antipaladin=3|Magic Circle against Chaos|Antipaladin=4|Dispel Chaos"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 212,
+    "record_key": "Tyrant ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

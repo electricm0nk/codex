@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Destruction",
     "name": "Destruction",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,18 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|True Strike|Druid=2|Shatter|Druid=3|Rage|Druid=4|Inflict Critical Wounds|Druid=5|Shout|Druid=6|Harm|Druid=7|Disintegrate|Druid=8|Earthquake|Druid=9|Implosion"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=8"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Murder Subdomain,Undead Subdomain=7"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Ancestors Subdomain,Souls Subdomain=7"
       }
     ]
   },
@@ -47,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

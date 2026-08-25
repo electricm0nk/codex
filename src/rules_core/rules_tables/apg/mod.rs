@@ -49,6 +49,7 @@
 //! status in `docs/work-inventory.json`.
 
 pub mod alchemist_spell_list;
+pub mod antipaladin_features;
 pub mod archetype_tables;
 mod companion_data;
 

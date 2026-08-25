@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Angel ~ Unchained Eidolon LVL16",
+    "delivery": null,
+    "description": "At 16th level, angel eidolons lose the resistance (acid) and resistance (cold) evolutions, and instead gain the immunity (acid) and immunity (cold) evolutions.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl16",
+    "name": "Eidolon Progession Lv.16",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Evolution|AUTOMATIC|Unchained Evolution ~ Immunity|Unchained Evolution ~ Immunity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Immunity|AUTOMATIC|Eidolon Immunity to acid|Eidolon Immunity to cold"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_EidolonImmunity|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RemoveEidolonResistanceForImmunity|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 16th level, angel eidolons lose the resistance (acid) and resistance (cold) evolutions, and instead gain the immunity (acid) and immunity (cold) evolutions."
+      },
+      {
+        "key": "KEY",
+        "value": "Angel ~ Unchained Eidolon LVL16"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AngelLVL16"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "AngelLVL16"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 109,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Angel ~ Unchained Eidolon LVL16",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

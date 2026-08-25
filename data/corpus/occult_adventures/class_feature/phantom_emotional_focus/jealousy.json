@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Emotional Focus ~ Jealousy",
     "name": "Jealousy",
-    "class": "Phantom Emotional Focus",
+    "class": "Phantom",
     "description": "A phantom with this emotional focus is covetous of everything-its master, those who wish to do it harm, and any who do not pay attention to it. It demands to be the center of attention at all times. The forms these phantoms take are as diverse as the forms of jealousy in life. Often they take pleasing forms, wishing to draw others in. Other times they take the form of crawling and lurching things, grasping at all they covet when they come within reach. The auras of these needy phantoms quickly change in color, going from an oily green to orange, to brownish red as they swirl through emotions in their efforts to gain the objects of their dark desires.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

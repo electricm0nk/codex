@@ -1,7 +1,10 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle). **Touched 2026-08-21 (SD-31 wave 29, integration cycle)**: added `RuleSetId::AdventurersGuide` (Adventurer's Guide's first compiled rule set, spell family only — `rules_tables::adventurers_guide::spell_list`) to the enum block below; every other row unchanged.
+> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle). **Touched 2026-08-21 (SD-31 wave 29, integration cycle)**: added `RuleSetId::AdventurersGuide` (Adventurer's Guide's first compiled rule set, spell family only — `rules_tables::adventurers_guide::spell_list`) to the enum block below; every other row unchanged. **Path correction 2026-08-22**
+> (SD-32 closure epilogue): src/bin/ingest_race_traits_arg.rs cite updated to
+> `src/bin/ingest_apg_race_traits.rs` (renamed by the function-based naming sweep, `8b6dd7511`);
+> no other content in this doc re-verified.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -400,7 +403,8 @@ Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
 - `src/bin/gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
   Guide (both books share one binary).
 - `src/bin/ingest_races.rs`, `src/bin/ingest_pu_classes.rs`,
-  `src/bin/ingest_race_traits_arg.rs` — the three later single-purpose
+  `src/bin/ingest_apg_race_traits.rs` (renamed from `ingest_race_traits_arg.rs` by the
+  function-based naming sweep, `8b6dd7511`) — the three later single-purpose
   ingest binaries added as ARG/PU widened.
 
 (`src/bin/gen_cache_apg.rs`, `gen_cache_acg.rs`, `gen_cache_beastiary.rs` are

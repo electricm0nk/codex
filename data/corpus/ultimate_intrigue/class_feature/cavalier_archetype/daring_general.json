@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Cavalier Archetype ~ Daring General",
     "name": "Daring General",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "Most cavaliers are great tacticians, but some stand above the rest for their ability to lead troops under their command, and inspire them to great accomplishments. Those cavaliers most gifted at command often become daring generals.",
     "raw_tokens": [
       {
@@ -91,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

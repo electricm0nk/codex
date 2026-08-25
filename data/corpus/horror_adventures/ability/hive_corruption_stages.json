@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption Stages",
+    "name": "Hive Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Hive Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HiveCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|HiveCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-The first time you fail the Fortitude save, your features shifts into an alien visage. You take a -2 penalty on Diplomacy, Disguise, and Handle Animal checks. Your alignment shifts one step toward neutral evil."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-The second time you fail, your body transforms. You are affected by spells and abilities as if your creature type were aberration. Your mental link with the hive shifts your alignment to neutral evil."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-The third time you fail, you succumb to the link. You seek out an isolated place and wrap yourself in a cocoon of resinous mucous, in which your body dissolves into hive larva swarms, which erupt after 24 hours."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Hive Corruption Stage %1|HiveCorruptionStage"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Diplomacy,Disguise,Handle Animal|-2|PREVARGTEQ:HiveCorruptionStage,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 375,
+    "record_key": "Hive Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

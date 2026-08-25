@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Oracle Archetype ~ Tree Soul",
     "name": "Tree Soul",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "Tree souls develop an affinity not just with trees but also with objects carved from them, feeling the essence of the tree's spirit living within. By bonding to trees, they learn to manipulate the trees' power to produce divine energy. The type of tree a tree soul oracle bonds to often seems to influence the oracle's personality. A tree soul who is bound to a towering redwood may value traditions and be slow to anger, while a tree soul bound to a smaller pine tree might be quick to react and have a somewhat prickly personality. Regardless of the trees they form their metaphysical attachment to, tree soul oracles tend to be steadfast and stubborn, having an aura of timelessness even as the world changes around them.",
     "raw_tokens": [
       {
@@ -171,5 +171,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

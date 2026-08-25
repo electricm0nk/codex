@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Professors Assistant ~ Academy",
+    "name": "Professor's Assistant",
+    "description": "You assist a professor of your choice in teaching her classes. You are now specialized in Knowledge (arcana) and Spellcraft, and can recruit a student to aid you in research when you use the academy library, which increases the circumstance bonus you gain from library access to +4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Professors Assistant ~ Academy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You assist a professor of your choice in teaching her classes. You are now specialized in Knowledge (arcana) and Spellcraft, and can recruit a student to aid you in research when you use the academy library, which increases the circumstance bonus you gain from library access to +4."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill Specialization Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Skill Specialization|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SSKnowArcana|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SSSpellcraft|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 86,
+    "record_key": "Professors Assistant ~ Academy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

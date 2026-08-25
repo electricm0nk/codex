@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Armored Blade ~ Enhanced Mind Armaments",
+    "name": "Enhanced Mind Armaments",
+    "class": "Armored Blade",
+    "description": "Gain +%1 in enhancement bonuses and abilities for both your mind blade and your mind armor; maximum enhancement bonus +%2.  The enhancement bonus for mind armor is unaffected if you form two mind blades.|MndBladeEnhancement|MndBladeMxEnhancement",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armored Blade ~ Enhanced Mind Armaments"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Soulknife ~ Enhanced Mind Blade"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndBladeMxEnhancement|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 in enhancement bonuses and abilities for both your mind blade and your mind armor; maximum enhancement bonus +%2.  The enhancement bonus for mind armor is unaffected if you form two mind blades.|MndBladeEnhancement|MndBladeMxEnhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeEnhancement|floor((2*MndBladeLVL-1)/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndBladeEnhancement|-max(0,(MndBladeLVL-1)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2149,
+    "record_key": "Armored Blade ~ Enhanced Mind Armaments"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

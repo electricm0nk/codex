@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Halfling ~ Underfoot",
+    "name": "Underfoot",
+    "description": "Halflings must train hard to effectively fight bigger opponents. Halflings with this racial trait gain a +1 dodge bonus to AC against foes larger than themselves and a +1 bonus on Reflex saving throws to avoid trample attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Underfoot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Underfoot],[!PREFACT:1,ABILITIES,Halfling_ReplaceHalflingLuck=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Halflings must train hard to effectively fight bigger opponents. Halflings with this racial trait gain a +1 dodge bonus to AC against foes larger than themselves and a +1 bonus on Reflex saving throws to avoid trample attacks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the halfling luck racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Underfoot"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+1 dodge bonus to AC vs. larger foes)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RefSaveBonus|+1 vs. trample attacks"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceHalflingLuck|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 100,
+    "record_key": "Halfling ~ Underfoot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

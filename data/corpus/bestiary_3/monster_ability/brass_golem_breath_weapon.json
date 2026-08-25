@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brass Golem ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "As a free action once every 1d4 rounds, a brass golem can expel a cloud of smoke and cinders that fills a 20-foot cube. This functions as an incendiary cloud that persists for 1d6 rounds, dealing 6d6 points of fire damage (DC 20 Reflex for half). The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:brass_golem_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action once every 1d4 rounds, a brass golem can expel a cloud of smoke and cinders that fills a 20-foot cube. This functions as an incendiary cloud that persists for 1d6 rounds, dealing 6d6 points of fire damage (DC 20 Reflex for half). The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Brass Golem ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrassGolemRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.134",
+    "traits": [
+      "BrassGolemRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 940,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Brass Golem ~ Breath Weapon",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

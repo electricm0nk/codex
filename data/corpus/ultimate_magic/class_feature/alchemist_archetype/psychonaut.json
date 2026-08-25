@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Psychonaut",
     "name": "Psychonaut",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "A psychonaut uses his knowledge to explore altered states of consciousness and even other planes of existence.",
     "raw_tokens": [
       {
@@ -67,6 +67,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Psychonaut],[!PREFACT:1,ABILITIES,Alchemist_Archetype_PoisonResistance4=True,Alchemist_Archetype_PoisonResistance6=True,Alchemist_Archetype_PoisonImmunity=True,Alchemist_Archetype_BombDamage15=True,Alchemist_Archetype_BombDamage17=True,Alchemist_Archetype_BombReduction=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BombDamage15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BombDamage17|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_BombReduction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombDamage15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombDamage17|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_BombReduction|true"
       }
     ]
   },
@@ -83,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

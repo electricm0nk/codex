@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Rajadhiraja",
+    "delivery": null,
+    "description": "Even more so than the maharajas, the rajadhirajas are unique beings. A rajadhiraja is never lower than CR 21-most have additional racial Hit Dice beyond the standard maharaja. Each additional racial Hit Die granted increases the rakshasa's CR by +1, but also increases its effective sorcerer caster level by +1 and grants a new spell-like ability that follows that rakshasa's personal theme and philosophy. A rajadhiraja that fancies itself a master of space and time might gain the ability to use greater teleport three times per day or the use of time stop once per day, while one who sees itself as a master of forms might gain the ability to use shapechange once per day or polymorph at will. A master of combat might instead gain additional damaging spell-like abilities. The type of new spell-like abilities the rakshasa gains can be selected as needed-8th- and 9th-level spells should be usable once per day, 5th- through 7th-level spells usable three times per day, and spells lower than 5th level at will, though even these guidelines can be adjusted as you see fit to make a more interesting rajadhiraja. The cycle of reincarnation and the faint memories it imparts provide rajadhirajas with the distinct power to manipulate life and death according to this cycle. A rajadhiraja can use its mastery of reincarnation to alter these cycles for other creatures, and as a result, all rajadhirajas gain the following special ability in addition to their other powers.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:rajadhiraja",
+    "name": "Rajadhiraja",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Rajadhiraja ~ Reincarnate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Even more so than the maharajas, the rajadhirajas are unique beings. A rajadhiraja is never lower than CR 21-most have additional racial Hit Dice beyond the standard maharaja. Each additional racial Hit Die granted increases the rakshasa's CR by +1, but also increases its effective sorcerer caster level by +1 and grants a new spell-like ability that follows that rakshasa's personal theme and philosophy. A rajadhiraja that fancies itself a master of space and time might gain the ability to use greater teleport three times per day or the use of time stop once per day, while one who sees itself as a master of forms might gain the ability to use shapechange once per day or polymorph at will. A master of combat might instead gain additional damaging spell-like abilities. The type of new spell-like abilities the rakshasa gains can be selected as needed-8th- and 9th-level spells should be usable once per day, 5th- through 7th-level spells usable three times per day, and spells lower than 5th level at will, though even these guidelines can be adjusted as you see fit to make a more interesting rajadhiraja. The cycle of reincarnation and the faint memories it imparts provide rajadhirajas with the distinct power to manipulate life and death according to this cycle. A rajadhiraja can use its mastery of reincarnation to alter these cycles for other creatures, and as a result, all rajadhirajas gain the following special ability in addition to their other powers."
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.MaharajaSelection"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "MaharajaSelection"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1448,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Rajadhiraja",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

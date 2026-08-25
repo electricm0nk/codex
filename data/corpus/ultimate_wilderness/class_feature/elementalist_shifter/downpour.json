@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elementalist Shifter ~ Downpour",
     "name": "Downpour",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "The elementalist shifter combines the powers of air and water to generate a torrential downpour in her square and squares adjacent to her. This rain automatically extinguishes all nonmagical fires in her square and squares adjacent to her (including flames on creatures that have caught on fire). It also has a chance to extinguish ongoing magical fire (but not instantaneous magical fire effects such as fireball) within or that enters the area, as if the elementalist shifter had cast dispel magic, using her elementalist shifter level as her caster level for the effect.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Worg ~ Darkness Aura",
+    "name": "Darkness Aura",
+    "description": "As a free action, a mythic worg can activate its darkness aura, which reduces the light level within 30 feet of it by one step. This never reduces the light level to supernatural darkness. Multiple worgs within range can reduce the light level multiple steps. Because a mythic worg has darkvision and low-light vision, this ability never interferes with its own vision. It can end this ability as a free action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Worg ~ Darkness Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Worg Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a mythic worg can activate its darkness aura, which reduces the light level within 30 feet of it by one step. This never reduces the light level to supernatural darkness. Multiple worgs within range can reduce the light level multiple steps. Because a mythic worg has darkvision and low-light vision, this ability never interferes with its own vision. It can end this ability as a free action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 262,
+    "record_key": "Mythic Worg ~ Darkness Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

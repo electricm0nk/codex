@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:15Z",
+  "data": {
+    "key": "Racial Heritage ~ Merfolk",
+    "name": "Merfolk",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial Heritage ~ Merfolk"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsMerfolk"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Heritage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/merfolk/merfolk_templates.lst",
+    "sha256": "894a49d6a918acc3a44159b1e1ffc240a19a4e9e878dd774aee09bdacbac44ed",
+    "line": 9,
+    "record_key": "Racial Heritage ~ Merfolk"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

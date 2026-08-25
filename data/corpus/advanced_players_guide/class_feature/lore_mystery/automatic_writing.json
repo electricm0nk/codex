@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Lore Mystery ~ Automatic Writing",
     "name": "Automatic Writing",
-    "class": "Lore Mystery",
+    "class": "Oracle",
     "description": "Once per day, you can spend a full hour in uninterrupted meditation. During this period, your hands produce mysterious writing that pertains to the future. At 1st level, the prophetic writing manifests as an augury spell with 90%% effectiveness. At 5th level, the writing takes the form of a divination with 90%% effectiveness. At 8th level, the writing manifests as a casting of commune with no material component required.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

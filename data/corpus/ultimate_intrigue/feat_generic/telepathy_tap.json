@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Telepathy Tap",
+    "name": "Telepathy Tap",
+    "description": "You are able to notice, intercept, and interpret telepathic communication around you.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRESPELL:1,Detect Thoughts,Telepathy],[PREABILITY:1,CATEGORY=Special Ability,Telepathy]"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Sense Motive=10"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Sense Motive 10 ranks, ability to cast detect thoughts or telepathy as a spell or spell-like ability or telepathy supernatural ability."
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to notice, intercept, and interpret telepathic communication around you."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When a creature within range of your telepathy (or within 60 feet if you are using detect thoughts) uses telepathy to communicate, including when that creature sends or receives a magical message such as dream or sending, you can notice the attempt with a successful DC 30 Sense Motive check. At this point, you can either use your telepathy ability or spend a use or casting of detect thoughts as an immediate action. If you do so, for every 5 points by which your check exceeds the DC, you glean one fragment of information about the communication, such as the identity of its source; its general nature; the emotional state of the sender or the recipient; or a specific person, place, or thing mentioned in the message. In addition, the creature must attempt a saving throw (with a DC equal to that of the spell if you spent a use of detect thoughts or are using telepathy, or 10 + 1/2 your racial HD + your Charisma modifier if you are using a racial telepathy ability). If the target fails its save, you can listen to both sides of the telepathic or magical communication as long as you continue to concentrate each round as a standard action."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 108,
+    "record_key": "Telepathy Tap"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

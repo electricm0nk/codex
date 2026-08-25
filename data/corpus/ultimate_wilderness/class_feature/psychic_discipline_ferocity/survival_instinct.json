@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Discipline Ferocity ~ Survival Instinct",
+    "name": "Survival Instinct",
+    "class": "Psychic",
+    "description": "Through sheer willpower, you can keep your body going longer than should be possible. You add your Wisdom bonus (minimum +1) to your Constitution score to determine the negative hit point total at which you die, and as a bonus on Constitution checks to become stable or regain consciousness.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Ferocity ~ Survival Instinct"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Through sheer willpower, you can keep your body going longer than should be possible. You add your Wisdom bonus (minimum +1) to your Constitution score to determine the negative hit point total at which you die, and as a bonus on Constitution checks to become stable or regain consciousness."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 160,
+    "record_key": "Psychic Discipline Ferocity ~ Survival Instinct"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

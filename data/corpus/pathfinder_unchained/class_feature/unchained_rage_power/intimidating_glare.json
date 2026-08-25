@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Intimidating Glare",
+    "name": "Intimidating Glare",
+    "class": "Unchained Barbarian",
+    "description": "You add your Strength modifier in place of your Charisma modifier on all Intimidate checks to demoralize a foe. You can attempt an Intimidate check to demoralize an adjacent foe as a move action instead of a standard action. If you successfully demoralizes an adjacent foe, that foe is shaken for the remainder of your current rage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Intimidating Glare"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Intimidating Glare"
+      },
+      {
+        "key": "DESC",
+        "value": "You add your Strength modifier in place of your Charisma modifier on all Intimidate checks to demoralize a foe. You can attempt an Intimidate check to demoralize an adjacent foe as a move action instead of a standard action. If you successfully demoralizes an adjacent foe, that foe is shaken for the remainder of your current rage."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Intimidate=to demoralize|STR-CHA|PREVAREQ:Raging,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 362,
+    "record_key": "Unchained Rage Power ~ Intimidating Glare"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

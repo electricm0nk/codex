@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Slayer Archetype ~ Witch Killer",
     "name": "Witch Killer",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "Born into cultures where magic users are hated and feared, witch killers devote their lives to purge the arcane taint from the world.",
     "raw_tokens": [
       {
@@ -103,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

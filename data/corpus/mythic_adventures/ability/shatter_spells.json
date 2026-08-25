@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Shatter Spells",
+    "name": "Shatter Spells",
+    "description": "You can destroy a magical effect (whether it's on a creature or an independent effect such as a wall of fire) by attacking it with an unarmed strike or natural weapon. You must succeed at a melee touch attack against the creature or effect and expend one use of mythic power. If this attack hits, the creature or effect is subject to targeted greater dispel magic, using double your tier as your caster level. If you dispel an effect, you suffer no harmful effects from touching it. If the effect is on a creature, the creature takes 1 point of damage per spell level of each effect dispelled.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Shatter Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You can destroy a magical effect (whether it's on a creature or an independent effect such as a wall of fire) by attacking it with an unarmed strike or natural weapon. You must succeed at a melee touch attack against the creature or effect and expend one use of mythic power. If this attack hits, the creature or effect is subject to targeted greater dispel magic, using double your tier as your caster level. If you dispel an effect, you suffer no harmful effects from touching it. If the effect is on a creature, the creature takes 1 point of damage per spell level of each effect dispelled."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 400,
+    "record_key": "Mythic Path Ability ~ Shatter Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

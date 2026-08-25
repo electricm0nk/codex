@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rogue Archetype ~ Deadly Courtesan",
     "name": "Deadly Courtesan",
-    "class": "Rogue Archetype",
+    "class": "Rogue",
     "description": "Skilled at manipulation and diversion, the deadly courtesan builds up those around her and periodically takes them down. She can be a spy, entertainer, assassin, bodyguard, or just an intimate to someone who needs it most.",
     "raw_tokens": [
       {
@@ -71,6 +71,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Rogue"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Deadly Courtesan],[!PREFACT:1,ABILITIES,Rogue_Archetype_RogueTalent2=True,Rogue_Archetype_TrapSense1=True,Rogue_Archetype_TrapSense2=True,Rogue_Archetype_TrapSense3=True,Rogue_Archetype_TrapSense4=True,Rogue_Archetype_TrapSense5=True,Rogue_Archetype_TrapSense6=True,Rogue_Archetype_UncannyDodge=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_RogueTalent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_UncannyDodge|true"
       }
     ]
   },
@@ -87,5 +155,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

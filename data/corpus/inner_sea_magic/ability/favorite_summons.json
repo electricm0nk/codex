@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Favorite Summons ~ Academy",
+    "name": "Favorite Summons",
+    "description": "You have learned how to summon a more powerful version of the selected creature. By adding powdered gemstones worth 100gp per spell level as an additional material component when you cast this spell and summon this monster, you grant the summoned monster the advanced creature simple template.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Favorite Summons ~ Academy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AcadamaeReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Acadamae ~ Academy"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to summon a more powerful version of the selected creature. By adding powdered gemstones worth 100gp per spell level as an additional material component when you cast this spell and summon this monster, you grant the summoned monster the advanced creature simple template."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT|TITLE=Add a creature to a summon monster spell you can cast."
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 89,
+    "record_key": "Favorite Summons ~ Academy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

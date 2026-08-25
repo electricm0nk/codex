@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Wandering Star Motes",
+    "name": "Wandering Star Motes",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WanderingStarMotes_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WanderingStarMotes_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WanderingStarMotes_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WanderingStarMotes_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WanderingStarMotes_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WanderingStarMotes_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WanderingStarMotes_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_WanderingStarMotes_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_WanderingStarMotes_LVL|Wandering Star Motes,SLA_WanderingStarMotes_DC|PREVAREQ:SLA_WanderingStarMotes_AtWill,0|PREVAREQ:SLA_WanderingStarMotes_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_WanderingStarMotes_LVL|Wandering Star Motes,SLA_WanderingStarMotes_DC|PREVAREQ:SLA_WanderingStarMotes_AtWill,1|PREVAREQ:SLA_WanderingStarMotes_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_WanderingStarMotes_LVL|Wandering Star Motes,SLA_WanderingStarMotes_DC|PREVAREQ:SLA_WanderingStarMotes_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WanderingStarMotes_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WanderingStarMotes_SpellLVL|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WanderingStarMotes_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WanderingStarMotes_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WanderingStarMotes_DC|10+SLA_WanderingStarMotes_SpellLVL+SLA_WanderingStarMotes_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 403,
+    "record_key": "Wandering Star Motes"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

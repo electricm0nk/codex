@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Broken Dreams Style",
+    "category": "Psionic",
+    "name": "Broken Dreams Style",
+    "description": "When performing an unarmed attack, you can choose to also deliver your devastating touch damage through that attack.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch",
+      "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike",
+      "PRESKILL:1,Intimidate=3",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 45,
+    "record_key": "Broken Dreams Style"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -58,6 +58,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
 /// The `(path, line, record_key)` a `CorpusSource` cites, when it cites a
@@ -620,12 +621,20 @@ fn gen_pathfinder_unchained() {
     let wiring_index = WiringClassIndex::build("pathfinder_unchained", &root);
     let mut wiring_lines = wiring_index.lines();
 
-    for sub in ["feat", "equipment"] {
-        let dir = out_root.join(sub);
-        if dir.exists() {
-            fs::remove_dir_all(&dir).expect("clear stale generated subdir");
-        }
-    }
+    // **SD-32 Epic 5 protective sweep (`epic-breakdown.md` Epic 5, T3
+    // residual / `defects.md` D9)**: this used to unconditionally
+    // `remove_dir_all` both `feat` and `equipment` on every run, then
+    // rewrite every entry from scratch -- the S6/D9 self-erasure shape
+    // `gen_monster_book`, in this SAME FILE, was already fixed for
+    // (`SD31-E6-F9-005`), never extended here. All 42 of 42 on-disk
+    // `pathfinder_unchained` equipment records carry a `raw_tokens` field
+    // `enrich_equipment_raw_tokens.rs` writes AFTER this generator runs,
+    // which this generator's own `EquipmentCacheData` cannot reconstruct.
+    // Same fix as `gen_monster_book`: a file is removed ONLY when its key
+    // is ABSENT from the set this run just computed (per write loop,
+    // below), never wiped wholesale up front.
+    let mut current_feat_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+    let mut current_equipment_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     // ---- Feats ----
     let feats_file = load_corpus_file(&root, "pu_feats.lst");
@@ -669,12 +678,29 @@ fn gen_pathfinder_unchained() {
                     wiring_class_signals,
                     description_source: None,
                 };
+                current_feat_keys.insert(entry.key.to_string());
                 let path = out_root.join("feat").join(format!("{}.json", slugify(entry.key)));
-                write_record(&path, &record);
+                // `SD31-E6-F9-005`-shaped guard (see this fn's own doc
+                // comment above): a file already on disk is left completely
+                // untouched, not re-derived.
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 feat_written += 1;
             }
             None => feat_unattributed.push(entry.key.to_string()),
         }
+    }
+    if out_root.join("feat").exists() {
+        // Single writer of `pathfinder_unchained/feat/` (verified: neither
+        // `cache_gen::feat_gap` nor `cache_gen::hand_authored_feat_dump`
+        // registers `pathfinder_unchained` -- SD-32 cross-generator sweep,
+        // 2026-08-23), so an unscoped citation predicate is safe here.
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("feat"),
+            &current_feat_keys,
+            &|_path, _line| true,
+        );
     }
 
     // ---- Equipment (equipmods) ----
@@ -723,16 +749,38 @@ fn gen_pathfinder_unchained() {
                     wiring_class_signals,
                     description_source: None,
                 };
+                current_equipment_keys.insert(entry.key.to_string());
                 let base_slug = slugify(entry.name);
                 let count = used_slugs.entry(base_slug.clone()).or_insert(0);
                 *count += 1;
                 let slug = if *count == 1 { base_slug } else { format!("{base_slug}_{count}") };
                 let path = out_root.join("equipment").join(format!("{slug}.json"));
-                write_record(&path, &record);
+                // `SD31-E6-F9-005`-shaped guard: a file already on disk
+                // (including one `enrich_equipment_raw_tokens.rs` has since
+                // written `raw_tokens` into) is left completely untouched.
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 equipment_written += 1;
             }
             None => equipment_unattributed.push(entry.name.to_string()),
         }
+    }
+    if out_root.join("equipment").exists() {
+        // Single writer of `pathfinder_unchained/equipment/` (verified: no
+        // other `cache_gen` module registers `pathfinder_unchained` for the
+        // `equipment` kind -- SD-32 cross-generator sweep, 2026-08-23; this
+        // comment's book name corrected 2026-08-24 -- it named
+        // `advanced_race_guide`, copy-pasted from a sibling call site, but
+        // this call site is inside `gen_pathfinder_unchained()`. The
+        // underlying verification (no other writer of THIS function's own
+        // `out_root.join("equipment")`) was already correct; only the
+        // comment's book name was wrong).
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("equipment"),
+            &current_equipment_keys,
+            &|_path, _line| true,
+        );
     }
 
     println!("SD-27 E2.2 pathfinder_unchained cache generation report");
@@ -791,6 +839,20 @@ fn gen_pathfinder_unchained() {
     fs::write(&license_path, serde_json::to_string_pretty(&license_json).unwrap() + "\n")
         .unwrap_or_else(|e| panic!("failed to write {license_path:?}: {e}"));
     println!("  LICENSE.json written to {}", license_path.display());
+
+    // `decisions.md §20` no_record-to-zero, round 4: this book's own
+    // `monster`/`monster_ability` family, previously unwired because its CLI
+    // dispatch special-cases this function (`main()`'s own `match`, above the
+    // generic `monster_book_spec` arm) rather than reaching the
+    // `MonsterBookSpec`-driven `gen_monster_book` path every other book here
+    // uses. `pathfinder_unchained` is now a registered `MonsterBookSpec`
+    // (zero monster rows, 72 owner-less ability rows) -- reuse the SAME
+    // mechanism, unmodified, rather than duplicating its write/PI-screen/
+    // stale-file-clear logic here.
+    gen_monster_book(
+        monster_book_spec("pathfinder_unchained")
+            .expect("pathfinder_unchained must be registered in MONSTER_BOOK_SPECS"),
+    );
 }
 
 /// SD-27 Cycle E2.1 -- Advanced Race Guide. Extends this shared binary's
@@ -809,12 +871,26 @@ fn gen_advanced_race_guide() {
     let wiring_index = WiringClassIndex::build("advanced_race_guide", &root);
     let mut wiring_lines = wiring_index.lines();
 
-    for sub in ["spell", "equipment", "feat"] {
-        let dir = out_root.join(sub);
-        if dir.exists() {
-            fs::remove_dir_all(&dir).expect("clear stale generated subdir");
-        }
-    }
+    // **SD-32 Epic 5 protective sweep (`defects.md` D9), live-reproduced**:
+    // this used to unconditionally `remove_dir_all` all three of `spell`,
+    // `equipment`, `feat` on every run, then rewrite every entry from
+    // scratch. Live-reproduced against this repo's real committed corpus
+    // in an isolated worktree (git status clean before, `git checkout --`
+    // after): one run wiped `raw_tokens` from all 93 `advanced_race_guide`
+    // spell records (100% of the book's spell population) and permanently
+    // deleted 15 real, populated `equipment` records belonging to
+    // `gen_equipment_gap_tables.rs`/`cache_gen::equipment_gap`'s own write
+    // into the SAME `equipment` directory. Same fix as `gen_monster_book`
+    // (`SD31-E6-F9-005`) for `spell`/`feat` -- a file is removed ONLY when
+    // its key is ABSENT from the set this run just computed. `equipment`
+    // gets the exists-guard WITHOUT a stale-key sweep (unlike `spell`/
+    // `feat`): a stale-key sweep there would delete
+    // `cache_gen::equipment_gap`'s own 15 records the instant this
+    // generator ran, since their keys are never in this generator's own
+    // `equipment_tables()` -- the exact collision this fix must not
+    // reintroduce.
+    let mut current_spell_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+    let mut current_feat_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     // ---- Spells ----
     let spells_file = load_corpus_file_rel(&root, ARG_BOOK_RELATIVE, "arg_spells.lst");
@@ -867,11 +943,26 @@ fn gen_advanced_race_guide() {
                         n += 1;
                     }
                 };
-                write_record(&out_root.join("spell").join(format!("{slug}.json")), &record);
+                current_spell_keys.insert(entry.key.to_string());
+                let path = out_root.join("spell").join(format!("{slug}.json"));
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 spell_written += 1;
             }
             None => spell_unattributed.push(entry.key.to_string()),
         }
+    }
+    if out_root.join("spell").exists() {
+        // Single writer of `advanced_race_guide/spell/` (verified:
+        // `advanced_race_guide` is in neither `cache_gen::spell_lane_dump`'s
+        // nor `cache_gen::spell_mod_access`'s book lists -- SD-32
+        // cross-generator sweep, 2026-08-23).
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("spell"),
+            &current_spell_keys,
+            &|_path, _line| true,
+        );
     }
 
     // ---- Equipment ----
@@ -975,7 +1066,14 @@ fn gen_advanced_race_guide() {
                         n += 1;
                     }
                 };
-                write_record(&out_root.join("equipment").join(category_slug).join(format!("{slug}.json")), &record);
+                // Exists-guard only, deliberately NO stale-key sweep here --
+                // see this fn's own doc comment for why a sweep would
+                // wrongly delete `cache_gen::equipment_gap`'s own 15
+                // records sharing this same directory.
+                let path = out_root.join("equipment").join(category_slug).join(format!("{slug}.json"));
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 equipment_written += 1;
             }
             None => equipment_unattributed.push(format!("{:?}:{}", entry.category, entry.key)),
@@ -1053,12 +1151,37 @@ fn gen_advanced_race_guide() {
                         n += 1;
                     }
                 };
-                write_record(&out_root.join("feat").join(category_slug).join(format!("{slug}.json")), &record);
+                current_feat_keys.insert(entry.key.to_string());
+                let path = out_root.join("feat").join(category_slug).join(format!("{slug}.json"));
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 feat_written += 1;
             }
             None => feat_unattributed.push(format!("{:?}:{}", entry.category, entry.key)),
         }
     }
+    // **SD-32 Epic 5 protective sweep correction (2026-08-24), live-reproduced
+    // against the real pinned corpus**: the previous stale-key sweep here
+    // (`remove_stale_owned_files` with an unscoped `|_p,_l| true` predicate)
+    // carried a comment claiming "Single writer of `pathfinder_unchained/feat/`"
+    // -- the WRONG book, copy-pasted from `gen_pathfinder_unchained`'s own
+    // identical call above and never re-verified for `advanced_race_guide`.
+    // `cache_gen::feat_gap::FEAT_GAP_BOOKS` DOES register `advanced_race_guide`
+    // (it writes gap-filled feat records this generator's own curated
+    // `feat_tables()` list does not model, into this SAME `feat/` directory,
+    // parsed from the SAME `arg_feats.lst`). Reproduced live: one run deleted
+    // 48 real `cache_gen::feat_gap` records (e.g.
+    // `data/corpus/advanced_race_guide/feat/angelic_flesh_brazen.json`,
+    // `source.path` = `arg_feats.lst`, a flat top-level file -- never under
+    // this generator's own `feat/<category_slug>/` nesting) -- reverted
+    // immediately (`git checkout -- data/corpus`), never committed. No
+    // stale-key sweep here now, same carve-out already used for `equipment`
+    // just above (`cache_gen::equipment_gap`'s own 15 records) and for the
+    // identical reason: this generator can never regenerate a sibling
+    // generator's own gap-filled records, so it must never delete one either.
+    // A record already on disk is left alone via the `exists()` guard above;
+    // nothing here removes what this run does not itself own.
 
     let total = spell_written + equipment_written + feat_written;
 
@@ -1116,6 +1239,15 @@ fn gen_advanced_race_guide() {
         println!("  feats UNATTRIBUTED: {feat_unattributed:?}");
     }
     println!("  LICENSE.json written to {}", license_path.display());
+
+    // `decisions.md §20` no_record-to-zero, round 4: this book's own
+    // `monster`/`monster_ability` family, previously unwired for the same
+    // reason `gen_pathfinder_unchained` above names -- reuse the SAME
+    // `MonsterBookSpec`-driven mechanism rather than duplicating it.
+    gen_monster_book(
+        monster_book_spec("advanced_race_guide")
+            .expect("advanced_race_guide must be registered in MONSTER_BOOK_SPECS"),
+    );
 }
 
 /// The Bonus Bestiary corpus cache -- SD-29 Epic 5's pilot, and the first
@@ -1331,7 +1463,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
                 block.key, block.source_file, spec.races_lsts
             )
         });
-        let line = verified_citation_line(races_file, block.source_line, block.name);
+        let line = verified_citation_line(races_file, block.source_line, block.name, false);
         let data = serde_json::json!({
             "key": format!("{book_id}:monster:{}", slugify(block.key)),
             "corpus_key": block.key,
@@ -1401,7 +1533,26 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
                 ability.key, ability.source_file, spec.abilities_lsts
             )
         });
-        let line = verified_citation_line(abilities_file, ability.source_line, ability.name);
+        let line = verified_citation_line(
+            abilities_file,
+            ability.source_line,
+            ability.name,
+            ability.codex_generated_name,
+        );
+        // SD-32 declared-pi-shipping-65-followups: this loop used to
+        // hardcode `license: Ogl`/`pi_field: None` unconditionally, even
+        // when `ability.description` was already the redaction marker (a
+        // static-table literal a prior pass had blanked by hand). The
+        // `monster_record_pi_hits` hard gate below still catches any LIVE,
+        // un-redacted blacklist-term text in `description` and aborts the
+        // whole run before anything is written -- so a description that
+        // reaches this point is always either ordinary prose or already
+        // the marker, and `classify_optional_field_declared` correctly
+        // stamps both cases (this is the same shared classifier
+        // `cache_gen::{equipment_gap, feat_gap, class_feature}` already
+        // use for their own optional text fields).
+        let (ability_license, ability_pi_field, ability_pi_marker, _) =
+            pi_screening::classify_optional_field_declared("description", ability.description, false);
         let data = serde_json::json!({
             "key": format!("{book_id}:monster_ability:{}", slugify(ability.key)),
             "corpus_key": ability.key,
@@ -1413,6 +1564,19 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             "description_variables": ability.description_variables,
             "source_page": ability.source_page,
             "owners": ability.owners.iter().map(|o| format!("{book_id}:monster:{}", slugify(o))).collect::<Vec<_>>(),
+            // `decisions.md §24b`-3: "a field marks it as carrying a
+            // Codex-generated name". `§24b`-4: the divergence stops at the
+            // coordinate -- never the original string, which is why there
+            // is no field here that could carry it.
+            "codex_generated_name": ability.codex_generated_name,
+            "rename": if ability.codex_generated_name {
+                serde_json::json!({
+                    "reason": ability.rename_reason,
+                    "coordinate": ability.rename_coordinate,
+                })
+            } else {
+                serde_json::Value::Null
+            },
         });
         pi_hits.extend(monster_record_pi_hits(ability.key, &data.to_string()));
         let source = CorpusSource::LstToken {
@@ -1429,9 +1593,9 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             ingested_at: ingested_at.clone(),
             data,
             source,
-            license: Some(License::Ogl),
-            pi_field: None,
-            pi_marker: None,
+            license: Some(ability_license),
+            pi_field: ability_pi_field,
+            pi_marker: ability_pi_marker,
             wiring_class,
             wiring_class_signals,
             description_source: None,
@@ -1575,10 +1739,19 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
     };
     let mut wiring_lines = wiring_index.lines();
 
-    let dir = out_root.join("companion");
-    if dir.exists() {
-        fs::remove_dir_all(&dir).expect("clear stale generated subdir");
-    }
+    // **SD-32 Epic 5 protective sweep (`defects.md` D9)**: this used to
+    // unconditionally `remove_dir_all` the whole `companion` directory on
+    // every run, then rewrite every entry from scratch -- confirmed
+    // vulnerable by code-read the same way `gen_advanced_race_guide` was
+    // live-reproduced (`grep -n "out_path.exists()" src/bin/gen_book_cache.rs`
+    // returns zero hits for this function). 927 of 927 companion records
+    // (100% of the kind, across 16 `CompanionBookSpec` books) carry a
+    // `raw_tokens` field `enrich_companion_raw_tokens.rs` writes AFTER this
+    // generator runs, which this generator's own inline `serde_json::json!`
+    // shape cannot reconstruct. Same fix as `gen_monster_book`
+    // (`SD31-E6-F9-005`): a file is removed ONLY when its key is ABSENT
+    // from the set this run just computed.
+    let mut current_companion_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
 
     // Keyed by file name, because a record's `source_line` is only meaningful
     // together with its `source_file` -- see `CompanionRecord::source_file`.
@@ -1630,7 +1803,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
                 companion.key, companion.source_file, spec.races_lsts
             )
         });
-        let line = verified_citation_line(races_file, companion.source_line, companion.name);
+        let line = verified_citation_line(races_file, companion.source_line, companion.name, false);
         let data = serde_json::json!({
             "key": format!("{book_id}:companion:{}", slugify(companion.key)),
             "corpus_key": companion.key,
@@ -1675,10 +1848,12 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             wiring_class_signals,
             description_source: None,
         };
-        write_record(
-            &out_root.join("companion").join(format!("{}.json", slugify(companion.key))),
-            &record,
-        );
+        let key = format!("{book_id}:companion:{}", slugify(companion.key));
+        current_companion_keys.insert(key);
+        let path = out_root.join("companion").join(format!("{}.json", slugify(companion.key)));
+        if !path.exists() {
+            write_record(&path, &record);
+        }
         creature_written += 1;
     }
 
@@ -1692,7 +1867,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
                 ability.key, ability.source_file, spec.abilities_lsts
             )
         });
-        let line = verified_citation_line(abilities_file, ability.source_line, ability.name);
+        let line = verified_citation_line(abilities_file, ability.source_line, ability.name, false);
         let data = serde_json::json!({
             "key": format!("{book_id}:companion:{}", slugify(ability.key)),
             "corpus_key": ability.key,
@@ -1742,11 +1917,23 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             wiring_class_signals,
             description_source: None,
         };
-        write_record(
-            &out_root.join("companion").join(format!("{}.json", slugify(ability.key))),
-            &record,
-        );
+        let key = format!("{book_id}:companion:{}", slugify(ability.key));
+        current_companion_keys.insert(key);
+        let path = out_root.join("companion").join(format!("{}.json", slugify(ability.key)));
+        if !path.exists() {
+            write_record(&path, &record);
+        }
         ability_written += 1;
+    }
+    if out_root.join("companion").exists() {
+        // Single writer of `<book>/companion/` (verified: `gen_companion_book`
+        // is the only generator that writes a `companion` kind directory --
+        // SD-32 cross-generator sweep, 2026-08-23).
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("companion"),
+            &current_companion_keys,
+            &|_path, _line| true,
+        );
     }
 
     if !pi_hits.is_empty() {
@@ -1895,15 +2082,22 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     // Implemented" -- so this generator, not the monster one, is the whole of
     // what those books contribute.
     //
-    // **B5's `support/b5_races_companion_oa.lst` is deliberately NOT named
-    // here.** `_bestiary_5.pcc:69` loads it under
-    // `PRECAMPAIGN:1,Occult Adventures`, a book this repo has not ingested;
-    // `decisions.md §47.2`. The transcriber excludes its two rows from the
-    // table by reading that pcc gate, so this spec has nothing to point at.
+    // **B5's `support/b5_races_companion_oa.lst` IS named here (SD-32 row
+    // 19, cycle 2).** It used to be excluded on the premise that
+    // `PRECAMPAIGN:1,Occult Adventures` (`_bestiary_5.pcc:69`) gated it
+    // behind an uningested book (`decisions.md §47.2`). That premise is
+    // false: `occult_adventures` is an ingested book
+    // (`reach_gate.rs::CORPUS_BOOK_IDS`), and `decisions.md §27b`
+    // ("EVERYTHING") separately overturned this exact reachability-driven
+    // exclusion shape. `classify_companion_rows.py`'s
+    // `UNINGESTED_CAMPAIGN_GATES` was emptied and the transcriber now
+    // includes both of this file's rows in `COMPANIONS`, so this spec must
+    // point at the file that owns them or `gen_companion_book` panics on
+    // an unresolvable citation.
     CompanionBookSpec {
         corpus_book: "bestiary_5",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_5",
-        races_lsts: &["b5_races_companion.lst"],
+        races_lsts: &["b5_races_companion.lst", "b5_races_companion_oa.lst"],
         abilities_lsts: &["b5_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_5.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 5, OGL §15 Product Identity section",
@@ -2237,8 +2431,31 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bestiary_3",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_3",
         races_lsts: &["b3_races.lst"],
-        abilities_lsts: &["b3_abilities_race.lst"],
-        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_3.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        // `vishkanya_abilities_race.lst` added `decisions.md §20`
+        // no_record-to-zero wave 2 follow-on: one owner-less
+        // `monster_ability` row (`Vishkanya ~ Toxic ~ Vishkanya Venom`,
+        // `docs/work-inventory.json`'s own `book: "bestiary_3"` re-
+        // attribution) physically lives under
+        // `core_essentials/races/vishkanya/vishkanya_abilities_race.lst`
+        // (that race's own `_race.pcc` loads it, not any `bestiary_3.pcc`
+        // line -- confirmed by `grep -rl vishkanya_abilities_race
+        // **/*.pcc`), reached via the SAME core_essentials fallback
+        // `ce_abilities_race.lst`/`b4_abilities_races_ce.lst` already use
+        // (`load_corpus_file_rel_with_fallback`'s recursive walk finds it
+        // under the subdirectory once the basename is registered here).
+        // Never registered until this cycle because no prior transcription
+        // reached this row -- `transcribe_monster_tables.py::
+        // resolve_book_file` already resolved it (Python's fallback walk is
+        // also recursive), so only this generator's citation allow-list was
+        // stale.
+        // `ce_abilities_race.lst` added the same cycle, same cause: another
+        // owner-less row (`Asura ~ Save Bonus` and siblings, the `Traits
+        // Output ~ <Kind>` rows this module's own header names) physically
+        // lives under `core_essentials`'s own directory, the identical
+        // shape `bestiary`/`bestiary_2`/`bestiary_4`'s entries already
+        // register for the same file.
+        abilities_lsts: &["b3_abilities_race.lst", "vishkanya_abilities_race.lst", "ce_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_3.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt. `vishkanya_abilities_race.lst`'s own provenance is `core_essentials`'s -- verified identical (same PCGen `_race.pcc` OGL declaration governs it).",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 3, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-006",
     },
@@ -2251,8 +2468,30 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bestiary_4",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_4",
         races_lsts: &["b4_races.lst"],
-        abilities_lsts: &["b4_abilities_race.lst"],
-        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        // `b4_abilities_races_ce.lst` added SD-32 card 11 (T9 onboarding,
+        // `decisions.md §19` sign-off / `§17` generic-pass discipline): both
+        // `_bestiary_4.pcc:59` and `_bestiary_4_for_players.pcc:59` load it
+        // UNGATED alongside `b4_abilities_race.lst` (`ABILITY:` line, no
+        // `PRECAMPAIGN`/other condition), the same "second abilities file at
+        // the book's own root" shape `inner_sea_gods`'s `support/` pair and
+        // `beastiary`'s `ce_abilities_race.lst` entry already cover --
+        // `transcribe_monster_tables.py`'s re-run against the fresh inventory
+        // found 42 newly-reachable rows citing this file, and this generator
+        // refuses (rather than silently drops) any citation to a file not
+        // named here.
+        // `ce_abilities_race.lst`/`wyrwood_abilities_race.lst` added
+        // `decisions.md §20` no_record-to-zero wave 2 follow-on: owner-less
+        // rows physically living under `core_essentials`'s own directory
+        // (the `Traits Output ~ <Kind>` rows and `Wyrwood ~ Construct
+        // Traits`), the identical shape `bestiary_3`'s matching entry adds
+        // this same cycle, reached via the same core_essentials fallback.
+        abilities_lsts: &[
+            "b4_abilities_race.lst",
+            "b4_abilities_races_ce.lst",
+            "ce_abilities_race.lst",
+            "wyrwood_abilities_race.lst",
+        ],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt. `b4_abilities_races_ce.lst` is loaded by the SAME `_bestiary_4.pcc`/`_bestiary_4_for_players.pcc` (line 59, `ABILITY:` token, no gate) so the same OGL declaration governs it.",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 4, OGL §15 Product Identity section; 14 monster rows additionally declare NAMEISPI:YES per-record and are dropped by the screen",
         classified_by_cycle: "SD29-E5-F2-007",
     },
@@ -2342,10 +2581,14 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
     // `grep -n 'ha_races.lst\|ha_abilities_race.lst' _horror_adventures.pcc`
     // -> `63:ABILITY:ha_abilities_race.lst`, `77:RACE:ha_races.lst`, neither
     // carrying a `PRECAMPAIGN` gate. That check is read from the PCC LOAD LINE,
-    // per round 9's finding, and it is the check that disqualified this lane's
-    // other nominally-workable book -- `occult_adventures` loads its one
-    // monster row under a NEGATED gate (`!PRECAMPAIGN:1,INCLUDES=Bestiary 3`)
-    // this repo's campaign set fails, see `decisions.md`.
+    // per round 9's finding, and at the time this was written it disqualified
+    // this lane's other nominally-workable book: `occult_adventures` loads
+    // its one monster row under a NEGATED gate
+    // (`!PRECAMPAIGN:1,INCLUDES=Bestiary 3`) this repo's campaign set fails.
+    // `decisions.md §27b` overturns that disposition: the gate is a
+    // reachability finding, not an ingest exemption, so `occult_adventures`
+    // is registered below too (own `MonsterBookSpec` entry) -- reachability
+    // for its 5 units is reported honestly as 0.
     //
     // `corpus_book` is `horror_adventures`, matching the `data/corpus/` tree
     // this book's `race_trait` (Epic 6 round 3) and `companion` (Epic 7)
@@ -2366,6 +2609,152 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Horror Adventures, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, and the classifier's Product Identity screen returns 0 -- which is what the blacklist's per-record predicate predicts for three generic hive-insect species rather than named personae",
         classified_by_cycle: "SD29-E5-F2-012",
     },
+    // `decisions.md §20` no_record-to-zero, round 3. Five zero-monster books
+    // `decisions.md §17a`'s re-derive found unregistered
+    // (`scripts/classify_monster_ability_rows.py`'s "ZERO-monster books"
+    // line). Every one has `races_lsts: &[]` -- no monster row of the book
+    // exists to own any ability, so every transcribed row ships owner-less by
+    // construction, the same shape the `bestiary_2`/`bestiary_3`/`bestiary_4`
+    // core_essentials-fallback entries already ship a subset of.
+    //
+    // Provenance verified against each file directly (not copied from the row
+    // above): `grep -c NAMEISPI:YES <abilities_lst>` -> 0 for all five;
+    // `ultimate_wilderness` alone carries 1 `NAMEISPI:YES`/`DESCISPI:YES` hit
+    // elsewhere in its 296-line abilities file (screened per-record by this
+    // generator's own PI_BLACKLIST_TERMS scan, not assumed clear).
+    MonsterBookSpec {
+        corpus_book: "ultimate_wilderness",
+        book_relative: "pathfinder/paizo/roleplaying_game/ultimate_wilderness",
+        races_lsts: &[],
+        abilities_lsts: &["uw_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _ultimate_wilderness.pcc declares ISOGL:YES at line 27, carries 16 COPYRIGHT lines and a real 9,214-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Wilderness, OGL §15 Product Identity section; the abilities file's own screen runs per-record on every emitted value",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    MonsterBookSpec {
+        corpus_book: "ultimate_intrigue",
+        book_relative: "pathfinder/paizo/roleplaying_game/ultimate_intrigue",
+        races_lsts: &[],
+        abilities_lsts: &["ui_abilities_race_pu.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _ultimate_intrigue.pcc declares ISOGL:YES at line 18, carries 18 COPYRIGHT lines and a real 9,728-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Intrigue, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    MonsterBookSpec {
+        corpus_book: "ultimate_magic",
+        book_relative: "pathfinder/paizo/roleplaying_game/ultimate_magic",
+        races_lsts: &[],
+        abilities_lsts: &["um_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _ultimate_magic.pcc declares ISOGL:YES at line 19, carries 29 COPYRIGHT lines and a real 10,158-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Magic, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    // `ce_abilities_race.lst` -- one owner-less row (`Universal Monster Rule ~
+    // Ferocity`) physically lives under `core_essentials`'s own directory,
+    // the identical shape `bestiary`/`bestiary_2`/`bestiary_3`/`bestiary_4`'s
+    // matching entries already register for this file, reached via the same
+    // `load_corpus_file_rel_with_fallback` core_essentials fallback. Found by
+    // this generator's own citation refusal, not assumed.
+    MonsterBookSpec {
+        corpus_book: "bestiary_6",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_6",
+        races_lsts: &[],
+        abilities_lsts: &["b6_abilities_race.lst", "ce_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_6.pcc declares ISOGL:YES at line 23, carries 23 COPYRIGHT lines and a real 10,687-byte OGL.txt. `ce_abilities_race.lst`'s own provenance is `core_essentials`'s -- see that book's own MonsterBookSpec entry -- verified identical (same PCGen `_core_essentials.pcc` OGL declaration governs every file it loads).",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 6, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    // `b5_abilities_race_oa.lst` -- `_bestiary_5.pcc:66` loads
+    // `support/b5_abilities_race_oa.lst|PRECAMPAIGN:1,Occult Adventures`: this
+    // repo has NOT registered `occult_adventures` as an included book, so
+    // PCGen's own chargen would not load this file for a `bestiary_5`-only
+    // campaign. Registered here anyway, deliberately: `docs/work-inventory.json`
+    // independently attributes these 3 rows to `book: "bestiary_5"` (the
+    // census walker reads a book's own `.pcc` ABILITY lines regardless of
+    // PRECAMPAIGN, which governs optional chargen inclusion, not which book
+    // physically owns the file) -- Gate 0's census already counted them as
+    // this book's content, and `decisions.md §20` requires their shape be
+    // measured, so this generator ingests what the census already scoped
+    // rather than re-litigating it. Found by this generator's own citation
+    // refusal, not assumed.
+    MonsterBookSpec {
+        corpus_book: "bestiary_5",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_5",
+        races_lsts: &[],
+        abilities_lsts: &["b5_abilities_race.lst", "ce_abilities_race.lst", "b5_abilities_race_oa.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_5.pcc declares ISOGL:YES at line 25, carries 8 COPYRIGHT lines and a real 7,806-byte OGL.txt. `ce_abilities_race.lst`'s own provenance is `core_essentials`'s (see that book's own entry); `b5_abilities_race_oa.lst` is loaded by the same `_bestiary_5.pcc` (ABILITY line, no PRECAMPAIGN gate on that token).",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 5, OGL §15 Product Identity section; zero rows of the abilities files declare NAMEISPI:YES. One owned row (`Traits Output ~ Sahkil`, `b5_abilities_race.lst:96`) is a multi-DESC: shape `parse_desc` refuses rather than mistranscribes -- real per-record work, not shipped by this cycle.",
+        classified_by_cycle: "SD32-T9-NORECORD-R3",
+    },
+    // `decisions.md §20` no_record-to-zero, round 4. Reached via
+    // `gen_pathfinder_unchained`'s own call to `gen_monster_book` (this
+    // book's CLI dispatch special-cases its own generator function in
+    // `main()`, above the generic `monster_book_spec` arm, so this spec is
+    // never reached through that arm directly -- only through the explicit
+    // call the generator function makes). `pu_abilities_race.lst` loads
+    // UNGATED at the book's own `.pcc` root (line 43, no `PRECAMPAIGN`).
+    MonsterBookSpec {
+        corpus_book: "pathfinder_unchained",
+        book_relative: "pathfinder/paizo/roleplaying_game/pathfinder_unchained",
+        races_lsts: &[],
+        abilities_lsts: &["pu_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _pathfinder_unchained.pcc declares ISOGL:YES at line 19 and carries 7 COPYRIGHT lines and a real 7,429-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Pathfinder Unchained, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R4",
+    },
+    // `decisions.md §20` no_record-to-zero, round 4. Reached via
+    // `gen_advanced_race_guide`'s own call to `gen_monster_book`, the same
+    // shape as `pathfinder_unchained` above. `arg_abilities_race.lst` loads
+    // UNGATED at the book's own `.pcc` root (line 57, no `PRECAMPAIGN`).
+    MonsterBookSpec {
+        corpus_book: "advanced_race_guide",
+        book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
+        races_lsts: &[],
+        abilities_lsts: &["arg_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own advanced_race_guide.pcc declares ISOGL:YES at line 20 and carries 11 COPYRIGHT lines and a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Advanced Race Guide, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R4",
+    },
+    // `decisions.md §20` no_record-to-zero, round 5. This book carries no
+    // hand-rolled `gen_book_cache.rs` function (its `spell` family is
+    // reached through `src/bin/ingest_spells.rs`'s config-driven path
+    // instead), so it is reached entirely through `main`'s generic
+    // `monster_book_spec` fallback arm below -- no new generator code, only
+    // this registry row. `ma_abilities_race.lst` loads UNGATED at the
+    // book's own `.pcc` root (line 40, no `PRECAMPAIGN`).
+    MonsterBookSpec {
+        corpus_book: "mythic_adventures",
+        book_relative: "pathfinder/paizo/roleplaying_game/mythic_adventures",
+        races_lsts: &[],
+        abilities_lsts: &["ma_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _mythic_adventures.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Mythic Adventures, OGL §15 Product Identity section; zero rows of the abilities file declare NAMEISPI:YES or DESCISPI:YES",
+        classified_by_cycle: "SD32-T9-NORECORD-R5",
+    },
+    // `decisions.md §27b` -- EVERYTHING. Overturns the disposition this
+    // file's own comment above (near `horror_adventures`) recorded: "occult_
+    // adventures loads its one monster row under a NEGATED gate this repo's
+    // campaign set fails" was a REACHABILITY finding, not an ingest
+    // exemption -- the book's `.lst` rows exist and are ingested here like
+    // every other book; reachability is reported separately and honestly
+    // (0 -- all 5 `monster_ability` rows ship owner-less, the identical
+    // shape `mythic_adventures` above already ships). `races_lsts: []`
+    // deliberately: `oa_races.lst`'s 4 rows are `docs/work-inventory.json`
+    // kind `race`, a different kind and a sibling lane's territory, not
+    // this cycle's `monster_ability` scope; the Python transcriber's own
+    // unit-set (`docs/work-inventory.json`, not a raw `races_lsts` glob)
+    // auto-includes the one `kind: monster` row (`oa_races_b3.lst`'s Kami
+    // (Shikigami)) regardless, because it is the sole `monster`-kind unit
+    // this book has -- see `occult_adventures/monster_data.rs`'s own header.
+    MonsterBookSpec {
+        corpus_book: "occult_adventures",
+        book_relative: "pathfinder/paizo/roleplaying_game/occult_adventures",
+        races_lsts: &["oa_races_b3.lst"],
+        abilities_lsts: &["oa_abilities_race.lst", "oa_abilities_race_b3.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _occult_adventures.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Occult Adventures, OGL §15 Product Identity section; zero rows of either abilities file declare NAMEISPI:YES or DESCISPI:YES",
+        classified_by_cycle: "SD32-DECISION-27B-CARVEOUT-CLOSURE",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {
@@ -2379,6 +2768,21 @@ fn monster_book_corpus_root(spec: &MonsterBookSpec) -> PathBuf {
     );
     if let Ok(v) = std::env::var(&override_var) {
         return PathBuf::from(v);
+    }
+    // `decisions.md §20` (no_record-to-zero wave 2): every OTHER tool in this
+    // bundle (`scripts/census_independent.py`, `scripts/card15_reconcile.py`,
+    // `scripts/generic_pass_state_rederive.py`, ...) reads the repo-local
+    // pinned oracle via the plain `PCGEN_CORPUS_ROOT` env var
+    // (`artifacts/corpus/README.md`, `scripts/fetch-pcgen-oracle.sh`). This
+    // binary alone fell back straight to the deprecated
+    // `~/workspace/repos/pcgen/data` checkout the program's own standing
+    // rule says never to reference, with no way to point it at the pinned
+    // oracle short of a per-book override that also (undesirably) disables
+    // the `core_essentials` cross-book fallback below. Checked SECOND, after
+    // the per-book override, so an existing `PCGEN_CORPUS_ROOT_<BOOK>` still
+    // wins for a synthetic/test-only book directory exactly as before.
+    if let Ok(v) = std::env::var("PCGEN_CORPUS_ROOT") {
+        return PathBuf::from(v).join(spec.book_relative);
     }
     let home = std::env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
     PathBuf::from(home).join("workspace/repos/pcgen/data").join(spec.book_relative)
@@ -2397,6 +2801,13 @@ fn monster_book_corpus_data_root(spec: &MonsterBookSpec) -> Option<PathBuf> {
     if std::env::var(&override_var).is_ok() {
         return None;
     }
+    // See `monster_book_corpus_root`'s matching comment: the plain
+    // `PCGEN_CORPUS_ROOT` env var (the repo-local pinned oracle's `data/`
+    // root) is checked before the deprecated `~/workspace/repos/pcgen`
+    // fallback.
+    if let Ok(v) = std::env::var("PCGEN_CORPUS_ROOT") {
+        return Some(PathBuf::from(v));
+    }
     let home = std::env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
     Some(PathBuf::from(home).join("workspace/repos/pcgen/data"))
 }
@@ -2408,19 +2819,43 @@ fn monster_book_corpus_data_root(spec: &MonsterBookSpec) -> Option<PathBuf> {
 /// A citation nobody checked is the failure mode `v06_corpus_trap_report
 /// --audit` exists to catch after the fact; checking it here means the cache is
 /// never written with a stale line number in the first place.
-fn verified_citation_line(file: &CorpusFile, recorded: u32, display_name: &str) -> u32 {
+/// `codex_generated_name`: `true` when `display_name` is a Codex-minted
+/// neutral identity (`decisions.md §24`), not the printed name -- the row's
+/// own first column is still the ORIGINAL (possibly PI) name in that case,
+/// so the exact-match check below would fail by design and must be skipped.
+/// The line still has to EXIST (the `.get(idx)` bounds check below still
+/// runs unconditionally) -- a citation this generator cannot verify at all
+/// is not a citation, renamed or not.
+fn verified_citation_line(
+    file: &CorpusFile,
+    recorded: u32,
+    display_name: &str,
+    codex_generated_name: bool,
+) -> u32 {
     let idx = recorded as usize - 1;
     let line = file
         .lines
         .get(idx)
         .unwrap_or_else(|| panic!("{} has no line {recorded}", file.relative_path));
     let first_col = line.split('\t').next().unwrap_or_default().trim();
-    assert_eq!(
-        first_col, display_name,
-        "{}:{recorded} names {first_col:?}, not {display_name:?} -- the table's recorded line is \
-         stale and must be re-transcribed, not papered over here",
-        file.relative_path
-    );
+    // A `.COPY=` overlay row's own first column is a compound directive
+    // (`CATEGORY=Special Ability|Rake.COPY=Rake`), not the record's display
+    // name -- the same "row's first column is not the emitted name" shape
+    // `codex_generated_name` exempts, but structural rather than a rename:
+    // provable from the line's own bytes, never guessed (`decisions.md
+    // §27`'s provisional-facet-default cycle, round 8 -- `Aurumvorax ~
+    // Rake`/`Carnivorous Blob ~ Split`). A `.COPY=` MONSTER row never
+    // reaches this function at all (dropped before emission, see the
+    // `.COPY=` screen above), so this only ever exempts an ABILITY row.
+    let is_copy_overlay_row = first_col.contains(".COPY=");
+    if !codex_generated_name && !is_copy_overlay_row {
+        assert_eq!(
+            first_col, display_name,
+            "{}:{recorded} names {first_col:?}, not {display_name:?} -- the table's recorded \
+             line is stale and must be re-transcribed, not papered over here",
+            file.relative_path
+        );
+    }
     recorded
 }
 
@@ -2475,6 +2910,42 @@ mod tests {
     // not just the bare basename -- `CorpusLines::line`'s single-level
     // `dir.join(file)` join otherwise silently resolves a nested citation
     // to a nonexistent top-level path.
+
+    // `decisions.md §27`'s provisional-facet-default cycle (round 8):
+    // `verified_citation_line` used to assert a cited line's own first
+    // column equals the emitted `display_name` unconditionally (except for
+    // `codex_generated_name`) -- a `.COPY=` overlay ability row's first
+    // column is a compound directive (`CATEGORY=Special Ability|Rake.COPY=
+    // Rake`), never the emitted name, so this panicked on every real
+    // `.COPY=` ability row before the fix.
+
+    #[test]
+    fn verified_citation_line_exempts_a_copy_overlay_rows_compound_first_column() {
+        let file = CorpusFile {
+            relative_path: "test.lst".to_string(),
+            sha256: String::new(),
+            lines: vec!["CATEGORY=Special Ability|Rake.COPY=Rake\tKEY:Aurumvorax ~ Rake".to_string()],
+        };
+        // Would panic under the pre-fix code: first column
+        // (`CATEGORY=Special Ability|Rake.COPY=Rake`) != display_name (`Rake`).
+        assert_eq!(verified_citation_line(&file, 1, "Rake", false), 1);
+    }
+
+    #[test]
+    fn verified_citation_line_still_catches_a_genuinely_stale_citation() {
+        // Mutation-style proof this is not a blanket bypass: a row that is
+        // NOT a `.COPY=` overlay and whose first column genuinely diverges
+        // from the emitted name must still panic.
+        let file = CorpusFile {
+            relative_path: "test.lst".to_string(),
+            sha256: String::new(),
+            lines: vec!["Stale Name\tKEY:Something ~ Else".to_string()],
+        };
+        let result = std::panic::catch_unwind(|| {
+            verified_citation_line(&file, 1, "Different Name", false)
+        });
+        assert!(result.is_err(), "a genuinely stale citation must still panic");
+    }
 
     #[test]
     fn wiring_class_file_arg_keeps_the_subdirectory_a_bare_basename_would_drop() {

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Talisman Crafter ~ Talismanic Implements",
+    "name": "Talismanic Implements",
+    "class": "Occultist",
+    "description": "The talisman crafter doesn't gain normal implements; rather, after refreshing her mental focus, she spends 1 hour crafting a number of small master talismans out of cast metal, parchment, wax, or wood, inscribing them with esoteric seals and investing them with power to serve as her implements for casting occultist spells of the schools she knows. The talisman crafter selects schools as normal (two at 1st level and an additional one at 2nd level and every 4 occultist levels thereafter). She creates one master talisman for each implement school she knows, unless she selected that implement school multiple times, in which case she needs one master talisman per time she has selected that school. The talisman crafter splits her mental focus among the schools she knows and generic focus as normal. This ability alters implements.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman Crafter ~ Talismanic Implements"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Feature.TalismanCrafterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "DESC",
+        "value": "The talisman crafter doesn't gain normal implements; rather, after refreshing her mental focus, she spends 1 hour crafting a number of small master talismans out of cast metal, parchment, wax, or wood, inscribing them with esoteric seals and investing them with power to serve as her implements for casting occultist spells of the schools she knows. The talisman crafter selects schools as normal (two at 1st level and an additional one at 2nd level and every 4 occultist levels thereafter). She creates one master talisman for each implement school she knows, unless she selected that implement school multiple times, in which case she needs one master talisman per time she has selected that school. The talisman crafter splits her mental focus among the schools she knows and generic focus as normal. This ability alters implements."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 288,
+    "record_key": "Talisman Crafter ~ Talismanic Implements"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

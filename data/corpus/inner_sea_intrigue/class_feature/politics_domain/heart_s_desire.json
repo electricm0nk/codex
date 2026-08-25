@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Politics Domain ~ Heart's Desire",
     "name": "Heart's Desire",
-    "class": "Politics Domain",
+    "class": "Cleric",
     "description": "You receive divine guidance on the goals of your political allies and rivals. Once per day, you can use commune as a spell-like ability using your inquisitor level as your caster level, but only to ask questions about others' goals.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

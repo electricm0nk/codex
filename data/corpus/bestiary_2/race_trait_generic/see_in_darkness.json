@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "See in Darkness",
+    "name": "See in Darkness",
+    "description": "The creature can see perfectly in darkness of any kind, including that created by deeper darkness.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sense.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature can see perfectly in darkness of any kind, including that created by deeper darkness."
+      },
+      {
+        "key": "VISION",
+        "value": "See in Darkness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Vision|See in Darkness"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1947,
+    "record_key": "See in Darkness"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

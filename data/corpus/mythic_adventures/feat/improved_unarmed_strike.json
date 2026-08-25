@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Improved Unarmed Strike",
+    "category": "Mythic",
+    "name": "Improved Unarmed Strike (Mythic)",
+    "description": "Your unarmed strikes are more powerful than others. You can add to your damage with unarmed strikes. As a swift action, you can expend one use of mythic power to overcome the hardness of objects with your unarmed strikes. This effect last for rounds. If an object's hardness is greater than 15, you don't ignore any of its hardness.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 116,
+    "record_key": "Improved Unarmed Strike"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Cavalier Archetype ~ Hussar",
     "name": "Hussar",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "Agile and maneuverable cavalry, hussars make up for their relatively light armor with their speed and cunning. They are known for doggedly pursuing their foes even in tight spaces, across rooftops, and in other places that mounted cavalry could normally never reach.",
     "raw_tokens": [
       {
@@ -151,5 +151,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

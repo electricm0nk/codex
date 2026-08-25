@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Familiar Archetype ~ Emissary",
+    "name": "Emissary",
+    "description": "The emissary is touched by the divine, serving as a font of wisdom and a moral compass for its master. An emissary familiar can serve only a master who worships a single deity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar Archetype ~ Emissary"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FamiliarArchetype.CF_FamiliarAlertness.CF_FamiliarShareSpells.CF_FamiliarDeliverTouchSpells"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "1,Y"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Emissary],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarShareSpells,TYPE.CF_FamiliarDeliverTouchSpells]"
+      },
+      {
+        "key": "DESC",
+        "value": "The emissary is touched by the divine, serving as a font of wisdom and a moral compass for its master. An emissary familiar can serve only a master who worships a single deity."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Emissary ~ Class Skills|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Emissary ~ Divine Guidance|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Emissary ~ Share Will|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Emissary ~ Domain Influence|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Familiar"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 536,
+    "record_key": "Familiar Archetype ~ Emissary"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

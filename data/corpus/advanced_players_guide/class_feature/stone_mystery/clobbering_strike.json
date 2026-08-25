@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Stone Mystery ~ Clobbering Strike",
     "name": "Clobbering Strike",
-    "class": "Stone Mystery",
+    "class": "Oracle",
     "description": "Whenever you score a critical hit against an opponent with a spell that requires an attack roll, you may immediately attempt to trip your opponent as a swift action. You do not provoke an attack of opportunity as normal for this trip attempt. You cannot be tripped in return when using this ability.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

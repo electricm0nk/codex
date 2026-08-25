@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Grodair ~ Muddy Field",
+    "delivery": "Supernatural",
+    "description": "As a standard action when on sand, soil, or other types of loose earth, a grodair can gush standing water into the area surrounding it. Upon doing so, the land within 15 feet of the grodair is treated as a shallow bog (Core Rulebook 427). This water remains as long as the grodair is within 15 feet and wishes to maintain the water. The bog instantly disperses as soon as the grodair is killed or moves out of the area.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:grodair_muddy_field",
+    "name": "Muddy Field",
+    "owners": [
+      "bestiary_3:monster:grodair"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action when on sand, soil, or other types of loose earth, a grodair can gush standing water into the area surrounding it. Upon doing so, the land within 15 feet of the grodair is treated as a shallow bog (Core Rulebook 427). This water remains as long as the grodair is within 15 feet and wishes to maintain the water. The bog instantly disperses as soon as the grodair is killed or moves out of the area."
+      },
+      {
+        "key": "KEY",
+        "value": "Grodair ~ Muddy Field"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "TYPE",
+        "value": "GrodairRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.143",
+    "traits": [
+      "GrodairRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1022,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Grodair ~ Muddy Field",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

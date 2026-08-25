@@ -1,0 +1,153 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Rule - Use Automatic Bonus Progression",
+    "name": "Rule - Use Automatic Bonus Progression",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "OptionalRules"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_SaveLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_AC_DeflectionLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_AC_Natural_ArmorLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_WeaponLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_ArmorLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_MentalLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_PhysicalLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_LegendaryLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Automatic Bonus Progression"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|ABP_Save|PREVARGTEQ:ABP_SaveLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|ABP_AC_Deflection|PREVARGTEQ:ABP_AC_DeflectionLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|ABP_AC_Natural_Armor|PREVARGTEQ:ABP_AC_Natural_ArmorLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|ABP_Weapon|PREVARGTEQ:ABP_WeaponLVL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|ABP_Armor|PREVARGTEQ:ABP_ArmorLVL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|ABP_Mental|PREVARGTEQ:ABP_MentalLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|ABP_Physical|PREVARGTEQ:ABP_PhysicalLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|ABP_Legendary|PREVARGTEQ:ABP_LegendaryLVL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_LVL|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_SaveLVL|ABP_LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_AC_DeflectionLVL|ABP_LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_AC_Natural_ArmorLVL|ABP_LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_WeaponLVL|ABP_LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_ArmorLVL|ABP_LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_MentalLVL|ABP_LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_PhysicalLVL|ABP_LVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_LegendaryLVL|ABP_LVL"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 25,
+    "record_key": "Rule - Use Automatic Bonus Progression"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -983,6 +983,106 @@ run_supersession_gate_selftest() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: shape-coverage-standing-gate-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_shape_coverage_standing_gate.py`
+# -- SD-32 Gate 3's own self-test (card `gate-3-closure-invariant`,
+# AT-32-G3-001/002/003). `scripts/shape_ledger.py`'s `classify_unit()`
+# structurally always returns a family (falls through to F0/F8 rather than
+# ever emitting an uncovered result), so on the real inventory
+# `unclassified_count` can never organically go non-zero -- "prove it can
+# fail before it is trusted" (`SD-30 state-goals-and-lessons.md §3.1`, the
+# same discipline `reachability-audit-selftest` above applies) therefore
+# feeds the gate a FABRICATED uncovered row and a fabricated pile mismatch
+# and confirms both are reported and fail the gate's own exit code, plus
+# confirms the fail-closed-on-empty-predicate path (AT-32-G3-002). Cheap
+# (stdlib unittest, no build, no network) -- placed in BOTH stage sets next
+# to supersession-gate-selftest, the same self-test-for-a-gate-that-raises-
+# on-purpose reasoning that stage carries.
+# ---------------------------------------------------------------------------
+
+run_shape_coverage_standing_gate_selftest() {
+    stage_start "shape-coverage-standing-gate-selftest — python3 -m unittest scripts/tests/test_shape_coverage_standing_gate.py"
+    local log="$LOG_DIR/shape-coverage-standing-gate-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_shape_coverage_standing_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail shape-coverage-standing-gate-selftest "self-test script missing at scripts/tests/test_shape_coverage_standing_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail shape-coverage-standing-gate-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail shape-coverage-standing-gate-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass shape-coverage-standing-gate-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: shape-coverage-standing-gate
+#
+# Runs `scripts/shape_coverage_standing_gate.py` against the live
+# `docs/work-inventory.json` and `data/corpus/` -- SD-32's Gate 3 closure
+# invariant (AT-32-G3-001/002/003, `decisions.md` Decision 1a). Re-derives
+# the shape ledger fresh on every invocation (reusing
+# `scripts/shape_ledger.py`'s classification rather than re-deriving them)
+# and fails when either `unclassified_count` is non-zero (an object no
+# named shape covers) or the per-family piles do not reconcile to the
+# population considered (a `build_ledger` regression that silently drops
+# rows) -- "sum the piles, always" (`workflow-instruction.md §9` standing
+# lesson 5). Cheap (Python + JSON, no cargo build, no network) -- placed in
+# BOTH stage sets next to reachability-audit, the same live-corpus-run-
+# every-time reasoning that stage carries.
+# ---------------------------------------------------------------------------
+
+run_shape_coverage_standing_gate() {
+    stage_start "shape-coverage-standing-gate — python3 scripts/shape_coverage_standing_gate.py"
+    local log="$LOG_DIR/shape-coverage-standing-gate.log"
+    local script="$REPO_ROOT/scripts/shape_coverage_standing_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail shape-coverage-standing-gate "script missing at scripts/shape_coverage_standing_gate.py"
+        return
+    fi
+
+    (
+        cd "$REPO_ROOT" && exec python3 "$script" \
+            --inventory "$REPO_ROOT/docs/work-inventory.json" \
+            --corpus-root "$REPO_ROOT/data/corpus"
+    ) >"$log" 2>&1
+    local status=$?
+
+    local population unclassified piles sha no_record budget_exceeded
+    population=$(sed -n 's/^population (not-done units considered): \([0-9]*\)$/\1/p' "$log" | tail -1)
+    unclassified=$(sed -n 's/^unclassified: \([0-9]*\)$/\1/p' "$log" | tail -1)
+    piles=$(sed -n 's/^piles reconcile: \([A-Za-z]*\).*$/\1/p' "$log" | tail -1)
+    no_record=$(sed -n 's/^join-status split.*no_record=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    budget_exceeded=$(sed -n 's/^.*exceeded: \([A-Za-z]*\)$/\1/p' "$log" | tail -1)
+    sha=$(sed -n 's/^corpus SHA: \(.*\)$/\1/p' "$log" | tail -1)
+    actual "SHAPE_COVERAGE_POPULATION=${population:-unknown}"
+    actual "SHAPE_COVERAGE_NO_RECORD=${no_record:-unknown}"
+
+    if (( status != 0 )); then
+        stage_fail shape-coverage-standing-gate "population=${population:-?} unclassified=${unclassified:-?} piles_reconcile=${piles:-?} no_record=${no_record:-?} budget_exceeded=${budget_exceeded:-?} corpus_sha=${sha:-?} — $log"
+        return
+    fi
+
+    stage_pass shape-coverage-standing-gate "population=${population:-?} unclassified=${unclassified:-?} no_record=${no_record:-?} corpus_sha=${sha:-?}"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: reachability-audit
 #
 # Runs `scripts/reachability_audit.py` against the live `docs/work-inventory.json`
@@ -1843,6 +1943,8 @@ for stage in "${SELECTED[@]}"; do
         reachability-audit)  run_reachability_audit ;;
         groundtruth-guard-selftest) run_groundtruth_guard_selftest ;;
         supersession-gate-selftest) run_supersession_gate_selftest ;;
+        shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
+        shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
         pi-sweep)            run_pi_sweep ;;
         declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;

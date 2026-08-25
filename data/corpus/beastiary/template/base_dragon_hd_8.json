@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "data": {
+    "key": "Base Dragon HD (8)",
+    "name": "Base Dragon HD (8)",
+    "raw_tokens": [
+      {
+        "key": "TEMPLATE",
+        "value": "Dragon Size HD (8)"
+      },
+      {
+        "key": "HD",
+        "value": "8-9:TEMPLATE:Wyrmling"
+      },
+      {
+        "key": "HD",
+        "value": "10-11:TEMPLATE:Very Young"
+      },
+      {
+        "key": "HD",
+        "value": "12-13:TEMPLATE:Young"
+      },
+      {
+        "key": "HD",
+        "value": "14-15:TEMPLATE:Juvenile"
+      },
+      {
+        "key": "HD",
+        "value": "16-17:TEMPLATE:Young Adult"
+      },
+      {
+        "key": "HD",
+        "value": "18-19:TEMPLATE:Adult"
+      },
+      {
+        "key": "HD",
+        "value": "20-21:TEMPLATE:Mature Adult"
+      },
+      {
+        "key": "HD",
+        "value": "22-23:TEMPLATE:Old"
+      },
+      {
+        "key": "HD",
+        "value": "24-25:TEMPLATE:Very Old"
+      },
+      {
+        "key": "HD",
+        "value": "26-27:TEMPLATE:Ancient"
+      },
+      {
+        "key": "HD",
+        "value": "28-29:TEMPLATE:Wyrm"
+      },
+      {
+        "key": "HD",
+        "value": "30+:TEMPLATE:Great Wyrm"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33",
+    "line": 956,
+    "record_key": "Base Dragon HD (8)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

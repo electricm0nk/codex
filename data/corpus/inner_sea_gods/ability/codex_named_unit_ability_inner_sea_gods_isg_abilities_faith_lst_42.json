@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_42)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_42)",
+    "description": "Using a ruby-bladed knife, inscribe symmetrical cuts into the flesh of another creature-preferably an unwilling sentient being you own or hold dominion over. Drain the victim's blood into a bowl of bone made from the skull of a sentient humanoid. The amount of blood drained is up to you; you don't have to drain so much that you make the creature weak or too useless to serve you. Use the bowl of blood to draw a large pentagram on the ground. Kneel within the pentagram and concentrate on the glory you will bring to the Prince of Darkness's name. Gain a +4 profane bonus on saving throws against fire effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "Using a ruby-bladed knife, inscribe symmetrical cuts into the flesh of another creature-preferably an unwilling sentient being you own or hold dominion over. Drain the victim's blood into a bowl of bone made from the skull of a sentient humanoid. The amount of blood drained is up to you; you don't have to drain so much that you make the creature weak or too useless to serve you. Use the bowl of blood to draw a large pentagram on the ground. Kneel within the pentagram and concentrate on the glory you will bring to the Prince of Darkness's name. Gain a +4 profane bonus on saving throws against fire effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 42,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_42)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:42"
+  }
+}

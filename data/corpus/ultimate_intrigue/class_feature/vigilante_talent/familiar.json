@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Familiar",
     "name": "Familiar",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante gains a familiar, using his vigilante level as his effective wizard level. The familiar also has a social identity as a seemingly normal animal, though vigilantes with outlandish familiars might still need to hide them.",
     "raw_tokens": [
       {
@@ -71,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

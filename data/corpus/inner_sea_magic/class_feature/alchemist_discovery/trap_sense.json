@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Alchemist Discovery ~ Trap Sense",
     "name": "Trap Sense",
-    "class": "Alchemist Discovery",
+    "class": "Alchemist",
     "description": "You gain a +%1 bonus on Reflex saves made to avoid traps, and a +%1 dodge bonus to AC against attacks made by traps.|TrapSenseBonus",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

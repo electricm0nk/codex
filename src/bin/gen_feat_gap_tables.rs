@@ -227,6 +227,47 @@ const BOOK_INPUTS: &[BookInput] = &[
             "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_feats.lst",
         ],
     },
+    // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+    // precondition`, AT-32-G0-003) -- Inner Sea Taverns' first compiled
+    // rule set of any kind, the same shape `RuleSetId::Mythic` above
+    // established (new `RuleSetId`, no hand-authored table, first record
+    // family delivered entirely by this generator). Only `istav_feats.lst`'s
+    // 9 non-`.MOD` declarations are parsed here -- this file has no `.MOD`
+    // rows at all (re-derived: `grep -c '\.MOD' istav_feats.lst` -> 0).
+    BookInput {
+        rule_set: RuleSetId::InnerSeaTaverns,
+        variant: "InnerSeaTaverns",
+        slug: "inner_sea_taverns",
+        files: &["pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst"],
+    },
+    // SD-32 T9 onboarding (card 11) -- `decisions.md §19` PI sign-off cleared
+    // this book's feat population. `RuleSetId::Isc` already exists and is
+    // already wired into `COMPILED_RULE_SETS`/`engine_book_for` (added for
+    // this book's equipment/monster content, `v06_work_inventory.rs`), so
+    // this is a pure config addition: no new `RuleSetId`, no `v06_work_
+    // inventory.rs` edit. Re-derived directly against `docs/work-
+    // inventory.json`'s own `feat_key_absent_from_catalog` evidence for this
+    // book: every one of its 24 not-ingested feat units carries `CATEGORY:
+    // FEAT` in the raw row (checked by direct read, not assumed) -- genuine
+    // player feats, not the `.MOD`/`VISIBLE:EXPORT` continuation shape found
+    // blocking `horror_adventures`/`mythic_adventures` (see this cycle's own
+    // receipt for that finding).
+    BookInput {
+        rule_set: RuleSetId::Isc,
+        variant: "Isc",
+        slug: "inner_sea_combat",
+        files: &["pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst"],
+    },
+    // Same shape as `Isc` immediately above: `RuleSetId::Isg` already exists
+    // and is already wired (added for this book's equipment/monster
+    // content). Re-derived directly: every one of this book's not-ingested
+    // feat units carries `CATEGORY:FEAT` in the raw row.
+    BookInput {
+        rule_set: RuleSetId::Isg,
+        variant: "Isg",
+        slug: "inner_sea_gods",
+        files: &["pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst"],
+    },
 ];
 
 /// One parsed corpus feat record, before the already-held filter runs.

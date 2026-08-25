@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Wild Shape Small Animal (Eagle)",
+    "name": "Wild Shape Small Animal (Eagle)",
+    "raw_tokens": [
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Wild Shape (Small Animal)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "TODO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "WildShapeProgression,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Wildshape 2 ~ Eagle|PREVAREQ:WildShapeProgression,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Wildshape 3 ~ Eagle|PREVARGTEQ:WildShapeProgression,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Talons"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Fly,30"
+      },
+      {
+        "key": "TYPE",
+        "value": "WildshapeTemplate.WildshapeSmall"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b",
+    "line": 307,
+    "record_key": "Wild Shape Small Animal (Eagle)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

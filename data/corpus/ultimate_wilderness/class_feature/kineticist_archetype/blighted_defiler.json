@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kineticist Archetype ~ Blighted Defiler",
+    "name": "Blighted Defiler",
+    "class": "Kineticist",
+    "description": "A few kineticists have developed the ability to steal the life force from the surrounding land in order to infuse themselves with unnatural strength beyond their bodies' normal capabilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kineticist Archetype ~ Blighted Defiler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.KineticistArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Kineticist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Kineticist Archetype ~ Blighted Defiler],[!PREFACT:1,ABILITIES,Kineticist_Archetype_GatherPower=True,Kineticist_Archetype_WildTalents=True,Kineticist_Archetype_ElementalOverflow=True,Kineticist_Archetype_InternalBuffer=True,Kineticist_Archetype_ElementalDefense=True,Kineticist_Archetype_Omnikinesis=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A few kineticists have developed the ability to steal the life force from the surrounding land in order to infuse themselves with unnatural strength beyond their bodies' normal capabilities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Defiler ~ Alignment|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Defiler ~ Steal Power|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Defiler ~ Elemental Might|PRECLASS:1,Kineticist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Defiler ~ Life Buffer|PRECLASS:1,Kineticist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Defiler ~ Stolen Strength|PRECLASS:1,Kineticist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blighted Defiler ~ Steal Life|PRECLASS:1,Kineticist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_GatherPower|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_WildTalents|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ElementalOverflow|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_InternalBuffer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_ElementalDefense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_Archetype_Omnikinesis|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_InternalBuffer|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_ElementalDefense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Kineticist_CF_Omnikinesis|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 9,
+    "record_key": "Kineticist Archetype ~ Blighted Defiler"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

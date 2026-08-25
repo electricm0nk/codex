@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bones Spirit ~ Shard Soul",
     "name": "Shard Soul",
-    "class": "Bones Spirit",
+    "class": "Shaman",
     "description": "The shaman gains DR %1/magic. In addition, as a standard action she can cause jagged pieces of bone to explode from her body in a 10-foot-radius burst. This deals %2d6 points of piercing damage. A successful Reflex saving throw (DC %3) halves this damage. The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.|ShamanShardSoulDR|ShamanShardSoulDamageDice|ShamanShardSoulDC",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

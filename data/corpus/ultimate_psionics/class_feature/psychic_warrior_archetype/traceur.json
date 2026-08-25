@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Warrior Archetype ~ Traceur",
+    "name": "Traceur",
+    "class": "Psychic Warrior",
+    "description": "You are a mobile fighter and you use techniques that allow you to make the most out of your momentum and your speed. Where many psychic warriors rely on their physical power or agility, you have learned that motion is just as powerful a tool at your disposal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Warrior Archetype ~ Traceur"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsychicWarriorArchetype.PsychicWarriorArmorProficiencies.PsychicWarriorBonusFeat2.PsychicWarriorPathSkill4.PsychicWarriorMartialPower.PsychicWarriorBonusFeat8"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic Warrior=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Warrior Archetype ~ Traceur],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsychicWarriorArmorProficiencies,TYPE.PsychicWarriorBonusFeat2,TYPE.PsychicWarriorPathSkill4,TYPE.PsychicWarriorMartialPower,TYPE.PsychicWarriorBonusFeat8]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a mobile fighter and you use techniques that allow you to make the most out of your momentum and your speed. Where many psychic warriors rely on their physical power or agility, you have learned that motion is just as powerful a tool at your disposal."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Traceur ~ Quickened Strides|PRECLASS:1,Psychic Warrior=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Traceur ~ Charge Through|PRECLASS:1,Psychic Warrior=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Traceur ~ Acrobatic Movements|PRECLASS:1,Psychic Warrior=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Traceur ~ Mobile Power|PRECLASS:1,Psychic Warrior=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Traceur ~ Rapid Acrobatics|PRECLASS:1,Psychic Warrior=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2026,
+    "record_key": "Psychic Warrior Archetype ~ Traceur"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

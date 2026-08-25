@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Weapon Focus",
+    "category": "Mythic",
+    "name": "Weapon Focus (Mythic)",
+    "description": "You're a master of one type of weapon. Double the bonuses on your attack rolls from Weapon Focus and Greater Weapon Focus. As a swift action, you can expend one use of mythic power to gain a bonus on attack rolls with your selected weapon until the end of your turn.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Weapon Focus",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 185,
+    "record_key": "Weapon Focus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

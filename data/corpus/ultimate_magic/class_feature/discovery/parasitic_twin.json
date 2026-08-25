@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Parasitic Twin",
     "name": "Parasitic Twin",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "Your vestigial limbs are part of a parasitic twin on your torso, consisting of a head, a torso, and two arms (from the vestigial limb discovery). Normally, the twin is mostly recessed within your body, with the visible arms acting like the vestigial arm discovery, though you can manifest or hide the twin as a standard action. The twin is helpless, fully subservient to you, and cannot be targeted or harmed. Once per day, if you succumb to a mental effect that would make you unconscious, helpless, or not in control of your own actions (such as charm person, feeblemind, or hold person), you can reroll your saving throw; success means the twin absorbs the effect and you can ignore it. Using this ability sickens you for the duration of the absorbed effect (removing the effect from the twin ends the sickened condition), and you cannot use the twin's limbs during that time, though passive effects (such as from rings worn on the vestigial arms) continue normally.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

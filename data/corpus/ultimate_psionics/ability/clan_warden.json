@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Inquisitor Archetype ~ Clan Warden",
+    "name": "Clan Warden",
+    "description": "You work to keep the clan and hearth safe against all threats.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Inquisitor Archetype ~ Clan Warden"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InquisitorArchetype.InquisitorDeityFavoredWeapon.InquisitorDomain.InquisitorSternGaze.InquisitorTrack.InquisitorSoloTactics.InquisitorTeamworkFeat6"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Clan Warden],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorDeityFavoredWeapon,TYPE.InquisitorDomain,TYPE.InquisitorSternGaze,TYPE.InquisitorTrack,TYPE.InquisitorSoloTactics,TYPE.InquisitorTeamworkFeat6,TYPE.InquisitorJudgment]"
+      },
+      {
+        "key": "DESC",
+        "value": "You work to keep the clan and hearth safe against all threats."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Clan Warden ~ Weapon and Armor Proficiencies|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Clan Warden ~ Domain|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Clan Warden ~ Judgment|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Clan Warden ~ Warden's Gaze|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Clan Warden ~ On the Scene|PRECLASS:1,Inquisitor=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Clan Warden ~ Tactician|PRECLASS:1,Inquisitor=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Class Feature|AUTOMATIC|Clan Warden ~ Protect the Community|PRECLASS:1,Inquisitor=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.340"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 65,
+    "record_key": "Inquisitor Archetype ~ Clan Warden"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

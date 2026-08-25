@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Surge",
     "name": "Surge",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "As a standard action, you can cause a mighty wave to appear that pushes or pulls a single creature. Make a combat maneuver check against the target, using %1 as your CMB. If successful, you may pull or push the creature as if using the bull rush or drag combat maneuver. You can use this ability %2 times per day.|DomainWaterLVL+WIS|DomainWaterTimes",
     "raw_tokens": [
       {
@@ -52,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

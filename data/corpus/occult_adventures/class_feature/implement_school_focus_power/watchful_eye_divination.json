@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Watchful Eye",
     "name": "Watchful Eye [Divination]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "You can expend 1 point of mental focus as a standard action to create an invisible sensor within 30 feet that watches a 5-foot-square area. Whenever any creature enters that square, you receive a mental image of the creature as long as you are on the same plane as the sensor. The sensor remains active for %1 minutes. The image will not wake you from slumber, although you do receive all of the images the sensor collected once you wake up. The sensor can be deceived by invisibility and similar magic. You can expend additional points of mental focus when creating the eye to increase the size of the square by 5 feet per additional point spent (to 10 feet square, 15 feet square, and so on).|10*OccultistLVL",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

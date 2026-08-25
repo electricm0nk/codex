@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Naturalist ~ Reflect on the Land",
+    "name": "Reflect on the Land",
+    "class": "Occultist",
+    "description": "A naturalist can cast commune with nature once per day as a spell-like ability with a caster level equal to his occultist level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naturalist ~ Reflect on the Land"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.NaturalistClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=OccultistLVL|Commune with Nature"
+      },
+      {
+        "key": "DESC",
+        "value": "A naturalist can cast commune with nature once per day as a spell-like ability with a caster level equal to his occultist level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 144,
+    "record_key": "Naturalist ~ Reflect on the Land"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

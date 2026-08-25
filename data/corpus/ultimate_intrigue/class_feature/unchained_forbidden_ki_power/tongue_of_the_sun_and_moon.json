@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Forbidden Ki Power ~ Tongue of the Sun and Moon",
+    "name": "Tongue of the Sun and Moon",
+    "class": "Unchained Forbidden Ki Power",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Forbidden Ki Power ~ Tongue of the Sun and Moon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PREVAREQ:UnchainedBlackAspForbiddenPower,1],[PREVAREQ:MonkLVL,13]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Unchained Monk ~ Tongue of the Sun and Moon"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 21,
+    "record_key": "Unchained Forbidden Ki Power ~ Tongue of the Sun and Moon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

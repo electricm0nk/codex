@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Greater Hive Mind Stain",
+    "name": "Greater Hive Mind Stain",
+    "description": "The noise of the hive mind is strongest when you are at your weakest. Whenever damage causes you to drop below half your maximum hit points, you are also staggered for 1 round. Immunities don't prevent this staggered condition, and you can't remove it early by any means. This effect doesn't trigger if you are already below half your maximum hit points before you take damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Greater Hive Mind Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveGreaterHiveMindStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "DESC",
+        "value": "The noise of the hive mind is strongest when you are at your weakest. Whenever damage causes you to drop below half your maximum hit points, you are also staggered for 1 round. Immunities don't prevent this staggered condition, and you can't remove it early by any means. This effect doesn't trigger if you are already below half your maximum hit points before you take damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 416,
+    "record_key": "Hive Corruption ~ Greater Hive Mind Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

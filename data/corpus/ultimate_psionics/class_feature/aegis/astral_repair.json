@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Astral Repair",
+    "name": "Astral Repair",
+    "class": "Aegis",
+    "description": "An aegis is capable of repairing mundane items, restoring %1 hit points of damage to the touched item as a standard action usable at will.  If the object has the broken condition, this condition is removed if the object is restored to at least half its original hit points.  All the pieces of an object must be present for this ability to function.  This ability has no effect on objects that have been warped or otherwise transmuted, but it can still repair damage to such items.|AstralRepairHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Astral Repair"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.PsiLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AstralRepairHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An aegis is capable of repairing mundane items, restoring %1 hit points of damage to the touched item as a standard action usable at will.  If the object has the broken condition, this condition is removed if the object is restored to at least half its original hit points.  All the pieces of an object must be present for this ability to function.  This ability has no effect on objects that have been warped or otherwise transmuted, but it can still repair damage to such items.|AstralRepairHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AstralRepairHP|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 24,
+    "record_key": "Aegis ~ Astral Repair"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Corruption ~ True Unlife Gift",
+    "name": "True Unlife Gift",
+    "description": "When you're reduced to fewer than 0 hit points but not slain and you have a use of fast healing remaining, you immediately assume gaseous form, activate your fast healing, and remain conscious. Once you have more than 0 hit points, the effect ends. This delays the normal Will save against your corruption progressing until gaseous form ends.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ True Unlife Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VampirismTrueUnlifeGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "DESC",
+        "value": "When you're reduced to fewer than 0 hit points but not slain and you have a use of fast healing remaining, you immediately assume gaseous form, activate your fast healing, and remain conscious. Once you have more than 0 hit points, the effect ends. This delays the normal Will save against your corruption progressing until gaseous form ends."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 934,
+    "record_key": "Vampirism Corruption ~ True Unlife Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

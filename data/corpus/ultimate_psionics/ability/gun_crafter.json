@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cannoneer ~ Gun Crafter",
+    "name": "Gun Crafter",
+    "description": "You gain a +%1 bonus to Craft (guns) checks.|GunCrafterBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cannoneer ~ Gun Crafter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GunCrafterBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus to Craft (guns) checks.|GunCrafterBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (guns)|GunCrafterBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GunCrafterBonus|min(6,floor(MarksmanLVL/3))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 25,
+    "record_key": "Cannoneer ~ Gun Crafter"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Zombie (Juju)",
+    "name": "Zombie (Juju)",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "DR",
+        "value": "5/Magic and Slashing"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Undead"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Juju Zombie Flight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Magic|5|PRELEVEL:MIN=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Slashing|5|PRELEVEL:MIN=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|DAMAGE|max(0,STR/2)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Immunity to Cold|Immunity to Electricity|Immunity to Electricity|Juju Zombie ~ Immunity to Magic Missile|Resistance to Fire|Undead Traits"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Initiative|Toughness"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE|LE|NE"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Zombie (Juju)"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
+    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520",
+    "line": 126,
+    "record_key": "Zombie (Juju)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

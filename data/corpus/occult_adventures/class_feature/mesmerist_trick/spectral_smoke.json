@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Spectral Smoke",
     "name": "Spectral Smoke",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "A cloud of smoke pops up around the subject, foiling attacks. The mesmerist can trigger this trick when the subject is attacked by an attack or by a spell that requires an attack roll. A smoke cloud appears in the subject's square and in a %1-foot radius around it. This cloud lasts for %2 round(s). The cloud functions as fog cloud, but is an illusion (figment) effect that can't be dispersed by wind and can be used underwater. A creature that interacts with the cloud can attempt a saving throw to disbelieve the effect.|min(10+5*floor(MesmeristLVL/5),30)|MesmeristLVL",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

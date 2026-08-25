@@ -1,0 +1,81 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Resolute Creature ~ Smite Chaos",
+    "delivery": "Supernatural",
+    "description": "%1/day as a swift action. Add +%2 to attack rolls and +%3 damage bonus against chaotic foes; smite persists until target is dead or the resolute creature rests.",
+    "description_variables": [
+      "SmiteChaosTimes",
+      "SmiteChaosAttackBonus",
+      "SmiteChaosDamageBonus"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:resolute_creature_smite_chaos",
+    "name": "Smite Chaos",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteChaosAttackBonus|max(CHA,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteChaosDamageBonus|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteChaosTimes|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteChaosAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteChaosDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteChaosTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day as a swift action. Add +%2 to attack rolls and +%3 damage bonus against chaotic foes; smite persists until target is dead or the resolute creature rests.|SmiteChaosTimes|SmiteChaosAttackBonus|SmiteChaosDamageBonus"
+      },
+      {
+        "key": "KEY",
+        "value": "Resolute Creature ~ Smite Chaos"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.292",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1966,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Resolute Creature ~ Smite Chaos",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Domain Power ~ Synergistic Touch",
+    "name": "Synergistic Touch",
+    "description": "You can touch a creature as a standard action to confer upon it the benefits of any one Teamwork feat that you possess. This effect persists for %1 rounds. You can use this ability %2 times per day.|max(1,DomainCommunityLVL/2)|DomainCommunityTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Synergistic Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "You can touch a creature as a standard action to confer upon it the benefits of any one Teamwork feat that you possess. This effect persists for %1 rounds. You can use this ability %2 times per day.|max(1,DomainCommunityLVL/2)|DomainCommunityTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainCommunityTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 264,
+    "record_key": "Domain Power ~ Synergistic Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

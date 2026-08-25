@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Siyokoy ~ Swim-By Attack",
+    "delivery": "Extraordinary",
+    "description": "Extremely quick in the water, a siyokoy gains Spring Attack as a bonus feat when swimming.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:siyokoy_swim_by_attack",
+    "name": "Swim-By Attack",
+    "owners": [
+      "bestiary_3:monster:siyokoy"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Extremely quick in the water, a siyokoy gains Spring Attack as a bonus feat when swimming."
+      },
+      {
+        "key": "KEY",
+        "value": "Siyokoy ~ Swim-By Attack"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.246"
+      },
+      {
+        "key": "TYPE",
+        "value": "SiyokoyRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.246",
+    "traits": [
+      "SiyokoyRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1537,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Siyokoy ~ Swim-By Attack",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

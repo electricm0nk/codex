@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:04Z",
+  "data": {
+    "key": "Stone (Spirit)",
+    "name": "Stone (Spirit)",
+    "raw_tokens": [
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stone (Spirit)=1|magic stone|Stone (Spirit)=2|stone call|Stone (Spirit)=3|meld into stone|Stone (Spirit)=4|wall of stone|Stone (Spirit)=5|stoneskin|Stone (Spirit)=6|stone tell|Stone (Spirit)=7|statue|Stone (Spirit)=8|repel metal or stone|Stone (Spirit)=9|clashing rocks"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
+    "sha256": "80e1bd9e91ad02c2653b6faf0a94bc92b528c0e89b6bfeb60c379ec40d4e64fd",
+    "line": 12,
+    "record_key": "Stone (Spirit)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

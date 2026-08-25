@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sniper Style ~ Sniper Mantra",
+    "name": "Sniper Mantra",
+    "class": "Sniper Style",
+    "description": "+%1 bonus damage on ranged attacks.|SniperMantraBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sniper Style ~ Sniper Mantra"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SniperMantraBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 bonus damage on ranged attacks.|SniperMantraBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|DAMAGE.Ranged|SniperMantraBonus*PsionicFocusActive"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SniperMantraBonus|(MarksmanStyleLVL+5)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 366,
+    "record_key": "Sniper Style ~ Sniper Mantra"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

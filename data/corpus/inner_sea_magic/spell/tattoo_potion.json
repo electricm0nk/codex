@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Tattoo Potion",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "When you cast this spell, you mix special tattoo inks into a potion of your choice. Once you finish casting tattoo potion, the potion begins bubbling and fizzing-if no one drinks the potion within 1 minute of the spell being cast, the potion bubbles away into vapor and is destroyed. &nl;When a potion under the effects of tattoo potion is imbibed, the effects of the potion do not occur. Instead, the potion transforms into a spell tattoo (see page 16) on the drinker's chest tattoo slot-if the drinker already has a magic tattoo in this location, the tattoo potion is wasted. Once the potion transforms into a spell tattoo, it remains in place permanently until it is used as a spell tattoo."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_spells.lst",
+    "sha256": "e1e7d1aab79b5fe0bb7d8ae8f77ac908fbb327e81c81a9482c0da6b673892661",
+    "line": 42,
+    "record_key": "Tattoo Potion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

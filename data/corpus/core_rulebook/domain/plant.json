@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Plant",
+    "name": "Plant",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainPlant,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Plant Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.PlantDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPlantAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "DESC",
+        "value": "You find solace in the green, can grow defensive thorns, and can communicate with plants."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Plant=1|Entangle|Plant=2|Barkskin|Plant=3|Plant Growth|Plant=4|Command Plants|Plant=5|Wall of Thorns|Plant=6|Repel Wood|Plant=7|Animate Plants|Plant=8|Control Plants|Plant=9|Shambler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 34,
+    "record_key": "Plant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

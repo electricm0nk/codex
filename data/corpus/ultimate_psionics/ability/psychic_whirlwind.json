@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dissonance ~ Psychic Whirlwind",
+    "name": "Psychic Whirlwind",
+    "description": "You may make a free disarm attempt against any creature that fails a concentration check within %1 feet to make them drop one held object of your choice.|DissonancePsychicWhirlwindRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dissonance ~ Psychic Whirlwind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DissonancePsychicWhirlwindRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You may make a free disarm attempt against any creature that fails a concentration check within %1 feet to make them drop one held object of your choice.|DissonancePsychicWhirlwindRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DissonancePsychicStaticRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DissonanceDeafeningStaticRange|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DissonancePsychicWhirlwindRange|15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.436"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 197,
+    "record_key": "Dissonance ~ Psychic Whirlwind"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

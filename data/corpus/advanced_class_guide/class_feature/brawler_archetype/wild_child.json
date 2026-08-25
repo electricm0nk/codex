@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler Archetype ~ Wild Child",
     "name": "Wild Child",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "The wild child works with his sworn animal friend to conquer the challenges that lay before them. This kinship could come from being lost in the wilderness and raised by animals or growing up with an exotic pet.",
     "raw_tokens": [
       {
@@ -63,6 +63,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Brawler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Brawler Archetype ~ Wild Child],[!PREFACT:1,ABILITIES,Brawler_Archetype_ManeuverTraining=True,Brawler_Archetype_BonusFeats=True,Brawler_Archetype_CloseWeaponMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_CF_CloseWeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Brawler_Archetype_CloseWeaponMastery|true"
       }
     ]
   },
@@ -79,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

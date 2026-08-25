@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Champion of the Faith ~ Sacred Weapon",
     "name": "Sacred Weapon",
@@ -71,6 +71,62 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.128"
+      },
+      {
+        "key": "DESC",
+        "value": "Any sacred weapon wielded by a champion of the faith counts as |PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "DESC",
+        "value": "Chaotic for the purposes of overcoming damage reduction.|PREVARGTEQ:ChampionOfTheFaithChaos,1|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "DESC",
+        "value": "Evil for the purposes of overcoming damage reduction.|PREVARGTEQ:ChampionOfTheFaithEvil,1|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "DESC",
+        "value": "Good for the purposes of overcoming damage reduction.|PREVARGTEQ:ChampionOfTheFaithGood,1|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "DESC",
+        "value": "Lawful for the purposes of overcoming damage reduction.|PREVARGTEQ:ChampionOfTheFaithLaw,1|PRECLASS:1,Warpriest=4"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action|PREVARGTEQ:WarpriestLVL,12|PREVARLT:WarpriestLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "Twice per day as a swift action|PREVARGTEQ:WarpriestLVL,16|PREVARLT:WarpriestLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a swift action|PREVARGTEQ:WarpriestLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": ", a champion of the faith can enhance any one sacred weapon with |PREVARGTEQ:WarpriestLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "the anarchic weapon special ability. This effect lasts for 1 minute.|PREVARGTEQ:ChampionOfTheFaithChaos,1|PRECLASS:1,Warpriest=12"
+      },
+      {
+        "key": "DESC",
+        "value": "the unholy weapon special ability. This effect lasts for 1 minute.|PREVARGTEQ:ChampionOfTheFaithEvil,1|PRECLASS:1,Warpriest=12"
+      },
+      {
+        "key": "DESC",
+        "value": "the holy weapon special ability. This effect lasts for 1 minute.|PREVARGTEQ:ChampionOfTheFaithGood,1|PRECLASS:1,Warpriest=12"
+      },
+      {
+        "key": "DESC",
+        "value": "the axiomatic weapon special ability. This effect lasts for 1 minute.|PREVARGTEQ:ChampionOfTheFaithLaw,1|PRECLASS:1,Warpriest=12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.128"
       }
     ]
   },
@@ -88,5 +144,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

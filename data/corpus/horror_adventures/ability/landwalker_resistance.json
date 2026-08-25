@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption ~ Landwalker Resistance",
+    "name": "Landwalker Resistance",
+    "description": "You have chosen to resist your corruption rather than embrace the gift of your manifestation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Landwalker Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeepOneLandwalkerGift"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,Rules ~ Use Corruption (Vile)"
+      },
+      {
+        "key": "DESC",
+        "value": "You have chosen to resist your corruption rather than embrace the gift of your manifestation."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeepOneCorruptionResistance|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 158,
+    "record_key": "Deep One Corruption ~ Landwalker Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

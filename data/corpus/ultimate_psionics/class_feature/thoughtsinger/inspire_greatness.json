@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thoughtsinger ~ Inspire Greatness",
+    "name": "Inspire Greatness",
+    "class": "Thoughtsinger",
+    "description": "You can use your performance to inspire greatness in yourself or up to %1 willing allies within 30 feet, granting extra fighting capability. To inspire greatness, all of the targets must be able to see and hear you. A creature inspired with greatness gains 2 bonus Hit Dice (d10s), the commensurate number of temporary hit points (apply the target's Constitution modifier, if any, to these bonus Hit Dice), a +2 competence bonus on attack rolls, and a +1 competence bonus on Fortitude saves. The bonus Hit Dice count as regular Hit Dice for determining the effect of spells that are Hit Dice dependent. Inspire Greatness is a mind-affecting ability and it relies on audible and visual components.|InspireGreatnessAllies",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thoughtsinger ~ Inspire Greatness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.Thoughtsong"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InspireGreatnessAllies|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your performance to inspire greatness in yourself or up to %1 willing allies within 30 feet, granting extra fighting capability. To inspire greatness, all of the targets must be able to see and hear you. A creature inspired with greatness gains 2 bonus Hit Dice (d10s), the commensurate number of temporary hit points (apply the target's Constitution modifier, if any, to these bonus Hit Dice), a +2 competence bonus on attack rolls, and a +1 competence bonus on Fortitude saves. The bonus Hit Dice count as regular Hit Dice for determining the effect of spells that are Hit Dice dependent. Inspire Greatness is a mind-affecting ability and it relies on audible and visual components.|InspireGreatnessAllies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InspireGreatnessAllies|min((ThoughtsongLVL-6)/3,4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2448,
+    "record_key": "Thoughtsinger ~ Inspire Greatness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

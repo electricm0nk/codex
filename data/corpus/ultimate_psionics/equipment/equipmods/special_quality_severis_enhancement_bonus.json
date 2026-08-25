@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "+% enhancement|Severis",
+    "key": "Special Quality ~ Severis / Enhancement Bonus",
+    "name": "Enhancement Bonus for Severis",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SeverisEnhancementBonus",
+          "max(0,floor((TL-6)/4))",
+          "PREABILITY:1,CATEGORY=Special Ability,Severis Attunement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SeverisEnhancementBonus",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "SeverisEnhancementBonus",
+          "TYPE=ENHANCEMENT"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Severis / Enhancement Bonus"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "WeaponEnhancement.Psionic"
+      },
+      {
+        "key": "SPROP",
+        "value": "+% enhancement|Severis"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeverisEnhancementBonus|0"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-23T15:10:33Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 145,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipmods.lst",
+    "record_key": "Special Quality ~ Severis / Enhancement Bonus",
+    "sha256": "39d2ad30eb09d1df38e192ab448e0c4dfd5f1cb9790a3d4049a4b4ee838a6968"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

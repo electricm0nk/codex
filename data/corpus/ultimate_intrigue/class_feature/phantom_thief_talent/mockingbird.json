@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Mockingbird",
     "name": "Mockingbird",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief can mimic almost any sort of voice, or even animal calls and sound effects, and he can throw his voice at a distance. This functions similarly to a combination of the ghost sound, ventriloquism, and vocal alteration spells.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

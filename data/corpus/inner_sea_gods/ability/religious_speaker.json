@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted ~ Religious Speaker",
+    "name": "Religious Speaker",
+    "description": "Through her intense studies, meditation, and discussions with other worshipers, the exalted has mastered the art of speaking about her faith. At 4th level, she gains a +2 competence bonus on Bluff, Diplomacy, and Perform (oratory) checks while her divine brand is visible.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted ~ Religious Speaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exalted Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Through her intense studies, meditation, and discussions with other worshipers, the exalted has mastered the art of speaking about her faith. At 4th level, she gains a +2 competence bonus on Bluff, Diplomacy, and Perform (oratory) checks while her divine brand is visible."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 98,
+    "record_key": "Exalted ~ Religious Speaker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

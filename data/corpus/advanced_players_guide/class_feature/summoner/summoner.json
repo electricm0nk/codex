@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner",
     "name": "Summoner",
-    "class": null,
+    "class": "Summoner",
     "description": null,
     "raw_tokens": [
       {
@@ -51,6 +51,306 @@
       {
         "key": "BONUS",
         "value": "VAR|EidolonBaseSkill|0"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=1|Ant Haul,Rejuvenate Eidolon (Lesser),Unfetter|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=2|Create Pit,Evolution Surge (Lesser),Glide,Summon Eidolon|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=3|Aqueous Orb,Devolution,Evolution Surge,Rejuvenate Eidolon,Seek Thoughts,Spiked Pit|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=4|Acid Pit,Evolution Surge (Greater),Purified Calling,Transmogrify|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=5|Hungry Pit,Planar Adaptation,Rejuvenate Eidolon (Greater)|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=6|Planar Adaptation (Mass)|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=0|Acid Splash,Arcane Mark,Daze,Detect Magic,Guidance,Light,Mage Hand,Mending,Message,Open/Close,Read Magic,Resistance|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=1|Alarm,Daze Monster,Endure Elements,Enlarge Person,Expeditious Retreat,Feather Fall,Grease,Identify,Jump,Mage Armor,Magic Fang,Magic Mouth,Mount,Protection from Chaos,Protection from Evil,Protection from Good,Protection from Law,Reduce Person,Shield,Unseen Servant,Ventriloquism|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=2|Alter Self,Barkskin,Bear's Endurance,Blur,Bull's Strength,Cat's Grace,Detect Thoughts,Eagle's Splendor,Fox's Cunning,Glitterdust,Haste,Invisibility,Levitate,Misdirection,Owl's Wisdom,Phantom Steed,Protection from Arrows,Resist Energy,See Invisibility,Slow,Spider Climb,Summon Swarm,Wind Wall|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=3|Black Tentacles,Charm Monster,Dimensional Anchor,Dimension Door,Dispel Magic,Displacement,Enlarge Person (Mass),Fire Shield,Fly,Heroism,Invisibility (Greater),Locate Creature,Magic Circle against Chaos,Magic Circle against Evil,Magic Circle against Good,Magic Circle against Law,Magic Fang (Greater),Minor Creation,Nondetection,Protection from Energy,Rage,Reduce Person (Mass),Stoneskin,Tongues,Wall of Fire,Wall of Ice,Water Breathing|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=4|Baleful Polymorph,Bear's Endurance (Mass),Bull's Strength (Mass),Cat's Grace (Mass),Contact Other Plane,Dismissal,Eagle's Splendor (Mass),Fox's Cunning (Mass),Hold Monster,Insect Plague,Mage's Faithful Hound,Magic Jar,Major Creation,Overland Flight,Owl's Wisdom (Mass),Planar Binding (Lesser),Sending,Teleport,Wall of Stone|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=5|Banishment,Creeping Doom,Dispel Magic (Greater),Ethereal Jaunt,Heroism (Greater),Invisibility (Mass),Planar Binding,Plane Shift,Repulsion,Sequester,Simulacrum,Spell Turning,Teleport (Greater),True Seeing,Wall of Iron|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=6|Antipathy,Binding,Charm Monster (Mass),Dimensional Lock,Discern Location,Dominate Monster,Incendiary Cloud,Maze,Planar Binding (Greater),Protection from Spells,Sympathy,Teleportation Circle|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=1|Summon Monster I|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=2|Summon Monster II|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=3|Summon Monster IV|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=4|Summon Monster V|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=5|Summon Monster VII|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Summoner=6|Summon Monster VIII|PREVAREQ:StandardSummoner,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_ArmorProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_SimpleWeapons|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_SummonMonsterSpells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_Eidolon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_LifeLink|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_SummonMonster|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_BondSenses|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_ShieldAlly|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_MakersCall|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_Transposition|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_GreaterShieldAlly|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_LifeBond|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_MergeForms|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_SummonMonster|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_Aspect|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_GreaterAspect|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_ShareSpells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Summoner_CF_TwinEidolon|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_ArmorProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_ArmorProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_SimpleWeapons|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_SimpleWeapons=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_SummonMonsterSpells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_SummonMonsterSpells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_Eidolon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_Eidolon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_LifeLink|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_LifeLink=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_SummonMonster|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_SummonMonster=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_BondSenses|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_BondSenses=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_ShieldAlly|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_ShieldAlly=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_MakersCall|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_MakersCall=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_Transposition|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_Transposition=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_GreaterShieldAlly|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_GreaterShieldAlly=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_LifeBond|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_LifeBond=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_MergeForms|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_MergeForms=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_GreaterAspect|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_GreaterAspect=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_Aspect|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_Aspect=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_ShareSpells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_ShareSpells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_TwinEidolon|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_TwinEidolon=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Summoner_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_ArmorProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerArmorProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_SimpleWeapons|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerSimpleWeapons"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_SummonMonsterSpells|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerSummonMonsterSpells"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_Eidolon|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerEidolon"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_LifeLink|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerLifeLink"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_SummonMonster|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerSummonMonster"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_BondSenses|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerBondSenses"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_ShieldAlly|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerShieldAlly"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_MakersCall|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerMakersCall"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_Transposition|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerTransposition"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_GreaterShieldAlly|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerGreaterShieldAlly"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_LifeBond|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerLifeBond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_MergeForms|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerMergeForms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_GreaterAspect|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerGreaterAspect"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_Aspect|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerAspect"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_ShareSpells|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerShareSpells"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Summoner_CF_TwinEidolon|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerTwinEidolon"
       }
     ]
   },
@@ -69,5 +369,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

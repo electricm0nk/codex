@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Speaker for the Past Time Mystery ~ Aging Touch",
     "name": "Aging Touch",
-    "class": "Speaker for the Past Time Mystery",
+    "class": "Oracle",
     "description": "Your touch ages living creatures and objects. As a melee touch attack, you can deal %1 points of Strength damage to living creatures. Against objects or constructs, you can deal %2d6 points of damage. If used against an object in another creature's possession, treat this attack as a sunder combat maneuver. You can use this ability %3/day.|AgingTouchStrDamage|AgingTouchDamageDice|AgingTouchTimes",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

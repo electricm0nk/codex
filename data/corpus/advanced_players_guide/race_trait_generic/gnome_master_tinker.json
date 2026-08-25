@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gnome ~ Master Tinker",
+    "name": "Master Tinker",
+    "description": "Gnomes experiment with all manner of mechanical devices. Gnomes with this racial trait gain a +1 bonus on Disable Device and Knowledge (engineering) checks. They are treated as proficient with any weapon they have personally crafted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Master Tinker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Master Tinker],[!PREFACT:1,ABILITIES,Gnome_ReplaceDefensiveTraining=true,Gnome_ReplaceHatred=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes experiment with all manner of mechanical devices. Gnomes with this racial trait gain a +1 bonus on Disable Device and Knowledge (engineering) checks. They are treated as proficient with any weapon they have personally crafted."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the defensive training and hatred racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Master Tinker"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disable Device,Knowledge (Engineering)|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceDefensiveTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 49,
+    "record_key": "Gnome ~ Master Tinker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serpent Lord ~ Serpentine Summons",
+    "name": "Serpentine Summons",
+    "class": "Serpent Lord",
+    "description": "You may cast summon nature's ally as a standard action when summoning snakes, and the poison DC of any snakes summoned increases by +2.  You can apply the young template to any snake to reduce the level of the summoning spell required by one.  You can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serpent Lord ~ Serpentine Summons"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DruidClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You may cast summon nature's ally as a standard action when summoning snakes, and the poison DC of any snakes summoned increases by +2.  You can apply the young template to any snake to reduce the level of the summoning spell required by one.  You can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.338"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2472,
+    "record_key": "Serpent Lord ~ Serpentine Summons"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

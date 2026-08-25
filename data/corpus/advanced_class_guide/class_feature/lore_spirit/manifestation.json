@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Lore Spirit ~ Manifestation",
     "name": "Manifestation",
-    "class": "Lore Spirit",
+    "class": "Shaman",
     "description": "the shaman becomes an unending font of knowledge and lore. She can take 20 on all Knowledge skill checks, including those she isn't trained in. Her understanding of the fundamental underpinnings of reality has also become so advanced that she can cast wish once per day. This doesn't require a material component, but the wish cannot be used to grant ability score bonuses or replicate spells with expensive material components.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

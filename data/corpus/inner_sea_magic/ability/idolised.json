@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Idolised ~ Guild",
+    "name": "Idolised",
+    "description": "You've built your glamour, fashion, confidence, and sex appeal to a point where it's not only unmistakable, it can almost be thought of as a weapon. You gain a +2 bonus on Bluff and Diplomacy. Treat your caster level as 1 higher for the purposes of determining the duration of any enchantment spell you cast.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Idolised ~ Guild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.KintargoOperaHouseReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Kintargo Opera House ~ Guild"
+      },
+      {
+        "key": "DESC",
+        "value": "You've built your glamour, fashion, confidence, and sex appeal to a point where it's not only unmistakable, it can almost be thought of as a weapon. You gain a +2 bonus on Bluff and Diplomacy. Treat your caster level as 1 higher for the purposes of determining the duration of any enchantment spell you cast."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Diplomacy|2"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 109,
+    "record_key": "Idolised ~ Guild"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

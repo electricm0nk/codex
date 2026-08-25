@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Air Domain",
     "name": "Air",
-    "class": null,
+    "class": "Cleric",
     "description": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Air=1|Obscuring Mist|Air=2|Wind Wall|Air=3|Gaseous Form|Air=4|Air Walk|Air=5|Control Winds|Air=6|Chain Lightning|Air=7|Elemental Body IV (Air Only)|Air=8|Whirlwind|Air=9|Elemental Swarm (Air Spell Only)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Air],[PREVARLT:AirDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

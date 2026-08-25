@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Daring General ~ Cohort ~ Squire",
     "name": "Squire",
-    "class": "Daring General",
+    "class": "Cavalier",
     "description": "The squire's main task is to care for the daring general's arms and armor. If the squire aids the daring general in donning his armor, it takes half as much time to don as it would if someone else aided the daring general. Additionally, when the squire is adjacent to the daring general, as a standard action, she can grant a +2 bonus to the daring general's AC against the first attack made against the daring general before the squire's next turn. This counts as an application of the aid another action, but the squire does not need to threaten the attacker in question.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

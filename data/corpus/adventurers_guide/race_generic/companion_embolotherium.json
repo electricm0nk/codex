@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "data": {
+    "key": "Companion (Embolotherium)",
+    "name": "Companion (Embolotherium)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Missing"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_races.lst",
+    "sha256": "66d482bb2e6df9db251b81915fd1730a875cbafd1fca4303991f2ac549db366d",
+    "line": 6,
+    "record_key": "Companion (Embolotherium)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

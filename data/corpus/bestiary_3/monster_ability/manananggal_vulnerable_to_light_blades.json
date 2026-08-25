@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Manananggal ~ Vulnerable to Light Blades",
+    "delivery": "Extraordinary",
+    "description": "Light blades (such as daggers, kamas, kukris, rapiers, short swords, sickles, and starknives) deal double the weapon's base damage on a successful hit against a manananggal.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:manananggal_vulnerable_to_light_blades",
+    "name": "Vulnerable to Light Blades",
+    "owners": [
+      "bestiary_3:monster:manananggal"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Light blades (such as daggers, kamas, kukris, rapiers, short swords, sickles, and starknives) deal double the weapon's base damage on a successful hit against a manananggal."
+      },
+      {
+        "key": "KEY",
+        "value": "Manananggal ~ Vulnerable to Light Blades"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "TYPE",
+        "value": "ManananggalRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.190",
+    "traits": [
+      "ManananggalRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1257,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Manananggal ~ Vulnerable to Light Blades",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

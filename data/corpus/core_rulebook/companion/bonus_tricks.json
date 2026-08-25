@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Companion ~ Bonus Tricks",
+    "name": "Bonus Tricks",
+    "description": "%1|BonusTricks",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion ~ Bonus Tricks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BonusTricks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1|BonusTricks"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Animal Trick|var(\"BonusTricks\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|BonusTricks"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 50,
+    "record_key": "Animal Companion ~ Bonus Tricks"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

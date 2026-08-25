@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian Archetype ~ Feral Gnasher",
     "name": "Feral Gnasher",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "Feral gnashers grow up in the wild, either raised by animals or scraping by on their own, and soon learn to fend for themselves. These barbarians often utilize pieced-together armor and fight with their sharp teeth and whatever improvised weapons are within reach.",
     "raw_tokens": [
       {
@@ -83,6 +83,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Feral Gnasher"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Feral Gnasher],[!PREFACT:1,ABILITIES,Barbarian_Archetype_Proficiencies=True,Barbarian_Archetype_FastMovement=True,Barbarian_Archetype_RagePower2=True,Barbarian_Archetype_TrapSense1=True,Barbarian_Archetype_TrapSense2=True,Barbarian_Archetype_TrapSense3=True,Barbarian_Archetype_TrapSense4=True,Barbarian_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_TrapSense4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_RagePower2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_TrapSense4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_ImprovedUncannyDodge|true"
       }
     ]
   },
@@ -99,5 +167,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

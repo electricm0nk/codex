@@ -1,0 +1,136 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Fighter Archetype ~ Ironborn",
+    "name": "Ironborn",
+    "class": "Fighter",
+    "description": "Your body can merge with your armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fighter Archetype ~ Ironborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FighterArchetype.FighterBravery.FighterArmorTraining_ALL.FighterBonusFeat2.FighterBonusFeat4.FighterBonusFeat8.FighterArmorMastery"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Fighter=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Ironborn],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining,TYPE.FighterBonusFeat2,TYPE.FighterBonusFeat4,TYPE.FighterBonusFeat8,TYPE.FighterArmorMastery]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Forgeborn"
+      },
+      {
+        "key": "DESC",
+        "value": "Your body can merge with your armor."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Ironborn ~ Armor Aptitude|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Ironborn ~ Iron Fists|PRECLASS:1,Fighter=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Ironborn ~ Durable Plating|PRECLASS:1,Fighter=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Ironborn ~ Always Armored|PRECLASS:1,Fighter=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Ironborn ~ Fusing of Man and Metal|PRECLASS:1,Fighter=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Fighter Class Feature|AUTOMATIC|Ironborn ~ Shatterproof|PRECLASS:1,Fighter=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Armor Aptitude 7th Level|PRECLASS:1,Fighter=7"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Ironborn],[!PREFACT:1,ABILITIES,Fighter_Archetype_Bravery=True,Fighter_Archetype_ArmorTraining=True,Fighter_Archetype_BonusFeats=True,Fighter_Archetype_ArmorMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_Bravery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_BonusFeat8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2483,
+    "record_key": "Fighter Archetype ~ Ironborn"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

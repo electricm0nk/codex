@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Shadow Beast",
     "name": "Shadow Beast [Illusion]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can call forth one or more beasts made of shadow by expending 1 point of mental focus. This functions as shadow conjuration, but it can be used to duplicate only the effects of summon monster spells. Creatures created with this spell deal 50%% of the normal damage to those that disbelieve the illusion, and their nondamaging effects have only a 50%% chance of affecting disbelieving targets. This can be used to duplicate any summon monster spell up to summon monster V. For every 2 additional levels you possess beyond 9th, the maximum spell level you can duplicate with this ability increases by 1 (to a maximum of summon monster IX at 17th level). Regardless of the spell duplicated, the creatures remain for 1 round per occultist level you possess. You must be at least 9th level to select this focus power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Arcane Temper",
+    "name": "Arcane Temper",
+    "description": "You have quick reactions and fierce concentration. You gain a +1 trait bonus on concentration and initiative checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Arcane Temper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.MagicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Arcane Temper],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.MagicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have quick reactions and fierce concentration. You gain a +1 trait bonus on concentration and initiative checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|INITIATIVE|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "CONCENTRATION|ALLSPELLS|1|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 126,
+    "record_key": "Trait ~ Arcane Temper"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

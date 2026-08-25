@@ -1,20 +1,28 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
-    "key": "Draconic Bloodline",
+    "key": "Draconic Bloodline ~ Standard",
     "name": "Draconic Bloodline",
-    "class": null,
+    "class": "Sorcerer",
     "description": null,
     "raw_tokens": [
       {
+        "key": "KEY",
+        "value": "Draconic Bloodline ~ Standard"
+      },
+      {
         "key": "CATEGORY",
-        "value": "Sorcerer Bloodline"
+        "value": "Blood of Dragons Bloodline"
       },
       {
         "key": "TYPE",
         "value": "SorcererBloodlineChoice"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Archetype,Sorcerer Archetype ~ Crossblooded"
       },
       {
         "key": "ABILITY",
@@ -25,48 +33,32 @@
         "value": "Special Ability|AUTOMATIC|Sorcerer Bloodline ~ Draconic"
       },
       {
-        "key": "BONUS",
-        "value": "ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount"
+        "key": "ABILITY",
+        "value": "Sorcerer Bloodline|AUTOMATIC|Draconic Bloodline"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlineLVL|BloodlineLVL"
+        "value": "VAR|Sorcerer_Draconic_BloodlineArcana1|if(SorcererLVL>=1,0,-1)"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlineProgressionLVL|BloodlineProgressionLVL"
+        "value": "VAR|Sorcerer_Draconic_BloodlineSpells1|if(SorcererLVL>=1,0,-1)"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlineArcana1|if(Sorcerer_CF_BloodlineArcana==0,1,0)"
+        "value": "VAR|Sorcerer_Draconic_BloodlineClassSkill1|if(SorcererLVL>=1,0,-1)"
       },
       {
         "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlineSpells1|if(Sorcerer_CF_BloodlineSpells==0,1,0)"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlineClassSkill1|if(Sorcerer_CF_BloodlineClassSkill==0,1,0)"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlinePowers|if(Sorcerer_CF_BloodlinePowers==0,1,0)"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlinePower1|if(Sorcerer_CF_BloodlinePower1==0,1,0)"
+        "value": "VAR|Sorcerer_Draconic_BloodlinePower1|if((Sorcerer_CF_BloodlinePower1==0&&Sorcerer_Draconic_BloodlineProgressionLVL>=1),1,0)"
       },
       {
         "key": "BONUS",
         "value": "VAR|Sorcerer_Draconic_BloodlinePower3|if((Sorcerer_CF_BloodlinePower3==0&&Sorcerer_Draconic_BloodlineProgressionLVL>=3),1,0)"
       },
       {
-        "key": "DEFINE",
-        "value": "Sorcerer_Draconic_BloodlinePower9|0"
-      },
-      {
         "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlinePower9|(Sorcerer_Draconic_BloodlineProgressionLVL>=9)-(Sorcerer_CF_BloodlinePower15>=1)"
+        "value": "VAR|Sorcerer_Draconic_BloodlinePower9|if((Sorcerer_CF_BloodlinePower9==0&&Sorcerer_Draconic_BloodlineProgressionLVL>=9),1,0)"
       },
       {
         "key": "BONUS",
@@ -75,10 +67,6 @@
       {
         "key": "BONUS",
         "value": "VAR|Sorcerer_Draconic_BloodlinePower20|if((Sorcerer_CF_BloodlinePower20==0&&Sorcerer_Draconic_BloodlineProgressionLVL>=20),1,0)"
-      },
-      {
-        "key": "BONUS",
-        "value": "VAR|Sorcerer_Draconic_BloodlinePower1Times|BloodlinePowerTimes+BloodlinePower1TimesBonus|TYPE=Base"
       }
     ]
   },
@@ -86,14 +74,15 @@
     "kind": "lst_token",
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
     "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
-    "line": 2435,
-    "record_key": "Draconic Bloodline"
+    "line": 2976,
+    "record_key": "Draconic Bloodline ~ Standard"
   },
-  "wiring_class": "static",
+  "wiring_class": "computed",
   "wiring_class_signals": [
-    "static:literal_magnitudes_only"
+    "computed:pre_guard"
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

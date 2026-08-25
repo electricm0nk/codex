@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Strength Stance",
+    "name": "Strength Stance",
+    "class": "Unchained Barbarian",
+    "description": "You can summon mighty strength. You gain a +%1 competence bonus on combat maneuvers and to you CMD. In addition, you gaina a +8 competence bonus on Strength checks to lift, push, bend, or break objects (this does not apply to combat maneuvers). This is a stance rage power.|StrengthStanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Strength Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthStanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can summon mighty strength. You gain a +%1 competence bonus on combat maneuvers and to you CMD. In addition, you gaina a +8 competence bonus on Strength checks to lift, push, bend, or break objects (this does not apply to combat maneuvers). This is a stance rage power.|StrengthStanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthStanceBonus|1+floor(RagePowersLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 388,
+    "record_key": "Unchained Rage Power ~ Strength Stance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

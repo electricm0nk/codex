@@ -1,0 +1,569 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Wizard ~ Class",
+    "name": "Wizard",
+    "class": "Wizard",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CFP_Level|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Archetype|AUTOMATIC|Archetype Wizard"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CFP_Level|WizardLVL|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OppositionalSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_ArcaneOppositionSchool|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeatQualifier_WizardLVL|WizardLVL"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "PFS Starting Gold"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Starting Gold ~ CRB.REMOVE"
+      },
+      {
+        "key": "!PREALIGN",
+        "value": "CE,NE,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Class Skills|PREVAREQ:Wizard_CF_ClassSkills,0|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Weapon and Armor Proficiency|PREVAREQ:Wizard_CF_WeaponProficiencies,0|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Spells|PREVAREQ:Wizard_CF_Spells,0|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Bonus Languages|PREVAREQ:Wizard_CF_BonusLanguages,0|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Arcane Bond|PREVAREQ:Wizard_CF_ArcaneBond,0|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Arcane School|PREVAREQ:Wizard_CF_ArcaneSchool,0|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Cantrips|PREVAREQ:Wizard_CF_Cantrips,0|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Scribe Scroll|PREVAREQ:Wizard_CF_ScribeScroll,0|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Bonus Feats|PREVAREQ:Wizard_CF_BonusFeats,0|PREVARGTEQ:Wizard_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Wizard Class Feature|AUTOMATIC|Wizard ~ Spellbooks|PREMULT:1,[PREMULT:2,[PREPCLEVEL:MAX=0],[PRECLASS:1,Wizard=1]],[PREMULT:2,[!PRECLASS:1,TYPE.Base=0],[PRECLASS:1,Wizard=1]],[PREVAREQ:Wizard_CF_SpellBook,0]|PREVARGTEQ:Wizard_CFP_Level,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ArcaneSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_BonusLanguages|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ScribeScroll|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ArcaneBond|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_Cantrips|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_BonusFeats|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_SpellBook|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_Familiar|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_BondedObject|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_BonusFeat5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_BonusFeat10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_BonusFeat15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_BonusFeat20|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ClassSkills|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ArcaneSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ArcaneSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_Spells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusLanguages|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_BonusLanguages=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ScribeScroll|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ScribeScroll=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ArcaneBond|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ArcaneBond=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_Cantrips|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_Cantrips=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeats|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_BonusFeats=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_SpellBook|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_SpellBook=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_Familiar|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_Familiar=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BondedObject|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_BondedObject=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeat5|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_BonusFeat5=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeat10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_BonusFeat10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeat15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_BonusFeat15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeat20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_BonusFeat20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ArcaneSchool|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneSchool"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_WeaponProficiencies|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardWeaponProficiencies"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ScribeScroll|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardScribeScroll"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ArcaneBond|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_Cantrips|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardCantrips"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeats|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardBonusFeats"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_SpellBook|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardSpellBook"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeat5|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardBonusFeat5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeat10|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardBonusFeat10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeat15|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardBonusFeat15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BonusFeat20|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.WizardBonusFeat20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_AbjurationOppositionSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_AbjurationOppositionSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ConjurationOppositionSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ConjurationOppositionSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_DivinationOppositionSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_DivinationOppositionSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_EnchantmentOppositionSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_EnchantmentOppositionSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_EvocationOppositionSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_EvocationOppositionSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_IllusionOppositionSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_IllusionOppositionSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_NecromancyOppositionSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_NecromancyOppositionSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_TransmutationOppositionSchool|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_TransmutationOppositionSchool=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_SchoolPower1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_SchoolPower1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_SchoolPower8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_SchoolPower8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_AcidDart|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_AcidDart=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_AuraOfDespair|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_AuraOfDespair=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_BlindingRay|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_BlindingRay=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ChangeShape|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ChangeShape=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_DazingTouch|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_DazingTouch=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_DimensionalSteps|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_DimensionalSteps=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_DivinersFortune|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_DivinersFortune=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ElementalWall|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ElementalWall=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_EnchantingSmile|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_EnchantingSmile=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_EnergyAbsorption|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_EnergyAbsorption=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ExtendedIllusion|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ExtendedIllusion=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ForceMissile|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ForceMissile=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_Forwarned|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_Forwarned=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_GraveTouch|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_GraveTouch=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_HandOfTheApprentice|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_HandOfTheApprentice=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_IntenseSpells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_IntenseSpells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_InvisibilityField|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_InvisibilityField=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_LifeSight|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_LifeSight=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_MetamagicMastery|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_MetamagicMastery=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_PhysicalEnhancement|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_PhysicalEnhancement=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_PowerOverUndead|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_PowerOverUndead=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ProtectiveWard|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ProtectiveWard=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_Resistance|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_Resistance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_ScryingAdept|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_ScryingAdept=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_SummonersCharm|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_SummonersCharm=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Wizard_CF_TelekineticFist|1|TYPE=Boolean|PREFACT:1,ABILITIES,Wizard_CF_TelekineticFist=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_AbjurationOppositionSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ConjurationOppositionSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_DivinationOppositionSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_EnchantmentOppositionSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_EvocationOppositionSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_IllusionOppositionSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_NecromancyOppositionSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_TransmutationOppositionSchool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_SchoolPower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_SchoolPower8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_AcidDart|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_AuraOfDespair|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_BlindingRay|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ChangeShape|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_DazingTouch|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_DimensionalSteps|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_DivinersFortune|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ElementalWall|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_EnchantingSmile|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_EnergyAbsorption|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ExtendedIllusion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ForceMissile|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_Forwarned|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_GraveTouch|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_HandOfTheApprentice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_IntenseSpells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_InvisibilityField|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_LifeSight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_MetamagicMastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_PhysicalEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_PowerOverUndead|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ProtectiveWard|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_Resistance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_ScryingAdept|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_SummonersCharm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Wizard_CF_TelekineticFist|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 108,
+    "record_key": "Wizard ~ Class"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

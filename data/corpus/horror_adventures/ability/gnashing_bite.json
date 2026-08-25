@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Gnashing Bite",
+    "name": "Gnashing Bite",
+    "description": "Your jaw can unhinge and your teeth grow to sharp points.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Gnashing Bite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GhoulManifestation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "DESC",
+        "value": "Your jaw can unhinge and your teeth grow to sharp points."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghoul Gnashing Bite Stain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghoul Gnashing Bite Gift Choice|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 233,
+    "record_key": "Ghoul Corruption ~ Gnashing Bite"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

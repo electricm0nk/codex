@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gathlain ~ Tree Dialect",
+    "name": "Tree Dialect",
+    "description": "A rare few gathlains are born with the knowledge of an ancient way of speech that allows them to communicate with trees. Once per day, they can cast speak with plants (trees only) as a spell-like ability with a caster level equal to the gathlain's character level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gathlain ~ Tree Dialect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gathlain ~ Tree Dialect],[!PREFACT:1,ABILITIES,Gathlain_ReplaceSpellLikeAbilities=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A rare few gathlains are born with the knowledge of an ancient way of speech that allows them to communicate with trees. Once per day, they can cast speak with plants (trees only) as a spell-like ability with a caster level equal to the gathlain's character level."
+      },
+      {
+        "key": "DESC",
+        "value": "This replaces spell-like abilities.|!PREABILITY:1,CATEGORY=Special Ability,Gathlain ~ Tree Dialect"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Speak with Plants (trees only)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "FACT",
+        "value": "Gathlain_ReplaceSpellLikeAbilities|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 56,
+    "record_key": "Gathlain ~ Tree Dialect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

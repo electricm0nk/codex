@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Heretic ~ Heresy",
+    "name": "Heresy",
+    "class": "Medium",
+    "description": "(Lesser) Instead of your normal spells per day for your medium level, you use the spells per day from Table: Mesmerist. For each level of spell you can now cast (including level 0), each time you channel an hierophant spirit, you gain the following inquisitor spells at the indicated spell levels to add to your medium spell list and spells known until you lose contact with the hierophant: 0-guidance; 1st-divine favor; 2nd-castigate; 3rd-terrible remorse; 4th-reprobation; 5th-mass castigate; 6th-overwhelming presence. When you cast these spells, they count as divine (though not for the purpose of fulfilling prerequisites), and thus you must provide verbal and somatic components instead of thought and emotion components. You need a divine focus if the spell requires one. Whenever you use your spirit surge on a skill check or ability check to convince or trick someone into perverting his faith in the good deity you chose with your vow, the Heretic is pleased and does not gain the usual point of influence over you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Heretic ~ Heresy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "(Lesser) Instead of your normal spells per day for your medium level, you use the spells per day from Table: Mesmerist. For each level of spell you can now cast (including level 0), each time you channel an hierophant spirit, you gain the following inquisitor spells at the indicated spell levels to add to your medium spell list and spells known until you lose contact with the hierophant: 0-guidance; 1st-divine favor; 2nd-castigate; 3rd-terrible remorse; 4th-reprobation; 5th-mass castigate; 6th-overwhelming presence. When you cast these spells, they count as divine (though not for the purpose of fulfilling prerequisites), and thus you must provide verbal and somatic components instead of thought and emotion components. You need a divine focus if the spell requires one. Whenever you use your spirit surge on a skill check or ability check to convince or trick someone into perverting his faith in the good deity you chose with your vow, the Heretic is pleased and does not gain the usual point of influence over you."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium To Mesmerist Spells 1|Medium To Mesmerist Spells 2|Medium To Mesmerist Spells 3|Medium To Mesmerist Spells 4|Medium To Mesmerist Spells 5|Medium To Mesmerist Spells 6"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Medium=0|Guidance|Medium=1|Divine Favor|Medium=2|Castigate|Medium=3|Terrible Remorse|Medium=4|Reprobation|Medium=5|Castigate (Mass)|Medium=6|Overwhelming Presence"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 107,
+    "record_key": "Medium ~ Heretic ~ Heresy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

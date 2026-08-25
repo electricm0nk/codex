@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Eidolon 8 ~ S",
+    "name": "Eidolon 8 ~ Small",
+    "class": "Eidolon",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eidolon 8 ~ S"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Broodmaster Eidolon.Eidolon8"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,Larger Brood ~ Huge"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonCompanionLVLH|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonCount|1"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Eidolon 8|1"
+      },
+      {
+        "key": "COMPANIONLIST",
+        "value": "Eidolon 8|Eidolon"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1854,
+    "record_key": "Eidolon 8 ~ S"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

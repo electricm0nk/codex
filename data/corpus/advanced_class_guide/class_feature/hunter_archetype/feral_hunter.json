@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hunter Archetype ~ Feral Hunter",
     "name": "Feral Hunter",
-    "class": "Hunter Archetype",
+    "class": "Hunter",
     "description": "A feral hunter has forged a bond with nature that's so strong that she doesn't merely channel the aspects of animals-she actually becomes an animal herself. Though she lacks an animal companion, a feral hunter is in tune with the beast lurking within her flesh and spirit, and lives in a near-wild state of being. A feral hunter often resembles a lycanthrope, but her power comes from her own nature and is not influenced by moonlight or silver.",
     "raw_tokens": [
       {
@@ -63,6 +63,118 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Hunter"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Feral Hunter],[!PREFACT:1,ABILITIES,Hunter_Archetype_AnimalCompanion=True,Hunter_Archetype_AnimalFocus=True,Hunter_Archetype_HunterTactics=True,Hunter_Archetype_SpeakWithMaster=True,Hunter_Archetype_PreciseCompanion=True,Hunter_Archetype_BonusTricks=True,Hunter_Archetype_ImprovedEmpathicLink=True,Hunter_Archetype_GreaterEmpathicLink=True,Hunter_Archetype_OneWithTheWild=True,Hunter_Archetype_RaiseAnimalCompanion=True,Hunter_Archetype_TeamworkFeats=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_SpeakWithMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_BonusTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_ImprovedEmpathicLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_GreaterEmpathicLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_OneWithTheWild|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_RaiseAnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeat9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeat15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_TeamworkFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_HunterTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_SpeakWithMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_PreciseCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_BonusTricks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_ImprovedEmpathicLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_GreaterEmpathicLink|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_OneWithTheWild|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_RaiseAnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_TeamworkFeats|true"
       }
     ]
   },
@@ -79,5 +191,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

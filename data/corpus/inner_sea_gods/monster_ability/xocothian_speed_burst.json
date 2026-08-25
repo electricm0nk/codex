@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Xocothian ~ Speed Burst",
+    "delivery": "Extraordinary",
+    "description": "A xocothian can fly or swim up to 200 feet as a full-round action. When using this ability, it must move in a straight line. This does not provoke attacks of opportunity.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:xocothian_speed_burst",
+    "name": "Speed Burst",
+    "owners": [
+      "inner_sea_gods:monster:xocothian"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(200 ft.)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A xocothian can fly or swim up to 200 feet as a full-round action. When using this ability, it must move in a straight line. This does not provoke attacks of opportunity."
+      },
+      {
+        "key": "KEY",
+        "value": "Xocothian ~ Speed Burst"
+      },
+      {
+        "key": "TYPE",
+        "value": "ModifyMovement.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "ModifyMovement"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:08:42Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 178,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Xocothian ~ Speed Burst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

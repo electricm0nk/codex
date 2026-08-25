@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Elemental Fist",
+    "name": "Elemental Fist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:ElementalFistGranted,1],[PREABILITY:1,CATEGORY=FEAT,Dragon Ferocity],[PREMULT:3,[PRETOTALAB:8],[PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike],[PRESTAT:2,CON=13,WIS=13]]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElementalFistFullVersion|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Elemental Fist ~ Dragon Ferocity|PREVAREQ:ElementalFistFullVersion,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Elemental Fist ~ Full Version|PREVARGTEQ:ElementalFistFullVersion,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementalFistDamage|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementalFistUses|classlevel(\"Monk\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementalFistUses|(TL-classlevel(\"Monk\"))/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElementalFistFullVersion|1|PREMULT:1,[PREVAREQ:ElementalFistGranted,1],[PREMULT:3,[PRETOTALAB:8],[PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike],[PRESTAT:2,CON=13,WIS=13]]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+    "sha256": "40d33ce6cf8f4321facf2c3528498479c6817abf58036f0a8402b68fc68181e4",
+    "line": 54,
+    "record_key": "Elemental Fist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

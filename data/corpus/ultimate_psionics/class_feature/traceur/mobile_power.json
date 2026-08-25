@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Traceur ~ Mobile Power",
+    "name": "Mobile Power",
+    "class": "Traceur",
+    "description": "You can manifest a path power with a manifesting time of a standard action as part of an action that involves movement, such  as  actually  moving,  charging,  withdrawing, jumping, climbing, etc.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Traceur ~ Mobile Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest a path power with a manifesting time of a standard action as part of an action that involves movement, such  as  actually  moving,  charging,  withdrawing, jumping, climbing, etc."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2110,
+    "record_key": "Traceur ~ Mobile Power"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

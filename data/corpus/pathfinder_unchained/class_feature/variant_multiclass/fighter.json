@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Variant Multiclass ~ Fighter",
+    "name": "Fighter",
+    "class": "Variant Multiclass",
+    "description": "A character who chooses fighter as his secondary class gains the following secondary class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Multiclass ~ Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Variant Multiclass.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MulticlassFighter|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A character who chooses fighter as his secondary class gains the following secondary class features."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Bravery: At 3rd level, he gains the bravery class feature as a fighter of his character level - 1."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Armor Training 1: At 7th level, he gains armor training 1."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Weapon Training 1: At 11th level, he gains weapon training 1."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Armor Training 2: At 15th level, he gains armor training 2."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Weapon Training 2: At 19th level, he gains weapon training 2."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Multiclass Fighter ~ Bravery|PRELEVEL:MIN=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Multiclass Fighter ~ Armor Training 1|PRELEVEL:MIN=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Multiclass Fighter ~ Weapon Training 1|PRELEVEL:MIN=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Multiclass Fighter ~ Armor Training 2|PRELEVEL:MIN=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Multiclass Fighter ~ Weapon Training 2|PRELEVEL:MIN=19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MulticlassFighter|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 854,
+    "record_key": "Variant Multiclass ~ Fighter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

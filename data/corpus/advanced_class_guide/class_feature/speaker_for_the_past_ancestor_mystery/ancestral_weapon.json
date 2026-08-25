@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Speaker for the Past Ancestor Mystery ~ Ancestral Weapon",
     "name": "Ancestral Weapon",
-    "class": "Speaker for the Past Ancestor Mystery",
+    "class": "Oracle",
     "description": "You can summon a simple or martial weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon. You can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.|AncestralWeaponDuration|!PRECLASS:1,Shaman=3",
     "raw_tokens": [
       {
@@ -80,5 +80,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

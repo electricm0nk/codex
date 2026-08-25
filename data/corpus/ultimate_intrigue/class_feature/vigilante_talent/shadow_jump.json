@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Shadow Jump",
     "name": "Shadow Jump",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The cabalist gains the shadowdancer's shadow jump ability with an effective shadowdancer level equal to his vigilante level - 6. If he has levels in shadowdancer, those levels stack with his vigilante levels to determine the total distance per day he can shadow jump (to a maximum of 320 feet per day). (The cabalist gains the ability to travel between shadows as if by means of a dimension door spell. The limitation is that the magical transport must begin and end in an area with at least some dim light. The cabalist can jump up to a total of %1 feet each day in this way; this may be a single jump or multiple jumps. This amount can be split among many jumps, but each one, no matter how small, counts as a 10-foot increment.)|min(320,ShadowJump)",
     "raw_tokens": [
       {
@@ -80,5 +80,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

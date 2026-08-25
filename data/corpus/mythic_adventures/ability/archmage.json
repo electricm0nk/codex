@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dual Path ~ Archmage",
+    "name": "Archmage",
+    "description": "For most practitioners of the arcane arts, learning magic requires a great deal of study and practice. Even for those who draw magic from their blood, the effort can be taxing. Not so for the archmage. This master of the arcane draws power from the very fabric of reality itself, learning to weave magic easily and naturally.&nl;The archmage is the master of arcane magic, and many of the abilities of this path enhance your ability to cast arcane spells or greatly increase their potency. In addition, may of the options in this path increase your knowledge of magic and of those who wield it. At the highest tiers, you can begin to break down the walls between the different types of magic and alter the very fabric of reality itself.&nl;Role: As an archmage, you use your abilities to add a great deal of power to your arcane spells, enabling them to blast through defenses and cripple foes. Your mastery over the arcane arts and your vast knowledge are of great benefit to the rest of your group, and your talent at getting the most out of magic items can prove invaluable. Although you gain little in the way of defenses, your overwhelming offensive capabilities more than make up for it--though you should still avoid being engaged in melee.&nl;Classes: The archmage is the most common path selection for characters capable of casting arcane spells, particularly sorcerers and wizards. Bards, summoners, and witches will find that this path has a great deal to offer, though some other paths might also prove useful to them.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual Path ~ Archmage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dual Path.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Mythic Feat,Dual Path"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Mythic Path ~ Archmage"
+      },
+      {
+        "key": "DESC",
+        "value": "For most practitioners of the arcane arts, learning magic requires a great deal of study and practice. Even for those who draw magic from their blood, the effort can be taxing. Not so for the archmage. This master of the arcane draws power from the very fabric of reality itself, learning to weave magic easily and naturally.&nl;The archmage is the master of arcane magic, and many of the abilities of this path enhance your ability to cast arcane spells or greatly increase their potency. In addition, may of the options in this path increase your knowledge of magic and of those who wield it. At the highest tiers, you can begin to break down the walls between the different types of magic and alter the very fabric of reality itself.&nl;Role: As an archmage, you use your abilities to add a great deal of power to your arcane spells, enabling them to blast through defenses and cripple foes. Your mastery over the arcane arts and your vast knowledge are of great benefit to the rest of your group, and your talent at getting the most out of magic items can prove invaluable. Although you gain little in the way of defenses, your overwhelming offensive capabilities more than make up for it--though you should still avoid being engaged in melee.&nl;Classes: The archmage is the most common path selection for characters capable of casting arcane spells, particularly sorcerers and wizards. Bards, summoners, and witches will find that this path has a great deal to offer, though some other paths might also prove useful to them."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mythic Path Feature ~ Archmage Arcana|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 47,
+    "record_key": "Dual Path ~ Archmage"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

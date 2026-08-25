@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dread ~ Devastating Touch",
+    "name": "Devastating Touch",
+    "class": "Dread",
+    "description": "Melee touch on living target deals %1d%2+%3 damage.|DevastatingTouchDice|DevastatingTouchDieType|DevastatingTouchBonusDamage",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dread ~ Devastating Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevastatingTouchDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevastatingTouchDieType|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevastatingTouchBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevastatingTouchLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Melee touch on living target deals %1d%2+%3 damage.|DevastatingTouchDice|DevastatingTouchDieType|DevastatingTouchBonusDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevastatingTouchDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevastatingTouchDieType|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevastatingTouchBonusDamage|DevastatingTouchLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevastatingTouchLVL|DreadLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 266,
+    "record_key": "Dread ~ Devastating Touch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

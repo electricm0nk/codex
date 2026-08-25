@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Race ~ Undine",
+    "name": "Undine",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race ~ Undine"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsUndine"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/undine/undine_templates.lst",
+    "sha256": "9d27812c52fe30eb6f2e9e2d7316786615c4edb4ae6402fab9b8d4ebd3ab85c9",
+    "line": 4,
+    "record_key": "Race ~ Undine"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

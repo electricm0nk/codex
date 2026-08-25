@@ -311,6 +311,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Allip"],
         source_file: "bb_abilities_race.lst",
         source_line: 6,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Madness",
@@ -324,6 +327,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Allip"],
         source_file: "bb_abilities_race.lst",
         source_line: 7,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Touch of Insanity",
@@ -337,6 +343,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Allip"],
         source_file: "bb_abilities_race.lst",
         source_line: 8,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Sand Trap",
@@ -350,6 +359,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Ant Lion (Giant)"],
         source_file: "bb_abilities_race.lst",
         source_line: 12,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Spores",
@@ -363,6 +375,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Ascomoid"],
         source_file: "bb_abilities_race.lst",
         source_line: 16,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Sudden Charge",
@@ -376,6 +391,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Axe Beak"],
         source_file: "bb_abilities_race.lst",
         source_line: 20,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Caryatid Column ~ Immunity to Magic",
@@ -389,6 +407,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Caryatid Column"],
         source_file: "bb_abilities_race.lst",
         source_line: 24,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Shatter Weapons",
@@ -402,6 +423,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Caryatid Column"],
         source_file: "bb_abilities_race.lst",
         source_line: 25,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Statue",
@@ -415,6 +439,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Caryatid Column"],
         source_file: "bb_abilities_race.lst",
         source_line: 26,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Faerie Dragon ~ Breath Weapon",
@@ -428,6 +455,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dragon (Faerie)"],
         source_file: "bb_abilities_race.lst",
         source_line: 30,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Roar",
@@ -441,6 +471,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dragonne"],
         source_file: "bb_abilities_race.lst",
         source_line: 34,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Huecuva ~ Disease",
@@ -454,6 +487,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Huecuva"],
         source_file: "bb_abilities_race.lst",
         source_line: 38,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Faithless",
@@ -467,6 +503,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Huecuva"],
         source_file: "bb_abilities_race.lst",
         source_line: 39,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Magic Circle against Evil",
@@ -480,6 +519,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Lammasu"],
         source_file: "bb_abilities_race.lst",
         source_line: 43,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Water Naga ~ Poison",
@@ -493,6 +535,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Naga (Water)"],
         source_file: "bb_abilities_race.lst",
         source_line: 47,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Shadow Mastiff ~ Bay",
@@ -506,6 +551,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Shadow Mastiff"],
         source_file: "bb_abilities_race.lst",
         source_line: 51,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Shadow Mastiff ~ Shadow Blend",
@@ -519,5 +567,8 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Shadow Mastiff"],
         source_file: "bb_abilities_race.lst",
         source_line: 52,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
 ];

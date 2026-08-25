@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hallucinist ~ Shared Hallucinations",
+    "name": "Shared Hallucinations",
+    "class": "Investigator",
+    "description": "A hallucinist under the effects of his hallucinogen can share and manipulate his hallucinatory revelations. By expending 10 minutes of the duration of his hallucinogen or one use of inspiration, he can create an effect similar to minor image or oneiric horror (DC %1).|10+InvestigatorLVL/2+INT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallucinist ~ Shared Hallucinations"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "A hallucinist under the effects of his hallucinogen can share and manipulate his hallucinatory revelations. By expending 10 minutes of the duration of his hallucinogen or one use of inspiration, he can create an effect similar to minor image or oneiric horror (DC %1).|10+InvestigatorLVL/2+INT"
+      },
+      {
+        "key": "DESC",
+        "value": " He can also create an effect similar to synesthesia (DC %1). Any of the effects remain only while the hallucinist concentrates upon it, for up to %2 rounds, but otherwise function as the spell.|10+InvestigatorLVL/2+INT|InvestigatorLVL|PRECLASS:1,Investigator=5"
+      },
+      {
+        "key": "DESC",
+        "value": " A hallucinist can expend 10 minutes of the duration of the hallucinogen or one use of inspiration to use aura alteration (DC %1) on one creature or object (unlike the other three abilities, this does not require concentration).|10+InvestigatorLVL/2+INT|PRECLASS:1,Investigator=9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 27,
+    "record_key": "Hallucinist ~ Shared Hallucinations"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

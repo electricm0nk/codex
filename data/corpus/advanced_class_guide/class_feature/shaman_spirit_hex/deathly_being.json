@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Deathly Being",
     "name": "Deathly Being",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "If the shaman is a living creature, she reacts to positive and negative energy as if she were undead-positive energy harms her, while negative energy heals her. If she's an undead creature or a creature with the negative energy affinity ability, she gains a +%1 bonus to her channel resistance.|ShamanDeathlyBeingBonus",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

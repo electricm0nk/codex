@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Elemental Immunity",
+    "name": "Elemental Immunity",
+    "description": "Choose an elemental damage type (Acid, Cold, Electricity, Fire): Immune to that type. Can be taken again, each time, choose a different element, and increase RP cost by 1. If you have Fire Immunity and Cold Vulnerability, or if you have Cold Immunity and Fire Vulnerability, you gain the fire subtype, or the cold subtype, respectively.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Elemental Immunity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedDefenseTrait.Monstrous"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose an elemental damage type (Acid, Cold, Electricity, Fire): Immune to that type. Can be taken again, each time, choose a different element, and increase RP cost by 1. If you have Fire Immunity and Cold Vulnerability, or if you have Cold Immunity and Fire Vulnerability, you gain the fire subtype, or the cold subtype, respectively."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|4"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Acid|Cold|Electricity|Fire"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Acid|PREABILITY:1,CATEGORY=Special Ability,Builder Racial Trait ~ Elemental Immunity(Acid)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Cold|PREABILITY:1,CATEGORY=Special Ability,Builder Racial Trait ~ Elemental Immunity(Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Electricity|PREABILITY:1,CATEGORY=Special Ability,Builder Racial Trait ~ Elemental Immunity(Electricity)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fire|PREABILITY:1,CATEGORY=Special Ability,Builder Racial Trait ~ Elemental Immunity(Fire)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 270,
+    "record_key": "Builder Racial Trait ~ Elemental Immunity"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Spellblight ~ Vertigo",
+    "name": "Vertigo",
+    "description": "A spellcaster with vertigo becomes dizzy and lightheaded when she casts a spell. Each time she casts a spell or uses a spell-like ability, the world spins and shifts around her. She must succeed at a concentration check (with a DC equal to the 15 + twice the level of the spell being cast). If the spellcaster fails the check, she falls prone, and for 1d4 rounds takes a penalty on Acrobatics, Climb, Ride, Stealth, and Swim checks equal to 1 + the level of the spell. While the afflicted spellcaster takes those penalties, she must also succeed at a DC 10 Acrobatics check in order to stand up from prone. A restoration cast on the afflicted spellcaster suppresses this spellblight for 1 day.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellblight ~ Vertigo"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "MajorSpellblight.Spellblight.Curse.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "A spellcaster with vertigo becomes dizzy and lightheaded when she casts a spell. Each time she casts a spell or uses a spell-like ability, the world spins and shifts around her. She must succeed at a concentration check (with a DC equal to the 15 + twice the level of the spell being cast). If the spellcaster fails the check, she falls prone, and for 1d4 rounds takes a penalty on Acrobatics, Climb, Ride, Stealth, and Swim checks equal to 1 + the level of the spell. While the afflicted spellcaster takes those penalties, she must also succeed at a DC 10 Acrobatics check in order to stand up from prone. A restoration cast on the afflicted spellcaster suppresses this spellblight for 1 day."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 26,
+    "record_key": "Spellblight ~ Vertigo"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

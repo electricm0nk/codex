@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Blade Skill ~ Wing Clip",
+    "name": "Wing Clip",
+    "class": "Blade Skill",
+    "description": "Attack and keep from moving for %1 rounds as a standard action (Fort DC %2).|max(STR,1)|WingClipDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Wing Clip"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WingClipDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Attack and keep from moving for %1 rounds as a standard action (Fort DC %2).|max(STR,1)|WingClipDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WingClipDC|BladeSkillDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "TYPE",
+        "value": "FeralHeartBladeSkill"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 807,
+    "record_key": "Blade Skill ~ Wing Clip"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

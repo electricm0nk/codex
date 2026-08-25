@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Fist Power Points",
+    "name": "Psychic Fist Power Points",
+    "class": "Psychic Fist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicFistPPStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsychicFistPPL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicFistPPStat|PsychicFistPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsychicFistPPL|PsychicFistML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2|PREVARGTEQ:PsychicFistPPL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|3|PREVARGTEQ:PsychicFistPPL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:PsychicFistPPL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:PsychicFistPPL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:PsychicFistPPL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:PsychicFistPPL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:PsychicFistPPL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:PsychicFistPPL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|16|PREVARGTEQ:PsychicFistPPL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(PsychicFistPPStat*PsychicFistPPL)/2|TYPE=PsychicFistBonusPP"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1431,
+    "record_key": "Psychic Fist Power Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

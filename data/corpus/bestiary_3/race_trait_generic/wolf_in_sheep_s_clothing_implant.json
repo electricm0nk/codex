@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Wolf-in-sheep's-clothing ~ Implant",
+    "name": "Implant",
+    "description": "A wolf-in-sheep's-clothing can infest a creature with its eggs in one of two ways. A creature that eats a carcass used by the monster as a corpse lure automatically becomes implanted. Alternatively, up to once per day, a wolf-insheep's- clothing can implant an egg into a helpless or pinned creature as part of a grapple action. The target can resist being implanted with a DC 19 Fortitude save, but if it fails, the seed gestates and becomes a self-aware creature that slowly steals nourishment from its host before finally exploding free of its host's gut. The parasite can be cut free of the host's belly with a DC 25 Heal check, which takes 1 hour and deals 3d6 slashing damage regardless of success or failure. Remove disease (or any similar effect) also kills an implanted egg. Wolf-in-Sheep's-Clothing Egg: Infestation-ingestion; save Fort 19; onset 1 day; frequency 1/day; effect 1d4 Str damage until host reaches 0, then 3d6 damage as parasite bursts free; cure 3 consecutive saves. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wolf-in-sheep's-clothing ~ Implant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wolf-in-sheep's-clothing can infest a creature with its eggs in one of two ways. A creature that eats a carcass used by the monster as a corpse lure automatically becomes implanted. Alternatively, up to once per day, a wolf-insheep's- clothing can implant an egg into a helpless or pinned creature as part of a grapple action. The target can resist being implanted with a DC 19 Fortitude save, but if it fails, the seed gestates and becomes a self-aware creature that slowly steals nourishment from its host before finally exploding free of its host's gut. The parasite can be cut free of the host's belly with a DC 25 Heal check, which takes 1 hour and deals 3d6 slashing damage regardless of success or failure. Remove disease (or any similar effect) also kills an implanted egg. Wolf-in-Sheep's-Clothing Egg: Infestation-ingestion; save Fort 19; onset 1 day; frequency 1/day; effect 1d4 Str damage until host reaches 0, then 3d6 damage as parasite bursts free; cure 3 consecutive saves. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.285"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1680,
+    "record_key": "Wolf-in-sheep's-clothing ~ Implant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

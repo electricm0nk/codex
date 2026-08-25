@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Alchemist Archetype ~ Promethean Alchemist",
     "name": "Promethean Alchemist",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Obsessed with discovering the origins of life, promethean alchemists build constructs they gradually endow with life.",
     "raw_tokens": [
       {
@@ -107,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

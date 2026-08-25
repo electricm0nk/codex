@@ -3,17 +3,796 @@
   "title": "Advanced Class Guide",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 46,
+      "denominator": 46,
+      "pct": 0.0,
+      "excluded_from_percentage": 63,
+      "standing_breakdown": {
+        "unclassified": 63,
+        "origin": 46
+      },
+      "items": [
+        {
+          "name": "Aberrant Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Aberrant Bloodline"
+        },
+        {
+          "name": "Abyssal Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Abyssal Bloodline"
+        },
+        {
+          "name": "Aiding Attack",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Aiding Attack"
+        },
+        {
+          "name": "Arcane Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Arcane Bloodline"
+        },
+        {
+          "name": "Arcanist Exploit ~ School Understanding",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcanist Exploit ~ School Understanding"
+        },
+        {
+          "name": "Aura of Prescience",
+          "doneness": "not-started",
+          "type_facet": "ArcanistSchoolChoice",
+          "standing": "origin",
+          "display_name": "Aura of Prescience"
+        },
+        {
+          "name": "Blazing Aura",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Blazing Aura"
+        },
+        {
+          "name": "Blistering Feint",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Blistering Feint"
+        },
+        {
+          "name": "Blood Beak",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Blood Beak"
+        },
+        {
+          "name": "Bloodrager",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodrager"
+        },
+        {
+          "name": "Blundering Defense",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Blundering Defense"
+        },
+        {
+          "name": "Bolster Companion",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Bolster Companion"
+        },
+        {
+          "name": "Bullying Blow",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Bullying Blow"
+        },
+        {
+          "name": "Catfall",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Catfall"
+        },
+        {
+          "name": "Cautious Fighter",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Cautious Fighter"
+        },
+        {
+          "name": "Celestial Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Celestial Bloodline"
+        },
+        {
+          "name": "Chameleon Step",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Chameleon Step"
+        },
+        {
+          "name": "Champion of the Unbound Coven",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Champion of the Unbound Coven"
+        },
+        {
+          "name": "Claw Pounce",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Claw Pounce"
+        },
+        {
+          "name": "Cleave Through",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Cleave Through"
+        },
+        {
+          "name": "Cloven Helm",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Cloven Helm"
+        },
+        {
+          "name": "Critical Versatility",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Critical Versatility"
+        },
+        {
+          "name": "Cunning Pantomime",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Cunning Pantomime"
+        },
+        {
+          "name": "Defensive Bow Stance",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Defensive Bow Stance"
+        },
+        {
+          "name": "Deft Stand",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Deft Stand"
+        },
+        {
+          "name": "Demoralizing Lash",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Demoralizing Lash"
+        },
+        {
+          "name": "Dented Helm",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Dented Helm"
+        },
+        {
+          "name": "Desperate Swing",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Desperate Swing"
+        },
+        {
+          "name": "Destined Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Destined Bloodline"
+        },
+        {
+          "name": "Destroyer's Blessing",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Destroyer's Blessing"
+        },
+        {
+          "name": "Distracting Attack",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Distracting Attack"
+        },
+        {
+          "name": "Div Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Div Bloodline"
+        },
+        {
+          "name": "Draconic Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Draconic Bloodline"
+        },
+        {
+          "name": "Dreadful Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Dreadful Gaze"
+        },
+        {
+          "name": "Elemental Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Elemental Bloodline"
+        },
+        {
+          "name": "Elven Battle Training",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Elven Battle Training"
+        },
+        {
+          "name": "Ferocious Tenacity",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Ferocious Tenacity"
+        },
+        {
+          "name": "Fey Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Fey Bloodline"
+        },
+        {
+          "name": "Fire Hand",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Fire Hand"
+        },
+        {
+          "name": "Giant Killer",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Giant Killer"
+        },
+        {
+          "name": "Gloom Strike",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Gloom Strike"
+        },
+        {
+          "name": "Gnome Weapon Focus",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Gnome Weapon Focus"
+        },
+        {
+          "name": "Goblin Cleaver",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Goblin Cleaver"
+        },
+        {
+          "name": "Goblin Gunslinger",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Goblin Gunslinger"
+        },
+        {
+          "name": "Great Hatred",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Great Hatred"
+        },
+        {
+          "name": "Grudge Fighter",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Grudge Fighter"
+        },
+        {
+          "name": "Hag Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Hag Form"
+        },
+        {
+          "name": "Hard-Headed",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Hard-Headed"
+        },
+        {
+          "name": "Harrow Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Harrow Bloodline"
+        },
+        {
+          "name": "Hateful Attack",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Hateful Attack"
+        },
+        {
+          "name": "Heel",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Heel"
+        },
+        {
+          "name": "Hobbling Attack",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Hobbling Attack"
+        },
+        {
+          "name": "Imperious Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Imperious Bloodline"
+        },
+        {
+          "name": "Impossible Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Impossible Bloodline"
+        },
+        {
+          "name": "Improved Low Blow",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Low Blow"
+        },
+        {
+          "name": "Improved Surprise Follow-Through",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Surprise Follow-Through"
+        },
+        {
+          "name": "Infernal Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Infernal Bloodline"
+        },
+        {
+          "name": "Inner Flame",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Inner Flame"
+        },
+        {
+          "name": "Kobold Ambusher",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Kobold Ambusher"
+        },
+        {
+          "name": "Kobold Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Kobold Bloodline"
+        },
+        {
+          "name": "Kobold Sniper",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Kobold Sniper"
+        },
+        {
+          "name": "Lay on Hands",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.LayOnHands.Lay on Hands",
+          "standing": "origin",
+          "display_name": "Lay on Hands"
+        },
+        {
+          "name": "Lucky Strike",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Lucky Strike"
+        },
+        {
+          "name": "Martial Mastery",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Martial Mastery"
+        },
+        {
+          "name": "Martial Versatility",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Martial Versatility"
+        },
+        {
+          "name": "Nanite Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Nanite Bloodline"
+        },
+        {
+          "name": "Nimble Striker",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Nimble Striker"
+        },
+        {
+          "name": "Oni Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Oni Bloodline"
+        },
+        {
+          "name": "Orc Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Orc Bloodline"
+        },
+        {
+          "name": "Orc Hewer",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Orc Hewer"
+        },
+        {
+          "name": "Orc Weapon Expertise",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Orc Weapon Expertise"
+        },
+        {
+          "name": "Phoenix Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Phoenix Bloodline"
+        },
+        {
+          "name": "Quick Climb",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Quick Climb"
+        },
+        {
+          "name": "Quick Healing",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Quick Healing"
+        },
+        {
+          "name": "Quick Swim",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Quick Swim"
+        },
+        {
+          "name": "Ranger's Counsel",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Ranger's Counsel"
+        },
+        {
+          "name": "Rattling Strike",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Rattling Strike"
+        },
+        {
+          "name": "Reveal Weakness",
+          "doneness": "not-started",
+          "type_facet": "ArcanistSchoolChoice",
+          "standing": "origin",
+          "display_name": "Reveal Weakness"
+        },
+        {
+          "name": "Reverse-Feint",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Reverse-Feint"
+        },
+        {
+          "name": "Risky Striker",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Risky Striker"
+        },
+        {
+          "name": "Scorching Weapons",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Scorching Weapons"
+        },
+        {
+          "name": "Sea Hunter",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Sea Hunter"
+        },
+        {
+          "name": "Second Chance Strike",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Second Chance Strike"
+        },
+        {
+          "name": "Sharpclaw",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Sharpclaw"
+        },
+        {
+          "name": "Shatterspell",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Shatterspell"
+        },
+        {
+          "name": "Sic 'Em",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Sic 'Em"
+        },
+        {
+          "name": "Skill Sage",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Skill Sage"
+        },
+        {
+          "name": "Spit Venom",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Spit Venom"
+        },
+        {
+          "name": "Stag's Leap",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Stag's Leap"
+        },
+        {
+          "name": "Surprise Follow-Through",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Surprise Follow-Through"
+        },
+        {
+          "name": "Surprise Shift",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Surprise Shift"
+        },
+        {
+          "name": "Surprise Strike",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Surprise Strike"
+        },
+        {
+          "name": "Sympathetic Rage",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Sympathetic Rage"
+        },
+        {
+          "name": "Tail Terror",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Tail Terror"
+        },
+        {
+          "name": "Tangle Feet",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Tangle Feet"
+        },
+        {
+          "name": "Tangling Attack",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Tangling Attack"
+        },
+        {
+          "name": "Taskmaster",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Taskmaster"
+        },
+        {
+          "name": "Tree Hanger",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Tree Hanger"
+        },
+        {
+          "name": "Trick Shot",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Trick Shot"
+        },
+        {
+          "name": "Uncanny Defense",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Uncanny Defense"
+        },
+        {
+          "name": "Uncanny Senses",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Uncanny Senses"
+        },
+        {
+          "name": "Undead Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Raging Blood Feat Bloodline",
+          "standing": "unclassified",
+          "display_name": "Undead Bloodline"
+        },
+        {
+          "name": "Unicorn Bloodline",
+          "doneness": "not-started",
+          "type_facet": "SorcererBloodlineChoice",
+          "standing": "origin",
+          "display_name": "Unicorn Bloodline"
+        },
+        {
+          "name": "Upending Strike",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Upending Strike"
+        },
+        {
+          "name": "Vast Hatred",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Bonus Feat",
+          "standing": "unclassified",
+          "display_name": "Vast Hatred"
+        },
+        {
+          "name": "Vengeance Strike",
+          "doneness": "not-started",
+          "type_facet": "HunterAnimalCompanionTrickChoice.AnimalTrick",
+          "standing": "origin",
+          "display_name": "Vengeance Strike"
+        },
+        {
+          "name": "Void Awareness",
+          "doneness": "not-started",
+          "type_facet": "ArcanistSchoolChoice",
+          "standing": "origin",
+          "display_name": "Void Awareness"
+        },
+        {
+          "name": "Void Magic",
+          "doneness": "not-started",
+          "type_facet": "ArcanistSchoolChoice",
+          "standing": "origin",
+          "display_name": "Void Magic"
+        },
+        {
+          "name": "Void School",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.ArcanistSchool",
+          "standing": "origin",
+          "display_name": "Void School"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
       "done": 40,
       "partial": 4,
-      "not_started": 1196,
-      "denominator": 1240,
-      "pct": 3.2,
-      "excluded_from_percentage": 1156,
+      "not_started": 1348,
+      "denominator": 1392,
+      "pct": 2.9,
+      "excluded_from_percentage": 1306,
       "standing_breakdown": {
-        "origin": 1240,
-        "unclassified": 1156
+        "origin": 1392,
+        "unclassified": 1306
       },
       "items": [
         {
@@ -57,6 +836,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Aberrant Bloodrager Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Aberrant Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Aberrant Bloodrager Bloodline ~ Feat Tracker"
         },
         {
           "name": "Aberrant Form",
@@ -157,6 +943,13 @@
           "display_name": "Abyssal Bloodrager Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Abyssal Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Abyssal Bloodrager Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Accuracy",
           "doneness": "not-started",
           "type_facet": "Sniper Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary",
@@ -213,6 +1006,20 @@
           "display_name": "Acid Strike"
         },
         {
+          "name": "Add Dare",
+          "doneness": "not-started",
+          "type_facet": "Swashbuckler Bonus Feat Selection.Gunslinger Bonus Feat Selection",
+          "standing": "origin",
+          "display_name": "Add Dare"
+        },
+        {
+          "name": "Add Swashbuckler Feat",
+          "doneness": "not-started",
+          "type_facet": "Swashbuckler Bonus Feat Selection",
+          "standing": "origin",
+          "display_name": "Add Swashbuckler Feat"
+        },
+        {
           "name": "Adder Strike",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -220,11 +1027,39 @@
           "display_name": "Adder Strike"
         },
         {
+          "name": "Adept Blade Weapon",
+          "doneness": "not-started",
+          "type_facet": "ArcanistClassFeatures.AdeptBladeChoice",
+          "standing": "origin",
+          "display_name": "Adept Blade Weapon"
+        },
+        {
           "name": "Adept Exploits",
           "doneness": "not-started",
           "type_facet": "Blade Adept Class Feature.Arcanist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Adept Exploits"
+        },
+        {
+          "name": "Adhesive Blood",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Adhesive Blood"
+        },
+        {
+          "name": "Adhesive Spittle",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Adhesive Spittle"
+        },
+        {
+          "name": "Adjustable Disguise",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Adjustable Disguise"
         },
         {
           "name": "Admixture School",
@@ -332,6 +1167,13 @@
           "display_name": "Air School (ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.VoidSavantSchool.SavantElementalSchool)"
         },
         {
+          "name": "Air Step",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Air Step"
+        },
+        {
           "name": "Air Supremacy",
           "doneness": "not-started",
           "type_facet": "ArcanistSchoolChoice",
@@ -360,6 +1202,13 @@
           "display_name": "Alchemy"
         },
         {
+          "name": "Alertness",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Alertness"
+        },
+        {
           "name": "Alignment",
           "doneness": "not-started",
           "type_facet": "Divine Tracker Class Feature.Ranger Class Feature.SpecialQuality",
@@ -386,6 +1235,13 @@
           "type_facet": "ArcanistExploit.ArcanistGreaterExploit.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Alter Enhancements"
+        },
+        {
+          "name": "Alter Musical Instrument",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Alter Musical Instrument"
         },
         {
           "name": "Amateur Gunslinger",
@@ -430,6 +1286,13 @@
           "display_name": "Ancestral Weapon"
         },
         {
+          "name": "Anchored Step",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Anchored Step"
+        },
+        {
           "name": "Angelic Attacks",
           "doneness": "not-started",
           "type_facet": "Class Feature.Bloodrager Class Feature.Celestial Bloodrager Bloodline ~ Power LVL 01.Bloodrager Bloodline Power.SpecialAttack.SpellLike",
@@ -472,144 +1335,291 @@
           "display_name": "Animal Companion (Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary.Animal Companion)"
         },
         {
+          "name": "Animal Companion (Packmaster Archetype)",
+          "doneness": "not-started",
+          "type_facet": "BoonCompanionSelection",
+          "standing": "origin",
+          "display_name": "Animal Companion (Packmaster Archetype)"
+        },
+        {
+          "name": "Animal Companion / II",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / II (Boon Companion Select Packmaster Companion)"
+        },
+        {
           "name": "Animal Companion / II",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / II"
+          "display_name": "Animal Companion / II (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / III",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / III (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / III",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / III"
+          "display_name": "Animal Companion / III (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / IV",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / IV (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / IV",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / IV"
+          "display_name": "Animal Companion / IV (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / IX",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / IX (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / IX",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / IX"
+          "display_name": "Animal Companion / IX (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / Primary",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / Primary (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / Primary",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / Primary"
+          "display_name": "Animal Companion / Primary (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / V",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / V (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / V",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / V"
+          "display_name": "Animal Companion / V (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / VI",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / VI (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / VI",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / VI"
+          "display_name": "Animal Companion / VI (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / VII",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / VII (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / VII",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / VII"
+          "display_name": "Animal Companion / VII (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / VIII",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / VIII (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / VIII",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / VIII"
+          "display_name": "Animal Companion / VIII (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / X",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / X (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / X",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / X"
+          "display_name": "Animal Companion / X (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XI",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XI (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XI",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XI"
+          "display_name": "Animal Companion / XI (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XII",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XII (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XII",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XII"
+          "display_name": "Animal Companion / XII (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XIII",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XIII (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XIII",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XIII"
+          "display_name": "Animal Companion / XIII (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XIV",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XIV (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XIV",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XIV"
+          "display_name": "Animal Companion / XIV (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XIX",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XIX (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XIX",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XIX"
+          "display_name": "Animal Companion / XIX (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XV",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XV (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XV",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XV"
+          "display_name": "Animal Companion / XV (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XVI",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XVI (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XVI",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XVI"
+          "display_name": "Animal Companion / XVI (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XVII",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XVII (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XVII",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XVII"
+          "display_name": "Animal Companion / XVII (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XVIII",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XVIII (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XVIII",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XVIII"
+          "display_name": "Animal Companion / XVIII (PackmasterCompanionChoice)"
+        },
+        {
+          "name": "Animal Companion / XX",
+          "doneness": "not-started",
+          "type_facet": "Boon Companion Select Packmaster Companion",
+          "standing": "unclassified",
+          "display_name": "Animal Companion / XX (Boon Companion Select Packmaster Companion)"
         },
         {
           "name": "Animal Companion / XX",
           "doneness": "not-started",
           "type_facet": "PackmasterCompanionChoice",
           "standing": "unclassified",
-          "display_name": "Animal Companion / XX"
+          "display_name": "Animal Companion / XX (PackmasterCompanionChoice)"
         },
         {
           "name": "Animal Focus",
@@ -706,14 +1716,14 @@
           "name": "Arcane Armor Mastery",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Arcane Armor Mastery"
         },
         {
           "name": "Arcane Armor Training",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Arcane Armor Training"
         },
         {
@@ -750,6 +1760,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Arcane Bloodrager Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Arcane Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcane Bloodrager Bloodline ~ Feat Tracker"
         },
         {
           "name": "Arcane Bond",
@@ -829,6 +1846,13 @@
           "display_name": "Arcanist Exploits"
         },
         {
+          "name": "Arcanist Free Spellbook",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcanist Free Spellbook"
+        },
+        {
           "name": "Arcanist School Void",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.WizardClassFeatures.ClassSpecialization.ArcaneSchool",
@@ -836,11 +1860,25 @@
           "display_name": "Arcanist School Void"
         },
         {
+          "name": "Arcanist Sorcerer Bloodline",
+          "doneness": "not-started",
+          "type_facet": "ArcanistBloodline",
+          "standing": "origin",
+          "display_name": "Arcanist Sorcerer Bloodline"
+        },
+        {
           "name": "Arcanist Spells Prepared",
           "doneness": "not-started",
           "type_facet": "Arcanist Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Arcanist Spells Prepared"
+        },
+        {
+          "name": "Arcanist ~ Spells Castable",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcanist ~ Spells Castable"
         },
         {
           "name": "Archetype Arcanist",
@@ -862,6 +1900,13 @@
           "type_facet": "BrawlerArchetype",
           "standing": "origin",
           "display_name": "Archetype Brawler"
+        },
+        {
+          "name": "Archetype Display",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Archetype Display"
         },
         {
           "name": "Archetype Hunter",
@@ -923,7 +1968,7 @@
           "name": "Armor Proficiency (Light)",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Armor Proficiency (Light)"
         },
         {
@@ -1023,6 +2068,13 @@
           "type_facet": "Warpriest Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Aura"
+        },
+        {
+          "name": "Aura Sight",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "unclassified",
+          "display_name": "Aura Sight"
         },
         {
           "name": "Aura of Banishment",
@@ -1130,6 +2182,13 @@
           "display_name": "Banishment Subschool"
         },
         {
+          "name": "Banshee Blast",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Banshee Blast"
+        },
+        {
           "name": "Bardic Knowledge",
           "doneness": "partial",
           "type_facet": "Skald Class Feature.SkaldBardicKnowledge.SpecialQuality.Extraordinary.Bardic Knowledge",
@@ -1142,6 +2201,13 @@
           "type_facet": "Warpriest Bonus Feat",
           "standing": "origin",
           "display_name": "Barroom Brawler"
+        },
+        {
+          "name": "Barrow Haze",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Barrow Haze"
         },
         {
           "name": "Bashing Finish",
@@ -1417,11 +2483,25 @@
           "display_name": "Black Market Connections"
         },
         {
+          "name": "Black Tentacles",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Black Tentacles"
+        },
+        {
           "name": "Blade Adept",
           "doneness": "not-started",
           "type_facet": "Archetype.ArcanistArchetype.ArcanistExploit1.ArcanistExploit3.ArcanistExploit9",
           "standing": "origin",
           "display_name": "Blade Adept"
+        },
+        {
+          "name": "Blade Adept Arcana",
+          "doneness": "not-started",
+          "type_facet": "ArcanistClassFeatures.BladeAdeptArcana",
+          "standing": "origin",
+          "display_name": "Blade Adept Arcana"
         },
         {
           "name": "Blast Rune",
@@ -1464,6 +2544,13 @@
           "type_facet": "SpecialQuality.Swashbuckler Deed.SwashbucklerDeedsLVL11.DeedHasCost.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bleeding Wound (SpecialQuality.Swashbuckler Deed.SwashbucklerDeedsLVL11.DeedHasCost.Extraordinary)"
+        },
+        {
+          "name": "Bless",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Bless"
         },
         {
           "name": "Bless Army",
@@ -1564,6 +2651,20 @@
           "display_name": "Blessings (Warpriest Class Feature.SpecialQuality.Supernatural)"
         },
         {
+          "name": "Blessings (Favored Class)",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Class Feature.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Blessings (Favored Class)"
+        },
+        {
+          "name": "Blessings Base",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Blessings Base"
+        },
+        {
           "name": "Blind Shot",
           "doneness": "not-started",
           "type_facet": "Steel Hound Class Feature.Investigator Class Feature.SpecialQuality.Supernatural",
@@ -1573,9 +2674,16 @@
         {
           "name": "Blind-Fight",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Blind-Fight (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Blind-Fight",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.AttackOption",
           "standing": "unclassified",
-          "display_name": "Blind-Fight"
+          "display_name": "Blind-Fight (Warpriest Bonus Feat.AttackOption)"
         },
         {
           "name": "Blinding Critical",
@@ -1620,11 +2728,32 @@
           "display_name": "Blinding Strike (SpecialQuality.Supernatural)"
         },
         {
+          "name": "Bloatbomb",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Bloatbomb"
+        },
+        {
           "name": "Blood Arcanist",
           "doneness": "not-started",
           "type_facet": "Archetype.ArcanistArchetype.ArcanistExploit1.ArcanistExploit3.ArcanistExploit9.ArcanistExploit15.ArcanistMagicalSupremacy",
           "standing": "origin",
           "display_name": "Blood Arcanist"
+        },
+        {
+          "name": "Blood Arcanist Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Bloodline Selection",
+          "standing": "origin",
+          "display_name": "Blood Arcanist Bloodline"
+        },
+        {
+          "name": "Blood Armor",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Blood Armor"
         },
         {
           "name": "Blood Bond",
@@ -1660,6 +2789,13 @@
           "type_facet": "ClassFeatures.Bloodrager Class Feature.Defensive.Supernatural",
           "standing": "origin",
           "display_name": "Blood Sanctuary"
+        },
+        {
+          "name": "Blood Sentinel",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Blood Sentinel"
         },
         {
           "name": "Blood of Heroes",
@@ -1809,6 +2945,13 @@
           "display_name": "Bloodline Spells (Mongrel Mage Class Feature.Sorcerer Class Feature.SpecialQuality)"
         },
         {
+          "name": "Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodline Tracker"
+        },
+        {
           "name": "Bloodline Weapons",
           "doneness": "not-started",
           "type_facet": "Eldritch Scrapper Class Feature.Sorcerer Class Feature.SpecialQuality",
@@ -1828,6 +2971,13 @@
           "type_facet": "FavoredClass",
           "standing": "origin",
           "display_name": "Bloodrager"
+        },
+        {
+          "name": "Bloodrager ~ Bloodline Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Bloodrager ~ Bloodline Tracker"
         },
         {
           "name": "Bloodraging Active",
@@ -1865,6 +3015,13 @@
           "display_name": "Blue"
         },
         {
+          "name": "Blur",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Blur"
+        },
+        {
           "name": "Blurring Movement",
           "doneness": "not-started",
           "type_facet": "Class Feature.Bloodrager Class Feature.Fey Bloodrager Bloodline ~ Power LVL 08.Bloodrager Bloodline Power.SpecialQuality.Supernatural",
@@ -1891,6 +3048,13 @@
           "type_facet": "Warpriest Bonus Feat.Style",
           "standing": "unclassified",
           "display_name": "Boar Style"
+        },
+        {
+          "name": "Body Capacitance",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Body Capacitance"
         },
         {
           "name": "Body Shield",
@@ -2180,6 +3344,433 @@
           "display_name": "Brawler Maneuver Training"
         },
         {
+          "name": "Brawler Unarmed Damage LVL 1",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Colossal)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Colossal)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Diminutive)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Diminutive)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Fine)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Fine)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Gargantuan)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Gargantuan)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Huge)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Huge)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Large)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Large)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Medium)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Medium)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Small)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Small)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 1 (Tiny)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 1 (Tiny)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Colossal)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Colossal)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Diminutive)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Diminutive)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Fine)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Fine)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Gargantuan)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Gargantuan)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Huge)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Huge)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Large)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Large)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Medium)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Medium)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Small)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Small)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 12 (Tiny)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 12 (Tiny)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Colossal)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Colossal)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Diminutive)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Diminutive)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Fine)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Fine)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Gargantuan)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Gargantuan)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Huge)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Huge)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Large)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Large)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Medium)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Medium)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Small)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Small)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 16 (Tiny)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 16 (Tiny)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Colossal)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Colossal)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Diminutive)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Diminutive)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Fine)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Fine)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Gargantuan)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Gargantuan)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Huge)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Huge)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Large)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Large)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Medium)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Medium)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Small)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Small)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 20 (Tiny)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 20 (Tiny)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Colossal)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Colossal)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Diminutive)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Diminutive)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Fine)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Fine)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Gargantuan)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Gargantuan)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Huge)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Huge)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Large)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Large)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Medium)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Medium)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Small)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Small)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 4 (Tiny)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 4 (Tiny)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Colossal)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Colossal)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Diminutive)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Diminutive)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Fine)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Fine)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Gargantuan)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Gargantuan)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Huge)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Huge)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Large)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Large)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Medium)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Medium)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Small)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Small)"
+        },
+        {
+          "name": "Brawler Unarmed Damage LVL 8 (Tiny)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler Unarmed Damage LVL 8 (Tiny)"
+        },
+        {
+          "name": "Brawler ~ Unarmed Damage",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Brawler ~ Unarmed Damage"
+        },
+        {
           "name": "Brawler's Cunning",
           "doneness": "not-started",
           "type_facet": "Brawler Class Feature.SpecialQuality.Extraordinary",
@@ -2306,11 +3897,60 @@
           "display_name": "Bull Rush Training (Wildcat Maneuver Training 4.SpecialQuality.Extraordinary)"
         },
         {
+          "name": "Bull's Strength",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Bull's Strength"
+        },
+        {
+          "name": "Bullet Ward",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Bullet Ward"
+        },
+        {
+          "name": "Buoyancy",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Buoyancy"
+        },
+        {
           "name": "Burning Flame",
           "doneness": "not-started",
           "type_facet": "ArcanistExploit.ArcanistGreaterExploit.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Burning Flame"
+        },
+        {
+          "name": "Burning Hands",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Burning Hands"
+        },
+        {
+          "name": "Burning Hands (Acid)",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Burning Hands (Acid)"
+        },
+        {
+          "name": "Burning Hands (Cold)",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Burning Hands (Cold)"
+        },
+        {
+          "name": "Burning Hands (Electricity)",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Burning Hands (Electricity)"
         },
         {
           "name": "Call to Arms",
@@ -2458,6 +4098,20 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Celestial Bloodrager Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Celestial Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Celestial Bloodrager Bloodline ~ Feat Tracker"
+        },
+        {
+          "name": "Celestial Companion",
+          "doneness": "not-started",
+          "type_facet": "Divine Hunter Companion",
+          "standing": "origin",
+          "display_name": "Celestial Companion"
         },
         {
           "name": "Celestial Resistances",
@@ -2705,6 +4359,13 @@
           "display_name": "Chemical Weapons"
         },
         {
+          "name": "Chill Touch",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Chill Touch"
+        },
+        {
           "name": "Chokehold",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -2742,6 +4403,27 @@
         {
           "name": "Class Skills",
           "doneness": "not-started",
+          "type_facet": "Arcanist Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Arcanist Class Feature)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "ClassFeatures.Bloodrager Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (ClassFeatures.Bloodrager Class Feature)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Brawler Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Brawler Class Feature)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
           "type_facet": "Cult Leader Class Feature.Warpriest Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Class Skills (Cult Leader Class Feature.Warpriest Class Feature.SpecialQuality)"
@@ -2763,9 +4445,30 @@
         {
           "name": "Class Skills",
           "doneness": "not-started",
+          "type_facet": "Hunter Class Feature.ArchetypeAbility.HunterClassSkills",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Hunter Class Feature.ArchetypeAbility.HunterClassSkills)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
           "type_facet": "Holy Guide Class Feature.Paladin Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Class Skills (Holy Guide Class Feature.Paladin Class Feature.SpecialQuality)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Hunter Class Feature)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Investigator Class Feature)"
         },
         {
           "name": "Class Skills",
@@ -2787,6 +4490,27 @@
           "type_facet": "Sacred Fist Class Feature.Warpriest Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Class Skills (Sacred Fist Class Feature.Warpriest Class Feature.SpecialQuality)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Shaman Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Shaman Class Feature)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Skald Class Feature)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Slayer Class Feature)"
         },
         {
           "name": "Class Skills",
@@ -2815,6 +4539,20 @@
           "type_facet": "Brawler Class Feature.Strangler Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Class Skills (Brawler Class Feature.Strangler Class Feature.SpecialQuality)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Swashbuckler Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Swashbuckler Class Feature)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Warpriest Class Feature",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Warpriest Class Feature)"
         },
         {
           "name": "Class Skills",
@@ -2854,9 +4592,16 @@
         {
           "name": "Cleave",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Cleave (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Cleave",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Cleave"
+          "display_name": "Cleave (Warpriest Bonus Feat)"
         },
         {
           "name": "Cleaving Finish",
@@ -2936,6 +4681,13 @@
           "display_name": "Cold Blast (ArcanistClassFeatures.SpecialQuality.Supernatural)"
         },
         {
+          "name": "Combat Casting",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Combat Casting"
+        },
+        {
           "name": "Combat Expertise",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.AttackOption.ModifyAC",
@@ -2966,9 +4718,16 @@
         {
           "name": "Combat Reflexes",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Combat Reflexes (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Combat Reflexes",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Combat Reflexes"
+          "display_name": "Combat Reflexes (Warpriest Bonus Feat)"
         },
         {
           "name": "Combat Style",
@@ -3055,6 +4814,13 @@
           "display_name": "Companion Animal"
         },
         {
+          "name": "Companion Life Link",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Companion Life Link"
+        },
+        {
           "name": "Concentrate Poison",
           "doneness": "not-started",
           "type_facet": "InvestigatorAlchemistDiscovery.SpecialAttack.Extraordinary",
@@ -3088,6 +4854,13 @@
           "type_facet": "SpecialAttack.Extraordinary.InvestigatorTalent",
           "standing": "origin",
           "display_name": "Confusing Strike (SpecialAttack.Extraordinary.InvestigatorTalent)"
+        },
+        {
+          "name": "Confusion",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Confusion"
         },
         {
           "name": "Confusion Curse",
@@ -3165,6 +4938,20 @@
           "type_facet": "Animist Class Feature.Shaman Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Contact with the Spirit World"
+        },
+        {
+          "name": "Contingent Action",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Contingent Action"
+        },
+        {
+          "name": "Contingent Scroll",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Contingent Scroll"
         },
         {
           "name": "Control Madness",
@@ -3419,11 +5206,25 @@
           "display_name": "Creator's Will"
         },
         {
+          "name": "Creeping Ice",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Creeping Ice"
+        },
+        {
           "name": "Creeping Vines",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Creeping Vines"
+        },
+        {
+          "name": "Crimson Confession",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Crimson Confession"
         },
         {
           "name": "Crippling Critical",
@@ -3454,6 +5255,13 @@
           "display_name": "Critical Strike"
         },
         {
+          "name": "Crossblooded Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Bloodline Selection",
+          "standing": "unclassified",
+          "display_name": "Crossblooded Bloodline"
+        },
+        {
           "name": "Crossblooded Rager",
           "doneness": "not-started",
           "type_facet": "Archetype.BloodragerArchetype",
@@ -3480,6 +5288,13 @@
           "type_facet": "Bolt Ace Class Feature.Gunslinger Class Feature.SpecialQuality.Extraordinary.GunTraining",
           "standing": "origin",
           "display_name": "Crossbow Training"
+        },
+        {
+          "name": "Crossbow Training Selection",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Crossbow Training Selection"
         },
         {
           "name": "Crowded Vessel",
@@ -3550,6 +5365,13 @@
           "type_facet": "InvestigatorRogueTalent.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Cunning Trigger"
+        },
+        {
+          "name": "Curse of Burning Sleep",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Curse of Burning Sleep"
         },
         {
           "name": "Curse of Suffering",
@@ -3967,9 +5789,16 @@
         {
           "name": "Deceitful",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Deceitful (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Deceitful",
+          "doneness": "not-started",
           "type_facet": "Cleaner Class Feature.Slayer Class Feature.SpecialQuality",
           "standing": "unclassified",
-          "display_name": "Deceitful"
+          "display_name": "Deceitful (Cleaner Class Feature.Slayer Class Feature.SpecialQuality)"
         },
         {
           "name": "Deeds",
@@ -4035,10 +5864,17 @@
           "display_name": "Deep Earth Bloodline"
         },
         {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
+        },
+        {
           "name": "Defensive Combat Training",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Defensive Combat Training"
         },
         {
@@ -4075,6 +5911,13 @@
           "type_facet": "Class Feature.Bloodrager Class Feature.Destined Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Defy Death"
+        },
+        {
+          "name": "Deity Has Unarmed Strike As Favored Weapon",
+          "doneness": "not-started",
+          "type_facet": "WarpriestIUS",
+          "standing": "origin",
+          "display_name": "Deity Has Unarmed Strike As Favored Weapon"
         },
         {
           "name": "Deliver Touch Spells",
@@ -4175,6 +6018,13 @@
           "display_name": "Destined Bloodrager Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Destined Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Destined Bloodrager Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Destined Strike",
           "doneness": "not-started",
           "type_facet": "Class Feature.Bloodrager Class Feature.Destined Bloodrager Bloodline ~ Power LVL 01.Bloodrager Bloodline Power.SpecialAttack.Supernatural",
@@ -4252,6 +6102,13 @@
           "display_name": "Diabolical Arrogance"
         },
         {
+          "name": "Diehard",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Diehard"
+        },
+        {
           "name": "Dilution",
           "doneness": "not-started",
           "type_facet": "InvestigatorAlchemistDiscovery.SpecialQuality.Extraordinary",
@@ -4264,6 +6121,20 @@
           "type_facet": "SpecialQuality.RogueTalent",
           "standing": "unclassified",
           "display_name": "Dilution (SpecialQuality.RogueTalent)"
+        },
+        {
+          "name": "Dimension Door",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Dimension Door"
+        },
+        {
+          "name": "Dimensional Bounce",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL7",
+          "standing": "origin",
+          "display_name": "Dimensional Bounce"
         },
         {
           "name": "Dimensional Hop",
@@ -4304,42 +6175,42 @@
           "name": "Dirty Trick",
           "doneness": "not-started",
           "type_facet": "Bounty Hunter Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Dirty Trick (Bounty Hunter Class Feature.Slayer Class Feature.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Dirty Trick",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingISelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Dirty Trick (BrawlerManeuverTrainingISelection)"
         },
         {
           "name": "Dirty Trick",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingIISelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Dirty Trick (BrawlerManeuverTrainingIISelection)"
         },
         {
           "name": "Dirty Trick",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingIIISelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Dirty Trick (BrawlerManeuverTrainingIIISelection)"
         },
         {
           "name": "Dirty Trick",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingIVSelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Dirty Trick (BrawlerManeuverTrainingIVSelection)"
         },
         {
           "name": "Dirty Trick",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingVSelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Dirty Trick (BrawlerManeuverTrainingVSelection)"
         },
         {
@@ -4348,6 +6219,13 @@
           "type_facet": "Wildcat Maneuver Training 1.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Dirty Trick Training"
+        },
+        {
+          "name": "Disable Construct",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Disable Construct"
         },
         {
           "name": "Disarm",
@@ -4418,6 +6296,13 @@
           "type_facet": "Visionary Class Feature.Shaman Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Discern Magical Expertise"
+        },
+        {
+          "name": "Discern Next of Kin",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Discern Next of Kin"
         },
         {
           "name": "Discovery",
@@ -4497,6 +6382,13 @@
           "display_name": "Dispelling Strike"
         },
         {
+          "name": "Displacement",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Displacement"
+        },
+        {
           "name": "Disrupting Counter",
           "doneness": "not-started",
           "type_facet": "Flying Blade Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary",
@@ -4527,9 +6419,16 @@
         {
           "name": "Disruptive",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Disruptive (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Disruptive",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Disruptive"
+          "display_name": "Disruptive (Warpriest Bonus Feat)"
         },
         {
           "name": "Disruptive Bloodrage",
@@ -4688,9 +6587,16 @@
         {
           "name": "Dodge",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Dodge (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Dodge",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Dodge"
+          "display_name": "Dodge (Warpriest Bonus Feat)"
         },
         {
           "name": "Dodging Panache",
@@ -4805,11 +6711,32 @@
           "display_name": "Draconic Bloodline (BloodragerBloodlineChoice) #4"
         },
         {
+          "name": "Draconic Bloodrager Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Dragon Disciple Bloodline Choice",
+          "standing": "origin",
+          "display_name": "Draconic Bloodrager Bloodline (Dragon Disciple Bloodline Choice)"
+        },
+        {
+          "name": "Draconic Bloodrager Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Dragon Disciple Bloodline Choice",
+          "standing": "origin",
+          "display_name": "Draconic Bloodrager Bloodline (Dragon Disciple Bloodline Choice) #2"
+        },
+        {
           "name": "Draconic Bloodrager Bloodline ~ Bonus Spells",
           "doneness": "not-started",
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Draconic Bloodrager Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Draconic Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Draconic Bloodrager Bloodline ~ Feat Tracker"
         },
         {
           "name": "Draconic Resistance",
@@ -4964,6 +6891,13 @@
           "type_facet": "Warpriest Bonus Feat.Panache",
           "standing": "origin",
           "display_name": "Dueling Cape Deed"
+        },
+        {
+          "name": "Dummy",
+          "doneness": "not-started",
+          "type_facet": "None",
+          "standing": "origin",
+          "display_name": "Dummy"
         },
         {
           "name": "Dustbringer",
@@ -5190,6 +7124,13 @@
           "display_name": "Eldritch Scion Arcane Bloodline"
         },
         {
+          "name": "Eldritch Scion Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Bloodline Selection",
+          "standing": "origin",
+          "display_name": "Eldritch Scion Bloodline"
+        },
+        {
           "name": "Eldritch Scion Celestial Bloodline",
           "doneness": "not-started",
           "type_facet": "EldritchScionBloodragerBloodlineChoice",
@@ -5230,6 +7171,13 @@
           "type_facet": "EldritchScionBloodragerBloodlineChoice",
           "standing": "origin",
           "display_name": "Eldritch Scion Infernal Bloodline"
+        },
+        {
+          "name": "Eldritch Scion SpellCasting Reduction",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Eldritch Scion SpellCasting Reduction"
         },
         {
           "name": "Eldritch Scion Undead Bloodline",
@@ -5323,11 +7271,25 @@
           "display_name": "Elemental Bloodrager Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Elemental Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Elemental Bloodrager Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Elemental Body",
           "doneness": "not-started",
           "type_facet": "Class Feature.Bloodrager Class Feature.Elemental Bloodrager Bloodline ~ Power LVL 20.Bloodrager Bloodline Power.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Elemental Body"
+        },
+        {
+          "name": "Elemental Body I",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Elemental Body I"
         },
         {
           "name": "Elemental Fist",
@@ -5505,6 +7467,13 @@
           "display_name": "Empiricist"
         },
         {
+          "name": "Empower Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Empower Spell"
+        },
+        {
           "name": "Enchanting Smile",
           "doneness": "not-started",
           "type_facet": "ArcanistSchoolChoice",
@@ -5517,6 +7486,13 @@
           "type_facet": "ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit1",
           "standing": "unclassified",
           "display_name": "Enchanting Smile (ArcanistClassFeatures.SpecialQuality.Supernatural.ArcanistSavantSchoolPower.ArcanistExploit1)"
+        },
+        {
+          "name": "Enchantment Foil",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Enchantment Foil"
         },
         {
           "name": "Enchantment Opposition School",
@@ -5538,6 +7514,13 @@
           "type_facet": "ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.EnchantmentSavantSchool",
           "standing": "unclassified",
           "display_name": "Enchantment School (ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.EnchantmentSavantSchool)"
+        },
+        {
+          "name": "Endurance",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Endurance"
         },
         {
           "name": "Enemies' Bane",
@@ -5566,6 +7549,13 @@
           "type_facet": "ArcanistExploit.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Energy Shield"
+        },
+        {
+          "name": "Enervation",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Enervation"
         },
         {
           "name": "Enfilading Fire",
@@ -5631,11 +7621,32 @@
           "display_name": "Enhancement Subschool"
         },
         {
+          "name": "Enlarge Person",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Enlarge Person"
+        },
+        {
+          "name": "Enlarge Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Enlarge Spell"
+        },
+        {
           "name": "Enshrouding Darkness",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Enshrouding Darkness"
+        },
+        {
+          "name": "Entangle",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Entangle"
         },
         {
           "name": "Entangling Curse",
@@ -5711,7 +7722,7 @@
           "name": "Etherealness",
           "doneness": "not-started",
           "type_facet": "Animist Class Feature.Shaman Class Feature.SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Etherealness"
         },
         {
@@ -5862,6 +7873,13 @@
           "display_name": "Extend Potion (SpecialQuality.RogueTalent)"
         },
         {
+          "name": "Extend Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Extend Spell"
+        },
+        {
           "name": "Extended Illusion",
           "doneness": "not-started",
           "type_facet": "ArcanistSchoolChoice",
@@ -5918,6 +7936,13 @@
           "display_name": "Eyes of Battle (Wandering)"
         },
         {
+          "name": "Eyes of the Void",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Eyes of the Void"
+        },
+        {
           "name": "Faerie's Strike",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -5930,6 +7955,13 @@
           "type_facet": "HunterAnimalFocusAbility",
           "standing": "origin",
           "display_name": "Falcon"
+        },
+        {
+          "name": "False Life",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "False Life"
         },
         {
           "name": "False Opening",
@@ -6072,6 +8104,13 @@
           "display_name": "Favored Weapon"
         },
         {
+          "name": "Fear",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Fear"
+        },
+        {
           "name": "Fearful Gaze",
           "doneness": "not-started",
           "type_facet": "ShamanSpiritHex.SpecialAttack.Supernatural",
@@ -6084,6 +8123,13 @@
           "type_facet": "ShamanBonesHex",
           "standing": "origin",
           "display_name": "Fearful Gaze (Wandering)"
+        },
+        {
+          "name": "Feast on Fear",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL5",
+          "standing": "unclassified",
+          "display_name": "Feast on Fear"
         },
         {
           "name": "Feat",
@@ -6226,6 +8272,13 @@
           "display_name": "Fey Bloodrager Bloodline ~ Bonus Spells"
         },
         {
+          "name": "Fey Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fey Bloodrager Bloodline ~ Feat Tracker"
+        },
+        {
           "name": "Field Instruction",
           "doneness": "not-started",
           "type_facet": "Exemplar Class Feature.Brawler Class Feature.SpecialQuality.Extraordinary.BrawlerBrawlersStrike",
@@ -6245,6 +8298,13 @@
           "type_facet": "Divine Hunter Companion",
           "standing": "origin",
           "display_name": "Fiendish"
+        },
+        {
+          "name": "Fiendish Companion",
+          "doneness": "not-started",
+          "type_facet": "Divine Hunter Companion",
+          "standing": "origin",
+          "display_name": "Fiendish Companion"
         },
         {
           "name": "Fierce Fortitude",
@@ -6392,6 +8452,13 @@
           "type_facet": "ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.VoidSavantSchool.SavantElementalSchool",
           "standing": "unclassified",
           "display_name": "Fire School (ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.VoidSavantSchool.SavantElementalSchool)"
+        },
+        {
+          "name": "Fire Shield",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Fire Shield"
         },
         {
           "name": "Fire Strike",
@@ -6550,9 +8617,16 @@
         {
           "name": "Fly",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Fly (Bloodrager Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Fly",
+          "doneness": "not-started",
           "type_facet": "HunterVerminFocusAbility",
           "standing": "unclassified",
-          "display_name": "Fly"
+          "display_name": "Fly (HunterVerminFocusAbility)"
         },
         {
           "name": "Flying Blade",
@@ -6744,6 +8818,13 @@
           "display_name": "Frantically Nimble"
         },
         {
+          "name": "Freedom of Movement",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Freedom of Movement"
+        },
+        {
           "name": "Freedom's Shout",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
@@ -6861,6 +8942,13 @@
           "type_facet": "ArcanistClassFeatures.SpecialQuality.ClassSpecialization.ArcanistSavantSchool.EvocationSavantSchool",
           "standing": "origin",
           "display_name": "Generation Subschool"
+        },
+        {
+          "name": "Gentle Breeze",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Gentle Breeze"
         },
         {
           "name": "Gentle Rest",
@@ -7082,9 +9170,16 @@
         {
           "name": "Great Fortitude",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Great Fortitude (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Great Fortitude",
+          "doneness": "not-started",
           "type_facet": "Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Great Fortitude"
+          "display_name": "Great Fortitude (Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat)"
         },
         {
           "name": "Greater Arcane Bloodrage",
@@ -7398,7 +9493,7 @@
           "name": "Greater Weapon Focus",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Greater Weapon Focus"
         },
         {
@@ -7563,6 +9658,13 @@
           "display_name": "Hard to Fool (SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary)"
         },
         {
+          "name": "Haste",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Haste"
+        },
+        {
           "name": "Hasted Assault",
           "doneness": "not-started",
           "type_facet": "BladeAdeptArcana.SpecialQuality.Supernatural",
@@ -7682,6 +9784,20 @@
           "display_name": "Heel"
         },
         {
+          "name": "Heighten Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Heighten Spell"
+        },
+        {
+          "name": "Heightened Awareness",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Heightened Awareness"
+        },
+        {
           "name": "Hellfire Charge",
           "doneness": "not-started",
           "type_facet": "Class Feature.Bloodrager Class Feature.Infernal Bloodrager Bloodline ~ Power LVL 16.Bloodrager Bloodline Power.SpecialAttack.Supernatural",
@@ -7708,6 +9824,13 @@
           "type_facet": "Warpriest Bonus Feat.Performance",
           "standing": "origin",
           "display_name": "Hero's Display"
+        },
+        {
+          "name": "Heroism",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Heroism"
         },
         {
           "name": "Hex",
@@ -7759,6 +9882,13 @@
           "display_name": "Hide in Plain Sight"
         },
         {
+          "name": "Hideous Laughter",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Hideous Laughter"
+        },
+        {
           "name": "Hobbling Attack",
           "doneness": "not-started",
           "type_facet": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary.WildChildTrickChoice",
@@ -7785,6 +9915,13 @@
           "type_facet": "Holy Guide Class Feature.Internal.Mercy",
           "standing": "origin",
           "display_name": "Holy Guide Favored Terrain"
+        },
+        {
+          "name": "Holy Smite",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Holy Smite"
         },
         {
           "name": "Holy Strike",
@@ -7957,6 +10094,13 @@
         {
           "name": "Improved Bull Rush",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Bull Rush (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Improved Bull Rush",
+          "doneness": "not-started",
           "type_facet": "Contact Specialist Feat",
           "standing": "unclassified",
           "display_name": "Improved Bull Rush (Contact Specialist Feat)"
@@ -7986,14 +10130,14 @@
           "name": "Improved Counterspell",
           "doneness": "not-started",
           "type_facet": "Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Improved Counterspell (Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat)"
         },
         {
           "name": "Improved Counterspell",
           "doneness": "not-started",
           "type_facet": "Spell Warrior Class Feature.Skald Class Feature.SpecialQuality",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Improved Counterspell (Spell Warrior Class Feature.Skald Class Feature.SpecialQuality)"
         },
         {
@@ -8027,9 +10171,16 @@
         {
           "name": "Improved Disarm",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Disarm (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Improved Disarm",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.AttackOption",
           "standing": "unclassified",
-          "display_name": "Improved Disarm"
+          "display_name": "Improved Disarm (Warpriest Bonus Feat.AttackOption)"
         },
         {
           "name": "Improved Divination",
@@ -8076,6 +10227,13 @@
         {
           "name": "Improved Grapple",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Grapple (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Improved Grapple",
+          "doneness": "not-started",
           "type_facet": "Contact Specialist Feat",
           "standing": "unclassified",
           "display_name": "Improved Grapple (Contact Specialist Feat)"
@@ -8091,7 +10249,7 @@
           "name": "Improved Great Fortitude",
           "doneness": "not-started",
           "type_facet": "Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Improved Great Fortitude"
         },
         {
@@ -8104,15 +10262,22 @@
         {
           "name": "Improved Initiative",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Initiative (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Improved Initiative",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Improved Initiative"
+          "display_name": "Improved Initiative (Warpriest Bonus Feat)"
         },
         {
           "name": "Improved Iron Will",
           "doneness": "not-started",
           "type_facet": "Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Improved Iron Will"
         },
         {
@@ -8156,6 +10321,13 @@
           "type_facet": "Warpriest Bonus Feat",
           "standing": "origin",
           "display_name": "Improved Rending Fury"
+        },
+        {
+          "name": "Improved Reposition",
+          "doneness": "not-started",
+          "type_facet": "BloodLineAdditional.Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Reposition (BloodLineAdditional.Bloodrager Bloodline Feat)"
         },
         {
           "name": "Improved Reposition",
@@ -8230,9 +10402,16 @@
         {
           "name": "Improved Sunder",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Sunder (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Improved Sunder",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.AttackOption",
           "standing": "unclassified",
-          "display_name": "Improved Sunder"
+          "display_name": "Improved Sunder (Warpriest Bonus Feat.AttackOption)"
         },
         {
           "name": "Improved Surge",
@@ -8247,6 +10426,13 @@
           "type_facet": "Warpriest Bonus Feat.Teamwork",
           "standing": "origin",
           "display_name": "Improved Swap Places"
+        },
+        {
+          "name": "Improved Trip",
+          "doneness": "not-started",
+          "type_facet": "BloodLineAdditional.Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Trip (BloodLineAdditional.Bloodrager Bloodline Feat)"
         },
         {
           "name": "Improved Trip",
@@ -8275,6 +10461,13 @@
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
           "display_name": "Improved Two-Weapon Fighting"
+        },
+        {
+          "name": "Improved Unarmed Strike",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Improved Unarmed Strike (Bloodrager Bloodline Feat)"
         },
         {
           "name": "Improved Unarmed Strike",
@@ -8436,6 +10629,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Infernal Bloodrager Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Infernal Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Infernal Bloodrager Bloodline ~ Feat Tracker"
         },
         {
           "name": "Infernal Resistance",
@@ -8671,9 +10871,23 @@
         {
           "name": "Intimidating Prowess",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Intimidating Prowess (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Intimidating Prowess",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Intimidating Prowess"
+          "display_name": "Intimidating Prowess (Warpriest Bonus Feat)"
+        },
+        {
+          "name": "Investigative Mind",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Investigative Mind"
         },
         {
           "name": "Investigator",
@@ -8706,9 +10920,23 @@
         {
           "name": "Invisibility",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Invisibility (Bloodrager Bloodline Bonus Spell)"
+        },
+        {
+          "name": "Invisibility",
+          "doneness": "not-started",
           "type_facet": "Stygian Slayer Class Feature.Slayer Class Feature.SpecialQuality.SpellLike",
           "standing": "unclassified",
-          "display_name": "Invisibility"
+          "display_name": "Invisibility (Stygian Slayer Class Feature.Slayer Class Feature.SpecialQuality.SpellLike)"
+        },
+        {
+          "name": "Invisibility Alarm",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Invisibility Alarm"
         },
         {
           "name": "Invisibility Field",
@@ -8734,9 +10962,16 @@
         {
           "name": "Iron Will",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Iron Will (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Iron Will",
+          "doneness": "not-started",
           "type_facet": "Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Iron Will"
+          "display_name": "Iron Will (Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat)"
         },
         {
           "name": "Irresistible Demand",
@@ -8984,6 +11219,13 @@
           "display_name": "Lead by Example"
         },
         {
+          "name": "Leadership",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Leadership"
+        },
+        {
           "name": "Leaping Charger",
           "doneness": "not-started",
           "type_facet": "Class Feature.Bloodrager Class Feature.Fey Bloodrager Bloodline ~ Power LVL 04.Bloodrager Bloodline Power.SpecialQuality.Supernatural",
@@ -9054,6 +11296,13 @@
           "display_name": "Life Link (Wandering)"
         },
         {
+          "name": "Life Pact",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Life Pact"
+        },
+        {
           "name": "Life School",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.ArcanistSchool",
@@ -9089,6 +11338,13 @@
           "display_name": "Life Subschool"
         },
         {
+          "name": "Lightning Bolt",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Lightning Bolt"
+        },
+        {
           "name": "Lightning Flash",
           "doneness": "not-started",
           "type_facet": "ArcanistSchoolChoice",
@@ -9112,9 +11368,16 @@
         {
           "name": "Lightning Reflexes",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Lightning Reflexes (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Lightning Reflexes",
+          "doneness": "not-started",
           "type_facet": "Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Lightning Reflexes"
+          "display_name": "Lightning Reflexes (Disenchanter Class Feature.Warpriest Class Feature.Disenchanter Bonus Feat)"
         },
         {
           "name": "Lightning Reload",
@@ -9355,6 +11618,13 @@
           "display_name": "Magic Blessing"
         },
         {
+          "name": "Magic Missile",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Magic Missile"
+        },
+        {
           "name": "Magical Expertise",
           "doneness": "not-started",
           "type_facet": "Counterfeit Mage Class Feature.Rogue Class Feature.SpecialQuality.Extraordinary",
@@ -9593,6 +11863,13 @@
           "display_name": "Martial Flexibility (Warsighted Class Feature.Oracle Class Feature.SpecialQuality.Extraordinary)"
         },
         {
+          "name": "Martial Flexibility Feat",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Martial Flexibility Feat"
+        },
+        {
           "name": "Martial Master",
           "doneness": "not-started",
           "type_facet": "Archetype.FighterArchetype.FighterWeaponTraining.FighterWeaponMastery",
@@ -9712,6 +11989,13 @@
           "display_name": "Mastermind's Inspiration"
         },
         {
+          "name": "Maximize Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Maximize Spell"
+        },
+        {
           "name": "Medusa's Wrath",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -9724,6 +12008,13 @@
           "type_facet": "Picaroon Class Feature.Swashbuckler Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Melee Shooter"
+        },
+        {
+          "name": "Memorize Page",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Memorize Page"
         },
         {
           "name": "Menacing Swordplay",
@@ -9852,6 +12143,13 @@
           "display_name": "Mimic Mastery"
         },
         {
+          "name": "Mindlocked Messenger",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Mindlocked Messenger"
+        },
+        {
           "name": "Minor Magic",
           "doneness": "not-started",
           "type_facet": "InvestigatorRogueTalent.SpecialQuality.SpellLike",
@@ -9871,6 +12169,27 @@
           "type_facet": "Sacred Fist Class Feature.Warpriest Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Miraculous Fortitude"
+        },
+        {
+          "name": "Mirror Hideaway",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Mirror Hideaway"
+        },
+        {
+          "name": "Mirror Polish",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Mirror Polish"
+        },
+        {
+          "name": "Mirror Transport",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Mirror Transport"
         },
         {
           "name": "Misfortune",
@@ -9910,9 +12229,16 @@
         {
           "name": "Mobility",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Mobility (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Mobility",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Mobility"
+          "display_name": "Mobility (Warpriest Bonus Feat)"
         },
         {
           "name": "Mocking Dance",
@@ -9920,6 +12246,13 @@
           "type_facet": "Warpriest Bonus Feat.Performance",
           "standing": "origin",
           "display_name": "Mocking Dance"
+        },
+        {
+          "name": "Molten Orb",
+          "doneness": "not-started",
+          "type_facet": "Sorcerer Bloodline Bonus Spell",
+          "standing": "origin",
+          "display_name": "Molten Orb"
         },
         {
           "name": "Momentary Glimpse",
@@ -10050,9 +12383,16 @@
         {
           "name": "Mounted Combat",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Mounted Combat (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Mounted Combat",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Mounted Combat"
+          "display_name": "Mounted Combat (Warpriest Bonus Feat)"
         },
         {
           "name": "Mounted Shield",
@@ -10081,6 +12421,34 @@
           "type_facet": "Archetype.SwashbucklerArchetype.SwashbucklerBleedingWoundDeed.SwashbucklerTargetedStrikeDeed.SwashbucklerOpportuneParryDeed.SwashbucklerRiposteDeed.SwashbucklerMenacingSwordplayDeed",
           "standing": "origin",
           "display_name": "Mouser"
+        },
+        {
+          "name": "Move ~ Burrow (30)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Move ~ Burrow (30)"
+        },
+        {
+          "name": "Move ~ Fly (60)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Move ~ Fly (60)"
+        },
+        {
+          "name": "Move ~ Land Increase (30)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Move ~ Land Increase (30)"
+        },
+        {
+          "name": "Move ~ Swim (60)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Move ~ Swim (60)"
         },
         {
           "name": "Mummification",
@@ -10674,35 +13042,35 @@
           "name": "Overrun",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingISelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Overrun (BrawlerManeuverTrainingISelection)"
         },
         {
           "name": "Overrun",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingIISelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Overrun (BrawlerManeuverTrainingIISelection)"
         },
         {
           "name": "Overrun",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingIIISelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Overrun (BrawlerManeuverTrainingIIISelection)"
         },
         {
           "name": "Overrun",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingIVSelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Overrun (BrawlerManeuverTrainingIVSelection)"
         },
         {
           "name": "Overrun",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingVSelection",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Overrun (BrawlerManeuverTrainingVSelection)"
         },
         {
@@ -10958,6 +13326,13 @@
           "display_name": "Panache (Swashbuckler Class Feature.SpecialQuality.Extraordinary.GritShared.Panache)"
         },
         {
+          "name": "Panache Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Panache Tracker"
+        },
+        {
           "name": "Panache and Deeds",
           "doneness": "not-started",
           "type_facet": "Daring Champion Class Feature.Cavalier Class Feature.SpecialQuality.Extraordinary.CavalierExpertTrainer",
@@ -11182,6 +13557,13 @@
           "display_name": "Picaroon"
         },
         {
+          "name": "Pierce Disguise",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Pierce Disguise"
+        },
+        {
           "name": "Pin Down",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -11301,6 +13683,13 @@
           "display_name": "Poison Use"
         },
         {
+          "name": "Polymorph Familiar",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Polymorph Familiar"
+        },
+        {
           "name": "Possessed Shaman",
           "doneness": "not-started",
           "type_facet": "Archetype.ShamanArchetype.ShamanSpiritMagic.ShamanHex2.ShamanWanderingHex6",
@@ -11317,9 +13706,16 @@
         {
           "name": "Power Attack",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Power Attack (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Power Attack",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.AttackOption",
           "standing": "unclassified",
-          "display_name": "Power Attack"
+          "display_name": "Power Attack (Warpriest Bonus Feat.AttackOption)"
         },
         {
           "name": "Power Over Undead",
@@ -11532,6 +13928,41 @@
           "display_name": "Preserve Organs (SpecialQuality.RogueTalent.Extraordinary)"
         },
         {
+          "name": "Primal Choice",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Primal Choice"
+        },
+        {
+          "name": "Primal Choice",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Primal Choice #2"
+        },
+        {
+          "name": "Primal Choice",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Primal Choice #3"
+        },
+        {
+          "name": "Primal Choice",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Primal Choice #4"
+        },
+        {
+          "name": "Primal Choice",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Primal Choice #5"
+        },
+        {
           "name": "Primal Choices",
           "doneness": "not-started",
           "type_facet": "Primalist Class Feature.Bloodrager Class Feature.SpecialQuality",
@@ -11607,6 +14038,20 @@
           "type_facet": "Blessings",
           "standing": "origin",
           "display_name": "Protection Blessing"
+        },
+        {
+          "name": "Protection from Energy",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Protection from Energy"
+        },
+        {
+          "name": "Protection from Good",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Protection from Good"
         },
         {
           "name": "Protective Ward",
@@ -11765,9 +14210,16 @@
         {
           "name": "Quick Draw",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Quick Draw (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Quick Draw",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Quick Draw"
+          "display_name": "Quick Draw (Warpriest Bonus Feat)"
         },
         {
           "name": "Quick Healing",
@@ -11861,6 +14313,13 @@
           "display_name": "Quick-Tongued"
         },
         {
+          "name": "Quicken Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Quicken Spell"
+        },
+        {
           "name": "Quickling Bloodrage",
           "doneness": "not-started",
           "type_facet": "Class Feature.Bloodrager Class Feature.Fey Bloodrager Bloodline ~ Power LVL 12.Bloodrager Bloodline Power.SpecialQuality.SpellLike",
@@ -11875,11 +14334,53 @@
           "display_name": "Rag Doll Mutagen"
         },
         {
+          "name": "Rage",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Rage"
+        },
+        {
           "name": "Rage Casting",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "origin",
           "display_name": "Rage Casting"
+        },
+        {
+          "name": "Rage Power",
+          "doneness": "not-started",
+          "type_facet": "Level 12 Primal Choice",
+          "standing": "unclassified",
+          "display_name": "Rage Power (Level 12 Primal Choice)"
+        },
+        {
+          "name": "Rage Power",
+          "doneness": "not-started",
+          "type_facet": "Level 16 Primal Choice",
+          "standing": "unclassified",
+          "display_name": "Rage Power (Level 16 Primal Choice)"
+        },
+        {
+          "name": "Rage Power",
+          "doneness": "not-started",
+          "type_facet": "Level 20 Primal Choice",
+          "standing": "unclassified",
+          "display_name": "Rage Power (Level 20 Primal Choice)"
+        },
+        {
+          "name": "Rage Power",
+          "doneness": "not-started",
+          "type_facet": "Level 4 Primal Choice",
+          "standing": "unclassified",
+          "display_name": "Rage Power (Level 4 Primal Choice)"
+        },
+        {
+          "name": "Rage Power",
+          "doneness": "not-started",
+          "type_facet": "Level 8 Primal Choice",
+          "standing": "unclassified",
+          "display_name": "Rage Power (Level 8 Primal Choice)"
         },
         {
           "name": "Rage Powers",
@@ -12022,6 +14523,13 @@
           "display_name": "Ray Shield (Warpriest Bonus Feat)"
         },
         {
+          "name": "Ray of Enfeeblement",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Ray of Enfeeblement"
+        },
+        {
           "name": "Ready for Anything",
           "doneness": "not-started",
           "type_facet": "Wildcat Class Feature.Monk Class Feature.SpecialQuality.Extraordinary",
@@ -12078,6 +14586,13 @@
           "display_name": "Redirect Spell"
         },
         {
+          "name": "Refine Improvised Weapon",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Refine Improvised Weapon"
+        },
+        {
           "name": "Reflexive Conduit",
           "doneness": "not-started",
           "type_facet": "Bloodrager Class Feature.SpecialQuality.Extraordinary.BloodragerIndomitableWill",
@@ -12097,6 +14612,20 @@
           "type_facet": "Warpriest Bonus Feat",
           "standing": "origin",
           "display_name": "Rending Fury"
+        },
+        {
+          "name": "Repair Undead",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Repair Undead"
+        },
+        {
+          "name": "Repair Undead (Mass)",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Repair Undead (Mass)"
         },
         {
           "name": "Repose Blessing",
@@ -12190,6 +14719,13 @@
           "display_name": "Resiliency"
         },
         {
+          "name": "Resist Energy",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Resist Energy"
+        },
+        {
           "name": "Resistance",
           "doneness": "not-started",
           "type_facet": "ArcanistClassFeatures.SpecialQuality.Extraordinary.ArcanistSavantSchoolPower.ArcanistExploit1",
@@ -12269,9 +14805,16 @@
         {
           "name": "Ride-By Attack",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Ride-By Attack (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Ride-By Attack",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.AttackOption",
           "standing": "unclassified",
-          "display_name": "Ride-By Attack"
+          "display_name": "Ride-By Attack (Warpriest Bonus Feat.AttackOption)"
         },
         {
           "name": "Riving Strike",
@@ -12449,6 +14992,34 @@
           "display_name": "School Understanding"
         },
         {
+          "name": "Scorching Ray",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Scorching Ray"
+        },
+        {
+          "name": "Scorching Ray (Acid)",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Scorching Ray (Acid)"
+        },
+        {
+          "name": "Scorching Ray (Cold)",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Scorching Ray (Cold)"
+        },
+        {
+          "name": "Scorching Ray (Electricity)",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Scorching Ray (Electricity)"
+        },
+        {
           "name": "Scorpion",
           "doneness": "not-started",
           "type_facet": "HunterVerminFocusAbility",
@@ -12573,6 +15144,13 @@
           "type_facet": "Mysterious Avenger Class Feature.Swashbuckler Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Secret Identity"
+        },
+        {
+          "name": "See Invisibility",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "See Invisibility"
         },
         {
           "name": "See Magic",
@@ -12827,11 +15405,25 @@
           "display_name": "Shedding Form"
         },
         {
+          "name": "Shield",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Shield"
+        },
+        {
           "name": "Shield Champion",
           "doneness": "not-started",
           "type_facet": "Archetype.BrawlerArchetype.BrawlerManeuverTraining.BrawlerWeaponProficiencies.BrawlerBrawlersStrike",
           "standing": "origin",
           "display_name": "Shield Champion"
+        },
+        {
+          "name": "Shield Companion",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Shield Companion"
         },
         {
           "name": "Shield Focus",
@@ -12846,6 +15438,13 @@
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
           "display_name": "Shield Master"
+        },
+        {
+          "name": "Shield Prof ~ Buckler",
+          "doneness": "not-started",
+          "type_facet": "ShieldProfBuckler.ShieldProf",
+          "standing": "origin",
+          "display_name": "Shield Prof ~ Buckler"
         },
         {
           "name": "Shield Proficiency",
@@ -13023,6 +15622,20 @@
           "display_name": "Silent Kill"
         },
         {
+          "name": "Silent Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Silent Spell"
+        },
+        {
+          "name": "Silent Table",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Silent Table"
+        },
+        {
           "name": "Silver",
           "doneness": "not-started",
           "type_facet": "Bloodrager Draconic Bloodline Choice",
@@ -13049,6 +15662,69 @@
           "type_facet": "FavoredClass",
           "standing": "origin",
           "display_name": "Skald"
+        },
+        {
+          "name": "Skald Spell Level 0",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 0"
+        },
+        {
+          "name": "Skald Spell Level 1",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 1"
+        },
+        {
+          "name": "Skald Spell Level 2",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 2"
+        },
+        {
+          "name": "Skald Spell Level 3",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 3"
+        },
+        {
+          "name": "Skald Spell Level 4",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 4"
+        },
+        {
+          "name": "Skald Spell Level 5",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 5"
+        },
+        {
+          "name": "Skald Spell Level 6",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 6"
+        },
+        {
+          "name": "Skald Spell Level 7",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 7"
+        },
+        {
+          "name": "Skald Spell Level 8",
+          "doneness": "not-started",
+          "type_facet": "BonusSpellKnownSkald",
+          "standing": "origin",
+          "display_name": "Skald Spell Level 8"
         },
         {
           "name": "Skald Versatile Performance (Oratory)",
@@ -13196,6 +15872,13 @@
           "type_facet": "Internal.Slayer Class Feature",
           "standing": "origin",
           "display_name": "Slayer Talents"
+        },
+        {
+          "name": "Slayer Track Bonus",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "origin",
+          "display_name": "Slayer Track Bonus"
         },
         {
           "name": "Slayer's Advance",
@@ -13478,6 +16161,13 @@
           "display_name": "Song of the Wild"
         },
         {
+          "name": "Sonic Form",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Sonic Form"
+        },
+        {
           "name": "Sorcerous Strike",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -13676,9 +16366,37 @@
         {
           "name": "Spellbreaker",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Spellbreaker (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Spellbreaker",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Spellbreaker"
+          "display_name": "Spellbreaker (Warpriest Bonus Feat)"
+        },
+        {
+          "name": "Spellcrash",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Spellcrash"
+        },
+        {
+          "name": "Spellcrash (Greater)",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL8",
+          "standing": "origin",
+          "display_name": "Spellcrash (Greater)"
+        },
+        {
+          "name": "Spellcrash (Lesser)",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Spellcrash (Lesser)"
         },
         {
           "name": "Spelleater",
@@ -14073,6 +16791,13 @@
           "display_name": "Stand Up"
         },
         {
+          "name": "Standard Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Bloodline Selection",
+          "standing": "unclassified",
+          "display_name": "Standard Bloodline"
+        },
+        {
           "name": "Starburn",
           "doneness": "not-started",
           "type_facet": "ShamanSpiritHex.ShamanHeavensHex.SpecialAttack.Supernatural",
@@ -14171,6 +16896,13 @@
           "display_name": "Stealing Strike (SpecialAttack.Extraordinary.InvestigatorTalent)"
         },
         {
+          "name": "Stealthy",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Stealthy"
+        },
+        {
           "name": "Stealthy Sniper",
           "doneness": "not-started",
           "type_facet": "SlayerTalent.SlayerAdvancedTalent.Extraordinary.SpecialQuality",
@@ -14201,9 +16933,16 @@
         {
           "name": "Step Up",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Step Up (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Step Up",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
-          "display_name": "Step Up"
+          "display_name": "Step Up (Warpriest Bonus Feat)"
         },
         {
           "name": "Step Up and Strike",
@@ -14218,6 +16957,13 @@
           "type_facet": "SpecialAttack.RogueTalent",
           "standing": "unclassified",
           "display_name": "Sticky Poison"
+        },
+        {
+          "name": "Still Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Still Spell"
         },
         {
           "name": "Stone (Spirit)",
@@ -14267,6 +17013,13 @@
           "type_facet": "ShamanStoneHex",
           "standing": "origin",
           "display_name": "Stone Stability (Wandering)"
+        },
+        {
+          "name": "Stoneskin",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Stoneskin"
         },
         {
           "name": "Storm Burst",
@@ -14367,6 +17120,13 @@
           "display_name": "Strength of Will"
         },
         {
+          "name": "Stricken Heart",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Stricken Heart"
+        },
+        {
           "name": "Strike Back",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -14451,6 +17211,20 @@
           "display_name": "Stunning Assault"
         },
         {
+          "name": "Stunning Barrier",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL1",
+          "standing": "origin",
+          "display_name": "Stunning Barrier"
+        },
+        {
+          "name": "Stunning Barrier (Greater)",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Stunning Barrier (Greater)"
+        },
+        {
           "name": "Stunning Critical",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.Critical",
@@ -14519,6 +17293,13 @@
           "type_facet": "ArcanistExploit.ArcanistGreaterExploit.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Suffering Knowledge"
+        },
+        {
+          "name": "Suggestion",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Suggestion"
         },
         {
           "name": "Summon Pack",
@@ -14799,6 +17580,13 @@
           "type_facet": "Warpriest Bonus Feat",
           "standing": "unclassified",
           "display_name": "Sword and Pistol"
+        },
+        {
+          "name": "Symbol of Laughter",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Symbol of Laughter"
         },
         {
           "name": "Tactician",
@@ -15172,6 +17960,13 @@
           "display_name": "Touched by the Beyond"
         },
         {
+          "name": "Toughness",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Toughness"
+        },
+        {
           "name": "Tower Shield Proficiency",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -15305,6 +18100,13 @@
           "display_name": "Trickery Blessing"
         },
         {
+          "name": "Triggered Suggestion",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Triggered Suggestion"
+        },
+        {
           "name": "Trip",
           "doneness": "not-started",
           "type_facet": "BrawlerManeuverTrainingISelection",
@@ -15410,6 +18212,13 @@
           "display_name": "Turn the Tables"
         },
         {
+          "name": "Twilight Haze",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Twilight Haze"
+        },
+        {
           "name": "Twin Thunders",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
@@ -15501,6 +18310,13 @@
           "display_name": "Unarmed Strike"
         },
         {
+          "name": "Unbearable Brightness",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Unbearable Brightness"
+        },
+        {
           "name": "Uncanny Dodge",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.Bloodrager Class Feature.Internal",
@@ -15576,6 +18392,13 @@
           "type_facet": "Internal",
           "standing": "origin",
           "display_name": "Undead Bloodrager Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Undead Bloodrager Bloodline ~ Feat Tracker",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Undead Bloodrager Bloodline ~ Feat Tracker"
         },
         {
           "name": "Undead School",
@@ -15669,6 +18492,13 @@
           "display_name": "Unlettered Arcanist"
         },
         {
+          "name": "Unliving Rage",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Unliving Rage"
+        },
+        {
           "name": "Unlucky Enemy",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
@@ -15744,6 +18574,13 @@
           "type_facet": "Brawler Class Feature.Wild Child Class Feature.SpecialQuality.Extraordinary.WildChildTrickChoice",
           "standing": "unclassified",
           "display_name": "Upending Strike"
+        },
+        {
+          "name": "Vampiric Touch",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Bonus Spell",
+          "standing": "unclassified",
+          "display_name": "Vampiric Touch"
         },
         {
           "name": "Vanguard",
@@ -15975,6 +18812,20 @@
           "type_facet": "InvestigatorRogueTalent.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Wall Scramble"
+        },
+        {
+          "name": "Wall of Blindness/Deafness",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL4",
+          "standing": "origin",
+          "display_name": "Wall of Blindness/Deafness"
+        },
+        {
+          "name": "Wall of Nausea",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL3",
+          "standing": "origin",
+          "display_name": "Wall of Nausea"
         },
         {
           "name": "Wand Adept",
@@ -16238,9 +19089,23 @@
         {
           "name": "Weapon Focus",
           "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Weapon Focus (Bloodrager Bloodline Feat)"
+        },
+        {
+          "name": "Weapon Focus",
+          "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.WeaponFocus",
           "standing": "unclassified",
-          "display_name": "Weapon Focus"
+          "display_name": "Weapon Focus (Warpriest Bonus Feat.WeaponFocus)"
+        },
+        {
+          "name": "Weapon Prof ~ Deity Weapons",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Weapon Prof ~ Deity Weapons"
         },
         {
           "name": "Weapon Proficiency",
@@ -16260,14 +19125,14 @@
           "name": "Weapon Specialization",
           "doneness": "not-started",
           "type_facet": "ArcanistExploit.Arcanist Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Weapon Specialization (ArcanistExploit.Arcanist Class Feature.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Weapon Specialization",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Weapon Specialization (Warpriest Bonus Feat)"
         },
         {
@@ -16460,6 +19325,27 @@
           "display_name": "Whip Mastery"
         },
         {
+          "name": "Whip of Ants",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL6",
+          "standing": "origin",
+          "display_name": "Whip of Ants"
+        },
+        {
+          "name": "Whip of Centipedes",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL5",
+          "standing": "origin",
+          "display_name": "Whip of Centipedes"
+        },
+        {
+          "name": "Whip of Spiders",
+          "doneness": "not-started",
+          "type_facet": "MagusSpellBlend.MagusSpellBlendLVL2",
+          "standing": "origin",
+          "display_name": "Whip of Spiders"
+        },
+        {
           "name": "Whirlwind Attack",
           "doneness": "not-started",
           "type_facet": "Warpriest Bonus Feat.AttackOption",
@@ -16486,6 +19372,13 @@
           "type_facet": "Archetype.ArcanistArchetype.ArcanistExploit1.ArcanistExploit9",
           "standing": "origin",
           "display_name": "White Mage"
+        },
+        {
+          "name": "Widen Spell",
+          "doneness": "not-started",
+          "type_facet": "Bloodrager Bloodline Feat",
+          "standing": "unclassified",
+          "display_name": "Widen Spell"
         },
         {
           "name": "Wild Child",
@@ -16883,16 +19776,101 @@
       ]
     },
     {
+      "kind": "domain",
+      "label": "Domains",
+      "done": 0,
+      "partial": 0,
+      "not_started": 10,
+      "denominator": 10,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 10
+      },
+      "items": [
+        {
+          "name": "Battle (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Battle (Spirit)"
+        },
+        {
+          "name": "Bones (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bones (Spirit)"
+        },
+        {
+          "name": "Flame (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Flame (Spirit)"
+        },
+        {
+          "name": "Heavens (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Heavens (Spirit)"
+        },
+        {
+          "name": "Life (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Life (Spirit)"
+        },
+        {
+          "name": "Lore (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Lore (Spirit)"
+        },
+        {
+          "name": "Nature (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Nature (Spirit)"
+        },
+        {
+          "name": "Stone (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Stone (Spirit)"
+        },
+        {
+          "name": "Waves (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Waves (Spirit)"
+        },
+        {
+          "name": "Wind (Spirit)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wind (Spirit)"
+        }
+      ]
+    },
+    {
       "kind": "equipment",
       "label": "Equipment",
       "done": 164,
       "partial": 57,
-      "not_started": 2,
-      "denominator": 223,
-      "pct": 73.5,
+      "not_started": 0,
+      "denominator": 221,
+      "pct": 74.2,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
-        "origin": 223
+        "origin": 221
       },
       "items": [
         {
@@ -17393,13 +20371,6 @@
           "display_name": "Dust Knuckles"
         },
         {
-          "name": "Dust Knuckles.FORGET",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Dust Knuckles.FORGET"
-        },
-        {
           "name": "Elixir of Sex Shift",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
@@ -17433,13 +20404,6 @@
           "type_facet": "Magic.Wondrous.Headgear",
           "standing": "origin",
           "display_name": "False Face"
-        },
-        {
-          "name": "False Face.FORGET",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "False Face.FORGET"
         },
         {
           "name": "Figurine of Wondrous Power (Tin Imp)",
@@ -18461,15 +21425,15 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 49,
-      "partial": 13,
-      "not_started": 28,
-      "denominator": 90,
-      "pct": 54.4,
-      "excluded_from_percentage": 6,
+      "done": 32,
+      "partial": 9,
+      "not_started": 5,
+      "denominator": 46,
+      "pct": 69.6,
+      "excluded_from_percentage": 2,
       "standing_breakdown": {
-        "origin": 90,
-        "unclassified": 6
+        "origin": 46,
+        "unclassified": 2
       },
       "items": [
         {
@@ -18480,32 +21444,11 @@
           "display_name": "Amorphous"
         },
         {
-          "name": "Amorphous",
-          "doneness": "done",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Amorphous (Armor)"
-        },
-        {
           "name": "Answering",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Answering"
-        },
-        {
-          "name": "Answering",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Answering (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Answering",
-          "doneness": "done",
-          "type_facet": "Weapon",
-          "standing": "origin",
-          "display_name": "Answering (Weapon)"
         },
         {
           "name": "Answering_AMF",
@@ -18513,20 +21456,6 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Answering_AMF"
-        },
-        {
-          "name": "Blood-Hunting",
-          "doneness": "not-started",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Blood-Hunting (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Blood-Hunting",
-          "doneness": "not-started",
-          "type_facet": "Weapon",
-          "standing": "origin",
-          "display_name": "Blood-Hunting (Weapon)"
         },
         {
           "name": "BloodHunting",
@@ -18544,24 +21473,10 @@
         },
         {
           "name": "Bloodsong",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bloodsong"
-        },
-        {
-          "name": "Bloodsong",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Bloodsong (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Bloodsong",
-          "doneness": "done",
-          "type_facet": "Weapon.Melee.Piercing.Slashing",
-          "standing": "origin",
-          "display_name": "Bloodsong (Weapon.Melee.Piercing.Slashing)"
         },
         {
           "name": "Bloodsong_AMF",
@@ -18572,24 +21487,10 @@
         },
         {
           "name": "Brawling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Brawling"
-        },
-        {
-          "name": "Brawling",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "unclassified",
-          "display_name": "Brawling (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Brawling",
-          "doneness": "done",
-          "type_facet": "Weapon.Bludgeoning.Light",
-          "standing": "unclassified",
-          "display_name": "Brawling (Weapon.Bludgeoning.Light)"
         },
         {
           "name": "Brawling_AMF",
@@ -18606,46 +21507,18 @@
           "display_name": "Burdenless"
         },
         {
-          "name": "Burdenless",
-          "doneness": "partial",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Burdenless (Armor)"
-        },
-        {
           "name": "Calming",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Calming"
         },
         {
-          "name": "Calming",
-          "doneness": "done",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Calming (Armor)"
-        },
-        {
           "name": "Confounding",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Confounding"
-        },
-        {
-          "name": "Confounding",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Confounding (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Confounding",
-          "doneness": "done",
-          "type_facet": "Weapon",
-          "standing": "origin",
-          "display_name": "Confounding (Weapon)"
         },
         {
           "name": "Confounding_AMF",
@@ -18656,38 +21529,10 @@
         },
         {
           "name": "Distracting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Distracting"
-        },
-        {
-          "name": "Distracting",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "unclassified",
-          "display_name": "Distracting (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Distracting",
-          "doneness": "done",
-          "type_facet": "Weapon",
-          "standing": "unclassified",
-          "display_name": "Distracting (Weapon)"
-        },
-        {
-          "name": "Distracting (Greater)",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Distracting (Greater) (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Distracting (Greater)",
-          "doneness": "done",
-          "type_facet": "Weapon",
-          "standing": "origin",
-          "display_name": "Distracting (Greater) (Weapon)"
         },
         {
           "name": "Distracting_AMF",
@@ -18712,24 +21557,10 @@
         },
         {
           "name": "Exclusionary",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Exclusionary"
-        },
-        {
-          "name": "Exclusionary",
-          "doneness": "partial",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Exclusionary (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Exclusionary",
-          "doneness": "partial",
-          "type_facet": "Weapon",
-          "standing": "origin",
-          "display_name": "Exclusionary (Weapon)"
         },
         {
           "name": "Exclusionary_AMF",
@@ -18740,24 +21571,10 @@
         },
         {
           "name": "Exhausting",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Exhausting"
-        },
-        {
-          "name": "Exhausting",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Exhausting (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Exhausting",
-          "doneness": "done",
-          "type_facet": "Weapon.Melee",
-          "standing": "origin",
-          "display_name": "Exhausting (Weapon.Melee)"
         },
         {
           "name": "Exhausting_AMF",
@@ -18765,20 +21582,6 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Exhausting_AMF"
-        },
-        {
-          "name": "Fate-Stealing",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Fate-Stealing (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Fate-Stealing",
-          "doneness": "done",
-          "type_facet": "Weapon.Melee",
-          "standing": "origin",
-          "display_name": "Fate-Stealing (Weapon.Melee)"
         },
         {
           "name": "FateStealing",
@@ -18796,38 +21599,10 @@
         },
         {
           "name": "Flamboyant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Flamboyant"
-        },
-        {
-          "name": "Flamboyant",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Flamboyant (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Flamboyant",
-          "doneness": "done",
-          "type_facet": "Weapon.Melee.Piercing.Light.OneHanded",
-          "standing": "origin",
-          "display_name": "Flamboyant (Weapon.Melee.Piercing.Light.OneHanded)"
-        },
-        {
-          "name": "Flamboyant (Greater)",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Flamboyant (Greater) (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Flamboyant (Greater)",
-          "doneness": "done",
-          "type_facet": "Weapon.Melee.Piercing.Light.OneHanded",
-          "standing": "origin",
-          "display_name": "Flamboyant (Greater) (Weapon.Melee.Piercing.Light.OneHanded)"
         },
         {
           "name": "Flamboyant_AMF",
@@ -18852,24 +21627,10 @@
         },
         {
           "name": "Flying",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Flying"
-        },
-        {
-          "name": "Flying",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Flying (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Flying",
-          "doneness": "done",
-          "type_facet": "Weapon.Melee",
-          "standing": "origin",
-          "display_name": "Flying (Weapon.Melee)"
         },
         {
           "name": "Flying_AMF",
@@ -18880,24 +21641,10 @@
         },
         {
           "name": "Fortuitous",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fortuitous"
-        },
-        {
-          "name": "Fortuitous",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Fortuitous (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Fortuitous",
-          "doneness": "done",
-          "type_facet": "Weapon.Melee",
-          "standing": "origin",
-          "display_name": "Fortuitous (Weapon.Melee)"
         },
         {
           "name": "Fortuitous_AMF",
@@ -18908,24 +21655,10 @@
         },
         {
           "name": "Inspired",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inspired"
-        },
-        {
-          "name": "Inspired",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Inspired (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Inspired",
-          "doneness": "done",
-          "type_facet": "Weapon.Simple",
-          "standing": "origin",
-          "display_name": "Inspired (Weapon.Simple)"
         },
         {
           "name": "Inspired_AMF",
@@ -18936,24 +21669,10 @@
         },
         {
           "name": "Jarring",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Jarring"
-        },
-        {
-          "name": "Jarring",
-          "doneness": "done",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Jarring (Armor)"
-        },
-        {
-          "name": "Phantom Ammunition",
-          "doneness": "partial",
-          "type_facet": "Weapon.Ammunition",
-          "standing": "origin",
-          "display_name": "Phantom Ammunition"
         },
         {
           "name": "Phantom_Ammunition",
@@ -18964,52 +21683,24 @@
         },
         {
           "name": "Prehensile",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Prehensile"
         },
         {
-          "name": "Prehensile",
-          "doneness": "partial",
-          "type_facet": "Weapon.Melee",
-          "standing": "origin",
-          "display_name": "Prehensile (Weapon.Melee)"
-        },
-        {
           "name": "Restful",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Restful"
         },
         {
-          "name": "Restful",
-          "doneness": "partial",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Restful (Armor)"
-        },
-        {
           "name": "Sacred",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sacred"
-        },
-        {
-          "name": "Sacred",
-          "doneness": "done",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Sacred (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Sacred",
-          "doneness": "done",
-          "type_facet": "Weapon",
-          "standing": "origin",
-          "display_name": "Sacred (Weapon)"
         },
         {
           "name": "Sacred_AMF",
@@ -19020,38 +21711,17 @@
         },
         {
           "name": "Sensing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sensing"
         },
         {
-          "name": "Sensing",
-          "doneness": "done",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Sensing (Armor)"
-        },
-        {
           "name": "Sneaky",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sneaky"
-        },
-        {
-          "name": "Sneaky",
-          "doneness": "partial",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Sneaky (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Sneaky",
-          "doneness": "partial",
-          "type_facet": "Weapon.Melee",
-          "standing": "origin",
-          "display_name": "Sneaky (Weapon.Melee)"
         },
         {
           "name": "Sneaky_AMF",
@@ -19061,32 +21731,11 @@
           "display_name": "Sneaky_AMF"
         },
         {
-          "name": "Spell Dodging",
-          "doneness": "done",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Spell Dodging"
-        },
-        {
           "name": "Spell_Dodging",
           "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spell_Dodging"
-        },
-        {
-          "name": "Spirit-Hunting",
-          "doneness": "not-started",
-          "type_facet": "Amulet of Mighty Fists",
-          "standing": "origin",
-          "display_name": "Spirit-Hunting (Amulet of Mighty Fists)"
-        },
-        {
-          "name": "Spirit-Hunting",
-          "doneness": "not-started",
-          "type_facet": "Weapon",
-          "standing": "origin",
-          "display_name": "Spirit-Hunting (Weapon)"
         },
         {
           "name": "SpiritHunting",
@@ -19105,13 +21754,6 @@
         {
           "name": "Spiteful",
           "doneness": "partial",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Spiteful (Armor)"
-        },
-        {
-          "name": "Spiteful",
-          "doneness": "not-started",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spiteful"
@@ -19119,13 +21761,6 @@
         {
           "name": "Trackless",
           "doneness": "partial",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Trackless (Armor)"
-        },
-        {
-          "name": "Trackless",
-          "doneness": "not-started",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Trackless"
@@ -19133,13 +21768,6 @@
         {
           "name": "Vouchsafing",
           "doneness": "done",
-          "type_facet": "Armor",
-          "standing": "origin",
-          "display_name": "Vouchsafing (Armor)"
-        },
-        {
-          "name": "Vouchsafing",
-          "doneness": "not-started",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vouchsafing"
@@ -20070,13 +22698,13 @@
       "label": "Race Traits",
       "done": 0,
       "partial": 0,
-      "not_started": 133,
-      "denominator": 133,
+      "not_started": 126,
+      "denominator": 126,
       "pct": 0.0,
-      "excluded_from_percentage": 4,
+      "excluded_from_percentage": 2,
       "standing_breakdown": {
-        "origin": 133,
-        "unclassified": 4
+        "origin": 126,
+        "unclassified": 2
       },
       "items": [
         {
@@ -20176,13 +22804,6 @@
           "type_facet": "SpecialQuality.ElfShamanHexRangeChoice",
           "standing": "origin",
           "display_name": "Benefit of Wisdom"
-        },
-        {
-          "name": "Blessings (Favored Class)",
-          "doneness": "not-started",
-          "type_facet": "Warpriest Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin",
-          "display_name": "Blessings (Favored Class)"
         },
         {
           "name": "Blight",
@@ -20657,7 +23278,7 @@
           "name": "Misfortune",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.ElfShamanHexRangeChoice",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Misfortune"
         },
         {
@@ -20750,69 +23371,6 @@
           "type_facet": "SpecialQuality.ElfHunterCritialConfirmationChoice",
           "standing": "origin",
           "display_name": "Shortsword"
-        },
-        {
-          "name": "Skald Spell Level 0",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 0"
-        },
-        {
-          "name": "Skald Spell Level 1",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 1"
-        },
-        {
-          "name": "Skald Spell Level 2",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 2"
-        },
-        {
-          "name": "Skald Spell Level 3",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 3"
-        },
-        {
-          "name": "Skald Spell Level 4",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 4"
-        },
-        {
-          "name": "Skald Spell Level 5",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 5"
-        },
-        {
-          "name": "Skald Spell Level 6",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 6"
-        },
-        {
-          "name": "Skald Spell Level 7",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 7"
-        },
-        {
-          "name": "Skald Spell Level 8",
-          "doneness": "not-started",
-          "type_facet": "BonusSpellKnownSkald",
-          "standing": "origin",
-          "display_name": "Skald Spell Level 8"
         },
         {
           "name": "Skald ~ Well-Versed",
@@ -20972,7 +23530,7 @@
           "name": "Ward",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.ElfShamanHexRangeChoice",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Ward"
         },
         {
@@ -21002,6 +23560,13 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Warpriest ~ Channel Energy"
+        },
+        {
+          "name": "Warpriest ~ Favored Class Blessings",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Warpriest ~ Favored Class Blessings"
         },
         {
           "name": "Warpriest ~ Sacred Weapon",
@@ -22061,6 +24626,175 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Widen Auras"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 22,
+      "denominator": 22,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 22
+      },
+      "items": [
+        {
+          "name": "Add Fly Speed",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Add Fly Speed"
+        },
+        {
+          "name": "Arcanist SpellBook",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcanist SpellBook"
+        },
+        {
+          "name": "Arcanist ~ Acid Damage",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcanist ~ Acid Damage"
+        },
+        {
+          "name": "Arcanist ~ Cold Damage",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcanist ~ Cold Damage"
+        },
+        {
+          "name": "Arcanist ~ Electricity Damage",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcanist ~ Electricity Damage"
+        },
+        {
+          "name": "Arcanist ~ Fire Damage",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Arcanist ~ Fire Damage"
+        },
+        {
+          "name": "Enhance Fly Speed",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Enhance Fly Speed"
+        },
+        {
+          "name": "Fighter Tentacle",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fighter Tentacle"
+        },
+        {
+          "name": "Inspired Chemist Languages",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Inspired Chemist Languages"
+        },
+        {
+          "name": "Inspired Rage",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Inspired Rage"
+        },
+        {
+          "name": "Medium Fighter Tentacle",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Medium Fighter Tentacle"
+        },
+        {
+          "name": "Sacred Weapon ~ Warpriest",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Sacred Weapon ~ Warpriest"
+        },
+        {
+          "name": "Skald's Instrument",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Skald's Instrument"
+        },
+        {
+          "name": "Skald's Instrument (Choose)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Skald's Instrument (Choose)"
+        },
+        {
+          "name": "Skald's Instrument (Random)",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Skald's Instrument (Random)"
+        },
+        {
+          "name": "Slayer's Manacles",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Slayer's Manacles"
+        },
+        {
+          "name": "Small Fighter Tentacle",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Small Fighter Tentacle"
+        },
+        {
+          "name": "Starting Gold ACG ~ Average",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold ACG ~ Average"
+        },
+        {
+          "name": "Starting Gold ACG ~ Maximum",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold ACG ~ Maximum"
+        },
+        {
+          "name": "Starting Gold ACG ~ Random",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold ACG ~ Random"
+        },
+        {
+          "name": "Starting Gold ~ ACG",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold ~ ACG"
+        },
+        {
+          "name": "Warpriest ~ Bonus Languages",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Warpriest ~ Bonus Languages"
         }
       ]
     }

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Spirit Focus",
+    "category": "General",
+    "name": "Spirit Focus",
+    "description": "You have a strong connection to a particular legend, which empowers the spirits you channel. Select a legend of spirits. Your spirit bonus from spirits of that legend increases by 1.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Medium ~ Spirit"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 66,
+    "record_key": "Spirit Focus"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

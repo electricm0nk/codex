@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Improved Spell Sharing",
+    "category": "Teamwork",
+    "name": "Improved Spell Sharing",
+    "description": "Your link with your companion creature allows you to share your magic with it.",
+    "prerequisites": [
+      "PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion,TYPE.Eidolon,TYPE.Familiar,TYPE.Special Mount],[PREVARGT:MasterLevel,0]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 91,
+    "record_key": "Improved Spell Sharing"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

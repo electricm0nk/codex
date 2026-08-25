@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blasting Wilder ~ Perfect Blast",
+    "name": "Perfect Blast",
+    "class": "Wilder",
+    "description": "You have learned how to make efficient use of your surge blasts. When you invoke a wild surge, you may expend your psionic focus to make one surge blast for each of your iterative attacks.  You are still subject to the normal risk of psychic enervation for invoking the wild surge.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blasting Wilder ~ Perfect Blast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to make efficient use of your surge blasts. When you invoke a wild surge, you may expend your psionic focus to make one surge blast for each of your iterative attacks.  You are still subject to the normal risk of psychic enervation for invoking the wild surge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2373,
+    "record_key": "Blasting Wilder ~ Perfect Blast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

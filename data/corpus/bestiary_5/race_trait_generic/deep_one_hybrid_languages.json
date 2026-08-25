@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Deep One Hybrid ~ Languages",
+    "name": "Languages",
+    "description": "Deep one hybrids begin play speaking Aklo and Common. Hybrids with high Intelligence scores can choose from the following languages: Abyssal, Aquan, Dwarven, Elven, Giant, Gnome, Goblin, Halfling, Orc, and Undercommon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Hybrid ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Racial Language"
+      },
+      {
+        "key": "DESC",
+        "value": "Deep one hybrids begin play speaking Aklo and Common. Hybrids with high Intelligence scores can choose from the following languages: Abyssal, Aquan, Dwarven, Elven, Giant, Gnome, Goblin, Halfling, Orc, and Undercommon."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Abyssal|Bonus Language ~ Aquan|Bonus Language ~ Dwarven|Bonus Language ~ Elven|Bonus Language ~ Giant|Bonus Language ~ Gnome|Bonus Language ~ Goblin|Bonus Language ~ Halfling|Bonus Language ~ Orc|Bonus Language ~ Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo|Common"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 103,
+    "record_key": "Deep One Hybrid ~ Languages"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

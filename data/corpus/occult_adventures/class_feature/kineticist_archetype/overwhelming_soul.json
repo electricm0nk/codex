@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Kineticist Archetype ~ Overwhelming Soul",
     "name": "Overwhelming Soul",
-    "class": "Kineticist Archetype",
+    "class": "Kineticist",
     "description": "Some kineticists have such a powerful personality that they can seize control of their element with their minds alone, without endangering their bodies.",
     "raw_tokens": [
       {
@@ -87,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

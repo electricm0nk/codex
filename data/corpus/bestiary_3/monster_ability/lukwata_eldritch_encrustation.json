@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lukwata ~ Eldritch Encrustation",
+    "delivery": "Supernatural",
+    "description": "Crystalline growths along the lukwata's digestive tract contain large deposits of magical energy. These nodes are responsible for the magical feedback that surrounds each lukwata, granting it its spell resistance, damage reduction, dispelling bite, and digest magic abilities. Dispel magic cast on a lukwata can negate these powers for 1 minute-the CL of the effect is treated as the lukwata's Hit Dice (CL 11th for most lukwatas).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:lukwata_eldritch_encrustation",
+    "name": "Eldritch Encrustation",
+    "owners": [
+      "bestiary_3:monster:lukwata"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Crystalline growths along the lukwata's digestive tract contain large deposits of magical energy. These nodes are responsible for the magical feedback that surrounds each lukwata, granting it its spell resistance, damage reduction, dispelling bite, and digest magic abilities. Dispel magic cast on a lukwata can negate these powers for 1 minute-the CL of the effect is treated as the lukwata's Hit Dice (CL 11th for most lukwatas)."
+      },
+      {
+        "key": "KEY",
+        "value": "Lukwata ~ Eldritch Encrustation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      },
+      {
+        "key": "TYPE",
+        "value": "LukwataRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.187",
+    "traits": [
+      "LukwataRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1243,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Lukwata ~ Eldritch Encrustation",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

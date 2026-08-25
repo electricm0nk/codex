@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Anger ~ Powerful Strike",
+    "name": "Powerful Strike",
+    "description": "A phantom with this focus deals more damage with its slam attacks. It deals slam damage as a creature one size category larger than its current size. The phantom also gains Power Attack as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Anger ~ Powerful Strike"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2d"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Anger.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A phantom with this focus deals more damage with its slam attacks. It deals slam damage as a creature one size category larger than its current size. The phantom also gains Power Attack as a bonus feat."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Power Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|DAMAGESIZE|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 63,
+    "record_key": "Emotional Focus / Anger ~ Powerful Strike"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Getaway Artist",
     "name": "Getaway Artist",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent adds Fly, Handle Animal, and Ride to her list of class skills, and gains a +2 bonus on all driving checks.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

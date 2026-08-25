@@ -1,0 +1,118 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Fey Caller ~ Nature's Call",
+    "name": "Nature's Call",
+    "class": "Summoner",
+    "description": "Instead of summoning creatures from the summon monster list, the fey caller's summoning spell-like ability summons creatures from the list for the summon nature's ally spell of the same level. You can cast summon nature's ally %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds). Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|FeyCallerSummonNaturesAllyLVL|FeyCallerSummonNaturesAllyTimes|FeyCallerSummonNaturesAllyDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Caller ~ Nature's Call"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Summoner Class Feature.FeyCallerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeyCallerSummonNaturesAllyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeyCallerSummonNaturesAllyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeyCallerSummonNaturesAllyDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of summoning creatures from the summon monster list, the fey caller's summoning spell-like ability summons creatures from the list for the summon nature's ally spell of the same level. You can cast summon nature's ally %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds). Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|FeyCallerSummonNaturesAllyLVL|FeyCallerSummonNaturesAllyTimes|FeyCallerSummonNaturesAllyDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeyCallerSummonNaturesAllyDuration|SummonerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeyCallerSummonNaturesAllyLVL|min(9,(SummonerLVL+1)/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeyCallerSummonNaturesAllyTimes|CHA+3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|FeyCallerSummonNaturesAllyTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally I|PREVAREQ:FeyCallerSummonNaturesAllyLVL,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally II|PREVAREQ:FeyCallerSummonNaturesAllyLVL,2"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally III|PREVAREQ:FeyCallerSummonNaturesAllyLVL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally IV|PREVAREQ:FeyCallerSummonNaturesAllyLVL,4"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally V|PREVAREQ:FeyCallerSummonNaturesAllyLVL,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally VI|PREVAREQ:FeyCallerSummonNaturesAllyLVL,6"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally VII|PREVAREQ:FeyCallerSummonNaturesAllyLVL,7"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally VIII|PREVAREQ:FeyCallerSummonNaturesAllyLVL,8"
+      },
+      {
+        "key": "SPELLS",
+        "value": "CLASS|TIMES=FeyCallerSummonNaturesAllyTimes|CASTERLEVEL=SummonerLVL|Summon Nature's Ally IX|PREVARGTEQ:FeyCallerSummonNaturesAllyLVL,9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 75,
+    "record_key": "Fey Caller ~ Nature's Call"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

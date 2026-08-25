@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Juggernaut ~ Rest Eternal",
+    "delivery": "Supernatural",
+    "description": "Damage dealt by the juggernaut resists magical healing. Attempting to use such healing to cure this damage requires a successful caster level check against a DC %1. This ability does not affect natural healing or healing provided by extraordinary abilities.",
+    "description_variables": [
+      "11+TL"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:juggernaut_rest_eternal",
+    "name": "Repose Domain - Rest Eternal",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Damage dealt by the juggernaut resists magical healing. Attempting to use such healing to cure this damage requires a successful caster level check against a DC %1. This ability does not affect natural healing or healing provided by extraordinary abilities.|11+TL"
+      },
+      {
+        "key": "KEY",
+        "value": "Juggernaut ~ Rest Eternal"
+      },
+      {
+        "key": "TYPE",
+        "value": "JuggernautDomain.SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "JuggernautDomain"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 942,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Juggernaut ~ Rest Eternal",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

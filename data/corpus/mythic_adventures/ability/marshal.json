@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dual Path ~ Marshal",
+    "name": "Marshal",
+    "description": "Some are destined not only to achieve personal greatness, but also to inspire armies, rally the fallen, and bring the most out of those who follow them. The marshal is such a leader, renowned for his vision, courage, and strategic acumen. Soldiers f lock to a marshal's banner for a chance to serve under such a commander, confident that his skill will see them through even the most difficult challenges.&nl;Role: As a marshal, your abilities allow you to inspire mythic and non-mythic allies alike to greatness. In a group, you protect and push your allies to even greater acts of heroism. All the while, the powers of the marshal allow you to take the lead, help your companions, and take the fight to your enemies.&nl;Classes: Bards, cavaliers, clerics, inquisitors, and paladins will all find a host of useful abilities in the marshal path. In fact, almost any character who assists others, both during combat and afterward, will likewise find that the path of the marshal includes a number of valuable abilities that will help in her noble endeavors.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual Path ~ Marshal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dual Path.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Mythic Feat,Dual Path"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Mythic Path ~ Marshal"
+      },
+      {
+        "key": "DESC",
+        "value": "Some are destined not only to achieve personal greatness, but also to inspire armies, rally the fallen, and bring the most out of those who follow them. The marshal is such a leader, renowned for his vision, courage, and strategic acumen. Soldiers f lock to a marshal's banner for a chance to serve under such a commander, confident that his skill will see them through even the most difficult challenges.&nl;Role: As a marshal, your abilities allow you to inspire mythic and non-mythic allies alike to greatness. In a group, you protect and push your allies to even greater acts of heroism. All the while, the powers of the marshal allow you to take the lead, help your companions, and take the fight to your enemies.&nl;Classes: Bards, cavaliers, clerics, inquisitors, and paladins will all find a host of useful abilities in the marshal path. In fact, almost any character who assists others, both during combat and afterward, will likewise find that the path of the marshal includes a number of valuable abilities that will help in her noble endeavors."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mythic Path Feature ~ Marshal's Order|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 51,
+    "record_key": "Dual Path ~ Marshal"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

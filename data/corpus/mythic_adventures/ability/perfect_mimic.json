@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Perfect Mimic",
+    "name": "Perfect Mimic",
+    "description": "You can use the Disguise skill as a full-round action. When you attempt to impersonate a specific person, those familiar with the individual receive only half the normal bonus from familiarity to see through your disguise. If you expend one use of mythic power when creating a disguise to impersonate an individual, you can read that creature's mind as if using detect thoughts with a range of 1 mile. This allows you to better mimic the individual, granting you a further +10 bonus on opposed Disguise skill checks. The target of your impersonation receives a Will saving throw (DC 10 + your tier + your Charisma modifier) to negate the detect thoughts aspect of this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Perfect Mimic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use the Disguise skill as a full-round action. When you attempt to impersonate a specific person, those familiar with the individual receive only half the normal bonus from familiarity to see through your disguise. If you expend one use of mythic power when creating a disguise to impersonate an individual, you can read that creature's mind as if using detect thoughts with a range of 1 mile. This allows you to better mimic the individual, granting you a further +10 bonus on opposed Disguise skill checks. The target of your impersonation receives a Will saving throw (DC 10 + your tier + your Charisma modifier) to negate the detect thoughts aspect of this ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 344,
+    "record_key": "Mythic Path Ability ~ Perfect Mimic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

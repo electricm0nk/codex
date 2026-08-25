@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Feral Warrior ~ Trance",
+    "name": "Trance",
+    "class": "Warrior",
+    "description": "+%1 competence bonus on attack rolls with natural weapon when focused.|FeralWarriorTranceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral Warrior ~ Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeralWarriorTranceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 competence bonus on attack rolls with natural weapon when focused.|FeralWarriorTranceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeralWarriorTranceBonus|(FeralWarriorPathTranceLVL+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT.Natural|FeralWarriorTranceBonus*PsionicFocusActive|TYPE=Competence"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 677,
+    "record_key": "Feral Warrior ~ Trance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

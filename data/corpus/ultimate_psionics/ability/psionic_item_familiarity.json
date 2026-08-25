@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Psionic Item Familiarity",
+    "name": "Psionic Item Familiarity",
+    "description": "You are very familiar with psionic and magic items.  This does not stack with Dangerously Curious.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Psionic Item Familiarity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.PsionicTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Psionic Item Familiarity],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.PsionicTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are very familiar with psionic and magic items.  This does not stack with Dangerously Curious."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Use Magic Device|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Use Magic Device"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 137,
+    "record_key": "Trait ~ Psionic Item Familiarity"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

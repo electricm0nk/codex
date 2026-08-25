@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption ~ Berserk Fury Gift",
+    "name": "Berserk Fury Gift",
+    "description": "You can voluntarily enter an enraged state as a free action for %1 rounds per day; these rounds don't have to be consecutive. Once you end this state, you can't enter it again for 1 minute. While enraged, you gain a +2 bonus on attack and damage rolls, %1 temporary hit points, and a +2 bonus on Fortitude saves. You are in control of yourself during this rage, but you must still succeed at a Will save to resist losing control (as detailed in this manifestation's stain). While voluntarily enraged, you take a -2 penalty on Will saves.|PrometheanManifestationLevel|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Berserk Fury Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PrometheanBerserkFuryGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "You can voluntarily enter an enraged state as a free action for %1 rounds per day; these rounds don't have to be consecutive. Once you end this state, you can't enter it again for 1 minute. While enraged, you gain a +2 bonus on attack and damage rolls, %1 temporary hit points, and a +2 bonus on Fortitude saves. You are in control of yourself during this rage, but you must still succeed at a Will save to resist losing control (as detailed in this manifestation's stain). While voluntarily enraged, you take a -2 penalty on Will saves.|PrometheanManifestationLevel|TL"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT,DAMAGE.Melee,DAMAGE.Ranged|2"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|HP|CURRENTMAX|TL"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Fortitude|2"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|Will|-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 722,
+    "record_key": "Promethean Corruption ~ Berserk Fury Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

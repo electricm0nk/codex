@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Shining Knight",
     "name": "Shining Knight",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "While paladins often are seen mounted atop a loyal steed, the shining knight is the true symbol of mounted bravery. They are never far from their steeds and are always clad in brightly polished armor. The shining knight has the following class features.",
     "raw_tokens": [
       {
@@ -55,6 +55,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Shining Knight],[!PREFACT:1,ABILITIES,Paladin_Archetype_DivineBond=True,Paladin_Archetype_DivineHealth=True,Paladin_Archetype_AuraofJustice=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_BondedWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineHealth|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
       }
     ]
   },
@@ -71,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Animal Trick ~ Build Simple Structure",
+    "name": "Build Simple Structure",
+    "description": "The companion can build simple structures on command, limited by its natural abilities and inclinations. The companion is able to build only structures that creatures of its type would naturally build on their own, and this trick merely allows the handler to direct the companion on when and where to build such structures. Only companions that naturally build structures can learn this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Build Simple Structure"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "DESC",
+        "value": "The companion can build simple structures on command, limited by its natural abilities and inclinations. The companion is able to build only structures that creatures of its type would naturally build on their own, and this trick merely allows the handler to direct the companion on when and where to build such structures. Only companions that naturally build structures can learn this trick."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 83,
+    "record_key": "Animal Trick ~ Build Simple Structure"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mesmerist Archetype ~ Vox",
+    "name": "Vox",
+    "class": "Mesmerist",
+    "description": "Most mesmerists practice their mental manipulation through their entrancing gaze, but others have learned to practice their skill through the lilt and intonation of their voice. From sibilant whispers to overwhelming imprecations that resonate with the force of pure will, a vox unleashes the power of his mind with every silken syllable and shattering shout.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mesmerist Archetype ~ Vox"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MesmeristArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Mesmerist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Mesmerist Archetype ~ Vox],[!PREFACT:1,ABILITIES,Mesmerist_Archetype_SpellList=True,Mesmerist_Archetype_ToweringEgo=True,Mesmerist_Archetype_MesmeristTrick10=True,Mesmerist_Archetype_TouchTreatment=True,Mesmerist_Archetype_HypnoticStare=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Most mesmerists practice their mental manipulation through their entrancing gaze, but others have learned to practice their skill through the lilt and intonation of their voice. From sibilant whispers to overwhelming imprecations that resonate with the force of pure will, a vox unleashes the power of his mind with every silken syllable and shattering shout."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vox ~ Spells|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vox ~ Compelling Voice|PRECLASS:1,Mesmerist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vox ~ Wounding Words|PRECLASS:1,Mesmerist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vox ~ Subsonic Strike|PRECLASS:1,Mesmerist=10"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_SpellList|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_ToweringEgo|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_MesmeristTrick10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_TouchTreatment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_Archetype_HypnoticStare|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_ToweringEgo|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_MesmeristTrick10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Mesmerist_CF_TouchTreatment|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 49,
+    "record_key": "Mesmerist Archetype ~ Vox"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Exarch",
     "name": "Exarch",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "The gruff traditionalism of most dwarves finds its apex in those who adhere to a strict orthodoxy rooted in ancient principles and practices and who are not amenable whatsoever to change or innovation.",
     "raw_tokens": [
       {
@@ -75,6 +75,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Exarch],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_DetectAlignment=True,Inquisitor_Archetype_Bane=True,Inquisitor_Archetype_SecondJudgment=True,Inquisitor_Archetype_GreaterBane=True,Inquisitor_Archetype_ThirdJudgment=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SecondJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_GreaterBane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ThirdJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Bane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SecondJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_GreaterBane|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ThirdJudgment|true"
       }
     ]
   },
@@ -91,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Staggering Claw Stain",
+    "name": "Staggering Claw Stain",
+    "description": "The flesh on your hands is covered with pustules and blisters, and your hunger begins to devour your emotions. The penalty you take on ranged attacks and attacks with manufactured weapons increases to -4. Your spells with somatic or emotion (Occult Adventures 144) components have a failure chance of 5%%. This stacks with any spell failure chances you incur from other sources. (For example, if you were wearing leather armor and casting arcane spells, you would have a 15%% spell failure chance.)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Staggering Claw Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulStaggeringClawStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "The flesh on your hands is covered with pustules and blisters, and your hunger begins to devour your emotions. The penalty you take on ranged attacks and attacks with manufactured weapons increases to -4. Your spells with somatic or emotion (Occult Adventures 144) components have a failure chance of 5%%. This stacks with any spell failure chances you incur from other sources. (For example, if you were wearing leather armor and casting arcane spells, you would have a 15%% spell failure chance.)"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|SPELLFAILURE|5"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|-4  on attacks with manufactured weapons and on all ranged attacks."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 277,
+    "record_key": "Ghoul Corruption ~ Staggering Claw Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

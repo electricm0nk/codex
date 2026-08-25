@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Clandestine Domain ~ Disappear",
     "name": "Disappear",
-    "class": "Clandestine Domain",
+    "class": "Cleric",
     "description": "You can become invisible as per the spell as a standard action. The invisibility lasts for %1 rounds or until you attack. You can use this ability %2 times per day.|DomainClandestineLVL|DomainClandestineTimes",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

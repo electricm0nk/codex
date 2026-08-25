@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_122)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_122)",
+    "description": "If you have performed your daily obedience, whenever you channel positive energy to heal living creatures, a shower of starry motes cascades over all of the living creatures in the area of effect. These motes do not impede vision or stealth attempts, nor do they reveal invisible creatures, but they infuse the targets with divine luck. Targets of this ability reduce any miss chance they face by 10%%. In addition, when targets of this ability roll damage dice, they may treat all 1's as 2's. The motes and their effects last for %1 rounds. If you don't have the ability to channel positive energy, you gain the ability to do so once per day as a cleric of a level equal to your Hit Dice (maximum 20), but only to heal living creatures. Whenever you use this ability, the beneficiaries are showered with starry motes, with the effects described above.|1+min(5,TL/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 122,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_122)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:122"
+  }
+}

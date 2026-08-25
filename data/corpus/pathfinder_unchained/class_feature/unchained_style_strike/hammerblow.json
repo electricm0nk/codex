@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Style Strike ~ Hammerblow",
+    "name": "Hammerblow",
+    "class": "Unchained Style Strike",
+    "description": "The monk links his hands together, swinging both arms like a club and dealing tremendous damage. If the attack hits, the monk rolls his unarmed strike damage twice, adding both rolls together before applying Strength and other modifiers to the damage. This bonus damage is not multiplied on a critical hit. The monk must attack with a fist to use this style strike, but must have both hands free.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Style Strike ~ Hammerblow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Style Strike.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The monk links his hands together, swinging both arms like a club and dealing tremendous damage. If the attack hits, the monk rolls his unarmed strike damage twice, adding both rolls together before applying Strength and other modifiers to the damage. This bonus damage is not multiplied on a critical hit. The monk must attack with a fist to use this style strike, but must have both hands free."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 566,
+    "record_key": "Unchained Style Strike ~ Hammerblow"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

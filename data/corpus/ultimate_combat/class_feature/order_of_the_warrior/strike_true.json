@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Warrior ~ Strike True",
     "name": "Strike True",
-    "class": "Order of the Warrior",
+    "class": "Warrior",
     "description": "The order of the warrior samurai can use his years of training and focus to make the perfect strike. When he uses this ability, the samurai makes an attack as normal. If the attack hits, it is a critical threat. The samurai must roll to confirm the critical as normal. The attack deals the maximum amount of damage, although additional dice from weapon qualities, sneak attack, and additional dice from a critical hit are rolled normally. The damage from this attack ignores any damage reduction the target might have and also causes the target to become blinded, deafened, sickened, or staggered for 1d4 rounds (the samurai's choice). Making this attack is a standard action. The samurai can use this ability once per day.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

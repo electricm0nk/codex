@@ -1,0 +1,133 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist Power Points",
+    "name": "Vitalist Power Points",
+    "class": "Vitalist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VitalistPPStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VitalistPPL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VitalistPPStat|VitalistPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VitalistPPL|VitalistML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:VitalistPPL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:VitalistPPL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|6|PREVARGTEQ:VitalistPPL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:VitalistPPL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|10|PREVARGTEQ:VitalistPPL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|11|PREVARGTEQ:VitalistPPL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:VitalistPPL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|14|PREVARGTEQ:VitalistPPL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|16|PREVARGTEQ:VitalistPPL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|18|PREVARGTEQ:VitalistPPL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|20|PREVARGTEQ:VitalistPPL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|21|PREVARGTEQ:VitalistPPL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|23|PREVARGTEQ:VitalistPPL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|25|PREVARGTEQ:VitalistPPL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|26|PREVARGTEQ:VitalistPPL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|29|PREVARGTEQ:VitalistPPL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|30|PREVARGTEQ:VitalistPPL,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|31|PREVARGTEQ:VitalistPPL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|32|PREVARGTEQ:VitalistPPL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(VitalistPPStat*VitalistPPL)/2|TYPE=VitalistBonusPP"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 947,
+    "record_key": "Vitalist Power Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

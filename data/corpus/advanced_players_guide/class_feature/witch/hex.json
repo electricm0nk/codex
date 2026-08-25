@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch ~ Hex",
     "name": "Hex",
@@ -91,6 +91,50 @@
       {
         "key": "BONUS",
         "value": "VAR|WitchGrandHexQualify|(WitchLVL>=18)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,1|PREVAREQ:Witch_CF_Hex1,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,2|PREVAREQ:Witch_CF_Hex2,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,4|PREVAREQ:Witch_CF_Hex4,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,6|PREVAREQ:Witch_CF_Hex6,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,8|PREVAREQ:Witch_CF_Hex8,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,10|PREVAREQ:Witch_CF_Hex10,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,12|PREVAREQ:Witch_CF_Hex12,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,14|PREVAREQ:Witch_CF_Hex14,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,16|PREVAREQ:Witch_CF_Hex16,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,18|PREVAREQ:Witch_CF_Hex18,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Witch Hex|1|PREVARGTEQ:WitchLVL,20|PREVAREQ:Witch_CF_Hex20,0"
       }
     ]
   },
@@ -109,5 +153,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

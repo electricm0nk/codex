@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Avenging Beast ~ Patron Spells",
+    "name": "Patron Spells",
+    "class": "Vigilante",
+    "description": "[NOT IMPLEMENTED] An avenging beast selects a patron from the witch patron list and adds the patron bonus spells to his spell list (up to 6th-level spells). Patron spells of 7th level or higher are not counted as being on the avenging beast's spell list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Avenging Beast ~ Patron Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.AvengingBeastClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] An avenging beast selects a patron from the witch patron list and adds the patron bonus spells to his spell list (up to 6th-level spells). Patron spells of 7th level or higher are not counted as being on the avenging beast's spell list."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_ui.lst",
+    "sha256": "82bfd1c734f1fc071a7e3de22959a711631bdcab7e0e9a921b109e9ee49fe46d",
+    "line": 15,
+    "record_key": "Avenging Beast ~ Patron Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

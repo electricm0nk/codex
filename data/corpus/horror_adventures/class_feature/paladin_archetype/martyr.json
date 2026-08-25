@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Paladin Archetype ~ Martyr",
     "name": "Martyr",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Every paladin's code instructs him to put the welfare of others before his own, but some paladins take this farther than most, shouldering the blackest suffering of the world onto themselves in order to help others and inspiring their allies to achieve heights of valor rather than seeking the glory for themselves.",
     "raw_tokens": [
       {
@@ -131,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

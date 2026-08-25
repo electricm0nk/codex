@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Aberrant",
     "name": "Aberrant Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "There is a taint in your blood that is both alien and bizarre. When you bloodrage, this manifests in peculiar and terrifying ways.|PREVAREQ:Bloodrager_Aberrant_Description,0",
     "raw_tokens": [
       {
@@ -196,5 +196,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

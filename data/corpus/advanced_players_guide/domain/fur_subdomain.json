@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Fur Subdomain",
+    "name": "Fur Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Fur Subdomain],[PREVARLT:AnimalDomain,1]"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Knowledge (Nature)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Fur Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fur Subdomain=1|Magic Fang|Fur Subdomain=2|Hold Animal|Fur Subdomain=3|Beast Shape I (Animals Only)|Fur Subdomain=4|Summon Nature's Ally IV (Animals Only)|Fur Subdomain=5|Beast Shape III (Animals Only)|Fur Subdomain=6|Antilife Shell|Fur Subdomain=7|Animal Shapes|Fur Subdomain=8|Summon Nature's Ally VIII (Animals Only)|Fur Subdomain=9|Shapechange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 37,
+    "record_key": "Fur Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

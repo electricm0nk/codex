@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Speed",
+    "name": "Speed",
+    "class": "Aegis",
+    "description": "Your base land speed is increased by %1 ft.|AegisSpeed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisSpeed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your base land speed is increased by %1 ft.|AegisSpeed"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|AegisSpeed"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisSpeed|5"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 73,
+    "record_key": "Aegis ~ Speed"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

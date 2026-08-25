@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Night Subdomain",
+    "name": "Night Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Night Subdomain],[PREVARLT:DarknessDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Night Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Night Subdomain=1|Sleep|Night Subdomain=2|Blindness/Deafness (Blindness Only)|Night Subdomain=3|Deeper Darkness|Night Subdomain=4|Shadow Conjuration|Night Subdomain=5|Summon Monster V (1d3 Shadows)|Night Subdomain=6|Nightmare|Night Subdomain=7|Power Word Blind|Night Subdomain=8|Shadow Evocation (Greater)|Night Subdomain=9|Shades"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 55,
+    "record_key": "Night Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

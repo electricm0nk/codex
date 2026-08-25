@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lycanthropy Corruption ~ Shift Form Gift",
+    "name": "Shift Form Gift",
+    "description": "You can attempt a DC 15 Constitution check as a full-round action to shift into a feral form, with a +%1 bonus. This form grants you a bite natural attack that deals 1d6 points of piercing damage if you're Medium (1d4 if Small). You retain the use of your abilities and gear. You can remain in this form for up to 1 minute, but can revert back as a move action at any time. If the duration expires, you can extend it by 1 minute by spending another use of this ability as a free action. You can use this ability %1 times per day.|LycanthropyManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lycanthropy Corruption ~ Shift Form Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LycanthropyShiftFormGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LycanthropyCorruptionShifted|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt a DC 15 Constitution check as a full-round action to shift into a feral form, with a +%1 bonus. This form grants you a bite natural attack that deals 1d6 points of piercing damage if you're Medium (1d4 if Small). You retain the use of your abilities and gear. You can remain in this form for up to 1 minute, but can revert back as a move action at any time. If the duration expires, you can extend it by 1 minute by spending another use of this ability as a free action. You can use this ability %1 times per day.|LycanthropyManifestationLevel"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|LycanthropyCorruptionShifted|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|PREVARGTEQ:LycanthropyCorruptionShifted,1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 608,
+    "record_key": "Lycanthropy Corruption ~ Shift Form Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

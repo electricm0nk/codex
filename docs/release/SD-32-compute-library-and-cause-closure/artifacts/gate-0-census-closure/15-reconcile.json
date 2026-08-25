@@ -1,0 +1,157 @@
+{
+  "populations": {
+    "census_tracked_kind_population": {
+      "value": 36883,
+      "command": "python3 scripts/census_independent.py --pcgen-root $PCGEN_CORPUS_ROOT --inventory docs/work-inventory.json --output <path>; sum(counts_by_kind.values())"
+    },
+    "census_kind_unenumerable_population": {
+      "value": 18992,
+      "command": "same run; total_kind_unenumerable_units"
+    },
+    "inventory_all_units_population": {
+      "value": 49540,
+      "command": "len(json.load(open('docs/work-inventory.json'))['units'])",
+      "by_kind": {
+        "class": 185,
+        "class_feature": 18056,
+        "race_trait": 2640,
+        "feat": 2722,
+        "spell": 2843,
+        "equipment": 6227,
+        "equipment_modifier": 1580,
+        "template": 2248,
+        "domain": 183,
+        "ability": 4824,
+        "companion": 1696,
+        "race": 95,
+        "monster_ability": 3806,
+        "language": 136,
+        "monster": 1270,
+        "skill": 149,
+        "deity": 459,
+        "power": 421
+      }
+    },
+    "ledger_not_done_population": {
+      "value": 35418,
+      "command": "scripts/shape_ledger.py (coverage_ledger.not_done_population -> shape_ledger.build_ledger)",
+      "unclassified_count": 0,
+      "families": {
+        "F0": 27978,
+        "F2": 1789,
+        "F1": 3716,
+        "F10": 3,
+        "F4": 695,
+        "F3": 520,
+        "F5": 385,
+        "F8": 73,
+        "F6": 225,
+        "F9": 29,
+        "F7": 5
+      }
+    }
+  },
+  "relationship": "The three populations are legitimately different (decisions.md \u00a712c), not forced equal: census_tracked_kind_population + census_kind_unenumerable_population is the FULL corpus walk (every row the walker can see); inventory_all_units_population is everything v06_work_inventory.rs currently enumerates (a subset of the census's tracked-kind population plus units the census's coarser filename rules miss or split differently); ledger_not_done_population is the inventory's not-done subset only. This cycle's job was to shrink census_kind_unenumerable_population by disposing every one of its units (A) or (B) -- see disposition_status.",
+  "disposition_status_of_kind_unenumerable": {
+    "total_this_run": 18992,
+    "removed_from_total_across_all_card_15_cycles": {
+      "ce__sizes_lst": 9,
+      "skill_this_cycle": 170,
+      "other_kinds_generic_enumeration_cycle": 3550,
+      "kit_filename_collision_fixed": 1,
+      "ability_landed_card_15_ability_cycle": 5028,
+      "abilities_familiar_companion_routing_fixed_card_15_ability_cycle": 97,
+      "note": "27,847 (pre-any-card-15-cycle) - 9 (ce__sizes.lst, non_object_file) - 170 (skill moved to a real kind, Kind::Skill) - 3,550 (template/deity/power/domain/language moved to real kinds, generic-enumeration cycle, decisions.md \u00a717) - 1 (kit, census filename false-positive on kitsune_races.lst fixed, folded into the existing race count) - 5,028 (ability moved to a real kind, Kind::Ability, card-15-ability cycle) - 97 (*_abilities_familiar*.lst rows routed to the tracked companion kind, matching Rust's own file_kind order, card-15-ability cycle) = 18992 (total_this_run, above; live, not hand-copied). The CATEGORY:Internal reroute (originally 2,614, narrowed to 40 by adjudication) never leaves total_this_run at all -- it only moves bucket (class_feature <-> ability_category:Internal), so it does not appear in this subtraction."
+    },
+    "b_disposed_applied": {
+      "total_still_counted_in_total_this_run": 801,
+      "total_removed_from_total_this_run": 107,
+      "detail": {
+        "ability_category_b_disposed": {
+          "units": 801,
+          "still_counted_in_total_this_run": true,
+          "proof": "artifacts/gate-0-census-closure/15-card-15-ability-category-memo.md's per-row disposition rules (B-duplicate/B-gateway/B-picklist), ported unchanged into scripts/census_independent.py's `row_dependent` branch this cycle (card-15-ability). INCLUDES the 40-unit CATEGORY:Internal bare-marker reroute from the `row_dependent_class_feature` branch (decisions.md \u00a714c item 4, 15-card-15-category-internal-adjudication-memo.md) -- both code paths write to the same `ability_category:<tag>` bucket keys, so their union is what this figure counts.",
+          "applied_in": "scripts/census_independent.py _ABILITY_CONTENT_RE / _collect_tracked_keys / count_objects row_dependent branch (card-15-ability); _row_is_bare_internal_marker + row_dependent_class_feature branch (category-internal-adjudication, unchanged)"
+        },
+        "abilities_familiar_companion_routing_fixed": {
+          "units": 97,
+          "still_counted_in_total_this_run": false,
+          "proof": "SD-32 card 15-ability: 6 in-scope `*_abilities_familiar*.lst` files (b2/b3/pfs_b2/ce x3) were falling into census's `row_dependent` branch even though `src/bin/v06_work_inventory.rs`'s `file_kind` already routes them to the tracked `companion` kind (checked before the bare `abilit` fallback) -- a real census/inventory disagreement this cycle found and fixed by matching Rust's own filename order, not a new content ruling. Moves the FULL 97 rows (not just the A-disposed ones) to `kind:companion`, matching companion's own unconditional-per-row-count convention.",
+          "applied_in": "scripts/census_independent.py _classify_kind_by_filename's abilit branch"
+        },
+        "ce__sizes_lst_engine_covered": {
+          "units": 9,
+          "still_counted_in_total_this_run": false,
+          "proof": "artifacts/gate-0-census-closure/15-card-15-other-kinds-memo.md \u00a77b (src/rules_core/size.rs SizeCategory, 9 variants, byte-identical)",
+          "applied_in": "scripts/census_independent.py NON_OBJECT_FILENAME_TOKENS"
+        },
+        "kit_filename_collision_fixed": {
+          "units": 1,
+          "still_counted_in_total_this_run": false,
+          "proof": "decisions.md \u00a717 -- census's own \"kit\" in b filename check false-positived on kitsune_races.lst (the race NAME \"Kitsune\" contains the substring \"kit\"), diverting one real race-kind row into kind_unenumerable[\"kit\"]. src/bin/v06_work_inventory.rs's file_kind never had a \"kit\" branch and always resolved this file to Kind::Race -- narrowed census's check to \"_kits\" in b (the real filename convention every genuine *_kits.lst file uses) to match. Not a new kind: no genuine *_kits.lst file contributes any row under either the old or the new rule (PCGen's STARTPACK: block format has no row whose own first field lacks a ':').",
+          "applied_in": "scripts/census_independent.py _classify_kind_by_filename"
+        }
+      }
+    },
+    "a_already_tracked_still_counted_in_total": {
+      "total": 18008,
+      "detail": {
+        "class_feature_already_in_inventory": {
+          "units": 18008,
+          "memo": "15-card-15-class-feature-memo.md \u00a70/\u00a75 (15,437 non-internal, was 15,438 before the card-15-internal cycle's own Disable-Device-Class-Skill displacement, 15-card-15-internal-duplicate-identity-memo.md \u00a73) + 2,547 content-bearing CATEGORY:Internal rows landed by card 15-internal (`is_internal_category` narrowed for Kind::ClassFeature the same way card 15-ability narrowed it for Kind::Ability) -- of the 2,574 that cycle's adjudication memo identified as disposition (A)/(B-gateway-resolved), 26 (was 27) lost their own duplicate_identity race and are pending (see pending_a below), not lost -- + 24 rescued by card 15-duplicate-identity (`disambiguate_class_feature_fallback_collisions`, the confirmed-safe `TYPE:FavoredClass`-shaped subset) + 4 rescued by card 15-duplicate-identity-review, this cycle (`disambiguate_class_feature_keyed_name_collisions`, the differing-display-name-under-one-KEY subset).",
+          "note": "already a real inventory unit under kind=class_feature; counted here only because census's bucket model has no class_feature 'kind' bucket to move it into",
+          "counts_toward_total_this_run": true
+        },
+        "skill_landed_this_cycle": {
+          "units": 149,
+          "census_raw_count": 170,
+          "core_essentials_residual_deleted": 21,
+          "memo": "15-card-15-other-kinds-memo.md \u00a77a; landed via Kind::Skill this cycle (card-15-enumerate)",
+          "note": "moved OUT of census's kind_unenumerable entirely -- does not count toward total_this_run below",
+          "counts_toward_total_this_run": false
+        },
+        "other_kinds_landed_this_cycle": {
+          "units": 3550,
+          "census_raw_count": 3550,
+          "core_essentials_residual_deleted": "template/language only -- 30 + 3 = 33 rows, part of the 138 -> 171 CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING raise",
+          "cross_book_duplicates_dropped": "19 -- core_essentials-sourced template rows restating a book's own native declaration (e.g. \"Aeon\" in both core_essentials/ce_templates.lst and bestiary_2/b2_templates_pc.lst); see drop_core_essentials_native_restatements in src/bin/v06_work_inventory.rs, decisions.md \u00a717",
+          "memo": "15-card-15-other-kinds-memo.md \u00a71-5; landed via Kind::Template/Deity/Power/Domain/Language this cycle (generic-enumeration, decisions.md \u00a717) through SIMPLE_FILENAME_KINDS -- the generic mechanism, not one Kind per cycle",
+          "note": "moved OUT of census's kind_unenumerable entirely -- does not count toward total_this_run below. `kit` (1 unit) is NOT among these: investigation found it was a census filename false-positive on kitsune_races.lst, not real content -- see disposed_b_applied.kit_filename_collision_fixed.",
+          "counts_toward_total_this_run": false
+        },
+        "ability_landed_this_cycle": {
+          "units": 4824,
+          "census_raw_count": 5028,
+          "note": "SD-32 card 15-ability: `Kind::Ability` landed through the census's own row_dependent branch (content/gateway test ported from 15-card-15-ability-category-memo.md into _ABILITY_CONTENT_RE) plus a row-level CATEGORY:FEAT redirect (refine_kind) matching the same rule. The 204-unit gap between census's raw 5,028 and the real inventory's 4,824 is the `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` deletion (289 new core_essentials-sourced ability residuals, decisions.md \u00a716 -- ce_abilities.lst's book-wide shared lookup tables have no per-race path signal and no resolvable SOURCELONG:, same disposition every prior kind's unattributable core_essentials content gets) minus a +85 gain from a PRE-EXISTING Rust/census disagreement this cycle's `abilit` fallback incidentally fixed: 3 in-scope `*_abilities_feat.lst` files (inner_sea_gods/inner_sea_combat/inner_sea_faiths) were never enumerated by src/bin/v06_work_inventory.rs's old file_kind at all (no `_abilities_feat` branch existed), so their 111 real CATEGORY:FEAT feat rows + 3 ability rows were invisible to the inventory even though census already counted them as `feat` via its looser `\"feat\" in b` substring match -- now correctly split 111 feat / 3 ability by refine_kind's own CATEGORY:FEAT test. `docs/work-inventory.json`'s `feat` kind grew 2,610 -> 2,722 (+112 = 111 + the 1 apg_abilities.lst row the memo already named) as the direct side effect -- verified by id-diff, 0 pre-existing feat units removed. NOTE: census's own `\"feat\" in b` check still counts all 114 rows in those 3 files as `feat` unconditionally (no per-row CATEGORY: test at that branch) -- 3 units (the ability-disposed ones) are a small, real, NOT-fixed census/inventory disagreement this cycle found and is reporting, not silently absorbing.",
+          "counts_toward_total_this_run": false
+        }
+      }
+    },
+    "a_identified_not_yet_integrated": {
+      "total": 183,
+      "detail": {
+        "class_feature_residual_duplicate_identity": {
+          "units": 183,
+          "memo": "15-card-15-internal-duplicate-identity-memo.md (root-cause pin) + 15-card-15-duplicate-identity-memo.md (first rescue cycle, +24, the *Choice-shape correction) + 15-card-15-duplicate-identity-review-memo.md (this cycle, per-case hand review, +4): 153 non-internal residual (was 156, -3 non-internal rescues) + 26 (was 27, -1 rescued despite carrying CATEGORY:Internal -- content-bearing, not a bare marker) newly-internal-turned-content rows that lost their own duplicate_identity race (unaffected balance, 2,574 candidate - 2,547 landed - 1 rescued this cycle)",
+          "why_not_applied": "root cause IS pinned for 131/153 of the remaining non-internal residual (collide on (book, key) with another class_feature row in the same book), and EVERY colliding group (55 groups: 39 Choice-typed fallback + 16 keyed) was reviewed case by case this cycle, by reading real corpus records -- but the surviving rows were NOT rescued for two independent, evidenced reasons: (1) 13 of the original 16 keyed groups (26 rows) collide with a row sharing the IDENTICAL display name under an explicit, corpus-author-declared `KEY:` field (PFS-legal override, hidden-tracker-beside-real-feature, or byte-identical restatement) -- a deliberate single identity, re-confirmed this cycle by direct content read, not the fallback weakness either fix targets; (2) all 39 of the 39 fallback-vs-fallback `TYPE:*Choice`-typed collision groups (including this card's OWN original 'Aberrant Bloodline' worked example) are the SAME shape SD-31 `decisions.md` Decision 17 already proved is a picker option beside its own real feature row, not a second object -- this cycle traced EVERY group's `ABILITY:AUTOMATIC` grant target and found each group's members converge in pairs on an IDENTICAL target feature, reached via a base-class gate and a second archetype/feat-chain gate (the exact `ultimate_magic:accursed_bloodline` shape already confirmed on `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`, `src/bin/v06_work_inventory.rs`; 7 of the 39 groups' surviving row -- all of `ultimate_magic`'s -- are ALREADY on that 33-id list). Decision 17's own text explicitly forbids a live adjacency filter here ('a generic same-name-adjacent-line rule would silently sweep in any FUTURE same-shaped collision no human reviewed'), so this cycle named every group's evidence in `15-card-15-duplicate-identity-review-memo.md` for an operator ruling to fold into that allowlist, rather than editing SD-31's operator-confirmed list itself or building an automatic classifier. 22 rows remain genuinely re-confirmed as having no (book,key) collision at all -- but ALL 22 are now traced: 21 are rows ALREADY on the confirmed 33-id `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS` allowlist (10 core_rulebook + 10 advanced_players_guide + 1 adventurers_guide bloodline pickers), deliberately removed post-construction by `apply_duplicate_chooser_removal` -- correct, expected, not a defect; the 22nd (`ultimate_psionics:class_feature:disable_device_class_skill`) is the already-traced displacement from `15-card-15-internal-duplicate-identity-memo.md` \u00a73 (content preserved under a new physical coordinate). No cause-pinning gap remains in the 183-unit population; the residual is a named, evidenced, per-case hand-review population awaiting an operator ruling on the Decision-17-shaped allowlist addition, not an unexplained defect."
+        }
+      }
+    },
+    "b_proposed_not_yet_applied_in_code": {
+      "total": 0,
+      "detail": {}
+    },
+    "category_internal_tension_resolution": {
+      "finding": "class_feature-lane (B)-for-all vs ability_category-lane (A)-for-81.6%, both applied to CATEGORY:Internal rows -- disjoint populations (bare *abilities*.lst files vs _abilities_class.lst files specifically), not a contradiction",
+      "resolution": "artifacts/gate-0-census-closure/15-card-15-category-internal-adjudication-memo.md (decisions.md \u00a714c item 4): 2,371 (A) / 243 (B) of the 2,614 rerouted rows, per-row proof, not blanket file-kind exclusion",
+      "code_fix_applied": "census_independent.py's reroute now excludes only the 40 provably-bare rows (`_row_is_bare_internal_marker`); the 203 proven facets stay counted as class_feature (under-exclude, not over-exclude). SD-32 card 15-internal: `v06_work_inventory.rs`'s OWN separate `is_internal_category` trap narrowed the same way for `Kind::ClassFeature` -- 2,547 of the 2,574 landed as real `docs/work-inventory.json` units this cycle; see `already_tracked_a.class_feature_already_in_inventory` and `pending_a.class_feature_residual_duplicate_identity` above for the split."
+    },
+    "arithmetic_check": {
+      "disposed_b_still_counted_plus_already_tracked_plus_pending_a_plus_pending_b": 18992,
+      "equals_total_this_run": true,
+      "remaining_undisposed": 0,
+      "note": "every unit in total_this_run (18992) is accounted for by exactly one row above: 801 (ability_category_b_disposed, live-derived, INCLUDES the 40-unit Internal bare-marker reroute) + 18,008 (class_feature, already tracked -- SD-32 card 15-internal raised this from 15,438; card 15-duplicate-identity raised it again from 17,984 with the 24-unit confirmed-safe rescue; card 15-duplicate-identity-review raised it again from 18,008 -- see the note below on why this cycle's own 4-unit rescue is not yet reflected here) + 183 (class_feature residual, cause pinned to `duplicate_identity` by card 15-internal, narrowed from 207 to 183 by card 15-duplicate-identity's 24-unit rescue, then, by card 15-duplicate-identity-review's own 4-unit rescue this cycle -- EVERY one of the 55 remaining colliding groups (39 Choice-typed fallback + 16 keyed) was reviewed case by case this cycle by reading real corpus records: 4 rescued (3 from the 16-group census, sharing genuinely different display names under one author-declared KEY, + 1 previously-invisible CATEGORY:Internal-but-content-bearing keyed collision the same census missed), 12 keyed groups left correctly collapsed (identical display name both sides -- PFS override / hidden tracker / true restatement), and all 39 Choice-typed groups found to be Decision-17-shaped duplicate-chooser pickers by direct ABILITY:AUTOMATIC-target evidence, named as allowlist candidates for an operator ruling rather than rescued or auto-classified -- see pending_a's own why_not_applied) = 18992. `skill` (149), `template`/`deity`/`power`/`domain`/`language` (3,550, generic-enumeration cycle) `kit` (1, disposed B) `ability` (4,824 real inventory units off a 5,028 live census count) and the 97-row companion routing fix are NOT in this sum: all moved OUT of kind_unenumerable entirely (see already_tracked_a and disposed_b_applied's own `counts_toward_total_this_run`/`still_counted_in_total_this_run` flags). Card 15's remaining scope, narrowed by card 15-duplicate-identity-review: the class_feature residual (183 units AS COMMITTED -- this cycle's own +4 rescue is landed in code and proven correct by a standalone regen, `15-duplicate-identity-review_cycle_receipt.md`, but not yet reflected in this checked-in `docs/work-inventory.json` because a further guarded regen at the fast-moving final HEAD is currently blocked by the `source.path` defect that same receipt names -- a future regen picks up all four units automatically once that is fixed. cause pinned to `duplicate_identity`, fully reviewed case by case -- an evidenced, named, per-case hand-review population awaiting an operator ruling on the Decision-17 allowlist addition, same shape as SD-31 Decision 17's 33-id chooser allowlist itself -- not an unexplained defect) is the only disposition-(A) population still pending integration."
+    }
+  },
+  "gate_3_standing_gate_still_passes": null
+}

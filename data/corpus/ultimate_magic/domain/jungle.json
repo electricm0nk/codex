@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Jungle",
+    "name": "Jungle",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Jungle Domain ~ Brachiation|PREVARGTEQ:DomainJungleAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Jungle Domain ~ Trap Sense|PREVARGTEQ:DomainJungleAbilityTriggerLVL,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainJungleLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainJungleDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainJungleTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainJungleAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJungleLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJungleDC|10+(DomainJungleLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJungleTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainJungleAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Jungle=1|Glide|Jungle=2|Tar Ball|Jungle=3|Venomous Bolt|Jungle=4|Arboreal Hammer|Jungle=5|Blessing of the Salamander|Jungle=6|Swarm Skin|Jungle=7|Creeping Doom|Jungle=8|Wall of Lava|Jungle=9|Shambler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
+    "line": 17,
+    "record_key": "Jungle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

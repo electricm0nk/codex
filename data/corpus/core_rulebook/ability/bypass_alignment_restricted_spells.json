@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Bypass Alignment Restricted Spells",
+    "name": "Bypass Alignment Restricted Spells",
+    "description": "GM allows to bypass alignment restrictions on spells.",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Z_Award"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GM_Award.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "GM allows to bypass alignment restrictions on spells."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BypassProhibitSpellAlignment_Restriction|1|TYPE=Bypass"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 450,
+    "record_key": "Bypass Alignment Restricted Spells"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

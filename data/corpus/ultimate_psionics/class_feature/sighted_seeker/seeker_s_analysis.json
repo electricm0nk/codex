@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sighted Seeker ~ Seeker's Analysis",
+    "name": "Seeker's Analysis",
+    "class": "Sighted Seeker",
+    "description": "You have mastered the mundane aspects of the hunt, such that they become almost second nature to you. Add Find Evidence [Normal time, DC 10-20] and Analysis [1 minute, DC 15] abilities to the Perception skill. Evidence is a physical clue which would provide information about your current task. Failure of analysis provides incomplete and potentially misleading information. You can take 10 to find or analyze evidence, but cannot take 20 and cannot retry failed checks. 5 or more ranks in a relevant Knowledge skill provide a +2 bonus on Perception checks made when analyzing evidence.nl;Additionally, add Research Subject [At least 1d4 hours, DC 10] and Browse Records [At least 1d4 hours, DC 10-30] abilities to the Knowledge skill. Researching a subject involves perusing libraries or related sources for information about a particular subject. Difficult subjects require more time to research and may yield less information. Particularly good sources may provide a bonus of up to +6 on this check. Browsing records involves going over files or ledgers looking for a particular piece of information. A very specific goal may increase the DC dramatically or decrease it if the filing system is particularly good.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sighted Seeker ~ Seeker's Analysis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SightedSeekerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "You have mastered the mundane aspects of the hunt, such that they become almost second nature to you. Add Find Evidence [Normal time, DC 10-20] and Analysis [1 minute, DC 15] abilities to the Perception skill. Evidence is a physical clue which would provide information about your current task. Failure of analysis provides incomplete and potentially misleading information. You can take 10 to find or analyze evidence, but cannot take 20 and cannot retry failed checks. 5 or more ranks in a relevant Knowledge skill provide a +2 bonus on Perception checks made when analyzing evidence.nl;Additionally, add Research Subject [At least 1d4 hours, DC 10] and Browse Records [At least 1d4 hours, DC 10-30] abilities to the Knowledge skill. Researching a subject involves perusing libraries or related sources for information about a particular subject. Difficult subjects require more time to research and may yield less information. Particularly good sources may provide a bonus of up to +6 on this check. Browsing records involves going over files or ledgers looking for a particular piece of information. A very specific goal may increase the DC dramatically or decrease it if the filing system is particularly good."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.378"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1484,
+    "record_key": "Sighted Seeker ~ Seeker's Analysis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

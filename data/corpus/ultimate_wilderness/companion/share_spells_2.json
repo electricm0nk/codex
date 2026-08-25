@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Infiltrator ~ Share Spells",
+    "name": "Share Spells",
+    "description": "The master may cast a divination spell with a target of \"You\" on the infiltrator (as a spell with a range of touch) instead of on herself. A master may cast spells on the infiltrator even if the spells normally do not affect creatures of the companion's type. Spells cast in this way must come from a class that grants a familiar. This ability does not allow the infiltrator to share abilities that are not spells, even if they function like spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infiltrator ~ Share Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The master may cast a divination spell with a target of \"You\" on the infiltrator (as a spell with a range of touch) instead of on herself. A master may cast spells on the infiltrator even if the spells normally do not affect creatures of the companion's type. Spells cast in this way must come from a class that grants a familiar. This ability does not allow the infiltrator to share abilities that are not spells, even if they function like spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 576,
+    "record_key": "Infiltrator ~ Share Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

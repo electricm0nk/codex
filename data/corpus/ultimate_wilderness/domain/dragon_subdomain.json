@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:11Z",
+  "data": {
+    "key": "Dragon Subdomain",
+    "name": "Dragon Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Dragon Subdomain],[PREVARLT:ScalykindDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Venomous Stare|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Scalykind)|PREVARGTEQ:DomainScalykindAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dragonbreath|PREVARGTEQ:DomainScalykindAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Scalykind"
+      },
+      {
+        "key": "DESC",
+        "value": "You have innate connection to dragons and their kin."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=1|Magic Fang"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=2|Animal Trance"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=3|Draconic Reservoir"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=4|Dragon's Breath"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=5|Animal Growth (Reptiles Only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=6|Form of the Dragon I"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=7|Creeping Doom"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=8|Animal Shapes (Reptiles Only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dragon Subdomain=9|Shapechange"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Scalykind"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_domains.lst",
+    "sha256": "b2f97a67e5a1d0671916f982443913c453e92e1cadbc3a94795340f1f4593112",
+    "line": 14,
+    "record_key": "Dragon Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

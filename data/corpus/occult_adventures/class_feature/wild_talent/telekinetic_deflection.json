@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Telekinetic Deflection",
     "name": "Telekinetic Deflection",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element aether; Type utility (Sp); Level 8; Burn 0 You can deflect your foes' attacks, as the spell deflectionAPG with a duration of 1 round. You can accept 1 point of burn to increase the duration to 1 round per kineticist level you possess.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Size ~ Small",
+    "name": "Small",
+    "description": "[Cost: %1]|0",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial Size ~ Small"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Racial Traits"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialQuality.RaceSizeQuality.AltRaceSize"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Racial Traits,Racial Size ~ Small],[!PREABILITY:1,CATEGORY=Racial Traits,TYPE.AltRaceSize]"
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|0"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|0"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 86,
+    "record_key": "Racial Size ~ Small"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Horse Lord",
     "name": "Horse Lord",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Rangers of the plains use horses or other riding beasts to hunt their lands, forging a near-mystical relationship with their mounts. Horse lords are unparalleled mounted combatants, the envy of even the most dedicated cavalier. Though called \"horse lords\" as a generic term, these rangers are not restricted to horses for their animal companions- any creature the ranger can ride is included in these abilities.",
     "raw_tokens": [
       {
@@ -59,6 +59,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Horse Lord],[!PREFACT:1,ABILITIES,Ranger_Archetype_HuntersBond=True,Ranger_Archetype_Camouflage=True,Ranger_Archetype_HideInPlainSight=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HideInPlainSight|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Camouflage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HideInPlainSight|true"
       }
     ]
   },
@@ -75,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

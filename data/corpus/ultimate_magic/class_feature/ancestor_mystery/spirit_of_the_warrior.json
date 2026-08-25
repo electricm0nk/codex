@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ancestor Mystery ~ Spirit of the Warrior",
     "name": "Spirit of the Warrior",
-    "class": "Ancestor Mystery",
+    "class": "Oracle",
     "description": "You can summon the spirit of a great warrior ancestor and allow it to possess you, becoming a mighty warrior yourself. You gain a +4 enhancement bonus to Strength, Dexterity, and Constitution, and a +4 natural armor bonus to AC. Your base attack bonus while possessed equals your oracle level (which may give you additional attacks), and you gain the Improved Critical feat with a weapon of your choice. You can use this ability for %1 rounds. This duration does not need to be consecutive, but it must be spent in 1-round increments.|SpiritOfTheWarriorDuration",
     "raw_tokens": [
       {
@@ -70,5 +70,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

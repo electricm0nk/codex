@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Reaving Raider ~ Take Captive",
+    "name": "Take Captive",
+    "class": "Reaving Raider",
+    "description": "While maintaining psionic focus, you can choose to deal nonlethal damage without incurring the -4 penalty on the attack rolls.  In addition, when you confirm a critical hit with an attack that deals nonlethal damage, you can expend your psionic focus to try to knock the enemy out, although a successful save (Fort DC %1) negates this effect.|TakeCaptiveDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reaving Raider ~ Take Captive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TakeCaptiveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While maintaining psionic focus, you can choose to deal nonlethal damage without incurring the -4 penalty on the attack rolls.  In addition, when you confirm a critical hit with an attack that deals nonlethal damage, you can expend your psionic focus to try to knock the enemy out, although a successful save (Fort DC %1) negates this effect.|TakeCaptiveDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TakeCaptiveDC|10+floor(RogueLVL/2)+CHA"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2614,
+    "record_key": "Reaving Raider ~ Take Captive"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Eclectic Training ~ Guild",
+    "name": "Eclectic Training",
+    "description": "Guilds often require members to master and train in different subjects. You increase your effective caster level in the chosen class (including the number of spells you know and can cast per day) by +1, to a maximum caster level equal to %1.|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Eclectic Training ~ Guild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GuildEclecticTraining"
+      },
+      {
+        "key": "DESC",
+        "value": "Guilds often require members to master and train in different subjects. You increase your effective caster level in the chosen class (including the number of spells you know and can cast per day) by +1, to a maximum caster level equal to %1.|TL"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "CLASS|SPELLCASTER"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|CHOICE|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 103,
+    "record_key": "Eclectic Training ~ Guild"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Skinwalker ~ Wereshark-Kin",
+    "name": "Wereshark-Kin",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Wereshark-Kin"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Wereshark-Kin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_templates_subrace.lst",
+    "sha256": "c19ca0e34b67be23c3196c11f6c751d857d9a0e39fb0a15936bd2d703f938ad8",
+    "line": 16,
+    "record_key": "Skinwalker ~ Wereshark-Kin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

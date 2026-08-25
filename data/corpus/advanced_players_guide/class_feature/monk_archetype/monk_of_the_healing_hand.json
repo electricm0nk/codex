@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Monk of the Healing Hand",
     "name": "Monk of the Healing Hand",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "Monks of the healing hand seek perfection through helping others. By focusing their meditations on the flow of life within themselves and all creation they gain an understanding of how to share their ki with others, healing wounds and even bringing the dead back to life. For such a monk, sacrificing himself to save another is the surest way to achieve transcendence. A monk of the healing hand has the following class features.",
     "raw_tokens": [
       {
@@ -55,6 +55,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Healing Hand],[!PREFACT:1,ABILITIES,Monk_Archetype_WholenessOfBody=True,Monk_Archetype_DiamondBody=True,Monk_Archetype_QuiveringPalm=True,Monk_Archetype_PerfectSelf=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_WholenessOfBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_DiamondBody|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PerfectSelf|true"
       }
     ]
   },
@@ -71,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

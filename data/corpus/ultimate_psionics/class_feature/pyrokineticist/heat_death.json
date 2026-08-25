@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pyrokineticist ~ Heat Death",
+    "name": "Heat Death",
+    "class": "Pyrokineticist",
+    "description": "Target takes 4d8 fire damage (save DC %1 for half); maintain concentration to continue attack.|HeatDeathDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pyrokineticist ~ Heat Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PyrokineticistClassFeatures.SpecialAttack.Psilike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeatDeathDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Target takes 4d8 fire damage (save DC %1 for half); maintain concentration to continue attack.|HeatDeathDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeatDeathDC|14+PyrokineticistPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.376"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1467,
+    "record_key": "Pyrokineticist ~ Heat Death"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

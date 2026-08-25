@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Nexian Spellspy ~ Nondetection",
+    "name": "Nondetection",
+    "class": "Witch",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nexian Spellspy ~ Nondetection"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Features.NexianSpellspyClassFeatures"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Witch=4|Nondetection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 338,
+    "record_key": "Nexian Spellspy ~ Nondetection"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

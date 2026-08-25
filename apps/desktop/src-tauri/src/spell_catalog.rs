@@ -76,8 +76,12 @@ use codex::rules_core::derived_evaluator_fixture_check::{
 };
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
-    acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures,
-    ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+    acg, adventurers_guide, advanced_race_guide, apg, bestiary, bestiary_4,
+    book_of_the_damned_volume_1, book_of_the_damned_volume_2, crb, horror_adventures,
+    inner_sea_faiths, inner_sea_gods, inner_sea_intrigue, inner_sea_magic, inner_sea_races,
+    inner_sea_temples, inner_sea_world_guide, monster_codex, mythic_adventures,
+    occult_adventures, ultimate_combat, ultimate_equipment, ultimate_intrigue, ultimate_magic,
+    ultimate_magic_wordsofpower, ultimate_wilderness,
 };
 use codex::rules_core::spell_resolver;
 
@@ -98,6 +102,36 @@ const BOOK_UW: &str = "UW";
 /// SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide, the
 /// twelfth book -- this book's first record family of any kind.
 const BOOK_AG: &str = "AG";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Faiths, the thirteenth book --
+/// this book's first record family of any kind.
+const BOOK_ISF: &str = "ISF";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Magic, the fourteenth book --
+/// this book's first record family of any kind.
+const BOOK_ISM: &str = "ISM";
+/// SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+/// precondition`, AT-32-G0-003): Inner Sea Temples, the fifteenth book --
+/// this book's first record family of any kind.
+const BOOK_ISTEM: &str = "ISTEM";
+/// SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): Horror
+/// Adventures, the sixteenth book -- its second record family of any
+/// kind (`companion`/`monster`/`monster_ability` already ship).
+const BOOK_HA: &str = "HA";
+/// SD-32 row 20 (`decisions.md §17`/`§27b`): eleven more books, chained into
+/// `spell_resolver::spell_catalog_rows()` this cycle -- see that module's
+/// own `SPELL_BOOK_*` doc comments for provenance.
+const BOOK_B1: &str = "B1";
+const BOOK_B4: &str = "B4";
+const BOOK_BOTD1: &str = "BOTD1";
+const BOOK_BOTD2: &str = "BOTD2";
+const BOOK_ISI: &str = "ISI";
+const BOOK_ISR: &str = "ISR";
+const BOOK_ISWG: &str = "ISWG";
+const BOOK_MC: &str = "MC";
+const BOOK_MYTHIC: &str = "MYTHIC";
+const BOOK_UE: &str = "UE";
+const BOOK_UMWP: &str = "UMWP";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -382,6 +416,205 @@ fn map_ag_entry(entry: &adventurers_guide::spell_list::SpellListEntry) -> SpellC
     }
 }
 
+/// ISF's table types `school`, `level` and `description` optionally, like
+/// AG's/UW's/UC's/ISG's -- SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) ingest found all 3
+/// shipped base declarations carry no `CLASSES:`/`DOMAINS:` level at all
+/// (`isf_spells.lst` names no class list on any of its rows), a real corpus
+/// gap, not fabricated.
+fn map_isf_entry(entry: &inner_sea_faiths::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISF.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISF, entry.key),
+        range: range_for(BOOK_ISF, entry.key),
+    }
+}
+
+/// ISM's table types `school`, `level` and `description` optionally, like
+/// ISF's above -- SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) ingest.
+fn map_ism_entry(entry: &inner_sea_magic::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISM.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISM, entry.key),
+        range: range_for(BOOK_ISM, entry.key),
+    }
+}
+
+/// ISTem's table types `school`, `level` and `description` optionally, like
+/// ISF's/ISM's above -- SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) ingest.
+fn map_istem_entry(entry: &inner_sea_temples::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISTEM.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISTEM, entry.key),
+        range: range_for(BOOK_ISTEM, entry.key),
+    }
+}
+
+/// Horror Adventures -- SD-32 card 11 (T9 onboarding, `decisions.md §19`
+/// sign-off), config-driven ingest (`src/bin/ingest_spells.rs`,
+/// `decisions.md §17`). Its table types `school`, `level` and
+/// `description` optionally, like ISF's/ISM's/ISTem's above.
+fn map_ha_entry(entry: &horror_adventures::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_HA.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_HA, entry.key),
+        range: range_for(BOOK_HA, entry.key),
+    }
+}
+
+/// SD-32 row 20: eleven more per-book mapping helpers, all typed against the
+/// same `Option`-everywhere `SpellListEntry` shape `src/bin/ingest_spells.rs`
+/// generates uniformly (see that module's own doc comment).
+fn map_b1_entry(entry: &bestiary::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_B1.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_B1, entry.key),
+        range: range_for(BOOK_B1, entry.key),
+    }
+}
+fn map_b4_entry(entry: &bestiary_4::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_B4.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_B4, entry.key),
+        range: range_for(BOOK_B4, entry.key),
+    }
+}
+fn map_botd1_entry(
+    entry: &book_of_the_damned_volume_1::spell_list::SpellListEntry,
+) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_BOTD1.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_BOTD1, entry.key),
+        range: range_for(BOOK_BOTD1, entry.key),
+    }
+}
+fn map_botd2_entry(
+    entry: &book_of_the_damned_volume_2::spell_list::SpellListEntry,
+) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_BOTD2.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_BOTD2, entry.key),
+        range: range_for(BOOK_BOTD2, entry.key),
+    }
+}
+fn map_isi_entry(entry: &inner_sea_intrigue::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISI.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISI, entry.key),
+        range: range_for(BOOK_ISI, entry.key),
+    }
+}
+fn map_isr_entry(entry: &inner_sea_races::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISR.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISR, entry.key),
+        range: range_for(BOOK_ISR, entry.key),
+    }
+}
+fn map_iswg_entry(
+    entry: &inner_sea_world_guide::spell_list::SpellListEntry,
+) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISWG.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISWG, entry.key),
+        range: range_for(BOOK_ISWG, entry.key),
+    }
+}
+fn map_mc_entry(entry: &monster_codex::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_MC.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_MC, entry.key),
+        range: range_for(BOOK_MC, entry.key),
+    }
+}
+fn map_mythic_entry(
+    entry: &mythic_adventures::spell_list::SpellListEntry,
+) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_MYTHIC.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_MYTHIC, entry.key),
+        range: range_for(BOOK_MYTHIC, entry.key),
+    }
+}
+fn map_ue_entry(entry: &ultimate_equipment::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_UE.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_UE, entry.key),
+        range: range_for(BOOK_UE, entry.key),
+    }
+}
+fn map_umwp_entry(
+    entry: &ultimate_magic_wordsofpower::spell_list::SpellListEntry,
+) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_UMWP.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_UMWP, entry.key),
+        range: range_for(BOOK_UMWP, entry.key),
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogResponse {
@@ -497,6 +730,17 @@ mod tests {
     /// (CRB/ACG/ARG/UI non-optional, APG optional); this test asserts the
     /// registry reproduces all five exactly, so the helpers are the proof
     /// rather than a second implementation that could drift.
+    ///
+    /// `bestiary_6` is deliberately NOT chained into `expected` below --
+    /// BOTH of its 2 rows are cross-book verbatim reprints the resolver's
+    /// own dedup drops (`spell_resolver::spell_catalog_rows`'s
+    /// "first-chained wins" pass), so it contributes zero net entries to
+    /// `actual` and omitting it entirely still balances. `horror_adventures`
+    /// (SD-32 card 11, T9 onboarding) is NOT zero-net -- only 2 of its 72
+    /// rows collide (`Green Caress`, `Verminous Transformation`, both
+    /// already served under `BOOK_UW`, earlier in the chain) -- so it IS
+    /// chained below, with those 2 keys excluded to mirror the same dedup
+    /// `actual` applies, preserving both count and relative order.
     #[test]
     fn mapping_helpers_agree_with_the_registry() {
         let expected: Vec<SpellCatalogEntryDto> = crb::spell_list::SPELL_LIST
@@ -512,7 +756,86 @@ mod tests {
             .chain(inner_sea_gods::spell_list::SPELL_LIST.iter().map(map_isg_entry))
             .chain(ultimate_wilderness::spell_list::SPELL_LIST.iter().map(map_uw_entry))
             .chain(adventurers_guide::spell_list::SPELL_LIST.iter().map(map_ag_entry))
-            .collect();
+            .chain(inner_sea_faiths::spell_list::SPELL_LIST.iter().map(map_isf_entry))
+            .chain(inner_sea_magic::spell_list::SPELL_LIST.iter().map(map_ism_entry))
+            .chain(inner_sea_temples::spell_list::SPELL_LIST.iter().map(map_istem_entry))
+            .chain(
+                horror_adventures::spell_list::SPELL_LIST
+                    .iter()
+                    .filter(|e| e.key != "Green Caress" && e.key != "Verminous Transformation")
+                    .map(map_ha_entry),
+            )
+            // SD-32 row 20: eleven more books chained this cycle
+            // (`decisions.md §17`/`§27b`), same dedup-exclusion shape as
+            // `horror_adventures` above -- see `reach_gate.rs`'s matching
+            // dispatch arms for each collision's own provenance.
+            .chain(bestiary::spell_list::SPELL_LIST.iter().map(map_b1_entry))
+            .chain(
+                bestiary_4::spell_list::SPELL_LIST
+                    .iter()
+                    .filter(|e| e.key != "Quickened Lightning Bolt")
+                    .map(map_b4_entry),
+            )
+            .chain(
+                book_of_the_damned_volume_1::spell_list::SPELL_LIST
+                    .iter()
+                    .filter(|e| e.key != "Agonize" && e.key != "Vision of Hell")
+                    .map(map_botd1_entry),
+            )
+            .chain(
+                book_of_the_damned_volume_2::spell_list::SPELL_LIST
+                    .iter()
+                    .filter(|e| {
+                        e.key != "Disfiguring Touch"
+                            && e.key != "Vermin Shape I"
+                            && e.key != "Vermin Shape II"
+                    })
+                    .map(map_botd2_entry),
+            )
+            .chain(
+                inner_sea_intrigue::spell_list::SPELL_LIST
+                    .iter()
+                    .filter(|e| e.key != "Brightest Light")
+                    .map(map_isi_entry),
+            )
+            .chain(inner_sea_races::spell_list::SPELL_LIST.iter().map(map_isr_entry))
+            .chain(
+                inner_sea_world_guide::spell_list::SPELL_LIST
+                    .iter()
+                    .filter(|e| {
+                        ![
+                            "Animal Growth (Reptiles Only)",
+                            "Animal Shapes (Reptiles Only)",
+                            "Interplanetary Teleport",
+                            "Vermin Shape I",
+                            "Vermin Shape II",
+                            "Dirge of the Victorious Knights",
+                            "Summon Mantis",
+                            "Quickened Dispel Magic (Greater)",
+                        ]
+                        .contains(&e.key)
+                    })
+                    .map(map_iswg_entry),
+            )
+            .chain(monster_codex::spell_list::SPELL_LIST.iter().map(map_mc_entry))
+            .chain(mythic_adventures::spell_list::SPELL_LIST.iter().map(map_mythic_entry))
+            .chain(ultimate_equipment::spell_list::SPELL_LIST.iter().map(map_ue_entry))
+            .chain(
+                ultimate_magic_wordsofpower::spell_list::SPELL_LIST.iter().map(map_umwp_entry),
+            )
+            // `inner_sea_races`'s own table restates "Elemental Mastery" 5
+            // times and `bestiary_4`'s own table restates two keys twice
+            // each (confirmed real: `grep -oP 'key: "\K[^"]+'` on each
+            // table, `uniq -c`) -- genuine WITHIN-book duplicates, distinct
+            // from the cross-book collisions excluded above. Production's
+            // `spell_catalog_rows()` global "first key wins" dedup collapses
+            // these the same way it collapses a cross-book collision, so
+            // this reconstruction applies the identical pass rather than
+            // hand-listing every duplicate key.
+            .collect::<Vec<_>>();
+        let mut seen = std::collections::HashSet::new();
+        let expected: Vec<SpellCatalogEntryDto> =
+            expected.into_iter().filter(|e| seen.insert(e.key.clone())).collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
         for (a, e) in actual.iter().zip(expected.iter()) {
@@ -529,7 +852,45 @@ mod tests {
         let response = build_spell_catalog();
         // SD-31 wave-29 (`lane5-book-onboard` lane): +45 AG spells, the
         // twelfth book, 2011 -> 2056.
-        assert_eq!(response.entries.len(), 2056);
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): +2 ISF + 34 ISM + 21
+        // ISTEM, the thirteenth/fourteenth/fifteenth books, 2056 -> 2113.
+        // ISF's raw `isf_spells.lst` carries 3 base declarations but one
+        // ("Curse of Disgust (Besmaran)") is genuinely restated a second
+        // time later in the same file; the ingest binary dedups within a
+        // book (first-declaration-wins, mirroring `spell_resolver`'s own
+        // cross-book policy), so only 2 of the 3 ship.
+        // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): +72
+        // HA (Horror Adventures), the sixteenth book, base declarations,
+        // but 2 ("Green Caress", "Verminous Transformation") are verbatim
+        // reprints of spells Ultimate Wilderness already ships (earlier in
+        // the chain) -- the resolver's cross-book dedup (SD-31 wave-24,
+        // first-chained wins) keeps only UW's copy, so only 70 of HA's 72
+        // reach the SERVED catalog. 2113 -> 2183.
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): the T12
+        // census/class-feature lanes' corpus growth landed +14 more spells
+        // corpus-wide with no regen of this pin (`decisions.md §17a`
+        // re-derivation, not a loosening -- every book's own count is
+        // re-checked below, not just the total). Re-derived via a one-shot
+        // debug print of `book_entries(..).len()` for all 15 books,
+        // confirmed to sum to the new total: ISG +4 (92 -> 96), AG +4
+        // (45 -> 49), ISF +1 (2 -> 3), ISM +5 (34 -> 39); the other eleven
+        // books are unchanged. 2183 -> 2197.
+        // SD-32 row 20 (`decisions.md §17`/`§27b`): eleven more books
+        // chained, 2197 -> 2481. Re-derived via `build_spell_catalog()`
+        // directly (`book_entries(..).len()` per book, summed and cross-
+        // checked against `response.entries.len()`), not assumed:
+        // `inner_sea_races`'s own table restates "Elemental Mastery" 5
+        // times and `bestiary_4`'s restates two keys twice each -- genuine
+        // within-book corpus duplicates the global "first key wins" dedup
+        // collapses, same as any cross-book collision. +111 B1 (bestiary/
+        // beastiary1, 2 bare -- see BARE_RECORD_FINDINGS) + 55 B4 (58 raw -
+        // 2 within-book dupes - 1 cross-book collision with B1) + 4 BOTD1
+        // (6 - 2 collisions with UM) + 8 BOTD2 (11 - 3 collisions with UM)
+        // + 25 ISI (26 - 1 collision with AG) + 29 ISR (33 - 4 within-book
+        // dupes) + 14 ISWG (22 - 8 collisions with UW/UM/AG/B4) + 24 MC +
+        // 10 MYTHIC + 1 UE + 3 UMWP (no collisions for these four).
+        assert_eq!(response.entries.len(), 2481);
         assert_eq!(book_entries(BOOK_CRB).len(), 664);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
@@ -538,9 +899,27 @@ mod tests {
         assert_eq!(book_entries(BOOK_UM).len(), 269);
         assert_eq!(book_entries(BOOK_OA).len(), 144);
         assert_eq!(book_entries(BOOK_UC).len(), 146);
-        assert_eq!(book_entries(BOOK_ISG).len(), 92);
+        assert_eq!(book_entries(BOOK_ISG).len(), 96);
         assert_eq!(book_entries(BOOK_UW).len(), 61);
-        assert_eq!(book_entries(BOOK_AG).len(), 45);
+        assert_eq!(book_entries(BOOK_AG).len(), 49);
+        assert_eq!(book_entries(BOOK_ISF).len(), 3);
+        assert_eq!(book_entries(BOOK_ISM).len(), 39);
+        assert_eq!(book_entries(BOOK_ISTEM).len(), 21);
+        // 70, not 72: "Green Caress"/"Verminous Transformation" serve under
+        // BOOK_UW (earlier in the chain), not BOOK_HA -- see the comment
+        // above `response.entries.len()`'s own assertion.
+        assert_eq!(book_entries(BOOK_HA).len(), 70);
+        assert_eq!(book_entries(BOOK_B1).len(), 111);
+        assert_eq!(book_entries(BOOK_B4).len(), 55);
+        assert_eq!(book_entries(BOOK_BOTD1).len(), 4);
+        assert_eq!(book_entries(BOOK_BOTD2).len(), 8);
+        assert_eq!(book_entries(BOOK_ISI).len(), 25);
+        assert_eq!(book_entries(BOOK_ISR).len(), 29);
+        assert_eq!(book_entries(BOOK_ISWG).len(), 14);
+        assert_eq!(book_entries(BOOK_MC).len(), 24);
+        assert_eq!(book_entries(BOOK_MYTHIC).len(), 10);
+        assert_eq!(book_entries(BOOK_UE).len(), 1);
+        assert_eq!(book_entries(BOOK_UMWP).len(), 3);
     }
 
     #[test]
@@ -569,7 +948,9 @@ mod tests {
             assert!(
                 [
                     BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA, BOOK_UC,
-                    BOOK_ISG, BOOK_UW, BOOK_AG
+                    BOOK_ISG, BOOK_UW, BOOK_AG, BOOK_ISF, BOOK_ISM, BOOK_ISTEM, BOOK_HA, BOOK_B1,
+                    BOOK_B4, BOOK_BOTD1, BOOK_BOTD2, BOOK_ISI, BOOK_ISR, BOOK_ISWG, BOOK_MC,
+                    BOOK_MYTHIC, BOOK_UE, BOOK_UMWP,
                 ]
                 .contains(&entry.book.as_str())
             );

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Daring Champion ~ Champion's Finesse",
     "name": "Champion's Finesse",
@@ -47,6 +47,46 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.90"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Weapon Group Melee Light Piercing|((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Weapon Group Melee OneHanded Piercing|((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longsword|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Longsword)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longsword|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Longsword)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scimitar|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Scimitar)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scimitar|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Scimitar)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Katana|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Katana)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Katana|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Katana)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sawtooth Sabre|TOHIT|DEX|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Sawtooth Sabre)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sawtooth Sabre|TOHIT|-STR|PREABILITY:1,CATEGORY=FEAT,Slashing Grace (Sawtooth Sabre)"
       }
     ]
   },
@@ -64,5 +104,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

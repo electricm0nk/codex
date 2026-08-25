@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Justice Domain ~ Chains of Justice",
     "name": "Chains of Justice",
-    "class": "Justice Domain",
+    "class": "Cleric",
     "description": "Once per day, you can bind an opponent within 60 feet to you with spectral chains (Will DC %1 negates). When you take damage from an enemy, the bound target takes this damage as well. Whenever the bound target takes damage from you or one of your allies, you take this damage as well. You and the target are not physically bound to each other, and either can end the connection by breaking the line of effect or exceeding the ability's range. You may dismiss the chains as a standard action.|ChainsOfJusticeDC",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

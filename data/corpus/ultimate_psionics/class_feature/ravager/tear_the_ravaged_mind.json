@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ravager ~ Tear the Ravaged Mind",
+    "name": "Tear the Ravaged Mind",
+    "class": "Ravager",
+    "description": "You can expend your psionic focus while using the Ravage the Mind ability to deal 1d6 points of Wisdom damage instead of 1 point of Wisdom damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ravager ~ Tear the Ravaged Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend your psionic focus while using the Ravage the Mind ability to deal 1d6 points of Wisdom damage instead of 1 point of Wisdom damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1849,
+    "record_key": "Ravager ~ Tear the Ravaged Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Psychic ~ Phrenic Amplifications",
     "name": "Phrenic Amplifications",
@@ -31,6 +31,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.60"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phrenic Amplification|-1|PREVARGTEQ:PsychicLVL,1|PREVAREQ:Psychic_CF_PhrenicAmplification1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phrenic Amplification|-1|PREVARGTEQ:PsychicLVL,3|PREVAREQ:Psychic_CF_PhrenicAmplification3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phrenic Amplification|-1|PREVARGTEQ:PsychicLVL,7|PREVAREQ:Psychic_CF_PhrenicAmplification7,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phrenic Amplification|-1|PREVARGTEQ:PsychicLVL,11|PREVAREQ:Psychic_CF_PhrenicAmplification11,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phrenic Amplification|-1|PREVARGTEQ:PsychicLVL,15|PREVAREQ:Psychic_CF_PhrenicAmplification15,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Phrenic Amplification|-1|PREVARGTEQ:PsychicLVL,19|PREVAREQ:Psychic_CF_PhrenicAmplification19,1"
       }
     ]
   },
@@ -49,5 +73,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

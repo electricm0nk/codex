@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Shrewd Tactician",
+    "category": "Combat",
+    "name": "Shrewd Tactician",
+    "description": "Your dealings with pirates, thieves, and assassins have taught you to be exceedingly careful. Flanking is less efficient against you. Your dealings with pirates, thieves, and assassins have taught you to be exceedingly careful. Opponents do not gain a +2 bonus on attack rolls for flanking you, although they can still sneak attack you. You also gain a +3 bonus on Sense Motive checks made to resist a foe's Bluff checks to feint in combat.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Alertness,Combat Reflexes"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 37,
+    "record_key": "Shrewd Tactician"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

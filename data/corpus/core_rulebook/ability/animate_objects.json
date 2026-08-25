@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Animate Objects",
+    "name": "Animate Objects",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateObjects_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateObjects_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateObjects_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateObjects_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateObjects_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateObjects_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_AnimateObjects_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_AnimateObjects_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_AnimateObjects_LVL|Animate Objects,SLA_AnimateObjects_DC|PREVAREQ:SLA_AnimateObjects_AtWill,0|PREVAREQ:SLA_AnimateObjects_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_AnimateObjects_LVL|Animate Objects,SLA_AnimateObjects_DC|PREVAREQ:SLA_AnimateObjects_AtWill,1|PREVAREQ:SLA_AnimateObjects_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_AnimateObjects_LVL|Animate Objects,SLA_AnimateObjects_DC|PREVAREQ:SLA_AnimateObjects_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateObjects_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateObjects_SpellLVL|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateObjects_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateObjects_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_AnimateObjects_DC|10+SLA_AnimateObjects_SpellLVL+SLA_AnimateObjects_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 826,
+    "record_key": "Animate Objects"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

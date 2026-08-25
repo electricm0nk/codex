@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Growth Subdomain",
+    "name": "Growth Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Growth Subdomain],[PREVARLT:PlantDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Growth Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Growth Subdomain=1|Enlarge Person|Growth Subdomain=2|Barkskin|Growth Subdomain=3|Plant Growth|Growth Subdomain=4|Command Plants|Growth Subdomain=5|Righteous Might|Growth Subdomain=6|Repel Wood|Growth Subdomain=7|Animate Plants|Growth Subdomain=8|Control Plants|Growth Subdomain=9|Shambler"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 38,
+    "record_key": "Growth Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

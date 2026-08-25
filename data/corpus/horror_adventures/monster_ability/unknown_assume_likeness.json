@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Unknown ~ Assume Likeness",
+    "delivery": "Supernatural",
+    "description": "As a standard action while using hallucinatory camouflage, an unknown is able to disguise itself as a specific creature known to the target of its victimize ability. If the victimized creature succeeds at a Will save (DC %1) it negates this effect, and the unknown can't use this ability again for 24 hours or until it changes victims, whichever comes first. Otherwise, the unknown's features and mannerisms change to match the creature known to its victim, granting it a +20 circumstance bonus on Disguise checks to impersonate this creature. Unlike hallucinatory camouflage, this ability works against the target of victimize. This is a mind-affecting illusion (glamer) effect.",
+    "description_variables": [
+      "10+TL+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:unknown_assume_likeness",
+    "name": "Assume Likeness",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action while using hallucinatory camouflage, an unknown is able to disguise itself as a specific creature known to the target of its victimize ability. If the victimized creature succeeds at a Will save (DC %1) it negates this effect, and the unknown can't use this ability again for 24 hours or until it changes victims, whichever comes first. Otherwise, the unknown's features and mannerisms change to match the creature known to its victim, granting it a +20 circumstance bonus on Disguise checks to impersonate this creature. Unlike hallucinatory camouflage, this ability works against the target of victimize. This is a mind-affecting illusion (glamer) effect.|10+TL+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Unknown ~ Assume Likeness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.UnknownTemplate"
+      }
+    ],
+    "source_page": "p.245",
+    "traits": [
+      "UnknownTemplate"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 340,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Unknown ~ Assume Likeness",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Infernal Armor ~ HK",
     "name": "Infernal Armor",
-    "class": "Infernal Armor",
+    "class": "Hellknight",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

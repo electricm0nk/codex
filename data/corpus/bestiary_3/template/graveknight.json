@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Graveknight",
+    "name": "Graveknight",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=5"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Living Creature"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|CR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate,Perception,Ride|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base.STACK"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Graveknight|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Improved Initiative|Mounted Combat|Ride-By Attack|Toughness"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst",
+    "sha256": "2558383378bdc55d460faa927817343ff857be38c8ea7cf620f3a61c09e11b2b",
+    "line": 24,
+    "record_key": "Graveknight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

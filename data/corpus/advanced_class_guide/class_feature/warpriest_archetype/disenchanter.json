@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest Archetype ~ Disenchanter",
     "name": "Disenchanter",
-    "class": "Warpriest Archetype",
+    "class": "Warpriest",
     "description": "While many warpriests focus on threats to the body, the disenchanter focuses on dangers to the mind and the soul. Using the power of his patron, the disenchanter seeks to keep the powers of magic in check.",
     "raw_tokens": [
       {
@@ -55,6 +55,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Warpriest"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Disenchanter],[!PREFACT:1,ABILITIES,Warpriest_Archetype_BonusFeats=True,Warpriest_Archetype_ChannelEnergy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_ChannelEnergy|true"
       }
     ]
   },
@@ -71,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

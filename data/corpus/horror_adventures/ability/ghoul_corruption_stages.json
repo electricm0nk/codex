@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption Stages",
+    "name": "Ghoul Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Ghoul Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GhoulCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|GhoulCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-Once you feed on an innocent sentient creature-either willingly or because you failed a saving throw-your alignment shifts one step toward evil and spells that detect undead sense you, though the peculiar result they return informs the caster that you're still a living creature. Other spells and effects don't treat you as undead."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-Your alignment shifts another step toward evil and you are affected by spells and abilities as if your creature type were undead (including effects like bane and the favored enemy class feature). This doesn't grant you any of the immunities of being undead, nor does it make you immune to effects that target living creatures or change how negative and positive energy affect you."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-You become an NPC ghoul under the GM's control."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Ghoul Corruption Stage %1|GhoulCorruptionStage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 204,
+    "record_key": "Ghoul Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

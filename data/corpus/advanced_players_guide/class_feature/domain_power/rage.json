@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Domain Power ~ Rage",
     "name": "Rage",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, you can enter a fearsome rage, like a barbarian, %1 rounds per day. At 12th and 16th level, you can select one rage power. You cannot select any rage power that possesses a level requirement, but otherwise your barbarian level is %2. These rounds of rage stack with any rounds of rage you might have from levels of barbarian.|DomainDestructionLVL|DomainDestructionLVL/2",
     "raw_tokens": [
       {
@@ -35,6 +39,34 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=3"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Demon Subdomain (Chaos)=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Rage Subdomain=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Demon Subdomain (Evil)=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Insanity Subdomain,Nightmare Subdomain=3"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Ferocity Subdomain=3"
       }
     ]
   },
@@ -52,5 +84,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

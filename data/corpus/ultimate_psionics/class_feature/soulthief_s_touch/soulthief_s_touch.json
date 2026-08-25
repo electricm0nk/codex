@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulthief's Touch",
+    "name": "Soulthief's Touch",
+    "class": null,
+    "description": "Use transfer wounds to harm target and heal self, with %1 extra damage.|SoulthiefsTouchExtraDamage",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VitalistsTouchLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulthiefsTouchExtraDamage|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Use transfer wounds to harm target and heal self, with %1 extra damage.|SoulthiefsTouchExtraDamage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulthiefsTouchExtraDamage|VitalistsTouchLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VitalistsTouchLVL|MethodLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1015,
+    "record_key": "Soulthief's Touch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

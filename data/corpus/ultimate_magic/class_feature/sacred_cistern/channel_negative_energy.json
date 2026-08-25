@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sacred Cistern ~ Channel Negative Energy",
     "name": "Channel Negative Energy",
-    "class": "Sacred Cistern",
+    "class": "Sorcerer",
     "description": "You can unleash a wave of negative energy. You must choose to deal %1d%2 points of negative energy damage to living creatures or to heal undead creatures of %1d%2 points of damage. Creatures that take damage from channeled energy receive a DC %3 Will save to halve the damage. You can use this ability %4 times per day.|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDice|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDieSize|Sorcerer_EmpyrealSacredCistern_ChannelNegativeEnergyDC|Sorcerer_EmpyrealSacredCistern_ChannelEnergyTimes",
     "raw_tokens": [
       {
@@ -120,5 +120,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Monkey",
+    "name": "Monkey",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monkey Domain ~ Familiar|PREVARGTEQ:DomainMonkeyAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monkey Domain ~ Monkey Athletics"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monkey Domain ~ Ranged Legerdemain|PREVARGTEQ:DomainMonkeyAbilityTriggerLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMonkeyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMonkeyDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMonkeyTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainMonkeyAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMonkeyLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMonkeyDC|10+(DomainMonkeyLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMonkeyTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainMonkeyAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Monkey=1|Beguiling Gift|Monkey=2|Spider Climb|Monkey=3|Cacophonous Call|Monkey=4|Freedom of Movement|Monkey=5|Summon Nature's Ally V (Dire Ape or Girallon Only)|Monkey=6|Confusion|Monkey=7|Animal Shapes (Apes and Monkeys Only)|Monkey=8|Clenched Fist|Monkey=9|Foresight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
+    "line": 18,
+    "record_key": "Monkey"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Claws / Arms",
+    "name": "Claws Arms",
+    "description": "The eidolon has a pair of vicious claws at the end of its limbs, giving it two claw attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Claws / Arms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Evolution ~ Limbs / Arms"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Eidolon Subtype ~ Agathion,Eidolon Subtype ~ daemon,Eidolon Subtype ~ demon,Eidolon Subtype ~ devil,Eidolon Subtype ~ div,Eidolon Subtype ~ elemental,Eidolon Subtype ~ protean,Eidolon Subtype ~ psychopomp"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Agathion, daemon, demon, devil, div, elemental, protean, or psychopomp subtype."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidMaxAttacks,EidUsedAttacks+2"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidArms,EidArmsUsed+2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidClawCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon has a pair of vicious claws at the end of its limbs, giving it two claw attacks."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidClawCount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidUsedAttacks|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidArmsUsed|2"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 193,
+    "record_key": "Unchained Evolution ~ Claws / Arms"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

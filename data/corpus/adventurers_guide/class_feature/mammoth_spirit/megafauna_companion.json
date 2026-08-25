@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mammoth Spirit ~ Megafauna Companion",
     "name": "Megafauna Companion",
-    "class": "Mammoth Spirit",
+    "class": "Shaman",
     "description": "The shaman's spirit animal transforms into a megafauna animal companion, using the shaman's shaman level as her effective druid level. The shaman must choose a mammalian megafauna. It retains its Intelligence score and the special abilities it gains from the spirit animal class feature, but it also has the statistics and abilities of an animal companion. If the animal companion is dismissed, lost, or dies, it can be replaced in the same way as a normal spirit animal.",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

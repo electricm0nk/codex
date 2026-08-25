@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Scarab Stalker Animal Focus ~ Cat",
     "name": "Cat",
-    "class": "Scarab Stalker Animal Focus",
+    "class": "Hunter",
     "description": "Get +%1 competence bonus on Acrobatics checks.|HunterAnimalFocusCatBonus",
     "raw_tokens": [
       {
@@ -55,6 +55,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.55"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion Body Type ~ Quadruped (Claws)"
       }
     ]
   },
@@ -71,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

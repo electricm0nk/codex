@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Air",
+    "name": "Air",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainAir,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Air Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.AirDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAirTimes|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Air=1|Obscuring Mist|Air=2|Wind Wall|Air=3|Gaseous Form|Air=4|Air Walk|Air=5|Control Winds|Air=6|Chain Lightning|Air=7|Elemental Body IV (Air Only)|Air=8|Whirlwind|Air=9|Elemental Swarm (Air Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 12,
+    "record_key": "Air"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Arcane Bloodrager Bloodline ~ Disruptive Bloodrage",
     "name": "Disruptive Bloodrage",
-    "class": "Arcane Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "The DC to cast spells defensively increases by 2 for enemies within your threatened area. This increase stacks with those granted by the Disruptive feat.",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

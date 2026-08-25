@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Vampire Hunter",
     "name": "Vampire Hunter",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -55,6 +55,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Vampire Hunter],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_DetectAlignment=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DetectAlignment|true"
       }
     ]
   },
@@ -71,5 +83,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

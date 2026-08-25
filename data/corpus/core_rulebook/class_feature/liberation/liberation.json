@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Liberation Domain",
     "name": "Liberation",
-    "class": null,
+    "class": "Cleric",
     "description": "You are a spirit of freedom and a staunch foe against all who would enslave and oppress.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Liberation=1|Remove Fear|Liberation=2|Remove Paralysis|Liberation=3|Remove Curse|Liberation=4|Freedom of Movement|Liberation=5|Break Enchantment|Liberation=6|Dispel Magic (Greater)|Liberation=7|Refuge|Liberation=8|Mind Blank|Liberation=9|Freedom"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Liberation],[PREVARLT:LiberationDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

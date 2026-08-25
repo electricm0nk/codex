@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Masterpiece Activation",
+    "name": "Masterpiece Activation",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ At the Heart of It All|PREMULT:1,[PRESPELL:1,Masterpiece (At the Heart of It All)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (At the Heart of It All)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Cat-Step|PREMULT:1,[PRESPELL:1,Masterpiece (Cat-Step)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Cat-Step)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Dance of 23 Steps|PREMULT:1,[PRESPELL:1,Masterpiece (Dance of 23 Steps)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Dance of 23 Steps)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Depths of the Mountain|PREMULT:1,[PRESPELL:1,Masterpiece (Depths of the Mountain)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Depths of the Mountain)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Dumbshow of Gorroc|PREMULT:1,[PRESPELL:1,Masterpiece (Dumbshow of Gorroc)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Dumbshow of Gorroc)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ House of Imaginary Walls|PREMULT:1,[PRESPELL:1,Masterpiece (House of Imaginary Walls)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (House of Imaginary Walls)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Legato Piece on the Infernal Bargain|PREMULT:1,[PRESPELL:1,Masterpiece (Legato Piece on the Infernal Bargain)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Legato Piece on the Infernal Bargain)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Lullaby of Ember the Ancient|PREMULT:1,[PRESPELL:1,Masterpiece (Lullaby of Ember the Ancient)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Lullaby of Ember the Ancient)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Minuet of the Midnight Ivy|PREMULT:1,[PRESPELL:1,Masterpiece (Minuet of the Midnight Ivy)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Minuet of the Midnight Ivy)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Quickening Pulse|PREMULT:1,[PRESPELL:1,Masterpiece (Quickening Pulse)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Quickening Pulse)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Requiem of the Fallen Priest-King|PREMULT:1,[PRESPELL:1,Masterpiece (Requiem of the Fallen Priest-King)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Requiem of the Fallen Priest-King)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Stone Face|PREMULT:1,[PRESPELL:1,Masterpiece (Stone Face)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Stone Face)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Toccata and Fugue of the Danse Macabre|PREMULT:1,[PRESPELL:1,Masterpiece (Toccata and Fugue of the Danse Macabre)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Toccata and Fugue of the Danse Macabre)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Triple Time|PREMULT:1,[PRESPELL:1,Masterpiece (Triple Time)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Triple Time)]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Masterpiece ~ Winds of the Five Heavens|PREMULT:1,[PRESPELL:1,Masterpiece (Winds of the Five Heavens)],[PREABILITY:1,CATEGORY=FEAT,Masterpiece (Winds of the Five Heavens)]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_templates.lst",
+    "sha256": "ced96ede43c1ea1f7fc8bc1b5925a13682eceade32bef6f94e8693585454f13f",
+    "line": 17,
+    "record_key": "Masterpiece Activation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

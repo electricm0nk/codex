@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Domain Power ~ Part the Veil",
+    "name": "Part the Veil",
+    "description": "You can lace spells you cast with the raw madness that waits in the outer darkness. Activating this ability is a swift action that you must use as you cast a spell that targets a single creature and that allows a Will saving throw to negate or reduce the spell's primary effect. If the target fails to resist the spell, the target is also confused for a number of rounds equal to the spell's level as visions of the void cause temporary insanity. The victim can attempt a new saving throw each round to end the effect - these additional saving throws apply only to the additional confusion effect and not to the original spell effect. This is a mind-affecting effect. You can use this ability %1 times per day.|DomainVoidTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Part the Veil"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "You can lace spells you cast with the raw madness that waits in the outer darkness. Activating this ability is a swift action that you must use as you cast a spell that targets a single creature and that allows a Will saving throw to negate or reduce the spell's primary effect. If the target fails to resist the spell, the target is also confused for a number of rounds equal to the spell's level as visions of the void cause temporary insanity. The victim can attempt a new saving throw each round to end the effect - these additional saving throws apply only to the additional confusion effect and not to the original spell effect. This is a mind-affecting effect. You can use this ability %1 times per day.|DomainVoidTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|DomainVoidTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainVoidTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 290,
+    "record_key": "Domain Power ~ Part the Veil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

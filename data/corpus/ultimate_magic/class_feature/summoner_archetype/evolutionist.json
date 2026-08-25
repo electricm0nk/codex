@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ Evolutionist",
     "name": "Evolutionist",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "An evolutionist possesses greater power over his eidolon's form, and is able to evolve his eidolon and its abilities to meet any challenge or face any threat as it comes up, seemingly on a whim.",
     "raw_tokens": [
       {
@@ -55,6 +55,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Evolutionist],[!PREFACT:1,ABILITIES,Summoner_Archetype_MakersCall=True,Summoner_Archetype_Transposition=True,Summoner_Archetype_GreaterShieldAlly=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_MakersCall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Transposition|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_GreaterShieldAlly|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_MakersCall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Transposition|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_GreaterShieldAlly|true"
       }
     ]
   },
@@ -71,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

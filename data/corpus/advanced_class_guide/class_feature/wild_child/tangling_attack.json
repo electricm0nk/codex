@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Child ~ Tangling Attack",
     "name": "Tangling Attack",
-    "class": "Wild Child",
+    "class": "Brawler",
     "description": "The wild child can use this attack as a free action when he makes an attack. If the attack hits, the target is entangled for 1 round.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

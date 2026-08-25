@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Wayfinder (Ebon)",
+    "category": "MagicItems",
+    "name": "Wayfinder (Ebon)",
+    "cost_gp": 18000.0,
+    "weight_lbs": 1.0,
+    "description": "Can contain 2 slotted ioun stones. Casts darkness 1/day (0 slots filled) and provides darkvision (0-1 slots filled)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_magic_items.lst",
+    "sha256": "792741b27d5309e252c6f35e597f507e4eb2c0756fae9b087406d5c34cc51611",
+    "line": 51,
+    "record_key": "Wayfinder (Ebon)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

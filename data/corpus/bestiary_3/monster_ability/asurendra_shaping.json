@@ -1,0 +1,61 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Asurendra ~ Shaping",
+    "delivery": null,
+    "description": "Some asurendras like to remake what the gods have created. Nothing escapes a shaper's vision, and its enemies find their bodies, minds, and souls are like clay in a shaper's hands. An asurendra sage of shaping lacks a spirit blade special attack, but gains the following special ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:asurendra_shaping",
+    "name": "Shaping",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Asurendra ~ Create Asura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Some asurendras like to remake what the gods have created. Nothing escapes a shaper's vision, and its enemies find their bodies, minds, and souls are like clay in a shaper's hands. An asurendra sage of shaping lacks a spirit blade special attack, but gains the following special ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Asurendra ~ Shaping"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.AsurendraAdditional.AsurendraSpiritBlades"
+      }
+    ],
+    "source_page": "p.",
+    "traits": [
+      "RaceAbility",
+      "AsurendraAdditional",
+      "AsurendraSpiritBlades"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 408,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Asurendra ~ Shaping",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

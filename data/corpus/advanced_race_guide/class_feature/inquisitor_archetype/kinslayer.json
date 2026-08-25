@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Kinslayer",
     "name": "Kinslayer",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "Appalled and guilt-ridden by the horrific circumstances of her birth, a kinslayer dedicates herself to eradicating the very creatures whose blood flows within her veins. She spends her life hunting and slaying those vampiric monsters for whom humans have become prey.",
     "raw_tokens": [
       {
@@ -59,6 +59,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Kinslayer],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Judgment=True,Inquisitor_Archetype_DetectAlignment=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_JudgmentDestruction|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Judgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DetectAlignment|true"
       }
     ]
   },
@@ -75,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

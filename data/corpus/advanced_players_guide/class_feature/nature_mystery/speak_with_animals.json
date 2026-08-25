@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Nature Mystery ~ Speak with Animals",
     "name": "Speak with Animals",
-    "class": "Nature Mystery",
+    "class": "Oracle",
     "description": "Choose a specific kind of animal (eagle, fox, dog, and so on). You gain the ability to converse with that type of animal as if you were under the effects of speak with animal. You gain the ability to communicate with an additional kind of animal for every 3 oracle levels you have attained.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Unicorn ~ Magical Strike",
+    "delivery": "Extraordinary",
+    "description": "A unicorn's gore attack is treated as a magic good weapon for the purposes of damage reduction.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:unicorn_magical_strike",
+    "name": "Magical Strike",
+    "owners": [
+      "beastiary:monster:unicorn"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A unicorn's gore attack is treated as a magic good weapon for the purposes of damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Unicorn ~ Magical Strike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "TYPE",
+        "value": "UnicornRacialTrait.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.269",
+    "traits": [
+      "UnicornRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:25:51Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1201,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Unicorn ~ Magical Strike",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

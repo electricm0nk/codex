@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Bonus Feat",
+    "name": "Bonus Feat",
+    "description": "At 3rd level, a student of perfection gains one feat based on his chosen House of Perfection. At 7th level, he gains another such feat. A student of perfection need not meet the prerequisites normally required for these feats. Alternatively, if the student of perfection has levels in a class that grants bonus feats, he can instead choose one of those bonus feats, adding his student of perfection level to his level in that class to determine available feats.[NOTE:SOME ARCHETYPES MAY REQUIRE MANUAL INPUT DUE TO SPECIALIZED BONUS FEAT LISTS!]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Bonus Feat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.Student of Perfection Class Feature.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "DESC",
+        "value": "At 3rd level, a student of perfection gains one feat based on his chosen House of Perfection. At 7th level, he gains another such feat. A student of perfection need not meet the prerequisites normally required for these feats. Alternatively, if the student of perfection has levels in a class that grants bonus feats, he can instead choose one of those bonus feats, adding his student of perfection level to his level in that class to determine available feats.[NOTE:SOME ARCHETYPES MAY REQUIRE MANUAL INPUT DUE TO SPECIALIZED BONUS FEAT LISTS!]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Student of Perfection Bonus Feat Selection|1+(StudentOfPerfectionLVL>=7)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unblinking Flame Feint Qualifier|PREVARGTEQ:UnblinkingFlameStudent,1,StudentOfPerfectionLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unfolding Wind Strike Qualifier|PREVARGTEQ:UnfoldingWindStudent,1,StudentOfPerfectionLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Untwisting Iron Strength Qualifier|PREVARGTEQ:UntwistingIronStudent,1,StudentOfPerfectionLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unblinking Flame Fist Qualifier|PREVARGTEQ:UnblinkingFlameStudent,1,StudentOfPerfectionLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Unfolding Wind Rush Qualifier|PREVARGTEQ:UnfoldingWindStudent,1,StudentOfPerfectionLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Untwisting Iron Skin Qualifier|PREVARGTEQ:UntwistingIronStudent,1,StudentOfPerfectionLVL,7"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 9,
+    "record_key": "Student of Perfection ~ Bonus Feat"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

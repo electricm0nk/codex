@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mutagenic Mauler Brawler Discovery ~ Feral Mutagen",
     "name": "Feral Mutagen",
-    "class": "Mutagenic Mauler Brawler Discovery",
+    "class": "Brawler",
     "description": "Whenever the mutagenic mauler imbibes a mutagen, he gains two claw attacks and a bite attack. These are primary attacks and are made using the mutagenic mauler's full base attack bonus. The claw attacks deal 1d6 points of damage (1d4 if the mutagenic mauler is Small) and the bite attack deals 1d8 points of damage (1d6 if the mutagenic mauler is Small). While the mutagen is in effect, the mutagenic mauler gains a +2 competence bonus on Intimidate skill checks.",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

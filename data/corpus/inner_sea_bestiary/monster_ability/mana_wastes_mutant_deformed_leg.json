@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mana Wastes Mutant ~ Deformed Leg",
+    "delivery": null,
+    "description": "The mutant's base speed is reduced by 10 feet (minimum base speed of 5 feet), but it gains a +4 racial bonus to its CMD.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:mana_wastes_mutant_deformed_leg",
+    "name": "Deformed Leg",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.All|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|4|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The mutant's base speed is reduced by 10 feet (minimum base speed of 5 feet), but it gains a +4 racial bonus to its CMD."
+      },
+      {
+        "key": "KEY",
+        "value": "Mana Wastes Mutant ~ Deformed Leg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.MutantDeformity"
+      }
+    ],
+    "source_page": "p.29",
+    "traits": [
+      "MutantDeformity"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 209,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Mana Wastes Mutant ~ Deformed Leg",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

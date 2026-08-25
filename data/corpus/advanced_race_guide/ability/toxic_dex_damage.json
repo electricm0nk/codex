@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Toxic (Dex damage)",
+    "name": "Toxic (Dex damage)",
+    "description": "%1/day, envenom weapon as swift action.  Poison: Injury; save Fort DC %2; freq 1/round for 6 rounds; cure 1 save; effect 1d2 Dex.|ToxicDexTimes|ToxicDexDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Toxic (Dex damage)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ToxicDexTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ToxicDexDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day, envenom weapon as swift action.  Poison: Injury; save Fort DC %2; freq 1/round for 6 rounds; cure 1 save; effect 1d2 Dex.|ToxicDexTimes|ToxicDexDC"
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ToxicDexTimes|max(1,CON)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ToxicDexDC|10+(TL/2)+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ToxicDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Toxic (Dex damage))"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 503,
+    "record_key": "Builder Racial Trait ~ Toxic (Dex damage)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

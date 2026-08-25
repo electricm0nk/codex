@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ravener ~ Soul Ward",
+    "name": "Soul Ward",
+    "description": "An intangible field of siphoned soul energy protects a ravener from destruction.  This ward has a maximum of %1 hit points, but starts at %2.  Whenever a ravener would be reduced below 1 hit point, all damage in excess of that which would reduce it to 1 hit point is instead dealt to its soul ward.  If this damage reduces the soul ward to fewer than 0 hit points, the ravener is destroyed.|TL*2|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ravener ~ Soul Ward"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An intangible field of siphoned soul energy protects a ravener from destruction.  This ward has a maximum of %1 hit points, but starts at %2.  Whenever a ravener would be reduced below 1 hit point, all damage in excess of that which would reduce it to 1 hit point is instead dealt to its soul ward.  If this damage reduces the soul ward to fewer than 0 hit points, the ravener is destroyed.|TL*2|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 hp)|TL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1053,
+    "record_key": "Ravener ~ Soul Ward"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

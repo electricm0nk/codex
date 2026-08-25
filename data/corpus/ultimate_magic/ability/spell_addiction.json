@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Spellblight ~ Spell Addiction",
+    "name": "Spell Addiction",
+    "description": "A spell addict feeds off the elation of wielding magic, but suffers rapid withdrawal once spellcasting ends. After successfully casting a spell, the addict gains a +2 morale bonus on attack rolls, skill checks, and saving throws until her next turn. On any round the spell addict does not cast a spell on her turn, however, she goes into withdrawal, and is sickened until her next turn. Spell addiction is cured by any effect that removes confusion, insanity, or disease. Creatures that are immune to mind-affecting effects are immune to spell addiction.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellblight ~ Spell Addiction"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "MinorSpellblight.Spellblight.Curse.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "A spell addict feeds off the elation of wielding magic, but suffers rapid withdrawal once spellcasting ends. After successfully casting a spell, the addict gains a +2 morale bonus on attack rolls, skill checks, and saving throws until her next turn. On any round the spell addict does not cast a spell on her turn, however, she goes into withdrawal, and is sickened until her next turn. Spell addiction is cured by any effect that removes confusion, insanity, or disease. Creatures that are immune to mind-affecting effects are immune to spell addiction."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 15,
+    "record_key": "Spellblight ~ Spell Addiction"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

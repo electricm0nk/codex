@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Archetype ~ Guild Agent",
     "name": "Guild Agent",
-    "class": "Rogue Archetype",
+    "class": "Rogue",
     "description": "Guild agents are members of a thieves' guild or other shadowy organization. What they lose in independence, they more than make up for in benefits gained due to their association's infrastructure. Guild agents come at all levels of the organization, from a lowly recruit all the way up to the guildmaster himself.",
     "raw_tokens": [
       {
@@ -95,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

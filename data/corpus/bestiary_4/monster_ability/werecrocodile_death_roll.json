@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Werecrocodile ~ Death Roll",
+    "delivery": "Extraordinary",
+    "description": "When grappling a foe of its size or smaller, a werecrocodile can perform a death roll upon making a successful grapple check. As it clings to its foe, the werecrocodile deals its bite damage, knocks the creature prone, and maintains the grapple.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:werecrocodile_death_roll",
+    "name": "Death Roll",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When grappling a foe of its size or smaller, a werecrocodile can perform a death roll upon making a successful grapple check. As it clings to its foe, the werecrocodile deals its bite damage, knocks the creature prone, and maintains the grapple."
+      },
+      {
+        "key": "KEY",
+        "value": "Werecrocodile ~ Death Roll"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1063,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Werecrocodile ~ Death Roll",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

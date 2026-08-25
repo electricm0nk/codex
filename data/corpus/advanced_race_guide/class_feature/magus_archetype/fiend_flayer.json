@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Archetype ~ Fiend Flayer",
     "name": "Fiend Flayer",
-    "class": "Magus Archetype",
+    "class": "Magus",
     "description": "Some tiefling magi can tap the dark energy of their fiendish blood to enhance their arcane and combat talents. By physically carving away their tainted flesh, they can use its dark energies to enhance their powers, call forth weapons from thin air, and bypass enemies' strongest defenses.",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

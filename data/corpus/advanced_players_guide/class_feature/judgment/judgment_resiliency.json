@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Judgment ~ Resiliency",
     "name": "Judgment / Resiliency",
-    "class": "Judgment",
+    "class": "Inquisitor",
     "description": "This judgment makes the inquisitor resistant to harm, granting DR %1/magic.|1+InqJudgeResiliencyLVL/5|PREMULT:1,[PREVARLT:InqJudgeResiliencyLVL,10],[!PREALIGN:LG,NG,CG,LN,CN,LE,NE,CE]",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

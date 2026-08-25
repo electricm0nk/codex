@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Astomoi ~ Mouthless",
+    "name": "Mouthless",
+    "description": "Astomoi don't need to eat or drink to survive. Instead, they absorb the essence of food and drink; this consumes the nutrients of the meal as though it had been eaten, rendering the food useless to others. Astomoi consume potions and other ingested materials in the same fashion. Since they never actually ingest anything, they can't normally be exposed to ingested poisons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Astomoi ~ Mouthless"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Astomoi don't need to eat or drink to survive. Instead, they absorb the essence of food and drink; this consumes the nutrients of the meal as though it had been eaten, rendering the food useless to others. Astomoi consume potions and other ingested materials in the same fashion. Since they never actually ingest anything, they can't normally be exposed to ingested poisons."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 47,
+    "record_key": "Astomoi ~ Mouthless"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Tactician Archetype ~ Commander",
+    "name": "Commander",
+    "class": "Tactician",
+    "description": "You need to ensure that the members of your collective are doing exactly as told.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tactician Archetype ~ Commander"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.TacticianArchetype.TacticianCoordinatedStrike.TacticianStrategy4.TacticianTeamworkFeat12"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Tactician=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Tactician Archetype ~ Commander],[!PREABILITY:1,CATEGORY=Archetype,TYPE.TacticianCoordinatedStrike,TYPE.TacticianStrategy4,TYPE.TacticianTeamworkFeat12]"
+      },
+      {
+        "key": "DESC",
+        "value": "You need to ensure that the members of your collective are doing exactly as told."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Commander ~ Forced Participant|PRECLASS:1,Tactician=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Commander ~ Issue Order|PRECLASS:1,Tactician=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Tactician Class Feature|AUTOMATIC|Commander ~ Thrall|PRECLASS:1,Tactician=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tactician Bonus Teamwork Feat|-1|PRECLASS:1,Tactician=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tactician Strategy|-1|PRECLASS:1,Tactician=4"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2228,
+    "record_key": "Tactician Archetype ~ Commander"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

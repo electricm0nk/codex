@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sard ~ Death Throes",
+    "delivery": "Supernatural",
+    "description": "When a sard dies, its remains explode with a blast of lightning into razor-sharp splinters of wood.  All creatures within 30 feet of a sard when it explodes in this manner take 12d6 points of electricity damage and 12d6 points of piercing damage.  A DC %1 Reflex save halves this damage.",
+    "description_variables": [
+      "SardDeathThroesDC"
+    ],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:sard_death_throes",
+    "name": "Death Throes",
+    "owners": [
+      "bestiary_2:monster:sard"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death Throes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SardDeathThroesDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SardDeathThroesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death Throes)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SardDeathThroesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a sard dies, its remains explode with a blast of lightning into razor-sharp splinters of wood.  All creatures within 30 feet of a sard when it explodes in this manner take 12d6 points of electricity damage and 12d6 points of piercing damage.  A DC %1 Reflex save halves this damage.|SardDeathThroesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Sard ~ Death Throes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.237",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1091,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Sard ~ Death Throes",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

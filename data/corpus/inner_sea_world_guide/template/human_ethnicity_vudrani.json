@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T22:22:16Z",
+  "data": {
+    "key": "Human Ethnicity (Vudrani)",
+    "name": "Human Ethnicity (Vudrani)",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Vudrani"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Vudrani"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_templates.lst",
+    "sha256": "9b17113984faaf6ff39729e8eef0a9944518518d78c419e80379ff059226cdf7",
+    "line": 26,
+    "record_key": "Human Ethnicity (Vudrani)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

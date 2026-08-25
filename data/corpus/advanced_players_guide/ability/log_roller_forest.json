@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Log Roller",
+    "name": "Log Roller (forest)",
+    "description": "The time you spent leaping between slippery logs as they whirled down the river to market taught you how to keep your footing. You gain a +1 trait bonus on Acrobatics checks and a +1 trait bonus to your CMD when attempting to resist trip attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Log Roller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RegionalTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Log Roller],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RegionalTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "The time you spent leaping between slippery logs as they whirled down the river to market taught you how to keep your footing. You gain a +1 trait bonus on Acrobatics checks and a +1 trait bonus to your CMD when attempting to resist trip attacks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|1|TYPE=Trait"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Trip|1|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 214,
+    "record_key": "Trait ~ Log Roller"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

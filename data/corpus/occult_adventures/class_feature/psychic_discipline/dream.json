@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Psychic Discipline ~ Dream",
     "name": "Dream",
-    "class": "Psychic Discipline",
+    "class": "Psychic",
     "description": "You discover deeper and more powerful corners of your mind through journeys you make in your dreams. Your consciousness expands outward into other dreaming minds, allowing you to explore the psychic landscapes of unconsciousness or regions of nightmare and horror. Phrenic Pool Ability: Charisma. Discipline Powers: Your mind can powerfully inf luence dreaming consciousnesses.",
     "raw_tokens": [
       {
@@ -47,6 +47,14 @@
       {
         "key": "BONUS",
         "value": "VAR|PhrenicPoolAbility|CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium=3|Mesmerist=4|Spiritualist=5"
       }
     ]
   },
@@ -64,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

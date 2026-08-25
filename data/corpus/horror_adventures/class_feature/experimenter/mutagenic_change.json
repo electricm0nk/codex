@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Experimenter ~ Mutagenic Change",
+    "name": "Mutagenic Change",
+    "class": "Vigilante",
+    "description": "As a full-round action, an experimenter can consume his mutagen (if he has one) and shift from his social identity to his vigilante identity, as if he had the quick change social talent.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Experimenter ~ Mutagenic Change"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.ExperimenterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, an experimenter can consume his mutagen (if he has one) and shift from his social identity to his vigilante identity, as if he had the quick change social talent."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 15,
+    "record_key": "Experimenter ~ Mutagenic Change"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

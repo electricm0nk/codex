@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Dread Lord ~ All-Seeing",
+    "delivery": "SpellLike",
+    "description": "Nothing happens in the dread lord's realm without the dread lord becoming aware. It can use speak with animals, speak with plants, and stone tell as spell-like abilities each three times per day. It can use clairaudience/clairvoyance as a spell-like ability three times per day, and the spell's range extends to any place in its domain.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:dread_lord_all_seeing",
+    "name": "All-Seeing",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "It can use clairaudience/clairvoyance as a spell-like ability three times per day, and the spell's range extends to any place in its domain.|PREVARGTEQ:CR,5"
+      },
+      {
+        "key": "DESC",
+        "value": "Nothing happens in the dread lord's realm without the dread lord becoming aware. It can use speak with animals, speak with plants, and stone tell as spell-like abilities each three times per day."
+      },
+      {
+        "key": "KEY",
+        "value": "Dread Lord ~ All-Seeing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.234"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Clairaudience/Clairvoyance|PREVARGTEQ:CR,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Speak with Animals|Speak with Plants|Stone Tell"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.DreadLordSpecialPower"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.234",
+    "traits": [
+      "DreadLordSpecialPower"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 256,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Dread Lord ~ All-Seeing",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

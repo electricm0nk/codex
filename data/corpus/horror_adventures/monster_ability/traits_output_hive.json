@@ -1,0 +1,88 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Hive",
+    "delivery": "Extraordinary",
+    "description": "Immunity to acid. &nl; Blind - A hive creature is blind. It is immune to gaze attacks, visual effects, illusions, and other attack forms that rely on sight. Unlike other aberrations, a hive creature doesn't have darkvision. &nl; Blindsense 60 feet. &nl; Blindsight 10 feet. &nl; Corrosive Blood (Ex) A hive creature's blood is highly caustic. Every time the hive creature is damaged by a piercing or slashing weapon, the attacking creature takes acid damage according to the creature's size (or double damage if the attack is a critical hit). Using a reach weapon does not endanger the attacker in this way. If the hive creature has the swallow whole ability, it adds this damage to its swallow whole damage. - Medium or smaller 1d4 damage;Large 1d6 damage; Huge 1d8 damage; Gargantuan 2d6 damage; Colossal 2d8 damage. &nl; Death Throes (Ex) When a hive creature dies, it exudes a pool of its corrosive blood in the space it occupies. This pool deals 1d6 points of acid damage per Hit Die of the hive creature for 3 rounds to objects and creatures in those squares (Reflex half). This acid damages whatever surface it is on, and if it deals enough damage to destroy the surface, the acid falls down to any subsequent floor below and continues to deal damage. The save DC is Constitution-based. &nl; Heat Adaptability (Ex) Hive creatures are considered to always be under the effect of endure elements with regard to hot climates. &nl; Hive Mind (Ex) Hive creatures have no language of their own, instead communicating simple concepts via pheromone discharge and body language that other creatures with the hive subtype understand. This ability functions within line of sight. If one hive creature is able to act in the surprise round of combat, all other hive creatures in line of sight can also act, and a hive creature isn't flanked unless all hive creatures within line of sight are flanked. &nl; A hive creature doesn't need to eat, drink, or sleep.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:traits_output_hive",
+    "name": "Hive Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A hive creature doesn't need to eat, drink, or sleep."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Blind - A hive creature is blind. It is immune to gaze attacks, visual effects, illusions, and other attack forms that rely on sight. Unlike other aberrations, a hive creature doesn't have darkvision."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Blindsense 60 feet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Blindsight 10 feet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Corrosive Blood (Ex) A hive creature's blood is highly caustic. Every time the hive creature is damaged by a piercing or slashing weapon, the attacking creature takes acid damage according to the creature's size (or double damage if the attack is a critical hit). Using a reach weapon does not endanger the attacker in this way. If the hive creature has the swallow whole ability, it adds this damage to its swallow whole damage. - Medium or smaller 1d4 damage;Large 1d6 damage; Huge 1d8 damage; Gargantuan 2d6 damage; Colossal 2d8 damage."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Death Throes (Ex) When a hive creature dies, it exudes a pool of its corrosive blood in the space it occupies. This pool deals 1d6 points of acid damage per Hit Die of the hive creature for 3 rounds to objects and creatures in those squares (Reflex half). This acid damages whatever surface it is on, and if it deals enough damage to destroy the surface, the acid falls down to any subsequent floor below and continues to deal damage. The save DC is Constitution-based."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Heat Adaptability (Ex) Hive creatures are considered to always be under the effect of endure elements with regard to hot climates."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Hive Mind (Ex) Hive creatures have no language of their own, instead communicating simple concepts via pheromone discharge and body language that other creatures with the hive subtype understand. This ability functions within line of sight. If one hive creature is able to act in the surprise round of combat, all other hive creatures in line of sight can also act, and a hive creature isn't flanked unless all hive creatures within line of sight are flanked."
+      },
+      {
+        "key": "DESC",
+        "value": "Immunity to acid."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Hive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.233",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:59:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 207,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Traits Output ~ Hive",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

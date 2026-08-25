@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Worm that Walks Slam",
+    "name": "Worm that Walks Slam",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Worm that Walks Slam ~ F|Worm that Walks Slam ~ D|Worm that Walks Slam ~ T|Worm that Walks Slam ~ S|Worm that Walks Slam ~ M|Worm that Walks Slam ~ L|Worm that Walks Slam ~ H|Worm that Walks Slam ~ G|Worm that Walks Slam ~ C"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
+    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520",
+    "line": 105,
+    "record_key": "Worm that Walks Slam"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bard Archetype ~ Shadow Puppeteer",
     "name": "Shadow Puppeteer",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "A shadow puppeteer invokes amazing and terrifying shadow puppet shows, producing supernatural effects by creating and manipulating shadow.",
     "raw_tokens": [
       {
@@ -59,6 +59,90 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bard"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Shadow Puppeteer],[!PREFACT:1,ABILITIES,Bard_Archetype_InspireCourage1=True,Bard_Archetype_InspireCourage2=True,Bard_Archetype_InspireCourage3=True,Bard_Archetype_InspireCourage4=True,Bard_Archetype_InspireCompetence1=True,Bard_Archetype_InspireCompetence2=True,Bard_Archetype_InspireCompetence3=True,Bard_Archetype_InspireCompetence4=True,Bard_Archetype_InspireCompetence5=True,Bard_Archetype_InspireCompetence6=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCourage1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCourage2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCourage3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCourage4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence6|true"
       }
     ]
   },
@@ -75,5 +159,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

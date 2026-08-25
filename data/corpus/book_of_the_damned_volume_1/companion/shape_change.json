@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Imp Companion ~ Starting Shape Change",
+    "name": "Shape Change",
+    "description": "The Imp Companion can choose %1 alternate form.|ImpCompStartTricks",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Imp Companion ~ Starting Shape Change"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImpCompStartTricks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The Imp Companion can choose %1 alternate form.|ImpCompStartTricks"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Imp Companion Starting Trick|var(\"ImpCompStartTricks\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImpCompStartTricks|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|ImpCompStartTricks"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
+    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9",
+    "line": 4,
+    "record_key": "Imp Companion ~ Starting Shape Change"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

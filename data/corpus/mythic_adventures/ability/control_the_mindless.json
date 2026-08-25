@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Control the Mindless",
+    "name": "Control the Mindless",
+    "description": "You can gain control over mindless constructs and undead. Using this ability is a standard action, and requires you to make a Knowledge check against the target's CMD. Use a Knowledge (arcana) check against a mindless construct, or a Knowledge (religion) check against a mindless undead. If your check equals or exceeds the creature's CMD, you can give the creature an order that lasts up to 1 round. For every 5 by which you beat the DC, your control lasts 1 additional round. The creature's creator or controller can't regain control during this time unless it also uses this ability. If you expend one use of mythic power when attempting to use this ability, the duration of your control increases from rounds to an equal number of minutes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Control the Mindless"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can gain control over mindless constructs and undead. Using this ability is a standard action, and requires you to make a Knowledge check against the target's CMD. Use a Knowledge (arcana) check against a mindless construct, or a Knowledge (religion) check against a mindless undead. If your check equals or exceeds the creature's CMD, you can give the creature an order that lasts up to 1 round. For every 5 by which you beat the DC, your control lasts 1 additional round. The creature's creator or controller can't regain control during this time unless it also uses this ability. If you expend one use of mythic power when attempting to use this ability, the duration of your control increases from rounds to an equal number of minutes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 138,
+    "record_key": "Mythic Path Ability ~ Control the Mindless"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

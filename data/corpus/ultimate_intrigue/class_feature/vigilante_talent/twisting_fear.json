@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Twisting Fear",
     "name": "Twisting Fear",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "Whenever the vigilante causes an opponent to gain the shaken, frightened, or panicked condition, that opponent takes an amount of nonlethal damage equal to the vigilante's reduced hidden strike damage, as the stress wears upon its body. A creature can't take damage from twisting fear more than once per round. Panicked creatures that take damage from twisting fear are too winded even to scream as they flee in terror.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

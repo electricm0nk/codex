@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bard Archetype ~ Celebrity",
     "name": "Celebrity",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Known for being known, a celebrity bard is a master of  performance  who  captures  the  imagination  and attention of his audience. He trades on his charisma, his wit, and his exploits to build his renown - and that of his companions.",
     "raw_tokens": [
       {
@@ -55,6 +55,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bard"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Celebrity],[!PREFACT:1,ABILITIES,Bard_Archetype_InspireCourage=True,Bard_Archetype_LoreMaster=True,Bard_Archetype_DirgeOfDoom=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_DirgeOfDoom|true"
       }
     ]
   },
@@ -71,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

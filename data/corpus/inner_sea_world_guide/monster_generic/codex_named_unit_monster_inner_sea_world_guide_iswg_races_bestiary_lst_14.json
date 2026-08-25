@@ -1,0 +1,135 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:38Z",
+  "data": {
+    "key": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_14)",
+    "name": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_14)",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gore|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent|Stampede|Trample"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Gore"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Advanced Creature|Giant Creature"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst",
+    "sha256": "d72743ae54143c507ef6cea069fca77c519e4d44b89432cca21b64fff8d29593",
+    "line": 14,
+    "record_key": "Codex-Named Unit (monster_inner_sea_world_guide_iswg_races_bestiary_lst_14)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_races_bestiary.lst:14"
+  }
+}

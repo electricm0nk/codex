@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Touch of Good",
     "name": "Touch of Good",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "You can touch a creature as a standard action, granting giving it a +%1 sacred bonus on attack rolls, skill checks, ability checks, and saving throws for 1 round. You can use this ability %2 times per day.|max(DomainGoodLVL/2,1)|TouchofGoodTimes",
     "raw_tokens": [
       {
@@ -63,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

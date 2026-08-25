@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fire Domain",
     "name": "Fire",
-    "class": null,
+    "class": "Cleric",
     "description": "You can call forth fire, command creatures of the inferno, and your flesh does not burn.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Fire=1|Burning Hands|Fire=2|Produce Flame|Fire=3|Fireball|Fire=4|Wall of Fire|Fire=5|Fire Shield|Fire=6|Fire Seeds|Fire=7|Elemental Body IV (Fire Only)|Fire=8|Incendiary Cloud|Fire=9|Elemental Swarm (Fire Spell Only)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Fire],[PREVARLT:FireDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

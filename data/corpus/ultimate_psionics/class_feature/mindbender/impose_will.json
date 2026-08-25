@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mindbender ~ Impose Will",
+    "name": "Impose Will",
+    "class": "Mindbender",
+    "description": "As long as you maintain psionic focus you treat your psion level as 1 higher when manifesting Charm or Compulsion powers.  In addition, you are treated as if affected by mind link with any creature currently charmed or dominated by you for the duration of the charm or domination effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindbender ~ Impose Will"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you maintain psionic focus you treat your psion level as 1 higher when manifesting Charm or Compulsion powers.  In addition, you are treated as if affected by mind link with any creature currently charmed or dominated by you for the duration of the charm or domination effect."
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SUBSCHOOL.Charm,SUBSCHOOL.Compulsion|1*PsionicFocusActive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 511,
+    "record_key": "Mindbender ~ Impose Will"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

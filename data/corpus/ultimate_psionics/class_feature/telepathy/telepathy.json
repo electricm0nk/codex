@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Telepathy ~ Telepathy",
+    "name": "Telepathy",
+    "class": "Telepathy",
+    "description": "You gain %1 ft. telepathy; detect use of telepathy within 30 ft. if focused.|(TelepathyDisciplineLVL+32)*10",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Telepathy ~ Telepathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Extraordinary.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain %1 ft. telepathy; detect use of telepathy within 30 ft. if focused.|(TelepathyDisciplineLVL+32)*10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Telepathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|(TelepathyDisciplineLVL+22)*10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 452,
+    "record_key": "Telepathy ~ Telepathy"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

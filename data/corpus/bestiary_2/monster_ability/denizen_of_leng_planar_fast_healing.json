@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Denizen of Leng ~ Planar Fast Healing",
+    "delivery": "Supernatural",
+    "description": "A denizen of Leng maintains a connection to Leng at all times, and when away from Leng, it has fast healing 5.  It loses this ability on Leng or in areas where planar connections do not function.  If killed, a denizen's body dissolves into nothingness in 1d4 rounds, leaving behind its equipment.  A slain denizen reforms in Leng, similar to a slain summoned creature; it can only be permanently killed if its fast healing is negated.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:denizen_of_leng_planar_fast_healing",
+    "name": "Planar Fast Healing",
+    "owners": [
+      "bestiary_2:monster:denizen_of_leng"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A denizen of Leng maintains a connection to Leng at all times, and when away from Leng, it has fast healing 5.  It loses this ability on Leng or in areas where planar connections do not function.  If killed, a denizen's body dissolves into nothingness in 1d4 rounds, leaving behind its equipment.  A slain denizen reforms in Leng, similar to a slain summoned creature; it can only be permanently killed if its fast healing is negated."
+      },
+      {
+        "key": "KEY",
+        "value": "Denizen of Leng ~ Planar Fast Healing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      },
+      {
+        "key": "TYPE",
+        "value": "ModifyHP.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.82",
+    "traits": [
+      "ModifyHP"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:08:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 377,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Denizen of Leng ~ Planar Fast Healing",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

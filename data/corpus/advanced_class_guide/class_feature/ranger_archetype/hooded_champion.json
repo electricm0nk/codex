@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Hooded Champion",
     "name": "Hooded Champion",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "The hooded champion lives on the periphery of civilized lands, and is often at odds with the forces of law and order. He is frequently a hero of oppressed peoples, lurking in the woods near their homes and trying to right the injustices inflicted upon them by the wealthy and powerful.",
     "raw_tokens": [
       {
@@ -63,6 +63,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Hooded Champion],[!PREFACT:1,ABILITIES,Ranger_Archetype_FavoredEnemy=True,Ranger_Archetype_WildEmpathy=True,Ranger_Archetype_Endurance=True,Ranger_Archetype_Evasion=True,Ranger_Archetype_ImprovedEvasion=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ImprovedEvasion|true"
       }
     ]
   },
@@ -79,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

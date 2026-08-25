@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Weapon of the Chosen",
+    "category": "Combat",
+    "name": "Weapon of the Chosen",
+    "description": "As a swift action, you can call upon your deity to guide an attack you make with your deity's favored weapon. On your next attack in that round with that weapon, your weapon counts as magical for the purpose of overcoming damage reduction or striking an incorporeal creature. If your attack misses because of concealment, you can reroll your miss chance one time to see whether you actually hit.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Weapon Focus",
+      "PRECLASS:1,SPELLCASTER.Divine=1",
+      "PRETEXT:Must have Weapon Focus with one of the deity's favored weapons."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 168,
+    "record_key": "Weapon of the Chosen"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

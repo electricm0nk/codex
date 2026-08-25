@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Wall Smasher",
+    "name": "Wall Smasher",
+    "description": "Whenever you succeed at a ki throw or a bull rush or reposition combat maneuver, you can smash your opponent against a wall (or suitable large obstacle) within the range you could move the target into as a result of the maneuver, dealing unarmed strike damage to your opponent and the wall. If you expend one use of mythic power when you use this ability, this damage ignores the hardness of the wall. If the damage destroys the wall, you move the opponent into the space beyond the wall and it immediately falls prone.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Wall Smasher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you succeed at a ki throw or a bull rush or reposition combat maneuver, you can smash your opponent against a wall (or suitable large obstacle) within the range you could move the target into as a result of the maneuver, dealing unarmed strike damage to your opponent and the wall. If you expend one use of mythic power when you use this ability, this damage ignores the hardness of the wall. If the damage destroys the wall, you move the opponent into the space beyond the wall and it immediately falls prone."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 281,
+    "record_key": "Mythic Path Ability ~ Wall Smasher"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

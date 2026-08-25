@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Heavy Punches",
     "name": "Heavy Punches",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The brute eschews civilized combat and prefers to wade into a fight with his fists swinging. While in his vigilante identity, the brute's unarmed strikes deal damage as if he were a monk of his size and vigilante level. If he has levels in other classes that provide monk advancement for unarmed strike damage, his vigilante level stacks with those levels whenever he is in his vigilante identity.",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

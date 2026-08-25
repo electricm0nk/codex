@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gnome Racial Subtype ~ Dread Gnome",
+    "name": "Dread Gnome",
+    "description": "Moodier, less forgiving, and often crueler than other gnomes, dread gnomes trace their heritage to the darker, more bloodthirsty lines of fey. Though not all dread gnomes are evil, they all find humor in watching others suffer, and have little use for the bright colors and joyful pursuits of their more cheerful cousins. Dread gnomes have the fell magic and knack for poison alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome Racial Subtype ~ Dread Gnome"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gnome Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome Racial Subtype ~ Dread Gnome],[!PREFACT:1,ABILITIES,Gnome_ReplaceGnomeMagic=true,Gnome_ReplaceObsessive=true,Gnome_ReplaceIllusionResistance=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Moodier, less forgiving, and often crueler than other gnomes, dread gnomes trace their heritage to the darker, more bloodthirsty lines of fey. Though not all dread gnomes are evil, they all find humor in watching others suffer, and have little use for the bright colors and joyful pursuits of their more cheerful cousins. Dread gnomes have the fell magic and knack for poison alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Dread Gnome"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gnome Racial Trait|NORMAL|Gnome ~ Fell Magic|Gnome ~ Knack with Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2167,
+    "record_key": "Gnome Racial Subtype ~ Dread Gnome"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

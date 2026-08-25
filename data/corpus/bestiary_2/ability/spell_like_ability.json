@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Jiang-shi-Born ~ Spell-Like Ability",
+    "name": "Spell-Like Ability",
+    "description": "Ru-shi can use erase three times per day as a spell-like ability (with a caster level equal to the dhampir's character level).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Jiang-shi-Born ~ Spell-Like Ability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Ru-shi can use erase three times per day as a spell-like ability (with a caster level equal to the dhampir's character level)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Erase"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Erase_Times|3|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceSpellLikeAbility|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
+    "line": 27,
+    "record_key": "Jiang-shi-Born ~ Spell-Like Ability"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

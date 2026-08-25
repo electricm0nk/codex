@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L4 ~ Blessing of Fervor",
+    "name": "Blessing of Fervor",
+    "class": "Sorcerer",
+    "description": "With this blessing, you call your allies to move forth and empower them to conquer and become victorious. Each round for the duration of this spell, each of your allies can choose one of the following bonuses for that round at the beginning of its turn (their choice): Increase its speed by 30 feet, Stand up as a swift action without provoking an attack of opportunity, Make one extra attack as part of a full attack action, using its highest base attack bonus, Gain a +2 bonus on attack rolls and a +2 dodge bonus to AC and Reflex saves, Cast a single spell of 2nd level or lower as if it were an enlarged, extended, silent, or still spell.  These effects are not cumulative with similar effects, such as those provided by haste or a speed weapon, nor do they actually grant an extra action, so you can't use it to cast a second spell or otherwise take an extra action in the round. Blessing of fervor does not stack with haste.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L4 ~ Blessing of Fervor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_BlessingofFervor_L4,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,9"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=4|Blessing of Fervor"
+      },
+      {
+        "key": "DESC",
+        "value": "With this blessing, you call your allies to move forth and empower them to conquer and become victorious. Each round for the duration of this spell, each of your allies can choose one of the following bonuses for that round at the beginning of its turn (their choice): Increase its speed by 30 feet, Stand up as a swift action without provoking an attack of opportunity, Make one extra attack as part of a full attack action, using its highest base attack bonus, Gain a +2 bonus on attack rolls and a +2 dodge bonus to AC and Reflex saves, Cast a single spell of 2nd level or lower as if it were an enlarged, extended, silent, or still spell.  These effects are not cumulative with similar effects, such as those provided by haste or a speed weapon, nor do they actually grant an extra action, so you can't use it to cast a second spell or otherwise take an extra action in the round. Blessing of fervor does not stack with haste.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3061,
+    "record_key": "Sorcerer Bonus Spell L4 ~ Blessing of Fervor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

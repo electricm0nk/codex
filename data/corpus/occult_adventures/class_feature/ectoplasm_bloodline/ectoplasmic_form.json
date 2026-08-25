@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ectoplasm Bloodline ~ Ectoplasmic Form",
     "name": "Ectoplasmic Form",
-    "class": "Ectoplasm Bloodline",
+    "class": "Sorcerer",
     "description": "You can transform into a cloud of ectoplasm. Treat this as gaseous form, except that you can fly at a speed of 30 feet, and you can solidify your form sufficiently to carry small objects, though fine manipulation is impossible. You can use this ability for %1 minutes per day. These minutes need not be consecutive, but must be used in 1-minute increments.|Sorcerer_EctoplasmEctoplasmicForm_Duration",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

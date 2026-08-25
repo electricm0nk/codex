@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Strangler",
+    "category": "General",
+    "name": "Strangler",
+    "description": "You can choke foes with a lasso. When you successfully entangle a creature with a lasso (Advanced Player's Guide 178) and beat the target's CMD by 5 or more, the target cannot speak above a whisper and must succeed at a concentration check (DC = 20 +your CMB +the spell level) to cast a spell with a verbal component, use a command word item, or use any magic requiring speech. Additionally, the DC of an Escape Artist check to slip free of a lasso you are using equals 15 or your CMD, whichever is higher.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Exotic Weapon Proficiency (lasso), Weapon Focus (lasso)"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 34,
+    "record_key": "Strangler"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

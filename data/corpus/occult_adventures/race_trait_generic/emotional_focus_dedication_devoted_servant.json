@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Emotional Focus / Dedication ~ Devoted Servant",
+    "name": "Devoted Servant",
+    "description": "When the spiritualist reaches 12th level and is caught unawares by an attack (such as an attack made in a surprise round or while the spiritualist is asleep or an attack by a creature using Stealth), if the phantom is not fully manifested, it automatically fully manifests from the spiritualist's consciousness to protect its master. The phantom stays manifested as long as the spiritualist is unaware and in danger. This ability requires no action from the spiritualist.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emotional Focus / Dedication ~ Devoted Servant"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emotional Focus 2f"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Emotional Focus / Dedication.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When the spiritualist reaches 12th level and is caught unawares by an attack (such as an attack made in a surprise round or while the spiritualist is asleep or an attack by a creature using Stealth), if the phantom is not fully manifested, it automatically fully manifests from the spiritualist's consciousness to protect its master. The phantom stays manifested as long as the spiritualist is unaware and in danger. This ability requires no action from the spiritualist."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
+    "line": 74,
+    "record_key": "Emotional Focus / Dedication ~ Devoted Servant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

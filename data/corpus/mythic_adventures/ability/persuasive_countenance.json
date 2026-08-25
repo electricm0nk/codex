@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Persuasive Countenance",
+    "name": "Persuasive Countenance",
+    "description": "Whenever you encounter a creature whose attitude is at least indifferent to you, treat its attitude as one step better. If the creature's starting attitude is helpful, you can make requests of the creature with a +5 bonus on your Diplomacy or Intimidate check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Persuasive Countenance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you encounter a creature whose attitude is at least indifferent to you, treat its attitude as one step better. If the creature's starting attitude is helpful, you can make requests of the creature with a +5 bonus on your Diplomacy or Intimidate check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41, 46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 234,
+    "record_key": "Mythic Path Ability ~ Persuasive Countenance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Deadeye",
     "name": "Deadeye",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "%1/day, the gunmaster can resolve an attack against touch AC instead of normal AC when firing one increment beyond his firearm's first range increment. The gunmaster still takes the -2 penalty on attack rolls for shooting a target outside the firearm's first range increment. A gunmaster can spend multiple daily uses to resolve an attack at a further range increment (for instance, he can spend three uses to resolve an attack three increments beyond his first range increment).|VigilanteLVL+2/4",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

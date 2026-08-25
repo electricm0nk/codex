@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Warrior Archetype ~ Meditant",
+    "name": "Meditant",
+    "class": "Psychic Warrior",
+    "description": "You are one of those psychic warriors who have turned fighting unarmed into your focus, learning to make deadly strikes without the use of psionic powers or weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Warrior Archetype ~ Meditant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsychicWarriorArchetype.PsychicWarriorLightArmorProficiency.PsychicWarriorMediumArmorProficiency.PsychicWarriorHeavyArmorProficiency.PsychicWarriorShieldProficiency.PsychicWarriorMartialWeaponProficiency.PsychicWarriorBonusFeat1.PsychicWarriorMartialPower.PsychicWarriorBonusFeat8"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psychic Warrior=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psychic Warrior Archetype ~ Meditant],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsychicWarriorLightArmorProficiency,TYPE.PsychicWarriorMediumArmorProficiency,TYPE.PsychicWarriorHeavyArmorProficiency,TYPE.PsychicWarriorShieldProficiency,TYPE.PsychicWarriorMartialWeaponProficiency,TYPE.PsychicWarriorFeat1,TYPE.PsychicWarriorMartialPower,TYPE.PsychicWarriorFeat8]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are one of those psychic warriors who have turned fighting unarmed into your focus, learning to make deadly strikes without the use of psionic powers or weapons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Meditant ~ Psionic Armor|PRECLASS:1,Psychic Warrior=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Meditant ~ Unarmed and Dangerous|PRECLASS:1,Psychic Warrior=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Meditant ~ Flurry of Strikes|PRECLASS:1,Psychic Warrior=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Meditant ~ Unarmed Fighting Style|PRECLASS:1,Psychic Warrior=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psychic Warrior Feat|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2023,
+    "record_key": "Psychic Warrior Archetype ~ Meditant"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

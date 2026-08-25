@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Zen Archer ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -39,6 +39,70 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.115"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_CombatReflexes|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_DeflectArrows|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Dodge|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_FarShot|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PointBlankShot|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PreciseShot|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_RapidShot|1|PREVARGTEQ:MonkBonusFeatLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_FocusedShot|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedPreciseShot|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Manyshot|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PartingShot|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_Mobility|1|PREVARGTEQ:MonkBonusFeatLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ImprovedCritical|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_PinpointTargeting|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_SnatchArrows|1|PREVARGTEQ:MonkBonusFeatLVL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonkBonusFeat_ShotontheRun|1|PREVARGTEQ:MonkBonusFeatLVL,10"
       }
     ]
   },
@@ -56,5 +120,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

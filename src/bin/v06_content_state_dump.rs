@@ -864,6 +864,20 @@ fn main() {
             // for exhaustiveness only, exactly as `Oa`'s above does --
             // `all_feat_tables()` never yields an `AdventurersGuide` table.
             RuleSetId::AdventurersGuide => "adventurers_guide",
+            // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+            // onboarding-precondition`, AT-32-G0-003). Inner Sea Faiths,
+            // Inner Sea Magic and Inner Sea Temples have no feats file this
+            // repo compiles (their first record family is `spell_list`,
+            // not a feat table); those three arms exist for exhaustiveness
+            // only, exactly as `AdventurersGuide`'s above does. Inner Sea
+            // Taverns' first family IS feat (`istav_feats.lst`'s 9 base
+            // declarations via `feat_gap_tables`), so `all_feat_tables()`
+            // DOES yield an `InnerSeaTaverns` table, the same shape
+            // `Mythic`'s arm above documents.
+            RuleSetId::InnerSeaFaiths => "inner_sea_faiths",
+            RuleSetId::InnerSeaMagic => "inner_sea_magic",
+            RuleSetId::InnerSeaTaverns => "inner_sea_taverns",
+            RuleSetId::InnerSeaTemples => "inner_sea_temples",
         };
         let records = table.entries.len();
         let wired_here = table

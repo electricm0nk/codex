@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Egotist ~ Song of Myself",
+    "name": "Song of Myself",
+    "description": "An egotist gains Alertness as a bonus feat rather than providing that feat to its master. [Variable Familiar Bonus alteration NOT IMPLEMENTED] It gains the variable familiar bonus (such as the bat's +3 bonus on Fly checks) instead of granting the bonus to its master. This alters alertness and the variable familiar bonus.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Egotist ~ Song of Myself"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "An egotist gains Alertness as a bonus feat rather than providing that feat to its master. [Variable Familiar Bonus alteration NOT IMPLEMENTED] It gains the variable familiar bonus (such as the bat's +3 bonus on Fly checks) instead of granting the bonus to its master. This alters alertness and the variable familiar bonus."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Alertness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 559,
+    "record_key": "Egotist ~ Song of Myself"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

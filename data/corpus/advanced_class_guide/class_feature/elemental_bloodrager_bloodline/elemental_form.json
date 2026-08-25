@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elemental Bloodrager Bloodline ~ Elemental Form",
     "name": "Elemental Form",
-    "class": "Elemental Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Once per day, you can take an elemental form as Elemental Body IV, but with a duration of %1 rounds.|Bloodrager_Elemental_ElementalForm_Duration",
     "raw_tokens": [
       {
@@ -71,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

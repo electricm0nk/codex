@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Hide in Plain Sight",
     "name": "Hide in Plain Sight",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante can use Stealth to hide even when being observed. As long as he is within 10 feet of dim light (his own shadow doesn't count), he can hide without anything to actually hide behind.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

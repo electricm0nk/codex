@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Teratoma (Trip)",
     "name": "Teratoma (Trip)",
@@ -14,7 +14,7 @@
       },
       {
         "key": "TYPE",
-        "value": "SpecialQuality.LamashtuTeratomaAbility"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
@@ -33,7 +33,8 @@
   "wiring_class_signals": [
     "display:no_magnitude_token"
   ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

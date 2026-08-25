@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Forbidden Rites Domain ~ Charm Domain",
     "name": "Charm",
-    "class": "Forbidden Rites Domain",
+    "class": "Cleric",
     "description": "You can baffle and befuddle foes with a touch or a smile, and your beauty and grace are divine.",
     "raw_tokens": [
       {
@@ -92,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

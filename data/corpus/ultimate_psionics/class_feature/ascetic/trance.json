@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ascetic ~ Trance",
+    "name": "Trance",
+    "class": "Ascetic",
+    "description": "Gain +%1 insight bonus to AC or saves when in light or no armor.|AsceticPathBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ascetic ~ Trance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsceticPathBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain +%1 insight bonus to AC or saves when in light or no armor.|AsceticPathBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ascetic Path Bonus ~ AC|Ascetic Path Bonus ~ Saves"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsceticPathBonus|(AsceticPathTranceLVL+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 647,
+    "record_key": "Ascetic ~ Trance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

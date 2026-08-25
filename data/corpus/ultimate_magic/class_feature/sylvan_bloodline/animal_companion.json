@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sylvan Bloodline ~ Animal Companion",
     "name": "Animal Companion",
-    "class": "Sylvan Bloodline",
+    "class": "Sorcerer",
     "description": "You gain an animal companion. Your effective druid level for this ability is %1. This bloodline power counts as your bloodline arcana and also replaces laughing touch.|Sorcerer_SylvanAnimalCompanion_LVL",
     "raw_tokens": [
       {
@@ -88,5 +88,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

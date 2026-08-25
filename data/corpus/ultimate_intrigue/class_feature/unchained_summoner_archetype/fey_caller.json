@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Summoner Archetype ~ Fey Caller",
+    "name": "Fey Caller",
+    "class": "Unchained Summoner Archetype",
+    "description": "The strange creatures known as fey hail from a variety of places, including the natural world and their own domains on other planes. Fey callers are summoners whose voices reach out into those strange faerie realms and call forth the fey who dwell there. The touch of the fey makes the fey caller different from those summoners who call other outsiders to their sides as eidolons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Summoner Archetype ~ Fey Caller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Summoner ~ Unchained Class"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Sorcerer=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Unchained Summoner Archetype ~ Fey Caller],[!PREFACT:1,ABILITIES,Summoner_Archetype_ClassSkills=True,Summoner_Archetype_SummonMonsterSpells=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The strange creatures known as fey hail from a variety of places, including the natural world and their own domains on other planes. Fey callers are summoners whose voices reach out into those strange faerie realms and call forth the fey who dwell there. The touch of the fey makes the fey caller different from those summoners who call other outsiders to their sides as eidolons."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Fey Caller ~ Class Skills|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Caller ~ Nature's Call|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fey Caller ~ Fey Eidolon|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_SummonMonsterSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_SummonMonsterSpells|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 72,
+    "record_key": "Unchained Summoner Archetype ~ Fey Caller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

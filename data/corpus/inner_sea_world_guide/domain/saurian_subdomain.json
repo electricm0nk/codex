@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Saurian Subdomain",
+    "name": "Saurian Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Saurian Subdomain],[PREVARLT:ScalykindDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Venomous Stare|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Scalykind)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Dinosaur Companion|PREVARGTEQ:DomainScalykindLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScalykindDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScalykindDomain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindDC|10+(DomainScalykindLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindTimes|DomainPowerTimes"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "http://paizo.com/paizo/blog/v5748dyo5lbvp"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Saurian Subdomain=1|Magic Fang|Saurian Subdomain=2|Animal Trance|Saurian Subdomain=3|Magic Fang (Greater)|Saurian Subdomain=4|Summon Nature's Ally IV (deinonychus or pteranodon only)|Saurian Subdomain=5|Beast Shape III|Saurian Subdomain=6|Eyebite|Saurian Subdomain=7|Summon Nature's Ally VII (brachiosaurus or tyrannosaurus only)|Saurian Subdomain=8|Animal Shapes (Reptiles Only)|Saurian Subdomain=9|Shapechange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_domains.lst",
+    "sha256": "81f7026d6227076550815d9f8ec793aa9f19b5e0fe5f3bbe0f2aebb4bbd35a4d",
+    "line": 13,
+    "record_key": "Saurian Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

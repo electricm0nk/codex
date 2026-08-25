@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mystic Archer ~ Tremorsense",
+    "name": "Tremorsense",
+    "class": "Mystic Archer",
+    "description": "Gain tremorsense, %1 ft range, when focused.|TremorsenseRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Archer ~ Tremorsense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MysticArcherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TremorsenseRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain tremorsense, %1 ft range, when focused.|TremorsenseRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|HeightenedSensesRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Tremorsense|TremorsenseRange"
+      },
+      {
+        "key": "VISION",
+        "value": "Tremorsense"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.365"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1319,
+    "record_key": "Mystic Archer ~ Tremorsense"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

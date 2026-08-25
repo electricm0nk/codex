@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Martial Kineticist ~ Expanded Martial Psionics",
+    "name": "Expanded Martial Psionics",
+    "class": "Kineticist",
+    "description": "While maintaining psionic focus, you can deliver powers that feature a ranged touch attack as melee touch attack powers. You can use a ranged touch attack power that targets more than one creature, but you make only one melee touch attack to deliver %1 of these ranged touch effects; additional ranged touch attacks from that effect are wasted and have no effect. In addition, you can expend your psionic focus when you manifest a power to gain %2 temporary power points to augment that power.  You must use the power points to augment this power, or they are lost.|ExpandedMartialPsionicsTouchAttacks|ExpandedMartialPsionicsPowerPoints",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Martial Kineticist ~ Expanded Martial Psionics"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExpandedMartialPsionicsTouchAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExpandedMartialPsionicsPowerPoints|0"
+      },
+      {
+        "key": "DESC",
+        "value": "While maintaining psionic focus, you can deliver powers that feature a ranged touch attack as melee touch attack powers. You can use a ranged touch attack power that targets more than one creature, but you make only one melee touch attack to deliver %1 of these ranged touch effects; additional ranged touch attacks from that effect are wasted and have no effect. In addition, you can expend your psionic focus when you manifest a power to gain %2 temporary power points to augment that power.  You must use the power points to augment this power, or they are lost.|ExpandedMartialPsionicsTouchAttacks|ExpandedMartialPsionicsPowerPoints"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExpandedMartialPsionicsTouchAttacks|floor((PsychicWarriorLVL+2)/5)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExpandedMartialPsionicsPowerPoints|floor((PsychicWarriorLVL+5)/8)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2040,
+    "record_key": "Martial Kineticist ~ Expanded Martial Psionics"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Healing",
+    "name": "Healing",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainHealing,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Healing Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.HealingDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainHealingAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch staves off pain and death, and your healing magic is particularly vital and potent."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Healing=1|Cure Light Wounds|Healing=2|Cure Moderate Wounds|Healing=3|Cure Serious Wounds|Healing=4|Cure Critical Wounds|Healing=5|Breath of Life|Healing=6|Heal|Healing=7|Regenerate|Healing=8|Cure Critical Wounds (Mass)|Healing=9|Heal (Mass)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 26,
+    "record_key": "Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

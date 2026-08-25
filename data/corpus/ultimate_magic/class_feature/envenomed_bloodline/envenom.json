@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Envenomed Bloodline ~ Envenom",
     "name": "Envenom",
-    "class": "Envenomed Bloodline",
+    "class": "Sorcerer",
     "description": "As a swift action, you can lick or bite a melee weapon to imbue it with 1 dose of black adder venom (see page 558 of the Core Rulebook). The poison's DC is %1.",
     "raw_tokens": [
       {
@@ -104,5 +104,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Azruverda ~ Acid Spit",
+    "delivery": "Extraordinary",
+    "description": "An azruverda can spit a stream of acid at a target within 60 feet as a ranged touch attack that deals 10d6 points of acid damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:azruverda_acid_spit",
+    "name": "Acid Spit",
+    "owners": [
+      "bestiary_3:monster:azruverda"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An azruverda can spit a stream of acid at a target within 60 feet as a ranged touch attack that deals 10d6 points of acid damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Azruverda ~ Acid Spit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "TYPE",
+        "value": "AzruverdaRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.30",
+    "traits": [
+      "AzruverdaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 433,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Azruverda ~ Acid Spit",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

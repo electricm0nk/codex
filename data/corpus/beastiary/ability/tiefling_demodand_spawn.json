@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Tiefling ~ Demodand-Spawn",
+    "name": "Tiefling ~ Demodand-Spawn",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Tiefling Racial Trait|AUTOMATIC|Demodand-Spawn ~ Ability Scores|PREVAREQ:Tiefling_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar_subrace.lst",
+    "sha256": "117a3f50501b54c9e89e522555bdb8d01e696616dfec1782d826857d57d46019",
+    "line": 29,
+    "record_key": "Tiefling ~ Demodand-Spawn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Aquatic",
+    "name": "Aquatic",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aquatic Domain ~ Sealord|PREVARGTEQ:DomainAquaticAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aquatic Domain ~ Seastrike|PREVARGTEQ:DomainAquaticAbilityTriggerLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAquaticLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAquaticDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAquaticTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAquaticAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAquaticLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAquaticDC|10+(DomainAquaticLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAquaticTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAquaticAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Aquatic=1|Hydraulic Push|Aquatic=2|Slipstream|Aquatic=3|Water Breathing|Aquatic=4|Freedom of Movement|Aquatic=5|Black Tentacles|Aquatic=6|Freezing Sphere|Aquatic=7|Animal Shapes (Aquatic Creatures Only)|Aquatic=8|Seamantle|Aquatic=9|Tsunami"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
+    "line": 11,
+    "record_key": "Aquatic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

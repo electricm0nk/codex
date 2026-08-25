@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Great Old One",
+    "delivery": "Extraordinary",
+    "description": "A Great Old One's natural weapons, as well as any weapon it wields, are treated as chaotic, epic, and mythic for the purpose of overcoming damage reduction. &nl; A Great Old One does not need to eat, drink, or breathe, nor does it age. A Great Old One that is slain does not truly die. &nl; Immunity to ability damage, ability drain, aging, cold, death effects, disease, energy drain, mind-affecting effects, paralysis, and petrification. &nl; Interacting directly with a Great Old One's thoughts (such as via detect thoughts or telepathy) forces a Will save to avoid being driven permanently insane. The save DC is %1. &nl; A Great Old One has mythic power (10/day, surge +1d12) and counts as a 10th-rank mythic creature. It can use any of its spell-like abilities as the mythic versions of those spells (if such exists). &nl; All Great Old Ones gain a +10 insight bonus on Initiative checks and to AC. &nl; A Great Old One's aura inflicts intense mental anguish and torment upon all creatures within 300 feet who can see and hear the Great Old One.",
+    "description_variables": [
+      "10+HD/2+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:traits_output_great_old_one",
+    "name": "Great Old One Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A Great Old One does not need to eat, drink, or breathe, nor does it age. A Great Old One that is slain does not truly die."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A Great Old One has mythic power (10/day, surge +1d12) and counts as a 10th-rank mythic creature. It can use any of its spell-like abilities as the mythic versions of those spells (if such exists)."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; A Great Old One's aura inflicts intense mental anguish and torment upon all creatures within 300 feet who can see and hear the Great Old One."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; All Great Old Ones gain a +10 insight bonus on Initiative checks and to AC."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Immunity to ability damage, ability drain, aging, cold, death effects, disease, energy drain, mind-affecting effects, paralysis, and petrification."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Interacting directly with a Great Old One's thoughts (such as via detect thoughts or telepathy) forces a Will save to avoid being driven permanently insane. The save DC is %1.|10+HD/2+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "A Great Old One's natural weapons, as well as any weapon it wields, are treated as chaotic, epic, and mythic for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Great Old One"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": [
+      "Supernatural"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:04Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 102,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Traits Output ~ Great Old One",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

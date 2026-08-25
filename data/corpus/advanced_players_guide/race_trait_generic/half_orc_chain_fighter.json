@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Orc ~ Chain Fighter",
+    "name": "Chain Fighter",
+    "description": "Some half-orcs have escaped from slavery and reforged the chains of their imprisonment into deadly weapons. Half-orcs with this racial trait are proficient with flails and heavy flails, and treat dire flails and spiked chains as martial weapons.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Chain Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Chain Fighter],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceWeaponFamiliarity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-orcs have escaped from slavery and reforged the chains of their imprisonment into deadly weapons. Half-orcs with this racial trait are proficient with flails and heavy flails, and treat dire flails and spiked chains as martial weapons."
+      },
+      {
+        "key": "DESC",
+        "value": "This trait replaces the weapon familiarity racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Chain Fighter"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Flail|Flail (Heavy)"
+      },
+      {
+        "key": "CHANGEPROF",
+        "value": "Chain (Spiked),Flail (Dire)=Martial"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceWeaponFamiliarity|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 81,
+    "record_key": "Half-Orc ~ Chain Fighter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

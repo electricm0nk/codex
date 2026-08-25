@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Many Forms",
+    "name": "Many Forms",
+    "description": "You can alter your appearance at will as if using alter self. You can expend one use of mythic power to change shape as if using polymorph, with a duration of %1 [1 minute per tier]. Your caster level for this ability is a number equal to %2 [10 + your tier]. At 6th tier, the duration of the polymorph ability increases to 10 minutes per tier.|MythicManyFormsDuration|MythicManyFormsCasterLvl",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Many Forms"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicManyFormsDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicManyFormsCasterLvl|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can alter your appearance at will as if using alter self. You can expend one use of mythic power to change shape as if using polymorph, with a duration of %1 [1 minute per tier]. Your caster level for this ability is a number equal to %2 [10 + your tier]. At 6th tier, the duration of the polymorph ability increases to 10 minutes per tier.|MythicManyFormsDuration|MythicManyFormsCasterLvl"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicManyFormsDuration|MythicLevel|PREVARLT:MythicTierLevel,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicManyFormsDuration|MythicLevel*10|PREVARGTEQ:MythicTierLevel,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicManyFormsCasterLvl|MythicLevel+10"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 333,
+    "record_key": "Mythic Path Ability ~ Many Forms"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -5,17 +5,213 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 2,
+      "done": 4,
       "partial": 0,
-      "not_started": 575,
-      "denominator": 577,
-      "pct": 0.3,
-      "excluded_from_percentage": 200,
+      "not_started": 686,
+      "denominator": 690,
+      "pct": 0.6,
+      "excluded_from_percentage": 245,
       "standing_breakdown": {
-        "origin": 577,
-        "unclassified": 200
+        "origin": 690,
+        "unclassified": 245
       },
       "items": [
+        {
+          "name": "Ability Enhancement I",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.FeyspeakerClassFeatures",
+          "standing": "origin",
+          "display_name": "Ability Enhancement I"
+        },
+        {
+          "name": "Ability Enhancement I (Charisma)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementI",
+          "standing": "origin",
+          "display_name": "Ability Enhancement I (Charisma)"
+        },
+        {
+          "name": "Ability Enhancement I (Constitution)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementI",
+          "standing": "origin",
+          "display_name": "Ability Enhancement I (Constitution)"
+        },
+        {
+          "name": "Ability Enhancement I (Dexterity)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementI",
+          "standing": "origin",
+          "display_name": "Ability Enhancement I (Dexterity)"
+        },
+        {
+          "name": "Ability Enhancement I (Intelligence)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementI",
+          "standing": "origin",
+          "display_name": "Ability Enhancement I (Intelligence)"
+        },
+        {
+          "name": "Ability Enhancement I (Strength)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementI",
+          "standing": "origin",
+          "display_name": "Ability Enhancement I (Strength)"
+        },
+        {
+          "name": "Ability Enhancement I (Wisdom)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementI",
+          "standing": "origin",
+          "display_name": "Ability Enhancement I (Wisdom)"
+        },
+        {
+          "name": "Ability Enhancement II",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.FeyspeakerClassFeatures",
+          "standing": "origin",
+          "display_name": "Ability Enhancement II"
+        },
+        {
+          "name": "Ability Enhancement II (Charisma)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement II (Charisma)"
+        },
+        {
+          "name": "Ability Enhancement II (Constitution)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement II (Constitution)"
+        },
+        {
+          "name": "Ability Enhancement II (Dexterity)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement II (Dexterity)"
+        },
+        {
+          "name": "Ability Enhancement II (Intelligence)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement II (Intelligence)"
+        },
+        {
+          "name": "Ability Enhancement II (Strength)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement II (Strength)"
+        },
+        {
+          "name": "Ability Enhancement II (Wisdom)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement II (Wisdom)"
+        },
+        {
+          "name": "Ability Enhancement III",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.FeyspeakerClassFeatures",
+          "standing": "origin",
+          "display_name": "Ability Enhancement III"
+        },
+        {
+          "name": "Ability Enhancement III (Charisma)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement III (Charisma)"
+        },
+        {
+          "name": "Ability Enhancement III (Constitution)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement III (Constitution)"
+        },
+        {
+          "name": "Ability Enhancement III (Dexterity)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement III (Dexterity)"
+        },
+        {
+          "name": "Ability Enhancement III (Intelligence)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement III (Intelligence)"
+        },
+        {
+          "name": "Ability Enhancement III (Strength)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement III (Strength)"
+        },
+        {
+          "name": "Ability Enhancement III (Wisdom)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIII",
+          "standing": "origin",
+          "display_name": "Ability Enhancement III (Wisdom)"
+        },
+        {
+          "name": "Ability Enhancement IV",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.FeyspeakerClassFeatures",
+          "standing": "origin",
+          "display_name": "Ability Enhancement IV"
+        },
+        {
+          "name": "Ability Enhancement IV (Charisma)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIV",
+          "standing": "origin",
+          "display_name": "Ability Enhancement IV (Charisma)"
+        },
+        {
+          "name": "Ability Enhancement IV (Constitution)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIV",
+          "standing": "origin",
+          "display_name": "Ability Enhancement IV (Constitution)"
+        },
+        {
+          "name": "Ability Enhancement IV (Dexterity)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIV",
+          "standing": "origin",
+          "display_name": "Ability Enhancement IV (Dexterity)"
+        },
+        {
+          "name": "Ability Enhancement IV (Intelligence)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIV",
+          "standing": "origin",
+          "display_name": "Ability Enhancement IV (Intelligence)"
+        },
+        {
+          "name": "Ability Enhancement IV (Strength)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIV",
+          "standing": "origin",
+          "display_name": "Ability Enhancement IV (Strength)"
+        },
+        {
+          "name": "Ability Enhancement IV (Wisdom)",
+          "doneness": "not-started",
+          "type_facet": "SkinshaperEnhancementIV",
+          "standing": "origin",
+          "display_name": "Ability Enhancement IV (Wisdom)"
+        },
         {
           "name": "Absentia",
           "doneness": "not-started",
@@ -50,6 +246,13 @@
           "type_facet": "Alchemist Class Feature.MetamorphClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Adaptive Physiology"
+        },
+        {
+          "name": "Agile Warrior",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.HussarClassFeatures",
+          "standing": "origin",
+          "display_name": "Agile Warrior"
         },
         {
           "name": "Aides-de-Camp",
@@ -136,6 +339,13 @@
           "display_name": "Appraise (Refined Education Selection)"
         },
         {
+          "name": "Appraise",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Appraise (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Arachnid",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.WildsoulNaturalCourse",
@@ -171,11 +381,32 @@
           "display_name": "Armor Proficiencies"
         },
         {
+          "name": "Armor Proficiency",
+          "doneness": "not-started",
+          "type_facet": "Cleric Class Features.CardinalClassFeatures.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Armor Proficiency"
+        },
+        {
           "name": "Armor Skin",
           "doneness": "not-started",
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Armor Skin"
+        },
+        {
+          "name": "Armor Skin Speed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Armor Skin Speed"
+        },
+        {
+          "name": "Artistry",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Artistry"
         },
         {
           "name": "Assume Identity",
@@ -353,6 +584,13 @@
           "display_name": "Bluff (Refined Education Selection)"
         },
         {
+          "name": "Bluff",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Bluff (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Bold Schemer",
           "doneness": "not-started",
           "type_facet": "Archetype.SkaldArchetype",
@@ -414,6 +652,13 @@
           "type_facet": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Brute Form"
+        },
+        {
+          "name": "Brutish Fortitude",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Brutish Fortitude"
         },
         {
           "name": "Cabalist",
@@ -551,9 +796,191 @@
         {
           "name": "Class Skills",
           "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Alchemist Class Feature.AlchemicalSapperClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.AncestralAspirantClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Occultist Class Features.AncestralAspirantClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Vigilante Class Features.CabalistClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.CloakedWolfClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Inquisitor Class Features.CloakedWolfClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.CodeRunnerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Ranger Class Features.CodeRunnerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.ConsigliereClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Rogue Class Features.ConsigliereClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.CourtlyHunterClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Hunter Class Features.CourtlyHunterClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.DandyClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Ranger Class Features.DandyClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Summoner Class Features.FeyCallerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Summoner Class Features.FeyCallerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.GrayPaladinClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Paladin Class Features.GrayPaladinClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.GuildbreakerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Ranger Class Features.GuildbreakerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.InterrogatorClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Alchemist Class Feature.InterrogatorClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MagicalChildClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Vigilante Class Features.MagicalChildClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.MetamorphClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Alchemist Class Feature.MetamorphClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MountedFuryClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Vigilante Class Features.MountedFuryClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.PsychometristClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Occultist Class Features.PsychometristClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Monk Class Features.SageCounselorClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Monk Class Features.SageCounselorClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.SecretBrokerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Occultist Class Features.SecretBrokerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.SkinshaperClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Druid Class Features.SkinshaperClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Antipaladin Class Features.TyrantClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Antipaladin Class Features.TyrantClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Inquisitor Class Features.UmbralStalkerClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Swashbuckler Class Features.VeiledBladeClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Swashbuckler Class Features.VeiledBladeClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Features.VelvetBladeClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Slayer Class Features.VelvetBladeClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
           "type_facet": "Vigilante Class Feature.SpecialQuality",
           "standing": "unclassified",
-          "display_name": "Class Skills"
+          "display_name": "Class Skills (Vigilante Class Feature.SpecialQuality)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.WarlockClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Vigilante Class Features.WarlockClassFeatures)"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.ZealotClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Class Skills (Vigilante Class Features.ZealotClassFeatures)"
         },
         {
           "name": "Climb",
@@ -805,161 +1232,322 @@
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Alchemy)"
+          "display_name": "Craft (Alchemy) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Alchemy)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Alchemy) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Armor)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Armor)"
+          "display_name": "Craft (Armor) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Armor)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Armor) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Baskets)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Baskets)"
+          "display_name": "Craft (Baskets) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Baskets)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Baskets) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Blacksmithing)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Blacksmithing)"
+          "display_name": "Craft (Blacksmithing) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Blacksmithing)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Blacksmithing) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Books)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Books)"
+          "display_name": "Craft (Books) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Books)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Books) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Bows)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Bows)"
+          "display_name": "Craft (Bows) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Bows)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Bows) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Calligraphy)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Calligraphy)"
+          "display_name": "Craft (Calligraphy) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Calligraphy)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Calligraphy) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Carpentry)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Carpentry)"
+          "display_name": "Craft (Carpentry) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Carpentry)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Carpentry) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Cloth)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Cloth)"
+          "display_name": "Craft (Cloth) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Cloth)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Cloth) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Clothing)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Clothing)"
+          "display_name": "Craft (Clothing) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Clothing)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Clothing) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Gemcutting)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Gemcutting)"
+          "display_name": "Craft (Gemcutting) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Gemcutting)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Gemcutting) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Glass)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Glass)"
+          "display_name": "Craft (Glass) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Glass)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Glass) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Jewelry)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Jewelry)"
+          "display_name": "Craft (Jewelry) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Jewelry)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Jewelry) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Leather)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Leather)"
+          "display_name": "Craft (Leather) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Leather)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Leather) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Locks)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Locks)"
+          "display_name": "Craft (Locks) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Locks)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Locks) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Paintings)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Paintings)"
+          "display_name": "Craft (Paintings) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Paintings)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Paintings) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Pottery)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Pottery)"
+          "display_name": "Craft (Pottery) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Pottery)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Pottery) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Sculptures)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Sculptures)"
+          "display_name": "Craft (Sculptures) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Sculptures)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Sculptures) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Ships)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Ships)"
+          "display_name": "Craft (Ships) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Ships)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Ships) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Shoes)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Shoes)"
+          "display_name": "Craft (Shoes) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Shoes)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Shoes) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Stonemasonry)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Stonemasonry)"
+          "display_name": "Craft (Stonemasonry) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Stonemasonry)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Stonemasonry) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Traps)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Traps)"
+          "display_name": "Craft (Traps) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Traps)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Traps) (SocialGraceSkillChoice)"
         },
         {
           "name": "Craft (Weapons)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Craft (Weapons)"
+          "display_name": "Craft (Weapons) (Refined Education Selection)"
+        },
+        {
+          "name": "Craft (Weapons)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Craft (Weapons) (SocialGraceSkillChoice)"
         },
         {
           "name": "Crime Inquisition",
@@ -1130,6 +1718,13 @@
           "display_name": "Deep Cover"
         },
         {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
+        },
+        {
           "name": "Delayed Bomb",
           "doneness": "not-started",
           "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialQuality.Supernatural",
@@ -1221,6 +1816,13 @@
           "display_name": "Diplomacy (Refined Education Selection)"
         },
         {
+          "name": "Diplomacy",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Diplomacy (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Disable Device",
           "doneness": "not-started",
           "type_facet": "RefinedEducationUnlock",
@@ -1277,6 +1879,13 @@
           "display_name": "Disguise (Refined Education Selection)"
         },
         {
+          "name": "Disguise",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Disguise (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Dodge",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
@@ -1320,7 +1929,7 @@
         },
         {
           "name": "Dual Identity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Dual Identity (Vigilante Class Feature.SpecialQuality.Extraordinary)"
@@ -1716,6 +2325,13 @@
           "type_facet": "VigilanteFavoredManeuver",
           "standing": "origin",
           "display_name": "Favored Maneuver (Steal)"
+        },
+        {
+          "name": "Favored Maneuver (Sunder)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver",
+          "standing": "origin",
+          "display_name": "Favored Maneuver (Sunder)"
         },
         {
           "name": "Favored Maneuver (Trip)",
@@ -2131,6 +2747,13 @@
           "display_name": "Handle Animal (Refined Education Selection)"
         },
         {
+          "name": "Handle Animal",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Handle Animal (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Hateful Bane",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.FaithHunterClassFeatures.SpecialAttack.Supernatural",
@@ -2152,6 +2775,13 @@
           "display_name": "Heal (Refined Education Selection)"
         },
         {
+          "name": "Heal",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Heal (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Heavy Punches",
           "doneness": "not-started",
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
@@ -2164,6 +2794,13 @@
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Heavy Training"
+        },
+        {
+          "name": "Heavy Training Speed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Heavy Training Speed"
         },
         {
           "name": "Heightened Senses",
@@ -2523,6 +3160,13 @@
           "display_name": "Intimidate (Refined Education Selection)"
         },
         {
+          "name": "Intimidate",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Intimidate (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Intimidated Push",
           "doneness": "not-started",
           "type_facet": "Skald Class Features.WarlordClassFeatures.SpecialQuality.Extraordinary",
@@ -2549,6 +3193,13 @@
           "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery",
           "standing": "origin",
           "display_name": "Intrigue Mysteries"
+        },
+        {
+          "name": "Intrigue Mysteries Class Skills",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Intrigue Mysteries Class Skills"
         },
         {
           "name": "Investigator Talents",
@@ -2656,6 +3307,76 @@
           "display_name": "Knowledge (Religion)"
         },
         {
+          "name": "Knowledge (arcana)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (arcana)"
+        },
+        {
+          "name": "Knowledge (dungeoneering)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (dungeoneering)"
+        },
+        {
+          "name": "Knowledge (engineering)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (engineering)"
+        },
+        {
+          "name": "Knowledge (geography)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (geography)"
+        },
+        {
+          "name": "Knowledge (history)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (history)"
+        },
+        {
+          "name": "Knowledge (local)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (local)"
+        },
+        {
+          "name": "Knowledge (nature)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (nature)"
+        },
+        {
+          "name": "Knowledge (nobility)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (nobility)"
+        },
+        {
+          "name": "Knowledge (planes)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (planes)"
+        },
+        {
+          "name": "Knowledge (religion)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Knowledge (religion)"
+        },
+        {
           "name": "Knowledge Is Power",
           "doneness": "not-started",
           "type_facet": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality",
@@ -2703,6 +3424,13 @@
           "type_facet": "Refined Education Selection",
           "standing": "unclassified",
           "display_name": "Linguistics (Refined Education Selection)"
+        },
+        {
+          "name": "Linguistics",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Linguistics (SocialGraceSkillChoice)"
         },
         {
           "name": "Living Darkness",
@@ -2901,6 +3629,13 @@
           "display_name": "Metamorph"
         },
         {
+          "name": "Metamorph SpellCasting Removal",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Metamorph SpellCasting Removal"
+        },
+        {
           "name": "Midnight Shroud",
           "doneness": "not-started",
           "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural",
@@ -3090,6 +3825,13 @@
           "display_name": "Object Reading"
         },
         {
+          "name": "Occult Awareness",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.PsychometristClassFeatures",
+          "standing": "origin",
+          "display_name": "Occult Awareness"
+        },
+        {
           "name": "Occult Lore",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.SecretSeekerClassFeatures.SpecialQuality.Supernatural",
@@ -3234,63 +3976,126 @@
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (Act)"
+          "display_name": "Perform (Act) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (Act)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (Act) (SocialGraceSkillChoice)"
         },
         {
           "name": "Perform (Comedy)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (Comedy)"
+          "display_name": "Perform (Comedy) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (Comedy)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (Comedy) (SocialGraceSkillChoice)"
         },
         {
           "name": "Perform (Dance)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (Dance)"
+          "display_name": "Perform (Dance) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (Dance)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (Dance) (SocialGraceSkillChoice)"
         },
         {
           "name": "Perform (Keyboard Instruments)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (Keyboard Instruments)"
+          "display_name": "Perform (Keyboard Instruments) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (Keyboard Instruments)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (Keyboard Instruments) (SocialGraceSkillChoice)"
         },
         {
           "name": "Perform (Oratory)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (Oratory)"
+          "display_name": "Perform (Oratory) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (Oratory)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (Oratory) (SocialGraceSkillChoice)"
         },
         {
           "name": "Perform (Percussion Instruments)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (Percussion Instruments)"
+          "display_name": "Perform (Percussion Instruments) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (Percussion Instruments)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (Percussion Instruments) (SocialGraceSkillChoice)"
         },
         {
           "name": "Perform (Sing)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (Sing)"
+          "display_name": "Perform (Sing) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (Sing)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (Sing) (SocialGraceSkillChoice)"
         },
         {
           "name": "Perform (String Instruments)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (String Instruments)"
+          "display_name": "Perform (String Instruments) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (String Instruments)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (String Instruments) (SocialGraceSkillChoice)"
         },
         {
           "name": "Perform (Wind Instruments)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Perform (Wind Instruments)"
+          "display_name": "Perform (Wind Instruments) (Refined Education Selection)"
+        },
+        {
+          "name": "Perform (Wind Instruments)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Perform (Wind Instruments) (SocialGraceSkillChoice)"
         },
         {
           "name": "Phantom Thief",
@@ -3328,6 +4133,13 @@
           "display_name": "Poetic Vengeance"
         },
         {
+          "name": "Political Skill",
+          "doneness": "not-started",
+          "type_facet": "Cleric Class Features.CardinalClassFeatures.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Political Skill"
+        },
+        {
           "name": "Power Behind the Throne",
           "doneness": "not-started",
           "type_facet": "Mesmerist Class Features.VizierClassFeatures.SpecialQuality.Supernatural",
@@ -3353,217 +4165,434 @@
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Architect)"
+          "display_name": "Profession (Architect) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Architect)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Architect) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Baker)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Baker)"
+          "display_name": "Profession (Baker) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Baker)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Baker) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Barrister)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Barrister)"
+          "display_name": "Profession (Barrister) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Barrister)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Barrister) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Brewer)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Brewer)"
+          "display_name": "Profession (Brewer) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Brewer)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Brewer) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Butcher)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Butcher)"
+          "display_name": "Profession (Butcher) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Butcher)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Butcher) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Clerk)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Clerk)"
+          "display_name": "Profession (Clerk) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Clerk)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Clerk) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Cook)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Cook)"
+          "display_name": "Profession (Cook) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Cook)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Cook) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Courtesan)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Courtesan)"
+          "display_name": "Profession (Courtesan) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Courtesan)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Courtesan) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Driver)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Driver)"
+          "display_name": "Profession (Driver) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Driver)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Driver) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Engineer)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Engineer)"
+          "display_name": "Profession (Engineer) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Engineer)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Engineer) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Farmer)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Farmer)"
+          "display_name": "Profession (Farmer) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Farmer)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Farmer) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Fisherman)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Fisherman)"
+          "display_name": "Profession (Fisherman) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Fisherman)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Fisherman) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Gambler)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Gambler)"
+          "display_name": "Profession (Gambler) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Gambler)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Gambler) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Gardener)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Gardener)"
+          "display_name": "Profession (Gardener) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Gardener)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Gardener) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Herbalist)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Herbalist)"
+          "display_name": "Profession (Herbalist) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Herbalist)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Herbalist) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Innkeeper)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Innkeeper)"
+          "display_name": "Profession (Innkeeper) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Innkeeper)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Innkeeper) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Librarian)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Librarian)"
+          "display_name": "Profession (Librarian) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Librarian)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Librarian) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Merchant)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Merchant)"
+          "display_name": "Profession (Merchant) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Merchant)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Merchant) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Midwife)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Midwife)"
+          "display_name": "Profession (Midwife) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Midwife)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Midwife) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Miller)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Miller)"
+          "display_name": "Profession (Miller) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Miller)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Miller) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Miner)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Miner)"
+          "display_name": "Profession (Miner) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Miner)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Miner) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Porter)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Porter)"
+          "display_name": "Profession (Porter) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Porter)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Porter) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Sailor)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Sailor)"
+          "display_name": "Profession (Sailor) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Sailor)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Sailor) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Scribe)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Scribe)"
+          "display_name": "Profession (Scribe) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Scribe)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Scribe) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Shepherd)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Shepherd)"
+          "display_name": "Profession (Shepherd) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Shepherd)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Shepherd) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Soldier)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Soldier)"
+          "display_name": "Profession (Soldier) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Soldier)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Soldier) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Soothsayer)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Soothsayer)"
+          "display_name": "Profession (Soothsayer) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Soothsayer)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Soothsayer) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Stable Master)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Stable Master)"
+          "display_name": "Profession (Stable Master) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Stable Master)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Stable Master) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Tanner)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Tanner)"
+          "display_name": "Profession (Tanner) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Tanner)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Tanner) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Trapper)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Trapper)"
+          "display_name": "Profession (Trapper) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Trapper)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Trapper) (SocialGraceSkillChoice)"
         },
         {
           "name": "Profession (Woodcutter)",
           "doneness": "not-started",
           "type_facet": "Refined Education Selection",
           "standing": "origin",
-          "display_name": "Profession (Woodcutter)"
+          "display_name": "Profession (Woodcutter) (Refined Education Selection)"
+        },
+        {
+          "name": "Profession (Woodcutter)",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "origin",
+          "display_name": "Profession (Woodcutter) (SocialGraceSkillChoice)"
         },
         {
           "name": "Protect the Faithful",
@@ -3730,7 +4759,7 @@
           "name": "Returning Weapon",
           "doneness": "not-started",
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Returning Weapon"
         },
         {
@@ -3914,6 +4943,13 @@
           "type_facet": "Refined Education Selection",
           "standing": "unclassified",
           "display_name": "Sense Motive (Refined Education Selection)"
+        },
+        {
+          "name": "Sense Motive",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Sense Motive (SocialGraceSkillChoice)"
         },
         {
           "name": "Sentinel",
@@ -4159,6 +5195,41 @@
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Skill Focus"
+        },
+        {
+          "name": "Skill Ranks per Level",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Skill Ranks per Level (Vigilante Class Features.CabalistClassFeatures)"
+        },
+        {
+          "name": "Skill Ranks per Level",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MagicalChildClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Skill Ranks per Level (Vigilante Class Features.MagicalChildClassFeatures)"
+        },
+        {
+          "name": "Skill Ranks per Level",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.WarlockClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Skill Ranks per Level (Vigilante Class Features.WarlockClassFeatures)"
+        },
+        {
+          "name": "Skill Ranks per Level",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.ZealotClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Skill Ranks per Level (Vigilante Class Features.ZealotClassFeatures)"
+        },
+        {
+          "name": "Skilled",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.RoofRunnerClassFeatures",
+          "standing": "origin",
+          "display_name": "Skilled"
         },
         {
           "name": "Skillful Rider",
@@ -4420,6 +5491,13 @@
           "display_name": "Spellcraft (Refined Education Selection)"
         },
         {
+          "name": "Spellcraft",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Spellcraft (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Spells",
           "doneness": "not-started",
           "type_facet": "Mesmerist Class Features.VoxClassFeatures.SpecialQuality",
@@ -4519,7 +5597,7 @@
         },
         {
           "name": "Startling Appearance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Startling Appearance"
@@ -4658,6 +5736,13 @@
           "display_name": "Survival (Refined Education Selection)"
         },
         {
+          "name": "Survival",
+          "doneness": "not-started",
+          "type_facet": "SocialGraceSkillChoice",
+          "standing": "unclassified",
+          "display_name": "Survival (SocialGraceSkillChoice)"
+        },
+        {
           "name": "Swift and Silent",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Extraordinary",
@@ -4789,6 +5874,13 @@
           "type_facet": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tear Them Apart"
+        },
+        {
+          "name": "Temp Bonus ~ Brute Form",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Temp Bonus ~ Brute Form"
         },
         {
           "name": "Tenuous Threat",
@@ -5036,6 +6128,13 @@
           "display_name": "Umbral Stalker"
         },
         {
+          "name": "Unarmed Strike",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.FeyspeakerClassFeatures",
+          "standing": "unclassified",
+          "display_name": "Unarmed Strike"
+        },
+        {
           "name": "Unassuming",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.CipherClassFeatures.SpecialQuality.Extraordinary",
@@ -5212,7 +6311,7 @@
         },
         {
           "name": "Vengeance Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Vengeance Strike (Vigilante Class Feature.SpecialQuality.Extraordinary)"
@@ -5237,6 +6336,13 @@
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vigilante"
+        },
+        {
+          "name": "Vigilante",
+          "doneness": "not-started",
+          "type_facet": "FavoredClass",
+          "standing": "origin",
+          "display_name": "Vigilante (FavoredClass)"
         },
         {
           "name": "Vigilante Specialization",
@@ -5359,7 +6465,7 @@
         },
         {
           "name": "Weapon and Armor Proficiencies",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiencies (Vigilante Class Feature.SpecialQuality)"
@@ -6148,11 +7254,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 7,
+      "done": 14,
       "partial": 0,
-      "not_started": 7,
+      "not_started": 0,
       "denominator": 14,
-      "pct": 50.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 14
@@ -6167,7 +7273,7 @@
         },
         {
           "name": "Liberating",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin",
           "display_name": "Liberating"
@@ -6181,7 +7287,7 @@
         },
         {
           "name": "Peaceful",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon.Melee.Ranged",
           "standing": "origin",
           "display_name": "Peaceful"
@@ -6202,14 +7308,14 @@
         },
         {
           "name": "Silencing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon.Melee.Ranged",
           "standing": "origin",
           "display_name": "Silencing"
         },
         {
           "name": "Slithering",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin",
           "display_name": "Slithering"
@@ -6223,7 +7329,7 @@
         },
         {
           "name": "Truthful",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin",
           "display_name": "Truthful"
@@ -6244,14 +7350,14 @@
         },
         {
           "name": "Umbral",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin",
           "display_name": "Umbral"
         },
         {
           "name": "Unseen",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin",
           "display_name": "Unseen"
@@ -7037,42 +8143,42 @@
       "items": [
         {
           "name": "Eidolon Progession Lv.1",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.FeyLVL1",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.1"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.FeyLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12"
         },
         {
           "name": "Eidolon Progession Lv.16",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.FeyLVL16",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.16"
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.FeyLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20"
         },
         {
           "name": "Eidolon Progession Lv.4",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.FeyLVL4",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.4"
         },
         {
           "name": "Eidolon Progession Lv.8",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.FeyLVL8",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.8"
@@ -7084,13 +8190,12 @@
       "label": "Race Traits",
       "done": 0,
       "partial": 0,
-      "not_started": 1,
-      "denominator": 1,
+      "not_started": 0,
+      "denominator": 0,
       "pct": 0.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
-        "unclassified": 2,
-        "origin": 1
+        "unclassified": 2
       },
       "items": [
         {
@@ -7099,13 +8204,6 @@
           "type_facet": "Unchained Eidolon Subtype Selection",
           "standing": "unclassified",
           "display_name": "Fey"
-        },
-        {
-          "name": "Fey Base Form ~ Biped",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin",
-          "display_name": "Fey Base Form ~ Biped"
         },
         {
           "name": "Low-Light Vision",
@@ -7835,6 +8933,49 @@
           "type_facet": "Arcane.Psychic",
           "standing": "origin",
           "display_name": "Wizened Appearance"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 4,
+      "denominator": 4,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 4
+      },
+      "items": [
+        {
+          "name": "Starting Gold UI ~ Average",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UI ~ Average"
+        },
+        {
+          "name": "Starting Gold UI ~ Maximum",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UI ~ Maximum"
+        },
+        {
+          "name": "Starting Gold UI ~ Random",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold UI ~ Random"
+        },
+        {
+          "name": "Starting Gold ~ UI",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Starting Gold ~ UI"
         }
       ]
     }

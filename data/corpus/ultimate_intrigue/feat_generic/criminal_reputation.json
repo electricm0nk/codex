@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Criminal Reputation",
+    "name": "Criminal Reputation",
+    "description": "Your acts of audacious larceny have endeared you to the criminal underworld.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "2,Diplomacy=5,Intimidate=5"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Diplomacy 5 ranks, Intimidate 5 ranks."
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=FEAT|Persuasive"
+      },
+      {
+        "key": "DESC",
+        "value": "Your acts of audacious larceny have endeared you to the criminal underworld."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Diplomacy=Interacting with criminals,Intimidate=Interacting with criminals|if(skillinfo(\"TOTALRANK\",\"Diplomacy\")>=10,4,2)|!PREABILITY:1,CATEGORY=FEAT,Persuasive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +2 bonus on any influence check against criminals, not just Diplomacy or Intimidate checks, whether they're individual thieves and cutpurses or criminal organizations. If you have 10 or more ranks in the skill used, the bonus increases to +4 for that skill. These bonuses do not stack with those granted by Persuasive, but this feat counts as Persuasive for the purposes of feats and other rules elements with Persuasive as a prerequisite. You also need 1 fewer influence per rank to reach a new influence threshold with a criminal organization (either positive or negative)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 31,
+    "record_key": "Criminal Reputation"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

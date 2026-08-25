@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Foxfire Infusion",
+    "name": "Foxfire Infusion",
+    "class": "Kineticist",
+    "description": "Element fire or wood; Type substance infusion (Sp); Level 3; Burn 2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Foxfire Infusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Wild Talent.Infusion Wild Talent.Infusion Wild Talent Fire.Infusion Wild Talent Wood"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Wild Talent ~ Foxfire,Wild Talent ~ Positive Blast"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARGTEQ:KineticistLVL_Fire,3],[PREVARGTEQ:KineticistLVL_Wood,3]"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite foxfire or positive blast"
+      },
+      {
+        "key": "DESC",
+        "value": "Element fire or wood; Type substance infusion (Sp); Level 3; Burn 2"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Associated Blasts blue flame, fire, positive; Saving Throw Will partial; Your blast leaves behind flickering flames that reveal the target's location as per faerie fire for 1 minute (or until your next turn if the target succeeds at its save). This effect occurs even if the foe doesn't take damage, as long as the attack overcomes spell resistance (if any). You can reduce the blast's damage by half to increase the DC of this saving throw by 2. A creature can remove the revealing flames early by taking a full-round action to extinguish them."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 63,
+    "record_key": "Wild Talent ~ Foxfire Infusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Archetype ~ Leafshifter",
     "name": "Leafshifter",
-    "class": "Shifter Archetype",
+    "class": "Shifter",
     "description": "Rather than assume aspects taken from the traits of natural animals, a leafshifter transforms into plant-animal hybrids that resemble living topiaries. This affords the leafshifter the savage power of the animal kingdom while also granting her the strength and timelessness of plant life.",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

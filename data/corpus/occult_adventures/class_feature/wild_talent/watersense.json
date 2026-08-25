@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Watersense",
     "name": "Watersense",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element water; Type utility (Su); Level 4; Burn - You gain tremorsense with a range of 30 feet to detect anything in contact with the same body of water as you. While you are benefiting from this tremorsense, your water blasts and composite blasts that include water don't suffer a miss chance from concealment or total concealment against creatures you detect with this tremorsense.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

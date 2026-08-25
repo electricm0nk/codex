@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:08:27Z",
+  "data": {
+    "key": "Falling Water Gambit",
+    "category": "Combat",
+    "name": "Falling Water Gambit",
+    "description": "[redacted PI]",
+    "prerequisites": [
+      "[redacted PI]",
+      "[redacted PI]",
+      "PRETOTALAB:8"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 9,
+    "record_key": "Falling Water Gambit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,prerequisites",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist ~ Collective",
+    "name": "Collective",
+    "class": "Vitalist",
+    "description": "Connect %1 willing minds into collective, manifest certain powers on members|CollectiveMinds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist ~ Collective"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural.Collective.ThrallherdLinkMinds"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CollectiveRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CollectiveMinds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CollectiveLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Connect %1 willing minds into collective, manifest certain powers on members|CollectiveMinds"
+      },
+      {
+        "key": "DESC",
+        "value": " range: %1 ft.|CollectiveRange|PREVARLTEQ:CollectiveLVL,14,EnlargedCollectiveLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": " range: on plane.|PREMULT:3,[PREMULT:1,[PREVARGTEQ:CollectiveLVL,15],[PREVARGTEQ:EnlargedCollectiveLVL,12]],[PREVARLTEQ:CollectiveLVL,18],[PREVARLTEQ:EnlargedCollectiveLVL,15]"
+      },
+      {
+        "key": "DESC",
+        "value": " range: across planes.|PREMULT:1,[PREVARGTEQ:CollectiveLVL,19],[PREVARGTEQ:EnlargedCollectiveLVL,16]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveRange|100+(10*CollectiveLVL)|!PREABILITY:1,CATEGORY=FEAT,Enlarged Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveRange|400+(40*EnlargedCollectiveLVL)|PREABILITY:1,CATEGORY=FEAT,Enlarged Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveMinds|max(CollectiveLVL/2,VitalistPrimeStat)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveLVL|VitalistLVL|!PREABILITY:1,CATEGORY=FEAT,Expansive Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveLVL|HD|PREABILITY:1,CATEGORY=FEAT,Expansive Collective"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.70"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 953,
+    "record_key": "Vitalist ~ Collective"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

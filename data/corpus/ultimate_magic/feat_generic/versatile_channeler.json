@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Versatile Channeler",
+    "name": "Versatile Channeler",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Channel Negative Energy,TYPE.Channel Positive Energy"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:2,[PREALIGN:LN,TN,CN],[PREMULT:1,[PREDEITYALIGN:LN,TN,CN],[PREDEITY:1,None]]],[PREVARGTEQ:NecromancySchoolLVL,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Versatile Channeler|1"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You may choose to channel positive energy as if your effective cleric level were 2 levels lower than normal.|PREABILITY:1,CATEGORY=Special Ability,Versatile Channeler ~ Positive Energy"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You may choose to channel negative energy as if your effective cleric level were 2 levels lower than normal.|PREABILITY:1,CATEGORY=Special Ability,Versatile Channeler ~ Negative Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 164,
+    "record_key": "Versatile Channeler"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

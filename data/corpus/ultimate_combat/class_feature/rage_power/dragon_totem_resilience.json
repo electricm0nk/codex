@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Dragon Totem Resilience",
     "name": "Dragon Totem Resilience",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the barbarian gains resistance to the energy type that is associated with her dragon totem-acid (black, copper, green), cold (silver, white), electricity (blue, bronze), or fire (brass, gold, red). This resistance equals double her current DR/- from her barbarian damage reduction class feature; this DR increases by 2 for each dragon totem rage power she possesses, including this one. A barbarian must have the dragon totem rage power and be at least 8th level before selecting this rage power.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

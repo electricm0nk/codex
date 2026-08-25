@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Impervious Companion",
+    "name": "Impervious Companion",
+    "description": "You can make your bonded creature more resistant to damage. Select one animal companion, eidolon, familiar, or bonded mount. This creature gains any epic damage reduction that you gain from the impervious body path ability. You must have the impervious body path ability to select this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Impervious Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=Special Ability,Mythic Path ~ Guardian,Mythic Path Ability ~ Impervious Body"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Pool_Impervious_Companion|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make your bonded creature more resistant to damage. Select one animal companion, eidolon, familiar, or bonded mount. This creature gains any epic damage reduction that you gain from the impervious body path ability. You must have the impervious body path ability to select this ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_Impervious_Companion|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 328,
+    "record_key": "Mythic Path Ability ~ Impervious Companion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

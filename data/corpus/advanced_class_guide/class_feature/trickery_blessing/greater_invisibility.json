@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Trickery Blessing ~ Greater Invisibility",
     "name": "Greater Invisibility",
-    "class": "Trickery Blessing",
+    "class": "Warpriest",
     "description": "As a swift action you can become invisible for 1 round (as greater invisibility).",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

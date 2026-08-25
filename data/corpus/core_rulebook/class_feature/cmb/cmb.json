@@ -1,0 +1,258 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "CMB",
+    "name": "CMB",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "CMB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_STAT|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_ACMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CM_SizeMod|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_STAT|STR|TYPE=Stat|PRESIZEGT:T"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_STAT|DEX|TYPE=Stat|PRESIZELTEQ:T|PREVAREQ:DisableCMDDex,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_STAT|CHA|TYPE=Stat|PRESIZELTEQ:T|PREVAREQ:UseCHAForCMDStat,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_STAT|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_ACMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CM_SizeMod|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_STAT|STR|TYPE=Stat|PRESIZEGT:T"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_STAT|DEX|TYPE=Stat|PRESIZELTEQ:T|PREVAREQ:DisableCMDDex,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_STAT|CHA|TYPE=Stat|PRESIZELTEQ:T|PREVAREQ:UseCHAForCMDStat,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_BAB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_BAB|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_BAB|BAB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_BAB|BAB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CM_SizeMod|-8|PRESIZEEQ:F"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CM_SizeMod|-4|PRESIZEEQ:D"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CM_SizeMod|-2|PRESIZEEQ:T"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CM_SizeMod|-1|PRESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CM_SizeMod|1|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CM_SizeMod|2|PRESIZEEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CM_SizeMod|4|PRESIZEEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CM_SizeMod|8|PRESIZEEQ:C"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB|CMB_BAB+CMB_STAT+CM_SizeMod"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD|10+CMD_BAB+STR+DEX+CM_SizeMod+var(\"AC.CMD\")"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_BullRush|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_BullRush|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_BullRush|CMB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_BullRush|CMD"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_Disarm|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_Disarm|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Disarm|CMB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Disarm|CMD"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_Grapple|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_Grapple|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|CMB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Grapple|CMD"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|1|PREABILITY:1,CATEGORY=FEAT,Weapon Focus (Grapple)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple|1|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Focus (Grapple)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_Overrun|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_Overrun|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Overrun|CMB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Overrun|CMD"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_Sunder|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_Sunder|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Sunder|CMB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Sunder|CMD"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMB_Trip|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CMD_Trip|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Trip|CMB"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Trip|CMD"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_Trip|(LEGS-2)*2|PREVARGTEQ:LEGS,2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2901,
+    "record_key": "CMB"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

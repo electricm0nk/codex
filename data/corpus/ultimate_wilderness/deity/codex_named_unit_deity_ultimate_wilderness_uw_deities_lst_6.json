@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_6)",
+    "name": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_6)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Charm,Earth,Evil,Plant,Caves Subdomain,Decay Subdomain,Growth Subdomain,Lust Subdomain|PREALIGN:TN,LE,NE,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Eldest of carnivorous plants, intrigue, seduction"
+      },
+      {
+        "key": "FACT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Briar-wrapped lips"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Sickle"
+      },
+      {
+        "key": "ALIGN",
+        "value": "NE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorDomainCharm,InquisitorDomainEarth,InquisitorDomainEvil,InquisitorDomainPlant,InquisitorDomainCavesSubdomain,InquisitorDomainDecaySubdomain,InquisitorDomainGrowthSubdomain,InquisitorDomainLustSubdomain|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
+    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f",
+    "line": 6,
+    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_6)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_wilderness:uw_deities.lst:6"
+  }
+}

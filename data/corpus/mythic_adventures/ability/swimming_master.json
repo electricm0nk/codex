@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Swimming Master",
+    "name": "Swimming Master",
+    "description": "You gain a swim speed equal to your base land speed and a +8 racial bonus on Swim checks. If you already have a swim speed, your base swim speed increases by 30 feet. You can hold your breath for %1 minutes, but afterward you must succeed at checks as normal to avoid drowning. If you expend one use of mythic power, for 1 hour your base swim speed increases by %2 feet.|Ability_SwimmingMaster_Breath|Ability_SwimmingMaster_Speed",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Swimming Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_SwimmingMaster_Breath|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_SwimmingMaster_Speed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a swim speed equal to your base land speed and a +8 racial bonus on Swim checks. If you already have a swim speed, your base swim speed increases by 30 feet. You can hold your breath for %1 minutes, but afterward you must succeed at checks as normal to avoid drowning. If you expend one use of mythic power, for 1 hour your base swim speed increases by %2 feet.|Ability_SwimmingMaster_Breath|Ability_SwimmingMaster_Speed"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Swimming Master ~ Has Swim|Swimming Master ~ No Swim"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_SwimmingMaster_Breath|10*CONSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_SwimmingMaster_Speed|10*MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 265,
+    "record_key": "Mythic Path Ability ~ Swimming Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

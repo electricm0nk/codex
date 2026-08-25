@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lycanthropy Manifestation Count",
+    "name": "Lycanthropy Manifestation Count",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=9|TITLE=Lycanthropy Manifestation Count"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LycanthropyManifestationCount|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|LycanthropyManifestationCount|%CHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Lycanthropy Manifestation Choice|LycanthropyManifestationCount"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 547,
+    "record_key": "Lycanthropy Manifestation Count"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

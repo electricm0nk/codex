@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Ophiduan ~ Poisonous Flesh",
+    "delivery": null,
+    "description": "Use prevenom or prevenom weapon once per day.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_psionics:monster_ability:ophiduan_poisonous_flesh",
+    "name": "Poisonous Flesh",
+    "owners": [
+      "ultimate_psionics:monster:ophiduan"
+    ],
+    "source_page": "p.336",
+    "traits": [
+      "RacialTraits",
+      "OphiduanRacialTrait",
+      "OphiduanSerpentsBite"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 318,
+    "record_key": "Ophiduan ~ Poisonous Flesh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ]
+}

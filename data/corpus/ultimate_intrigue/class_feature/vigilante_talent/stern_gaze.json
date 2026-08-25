@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Stern Gaze",
     "name": "Stern Gaze",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "A zealot with this talent is skilled at sensing deception and intimidating his foes. The zealot gains a +%1 morale bonus on all Intimidate and Sense Motive checks|max(1,VigilanteLVL/2)",
     "raw_tokens": [
       {
@@ -57,5 +57,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

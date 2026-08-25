@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_8)",
+    "category": "ArmsArmor",
+    "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_8)",
+    "cost_gp": 0.0,
+    "weight_lbs": 10.0,
+    "description": "fire shield (warm) 1/day, redirect ranged/melee attack on adj ally 1/rnd as immed, benefits to allies within 100 ft."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst",
+    "sha256": "552092581f8480ce2a536d5358ebd3049ccb2f93a7e65a10a6287acbff6e50fa",
+    "line": 8,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_8)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_equip_arms_armor.lst:8"
+  }
+}

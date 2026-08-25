@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Weapon Master",
     "name": "Weapon Master",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "As a swift action, you gain the use of one combat feat for %1 rounds per day. These rounds do not need to be consecutive and you can change the feat chosen each time you use this ability. You must meet the prerequisites to use these feats.|WeaponMasterRounds",
     "raw_tokens": [
       {
@@ -63,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

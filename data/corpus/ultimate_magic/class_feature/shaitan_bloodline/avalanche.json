@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaitan Bloodline ~ Avalanche",
     "name": "Avalanche",
-    "class": "Shaitan Bloodline",
+    "class": "Sorcerer",
     "description": "Whenever you hit a single target with a spell that deals damage, you may make a bull rush check as a swift action. Your CMB for this maneuver is %1. You can make this maneuver even if the target is not in melee range, and you do not provoke an attack of opportunity for making this maneuver. If the target is in contact with earth, stone, or rock, you gain a +4 bonus on your CMB check.|Sorcerer_ShaitanAvalanche_BullRushCMB",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

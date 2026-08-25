@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Shield Master",
+    "category": "Combat",
+    "name": "Shield Master",
+    "description": "Your mastery of the shield allows you to fight with it without hindrance.",
+    "prerequisites": [
+      "PREABILITY:3,CATEGORY=FEAT,Improved Shield Bash,Shield Slam,Two-Weapon Fighting",
+      "PREMULT:1,[PREPROFWITHSHIELD:3,TYPE.Buckler,TYPE.Light,TYPE.Heavy],[PREABILITY:1,CATEGORY=FEAT,Shield Proficiency]",
+      "PRETOTALAB:11"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 148,
+    "record_key": "Shield Master"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

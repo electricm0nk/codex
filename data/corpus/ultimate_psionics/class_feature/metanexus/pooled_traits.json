@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metanexus ~ Pooled Traits",
+    "name": "Pooled Traits",
+    "class": "Metanexus",
+    "description": "Any member of your collective can choose to use one of the racial traits of another willing member of the collective.  Using this racial trait counts as a use for the member with the ability to be used and the benefiting collective member must spend the appropriate action to use the ability.  Only racial traits that are limited in use per day or that require a power point cost can be distributed in this way, but if the ability has a power point cost, the benefiting member must pay double the normal power point cost.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metanexus ~ Pooled Traits"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Any member of your collective can choose to use one of the racial traits of another willing member of the collective.  Using this racial trait counts as a use for the member with the ability to be used and the benefiting collective member must spend the appropriate action to use the ability.  Only racial traits that are limited in use per day or that require a power point cost can be distributed in this way, but if the ability has a power point cost, the benefiting member must pay double the normal power point cost."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2285,
+    "record_key": "Metanexus ~ Pooled Traits"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

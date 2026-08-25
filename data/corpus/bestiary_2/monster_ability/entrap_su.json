@@ -1,0 +1,68 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Entrap ~ Su",
+    "delivery": "Supernatural",
+    "description": "The creature has an ability that restricts another creature's movement, usually with a physical attack such as ice, mud, lava, or webs.  The target of an entrap must make a DC %1 Fortitude save or become entangled for the duration.  If a target is already entangled by this ability, a second entrap attack means the target must make a Fortitude save or become helpless for the listed duration.  A target made helpless by this ability is conscious but can take no physical actions (except attempting to break free) until the entrapping material is removed.  The target can use spells with only verbal components or spell-like abilities if it can make a DC 20 concentration check.  An entangled creature can make a DC %1 Strength check as a full-round action to break free; the DC for a helpless creature is +5 greater than the saving throw DC.  Destroying the entrapping material frees the creature.",
+    "description_variables": [
+      "EntrapDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:entrap_su",
+    "name": "Entrap",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Entrap"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EntrapDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EntrapDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Entrap)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EntrapDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature has an ability that restricts another creature's movement, usually with a physical attack such as ice, mud, lava, or webs.  The target of an entrap must make a DC %1 Fortitude save or become entangled for the duration.  If a target is already entangled by this ability, a second entrap attack means the target must make a Fortitude save or become helpless for the listed duration.  A target made helpless by this ability is conscious but can take no physical actions (except attempting to break free) until the entrapping material is removed.  The target can use spells with only verbal components or spell-like abilities if it can make a DC 20 concentration check.  An entangled creature can make a DC %1 Strength check as a full-round action to break free; the DC for a helpless creature is +5 greater than the saving throw DC.  Destroying the entrapping material frees the creature.|EntrapDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Entrap ~ Su"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1872,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Entrap ~ Su",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

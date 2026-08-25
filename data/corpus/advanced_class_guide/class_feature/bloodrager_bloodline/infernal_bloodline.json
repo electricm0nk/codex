@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Infernal",
     "name": "Infernal Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "The Pit lives in your blood. Maybe one of your ancestors was seduced by the powers of Hell, or they made a deal with one its denizens, either way its corruption seethes within your lineage, and makes you fight with devilish ferocity.|PREVAREQ:Bloodrager_Infernal_Description,0",
     "raw_tokens": [
       {
@@ -196,5 +196,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

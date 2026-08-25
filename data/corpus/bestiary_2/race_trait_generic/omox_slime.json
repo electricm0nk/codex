@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Omox ~ Slime",
+    "name": "Slime",
+    "description": "An omox's nauseating body is composed of sticky, acidic slime.  As an attack action, it can hurl a glob of slime (range increment 20 feet).  Any creature that is struck by the glob must make a DC %1 Reflex save or become entangled for 1d6 rounds.|OmoxSlimeDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Omox ~ Slime"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OmoxSlimeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An omox's nauseating body is composed of sticky, acidic slime.  As an attack action, it can hurl a glob of slime (range increment 20 feet).  Any creature that is struck by the glob must make a DC %1 Reflex save or become entangled for 1d6 rounds.|OmoxSlimeDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Slime"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OmoxSlimeDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OmoxSlimeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Slime)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slime,Weapon.Natural.Weapon Group Natural.Ranged.Acid.Entangle,*1,1d6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 358,
+    "record_key": "Omox ~ Slime"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Warmonger Spirit",
+    "name": "Warmonger Spirit",
+    "class": "Medium",
+    "description": "The Warmonger is a spirit of unbridled strife, inspiring others to throw their lives away in pursuit of hatred and vengeance.&nl;",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Warmonger Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "The Warmonger is a spirit of unbridled strife, inspiring others to throw their lives away in pursuit of hatred and vengeance.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Gaining Favor: To gain the Warmonger's favor, you must intentionally incite a war or blood feud between two groups (which could be nations but don't have to be) that results in at least 36 deaths. You must then swear an oath to never allow quarter or truce or to compromise with those who will not meet your demands, and succeed at a Charisma check (DC %1).&nl;|10+MediumLVL/2"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored Locations: Barracks, battlefields, fortresses, throne rooms.&nl; |PREVARLT:SpiritHideLocation,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Influence Penalty: The time you spend concentrating on your allies prevents you from attending to other important matters. You take a -%1 penalty on Wisdom checks and Wisdom-based skill checks. Additionally, if you are not at least nominally in charge of your present allies, you lose the marshal's spirit bonus and seance boon.&nl; Taboos: Choose one: you may not allow yourself or your allies to prevent a fleeing enemy from escaping, since an at-large villain makes a better tale (this applies only to enemies seeking to escape, not to those retreating to alert others or fight again from a better position); you may never leave an ally behind or allow yourself or your allies to sacrifice another ally, even a summoned creature; you must embrace any opportunity to spread the legend of yourself and your allies, even when a low profile would be helpful.|SpiritBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Marshal Spirit Bonus|!PREFACT:1,ABILITIES,Medium_CF_SpiritBonus=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Marshal Seance Boon|Medium ~ Warmonger ~ No Mercy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Warmonger ~ Warmonger's Way|PREVARGTEQ:MediumLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Warmonger ~ Inspiring Call|PREVARGTEQ:MediumLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Legendary Marshal|PREVARGTEQ:MediumLVL,17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 125,
+    "record_key": "Medium ~ Warmonger Spirit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Warpriest ~ Favored Class Blessings",
+    "name": "Blessings (Favored Class)",
+    "class": "Warpriest",
+    "description": "You can call upon the power of your blessings a further %1 times per day, but only on blessings that affect weapons or armor|WarpriestBlessingFavoredClassUses|PREVARGTEQ:DwarfWarpriestFavClassBonus,3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest ~ Favored Class Blessings"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|WarpriestBlessingFavoredClassUses"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon the power of your blessings a further %1 times per day, but only on blessings that affect weapons or armor|WarpriestBlessingFavoredClassUses|PREVARGTEQ:DwarfWarpriestFavClassBonus,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingFavoredClassUses|DwarfWarpriestFavClassBonus/3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call upon the power of your blessings a further %1 times per day, but only on blessings from the Air, Animal, Charm, Magic, Plant, or Sun domains|WarpriestBlessingFavoredClassUses|PREVARGTEQ:ElfWarpriestFavClassBonus,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpriestBlessingFavoredClassUses|ElfWarpriestFavClassBonus/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 471,
+    "record_key": "Warpriest ~ Favored Class Blessings"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

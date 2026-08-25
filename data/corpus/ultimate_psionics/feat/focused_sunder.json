@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Focused Sunder",
+    "category": "Psionic",
+    "name": "Focused Sunder",
+    "description": "Ignore 1/2 hardness of foe's weapon",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Power Attack,Improved Sunder",
+      "PRESTAT:1,STR=13",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 135,
+    "record_key": "Focused Sunder"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

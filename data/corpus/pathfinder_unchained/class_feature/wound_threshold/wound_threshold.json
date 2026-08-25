@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wound Threshold",
+    "name": "Wound Threshold",
+    "class": null,
+    "description": "Maximum [%1]; Grazed (-1) [%2]; Wounded (-2) [%3]; Critical (-3) [%4]; Disabled [0 to %5]; Dying [%6]; Dead [%7]|WoundThreshold_Maximum|WoundThreshold_Grazed|WoundThreshold_Wounded|WoundThreshold_Critical|WoundThreshold_Disabled|WoundThreshold_Dying|WoundThreshold_Dead",
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "0"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoundThreshold_Maximum|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoundThreshold_Grazed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoundThreshold_Wounded|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoundThreshold_Critical|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoundThreshold_Disabled|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoundThreshold_Dying|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WoundThreshold_Dead|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Maximum [%1]; Grazed (-1) [%2]; Wounded (-2) [%3]; Critical (-3) [%4]; Disabled [0 to %5]; Dying [%6]; Dead [%7]|WoundThreshold_Maximum|WoundThreshold_Grazed|WoundThreshold_Wounded|WoundThreshold_Critical|WoundThreshold_Disabled|WoundThreshold_Dying|WoundThreshold_Dead"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoundThreshold_Maximum|var(\"HP\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoundThreshold_Grazed|WoundThreshold_Maximum*3/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoundThreshold_Wounded|WoundThreshold_Maximum*1/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoundThreshold_Critical|WoundThreshold_Maximum*1/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoundThreshold_Disabled|-max(0,CON)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoundThreshold_Dying|-max(1,CON+1)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WoundThreshold_Dead|-max(10,CONSCORE)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 29,
+    "record_key": "Wound Threshold"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

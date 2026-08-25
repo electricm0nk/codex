@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Extra Inspiration",
+    "category": "General",
+    "name": "Extra Inspiration",
+    "description": "You are more able to draw upon inspiration than most.",
+    "prerequisites": [
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Amateur Investigator],[PREABILITY:1,CATEGORY=Special Ability,Investigator ~ Inspiration]",
+      "PREMULT:1,[!PREABILITY:1,CATEGORY=FEAT,Extra Inspiration],[PREABILITY:1,CATEGORY=Special Ability,Investigator ~ Inspiration]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 62,
+    "record_key": "Extra Inspiration"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

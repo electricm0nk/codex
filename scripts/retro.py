@@ -396,6 +396,8 @@ def auto_summary(event_type: str, values: dict) -> str:
         return f"caught before {get('would_have')} by {get('caught_by')}"
     if event_type == "deferral":
         return f"deferred {get('what')}: {get('reason')}"
+    if event_type == "resolution":
+        return f"resolved {get('resolves')}: {get('how')}"
     if event_type == "rework":
         return f"redid {get('what')}: {get('cause')}"
     if event_type == "verification":
@@ -674,6 +676,16 @@ def build_summary(events: list[dict], problems, args: argparse.Namespace, direct
     escaped = sum(1 for e in near_misses if e.get("escaped"))
 
     deferrals = of_type("deferral")
+    # A deferral is open until some later event -- almost always a
+    # `resolution` -- names its id in its own `resolves` field. This is
+    # checked generically over every event's `resolves`, not only
+    # `resolution`-typed ones, on purpose: the field is what defines
+    # "resolved", not the type name carrying it, so the vocabulary can grow a
+    # second way to close something out later without this computation
+    # silently missing it.
+    resolved_ids = {e.get("resolves") for e in events if e.get("resolves")}
+    open_deferrals = [e for e in deferrals if e.get("id") not in resolved_ids]
+    resolved_deferrals = [e for e in deferrals if e.get("id") in resolved_ids]
     rework = of_type("rework")
     rework_causes: collections.Counter = collections.Counter()
     for event in rework:
@@ -752,16 +764,25 @@ def build_summary(events: list[dict], problems, args: argparse.Namespace, direct
         },
         "deferrals": {
             "total": len(deferrals),
-            "open": [
+            # `open` is a count of unresolved deferrals -- it must not vary
+            # with --limit. It used to be `deferrals[-limit:]`, the last N
+            # deferrals emitted, which had never measured openness at all:
+            # `--limit 3` reported 3 "open", `--limit 29` reported 29 of the
+            # same total. See docs/retro/schema.json's `resolution` type.
+            "open": len(open_deferrals),
+            "resolved": len(resolved_deferrals),
+            "open_items": [
                 {
+                    "id": e.get("id"),
                     "ts": e.get("ts"),
                     "actor": e.get("actor"),
                     "what": e.get("what"),
                     "reason": e.get("reason"),
                     "revisit": e.get("revisit"),
                 }
-                for e in deferrals[-limit:]
+                for e in open_deferrals
             ],
+            "recent": [brief(e) for e in deferrals[-limit:]],
         },
         "rework": {
             "total": len(rework),
@@ -835,8 +856,9 @@ def render_summary(doc: dict) -> str:
     add("")
 
     deferrals = doc["deferrals"]
-    add(f"DEFERRALS  {deferrals['total']}")
-    for item in deferrals["open"]:
+    add(f"DEFERRALS  {deferrals['total']} total, {deferrals['open']} open, "
+        f"{deferrals['resolved']} resolved")
+    for item in deferrals["open_items"]:
         revisit = f"  [revisit: {item['revisit']}]" if item.get("revisit") else ""
         add(f"    - {item['what']} — {item['reason']}{revisit}")
     add("")

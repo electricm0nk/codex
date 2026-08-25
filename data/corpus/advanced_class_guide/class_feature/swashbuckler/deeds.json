@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler ~ Deeds",
     "name": "Deeds",
@@ -43,6 +43,82 @@
       {
         "key": "ASPECT",
         "value": "MasterAbility|Deeds"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Derring-Do|PREVAREQ:Swashbuckler_CF_DerringDoDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Dodging Panache|PREVAREQ:Swashbuckler_CF_DodgingPanacheDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Opportune Parry and Riposte|PREVAREQ:Swashbuckler_CF_OpportuneParryandRiposteDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Kip-Up|PREVAREQ:Swashbuckler_CF_KipUpDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Menacing Swordplay|PREVAREQ:Swashbuckler_CF_MenacingSwordplayDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Precise Strike|PREVAREQ:Swashbuckler_CF_PreciseStrikeDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Swashbuckler Initiative|PREVAREQ:Swashbuckler_CF_SwashbucklersInitiativeDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Swashbuckler's Grace|PREVAREQ:Swashbuckler_CF_SwashbucklersGraceDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Superior Feint|PREVAREQ:Swashbuckler_CF_SuperiorFeintDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Targeted Strike|PREVAREQ:Swashbuckler_CF_TargetedStrikeDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Bleeding Wound|PREVAREQ:Swashbuckler_CF_BleedingWoundDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Subtle Blade|PREVAREQ:Swashbuckler_CF_SubtleBladeDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Evasive|PREVAREQ:Swashbuckler_CF_EvasiveDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Dizzying Defense|PREVAREQ:Swashbuckler_CF_DizzyingDefenseDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Perfect Thrust|PREVAREQ:Swashbuckler_CF_PerfectThrustDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Swashbuckler's Edge|PREVAREQ:Swashbuckler_CF_SwashbucklersEdgeDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Cheat Death|PREVAREQ:Swashbuckler_CF_CheatDeathDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Deadly Stab|PREVAREQ:Swashbuckler_CF_DeadlyStabDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swashbuckler ~ Stunning Stab|PREVAREQ:Swashbuckler_CF_StunningStabDeed,0|PREVARGTEQ:SwashbucklerDeedsLVL,19"
       }
     ]
   },
@@ -59,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

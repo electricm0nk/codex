@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Gynosphinx ~ Symbol of Fear",
+    "delivery": null,
+    "description": "May cast Symbol of Fear (DC 20) once per week. Symbol will last for 1 week maximum.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:gynosphinx_symbol_of_fear",
+    "name": "Symbol of Fear",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special ability"
+      },
+      {
+        "key": "DESC",
+        "value": "May cast Symbol of Fear (DC 20) once per week. Symbol will last for 1 week maximum."
+      },
+      {
+        "key": "KEY",
+        "value": "Gynosphinx ~ Symbol of Fear"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.257"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=Week|CASTERLEVEL=12|Symbol of Fear,16+CHA"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Spelllike"
+      }
+    ],
+    "source_page": "p.257",
+    "traits": [
+      "Spelllike"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1146,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Gynosphinx ~ Symbol of Fear",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

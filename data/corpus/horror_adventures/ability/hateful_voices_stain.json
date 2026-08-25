@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Possessed Corruption ~ Hateful Voices Stain",
+    "name": "Hateful Voices Stain",
+    "description": "Whenever a character you consider an ally or friend betrays or disappoints you, even if the disappointment is completely innocent, you unknowingly mutter (Perception DC 15 for others to hear) about how that character was an enemy all along and must be made to pay. As long as the spirit has 3 or more points of influence, you gain no benefit from another creature's aid another attempts.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Hateful Voices Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedHatefulVoicesStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a character you consider an ally or friend betrays or disappoints you, even if the disappointment is completely innocent, you unknowingly mutter (Perception DC 15 for others to hear) about how that character was an enemy all along and must be made to pay. As long as the spirit has 3 or more points of influence, you gain no benefit from another creature's aid another attempts."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 651,
+    "record_key": "Possessed Corruption ~ Hateful Voices Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Copper Dragon ~ Slow Aura",
+    "delivery": "Supernatural",
+    "description": "An old or older copper dragon is surrounded by an aura of slowness. All creatures within %1 feet of the dragon must make a Will save (DC %2) or be affected as per slow for 1 round. A copper dragon can suppress or activate this aura at will as a free action. For great wyrm copper dragons, those opponents that fail their saves are slowed for 1d4 rounds.",
+    "description_variables": [
+      "SlowAuraRange",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:copper_dragon_slow_aura",
+    "name": "Slow Aura",
+    "owners": [
+      "beastiary:monster:dragon_copper"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., DC %2)|SlowAuraRange|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlowAuraRange|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlowAuraRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An old or older copper dragon is surrounded by an aura of slowness. All creatures within %1 feet of the dragon must make a Will save (DC %2) or be affected as per slow for 1 round. A copper dragon can suppress or activate this aura at will as a free action.|SlowAuraRange|BreathWeaponDC"
+      },
+      {
+        "key": "DESC",
+        "value": "For great wyrm copper dragons, those opponents that fail their saves are slowed for 1d4 rounds.|PREVARGTEQ:DragonAgeCategory,12"
+      },
+      {
+        "key": "KEY",
+        "value": "Copper Dragon ~ Slow Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.106",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 480,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Copper Dragon ~ Slow Aura",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

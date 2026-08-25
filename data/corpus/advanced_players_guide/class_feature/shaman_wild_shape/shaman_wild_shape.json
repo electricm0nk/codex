@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Wild Shape",
     "name": "Shaman Wild Shape",
-    "class": null,
+    "class": "Shaman",
     "description": "You can change shape %1 time / day for up to %2 hours|ShamanWildShapeTimes|ShamanWildShapeDuration|PREVAREQ:ShamanWildShapeProgression,1",
     "raw_tokens": [
       {
@@ -43,6 +43,34 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.51"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Small or Medium totem animal.|PREVAREQ:ShamanWildShapeProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Tiny, Small, Medium or Large totem animal.|PREVAREQ:ShamanWildShapeProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge totem animal.|PREVAREQ:NoPlantShape,0|PREVAREQ:ShamanWildShapeProgression,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge totem animal.|PREVAREQ:NoPlantShape,1|PREVAREQ:ShamanWildShapeProgression,3"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an totem animal, this functions as Beast Shape I|PREVAREQ:ShamanWildShapeProgression,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an totem animal, this functions as Beast Shape II|PREVAREQ:ShamanWildShapeProgression,2"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an totem animal, this functions as Beast Shape III|PREVARGTEQ:ShamanWildShapeProgression,3"
       }
     ]
   },
@@ -59,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

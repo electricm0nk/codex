@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shifter ~ Shifter Aspect",
     "name": "Shifter Aspect",
@@ -67,6 +67,26 @@
       {
         "key": "ASPECT",
         "value": "MasterAbility|Shifter Aspect"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PREVARGTEQ:ShifterLVL,1|PREVAREQ:Shifter_CF_ShifterAspect1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PREVARGTEQ:ShifterLVL,5|PREVAREQ:Shifter_CF_ShifterAspect2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PREVARGTEQ:ShifterLVL,10|PREVAREQ:Shifter_CF_ShifterAspect3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PREVARGTEQ:ShifterLVL,15|PREVAREQ:Shifter_CF_ShifterAspect4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Shifter Aspect Choice|-1|PREVARGTEQ:ShifterLVL,20|PREVAREQ:Shifter_CF_ShifterAspect5,1"
       }
     ]
   },
@@ -84,5 +104,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Gruesome Slaughter",
     "name": "Gruesome Slaughter",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Creatures you demoralize by using the Killing Flourish feat must succeed at a Fortitude save (DC = %1) or become sickened for 1 minute.|CL/2+10+max(DEX,STR)",
     "raw_tokens": [
       {
@@ -61,5 +61,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

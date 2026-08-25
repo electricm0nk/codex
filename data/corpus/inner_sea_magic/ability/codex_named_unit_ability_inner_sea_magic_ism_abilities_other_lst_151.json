@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_151)",
+    "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_151)",
+    "description": "You gain the ability to cast eagle's splendor once per day as a spell-like ability (caster level equals %1).|TL-HD",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.MonasteryReward"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=(TL-HD)|Eagle's Splendor"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the ability to cast eagle's splendor once per day as a spell-like ability (caster level equals %1).|TL-HD"
+      },
+      {
+        "key": "COST",
+        "value": "7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 151,
+    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_151)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_magic:ism_abilities_other.lst:151"
+  }
+}

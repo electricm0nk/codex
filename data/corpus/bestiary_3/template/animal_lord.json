@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Animal Lord",
+    "name": "Animal Lord",
+    "raw_tokens": [
+      {
+        "key": "DR",
+        "value": "10/silver"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|STR|AnimalSTRScore"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|DEX|AnimalDEXScore"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|CON|AnimalCONScore"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|INT|AnimalINTScore"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|WIS|AnimalWISScore"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "MINVALUE|CHA|AnimalCHAScore"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "NG,TN,NE,CN,LN"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=10"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACETYPE=Humanoid"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Animal Lord Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|CR|max(0,CR-AnimalBaseCR)+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Animal Lord ~ Change Shape|Animal Lord ~ Dominion|Animal Lord ~ Spell-Like Abilities"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Animal Lord"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Native|Shapechanger"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_templates.lst",
+    "sha256": "2558383378bdc55d460faa927817343ff857be38c8ea7cf620f3a61c09e11b2b",
+    "line": 8,
+    "record_key": "Animal Lord"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Flexible School Power ~ Illusion ~ Extended Illusion",
+    "name": "Extended Illusion",
+    "description": "Any illusion spell you cast with a duration of \"concentration\" lasts an additional %1 rounds after you stop maintaining concentration.|IllusionExtendedIllusionBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flexible School Power ~ Illusion ~ Extended Illusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Illusion School ~ Extended Illusion"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IllusionExtendedIllusionBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any illusion spell you cast with a duration of \"concentration\" lasts an additional %1 rounds after you stop maintaining concentration.|IllusionExtendedIllusionBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make one illusion spell with a duration of \"Concentration\" become permanent. You can have no more than one illusion made permanent in this way at one time. If you designate another illusion as permanent, the previous permanent illusion ends.|PREVARGTEQ:Ability_FlexibleSchool_IllusionLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IllusionExtendedIllusionBonus|max(1,Ability_FlexibleSchool_IllusionLVL/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 460,
+    "record_key": "Flexible School Power ~ Illusion ~ Extended Illusion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bloodline ~ Elemental",
     "name": "Elemental Bloodline",
-    "class": "Sorcerer Bloodline",
+    "class": "Sorcerer",
     "description": "The power of the elements resides in you, and at times you can hardly control its fury. This influence comes from an elemental outsider in your family history or a time when you or your relatives were exposed to a powerful elemental force.|PREVAREQ:Sorcerer_Elemental_Description,0",
     "raw_tokens": [
       {
@@ -163,6 +163,38 @@
       {
         "key": "ASPECT",
         "value": "Bloodline|Elemental"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Air)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Air)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Elemental (Air)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Air)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Earth)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Earth)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Elemental (Earth)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Earth)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Fire)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Fire)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Elemental (Fire)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Fire)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Elemental Bloodline (Water)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Water)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Elemental (Water)|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Water)"
       }
     ]
   },
@@ -180,5 +212,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

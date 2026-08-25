@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Archetype ~ Escapologist",
     "name": "Escapologist",
-    "class": "Rogue Archetype",
+    "class": "Rogue",
     "description": "The escapologist excels at escaping any conf inement, whether physical, magical, or mental. Few restraints can hold an escapologist for long.",
     "raw_tokens": [
       {
@@ -87,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

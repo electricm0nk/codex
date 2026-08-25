@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Chaos Beast ~ Resistant to Transformation",
+    "delivery": "Extraordinary",
+    "description": "Transmutation effects, such as polymorphing or petrification, force a chaos beast into a new shape, but at the start of its next turn, it immediately returns to its normal form as a free action.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:chaos_beast_resistant_to_transformation",
+    "name": "Resistant to Transformation",
+    "owners": [
+      "bestiary_2:monster:chaos_beast"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Transmutation effects, such as polymorphing or petrification, force a chaos beast into a new shape, but at the start of its next turn, it immediately returns to its normal form as a free action."
+      },
+      {
+        "key": "KEY",
+        "value": "Chaos Beast ~ Resistant to Transformation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.54",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 235,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Chaos Beast ~ Resistant to Transformation",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

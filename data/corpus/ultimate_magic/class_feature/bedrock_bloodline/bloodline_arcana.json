@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bedrock Bloodline ~ Bloodline Arcana",
     "name": "Bloodline Arcana",
-    "class": "Bedrock Bloodline",
+    "class": "Sorcerer",
     "description": "Whenever you cast a spell of the summoning subschool, the creatures summoned gain DR %1/adamantine. This does not stack with any DR the creature might have.|Sorcerer_BedrockArcana_DR",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,310 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Monk ~ Unchained Class",
+    "name": "Unchained Monk",
+    "class": "Monk",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Unchained Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Selection.AltMonkChoice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IsMonk|1|TYPE=Boolean"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Archetype,TYPE.MonkArchetype,[Archetype Monk]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Monk ~ Unchained HD"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Unchained Monk|PREVAREQ:Monk_CF_ClassSkills,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Archetype|AUTOMATIC|Unchained Monk Archetype"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Reflex|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABFull|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Will|classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Weapon and Armor Proficiency|PREVAREQ:Monk_CF_WeaponandArmorProficiency,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ AC Bonus|PREVAREQ:Monk_CF_ACBonus,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Bonus Feat|PREVAREQ:Monk_CF_BonusFeat,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Flurry of Blows|PREVAREQ:Monk_CF_FlurryofBlows,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Stunning Fist|PREVAREQ:Monk_CF_StunningFist,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Unarmed Strike|PREVAREQ:Monk_CF_UnarmedStrike,0|PREVARGTEQ:Monk_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Evasion|PREVAREQ:Monk_CF_Evasion,0|PREVARGTEQ:Monk_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Fast Movement|PREVAREQ:Monk_CF_FastMovement,0|PREVARGTEQ:Monk_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Ki Pool|PREVAREQ:Monk_CF_KiPool,0|PREVARGTEQ:Monk_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Ki Powers|PREVAREQ:Monk_CF_KiPowers,0|PREVARGTEQ:Monk_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Still Mind|PREVAREQ:Monk_CF_StillMind,0|PREVARGTEQ:Monk_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Purity of Body|PREVAREQ:Monk_CF_PurityofBody,0|PREVARGTEQ:Monk_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Style Strike|PREVAREQ:Monk_CF_StyleStrike,0|PREVARGTEQ:Monk_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Improved Evasion|PREVAREQ:Monk_CF_ImprovedEvasion,0|PREVARGTEQ:Monk_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Tongue of the Sun and Moon|PREVAREQ:Monk_CF_TongueoftheSunandMoon,0|PREVARGTEQ:Monk_CFP_Level,13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Timeless Body|PREVAREQ:Monk_CF_TimelessBody,0|PREVARGTEQ:Monk_CFP_Level,17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Flawless Mind|PREVAREQ:Monk_CF_FlawlessMind,0|PREVARGTEQ:Monk_CFP_Level,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Perfect Self|PREVAREQ:Monk_CF_PerfectSelf,0|PREVARGTEQ:Monk_CFP_Level,20"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_WeaponandArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_ACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_BonusFeat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_FlurryofBlows|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_StunningFist|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_UnarmedStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_Evasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_FastMovement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPool|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_StillMind|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_PurityofBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_StyleStrike|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_ImprovedEvasion|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_TongueoftheSunandMoon|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_TimelessBody|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_FlawlessMind|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_PerfectSelf|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers10|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers14|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Monk_CF_KiPowers20|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers10|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers10=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers14|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers14=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Monk_CF_KiPowers20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Monk_CF_KiPowers20=True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 115,
+    "record_key": "Monk ~ Unchained Class"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

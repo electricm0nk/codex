@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Speaker for the Past Time Mystery ~ Speed or Slow Time",
     "name": "Speed or Slow Time",
-    "class": "Speaker for the Past Time Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can speed up or slow down time, as either the haste or slow spell. You can use this ability %1/day.|SpeedOrSlowTimeTimes",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

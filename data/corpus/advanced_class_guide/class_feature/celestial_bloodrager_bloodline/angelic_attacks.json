@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Celestial Bloodrager Bloodline ~ Angelic Attacks",
     "name": "Angelic Attacks",
-    "class": "Celestial Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Your melee attacks are considered good-aligned weapons for the purpose of bypassing damage reduction. Furthermore, you deal 1d6 extra damage when you deal damage to an evil outsider with a melee attack. This extra damage stacks with effects such as Align Weapon and those granted by a weapon with the holy magic weapon special ability.",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

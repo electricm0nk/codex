@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Samurai",
+    "name": "Samurai",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Class"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Samurai_CFP_Level|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Samurai_CFP_Level|SamuraiLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Samurai Archetype|AUTOMATIC|Archetype Samurai"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Samurai ~ Class Skill|PREVAREQ:Samurai_CF_ClassSkills,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_globalvar.lst",
+    "sha256": "03c83261fa96e2b76bec35783730df9b8eac24142d4d023966535b168807122d",
+    "line": 8,
+    "record_key": "Samurai"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Mummification",
     "name": "Mummification",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You have mastered preserving flesh and applied this knowledge to your own body, turning yourself into an undeadlike creature. After learning this discovery, you must perform a 30-day regimen of a special diet, rigorous exercise, and drinking a mildly poisonous alchemical tea. At the end of this regimen, you fall unconscious for 24 hours, then awaken as a \"living mummy.\" Your type does not change, but you become immune to cold, nonlethal damage, paralysis, and sleep.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

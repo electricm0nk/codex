@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Death Slayer ~ Favored Enemy",
     "name": "Favored Enemy",
-    "class": "Death Slayer",
+    "class": "Slayer",
     "description": "A death slayer gains undead as a favored enemy. This ability functions as the ranger class feature of the same name and stacks with similar bonuses from other classes. (This doesn't increase existing favored enemy bonuses against any other creature types.)",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

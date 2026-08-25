@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Retrain ~ Class Level",
+    "name": "Class Level",
+    "description": "[not implemeted] You retrained one or more class levels. This ability tracks the number of days spent to retrain a class level to another class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Retrain ~ Class Level"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Retraining"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RetrainingDaysSpent|0"
+      },
+      {
+        "key": "DESC",
+        "value": "[not implemeted] You retrained one or more class levels. This ability tracks the number of days spent to retrain a class level to another class level."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITY|Special Ability|TYPE=RetrainingClassLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RetrainingDaysSpent|3|PREABILITY:1,CATEGORY=Special Ability,Retrain ~ Class Level(Retraining ~ Class Level ~ NPC)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RetrainingDaysSpent|5|PREABILITY:1,CATEGORY=Special Ability,Retrain ~ Class Level(Retraining ~ Class Level ~ Synnergy)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RetrainingDaysSpent|3|PREABILITY:1,CATEGORY=Special Ability,Retrain ~ Class Level(Any)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_retraining.lst",
+    "sha256": "2a7a5c3921a0b079d19ac48eea38f66d6cd6672279557f8272d05e825ed8b643",
+    "line": 20,
+    "record_key": "Retrain ~ Class Level"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

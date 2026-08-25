@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Tail",
+    "name": "Tail",
+    "description": "The eidolon grows a long, powerful tail. This grants it a +2 racial bonus on Acrobatics checks to balance on a surface. This evolution can be selected more than once.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Tail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Eidolon Subtype ~ Agathion,Eidolon Subtype ~ daemon,Eidolon Subtype ~ demon,Eidolon Subtype ~ devil,Eidolon Subtype ~ div,Eidolon Subtype ~ elemental,Eidolon Subtype ~ protean,Eidolon Subtype ~ psychopomp"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Agathion, daemon, demon, devil, div, elemental, protean, or psychopomp subtype."
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidTails|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidTailsUsed|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon grows a long, powerful tail. This grants it a +2 racial bonus on Acrobatics checks to balance on a surface. This evolution can be selected more than once."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidTails|1"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 215,
+    "record_key": "Unchained Evolution ~ Tail"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

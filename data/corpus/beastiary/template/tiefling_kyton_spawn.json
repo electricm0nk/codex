@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Tiefling ~ Kyton-Spawn",
+    "name": "Kyton-Spawn",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Kyton-Spawn"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Kyton-Spawn"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_templates_subrace.lst",
+    "sha256": "c4c43e7634c472f8a836d21903ec0f2c2cb47fb01cd057ad68d3e606262b838f",
+    "line": 11,
+    "record_key": "Tiefling ~ Kyton-Spawn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

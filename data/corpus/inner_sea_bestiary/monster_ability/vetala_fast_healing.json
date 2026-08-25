@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Vetala ~ Fast Healing",
+    "delivery": "Supernatural",
+    "description": "If reduced to 0 hit points in combat, a vetala is helpless and its fast healing ceases to function for 1 hour. Additional damage dealt to the vetala has no effect. Its body might be subjected to any method of dismemberment or desecration, but after 1 hour-regardless of the state of its remains-it regains 1 hit point, is no longer helpless, and resumes healing at the rate of 5 hit points per round. However, consecrating the vetala's remains and burying the body destroys it forever.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:vetala_fast_healing",
+    "name": "Fast Healing",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If reduced to 0 hit points in combat, a vetala is helpless and its fast healing ceases to function for 1 hour. Additional damage dealt to the vetala has no effect. Its body might be subjected to any method of dismemberment or desecration, but after 1 hour-regardless of the state of its remains-it regains 1 hit point, is no longer helpless, and resumes healing at the rate of 5 hit points per round. However, consecrating the vetala's remains and burying the body destroys it forever."
+      },
+      {
+        "key": "KEY",
+        "value": "Vetala ~ Fast Healing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.54",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 383,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Vetala ~ Fast Healing",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

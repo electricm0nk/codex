@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion ~ Multiattack",
+    "name": "Multiattack",
+    "description": "An animal companion gains Multiattack as a bonus feat if it has three or more natural attacks and does not already have that feat. If it does not have the requisite three or more natural attacks, the animal companion instead gains a second attack with one of its natural weapons, albeit at a -5 penalty.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion ~ Multiattack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Multiattack|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An animal companion gains Multiattack as a bonus feat if it has three or more natural attacks and does not already have that feat. If it does not have the requisite three or more natural attacks, the animal companion instead gains a second attack with one of its natural weapons, albeit at a -5 penalty."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Multiattack|PREVARGTEQ:NaturalAttacks,3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Companion gets a second attack with their primary attack at -5|PREVARLTEQ:NaturalAttacks,3"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 55,
+    "record_key": "Animal Companion ~ Multiattack"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

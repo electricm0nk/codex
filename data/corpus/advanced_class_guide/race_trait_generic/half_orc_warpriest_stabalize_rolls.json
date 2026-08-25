@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-orc ~ Warpriest ~ Stabalize Rolls",
+    "name": "Stabalize Rolls",
+    "description": "You have a +%1 bonus on rolls to stabilize when dying.|HalfOrcWarpriestFavClassBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-orc ~ Warpriest ~ Stabalize Rolls"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a +%1 bonus on rolls to stabilize when dying.|HalfOrcWarpriestFavClassBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 bonus on rolls to stabilize when dying.|HalfOrcWarpriestFavClassBonus*2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 326,
+    "record_key": "Half-orc ~ Warpriest ~ Stabalize Rolls"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Cave",
+    "name": "Cave",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "VISION",
+        "value": "Tremorsense (30')|PREVARGTEQ:DomainCaveAbilityTriggerLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cave Domain ~ Cavesight|PREVARGTEQ:DomainCaveAbilityTriggerLVL,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCaveLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCaveDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCaveTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCaveAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCaveLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCaveDC|10+(DomainCaveLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCaveTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainCaveAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Tremorsense|30|PREVARGTEQ:DomainCaveAbilityTriggerLVL,12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Cave=1|Detect Aberration|Cave=2|Stone Call|Cave=3|Deeper Darkness|Cave=4|Echolocation|Cave=5|Wall of Stone|Cave=6|Conjure Black Pudding|Cave=7|Statue (looking like a stalagmite or stalactite)|Cave=8|Earthquake|Cave=9|Imprisonment"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
+    "line": 13,
+    "record_key": "Cave"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

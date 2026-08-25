@@ -1,0 +1,152 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Oracle Archetype ~ Words of Power",
+    "name": "Words of Power Oracle",
+    "description": "A words of power using oracle; %1 meta words/day.|OracleMetaWordsPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oracle Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.OracleArchetype.OracleSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Oracle=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OracleMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using oracle; %1 meta words/day.|OracleMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 1|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 2|PRECLASS:1,Oracle=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 3|PRECLASS:1,Oracle=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 4|PRECLASS:1,Oracle=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 5|PRECLASS:1,Oracle=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 6|PRECLASS:1,Oracle=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 7|PRECLASS:1,Oracle=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 8|PRECLASS:1,Oracle=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 9|PRECLASS:1,Oracle=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 10|PRECLASS:1,Oracle=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 11|PRECLASS:1,Oracle=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 12|PRECLASS:1,Oracle=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 13|PRECLASS:1,Oracle=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 14|PRECLASS:1,Oracle=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 15|PRECLASS:1,Oracle=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 16|PRECLASS:1,Oracle=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 17|PRECLASS:1,Oracle=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 18|PRECLASS:1,Oracle=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 19|PRECLASS:1,Oracle=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Oracle 20|PRECLASS:1,Oracle=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMetaWordsPerDay|max(1,classlevel(\"Oracle\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 26,
+    "record_key": "Oracle Archetype ~ Words of Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

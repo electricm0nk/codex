@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fjord Linnorm ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds as a standard action, a fjord linnorm can expel a 120-foot line of icy fluid, dealing 16d8 points of cold damage to all creatures struck (Reflex DC 27 for half damage). The freezing liquid quickly hardens to sheets of ice, causing any creature that takes damage to move at only half its normal speed for 1d4 rounds. A DC 27 Strength check made as a full-round action allows a character to break free of the ice before this duration expires. The save DC and Strength check DC are Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:fjord_linnorm_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds as a standard action, a fjord linnorm can expel a 120-foot line of icy fluid, dealing 16d8 points of cold damage to all creatures struck (Reflex DC 27 for half damage). The freezing liquid quickly hardens to sheets of ice, causing any creature that takes damage to move at only half its normal speed for 1d4 rounds. A DC 27 Strength check made as a full-round action allows a character to break free of the ice before this duration expires. The save DC and Strength check DC are Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Fjord Linnorm ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "TYPE",
+        "value": "FjordLinnormRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.183",
+    "traits": [
+      "FjordLinnormRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1217,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Fjord Linnorm ~ Breath Weapon",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

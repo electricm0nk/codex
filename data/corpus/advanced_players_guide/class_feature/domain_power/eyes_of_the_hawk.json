@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Eyes of the Hawk",
     "name": "Eyes of the Hawk",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You gain a racial bonus of %1 on Perception checks. In addition, if you can act during a surprise round, you receive a +2 racial bonus on your Initiative check.|EyesOfTheHawkBonus",
     "raw_tokens": [
       {
@@ -59,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

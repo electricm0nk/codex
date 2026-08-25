@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Telepathy Power List",
+    "name": "Telepathy Power List",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Psion=1|Empathic Connection,Mindlink,Suppress Compulsion|Psion=2|Aversion,Brain Lock,Compelling Voice,Read Thoughts,Sense Minds|Psion=3|Battlesense,Crisis of Breath,Empathic Transfer (Hostile),False Sensory Input|Psion=4|Alienation,Fear Cascade,Memory Modification,Mind Control,Mindlink (Thieving),Schism,Sensory Cascade|Psion=5|Metaconcert,Mind Probe|Psion=6|Mind Switch|Psion=7|Crisis of Life|Psion=8|Mind Seed|Psion=9|Mind Switch (True),Psychic Chirurgery"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1979,
+    "record_key": "Telepathy Power List"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

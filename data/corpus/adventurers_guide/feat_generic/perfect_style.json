@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Perfect Style",
+    "name": "Perfect Style",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat.Style"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_WIS,13"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRECLASS:1,Monk=5],[PRETOTALAB:5]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.106"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you take this feat, choose one of the Houses of Perfection; once this decision has been made, it cannot be changed. While using this style, you gain a type of energy resistance based on the House of Perfection you have chosen. Additionally, you gain a ki pool that you can use to activate abilities of your chosen House of Perfection style. Your pool contains %1 ki points. If you have a ki pool from another source, you do not gain additional ki points from this feat. [Special] You can select Perfect Style multiple times. Each time you do so, you must select a different House of Perfection to belong to.|PerfectStyleKiPool"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PerfectStyleKiPool|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PerfectStyleKiPool|1+(TL-1)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|House of Perfection|1"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ki points|%1|PerfectStyleKiPool|!PREABILITY:1,CATEGORY=Special Ability,TYPE=Ki Pool"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 48,
+    "record_key": "Perfect Style"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

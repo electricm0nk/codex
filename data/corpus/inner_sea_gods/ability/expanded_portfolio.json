@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted ~ Expanded Portfolio",
+    "name": "Expanded Portfolio",
+    "description": "At 5th level, the exalted further increases her already impressive knowledge of her chosen deity's faith and is rewarded with increased powers in one of the spheres over which her deity holds sway. The exalted chooses a domain of her chosen deity to which she gains access, using her exalted level as her effective cleric level. The exalted can also can use each of the chosen domain's spells once per day as a spell-like ability, with a caster level equal to her exalted level. The exalted can use each spell-like ability only if she is able to cast divine spells of that level. If the exalted has any domain spell slots, she is also able to cast the chosen domain's spells in those slots as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted ~ Expanded Portfolio"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exalted Class Feature.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 5th level, the exalted further increases her already impressive knowledge of her chosen deity's faith and is rewarded with increased powers in one of the spheres over which her deity holds sway. The exalted chooses a domain of her chosen deity to which she gains access, using her exalted level as her effective cleric level. The exalted can also can use each of the chosen domain's spells once per day as a spell-like ability, with a caster level equal to her exalted level. The exalted can use each spell-like ability only if she is able to cast divine spells of that level. If the exalted has any domain spell slots, she is also able to cast the chosen domain's spells in those slots as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 99,
+    "record_key": "Exalted ~ Expanded Portfolio"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

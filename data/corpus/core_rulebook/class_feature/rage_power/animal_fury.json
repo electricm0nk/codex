@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Animal Fury",
     "name": "Animal Fury",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, you gain a bite attack, If uses as a part of a full-attack action, the bite is made at your full base attack bonus-5. If the bite hits, it deals 1d%1+%2 points of damage. You can make a bite attack as part of the action to maintain or break free from a grapple. This attack is resolved before the grapple check is made. If the bite attack hits, any grapple checks you make against the target this round are at a +2 bonus.|if(SIZE==4,4,3)|floor(STR/2)",
     "raw_tokens": [
       {
@@ -57,5 +57,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

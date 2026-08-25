@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter ~ Bonus Feats",
     "name": "Bonus Feats",
@@ -27,6 +27,50 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Fighter Bonus Feat|FighterLvl/2+1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,1|PREVAREQ:Fighter_CF_BonusFeat1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,2|PREVAREQ:Fighter_CF_BonusFeat2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,4|PREVAREQ:Fighter_CF_BonusFeat4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,6|PREVAREQ:Fighter_CF_BonusFeat6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,8|PREVAREQ:Fighter_CF_BonusFeat8,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,10|PREVAREQ:Fighter_CF_BonusFeat10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,12|PREVAREQ:Fighter_CF_BonusFeat12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,14|PREVAREQ:Fighter_CF_BonusFeat14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,16|PREVAREQ:Fighter_CF_BonusFeat16,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,18|PREVAREQ:Fighter_CF_BonusFeat18,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Fighter Bonus Feat|-1|PREVARGTEQ:FighterLvl,20|PREVAREQ:Fighter_CF_BonusFeat20,1"
       }
     ]
   },
@@ -44,5 +88,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

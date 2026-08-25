@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:22:10Z",
+  "data": {
+    "corpus_key": "Deinotherium ~ Sweep",
+    "delivery": "Extraordinary",
+    "description": "A deinotherium can sweep a target with its tusks and knock the victim to the ground. As part of a charge, a deinotherium can move up to twice its base speed in a straight line and make a gore attack at any point during its movement. If this attack is successful, the target is knocked prone and the deinotherium can deal damage with its trample attack before continuing its movement.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_6:monster_ability:deinotherium_sweep",
+    "name": "Sweep",
+    "owners": [],
+    "source_page": "p.184",
+    "traits": [
+      "DeinotheriumRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_race.lst",
+    "sha256": "d60128d0229b23016cc603e691bb97cc6bf568f5e504e5bd32b57f2504fdd8f0",
+    "line": 9,
+    "record_key": "Deinotherium ~ Sweep"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

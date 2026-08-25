@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Inspired Blade",
     "name": "Inspired Blade",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "An inspired blade is both a force of personality and a sage of swordplay dedicated to the perfection of combat with the rapier. They use the science and geometry with swordplay to beautiful and deadly effect.",
     "raw_tokens": [
       {
@@ -63,6 +63,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Inspired Blade],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Panache=True,Swashbuckler_Archetype_SwashbucklerFinesse=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_SwashbucklerWeaponTraining=True,Swashbuckler_Archetype_SwashbucklerWeaponMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerWeaponMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerWeaponTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerWeaponMastery|true"
       }
     ]
   },
@@ -79,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,129 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "Eidolon",
+    "name": "Eidolon",
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Eidolon"
+      },
+      {
+        "key": "HD",
+        "value": "10"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monster.Companion"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.309"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|CMB Output"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonFortGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonReflexGood|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonWillGood|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")|TYPE=Base.REPLACE|PREVAREQ:Eidolon_CF_BaseAB,0|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0|PREVARGTEQ:EidolonFortGood,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0|PREVARGTEQ:EidolonReflexGood,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0|PREVARGTEQ:EidolonWillGood,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0|PREVARLTEQ:EidolonFortGood,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0|PREVARLTEQ:EidolonReflexGood,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0|PREVARLTEQ:EidolonWillGood,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABFull|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:Eidolon_CF_BaseAB,0|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1|PREVARGTEQ:EidolonFortGood,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1|PREVARLTEQ:EidolonFortGood,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1|PREVARGTEQ:EidolonReflexGood,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1|PREVARLTEQ:EidolonReflexGood,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1|PREVARGTEQ:EidolonWillGood,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1|PREVARLTEQ:EidolonWillGood,0"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|Companion"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+    "sha256": "fc0f627d301eca409b7441c5b54fdb452404ea8924163ec1abdad13308fd83db",
+    "line": 207,
+    "record_key": "Eidolon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Forgesteed Rider Mount ~ Boost Steed",
+    "name": "Boost Steed",
+    "description": "Your steed's Strength and Constitution can be increased by %1.|MountBoostSteedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgesteed Rider Mount ~ Boost Steed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MountBoostSteedBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your steed's Strength and Constitution can be increased by %1.|MountBoostSteedBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,CON|MountBoostSteedBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 50,
+    "record_key": "Forgesteed Rider Mount ~ Boost Steed"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

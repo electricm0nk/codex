@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gathlain ~ Intense Curiosity",
+    "name": "Intense Curiosity",
+    "description": "Some gathlains habitually fixate on someone or something nearby and examine its every detail. When taking 20 on the check, they gain a +4 racial bonus on Perception and Survival checks to find and follow tracks and to predict the weather.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gathlain ~ Intense Curiosity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gathlain ~ Intense Curiosity],[!PREFACT:1,ABILITIES,Gathlain_ReplaceSpellLikeAbilities=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gathlains habitually fixate on someone or something nearby and examine its every detail. When taking 20 on the check, they gain a +4 racial bonus on Perception and Survival checks to find and follow tracks and to predict the weather."
+      },
+      {
+        "key": "DESC",
+        "value": "This replaces spell-like abilities.|!PREABILITY:1,CATEGORY=Special Ability,Gathlain ~ Intense Curiosity"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+4 racial bonus on Perception and Survival checks to find and follow tracks and to predict the weather when taking 20."
+      },
+      {
+        "key": "FACT",
+        "value": "Gathlain_ReplaceSpellLikeAbilities|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 52,
+    "record_key": "Gathlain ~ Intense Curiosity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

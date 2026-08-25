@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Tanglebriar Demonslayer",
     "name": "Tanglebriar Demonslayer",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -63,6 +63,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.46"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Tanglebriar Demonslayer],[!PREFACT:1,ABILITIES,Ranger_Archetype_Endurance=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Endurance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Endurance|true"
       }
     ]
   },
@@ -79,5 +91,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

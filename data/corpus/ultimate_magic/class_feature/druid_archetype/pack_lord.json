@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Archetype ~ Pack Lord",
     "name": "Pack Lord",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "Some druids bond with many animal companions rather than just one, achieving a level of communion rare even in druidic circles and leading their pack brothers and pack sisters with total authority.",
     "raw_tokens": [
       {
@@ -51,6 +51,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Druid"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Pack Lord],[!PREFACT:1,ABILITIES,Druid_Archetype_NatureBond=True,Druid_Archetype_WildShapeUses6=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_DruidDomain|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShapeUses6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_NatureBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShapeUses6|true"
       }
     ]
   },
@@ -67,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

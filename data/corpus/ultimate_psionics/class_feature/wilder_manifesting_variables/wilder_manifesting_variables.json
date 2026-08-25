@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wilder Manifesting Variables",
+    "name": "Wilder Manifesting Variables",
+    "class": "Wilder",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WilderML|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaxManifesterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WilderPLStatScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WilderPKL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WilderMPL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WilderPowersKnown|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WilderMaxPowerLevel|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderML|WilderLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderML|var(\"BL=Wilder\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaxManifesterLVL|WilderML|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderPLStatScore|CHASCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderPKL|WilderLVL+var(\"BL=Wilder\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderMPL|WilderLVL+var(\"BL=Wilder\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderPowersKnown|1+floor(WilderPKL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WilderMaxPowerLevel|min(9,floor((WilderMPL+1)/2),WilderPLStatScore-10)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1033,
+    "record_key": "Wilder Manifesting Variables"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

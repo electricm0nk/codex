@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch Archetype ~ Hedge Witch",
     "name": "Hedge Witch",
-    "class": "Witch Archetype",
+    "class": "Witch",
     "description": "Among witches, there are those who devote themselves to the care of others and restrict their practices to the healing arts. They often take the place of clerics in rural communities and may wander the countryside servicing the needs of several small communities.",
     "raw_tokens": [
       {
@@ -51,6 +51,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Witch"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Hedge Witch],[!PREFACT:1,ABILITIES,Witch_Archetype_Hex4=True,Witch_Archetype_Hex8=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex8|true"
       }
     ]
   },
@@ -67,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

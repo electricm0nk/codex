@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Elemental Stance",
+    "name": "Elemental Stance",
+    "class": "Unchained Barbarian",
+    "description": "When you adopt this stance, you choose an energy type (acid, cold, electricity, or fire). Your melee attacks deal",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Elemental Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,4"
+      },
+      {
+        "key": "DESC",
+        "value": "When you adopt this stance, you choose an energy type (acid, cold, electricity, or fire). Your melee attacks deal"
+      },
+      {
+        "key": "DESC",
+        "value": "1|PREVARLT:RagePowersLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6|PREVARGTEQ:RagePowersLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "additional point of damage of the chosen type."
+      },
+      {
+        "key": "DESC",
+        "value": "Your critical hits deal an additional 1d10 points of energy damage of the same type (2d10 if the weapon deals x3 damage on a critical hit, 3d10 if the weapon deals x4 damage on a critical hit).|PREVARGTEQ:RagePowersLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": "This is a stance rage power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 350,
+    "record_key": "Unchained Rage Power ~ Elemental Stance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

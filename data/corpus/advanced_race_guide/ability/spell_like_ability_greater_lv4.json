@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Spell-Like Ability (Greater Lvl4)",
+    "name": "Spell-Like Ability (Greater Lv4)",
+    "description": "SLAs:1/day - 3rd or 4th level spell that doesn't attack or deal damage. CL = Character Level. Cost = spell level. Can be taken 3 times.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Spell-Like Ability (Greater Lvl4)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderAdvancedMagicalTrait.Advanced"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "SLAGreaterCount,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLAGreaterCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "SLAs:1/day - 3rd or 4th level spell that doesn't attack or deal damage. CL = Character Level. Cost = spell level. Can be taken 3 times."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|4"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT|TITLE=4th Level Spell"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLAGreaterCount|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 380,
+    "record_key": "Builder Racial Trait ~ Spell-Like Ability (Greater Lvl4)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

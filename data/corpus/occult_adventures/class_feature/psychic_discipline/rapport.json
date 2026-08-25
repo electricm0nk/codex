@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Psychic Discipline ~ Rapport",
     "name": "Rapport",
-    "class": "Psychic Discipline",
+    "class": "Psychic",
     "description": "Forging a close bond with other people brings out the best in you, making it easier for you to link your mind with theirs. Through bonding your psyche with another person, you're able to fill in your own mental gaps and develop new psychic powers. Phrenic Pool Ability: Charisma. Discipline Powers: Your powers meld several minds together, or allow you to more easily inf luence others.",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

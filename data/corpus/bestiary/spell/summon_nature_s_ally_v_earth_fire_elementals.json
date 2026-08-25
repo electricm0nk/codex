@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T13:59:53Z",
+  "data": {
+    "key": "Summon Nature's Ally V (earth/fire elementals)",
+    "school": "Conjuration",
+    "level": null,
+    "description": "This spell functions like summon nature's ally I, except that you can summon one 5th-level creature, 1d3 4th-level creatures of the same kind, or 1d4+1 lower-level creatures of the same kind."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_spells.lst",
+    "sha256": "e7e55cf92a9e94909f085392ce48a7b41c4d2243cd8cf974ac13708204a27195",
+    "line": 123,
+    "record_key": "Summon Nature's Ally V (earth/fire elementals)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

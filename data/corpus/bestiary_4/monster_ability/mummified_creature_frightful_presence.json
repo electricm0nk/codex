@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mummified Creature ~ Frightful Presence",
+    "delivery": "Extraordinary",
+    "description": "A mummified creature's very presence is unsettling to foes. Activating this ability is a free action that is usually part of an attack or charge. Opponents within range who witness the action may become frightened or shaken. The range is 30 feet, and the duration is 1d6 rounds. This ability affects only opponents with fewer Hit Dice or levels than the creature has. An affected opponent can resist the effects with a successful Will save (DC %1). On a failed save, the opponent is shaken, or panicked if 4 HD or fewer. An opponent that succeeds on the saving throw is immune to the mummified creature's frightful presence for 24 hours. Frightful presence is a mind-affecting fear effect.",
+    "description_variables": [
+      "10+(HD/2)+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mummified_creature_frightful_presence",
+    "name": "Frightful Presence",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft., DC %1)|10+(HD/2)+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A mummified creature's very presence is unsettling to foes. Activating this ability is a free action that is usually part of an attack or charge. Opponents within range who witness the action may become frightened or shaken. The range is 30 feet, and the duration is 1d6 rounds. This ability affects only opponents with fewer Hit Dice or levels than the creature has. An affected opponent can resist the effects with a successful Will save (DC %1). On a failed save, the opponent is shaken, or panicked if 4 HD or fewer. An opponent that succeeds on the saving throw is immune to the mummified creature's frightful presence for 24 hours. Frightful presence is a mind-affecting fear effect.|10+(HD/2)+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Mummified Creature ~ Frightful Presence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Aura"
+      }
+    ],
+    "source_page": "p.300",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1099,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Mummified Creature ~ Frightful Presence",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

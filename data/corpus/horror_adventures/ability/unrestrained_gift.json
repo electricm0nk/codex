@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Possessed Corruption ~ Unrestrained Gift",
+    "name": "Unrestrained Gift",
+    "description": "You gain a +%1 bonus on Acrobatics, Climb, Fly, and Swim checks. You can give the spirit 1 point of influence as a swift action to gain the benefits of freedom of movement for 1 round.|CorruptionUnrestrainedBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Unrestrained Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedUnrestrainedGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Acrobatics, Climb, Fly, and Swim checks. You can give the spirit 1 point of influence as a swift action to gain the benefits of freedom of movement for 1 round.|CorruptionUnrestrainedBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Climb,Fly,Swim|CorruptionUnrestrainedBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 681,
+    "record_key": "Possessed Corruption ~ Unrestrained Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ Spirit Summoner",
     "name": "Spirit Summoner",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "A spirit summoner is an arcane spellcaster whose eidolon is a manifestation of a shamanic spirit. The bond connecting the summoner and this spirit might be friendly, as a member of a tribe giving flesh to his protector spirit, or hostile, as an outlander or rival compelling service from an unwilling spirit. The summoner can draw upon the divine power of this spirit, but is not constrained by the spirit's morals or ethics.",
     "raw_tokens": [
       {
@@ -55,6 +55,62 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Spirit Summoner],[!PREFACT:1,ABILITIES,Summoner_Archetype_Aspect=True,Summoner_Archetype_MakersCall=True,Summoner_Archetype_MergeForms=True,Summoner_Archetype_Transposition=True,Summoner_Archetype_Eidolon=True,Summoner_Archetype_SummonMonster=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_MakersCall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_MergeForms|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_Transposition|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_SummonMonster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Aspect|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_MakersCall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_MergeForms|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Transposition|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Eidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_SummonMonster|true"
       }
     ]
   },
@@ -71,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Rakshasa Bloodline",
+    "name": "Rakshasa Bloodline",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Eldritch Heritage Bloodline"
+      },
+      {
+        "key": "TYPE",
+        "value": "SorcererBloodlineChoice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Skill Focus (Disguise)"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Sorcerer Bloodline,Rakshasa Bloodline"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Crossblooded Bloodline,Rakshasa Bloodline"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Sorcerer Bloodline ~ Rakshasa"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlineLVL|EldritchHeritageBloodlineLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower1|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower3|1|PREABILITY:1,CATEGORY=Eldritch Heritage Bloodline,Level 3 Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower9|1|PREABILITY:1,CATEGORY=Eldritch Heritage Bloodline,Level 9 Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower15|1|PREABILITY:1,CATEGORY=Eldritch Heritage Bloodline,Level 15 Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower20|1|PREABILITY:1,CATEGORY=Eldritch Heritage Bloodline,Level 20 Ability"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower1LVL|EldrtichHeritageBloodlinePower1LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower3LVL|EldrtichHeritageBloodlinePower3LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower9LVL|EldrtichHeritageBloodlinePower9LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower15LVL|EldrtichHeritageBloodlinePower15LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower20LVL|EldrtichHeritageBloodlinePower20LVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Rakshasa_BloodlinePower1Times|Sorcerer_Spells_StatBonus+3+BloodlinePower1TimesBonus|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 87,
+    "record_key": "Rakshasa Bloodline"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

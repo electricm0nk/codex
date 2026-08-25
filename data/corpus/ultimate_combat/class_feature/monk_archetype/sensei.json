@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Sensei",
     "name": "Sensei",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "The sensei is a revered teacher who imparts lessons on the oneness of mind, body, and spirit, along with occasional correction that is subtle and swift. Rather than using wisdom for his own benefit alone, he uses it to better those around him.",
     "raw_tokens": [
       {
@@ -55,6 +55,82 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Sensei],[!PREFACT:1,ABILITIES,Monk_Archetype_BonusFeat2=True,Monk_Archetype_BonusFeat6=True,Monk_Archetype_BonusFeat10=True,Monk_Archetype_BonusFeat18=True,Monk_Archetype_FlurryOfBlows=True,Monk_Archetype_FastMovement=True,Monk_Archetype_ImprovedEvasion=True,Monk_Archetype_Evasion=True,Monk_Archetype_FlurryOfBlows=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat18|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FlurryOfBlows|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FlurryOfBlows|true"
       }
     ]
   },
@@ -71,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

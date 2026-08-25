@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Hardy Liver",
+    "category": "General",
+    "name": "Hardy Liver",
+    "description": "You can hold your liquor and poisons better than most. You gain a +2 bonus on Fortitude saving throws against ingested poisons. You take no penalties when you are tipsy, and the penalties for being drunk or soused are halved for you.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Great Fortitude"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst",
+    "sha256": "7906f2a2b36a01031788d3270949a8f4e83b1eed239a50ba2a6790be72898e63",
+    "line": 7,
+    "record_key": "Hardy Liver"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

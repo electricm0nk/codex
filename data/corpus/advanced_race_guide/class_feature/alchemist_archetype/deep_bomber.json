@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Deep Bomber",
     "name": "Deep Bomber",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "Consumed with keeping hidden from the horrors below the surface, svirfneblin use their racial proclivity for alchemy and their inherent talent for obfuscation to strike their enemies from the darkness and retreat unseen.",
     "raw_tokens": [
       {
@@ -63,6 +63,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Deep Bomber],[!PREFACT:1,ABILITIES,Alchemist_Archetype_PoisonUse=True,Alchemist_Archetype_SwiftAlchemy=True,Alchemist_Archetype_SwiftPoisoning=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonUse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_SwiftPoisoning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonUse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_SwiftPoisoning|true"
       }
     ]
   },
@@ -79,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

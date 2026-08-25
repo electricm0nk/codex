@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fear in Flesh ~ Fear Made Flesh",
+    "name": "Fear Made Flesh",
+    "class": "Fear in Flesh",
+    "description": "You can spend 1 hour in meditation, preparing your body for a physical transformation into a frightening creature.  One you have finished your meditation, you can activate the transformation at any time as a standard action.  Once activated, you are under the effects of bite of the wolf and claws of the beast, with a manifester level of %1.  This effect lasts %2 minutes.  Once the effect ends, you must spend another hour in meditation before you can transform again.|FearMadeFleshML|FearMadeFleshDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fear in Flesh ~ Fear Made Flesh"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearMadeFleshML|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FearMadeFleshDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can spend 1 hour in meditation, preparing your body for a physical transformation into a frightening creature.  One you have finished your meditation, you can activate the transformation at any time as a standard action.  Once activated, you are under the effects of bite of the wolf and claws of the beast, with a manifester level of %1.  This effect lasts %2 minutes.  Once the effect ends, you must spend another hour in meditation before you can transform again.|FearMadeFleshML|FearMadeFleshDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearMadeFleshML|DreadLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FearMadeFleshDuration|10*DreadLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1868,
+    "record_key": "Fear in Flesh ~ Fear Made Flesh"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

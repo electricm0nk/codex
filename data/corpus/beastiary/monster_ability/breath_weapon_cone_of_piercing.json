@@ -1,0 +1,93 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Breath Weapon ~ Cone of Piercing",
+    "delivery": "Supernatural",
+    "description": "%1' Cone of Piercing %2d%3, DC %4, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.",
+    "description_variables": [
+      "BreathWeaponCone",
+      "BreathWeaponDice",
+      "BreathWeaponDamageDie",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:breath_weapon_cone_of_piercing",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1' Cone of Piercing %2d%3, DC %4)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponCone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDamageDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1' Cone of Piercing %2d%3, DC %4, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Breath Weapon ~ Cone of Piercing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.BreathWeapon"
+      }
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "BreathWeapon"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1320,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Breath Weapon ~ Cone of Piercing",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Thunderstriker",
     "name": "Thunderstriker",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "The thunderstriker adopts an unusual fighting style, gripping a heavy weapon with both hands and switching to a defensive posture with weapon and buckler, lashing out with the shield with surprising speed and power.",
     "raw_tokens": [
       {
@@ -71,6 +71,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Fighter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ THUNDERSTRIKER],[!PREFACT:1,ABILITIES,Fighter_Archetype_ArmorTraining1=True,Fighter_Archetype_ArmorTraining2=True,Fighter_Archetype_ArmorTraining3=True,Fighter_Archetype_ArmorTraining4=True,Fighter_Archetype_ArmorMastery=True,Fighter_Archetype_WeaponTraining3=True,Fighter_Archetype_WeaponTraining4=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_WeaponTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_WeaponTraining4|true"
       }
     ]
   },
@@ -87,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

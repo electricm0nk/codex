@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Exemplar Brawler ~ Inspiring Prowess",
     "name": "Inspiring Prowess",
@@ -67,6 +67,18 @@
       {
         "key": "ASPECT",
         "value": "MasterAbility|Bardic Performance"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting a bardic performance is a standard action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the brawler to stop the previous performance and start a new one as a standard action. A bardic performance cannot be disrupted, but it ends immediately if the brawler is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. A brawler cannot have more than one bardic performance in effect at one time. Targets must have line of sight to the brawler for the performance to have any effect. A blind brawler has a 50%% chance to fail when attempting to use a bardic performance with a visual component. If he fails this check, the attempt still counts against his daily limit. Blind creatures are immune to bardic performances with visual components.|PREMULT:1,[PREVARGTEQ:BardicPerformanceLVL,1],[PREVARLT:BardicPerformanceLVL,7]"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting a bardic performance is a move action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the brawler to stop the previous performance and start a new one as a standard action. A bardic performance cannot be disrupted, but it ends immediately if the brawler is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. A brawler cannot have more than one bardic performance in effect at one time. Targets must have line of sight to the brawler for the performance to have any effect. A blind brawler has a 50%% chance to fail when attempting to use a bardic performance with a visual component. If he fails this check, the attempt still counts against his daily limit. Blind creatures are immune to bardic performances with visual components.|PREMULT:2,[PREVARGTEQ:BardicPerformanceLVL,7],[PREVARLT:BardicPerformanceLVL,13]"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting a bardic performance is a swift action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the brawler to stop the previous performance and start a new one as a standard action. A bardic performance cannot be disrupted, but it ends immediately if the brawler is killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. A brawler cannot have more than one bardic performance in effect at one time. Targets must have line of sight to the brawler for the performance to have any effect. A blind brawler has a 50%% chance to fail when attempting to use a bardic performance with a visual component. If he fails this check, the attempt still counts against his daily limit. Blind creatures are immune to bardic performances with visual components.|PREVARGTEQ:BardicPerformanceLVL,13"
       }
     ]
   },
@@ -84,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

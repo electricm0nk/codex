@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Alchemist Archetype ~ Plague Bringer",
     "name": "Plague Bringer",
-    "class": "Alchemist Archetype",
+    "class": "Alchemist",
     "description": "The plague bringer sees disease as the ultimate weapon, and has worked tirelessly to master new diseases and disease-delivery systems. A plague bringer feels no more remorse at unleashing his armaments on his enemies than an archer does when firing an arrow in the heat of battle. Disease is a tool, and the plague bringer is its master. A plague bringer has the following class features.",
     "raw_tokens": [
       {
@@ -63,6 +63,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Alchemist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Plague Bringer],[!PREFACT:1,ABILITIES,Alchemist_Archetype_Mutagen=True,Alchemist_Archetype_PoisonResistance=True,Alchemist_Archetype_PoisonResistance2=True,Alchemist_Archetype_PoisonResistance4=True,Alchemist_Archetype_PoisonResistance6=True,Alchemist_Archetype_PoisonImmunity=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_Mutagen|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonResistance6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Alchemist_Archetype_PoisonImmunity|true"
       }
     ]
   },
@@ -79,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

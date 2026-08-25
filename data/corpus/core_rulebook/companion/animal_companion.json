@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Base Companion ~ Animal Companion",
+    "name": "Animal Companion",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Base Companion ~ Animal Companion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ AC Bonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Stat Bonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Bonus Tricks|PREVARGTEQ:MasterLevel,1|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_BonusTricks"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Link|PREVARGTEQ:MasterLevel,1|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionLink"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Share Spells|PREVARGTEQ:MasterLevel,1|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Ability Score Increase|PREVARGTEQ:MasterLevel,4|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_AbilityScoreIncrease"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Devotion|PREVARGTEQ:MasterLevel,6|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionDevotion"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Multiattack|PREVARGTEQ:MasterLevel,9|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionMultiattack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Evasion|PREVARGTEQ:MasterLevel,3|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionEvasion"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Improved Evasion|PREVARGTEQ:MasterLevel,16|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionImprovedEvasion"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Companion Class Feature|AUTOMATIC|Animal Companion ~ Spell Resistance|PREVARGTEQ:MasterLevel,15|!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_SpellResistance"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 46,
+    "record_key": "Base Companion ~ Animal Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

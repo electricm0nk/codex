@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T22:40:18Z",
+  "data": {
+    "key": "Campfire Bead",
+    "category": "MagicItems",
+    "name": "Campfire Bead",
+    "cost_gp": 720.0,
+    "weight_lbs": 0.0,
+    "description": "Once per day, this glass bead transforms itself into a 2-foot campfire whenever you speak its command word. The fire burns for 8 hours or until extinguished, then turns back into a bead."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/beginner_box/bbox_equip_magic_items.lst",
+    "sha256": "f56e5fde77194bd07f1800f566f6c4668f7b2f4a67f72d19b81665fd75104a70",
+    "line": 6,
+    "record_key": "Campfire Bead"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

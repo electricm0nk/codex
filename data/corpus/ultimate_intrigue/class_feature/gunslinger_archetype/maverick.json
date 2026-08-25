@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Gunslinger Archetype ~ Maverick",
     "name": "Maverick",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "Trouble always finds a maverick, whether she is a con artist or an honest gambler. Quick with her gun and no stranger to barroom brawls, she can hold her own when bullets and punches start flying.",
     "raw_tokens": [
       {
@@ -91,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

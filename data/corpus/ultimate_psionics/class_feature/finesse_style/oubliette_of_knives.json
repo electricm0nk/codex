@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Finesse Style ~ Oubliette of Knives",
+    "name": "Oubliette of Knives",
+    "class": "Finesse Style",
+    "description": "Make redirecting multiple ranged attacks as standard action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Finesse Style ~ Oubliette of Knives"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DESC",
+        "value": "Make redirecting multiple ranged attacks as standard action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 361,
+    "record_key": "Finesse Style ~ Oubliette of Knives"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

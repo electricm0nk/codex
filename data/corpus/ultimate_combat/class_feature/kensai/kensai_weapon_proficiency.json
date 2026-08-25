@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Kensai ~ Weapon Proficiency",
+    "name": "Kensai Weapon Proficiency",
+    "class": "Kensai",
+    "description": "Kensai additional weapon proficiency selection.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kensai ~ Weapon Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Kensai additional weapon proficiency selection."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|TYPE=Exotic|TYPE=Martial"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|%LIST"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Katana)|PREABILITY:1,CATEGORY=Special Ability,Kensai ~ Weapon Proficiency (Katana)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Sword (Bastard))|PREABILITY:1,CATEGORY=Special Ability,Kensai ~ Weapon Proficiency (Sword (Bastard))"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kensai Chosen Weapon|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Estoc)|PREABILITY:1,CATEGORY=Special Ability,Kensai ~ Weapon Proficiency (Estoc)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 30,
+    "record_key": "Kensai ~ Weapon Proficiency"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

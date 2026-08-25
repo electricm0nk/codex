@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Draconic Bloodrager Bloodline ~ Dragon Form",
     "name": "Dragon Form",
-    "class": "Draconic Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "When you enter a bloodrage, you can choose to take the form of your chosen dragon type (as Form of the Dragon II).",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

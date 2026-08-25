@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Serpent Domain ~ Venom Immunity",
     "name": "Venom Immunity",
-    "class": "Serpent Domain",
+    "class": "Cleric",
     "description": "You gain immunity to poisons from snakes, reptiles, and creatures with the reptilian subtype.|PREVARLT:DomainSerpentLVL,12",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

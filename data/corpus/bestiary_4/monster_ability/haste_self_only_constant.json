@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Haste (self only) ~ Constant",
+    "delivery": "SpellLike",
+    "description": "You can use haste, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:haste_self_only_constant",
+    "name": "Haste (self only)",
+    "owners": [
+      "bestiary_4:monster:erlking"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1|TYPE=Dodge"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|ATTACKS|1|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT|1|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "POSTMOVEADD|TYPE.ALL|min(MOVEBASE,30)|TYPE=Enhancement"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Reflex|1|TYPE=Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use haste, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use haste, as per the spell, as a constant ability.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You move and act more quickly than normal. This extra speed has several effects. When making a full attack action, a hasted creature may make one extra attack with any weapon he is holding. The attack is made using the creature's full base attack bonus, plus any modifiers appropriate to the situation. [This effect is not cumulative with similar effects, such as that provided by a speed weapon, nor does it actually grant an extra action, so you can't use it to cast a second spell or otherwise take an extra action in the round.] A hasted creature gains a +1 bonus on attack rolls and a +1 dodge bonus to AC and Reflex saves. Any condition that makes you lose your Dexterity bonus to Armor Class [if any] also makes you lose dodge bonuses. All of the hasted creature's modes of movement [including land movement, burrow, climb, fly, and swim] increase by 30 feet, to a maximum of twice the subject's normal speed using that form of movement. This increase counts as an enhancement bonus, and it affects the creature's jumping distance as normal for increased speed. Multiple haste effects don't stack. Haste dispels and counters slow.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "KEY",
+        "value": "Haste (self only) ~ Constant"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=SLA_CL|Haste"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.ModifyMovement"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ModifyMovement"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Haste (self only) ~ Constant",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

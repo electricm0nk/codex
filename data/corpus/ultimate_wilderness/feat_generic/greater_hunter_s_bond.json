@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Greater Hunter's Bond",
+    "name": "Greater Hunter's Bond",
+    "description": "Your allies can target additional foes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ranger=12"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PREABILITY:1,CATEGORY=Special Ability,Hunter's Bond ~ Companion],[PREABILITY:1,CATEGORY=FEAT,Improved Hunter's Bond]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your allies can target additional foes."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.113"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you activate hunter's bond, you can select a number of targets equal to your Wisdom modifier as long as they all count as your favored enemy. &nl;[Normal] You select one target against which your allies receive your favored enemy bonus."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 57,
+    "record_key": "Greater Hunter's Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

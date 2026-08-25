@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_184)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_184)",
+    "description": "If you have performed your daily obedience, as a free action, you can grant yourself and any allies within 30 feet of you the ability to move through undergrowth at normal speed and without taking damage or suffering any other impairment. This effect lasts %1 rounds or until you dismiss it as a free action, whichever comes first. Your allies must remain within 30 feet of you to gain the benefits. Thorns, briars, and overgrown areas that are enchanted or magically manipulated to impede motion still affect you and your allies. While using this ability, you also gain a +4 sacred or profane bonus on saving throws against spells and effects that would cause such terrain-based movement impairment, such as the entangle spell. (Your allies do not also gain this bonus.)|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, as a free action, you can grant yourself and any allies within 30 feet of you the ability to move through undergrowth at normal speed and without taking damage or suffering any other impairment. This effect lasts %1 rounds or until you dismiss it as a free action, whichever comes first. Your allies must remain within 30 feet of you to gain the benefits. Thorns, briars, and overgrown areas that are enchanted or magically manipulated to impede motion still affect you and your allies. While using this ability, you also gain a +4 sacred or profane bonus on saving throws against spells and effects that would cause such terrain-based movement impairment, such as the entangle spell. (Your allies do not also gain this bonus.)|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 184,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_184)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:184"
+  }
+}

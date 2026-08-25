@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_12)",
+    "name": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_12)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Evil,Scalykind,Water,Ancestors Subdomain,Dragon Subdomain,Oceans Subdomain,Venom Subdomain|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Eldest of linnorms, oceans, spirals"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Water Lord"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Blue ouroboros"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Eldest"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Whip"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorDomainChaos,InquisitorDomainEvil,InquisitorDomainScalykind,InquisitorDomainWater,InquisitorDomainAncestorsSubdomain,InquisitorDomainDragonSubdomain,InquisitorDomainOceansSubdomain,InquisitorDomainVenomSubdomain|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
+    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f",
+    "line": 12,
+    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_12)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_wilderness:uw_deities.lst:12"
+  }
+}

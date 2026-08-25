@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:46:05Z",
+  "data": {
+    "key": "Hungry Darkness",
+    "school": "Evocation",
+    "level": 7,
+    "description": "This spell creates an area of intense blackness, as deeper darkness, but filled with unseen chewing teeth and ravenous maws. Any creatures beginning its turn within the hungry darkness is gnawed and slashed by these unseen fangs of force, dealing 3d6 points of force damage and 2 points of Constitution damage per round. Once a creature leaves the cloud, it continues to take 1d6 points of bleed damage each round until it receives magical healing or enters an area of bright light. Spell resistance can prevent damage from the hungry darkness but not against the darkness it creates."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_spells.lst",
+    "sha256": "e1e7d1aab79b5fe0bb7d8ae8f77ac908fbb327e81c81a9482c0da6b673892661",
+    "line": 22,
+    "record_key": "Hungry Darkness"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

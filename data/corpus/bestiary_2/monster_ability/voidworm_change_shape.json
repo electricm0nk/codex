@@ -1,0 +1,65 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Voidworm ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "You have the ability to assume the appearance of a type of creature, but retain most of your own physical qualities. You have the ability to assume the appearance of a specific type of creature, but retain most of your own physical qualities. You cannot change shape to a form more than one size category smaller or larger than your original form. This ability functions as a polymorph spell, but you do not adjust your ability scores (although you gain any other abilities of the creature you mimic).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:voidworm_change_shape",
+    "name": "Change Shape",
+    "owners": [
+      "bestiary_2:monster:protean_voidworm"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(2 forms, both of which must be Tiny animals; beast shape II)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You have the ability to assume the appearance of a specific type of creature, but retain most of your own physical qualities. You cannot change shape to a form more than one size category smaller or larger than your original form. This ability functions as a polymorph spell, but you do not adjust your ability scores (although you gain any other abilities of the creature you mimic)."
+      },
+      {
+        "key": "DESC",
+        "value": "You have the ability to assume the appearance of a type of creature, but retain most of your own physical qualities."
+      },
+      {
+        "key": "KEY",
+        "value": "Voidworm ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.217",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:58:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2043,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Voidworm ~ Change Shape",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

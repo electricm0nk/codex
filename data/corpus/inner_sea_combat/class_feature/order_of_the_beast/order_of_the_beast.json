@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Order of the Beast",
     "name": "Order of the Beast",
@@ -51,6 +51,14 @@
       {
         "key": "ASPECT",
         "value": "CombatBonus|+%1 morale bonus on all damage rolls while using Cleave or Great Cleave so long as the target of his challenge is the first creature attacked.|1+OrderChallengeBonus"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
       }
     ]
   },
@@ -68,5 +76,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

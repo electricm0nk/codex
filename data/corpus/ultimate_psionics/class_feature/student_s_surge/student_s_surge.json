@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Student's Surge",
+    "name": "Student's Surge",
+    "class": null,
+    "description": "Psychic enervation: dazzled for %1 rounds and lose %2 pp.|StudentDuration|StudentPPLoss",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality.SurgeType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StudentDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StudentPPLoss|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic enervation: dazzled for %1 rounds and lose %2 pp.|StudentDuration|StudentPPLoss"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Psicrystal Affinity|!PREABILITY:1,CATEGORY=Archetype,TYPE.WilderSurgeBond|PREABILITY:1,CATEGORY=Special Ability,Student's Surge"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Student's Surge Feat|ImpSurgeBond|PREABILITY:1,CATEGORY=Internal,Wilder ~ Improved Surge Bond"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StudentDuration|WildSurge"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StudentPPLoss|SurgeLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1055,
+    "record_key": "Student's Surge"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

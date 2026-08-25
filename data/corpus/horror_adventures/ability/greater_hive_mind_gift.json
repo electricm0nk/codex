@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Greater Hive Mind Gift",
+    "name": "Greater Hive Mind Gift",
+    "description": "As a move action, you can communicate telepathically with one creature within 30 feet for 1 round. The hive whispers through the connection, causing a creature that doesn't have the hive subtype or hive corruption to be shaken for 1 round (Will DC %1 negates).|10+TL/2+HiveManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Greater Hive Mind Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveGreaterHiveMindGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can communicate telepathically with one creature within 30 feet for 1 round. The hive whispers through the connection, causing a creature that doesn't have the hive subtype or hive corruption to be shaken for 1 round (Will DC %1 negates).|10+TL/2+HiveManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 414,
+    "record_key": "Hive Corruption ~ Greater Hive Mind Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

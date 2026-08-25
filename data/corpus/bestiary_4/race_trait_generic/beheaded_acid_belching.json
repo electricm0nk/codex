@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Beheaded ~ Acid Belching",
+    "name": "Acid Belching",
+    "description": "The beheaded can make a ranged touch attack with a maximum range of 30 feet that deals 1d6 points of acid damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beheaded ~ Acid Belching"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BeheadedBelchingType.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "The beheaded can make a ranged touch attack with a maximum range of 30 feet that deals 1d6 points of acid damage."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 300,
+    "record_key": "Beheaded ~ Acid Belching"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

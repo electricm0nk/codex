@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Infirmary Access ~ Monastery",
+    "name": "Infirmary Access",
+    "description": "As long as you are able to rest in a church or monastery dedicated to your deity, you and %1 allies can receive magical healing for free. When you use this ability, you and your allies heal %2 hit points damage overnight (this healing comes primarily from channeled energy and cure light wounds spells from low-ranking priests in the building). You can gain these benefits %3 times each weak.|MonasteryFame/5|MonasteryFame|max(1,MonateryFame/10)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infirmary Access ~ Monastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as you are able to rest in a church or monastery dedicated to your deity, you and %1 allies can receive magical healing for free. When you use this ability, you and your allies heal %2 hit points damage overnight (this healing comes primarily from channeled energy and cure light wounds spells from low-ranking priests in the building). You can gain these benefits %3 times each weak.|MonasteryFame/5|MonasteryFame|max(1,MonateryFame/10)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 125,
+    "record_key": "Infirmary Access ~ Monastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

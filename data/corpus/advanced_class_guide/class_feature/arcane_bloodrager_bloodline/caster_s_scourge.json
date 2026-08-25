@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Arcane Bloodrager Bloodline ~ Caster's Scourge",
     "name": "Caster's Scourge",
-    "class": "Arcane Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "You gain a pool of %1 extra attacks of opportunity. You can only use this pool of attacks of opportunity to make attacks against spellcasters who cast or attempted to cast defensively in your threatened area. Either the Spellbreaker feat, the Caster's Bane bloodrage power, or some similar effect is still required to make attacks of opportunity against spellcasters who are casting defensively.|Bloodrager_Arcane_CastersScourge_Times",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

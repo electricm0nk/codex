@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Draining Strike",
     "name": "Draining Strike",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Draining Strike forces a foe damaged by your unarmed attack to attempt a DC %1 Fortitude saving throw, in addition to dealing damage normally. You must declare that you are using this feat before you make your attack roll-thus, a failed attack roll ruins the attempt. A defender who is fails this saving throw fatigued for 1 minute or until the foe is subject to any spell or effect that heals  hit point damage. If you have a base attack bonus of +14 or higher, the target is exhausted for the same duration instead. You can use Draining Strike %2 times per day, but no more than once per round. Constructs, incorporeal creatures, mindless creatures, plants, undead, and creatures that are immune to critical hits cannot be affected by this ability.|CL/2+10+WIS|DrainingStrikeTimes",
     "raw_tokens": [
       {
@@ -76,5 +76,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

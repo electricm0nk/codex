@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hunter ~ Teamwork Feats",
     "name": "Teamwork Feats",
@@ -27,6 +27,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.28"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Teamwork Feats|1|PREMULT:2,[PRECLASS:1,Hunter=3],[PREVAREQ:Hunter_CF_TeamworkFeat3,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Teamwork Feats|1|PREMULT:2,[PRECLASS:1,Hunter=6],[PREVAREQ:Hunter_CF_TeamworkFeat6,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Teamwork Feats|1|PREMULT:2,[PRECLASS:1,Hunter=9],[PREVAREQ:Hunter_CF_TeamworkFeat9,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Teamwork Feats|1|PREMULT:2,[PRECLASS:1,Hunter=12],[PREVAREQ:Hunter_CF_TeamworkFeat12,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Teamwork Feats|1|PREMULT:2,[PRECLASS:1,Hunter=15],[PREVAREQ:Hunter_CF_TeamworkFeat15,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hunter Teamwork Feats|1|PREMULT:2,[PRECLASS:1,Hunter=18],[PREVAREQ:Hunter_CF_TeamworkFeat18,0]"
       }
     ]
   },
@@ -43,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

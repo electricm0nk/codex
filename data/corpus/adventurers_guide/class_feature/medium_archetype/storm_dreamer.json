@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Medium Archetype ~ Storm Dreamer",
     "name": "Storm Dreamer",
-    "class": "Medium Archetype",
+    "class": "Medium",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -42,7 +42,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Storm Dreamer ~ Gozreh's Domain|PRECLASS:1,Medium=1"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
@@ -106,6 +106,7 @@
     "computed:pre_guard"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_field": "description,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

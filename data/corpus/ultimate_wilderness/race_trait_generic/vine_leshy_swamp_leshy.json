@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vine Leshy ~ Swamp Leshy",
+    "name": "Swamp Leshy",
+    "description": "Some vine leshys are made from plants that naturally grow in swamps. These leshys gain a +2 racial bonus on Swim checks and a +4 racial bonus on Stealth checks in swamps.&nl;This replaces climber and alters unassuming foliage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vine Leshy ~ Swamp Leshy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Alternate Racial Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Vine Leshy ~ Swamp Leshy],[PREVAREQ:VineLeshy_ReplaceClimber,0,VineLeshy_ReplaceUnassumingFoliage,0]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some vine leshys are made from plants that naturally grow in swamps. These leshys gain a +2 racial bonus on Swim checks and a +4 racial bonus on Stealth checks in swamps.&nl;This replaces climber and alters unassuming foliage."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In swamps|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VineLeshy_ReplaceClimber,VineLeshy_ReplaceUnassumingFoliage|1|TYPE=Boolean"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 132,
+    "record_key": "Vine Leshy ~ Swamp Leshy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

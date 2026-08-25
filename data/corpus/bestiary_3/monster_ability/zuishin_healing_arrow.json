@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Zuishin ~ Healing Arrow",
+    "delivery": "Supernatural",
+    "description": "As a swift action, a zuishin can infuse an arrow it fires to carry any of the following effects: breath of life, cure light wounds, heal, neutralize poison, remove curse, remove disease, or restoration. Using one of these effects consumes a use of the same spell-like ability. The zuishin must make a touch attack to deliver the effect to the target-the target takes no damage from the arrow.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:zuishin_healing_arrow",
+    "name": "Healing Arrow",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a zuishin can infuse an arrow it fires to carry any of the following effects: breath of life, cure light wounds, heal, neutralize poison, remove curse, remove disease, or restoration. Using one of these effects consumes a use of the same spell-like ability. The zuishin must make a touch attack to deliver the effect to the target-the target takes no damage from the arrow."
+      },
+      {
+        "key": "KEY",
+        "value": "Zuishin ~ Healing Arrow"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.165"
+      },
+      {
+        "key": "TYPE",
+        "value": "ZuishinRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.165",
+    "traits": [
+      "ZuishinRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1135,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Zuishin ~ Healing Arrow",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption ~ Greater Shattered Body Gift",
+    "name": "Greater Shattered Body Gift",
+    "description": "Your body is almost entirely artificial, save for a few organic components tethering you to your original life. Your bonus on saving throws against poison and diseases from shattered body is equal to your manifestation level. You automatically stabilize when you are below 0 hit points. You no longer need to eat, drink, or sleep. You must still rest for at least 8 hours to prepare spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Greater Shattered Body Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PrometheanGreaterShatteredBodyGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "Your body is almost entirely artificial, save for a few organic components tethering you to your original life. Your bonus on saving throws against poison and diseases from shattered body is equal to your manifestation level. You automatically stabilize when you are below 0 hit points. You no longer need to eat, drink, or sleep. You must still rest for at least 8 hours to prepare spells."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrometheanShatteredBodyBonus|PrometheanManifestationLevel|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 736,
+    "record_key": "Promethean Corruption ~ Greater Shattered Body Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

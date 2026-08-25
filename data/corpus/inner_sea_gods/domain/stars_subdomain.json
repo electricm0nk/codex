@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Stars Subdomain",
+    "name": "Stars Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Stars Subdomain],[PREVARLT:VoidDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Guarded Mind|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Void)|PREVARGTEQ:DomainVoidAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ The Stars Are Right|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Void"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "DESC",
+        "value": "The firmament provides you inspiration, and you draw power from the stars' distant light."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=1|Feather Fall"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=2|Hypnotic Pattern"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=3|Fly"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=4|Planar Binding (Lesser)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=5|Overland Flight"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=6|Planar Binding"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=7|Sunbeam"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=8|Planar Binding (Greater)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=9|Meteor Swarm"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Void"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 22,
+    "record_key": "Stars Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

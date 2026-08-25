@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcanist Archetype ~ Unlettered Arcanist",
     "name": "Unlettered Arcanist",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "Some arcanists store their spells as whispered secrets within familiars instead of on paper.",
     "raw_tokens": [
       {
@@ -51,6 +51,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Arcanist"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Unlettered Arcanist],[!PREFACT:1,ABILITIES,Arcanist_Archetype_Spellbooks=True,Arcanist_Archetype_Spells=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_Spellbooks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_Spells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_Spellbooks|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_Spells|true"
       }
     ]
   },
@@ -67,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

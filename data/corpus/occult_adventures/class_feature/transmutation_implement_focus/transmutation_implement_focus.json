@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Occultist Transmutation Implement Focus",
     "name": "Transmutation Implement Focus",
-    "class": null,
+    "class": "Occultist",
     "description": "Resonant power: +2 temporary enhancement bonus to a physical ability score per 3 points of mental focus invested (max +%1).|2*floor(1+OccultistLVL/6)",
     "raw_tokens": [
       {
@@ -77,5 +77,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

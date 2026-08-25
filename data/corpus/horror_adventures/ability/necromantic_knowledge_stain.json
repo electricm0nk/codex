@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lich Corruption ~ Necromantic Knowledge Stain",
+    "name": "Necromantic Knowledge Stain",
+    "description": "You cast any spell from a school other than necromancy as though your caster level were 1 lower, which might prevent you from casting the spell altogether. [Special] You can gain this manifestation multiple times. Each time you gain the stain, the penalties stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Necromantic Knowledge Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichNecromanticKnowledgeStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "DESC",
+        "value": "You cast any spell from a school other than necromancy as though your caster level were 1 lower, which might prevent you from casting the spell altogether. [Special] You can gain this manifestation multiple times. Each time you gain the stain, the penalties stack."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Abjuration|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Conjuration|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Divination|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Enchantment|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Evocation|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Illusion|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Transmutation|-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 535,
+    "record_key": "Lich Corruption ~ Necromantic Knowledge Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

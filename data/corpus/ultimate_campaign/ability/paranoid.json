@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Drawback ~ Paranoid",
+    "name": "Paranoid",
+    "description": "You believe that someone or something is always out to get you, so you have a hard time truly trusting anyone. Anyone who attempts an aid another action of any type to assist you must succeed at a DC 15 check instead of the normal DC 10 check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drawback ~ Paranoid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Drawback"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassDrawbackRestriction,1],[PREABILITY:1,CATEGORY=Special Ability,Drawback ~ Paranoid],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.Drawback]"
+      },
+      {
+        "key": "DESC",
+        "value": "You believe that someone or something is always out to get you, so you have a hard time truly trusting anyone. Anyone who attempts an aid another action of any type to assist you must succeed at a DC 15 check instead of the normal DC 10 check."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_drawbacks.lst",
+    "sha256": "639ac624d4a49ce7d5125c407a7c6150d20450678d57d92b69577b5ebef2c7c1",
+    "line": 23,
+    "record_key": "Drawback ~ Paranoid"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

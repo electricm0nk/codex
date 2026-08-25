@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Vigilante ~ Vigilante Talent",
     "name": "Vigilante Talent",
@@ -47,6 +47,46 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.13"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,2|PREVAREQ:Vigilante_CF_VigilanteTalent2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,4|PREVAREQ:Vigilante_CF_VigilanteTalent4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,6|PREVAREQ:Vigilante_CF_VigilanteTalent6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,8|PREVAREQ:Vigilante_CF_VigilanteTalent8,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,10|PREVAREQ:Vigilante_CF_VigilanteTalent10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,12|PREVAREQ:Vigilante_CF_VigilanteTalent12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,14|PREVAREQ:Vigilante_CF_VigilanteTalent14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,16|PREVAREQ:Vigilante_CF_VigilanteTalent16,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,18|PREVAREQ:Vigilante_CF_VigilanteTalent18,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Vigilante Talent|-1|PREVARGTEQ:VigilanteLVL,20|PREVAREQ:Vigilante_CF_VigilanteTalent20,1"
       }
     ]
   },
@@ -65,5 +105,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

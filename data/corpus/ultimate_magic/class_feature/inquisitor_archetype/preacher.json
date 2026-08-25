@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Preacher",
     "name": "Preacher",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "Some inquisitors wander the land to spread the true word of their faith. Often they come into conflict with those hostile to their teachings or to the preacher's need to help those who cannot help themselves. The leaders of evil or aggressive religions send these preachers into new territories to win converts and hopefully allies. Often, they start uprisings against powers hostile to their religion, or defend a group of honest believers from the depredations of the unfaithful.",
     "raw_tokens": [
       {
@@ -47,6 +47,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Preacher],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_SoloTactics=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SoloTactics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SoloTactics|true"
       }
     ]
   },
@@ -63,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

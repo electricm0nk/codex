@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Inquisitor Archetype ~ Vigilant Defender",
     "name": "Vigilant Defender",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "Some inquisitors focus more on protecting those who share their faiths and their ideals than on actively hunting their enemies. These vigilant defenders often work alongside traveling clerics and paladins.",
     "raw_tokens": [
       {
@@ -95,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

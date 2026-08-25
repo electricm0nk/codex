@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Orc Racial Subtype ~ Mystic",
+    "name": "Mystic",
+    "description": "Orc shamans are brutal teachers who sometimes kill or maim their most promising students in order to eliminate what could be a potential rival. Half-orcs who survive years of abuse by an orc shaman master are deeply scarred and altered by the experience. Shaman trainees learn early that cunning and luck are often the only things that offer a chance of survival. They have the shaman's apprentice and sacred tattoo alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc Racial Subtype ~ Mystic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Half-Orc Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc Racial Subtype ~ Mystic],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceOrcFerocity=true,HalfOrc_ReplaceIntimidating=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Orc shamans are brutal teachers who sometimes kill or maim their most promising students in order to eliminate what could be a potential rival. Half-orcs who survive years of abuse by an orc shaman master are deeply scarred and altered by the experience. Shaman trainees learn early that cunning and luck are often the only things that offer a chance of survival. They have the shaman's apprentice and sacred tattoo alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Mystic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Half-Orc Racial Trait|NORMAL|Half-Orc ~ Shaman's Apprentice|Half-Orc ~ Sacred Tattoo"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2182,
+    "record_key": "Half-Orc Racial Subtype ~ Mystic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

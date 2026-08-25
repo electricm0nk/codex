@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Clockwork Servant ~ Repair Clockwork",
+    "delivery": "Extraordinary",
+    "description": "Clockwork servants are adept at repairing other clockwork constructs. As a standard action that does not provoke an attack of opportunity, a clockwork servant can repair damage done to either itself or an adjacent clockwork creature, healing 1d10 points of damage to the target.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:clockwork_servant_repair_clockwork",
+    "name": "Repair Clockwork",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Clockwork servants are adept at repairing other clockwork constructs. As a standard action that does not provoke an attack of opportunity, a clockwork servant can repair damage done to either itself or an adjacent clockwork creature, healing 1d10 points of damage to the target."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Servant ~ Repair Clockwork"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClockworkServantRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.56",
+    "traits": [
+      "ClockworkServantRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 577,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Clockwork Servant ~ Repair Clockwork",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

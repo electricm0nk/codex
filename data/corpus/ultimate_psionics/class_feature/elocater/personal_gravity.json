@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Elocater ~ Personal Gravity",
+    "name": "Personal Gravity",
+    "class": "Elocater",
+    "description": "Move on solid or liquid surfaces, including walls and ceilings, if within 1 ft. of the surface.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elocater ~ Personal Gravity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ElocaterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Move on solid or liquid surfaces, including walls and ceilings, if within 1 ft. of the surface."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.357"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1218,
+    "record_key": "Elocater ~ Personal Gravity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

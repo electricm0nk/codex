@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Telekinetic Master",
+    "name": "Telekinetic Master",
+    "description": "You can use mage hand or open/close at will as a standard action, and you can affect unattended magical objects with mage hand. The weight limit for these abilities increases by %1 pounds. Treat your caster level as 2 levels higher when casting levitate, telekinesis, and similar spells.|Ability_TelekineticMaster_WT",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Telekinetic Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_TelekineticMaster_WT|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Mythic Ability|TIMES=ATWILL|Mage Hand"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Mythic Ability|TIMES=ATWILL|Open/Close"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use mage hand or open/close at will as a standard action, and you can affect unattended magical objects with mage hand. The weight limit for these abilities increases by %1 pounds. Treat your caster level as 2 levels higher when casting levitate, telekinesis, and similar spells.|Ability_TelekineticMaster_WT"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_TelekineticMaster_WT|5*MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 269,
+    "record_key": "Mythic Path Ability ~ Telekinetic Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Musket Master",
     "name": "Musket Master",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "Pistols and other one-handed firearms are often easy to conceal and faster to load than other firearms, and do suff icient damage for most situations. But some gunslingers want a little more firepower and range. These are the musket masters; the best of these gunslingers can reload a musket with dazzling speed, potentially putting even their pistol-wielding brethren to shame.",
     "raw_tokens": [
       {
@@ -63,6 +63,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Gunslinger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ MUSKET MASTER],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_Proficiencies=True,Gunslinger_Archetype_Gunsmith=True,Gunslinger_Archetype_DodgeDeed=True,Gunslinger_Archetype_UtilityShotDeed=True,Gunslinger_Archetype_GunTraining1=True,Gunslinger_Archetype_GunTraining2=True,Gunslinger_Archetype_GunTraining3=True,Gunslinger_Archetype_GunTraining4=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunslingersDodgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_UtilityShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Gunsmith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_DodgeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_UtilityShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining4|true"
       }
     ]
   },
@@ -79,5 +139,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

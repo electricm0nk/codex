@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Exciter ~ Excitation",
+    "name": "Excitation",
+    "class": "Spiritualist",
+    "description": "When an exciter is in a rapture, each round he can choose to intensify his emotional fury, expending 2 rounds of rapture instead of 1. When he uses excitation, he chooses one of the two abilities that his emotional focus would normally grant to a manifested phantom, such as strength focus and powerful strike for an anger phantom, or power from despair and miserable strike for a despair phantom. He gains these abilities until the beginning of his next turn. If the ability normally augments only a phantom's slam attacks, it instead applies to the ectoplasmic tendrils that the spiritualist can sprout using his ectoplasmic bonded manifestation.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exciter ~ Excitation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "DESC",
+        "value": "When an exciter is in a rapture, each round he can choose to intensify his emotional fury, expending 2 rounds of rapture instead of 1. When he uses excitation, he chooses one of the two abilities that his emotional focus would normally grant to a manifested phantom, such as strength focus and powerful strike for an anger phantom, or power from despair and miserable strike for a despair phantom. He gains these abilities until the beginning of his next turn. If the ability normally augments only a phantom's slam attacks, it instead applies to the ectoplasmic tendrils that the spiritualist can sprout using his ectoplasmic bonded manifestation."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 304,
+    "record_key": "Exciter ~ Excitation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

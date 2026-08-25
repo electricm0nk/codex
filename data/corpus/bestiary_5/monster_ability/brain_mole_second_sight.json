@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Brain Mole ~ Second Sight",
+    "delivery": "Supernatural",
+    "description": "Brain moles can sense the presence of creatures whose minds have been opened to the world of magic. Brain moles can notice and locate any creature within 60 feet that is capable of casting spells (whether they are arcane, divine, or psychic spells). This functions identically to blindsight, except that it applies only to creatures that can cast spells.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:brain_mole_second_sight",
+    "name": "Second Sight",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Brain moles can sense the presence of creatures whose minds have been opened to the world of magic. Brain moles can notice and locate any creature within 60 feet that is capable of casting spells (whether they are arcane, divine, or psychic spells). This functions identically to blindsight, except that it applies only to creatures that can cast spells."
+      },
+      {
+        "key": "KEY",
+        "value": "Brain Mole ~ Second Sight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.BrainMoleRacialTrait"
+      }
+    ],
+    "source_page": "p.46",
+    "traits": [
+      "BrainMoleRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "record_key": "Brain Mole ~ Second Sight",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lich Corruption ~ Necromantic Knowledge Gift",
+    "name": "Necromantic Knowledge Gift",
+    "description": "[NOT IMPLEMENTED] You can add one necromancy spell from the sorcerer/wizard spell list to your spellbook, familiar, or list of spells you can prepare or to your spells known. This spell must be of a level you can cast. A spell learned in this fashion is treated as though it were on your class spell list. If you normally cast your spells from the sorcerer/wizard spells list, you can add a necromancy spell from the cleric or witch spell list instead. [Special] You can gain this manifestation multiple times. Each time you gain the gift, you gain a different necromancy spell.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Necromantic Knowledge Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichNecromanticKnowledgeGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] You can add one necromancy spell from the sorcerer/wizard spell list to your spellbook, familiar, or list of spells you can prepare or to your spells known. This spell must be of a level you can cast. A spell learned in this fashion is treated as though it were on your class spell list. If you normally cast your spells from the sorcerer/wizard spells list, you can add a necromancy spell from the cleric or witch spell list instead. [Special] You can gain this manifestation multiple times. Each time you gain the gift, you gain a different necromancy spell."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 533,
+    "record_key": "Lich Corruption ~ Necromantic Knowledge Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

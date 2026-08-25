@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Corpse Armor Gift",
+    "name": "Corpse Armor Gift",
+    "description": "You gain a +%1 bonus to your natural armor.|GhoulCorpseArmorBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Corpse Armor Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulCorpseArmorGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GhoulCorpseArmorBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus to your natural armor.|GhoulCorpseArmorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GhoulCorpseArmorBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GhoulCorpseArmorBonus|1|PREVARGTEQ:GhoulManifestationLevel,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|GhoulCorpseArmorBonus|TYPE=NaturalArmorEnhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 219,
+    "record_key": "Ghoul Corruption ~ Corpse Armor Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

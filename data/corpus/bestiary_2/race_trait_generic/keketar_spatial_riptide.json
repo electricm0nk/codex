@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Keketar ~ Spatial Riptide",
+    "name": "Spatial Riptide",
+    "description": "Any non-protean teleporting into or out of the protean's aura must make a DC %1 Fortitude save or enter a state of suspended animation (identical to temporal stasis) for 1d3 rounds; success means the creature is merely nauseated for 1 round.|KeketarSpatialRiptideDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Keketar ~ Spatial Riptide"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KeketarSpatialRiptideDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any non-protean teleporting into or out of the protean's aura must make a DC %1 Fortitude save or enter a state of suspended animation (identical to temporal stasis) for 1d3 rounds; success means the creature is merely nauseated for 1 round.|KeketarSpatialRiptideDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Spatial Riptide"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KeketarSpatialRiptideDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KeketarSpatialRiptideDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Spatial Riptide)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 979,
+    "record_key": "Keketar ~ Spatial Riptide"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

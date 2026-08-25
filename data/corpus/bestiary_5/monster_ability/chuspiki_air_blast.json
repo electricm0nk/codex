@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Chuspiki ~ Air Blast",
+    "delivery": "SpellLike",
+    "description": "A chuspiki can make a ranged attack with an intense air blast, as the kineticist wild talent of the same name, using its Hit Dice as its kineticist level (Pathfinder RPG Occult Adventures 11, 15).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:chuspiki_air_blast",
+    "name": "Air Blast",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d6+%2 damage, 30-ft. range)|HD/2|HD/2+CON/2"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A chuspiki can make a ranged attack with an intense air blast, as the kineticist wild talent of the same name, using its Hit Dice as its kineticist level (Pathfinder RPG Occult Adventures 11, 15)."
+      },
+      {
+        "key": "KEY",
+        "value": "Chuspiki ~ Air Blast"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike.ChuspikiRacialTrait"
+      }
+    ],
+    "source_page": "p.56",
+    "traits": [
+      "ChuspikiRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "record_key": "Chuspiki ~ Air Blast",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

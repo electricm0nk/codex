@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mummified Creature ~ Fail-Safe",
+    "delivery": null,
+    "description": "As a fail-safe in case of rebellion, a mummified creature is subtly marked during the ritual process with a hieroglyph someplace inconspicuous on its body or wrappings that identifies the particular energy type to which it is vulnerable. A successful DC 20 Perception check is needed to find the mark, but a successful DC 25 Linguistics check is still required to decipher the hieroglyph's meaning.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mummified_creature_fail_safe",
+    "name": "Fail-Safe",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a fail-safe in case of rebellion, a mummified creature is subtly marked during the ritual process with a hieroglyph someplace inconspicuous on its body or wrappings that identifies the particular energy type to which it is vulnerable. A successful DC 20 Perception check is needed to find the mark, but a successful DC 25 Linguistics check is still required to decipher the hieroglyph's meaning."
+      },
+      {
+        "key": "KEY",
+        "value": "Mummified Creature ~ Fail-Safe"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1098,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Mummified Creature ~ Fail-Safe",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Master of All Forms",
+    "category": "Psionic",
+    "name": "Master of All Forms",
+    "description": "Manifest shapechanging powers as a swift action",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Swift Shapeshifter",
+      "PRESPELL:1,Metamorphosis",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 201,
+    "record_key": "Master of All Forms"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

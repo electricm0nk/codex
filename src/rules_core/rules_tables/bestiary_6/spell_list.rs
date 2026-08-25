@@ -68,6 +68,7 @@ impl Pf1SchoolId {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpellListEntry {
     pub key: &'static str,
+    pub name_pi_line: Option<u32>,
     pub school: Option<Pf1SchoolId>,
     pub level: Option<u8>,
     pub description: Option<&'static str>,
@@ -76,6 +77,7 @@ pub struct SpellListEntry {
 pub const SPELL_LIST: &[SpellListEntry] = &[
     SpellListEntry {
         key: "Animal Growth (Reptiles Only)",
+        name_pi_line: None,
         school: Some(Pf1SchoolId::Transmutation),
         level: Some(5),
         description: Some(
@@ -85,6 +87,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
     },
     SpellListEntry {
         key: "Animal Shapes (Reptiles Only)",
+        name_pi_line: None,
         school: Some(Pf1SchoolId::Transmutation),
         level: Some(8),
         description: Some(

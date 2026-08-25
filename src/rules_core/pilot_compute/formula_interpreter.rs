@@ -61,11 +61,27 @@
 //!    have the same `Math.floor` behaviour — right answer, wrong file). Unobservable against the
 //!    current 22 reproduction cases (all sampled level/ability-mod inputs are non-negative);
 //!    exercised only by this module's own synthetic negative-operand test.
-//! 3. **`max`/`min` are N-ary, not fixed at two arguments.**
-//!    `plugin/jepcommands/MaxCommand.java`: `numberOfParameters = -1` (variable-arity), summing
-//!    over the whole stack; `MinCommand.java` is the mirror. Confirmed directly (prior citation
-//!    was `PCGen-Formula`'s `MaxFunction`/`AbstractNaryFunction`, also N-ary, but again the wrong
-//!    engine). This module accepts 2 or more arguments.
+//! 3. **`max`/`min` are N-ary, not fixed at two arguments — INCLUDING one argument.**
+//!    `plugin/jepcommands/MaxCommand.java`: `numberOfParameters = -1` (variable-arity); its `run`
+//!    pops each parameter off the stack and folds via `first || param > result`, so a single
+//!    parameter simply becomes the result (`first` is true on the only iteration) — the oracle
+//!    accepts `max(X)` and returns `X` unchanged. `MinCommand.java` is the mirror. Confirmed
+//!    directly (prior citation was `PCGen-Formula`'s `MaxFunction`/`AbstractNaryFunction`, also
+//!    N-ary, but again the wrong engine). SD-32 T12 Epic 8 row 18 cycle 16: this module
+//!    previously refused a single-argument `min`/`max` call as an unimplemented shape (a
+//!    disclosed but INCORRECT restriction — real corpus records exist,
+//!    e.g. `Cavalier Order of the Beast ~ Class Skills`'s `max(floor(CavalierLVL/2))`,
+//!    `Barbarian Undead Bloodline (rage power) ~ Undead Blood (Lesser)`'s
+//!    `max(floor(BarbarianLVL/2))`, `Voice of the Wild ~ Wild Knowledge`'s
+//!    `max(floor(BardLVL/2))` — 3 corpus records total, sized via
+//!    `python3 -c "..."` walking `data/corpus/**/*.json` for a balanced-paren `min(`/`max(` call
+//!    with exactly one top-level comma-split argument, see cycle 16's own receipt for the full
+//!    script). Fixed to accept 1 or more arguments, matching the oracle's variable-arity
+//!    `MaxCommand`/`MinCommand` exactly — the parser already always supplies at least one
+//!    argument by construction (`parse_call`'s `min`/`max`/`floor`/`ceil`/`abs` branch always
+//!    pushes one `parse_expr()?` before the comma loop), so a genuine zero-argument call can
+//!    never reach this arity check at all; the fix removes the now-provably-wrong `< 2` guard
+//!    rather than replacing it with an unreachable `< 1` one.
 //! 4. **`if(cond, then, else)` accepts a bare NUMERIC condition (nonzero = true), not only a
 //!    boolean comparison — and this module does NOT implement that yet.**
 //!    `plugin/jepcommands/IfCommand.java`: "The first is a number interpreted as a boolean... if
@@ -124,18 +140,30 @@
 //!   form) — wave 26 widened what counts as a valid condition (a `&&`-chain of comparisons, not
 //!   only a single one) but did not touch this restriction; see point 4 above and `parse_call`'s
 //!   `"if"` arm.
-//! - **`classlevel(...)` does NOT verify its class-name argument against anything — this is a
-//!   real, currently-unfixed gap, not a refusal.** The real oracle's `classlevel("X")`
-//!   (`plugin/jepcommands/ClassLevelCommand.java`) looks up level in the SPECIFIC named class;
-//!   this module has no per-class variable environment (only a single `__LEVEL__` binding, per
-//!   the harness's own open question (b)), so `classlevel("Fighter")` and
-//!   `classlevel("Anything")` currently both silently return the same `__LEVEL__` value. For a
-//!   single-class formula in a single-class caller context this is harmless; for any genuinely
-//!   cross-class `classlevel("OtherClass")` formula (confirmed present in the corpus, see
-//!   `OPEN-ISSUES.md`) it is silently wrong, not merely incomplete. **No consumer may bank a value
-//!   through a `classlevel(...)`-bearing formula until this is resolved** — logged as a hard
-//!   precondition in `OPEN-ISSUES.md`, not merely a documented limitation, because the failure
-//!   mode is exactly the "plausible number nobody checks" shape §24.1 exists to prevent.
+//! - **`classlevel(...)` now verifies its class-name argument (SD-32 T12 Epic 8 row 18 cycle
+//!   6) — CLOSED for the same-class case, still a clean refusal for the genuinely cross-class
+//!   case.** The real oracle's `classlevel("X")` (`plugin/jepcommands/ClassLevelCommand.java`)
+//!   looks up level in the SPECIFIC named class. This module now has a per-class variable
+//!   environment: `Expr::ClassLevel(class_name)` looks up `CLASSLEVEL::<class_name>`, never a
+//!   class-blind `__LEVEL__` slot. Every consumer in this codebase only ever knows ONE class's
+//!   real level (the record's own granting class) and binds exactly that one `CLASSLEVEL::`
+//!   key — so `classlevel("SameClass")` now resolves CORRECTLY (the prior version's silent
+//!   coincidence, now an honest binding), while `classlevel("SomeOtherClass")` stays cleanly
+//!   unbound and refuses, exactly the "refuse, never guess" contract this module holds
+//!   everywhere else. **Genuine multiclass cross-referencing** (a caller that knows more than
+//!   one class's level and could bind more than one `CLASSLEVEL::` key) is still not
+//!   implemented by any consumer — no consumer in this codebase currently tracks multiple
+//!   classes' levels at once — so a formula naming a class the caller truly does not know about
+//!   still refuses, never fabricates. **No consumer may bank a value through a
+//!   `classlevel(...)`-bearing formula whose class name it cannot bind** — the failure mode this
+//!   guards against is exactly the "plausible number nobody checks" shape §24.1 exists to
+//!   prevent.
+//! - **Bare `classlevel()` with no argument now PARSES (SD-32 T12 Epic 8 row 18 cycle 9)** — a
+//!   real corpus shape (`book_of_the_damned_volume_2/demoniac.json`'s BASEAB/SAVE formulas) the
+//!   grammar previously refused outright. It reuses the exact same `CLASSLEVEL::<name>` lookup
+//!   above with an empty string as the "no class name given" sentinel (`CLASSLEVEL::`) — this
+//!   was a pure parser-shape gap, not a semantic widening: no consumer in this codebase binds
+//!   the empty key yet, so evaluation still refuses cleanly until one explicitly does.
 //!
 //! ## Wave 26 shape closure (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on)
 //!
@@ -185,14 +213,19 @@
 //!   write scope).
 //! - `DEFINE:` envelope parsing beyond formula-segment extraction (see [`extract_formula_field`]).
 //! - Non-numeric formula results (string-valued `DEFINE:`s, `.EQUIP` object references, etc.).
-//! - Multiclass `classlevel("X")` resolution to a specific class's own level — see the refusal
-//!   list above; this is a silently-wrong gap, not a clean refusal, and is the single highest-
-//!   priority fix before any `classlevel`-bearing formula is banked.
-//! - `classlevel("X", "APPLIEDAS=NONEPIC")` — a real 2-argument form (confirmed present in the
-//!   corpus, e.g. Monk unarmed-damage formulas) this module has not investigated; refuses today as
-//!   a parse error (`expected RParen, got Some(Comma)`), not silently mishandled, but its oracle
-//!   semantics are unverified — found during wave 26, out of this lane's four named shapes, not
-//!   attempted.
+//! - Genuine multiclass `classlevel("X")` resolution for X other than the caller's one known
+//!   class — SD-32 T12 Epic 8 row 18 cycle 6 closed the same-class case (see the refusal list
+//!   above); a caller that tracks more than one class's level at once and could therefore bind
+//!   more than one `CLASSLEVEL::` key does not exist yet in this codebase.
+//! - `classlevel("X", "APPLIEDAS=NONEPIC")` — SD-32 T12 Epic 8 row 18 cycle 14: implemented.
+//!   Verified against `plugin/jepcommands/ClassLevelCommand.java`'s `run`: the qualifier caps the
+//!   class level read at the game mode's non-epic ceiling
+//!   (`cl += ";BEFORELEVEL=" + (maxNonEpicLevel+1)`), a cap that can never bind because this
+//!   engine never models epic levels and every class chassis already gates its own level at its
+//!   corpus-derived `max_level` (<= 20 for every real base class) — so the form is
+//!   observationally identical to `classlevel("X")` for every character this engine represents.
+//!   Any qualifier value other than the literal `APPLIEDAS=NONEPIC` still refuses, matching the
+//!   oracle's own `ParseException` for an unrecognised `APPLIEDAS=` value.
 //! - `skillinfo(...)`'s five other first-argument keywords (`modifier`, `rank`, `total`, `stat`,
 //!   `misc`) — verified against `SkillInfoCommand.java` (same citation as `TOTALRANK`). CORRECTION
 //!   (wave 26 integration cycle): two of the five (`rank`, `total`) ARE corpus-exercised (4 and 1
@@ -565,13 +598,72 @@ impl<'a> Parser<'a> {
         let lname = name.to_ascii_lowercase();
         match lname.as_str() {
             "classlevel" => {
+                // SD-32 T12 Epic 8 row 18 cycle 9: bare `classlevel()` with NO argument is a
+                // real corpus shape (`book_of_the_damned_volume_2/demoniac.json`'s BASEAB/SAVE
+                // formulas: `classlevel()*3/4`, `(classlevel()+1)/2`, `(classlevel()+1)/3`) that
+                // the pre-existing grammar refused outright before ever reaching evaluation — a
+                // parser-shape gap, not a semantic one. Widened to accept it: `Expr::ClassLevel(
+                // String::new())` reuses the SAME `CLASSLEVEL::<name>` lookup cycle 6 already
+                // built, with the empty string as the "no class name given" sentinel — the exact
+                // "unowned = \"\", never fabricated" convention this codebase already applies
+                // elsewhere (e.g. row 18 cycle 8's bare-key header merge). No caller today binds
+                // `CLASSLEVEL::` (empty key), so this still refuses cleanly at evaluation time
+                // until a caller explicitly does — never silently answers with any other class's
+                // level, exactly the "refuse, never guess" contract this module holds everywhere.
+                if let Some(Tok::RParen) = self.peek() {
+                    self.bump();
+                    return Ok(Expr::ClassLevel(String::new()));
+                }
                 match self.bump() {
                     Some(Tok::Str(s)) => {
-                        self.expect(&Tok::RParen)?;
-                        Ok(Expr::ClassLevel(s))
+                        // SD-32 T12 Epic 8 row 18 cycle 14: the real 2-argument form,
+                        // `classlevel("<class>","APPLIEDAS=NONEPIC")` (confirmed live corpus
+                        // shape, e.g. `core_rulebook/class_feature/monk/standard_monk.json`'s
+                        // `classlevel("Monk","APPLIEDAS=NONEPIC")` BASEAB/SAVE formulas, and
+                        // `pathfinder_unchained/class_feature/monk/unchained_monk.json`'s same
+                        // shape). Verified against the real oracle
+                        // (`plugin/jepcommands/ClassLevelCommand.java`'s `run`): a second
+                        // string argument starting `APPLIEDAS=` is parsed as a qualifier, not a
+                        // second class name; `NONEPIC` is the only qualifier value the oracle
+                        // recognises (any other value throws `ParseException("Did not
+                        // understand APPLIEDAS=" + applied)` — refused there, refused here
+                        // identically). Its real semantic effect is
+                        // `cl += ";BEFORELEVEL=" + (mode.getMaxNonEpicLevel() + 1)` — the class
+                        // level is capped at the game mode's non-epic level ceiling before
+                        // being read. This engine never models epic levels at all (every class
+                        // chassis this codebase resolves already gates its own level at that
+                        // class's own corpus-derived `max_level`, `untabled_base_class_chassis.
+                        // rs`/`generic_class_chassis.rs`, which for every real Pathfinder base
+                        // class is <= 20, the same non-epic ceiling PCGen's own default game
+                        // mode uses) — so the cap can never actually bind for any level this
+                        // engine ever resolves, and `classlevel("<class>","APPLIEDAS=NONEPIC")`
+                        // is observationally identical to `classlevel("<class>")` for every
+                        // character this engine can represent. Reusing the SAME
+                        // `Expr::ClassLevel` binding (not a new AST node) is therefore correct,
+                        // not a shortcut around the real semantics — the qualifier is checked
+                        // and REFUSED if it is anything other than the one value the oracle
+                        // itself accepts, never silently ignored.
+                        if let Some(Tok::Comma) = self.peek() {
+                            self.bump();
+                            match self.bump() {
+                                Some(Tok::Str(q)) if q.eq_ignore_ascii_case("APPLIEDAS=NONEPIC") => {
+                                    self.expect(&Tok::RParen)?;
+                                    Ok(Expr::ClassLevel(s))
+                                }
+                                other => Err(FormulaEvalError(format!(
+                                    "classlevel({s:?}, ...)'s second argument must be the \
+                                     literal qualifier \"APPLIEDAS=NONEPIC\" (the only value the \
+                                     real oracle's ClassLevelCommand.java accepts), got {other:?}"
+                                ))),
+                            }
+                        } else {
+                            self.expect(&Tok::RParen)?;
+                            Ok(Expr::ClassLevel(s))
+                        }
                     }
                     other => Err(FormulaEvalError(format!(
-                        "classlevel(...) expects a string literal class name, got {other:?}"
+                        "classlevel(...) expects a string literal class name or no argument, got \
+                         {other:?}"
                     ))),
                 }
             }
@@ -636,10 +728,30 @@ impl<'a> Parser<'a> {
                 Ok(Expr::SkillInfoTotalRank(skill))
             }
             "min" | "max" | "floor" | "ceil" | "abs" => {
-                let mut args = vec![self.parse_expr()?];
+                // SD-32 T12 Epic 8 row 18 cycle 17: each comma-separated argument is now parsed
+                // via `parse_arith_or_bool`, not the plain-arithmetic `parse_expr`. Real PCGen's
+                // grammar is `org.nfunk.jep` (`pcgen/util/PJEP.java extends org.nfunk.jep.JEP`),
+                // a standard operator-precedence expression parser: relational operators
+                // (`org.nfunk.jep.function.Comparative`, confirmed pushing a plain `1.0`/`0.0`
+                // Double, same citation `Expr::Cmp`'s eval already cites) sit at their own
+                // precedence level and are valid anywhere an `expr` nonterminal appears --
+                // including a function call's comma-separated arguments -- not gated behind a
+                // parenthesised sub-expression the way this module's grammar previously required.
+                // Confirmed by the real corpus shape this module previously refused:
+                // `Protection Blessing ~ Increased Defense`'s
+                // `1+min(WarpriestLVL>20,2,WarpriestLVL/10)` -- `WarpriestLVL>20` as a BARE,
+                // unparenthesised `min()` argument. `parse_arith_or_bool` is a strict superset of
+                // `parse_expr` (identical behaviour whenever no comparison/`&&` operator follows),
+                // so this widening cannot change how any previously-accepted argument parses --
+                // it only accepts a new shape `parse_expr` alone refused. Applies uniformly to
+                // `floor`/`ceil`/`abs` too since they share this one parse branch; no oracle
+                // citation restricts comparisons to only `min`/`max` positions specifically, and
+                // narrowing to just two of the five functions here would be an arbitrary,
+                // unverified restriction of its own.
+                let mut args = vec![self.parse_arith_or_bool()?];
                 while let Some(Tok::Comma) = self.peek() {
                     self.bump();
-                    args.push(self.parse_expr()?);
+                    args.push(self.parse_arith_or_bool()?);
                 }
                 self.expect(&Tok::RParen)?;
                 match lname.as_str() {
@@ -649,12 +761,12 @@ impl<'a> Parser<'a> {
                             args.len()
                         )))
                     }
-                    "min" | "max" if args.len() < 2 => {
-                        return Err(FormulaEvalError(format!(
-                            "{lname}(...) takes at least 2 arguments, got {}",
-                            args.len()
-                        )))
-                    }
+                    // `min`/`max` accept 1 or more arguments (see this module's own doc point 3
+                    // — real `MaxCommand.java`/`MinCommand.java` are variable-arity and a
+                    // single-argument call simply returns that argument unchanged). No arity
+                    // check needed here: `args` always holds at least one element by
+                    // construction (the `let mut args = vec![self.parse_arith_or_bool()?]` above), so
+                    // there is no reachable "too few arguments" shape for `min`/`max` to refuse.
                     _ => {}
                 }
                 Ok(Expr::Call(lname, args))
@@ -669,14 +781,19 @@ impl<'a> Parser<'a> {
     /// to a boolean-valued [`Expr::Cmp`] node, then continues folding any further `&&`-joined
     /// comparison terms into [`Expr::And`] nodes. This is the ONE grammar rule used everywhere a
     /// boolean-as-numeric value can appear: as `if()`'s condition, inside a parenthesised
-    /// arithmetic primary (`1+(X>=15)`), and as an entire bare top-level formula (`RangerLVL>=6`)
-    /// — see each call site's own comment for why unifying them is safe rather than an
-    /// unverified precedence guess: every corpus occurrence of a comparison used as a value sits
-    /// at exactly one of those three positions, never embedded at an arbitrary point inside a
-    /// larger arithmetic expression (confirmed by `tests::corpus_shape_coverage`'s full refusal
-    /// listing), so this module does not need to — and does not — invent a general operator
-    /// precedence between comparisons and `+`/`-`/`*`//` that the real oracle's grammar was never
-    /// exercised against here.
+    /// arithmetic primary (`1+(X>=15)`), as an entire bare top-level formula (`RangerLVL>=6`),
+    /// and (SD-32 T12 Epic 8 row 18 cycle 17) as a bare, unparenthesised `min`/`max`/`floor`/
+    /// `ceil`/`abs` function argument (`min(WarpriestLVL>20,2,WarpriestLVL/10)`) — see each call
+    /// site's own comment for why unifying them is safe rather than an unverified precedence
+    /// guess. Real PCGen's grammar (`org.nfunk.jep`, a standard operator-precedence expression
+    /// parser `pcgen/util/PJEP.java` extends) treats relational operators as valid at every
+    /// `expr` position, including a function call's comma-separated arguments, not only the
+    /// three positions this module previously restricted them to — this module does not need to
+    /// — and does not — invent a general operator precedence between comparisons and
+    /// `+`/`-`/`*`//` beyond what `parse_arith_or_bool` already expresses (a comparison/`&&`
+    /// chain sits ABOVE arithmetic, never nested inside one); a comparison still cannot appear
+    /// nested inside a larger arithmetic term (`1+(X>=5)*2` is still refused, no corpus record
+    /// exercises that shape).
     fn parse_arith_or_bool(&mut self) -> Result<Expr, FormulaEvalError> {
         let mut lhs = self.parse_expr()?;
         if let Some(op) = Self::peek_cmp_op(self.peek()) {
@@ -767,9 +884,27 @@ fn eval_expr(expr: &Expr, vars: &BTreeMap<String, i64>) -> Result<f64, FormulaEv
             }
             Ok(eval_expr(a, vars)? / denom)
         }
-        Expr::ClassLevel(_class_name) => vars.get("__LEVEL__").map(|v| *v as f64).ok_or_else(|| {
-            FormulaEvalError("classlevel(...) needs a __LEVEL__ binding".to_string())
-        }),
+        // SD-32 T12 Epic 8 row 18 cycle 6: cross-class widening. Real PCGen's `classlevel("X")`
+        // (`plugin/jepcommands/ClassLevelCommand.java`) looks up level in the SPECIFIC named
+        // class -- this evaluator now honours that by keying the lookup on the class name
+        // itself, `CLASSLEVEL::<X>` (a caller-supplied per-class binding, never `__LEVEL__`
+        // any more). A caller that only knows ONE class's level (every consumer in this
+        // codebase today -- `resolve_pcgen_var_chain` seeds exactly the record's own granting
+        // class) binds only that one key; `classlevel("SameClass")` then resolves correctly
+        // and safely, while a GENUINELY different class name stays unbound and refuses --
+        // never silently answers with the wrong class's level, unlike the prior `__LEVEL__`
+        // shortcut this replaces (see this module's own doc, "not covered" section, prior
+        // text: "classlevel(...) does NOT verify its class-name argument against anything").
+        Expr::ClassLevel(class_name) => {
+            let key = format!("CLASSLEVEL::{class_name}");
+            vars.get(&key).map(|v| *v as f64).ok_or_else(|| {
+                FormulaEvalError(format!(
+                    "classlevel({class_name:?}) needs a {key:?} binding -- no caller-supplied \
+                     level is known for this class (refusing rather than guessing another \
+                     class's level)"
+                ))
+            })
+        }
         Expr::If(cond, a, b) => {
             if eval_expr(cond, vars)? != 0.0 {
                 eval_expr(a, vars)
@@ -959,10 +1094,87 @@ mod tests {
 
     #[test]
     fn classlevel_reads_the_level_binding() {
+        // SD-32 T12 Epic 8 row 18 cycle 6: `classlevel("X")` now keys its lookup on `X` itself
+        // (`CLASSLEVEL::Summoner`), not a class-blind `__LEVEL__` slot.
         let e = PcgenFormulaEvaluator;
-        let v = vars(&[("__LEVEL__", 7)]);
+        let v = vars(&[("CLASSLEVEL::Summoner", 7)]);
         assert_eq!(e.evaluate("classlevel(\"Summoner\")", &v).unwrap(), 7);
         assert_eq!(e.evaluate("10+(X/2)+INT", &vars(&[("X", 7), ("INT", 3)])).unwrap(), 16);
+    }
+
+    #[test]
+    fn classlevel_refuses_a_genuinely_different_class_it_has_no_binding_for() {
+        // SD-32 T12 Epic 8 row 18 cycle 6: a caller that only knows ITS OWN class's level (every
+        // consumer today) must never have `classlevel("SomeOtherClass")` silently answer with
+        // that level -- the exact "plausible wrong number" shape the prior `__LEVEL__` shortcut
+        // produced. Binding only `CLASSLEVEL::Sorcerer` and asking about `"Bloodrager"` refuses.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::Sorcerer", 7)]);
+        assert!(e.evaluate("classlevel(\"Bloodrager\")", &v).is_err());
+    }
+
+    #[test]
+    fn classlevel_with_no_argument_parses_and_reads_the_empty_key_binding() {
+        // SD-32 T12 Epic 8 row 18 cycle 9: bare `classlevel()` (real shape:
+        // `book_of_the_damned_volume_2/demoniac.json`'s BASEAB/SAVE formulas) now parses instead
+        // of refusing outright, reusing the SAME `CLASSLEVEL::<name>` lookup with an empty-string
+        // sentinel for "no class name given" — a caller must still explicitly bind `CLASSLEVEL::`
+        // (empty key) for it to resolve.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::", 12)]);
+        assert_eq!(e.evaluate("classlevel()*3/4", &v).unwrap(), 9);
+        assert_eq!(e.evaluate("(classlevel()+1)/2", &v).unwrap(), 6);
+    }
+
+    #[test]
+    fn classlevel_with_no_argument_refuses_without_a_binding() {
+        // Widening the grammar to PARSE `classlevel()` must never widen what it silently
+        // ANSWERS — no binding means refuse, exactly like every other unbound reference in this
+        // module.
+        let e = PcgenFormulaEvaluator;
+        assert!(e.evaluate("classlevel()", &BTreeMap::new()).is_err());
+        // And a bound NAMED class must never leak into the unnamed lookup.
+        let v = vars(&[("CLASSLEVEL::Summoner", 7)]);
+        assert!(e.evaluate("classlevel()", &v).is_err());
+    }
+
+    #[test]
+    fn classlevel_two_argument_appliedas_nonepic_form_reads_the_same_binding() {
+        // SD-32 T12 Epic 8 row 18 cycle 14: the real 2-argument corpus shape,
+        // `classlevel("Monk","APPLIEDAS=NONEPIC")` (`core_rulebook/class_feature/monk/
+        // standard_monk.json`, `pathfinder_unchained/class_feature/monk/unchained_monk.json`
+        // BASEAB/SAVE formulas). Verified against `ClassLevelCommand.java`: the qualifier caps
+        // the level read at the non-epic ceiling, a cap this engine's own per-class `max_level`
+        // gate already makes unreachable — so it reads the SAME `CLASSLEVEL::Monk` binding as
+        // the 1-argument form.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::Monk", 9)]);
+        assert_eq!(e.evaluate("classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")", &v).unwrap(), 9);
+        assert_eq!(
+            e.evaluate("classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")*3/4", &v).unwrap(),
+            6
+        );
+    }
+
+    #[test]
+    fn classlevel_two_argument_form_still_refuses_an_unbound_or_wrong_class() {
+        // The widening must not leak into answering for a class it has no binding for, exactly
+        // like the 1-argument form's own refusal.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::Monk", 9)]);
+        assert!(e.evaluate("classlevel(\"Fighter\",\"APPLIEDAS=NONEPIC\")", &v).is_err());
+        assert!(e.evaluate("classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")", &BTreeMap::new()).is_err());
+    }
+
+    #[test]
+    fn classlevel_two_argument_form_refuses_an_unrecognised_appliedas_qualifier() {
+        // The real oracle's `ClassLevelCommand.java` throws `ParseException("Did not understand
+        // APPLIEDAS=" + applied)` for any value other than `NONEPIC` — this module refuses
+        // identically rather than silently accepting an unverified qualifier.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("CLASSLEVEL::Monk", 9)]);
+        assert!(e.evaluate("classlevel(\"Monk\",\"APPLIEDAS=EPIC\")", &v).is_err());
+        assert!(e.evaluate("classlevel(\"Monk\",\"Fighter\")", &v).is_err());
     }
 
     // -- 1b. wave 26 shape closure: comparisons/`&&` as first-class numeric values, and
@@ -1193,8 +1405,66 @@ mod tests {
     #[test]
     fn wrong_arg_counts_refuse() {
         assert!(recognises_shape("floor(1,2)").is_err());
-        assert!(recognises_shape("max(1)").is_err());
         assert!(recognises_shape("if(X>=1,1)").is_err());
+        // `max(1)` (and `min(1)`) do NOT belong here any more (SD-32 T12 Epic 8 row 18 cycle 16,
+        // `scripts/retro.py correction` -- this test previously asserted `max(1)` refuses, a
+        // pinned wrong assumption: real PCGen's `MaxCommand.java` is variable-arity and a
+        // single-argument call is valid, returning that argument unchanged. See
+        // `single_argument_min_max_now_matches_the_oracles_variable_arity_max_min_command` below
+        // for the corrected, proven property.
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 16: corrects `wrong_arg_counts_refuse`'s own prior wrong
+    /// assumption that `max(1)` refuses. Verified directly against the pinned oracle,
+    /// `plugin/jepcommands/MaxCommand.java` (`numberOfParameters = -1`, `run()`'s `first ||
+    /// param > result` fold returns the sole parameter unchanged when there is only one) and its
+    /// mirror `MinCommand.java` -- both genuinely variable-arity, accepting 1 argument. Also
+    /// proves the real corpus shape this closes: `Cavalier Order of the Beast ~ Class Skills`'s
+    /// own `max(floor(CavalierLVL/2))`.
+    #[test]
+    fn single_argument_min_max_now_matches_the_oracles_variable_arity_max_min_command() {
+        let e = PcgenFormulaEvaluator;
+        assert_eq!(e.evaluate("max(7)", &BTreeMap::new()).unwrap(), 7);
+        assert_eq!(e.evaluate("min(7)", &BTreeMap::new()).unwrap(), 7);
+        assert_eq!(
+            e.evaluate("max(floor(CavalierLVL/2))", &vars(&[("CavalierLVL", 9)])).unwrap(),
+            4
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 17: an unparenthesised comparison as a bare `min`/`max`
+    /// function argument, the real corpus shape `Protection Blessing ~ Increased Defense`'s
+    /// `1+min(WarpriestLVL>20,2,WarpriestLVL/10)` previously refused (cycle 16 named it,
+    /// verified against `org.nfunk.jep`'s standard operator-precedence grammar — relational
+    /// operators are valid at any `expr` position, not gated behind parens — and sized the
+    /// blast radius: 1 corpus record). `WarpriestLVL>20` evaluates to `Expr::Cmp` -> 0.0/1.0
+    /// (`org.nfunk.jep.function.Comparative.run()`, same citation `Expr::Cmp`'s own eval arm
+    /// cites), so at level 20 the comparison is false (0) and `min(0,2,2)=0`, at level 21 true
+    /// (1) and `min(1,2,2.1)=1`.
+    #[test]
+    fn bare_comparison_as_a_min_max_function_argument_matches_the_warpriest_corpus_shape() {
+        let e = PcgenFormulaEvaluator;
+        assert_eq!(
+            e.evaluate(
+                "1+min(WarpriestLVL>20,2,WarpriestLVL/10)",
+                &vars(&[("WarpriestLVL", 20)])
+            )
+            .unwrap(),
+            1
+        );
+        assert_eq!(
+            e.evaluate(
+                "1+min(WarpriestLVL>20,2,WarpriestLVL/10)",
+                &vars(&[("WarpriestLVL", 21)])
+            )
+            .unwrap(),
+            2
+        );
+        // Same shape for max(), and for a bare (non-min/max-wrapped) comparison mixed with a
+        // plain arithmetic argument, proving this is the general `parse_arith_or_bool` widening
+        // and not a min()-specific special case.
+        assert_eq!(e.evaluate("max(WarpriestLVL>20,0)", &vars(&[("WarpriestLVL", 25)])).unwrap(), 1);
+        assert_eq!(e.evaluate("max(WarpriestLVL>20,0)", &vars(&[("WarpriestLVL", 5)])).unwrap(), 0);
     }
 
     #[test]

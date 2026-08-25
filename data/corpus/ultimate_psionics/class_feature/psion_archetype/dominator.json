@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Archetype ~ Dominator",
+    "name": "Dominator",
+    "class": "Psion",
+    "description": "You have developed abilities that allow you to retain a measure of control and influence long after you relinquish direct mental control.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psion Archetype ~ Dominator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsionArchetype.PsionTelepathTelepathy.PsionFeat1.PsionFeat10"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Telepathy Discipline"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psion Archetype ~ Dominator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsionTelepathTelepathy,TYPE.PsionFeat10,TYPE.PsionFeat1]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Blue"
+      },
+      {
+        "key": "DESC",
+        "value": "You have developed abilities that allow you to retain a measure of control and influence long after you relinquish direct mental control."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Dominator ~ Lingering Presence|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Dominator ~ Master's Whisper|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Dominator ~ Always There|PRECLASS:1,Psion=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psion Feat|-1|PRECLASS:1,Psion=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psion Feat|-1|PRECLASS:1,Psion=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.312"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1940,
+    "record_key": "Psion Archetype ~ Dominator"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

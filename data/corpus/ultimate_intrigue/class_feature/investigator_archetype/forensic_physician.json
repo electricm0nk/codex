@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Investigator Archetype ~ Forensic Physician",
     "name": "Forensic Physician",
-    "class": "Investigator Archetype",
+    "class": "Investigator",
     "description": "A forensic physician specializes in analyzing medical details in order to solve crimes and uncover evidence. Whether it is a disease, blood work, a poison, or bones, the forensic physician's medical expertise allows him great insight into his cases, much to the chagrin of criminals who seek to cover up the nature of their crimes, even those with magical methods at their disposal.",
     "raw_tokens": [
       {
@@ -103,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

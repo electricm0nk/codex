@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Teamwork Feats",
     "name": "Teamwork Feats",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "A mounted fury can  select a teamwork feat for which he qualifies in place of a vigilante talent; at 10th level, he gains an additional teamwork feat each time he does so (if he selected any teamwork feats in place of vigilante talents before 10th level, he gains an additional teamwork feat at 10th level for each time he did so).",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

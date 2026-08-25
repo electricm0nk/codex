@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ghoul Bloodline ~ Ghoulish Aspect",
     "name": "Ghoulish Aspect",
-    "class": "Ghoul Bloodline",
+    "class": "Sorcerer",
     "description": "You take on aspects of the nature and appearance of ghouls. You no longer feel the need to eat and are immune to hunger (though you are still able to consume flesh if you choose to). You gain immunity to cold, nonlethal damage, paralysis, and sleep. You also gain DR 5/--. Additionally, you gain the stench ability with a radius of 10 feet. Creatures that fail their Fortitude saving throws are sickened for 1d6+4 minutes.",
     "raw_tokens": [
       {
@@ -92,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Colossus ~ Pinning Stomp",
+    "delivery": "Extraordinary",
+    "description": "When a colossus is in its normal form, as a swift action it can make a single melee attack at its highest base attack against a target three or more size categories smaller than the colossus. This attack deals an amount of damage equal to twice that of its slam attack plus 1-1/2 times the colossus's Strength bonus. If the colossus hits with this attack, it can attempt a grapple check as a free action. This grapple doesn't provoke attacks of opportunity. If the grapple is successful, the target is pinned and takes an amount of damage equal to that of the colossus's slam attack each round at the start of the colossus's turn until either the pinned creature frees itself or the colossus moves out of the pinned creature's space. The colossus doesn't need to attempt grapple checks to continue the pin, nor can it attempt a check to move, further damage, or tie up the grappled creature. A colossus can at most have two creatures pinned with this attack at one time.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:colossus_pinning_stomp",
+    "name": "Pinning Stomp",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a colossus is in its normal form, as a swift action it can make a single melee attack at its highest base attack against a target three or more size categories smaller than the colossus. This attack deals an amount of damage equal to twice that of its slam attack plus 1-1/2 times the colossus's Strength bonus. If the colossus hits with this attack, it can attempt a grapple check as a free action. This grapple doesn't provoke attacks of opportunity. If the grapple is successful, the target is pinned and takes an amount of damage equal to that of the colossus's slam attack each round at the start of the colossus's turn until either the pinned creature frees itself or the colossus moves out of the pinned creature's space. The colossus doesn't need to attempt grapple checks to continue the pin, nor can it attempt a check to move, further damage, or tie up the grappled creature. A colossus can at most have two creatures pinned with this attack at one time."
+      },
+      {
+        "key": "KEY",
+        "value": "Colossus ~ Pinning Stomp"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 113,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Colossus ~ Pinning Stomp",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

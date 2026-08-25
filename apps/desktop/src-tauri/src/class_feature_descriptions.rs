@@ -114,6 +114,24 @@ pub struct ClassFeatureDescriptionDto {
     /// records with no real description are not emitted at all (see
     /// `is_real_description_value`).
     pub description: String,
+    /// `None` for every record this module itself emits. `Some(<exact feat
+    /// name>)` is `class_feature_feat_bridge.rs`'s own addition (T4-L9,
+    /// `epic-2-cause-closure`): that module's records carry a synthetic
+    /// pool-group `class_slug` (e.g. `"golden_legionnaire"`) rather than a
+    /// real class token, so the class-held reachability join
+    /// (`unmatchedClassFeatureDescriptions`'s `heldTokens.has(d.classSlug)`)
+    /// can never match them by construction. This field names the ALREADY-
+    /// VERIFIED feat the record's sole content grants (the exact string
+    /// `feat_description_by_exact_name` matched on), so the frontend can
+    /// gate reachability on the character HOLDING THAT FEAT instead --
+    /// `feat_identity::holds`'s own fold, reproduced client-side by
+    /// `featsTabModel.ts::normalizeFeatIdentity` (see that module's own doc
+    /// comment on why the two folds must stay identical). Left as a plain
+    /// `String`, not the class feature's own `name`/`feature_slug`: some
+    /// bridge records' class-feature name differs from the feat name they
+    /// grant, and only the token `feat_description_by_exact_name` itself
+    /// matched on can be trusted as the held-feat identity.
+    pub granted_feat: Option<String>,
 }
 
 /// Reproduced from `v06_work_inventory.rs::slug` -- see this module's own doc
@@ -256,6 +274,7 @@ fn load_class_feature_descriptions(repo_root: &Path) -> Vec<ClassFeatureDescript
                 key: key.to_string(),
                 name: name.to_string(),
                 description: rendered.text,
+                granted_feat: None,
             });
         }
     }
@@ -324,12 +343,25 @@ mod tests {
         // unresolved `%1` and is no longer served by this catalog -- see
         // `a_description_whose_percent_n_argument_has_no_character_context_
         // to_resolve_it_is_not_served`, below).
+        //
+        // **SD-32 card 11 (`epic-2-cause-closure`, T2a/T12 combined cycle)
+        // correction:** `class_slug` used to assert `"aberrant_bloodline"`
+        // -- the group-prefix category label, exactly T2a's own shape
+        // ("`data.class` read from the wrong place"). `cache_gen::class_
+        // feature::generate`'s pool-catalog fallback now resolves this
+        // record's real owner (Aberrant is a Sorcerer bloodline; the
+        // `Bloodline` -> `Sorcerer` pool entry), so the live corpus now
+        // ships `data.class: "Sorcerer"` for this exact record -- which is
+        // what lets `classSlug` actually join a real `class_feature.sorcerer.*`
+        // `ExplanationDto.id` on the character sheet instead of a slug no
+        // explanation id can ever match. This assertion is updated to the
+        // now-correct value, not loosened.
         let aberrant_form = descriptions
             .iter()
             .find(|d| d.book == "core_rulebook" && d.key == "Aberrant Bloodline ~ Aberrant Form");
         let record = aberrant_form
             .expect("core_rulebook's real Aberrant Bloodline ~ Aberrant Form record must be in the catalog");
-        assert_eq!(record.class_slug, "aberrant_bloodline");
+        assert_eq!(record.class_slug, "sorcerer");
         assert_eq!(record.feature_slug, "aberrant_form");
         assert!(record.description.starts_with("Your body becomes truly unnatural."));
         assert!(!record.description.contains('|'), "the pipe-arg tail must never leak into prose");

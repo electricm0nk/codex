@@ -1,0 +1,172 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Investigator Archetype ~ Hallucinist",
+    "name": "Hallucinist",
+    "class": "Investigator",
+    "description": "A hallucinist imbibes magical drugs to expand his mind into the psychedelic world, extending his awareness to things he could not normally perceive. While a hallucinist's body sways oddly under the effects of his hallucinogen, it grants him strange insights that reveal things to him that others can't see. Hallucinists know that others can't function with these expanded senses, and they use that fact to repurpose their hallucinations as distractions or assaults against their enemies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Investigator Archetype ~ Hallucinist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.InvestigatorArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Investigator=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Hallucinist],[!PREFACT:1,ABILITIES,Investigator_Archetype_TrapSense=True,Investigator_Archetype_Talent3=True,Investigator_Archetype_Talent5=True,Investigator_Archetype_Talent7=True,Investigator_Archetype_Talent9=True,Investigator_Archetype_Talent11=True,Investigator_Archetype_Talent15=True,Investigator_Archetype_PoisonLore=True,Investigator_Archetype_PoisonResistance=True,Investigator_Archetype_PoisonImmunity=True,Investigator_Archetype_KeenRecollection=True,Investigator_Archetype_StudiedCombat=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A hallucinist imbibes magical drugs to expand his mind into the psychedelic world, extending his awareness to things he could not normally perceive. While a hallucinist's body sways oddly under the effects of his hallucinogen, it grants him strange insights that reveal things to him that others can't see. Hallucinists know that others can't function with these expanded senses, and they use that fact to repurpose their hallucinations as distractions or assaults against their enemies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hallucinist ~ Psychedelic Perception|PRECLASS:1,Investigator=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hallucinist ~ Drug Lore|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hallucinist ~ Drug Resistance|PRECLASS:1,Investigator=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hallucinist ~ Shared Hallucinations|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hallucinist ~ Simultaneous Study|PRECLASS:1,Investigator=6"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_KeenRecollection|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_StudiedCombat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_TrapSense|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Talent9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Talent15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonResistance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_PoisonImmunity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_KeenRecollection|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 21,
+    "record_key": "Investigator Archetype ~ Hallucinist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

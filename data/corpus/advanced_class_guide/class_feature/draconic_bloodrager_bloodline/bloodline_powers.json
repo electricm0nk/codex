@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Draconic Bloodrager Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Draconic Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "The power of dragons flows through you and manifests in a number of ways. At 1st level, you must select a chromatic or metallic dragon type. Once chosen, this type cannot be changed. A number of your bloodline powers deal damage and grant resistances based on your dragon type.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

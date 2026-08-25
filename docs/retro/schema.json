@@ -117,6 +117,18 @@
       "why": "Escape hatch for a real observation that fits none of the above. Kept deliberately unstructured and reported separately in the summary: a rising note count means the vocabulary is missing a type, which is itself a finding about this log.",
       "required": [],
       "optional": {}
+    },
+
+    "resolution": {
+      "why": "Closes an earlier event -- most importantly a `deferral` -- without editing or deleting the line it resolves. The log is append-only (`storage.format` above), so marking something resolved has to be a new event, not a mutation of the old one. Before this type existed, `summary`'s `deferrals.open` had no resolution signal to compute from at all and silently reported `deferrals[-limit:]` -- the last N deferrals emitted, in emission order -- as though that tail slice were the open set: `--limit 3` printed 3 'open' deferrals, `--limit 29` printed 29, and a closure lane that read the default `--limit 10` as the bundle's whole deferral list left the other 19 of 29 real SD-32-window deferrals unchecked. A `resolution` event makes `open` mean unresolved, independent of `--limit`.",
+      "required": ["resolves", "how"],
+      "optional": {
+        "outcome": "Free-form: what actually happened -- closed as planned, superseded, turned out not to apply."
+      },
+      "field_notes": {
+        "resolves": "The `id` of the event being closed out -- almost always a `deferral`'s id, but the field is generic (the summary treats any event whose id appears as some `resolution.resolves` value as resolved) so a `near_miss` or `incident` can be closed out the same way instead of the vocabulary growing a second, parallel mechanism later.",
+        "how": "What actually closed it: the command run, the doc section, the decision that made the deferred work moot. Held to the same bar as a correction's `verified_by` -- 'I think it's done' is not a resolution."
+      }
     }
   },
 

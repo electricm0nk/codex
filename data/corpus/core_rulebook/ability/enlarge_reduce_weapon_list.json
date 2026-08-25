@@ -1,0 +1,620 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Enlarge/Reduce Weapon List",
+    "name": "Enlarge/Reduce Weapon List",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DamageSizeAdjustment|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Aklys (Gladiator)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Aklys|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Amentum|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Atlatl|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Axe (Orc Double)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Battle Aspergillum|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Battleaxe|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bo Staff|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Boar Spear|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Brass Knuckles|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Broadsword (Nine Ring)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Butterfly Sword|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Chain (Spiked)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Chain Spear|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Club|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Culverin|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Curve Blade (Elven)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dagger (Punching)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dagger|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dan Bong|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Dogslicer|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Double Chicken Saber|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Double Hackbut|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Earth Breaker|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Emei Piercer|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Falchion|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Fighting Fan|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Fire Lance|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Flail (Dire)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Flail (Heavy)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Flail|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Flying Blade|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gauntlet (Spiked)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gauntlet|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Gladius|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Glaive|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Great Terbutje|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Greataxe|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Greatclub|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Greatsword|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Guisarme|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Halberd|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hammer (Gnome Hooked)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hammer (Light)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Handaxe|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hooked Axe|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hooked Lance|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Horsechopper|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hunga Munga|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Iron Brush|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Jutte|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kama (Double-Chained)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kama|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Katana (Double Walking Stick)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Katana|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kerambit|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kestros|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Klar|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Knuckle Axe|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kukri|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kusarigama (Sickle and Chain)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kyoketsu Shoge|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Lance|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longspear|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longsword|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Lucerne Hammer|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Lungchuan Tamo|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Mace (Heavy)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Mace (Light)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Madu|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Mattock|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Mere Club|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Meteor Hammer|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Monk's Spade|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Morningstar|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Naginata|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Net|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Nine-Section Whip|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Nodachi|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Nunchaku|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Ogre Hook|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pata|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pick (Heavy)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Pick (Light)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Quadrens|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Quarterstaff|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Ranseur|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rapier|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Revolver|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rhoka Sword|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rhomphaia|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sai|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sansetsukon|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sap|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sawtooth Sabre|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scimitar|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scizore|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scorpion Whip|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Scythe|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shang Gou|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shieldbash|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shortspear|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shotel|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shotgun|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Shuriken|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Siangham|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sibat|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sica|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sickle|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sling Staff (Halfling)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Spear|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Spiked Armor|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Starknife|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Bastard)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Seven-Branched)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Short)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Tri-Point Double-Edged)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sword (Two-Bladed)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Swordbreaker (Dagger)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Taiaha|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Taiaha|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tekko-Kagi (Iron Claw)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Temple Sword|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tepoztopilli|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Terbutje (Great)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Terbutje|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tetsubo|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tiger Fork|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tonfa|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Trident|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Urgrosh (Dwarven)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Urumi|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wahaika|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wakizashi|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Waraxe (Dwarven)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Warhammer|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Whip|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Waraxe (Dwarven Double)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Helmet (Dwarven Boulder)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longaxe (Dwarven)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Longhammer (Dwarven)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kobold Tail Attachment|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tailblade (Ratfolk)|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Terror Kite|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Sea-Knife|DAMAGESIZE|DamageSizeAdjustment"
+      },
+      {
+        "key": "BONUS",
+        "value": "WIELDCATEGORY|ALL|DamageSizeAdjustment"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 423,
+    "record_key": "Enlarge/Reduce Weapon List"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

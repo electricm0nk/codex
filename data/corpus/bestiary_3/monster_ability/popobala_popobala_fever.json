@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Popobala ~ Popobala Fever",
+    "delivery": "Supernatural",
+    "description": "A creature wounded by a popobala's talons becomes sickened for 1d6 minutes unless it makes a DC 25 Fortitude save. A creature already sickened by the fever becomes nauseated for 1d6 rounds. One already nauseated by the fever is helpless for 1d6 rounds. This is a disease effect. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:popobala_popobala_fever",
+    "name": "Popobala Fever",
+    "owners": [
+      "bestiary_3:monster:popobala"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature wounded by a popobala's talons becomes sickened for 1d6 minutes unless it makes a DC 25 Fortitude save. A creature already sickened by the fever becomes nauseated for 1d6 rounds. One already nauseated by the fever is helpless for 1d6 rounds. This is a disease effect. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Popobala ~ Popobala Fever"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      },
+      {
+        "key": "TYPE",
+        "value": "PopobalaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.221",
+    "traits": [
+      "PopobalaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1425,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Popobala ~ Popobala Fever",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

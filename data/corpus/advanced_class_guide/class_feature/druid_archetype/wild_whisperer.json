@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Archetype ~ Wild Whisperer",
     "name": "Wild Whisperer",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "A wild whisperer is an expert at studying, predicting, and explaining animal behavior. She is less interested in plants, fey, and other aspects of the natural world, and uses her gifts to tame or relocate dangerous beasts and soothe the hurts of wounded and sickly creatures.",
     "raw_tokens": [
       {
@@ -59,6 +59,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Druid"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Wild Whisperer],[!PREFACT:1,ABILITIES,Druid_Archetype_WoodlandStride=True,Druid_Archetype_TracklessStep=True,Druid_Archetype_ResistNaturesLure=True,Druid_Archetype_WildShape=True,Druid_Archetype_WildShapeUses6=True,Druid_Archetype_WildShapeUses8=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShapeUses6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_CF_WildShapeUses8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_TracklessStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_ResistNaturesLure|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShape|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShapeUses6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Druid_Archetype_WildShapeUses8|true"
       }
     ]
   },
@@ -75,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

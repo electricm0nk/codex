@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Home Subdomain",
+    "name": "Home Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Home Subdomain],[PREVARLT:CommunityDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Home Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Home Subdomain=1|Alarm|Home Subdomain=2|Shield Other|Home Subdomain=3|Glyph Of Warding|Home Subdomain=4|Status|Home Subdomain=5|Telepathic Bond|Home Subdomain=6|Heroes' Feast|Home Subdomain=7|Guards and Wards|Home Subdomain=8|Cure Critical Wounds (Mass)|Home Subdomain=9|Miracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 40,
+    "record_key": "Home Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

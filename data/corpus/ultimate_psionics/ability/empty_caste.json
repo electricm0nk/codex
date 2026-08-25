@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ninja Archetype ~ Empty Caste",
+    "name": "Empty Caste",
+    "description": "You were born with no caste, to serve none but the Queen herself.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Archetype ~ Empty Caste"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.NinjaArchetype.NinjaTrick2.NinjaTrick8"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LN,LG,LN,LE"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ninja=1"
+      },
+      {
+        "key": "PRELEVELMAX",
+        "value": "1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ninja Archetype ~ Empty Caste],[!PREABILITY:1,CATEGORY=Archetype,TYPE.NinjaTrick2,TYPE.NinjaTrick8]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Dromite"
+      },
+      {
+        "key": "DESC",
+        "value": "You were born with no caste, to serve none but the Queen herself."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ninja Class Feature|AUTOMATIC|Empty Caste ~ All and None|PRECLASS:1,Ninja=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ninja Class Feature|AUTOMATIC|Empty Caste ~ Charged Weapon|PRECLASS:1,Ninja=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ninja Class Feature|AUTOMATIC|Empty Caste ~ Ki Pool|PRECLASS:1,Ninja=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ninja Trick|NORMAL|Ninja Trick ~ Cloud Mind|PRECLASS:1,Ninja=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ninja Class Feature|AUTOMATIC|Empty Caste ~ Code of Conduct|PRECLASS:1,Ninja=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ninja Trick|-1|PRECLASS:1,Ninja=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.314"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 43,
+    "record_key": "Ninja Archetype ~ Empty Caste"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

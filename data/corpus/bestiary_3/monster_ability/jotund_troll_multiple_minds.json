@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Jotund Troll ~ Multiple Minds",
+    "delivery": "Extraordinary",
+    "description": "A jotund troll has nine different minds that are in constant communication with each other. The resulting jumble of tangled thoughts grants the troll a +4 racial bonus on all Will saving throws against mindaffecting effects. In addition, whenever a jotund troll must make a Will save, it can roll the saving throw twice and take the better of the two results as its actual saving throw.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:jotund_troll_multiple_minds",
+    "name": "Multiple Minds",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A jotund troll has nine different minds that are in constant communication with each other. The resulting jumble of tangled thoughts grants the troll a +4 racial bonus on all Will saving throws against mindaffecting effects. In addition, whenever a jotund troll must make a Will save, it can roll the saving throw twice and take the better of the two results as its actual saving throw."
+      },
+      {
+        "key": "KEY",
+        "value": "Jotund Troll ~ Multiple Minds"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      },
+      {
+        "key": "TYPE",
+        "value": "JotundTrollRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.272",
+    "traits": [
+      "JotundTrollRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1631,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Jotund Troll ~ Multiple Minds",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

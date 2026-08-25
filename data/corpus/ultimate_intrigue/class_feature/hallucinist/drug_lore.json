@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hallucinist ~ Drug Lore",
+    "name": "Drug Lore",
+    "class": "Investigator",
+    "description": "A hallucinist has a deep understanding and appreciation of drugs. If the hallucinist spends 1 minute physically examining a drug, he can attempt a Knowledge (nature) check to identify any natural drug or a Knowledge (arcana) check to identify any magical drug (DC = the drug's addiction saving throw DC). Once he identifies a drug, he can spend 1 minute and attempt a Craft (alchemy) check (DC = the drug's addiction saving throw DC) to neutralize 1 dose of the drug. Success renders the dose harmless. The hallucinist has no chance of accidentally drugging herself when examining or attempting to neutralize a drug.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallucinist ~ Drug Lore"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A hallucinist has a deep understanding and appreciation of drugs. If the hallucinist spends 1 minute physically examining a drug, he can attempt a Knowledge (nature) check to identify any natural drug or a Knowledge (arcana) check to identify any magical drug (DC = the drug's addiction saving throw DC). Once he identifies a drug, he can spend 1 minute and attempt a Craft (alchemy) check (DC = the drug's addiction saving throw DC) to neutralize 1 dose of the drug. Success renders the dose harmless. The hallucinist has no chance of accidentally drugging herself when examining or attempting to neutralize a drug."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 25,
+    "record_key": "Hallucinist ~ Drug Lore"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

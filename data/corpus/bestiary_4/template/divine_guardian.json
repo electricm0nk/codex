@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Divine Guardian",
+    "name": "Divine Guardian",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Sense Motive|5|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4|!PRESTAT:1,INT=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Divine Guardian ~ Ability Healing|Divine Guardian ~ Aura|Divine Guardian ~ Blessed Life|Divine Guardian ~ Divine Swiftness|Divine Guardian ~ Sacred Site|Immunity to Disease|Immunity to Mind-Affecting Effects|Immunity to Poison|Fast Healing"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=max(SLA_CL,TL)|Dimension Door (within sacred site)|PREVARGTEQ:TL,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=max(SLA_CL,TL)|Alarm|PREVARGTEQ:TL,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Hold Portal|PREVARGTEQ:TL,1"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=max(SLA_CL,TL)|Knock|PREVARGTEQ:TL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Arcane Lock|PREVARGTEQ:TL,3"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Augury|Clairaudience/Clairvoyance|PREVARGTEQ:TL,5"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Dismissal|PREVARGTEQ:TL,7"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Commune|PREVARGTEQ:TL,9"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Guards and Wards|PREVARGTEQ:TL,11"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Forbiddance|PREVARGTEQ:TL,13"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Banishment|PREVARGTEQ:TL,15"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Repulsion|PREVARGTEQ:TL,17"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Screen|PREVARGTEQ:TL,19"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|CASTERLEVEL=max(SLA_CL,TL)|Antipathy|PREVARGTEQ:TL,21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 87,
+    "record_key": "Divine Guardian"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

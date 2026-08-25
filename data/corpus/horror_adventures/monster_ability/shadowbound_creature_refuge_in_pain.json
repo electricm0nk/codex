@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shadowbound Creature ~ Refuge in Pain",
+    "delivery": "Extraordinary",
+    "description": "After taking %1 points of damage in a single attack, a shadowbound creature gains a +2 profane bonus on attack rolls, damage rolls, saving throws, and skill checks for 1 round",
+    "description_variables": [
+      "HD*3"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:shadowbound_creature_refuge_in_pain",
+    "name": "Refuge in Pain",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "After taking %1 points of damage in a single attack, a shadowbound creature gains a +2 profane bonus on attack rolls, damage rolls, saving throws, and skill checks for 1 round|HD*3"
+      },
+      {
+        "key": "KEY",
+        "value": "Shadowbound Creature ~ Refuge in Pain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.ShadowboundCreature"
+      }
+    ],
+    "source_page": "p.250",
+    "traits": [
+      "ShadowboundCreature"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 326,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Shadowbound Creature ~ Refuge in Pain",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,6 +1,7 @@
 import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
 import type { ClassFeatureDescriptionDto } from '../boundary/loadClassFeatureDescriptions';
 import type { HeldClass } from './characterProgression';
+import { normalizeFeatIdentity } from './featsTabModel';
 
 /**
  * Projects the engine's own `class_feature.*` / `class_chassis.*`
@@ -219,6 +220,73 @@ function findCorpusDescription(
     (d) => d.classSlug === classToken && matchesCorpusFeature(id, d.classSlug, d.featureSlug)
   );
   return match?.description ?? null;
+}
+
+/**
+ * Every real corpus `class_feature` description for a class the character
+ * holds that {@link buildClassFeatureSurface} does NOT already attach to a
+ * grounded row (T4 / `epic-breakdown.md` Epic 2, "built-but-unreachable
+ * render surface").
+ *
+ * `class_feature_descriptions.rs` (and the disjoint feat-bridge population,
+ * `class_feature_feat_bridge.rs`, concatenated by the caller into the same
+ * `descriptions` array) transcribe real, PI-screened, leak-checked corpus
+ * text into `ClassFeatureDescriptionDto` — but `buildClassFeatureSurface`
+ * only ever attaches `corpusDescription` as enrichment onto a row an
+ * `ExplanationDto` already created (`findCorpusDescription`, above). A corpus
+ * feature the engine emits no explanation for — grounded or `.unsupported`
+ * — never reaches `features`/`notComputed` at all, so its real rulebook text
+ * is never shown anywhere, no matter how many such records exist. This is
+ * the cause T4 names: content exists and is fully verified, but no code path
+ * ever puts it on screen.
+ *
+ * The fix is a browsable REFERENCE list, the same shape
+ * `ClassFeaturePoolReferenceSection` (`CharacterSheet.tsx`) already uses for
+ * option-pool members: every real description for a class the character
+ * holds, shown independent of whether the engine also emits a computed row
+ * for it. **Only grounded (non-`.unsupported`) explanation ids count as
+ * "already shown"** — a `.unsupported` notice never carries a
+ * `corpusDescription` either (`buildClassFeatureSurface` only sets it inside
+ * the `features` loop), so a description matching only an `.unsupported` id
+ * is still unreachable today and must still appear here, not be excluded as
+ * a false duplicate.
+ *
+ * **T4-L9 (`decisions.md §13`) — a second, feat-held reachability arm.**
+ * `class_feature_feat_bridge.rs`'s own 471-record population names a
+ * synthetic pool-group `classSlug` (e.g. `"golden_legionnaire"`), never a
+ * real class token, so the class-held check above (`heldTokens.has(d.
+ * classSlug)`) can never match any of them — confirmed corpus-wide by that
+ * module's own test that only 1 of 471 group slugs is even a holdable class
+ * token. Every one of those records instead carries `grantedFeat`: the
+ * exact, already-verified feat name the record's sole content grants (see
+ * `ClassFeatureDescriptionDto.grantedFeat`'s own doc comment). This function
+ * gates those records on the character holding THAT FEAT — reusing
+ * `normalizeFeatIdentity`, the SAME fold `feat_identity.rs`'s `holds()`
+ * mirrors on the Rust side (that module's own doc comment names the
+ * pairing), not a second invented comparison. **Closed by class, not by
+ * instance**: this is a predicate over `grantedFeat` presence, not a
+ * hand-listed set of the 471 keys — any future bridge record the Rust side
+ * emits is covered automatically, with no per-record entry here.
+ */
+export function unmatchedClassFeatureDescriptions(
+  explanations: readonly ExplanationDto[],
+  heldClasses: readonly HeldClass[],
+  descriptions: readonly ClassFeatureDescriptionDto[],
+  selectedFeats: readonly string[] = []
+): ClassFeatureDescriptionDto[] {
+  const heldTokens = new Set(heldClasses.map((held) => classIdToken(held.classId)));
+  const heldFeatIdentities = new Set(selectedFeats.map((feat) => normalizeFeatIdentity(feat)));
+  const isReachableByHeldCause = (d: ClassFeatureDescriptionDto): boolean =>
+    d.grantedFeat !== null
+      ? heldFeatIdentities.has(normalizeFeatIdentity(d.grantedFeat))
+      : heldTokens.has(d.classSlug);
+  const heldDescriptions = descriptions.filter(isReachableByHeldCause);
+  const groundedIds = explanations
+    .filter((e) => isClassRecord(e.id) && !e.id.endsWith(UNSUPPORTED_SUFFIX))
+    .map((e) => e.id);
+  return heldDescriptions.filter(
+    (d) => !groundedIds.some((id) => matchesCorpusFeature(id, d.classSlug, d.featureSlug))
+  );
 }
 
 export function buildClassFeatureSurface(

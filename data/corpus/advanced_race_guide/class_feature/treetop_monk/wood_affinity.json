@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Treetop Monk ~ Wood Affinity 1",
     "name": "Wood Affinity",
-    "class": "Treetop Monk",
+    "class": "Monk",
     "description": "A treetop monk may expend 1 point from his ki pool as a free action to treat a wooden object as if it were not broken for 1 minute (this includes a weapon with a wooden haft such as an axe or spear).",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

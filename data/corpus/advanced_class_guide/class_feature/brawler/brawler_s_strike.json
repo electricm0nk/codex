@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Brawler ~ Brawler's Strike",
     "name": "Brawler's Strike",
@@ -59,6 +59,38 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.23"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver and chaotic weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,3,BrawlerStrikeChaotic,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver, chaotic and adamantine weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,4,BrawlerStrikeChaotic,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver and evil weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,3,BrawlerStrikeEvil,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver, evil and adamantine weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,4,BrawlerStrikeEvil,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver and good weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,3,BrawlerStrikeGood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver, good and adamantine weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,4,BrawlerStrikeGood,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver and lawful weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,3,BrawlerStrikeLawful,1"
+      },
+      {
+        "key": "DESC",
+        "value": "A brawler's unarmed strikes are treated as magic, cold iron, silver, lawful and adamantine weapons for the purpose of overcoming damage reduction.|PREVAREQ:BrawlersStrikeProgression,4,BrawlerStrikeLawful,1"
       }
     ]
   },
@@ -76,5 +108,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

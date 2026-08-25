@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle Archetype ~ Warsighted",
     "name": "Warsighted",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "A warsighted's unique gifts are not in strange magical revelations, but in her ability to adapt in the midst of a battle with new fighting techniques. The warsighted is a master of combat, as dedicated as a fighter and as flexible as a brawler.",
     "raw_tokens": [
       {
@@ -47,6 +47,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Oracle"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Warsighted],[!PREFACT:1,ABILITIES,Oracle_Archetype_Revelation=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation11|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_Revelation15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_Revelation|true"
       }
     ]
   },
@@ -63,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

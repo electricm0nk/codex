@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Drow Noble ~ Spell-Like Abilities",
+    "name": "Spell-Like Abilities",
+    "description": "Drow nobles can cast dancing lights, deeper darkness, faerie fire, feather fall, and levitate each at will, and have detect magic as a constant spell-like ability. A drow noble can also cast divine favor, dispel magic, and suggestion once per day each. In some cases, a drow noble's spell-like abilities might vary, although the level of a particular spell-like ability does not. A drow noble's caster level for her spell-like abilities is equal to her character level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow Noble ~ Spell-Like Abilities"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.Drow Noble Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Drow_ReplaceSpellLikeAbilities=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Drow nobles can cast dancing lights, deeper darkness, faerie fire, feather fall, and levitate each at will, and have detect magic as a constant spell-like ability. A drow noble can also cast divine favor, dispel magic, and suggestion once per day each. In some cases, a drow noble's spell-like abilities might vary, although the level of a particular spell-like ability does not. A drow noble's caster level for her spell-like abilities is equal to her character level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Dancing Lights|Racial SLA ~ Deeper Darkness|Racial SLA ~ Detect Magic|Racial SLA ~ Faerie Fire|Racial SLA ~ Feather Fall|Racial SLA ~ Levitate|Racial SLA ~ Dispel Magic|Racial SLA ~ Divine Favor|Racial SLA ~ Suggestion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_DancingLights_AtWill,RacialSLA_DeeperDarkness_AtWill,RacialSLA_FaerieFire_AtWill,RacialSLA_FeatherFall_AtWill,RacialSLA_Levitate_AtWill|1|TYPE=Boolean"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_DetectMagic_Constant|1|TYPE=Boolean"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.115"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 566,
+    "record_key": "Drow Noble ~ Spell-Like Abilities"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

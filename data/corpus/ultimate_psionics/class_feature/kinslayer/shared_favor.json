@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kinslayer ~ Shared Favor",
+    "name": "Shared Favor",
+    "class": "Kinslayer",
+    "description": "Your animal companion is treated as having your favored enemy ability against humanoid (giant) creatures, with the same bonuses against that favored enemy as yours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kinslayer ~ Shared Favor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RangerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Your animal companion is treated as having your favored enemy ability against humanoid (giant) creatures, with the same bonuses against that favored enemy as yours."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2591,
+    "record_key": "Kinslayer ~ Shared Favor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

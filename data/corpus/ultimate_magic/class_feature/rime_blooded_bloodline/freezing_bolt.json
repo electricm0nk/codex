@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rime-Blooded Bloodline ~ Freezing Bolt",
     "name": "Freezing Bolt",
-    "class": "Rime-Blooded Bloodline",
+    "class": "Sorcerer",
     "description": "You can cause the air to erupt in freezing sleet. This 10-foot-radius burst does %1d6 points of cold damage (Reflex half). The DC of this save is %2.|Sorcerer_RimeBloodedFreezingBolt_Dice|Sorcerer_RimeBloodedFreezingBolt_DC",
     "raw_tokens": [
       {
@@ -116,5 +116,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

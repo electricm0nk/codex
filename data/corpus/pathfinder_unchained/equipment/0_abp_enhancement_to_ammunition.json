@@ -1,86 +1,27 @@
 {
+  "population": "in_scope",
   "completeness": "full",
+  "ingested_at": "2026-08-23T23:00:21Z",
   "data": {
-    "category": "equipmods",
-    "cost_gp": null,
-    "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system.",
-    "equip_type": "Ammunition",
     "key": "Special Ability ~ ABP +0 ~ Ammunition",
+    "category": "equipmods",
     "name": "+0 ABP (Enhancement to Ammunition)",
+    "equip_type": "Ammunition",
     "plus": null,
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "ITEMCOST",
-          "TYPE.AMMUNITION",
-          "(40*PLUSTOTAL*PLUSTOTAL)"
-        ]
-      },
-      {
-        "qualifiers": [
-          "ITEMCOST",
-          "TYPE.AMMUNITION",
-          "6",
-          "!PRETYPE:1,EQMODTYPE=MASTERWORKQUALITY"
-        ]
-      }
-    ],
-    "raw_tokens": [
-      {
-        "key": "KEY",
-        "value": "Special Ability ~ ABP +0 ~ Ammunition"
-      },
-      {
-        "key": "NAMEOPT",
-        "value": "NOTHING"
-      },
-      {
-        "key": "TYPE",
-        "value": "Ammunition"
-      },
-      {
-        "key": "VISIBLE",
-        "value": "QUALIFY"
-      },
-      {
-        "key": "ITYPE",
-        "value": "Masterwork.Enhancement.Magic"
-      },
-      {
-        "key": "REPLACES",
-        "value": "Special Ability ~ +1 ~ Ammunition,Special Ability ~ +2 ~ Ammunition,Special Ability ~ +3 ~ Ammunition,Special Ability ~ +4 ~ Ammunition,Special Ability ~ +5 ~ Ammunition,Special Quality ~ Masterwork ~ Ammunition,Special Ability ~ ABP +2 ~ Ammunition,Special Ability ~ ABP +3 ~ Ammunition,Special Ability ~ ABP +4 ~ Ammunition,Special Ability ~ ABP +5 ~ Ammunition"
-      },
-      {
-        "key": "SOURCEPAGE",
-        "value": "p.xx"
-      },
-      {
-        "key": "PRETYPE",
-        "value": "1,Ammunition"
-      },
-      {
-        "key": "ASSIGNTOALL",
-        "value": "NO"
-      },
-      {
-        "key": "DESC",
-        "value": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
-      }
-    ],
-    "weight_lbs": null
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
   },
-  "ingested_at": "2026-08-03T19:41:44Z",
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
+    "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b",
+    "line": 10,
+    "record_key": "Special Ability ~ ABP +0 ~ Ammunition"
+  },
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "population": "in_scope",
-  "source": {
-    "kind": "lst_token",
-    "line": 10,
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
-    "record_key": "Special Ability ~ ABP +0 ~ Ammunition",
-    "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b"
-  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

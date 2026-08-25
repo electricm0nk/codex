@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Waves Spirit ~ Wave Strike",
     "name": "Wave Strike",
-    "class": "Waves Spirit",
+    "class": "Shaman",
     "description": "As a standard action, the shaman can perform a melee touch attack that drenches a creature and pushes it away. The opponent takes 1d6+%1 points of nonlethal damage and is pushed 5 feet directly away from the shaman. This movement does not provoke attacks of opportunity. A shaman can use this ability %2 times per day.|ShamanWaveStrikeBonusDamage|ShamanWaveStrikeTimes",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Dark Tapestry Mystery ~ Brain Drain",
     "name": "Brain Drain",
-    "class": "Dark Tapestry Mystery",
+    "class": "Oracle",
     "description": "You can take a standard action to violently probe the mind of a single intelligent enemy within 100 feet. The target receives a Will save (DC %1) to negate the effect and immediately knows the source of this harmful mental prying. Those who fail this save are wracked with pain, taking %2d%3 points of damage. After successfully attacking with this ability, you may use a full-round action to sort through the jumble of stolen thoughts and memories to make a single Knowledge check using the victim's skill bonus. The randomly stolen thoughts remain in your mind for %4 rounds. Treat the knowledge gained as if you had used detect thoughts. This is a mind-affecting effect. You can use this ability %5/day.|BrainDrainDC|BrainDrainDice|BrainDrainDieType|BrainDrainDuration|BrainDrainTimes",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

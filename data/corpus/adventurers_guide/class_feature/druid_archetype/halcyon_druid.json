@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Druid Archetype ~ Halcyon Druid",
     "name": "Halcyon Druid",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -50,7 +50,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Halcyon Druid ~ Magaambya-Trained|PRECLASS:1,Druid=1"
+        "value": "[redacted PI]"
       },
       {
         "key": "ABILITY",
@@ -146,6 +146,7 @@
     "computed:pre_guard"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_field": "description,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter ~ Weapon Training",
     "name": "Weapon Training",
@@ -115,6 +115,334 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.56"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training I|-1|PREVAREQ:Fighter_CF_WeaponTraining1,1|PREVARGTEQ:FighterWeaponTrainingLVL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training II|-1|PREVAREQ:Fighter_CF_WeaponTraining2,1|PREVARGTEQ:FighterWeaponTrainingLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training III|-1|PREVAREQ:Fighter_CF_WeaponTraining3,1|PREVARGTEQ:FighterWeaponTrainingLVL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Weapon Training IV|-1|PREVAREQ:Fighter_CF_WeaponTraining4,1|PREVARGTEQ:FighterWeaponTrainingLVL,17"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingTierOne|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingTierOne|WeaponTrainingBase+MAX(count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=WeaponTraining\")-1,0)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingTierTwo|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingTierTwo|WeaponTrainingBase+MAX(count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=WeaponTraining\")-2,0)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingTierThree|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingTierThree|WeaponTrainingBase+MAX(count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=WeaponTraining\")-3,0)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingTierFour|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingTierFour|WeaponTrainingBase+MAX(count(\"ABILITIES\",\"CATEGORY=Special Ability\",\"TYPE=WeaponTraining\")-4,0)"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingAxes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingBladesHeavy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingBladesLight|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingBows|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingClose|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingCrossbows|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingDouble|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingFlails|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingHammers|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingMonk|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingNatural|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingPoleArms|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingSpears|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaponTrainingThrown|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingAxes|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Axes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesHeavy|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Blades Heavy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesLight|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Blades Light"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBows|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Bows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingClose|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Close"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingCrossbows|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Crossbows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingDouble|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Double"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingFlails|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Flails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingMonk|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingNatural|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Natural"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingPoleArms|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Pole Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Spears"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingThrown|WeaponTrainingTierOne|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 1 Thrown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingAxes|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Axes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesHeavy|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Blades Heavy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesLight|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Blades Light"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBows|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Bows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingClose|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Close"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingCrossbows|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Crossbows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingDouble|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Double"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingFlails|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Flails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingMonk|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingNatural|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Natural"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingPoleArms|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Pole Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Spears"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingThrown|WeaponTrainingTierTwo|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 2 Thrown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingAxes|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Axes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesHeavy|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Blades Heavy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesLight|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Blades Light"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBows|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Bows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingClose|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Close"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingCrossbows|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Crossbows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingDouble|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Double"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingFlails|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Flails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingMonk|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingNatural|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Natural"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingPoleArms|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Pole Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Spears"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingThrown|WeaponTrainingTierThree|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 3 Thrown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingAxes|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Axes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesHeavy|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Blades Heavy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBladesLight|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Blades Light"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingBows|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Bows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingClose|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Close"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingCrossbows|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Crossbows"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingDouble|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Double"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingFlails|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Flails"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingHammers|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Hammers"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingMonk|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Monk"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingNatural|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Natural"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingPoleArms|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Pole Arms"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingSpears|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Spears"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaponTrainingThrown|WeaponTrainingTierFour|PREABILITY:1,CATEGORY=Special Ability,Weapon Training 4 Thrown"
       }
     ]
   },
@@ -133,5 +461,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

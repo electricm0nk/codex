@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L7 ~ Control Weather",
+    "name": "Control Weather",
+    "class": "Sorcerer",
+    "description": "You change the weather in the local area. It takes 10 minutes to cast the spell and an additional 10 minutes for the effects to manifest. You can call forth weather appropriate to the climate and season of the area you are in. You can also use this spell to cause the weather in the area to become calm and normal for the season. &nl;Season &pipe; Possible Weather &nl;Spring &pipe; Tornado, thunderstorm, sleet storm, or hot weather &nl;Summer &pipe; Torrential rain, heat wave, or hailstorm &nl;Autumn &pipe; Hot or cold weather, fog, or sleet &nl;Winter &pipe; Frigid cold, blizzard, or thaw &nl;Late winter &pipe; Hurricane-force winds or early spring &nl;You control the general tendencies of the weather, such as the direction and intensity of the wind. You cannot control specific applications of the weather-where lightning strikes, for example, or the exact path of a tornado. The weather continues as you left it for the duration, or until you use a standard action to designate a new kind of weather [which fully manifests itself 10 minutes later]. Contradictory conditions are not possible simultaneously. Control weather can do away with atmospheric phenomena [naturally occurring or otherwise] as well as create them. A druid casting this spell doubles the duration and affects a circle with a 3-mile radius.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L7 ~ Control Weather"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_ControlWeather_L7,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=7|Control Weather"
+      },
+      {
+        "key": "DESC",
+        "value": "You change the weather in the local area. It takes 10 minutes to cast the spell and an additional 10 minutes for the effects to manifest. You can call forth weather appropriate to the climate and season of the area you are in. You can also use this spell to cause the weather in the area to become calm and normal for the season. &nl;Season &pipe; Possible Weather &nl;Spring &pipe; Tornado, thunderstorm, sleet storm, or hot weather &nl;Summer &pipe; Torrential rain, heat wave, or hailstorm &nl;Autumn &pipe; Hot or cold weather, fog, or sleet &nl;Winter &pipe; Frigid cold, blizzard, or thaw &nl;Late winter &pipe; Hurricane-force winds or early spring &nl;You control the general tendencies of the weather, such as the direction and intensity of the wind. You cannot control specific applications of the weather-where lightning strikes, for example, or the exact path of a tornado. The weather continues as you left it for the duration, or until you use a standard action to designate a new kind of weather [which fully manifests itself 10 minutes later]. Contradictory conditions are not possible simultaneously. Control weather can do away with atmospheric phenomena [naturally occurring or otherwise] as well as create them. A druid casting this spell doubles the duration and affects a circle with a 3-mile radius.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+    "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+    "line": 2139,
+    "record_key": "Sorcerer Bonus Spell L7 ~ Control Weather"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

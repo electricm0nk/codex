@@ -258,8 +258,12 @@ FUTURE_STATE_BOOKS = [
     # core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline`,
     # `v06_work_inventory.rs`) and `main()`'s own
     # `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` assertion both still ratchet
-    # the pre-deletion residual at 117, so a regression is caught before this
-    # panel would ever need to report a non-zero figure again.)
+    # the pre-deletion residual, so a regression is caught before this panel
+    # would ever need to report a non-zero figure again. SD-32 card 15
+    # (`decisions.md §12b`) raised the ratchet from 117 to 138 when
+    # `Kind::Skill` made `core_essentials/ce_skills.lst`'s 21
+    # previously-unenumerated, unattributable rows visible for the first
+    # time -- see that constant's own doc comment for the re-derive command.)
     {"id": "core_essentials", "title": "Core Essentials", "channel": ""},
     {"id": "advanced_race_guide", "title": "Advanced Race Guide", "channel": "SD-27"},
     {"id": "pathfinder_unchained", "title": "Pathfinder Unchained", "channel": "SD-27"},
@@ -753,8 +757,12 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
     # ever did. Only the SIZE of what core_essentials legitimately owns has
     # changed, not the decision to show it.
     #
-    # `beginner_box` stays excluded -- 19 units, a genuinely simplified
-    # intro subset, the original 2026-08-02 rationale still holds for it.
+    # `beginner_box` is NO LONGER excluded (closed 2026-08-24, `decisions.md
+    # §27b`) -- see `EXCLUDED_BOOKS`'s own declaration for the full
+    # derivation. Its 19 equipment units now flow into every figure below
+    # like any other not-started population, which is the honest state:
+    # real records this dashboard was previously hiding from its own
+    # denominators, not a book with no source data to show.
     #
     # Filtered HERE rather than in `v06_work_inventory` on purpose (unchanged
     # from the original directive). `core_essentials`'s directories remain
@@ -1014,6 +1022,21 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
             (wiring or {}).get("mechanically_confirmed_by_kind", {}),
             (wiring or {}).get("mechanically_confirmed_by_kind_by_book", {}),
             excluded),
+        # SD-32 Epic 2 T8 (D13) -- computed pre-excluded in
+        # `compute_wiring_class_summary()` itself (the per-unit loop checks
+        # `book not in EXCLUDED_BOOKS` inline), unlike the other fields on
+        # this panel, because it is a unit-id list rather than a count
+        # dict -- there is no per-book breakdown to subtract from here.
+        # Falls back to an explicit zero-count shape (never absent) so an
+        # older, pre-this-field cache still reports "checked, none found"
+        # rather than a viewer-side `undefined`.
+        "classifier_reclassified_units": (wiring or {}).get(
+            "classifier_reclassified_units",
+            {"predicate": "kind=='class_feature' and wiring_class=='display' and "
+                          "status=='grounded' and evidence=="
+                          "'explanation_id_observed_in_a_real_computation', "
+                          "EXCLUDED_BOOKS dropped",
+             "reclassified_to": "computed", "count": 0, "units": []}),
         "doneness_unmapped": (wiring or {}).get("doneness_unmapped", {}),
         # Single-sourced with the producer's own `NO_GROUNDING_PROBE` (round 8,
         # SD-29 QA finding, 2026-08-12) -- the viewer reads this instead of
@@ -3461,17 +3484,62 @@ _CATEGORY_GROUP_KEY_ALIASES = {
     "racialtrait": "racialtraits",
 }
 
-# Operator directive 2026-08-02 (see the long comment in work_inventory_panel
-# below for the `core_essentials` reversal history): `beginner_box` is a
-# genuinely simplified intro subset, 19 units, ruled out of scope for this
-# dashboard. Every corpus-wide figure this producer emits must exclude it --
-# by_status, by_kind, by_wiring_class, by_doneness, by_doneness_kind,
-# cross_tab, and the unit-search shard index all read from this one constant
-# so a book cannot silently stay excluded from some rollups and not others
-# the way `cross_tab` and `build_unit_shards()` did in round 1 (SD-29 QA
-# findings #7/#8, round 2, 2026-08-12: both drifted from this set and their
-# totals stopped matching the by-lane figures by exactly beginner_box's count).
-EXCLUDED_BOOKS = {"beginner_box"}
+# CLOSED 2026-08-24 (`decisions.md §27b`, operator ruling 2026-08-23:
+# "EVERYTHING" -- no carve-outs survive). This constant used to read
+# `{"beginner_box"}` on a 2026-08-02 operator directive ("genuinely
+# simplified intro subset ... ruled out of scope"). That directive did not
+# survive §27b: the only admissible reasons a unit may sit outside every
+# closure figure are a hard impossibility -- the source data does not
+# exist, or licensing forbids shipping it -- and neither holds for
+# `beginner_box`. Its 19 equipment units are real, declared records sourced
+# from the pinned PCGen oracle's own `bbox_equip_magic_items.lst` /
+# `bbox_equip_arms_armor.lst` (`data/pathfinder/paizo/roleplaying_game/
+# beginner_box/`, verified present at `PCGEN_ORACLE_SHA`
+# 7f818006e371188e5717fd18d74d18a420747fc6) -- "genuinely simplified" is a
+# cost/awkwardness judgment, exactly what §27b names as inadmissible. They
+# were already flowing into `docs/work-inventory.json` as `not-started`
+# units (evidence `no_compiled_rule_set_for_book`); the carve-out lived
+# ONLY in this dashboard-reporting layer, hiding them from every
+# denominator rather than reporting them honestly as not-done. Kept empty
+# now rather than deleted so the mechanism survives for a FUTURE
+# genuinely-admissible exclusion -- but any future entry here must carry a
+# paired, admissible reason in `EXCLUDED_BOOKS_REASONS` below, checked at
+# import time, so the next carve-out cannot hide silently in code the way
+# this one did (`decisions.md §27b`'s own diagnosis: "it survived every
+# prose sweep because it lives in Python rather than in a document").
+#
+# Historical note (why this constant exists at all): every corpus-wide
+# figure this producer emits reads from this one constant -- by_status,
+# by_kind, by_wiring_class, by_doneness, by_doneness_kind, cross_tab, and
+# the unit-search shard index -- so a book cannot silently stay excluded
+# from some rollups and not others the way `cross_tab` and
+# `build_unit_shards()` did in round 1 (SD-29 QA findings #7/#8, round 2,
+# 2026-08-12: both drifted from this set and their totals stopped matching
+# the by-lane figures by exactly beginner_box's count).
+EXCLUDED_BOOKS: frozenset[str] = frozenset()
+
+# The only reasons `decisions.md §27b` admits for a book to sit in
+# EXCLUDED_BOOKS. Anything else is a cost/awkwardness/novelty judgment and
+# must be escalated for an operator ruling instead, per the same decision.
+ADMISSIBLE_EXCLUSION_REASONS = frozenset({
+    "source_data_absent",
+    "licensing_forbids_shipping",
+})
+
+# book -> admissible reason. Every key of EXCLUDED_BOOKS must appear here
+# with a value drawn from ADMISSIBLE_EXCLUSION_REASONS; the assertion right
+# below enforces it at import time so a future carve-out cannot be added to
+# EXCLUDED_BOOKS alone without also declaring, in writing, why it qualifies.
+EXCLUDED_BOOKS_REASONS: dict[str, str] = {}
+
+assert set(EXCLUDED_BOOKS) <= set(EXCLUDED_BOOKS_REASONS), (
+    "EXCLUDED_BOOKS entries missing a declared reason in "
+    f"EXCLUDED_BOOKS_REASONS: {sorted(set(EXCLUDED_BOOKS) - set(EXCLUDED_BOOKS_REASONS))}"
+)
+assert all(reason in ADMISSIBLE_EXCLUSION_REASONS for reason in EXCLUDED_BOOKS_REASONS.values()), (
+    "EXCLUDED_BOOKS_REASONS carries a reason outside "
+    f"ADMISSIBLE_EXCLUSION_REASONS: {EXCLUDED_BOOKS_REASONS}"
+)
 
 # ---------------------------------------------------------------------------
 # wiring_class aggregation (added 2026-08-07, per GE-09
@@ -3547,7 +3615,18 @@ WIRING_CLASS_CACHE = os.environ.get(
 # rather than a corpus-doc change. `NO_GROUNDING_PROBE` feeds
 # `doneness_verdict()`'s capping step directly, so it is exactly as
 # invalidating as the branch-logic changes above.
-WIRING_SUMMARY_SCHEMA = 12
+# Bumped 12 -> 13 (SD-32 Epic 2 T8 follow-up, `decisions.md §11`): the T8
+# fix added `classifier_reclassified_units` to this function's return dict
+# but did not bump this constant, so every pre-T8 warm cache (also schema
+# 12) passed the equality check below unchanged and the fix never fired
+# against the real `WIRING_CLASS_CACHE` -- reproduced live on the tip of
+# this bundle (cached schema 12, field absent, `corpus_wide` at the pre-fix
+# values). This is the SAME hazard shape schema 11->12's own history above
+# already documents once. See `StaleSchemaCacheIsRejectedTest` and
+# `WiringSummaryTopLevelKeysCanaryTest` in
+# `scripts/tests/test_pf1e_dashboard_producer.py` for the regression
+# coverage this incident earned.
+WIRING_SUMMARY_SCHEMA = 13
 
 # ---------------------------------------------------------------------------
 # Doneness (added 2026-08-12, operator directive; SD-29 `decisions.md §46`)
@@ -4129,16 +4208,59 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
     # viewer for the >= done case this also has to distinguish, the same
     # "every rung renders including zero" rule GE-09 applies elsewhere).
     all_kinds_seen: set[str] = set()
+    # SD-32 Epic 2 T8 (`decisions.md §11`; D13,
+    # `docs/release/SD-31-corpus-closure-grind/todo/defects.md`): the
+    # `wiring_class`-vs-`status` classifier blind spot. The determinator's
+    # single-row `no_magnitude_token` heuristic stamps a unit `display`
+    # without ever considering that `status == "grounded"` is itself real,
+    # independent evidence a live consumer already computed something from
+    # it -- exactly the `bloodrager_indomitable_will` case
+    # `_doneness_verdict_uncapped`'s `display` branch's own doc comment
+    # names, and "the instrument that would actually resolve this is a
+    # wiring-class classifier that checks the full token closure GE-01
+    # defines... does not exist yet."
+    #
+    # This block IS that missing check, narrowly and provably scoped: a
+    # `display`+`grounded` unit is reclassified to `computed` (so
+    # `doneness_verdict('computed', 'grounded', kind)` -> DONE fires for it,
+    # the existing, unmodified rule -- `doneness_verdict()` itself is not
+    # touched) only when its own `evidence` field independently corroborates
+    # the claim: `explanation_id_observed_in_a_real_computation` means the
+    # compute pipeline's own explanation-id trace, not this classifier,
+    # already recorded a real computation touching this exact record. A
+    # generic PREDICATE (kind, wiring_class, status, evidence), not a
+    # hardcoded id list, so a future unit landing in the identical
+    # evidence-corroborated cell is caught automatically -- Decision 11
+    # condition 1: "proved by class... not by instance". Today this
+    # predicate resolves to exactly D13's named 12 (`class_feature`, all
+    # `core_rulebook`) -- re-derive with the command in this cycle's receipt.
+    # `monster_ability` carries shape-alike siblings D13 itself flags as
+    # "not yet swept" (they do not share this evidence string), so this
+    # predicate does not silently widen past D13's own scope. `EXCLUDED_BOOKS`
+    # applied inline, matching every other corpus-wide figure this
+    # function/`work_inventory_panel()` produces.
+    T8_RECLASSIFY_EVIDENCE = "explanation_id_observed_in_a_real_computation"
+    classifier_reclassified_units: list[str] = []
     for unit in doc.get("units") or []:
         # No wiring_class on a unit is itself a gap, not a zero -- report it
         # under "ambiguous" rather than dropping the unit from the count.
         wc = unit.get("wiring_class") or "ambiguous"
-        corpus_wide[wc] = corpus_wide.get(wc, 0) + 1
-        book = unit.get("book") or "unknown"
-        by_book.setdefault(book, {})
-        by_book[book][wc] = by_book[book].get(wc, 0) + 1
         st = unit.get("status") or "unknown"
         kind = unit.get("kind") or "unknown"
+        book = unit.get("book") or "unknown"
+        # T8 (D13) reclassification -- see the block comment above the loop.
+        # Applied BEFORE every rollup below reads `wc`, so corpus_wide,
+        # by_book, cross_tab and doneness all reflect the corrected class,
+        # not a shadow copy.
+        if (kind == "class_feature" and wc == "display" and st == "grounded"
+                and unit.get("evidence") == T8_RECLASSIFY_EVIDENCE
+                and book not in EXCLUDED_BOOKS):
+            wc = "computed"
+            unit_id = unit.get("id") or f"{book}:{kind}:{unit.get('name')}"
+            classifier_reclassified_units.append(unit_id)
+        corpus_wide[wc] = corpus_wide.get(wc, 0) + 1
+        by_book.setdefault(book, {})
+        by_book[book][wc] = by_book[book].get(wc, 0) + 1
         all_kinds_seen.add(kind)
         cell = f"{wc}|{st}"
         cross_tab[cell] = cross_tab.get(cell, 0) + 1
@@ -4206,6 +4328,23 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
         # the one tier that proves more than "filed correctly".
         "mechanically_confirmed_by_kind": mechanically_confirmed_by_kind,
         "mechanically_confirmed_by_kind_by_book": mechanically_confirmed_by_kind_by_book,
+        # SD-32 Epic 2 T8 (D13) -- see the block comment above the main loop
+        # for the full rationale. These units were reclassified `display` ->
+        # `computed` in the loop above (before every rollup on this cache
+        # read `wc`), so they already count as `computed` in `corpus_wide`/
+        # `by_book`/`cross_tab`/`doneness` -- this field is the audit trail
+        # naming WHICH units and WHY, not a second, separate bucket. Always
+        # present, count 0 is a real "checked, none found" (Decision 1a: the
+        # empty case must fail closed, never read as "the field doesn't
+        # exist" / "this run didn't check").
+        "classifier_reclassified_units": {
+            "predicate": "kind=='class_feature' and wiring_class=='display' and "
+                         "status=='grounded' and evidence=="
+                         f"'{T8_RECLASSIFY_EVIDENCE}', EXCLUDED_BOOKS dropped",
+            "reclassified_to": "computed",
+            "count": len(classifier_reclassified_units),
+            "units": sorted(classifier_reclassified_units),
+        },
         # Empty is the expected state. Non-empty means a wiring_class or status
         # word appeared that doneness_verdict() has no bar for, and those units
         # are absent from every doneness rollup above -- so the ladder will not

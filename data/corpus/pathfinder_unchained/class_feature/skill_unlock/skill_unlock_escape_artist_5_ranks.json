@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skill unlock ~ escape artist 05 Ranks",
+    "name": "Skill unlock escape artist 5 Ranks",
+    "class": "Skill unlock",
+    "description": "If you take a -10 penalty, the time required to use the escape artist skill is halved; escaping a grapple or pin is a move action, and escaping a net, animate rope, command plants, or control plants spell is a standard action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill unlock ~ escape artist 05 Ranks"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rogue's Edge escape artist 05"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Signature Skill 05"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,escape artist=5"
+      },
+      {
+        "key": "DESC",
+        "value": "If you take a -10 penalty, the time required to use the escape artist skill is halved; escaping a grapple or pin is a move action, and escaping a net, animate rope, command plants, or control plants spell is a standard action."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 1040,
+    "record_key": "Skill unlock ~ escape artist 05 Ranks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

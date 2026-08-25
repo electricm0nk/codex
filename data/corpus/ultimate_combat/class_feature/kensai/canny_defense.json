@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Kensai ~ Canny Defense",
+    "name": "Canny Defense",
+    "class": "Kensai",
+    "description": "At 1st level, when a kensai is wielding his chosen weapon, he gains the canny defense ability. This is identical to the duelist prestige class ability of the same name (Core Rulebook 382), save that his chosen weapon may be of any type. [AC Bonus +%1 / Actual AC Bonus +%2]|TotalACBonus|ActualACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kensai ~ Canny Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CannyDefenseLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotalACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ActualACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "At 1st level, when a kensai is wielding his chosen weapon, he gains the canny defense ability. This is identical to the duelist prestige class ability of the same name (Core Rulebook 382), save that his chosen weapon may be of any type. [AC Bonus +%1 / Actual AC Bonus +%2]|TotalACBonus|ActualACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|max(0,min(INT,CannyDefenseLVL))|TYPE=Dodge|PREMULT:2,[!PREEQUIP:1,ARMORTYPE=Medium,ARMORTYPE=Heavy,TYPE=Shield],[PREEQUIP:1,TYPE=Melee,TYPE=Ranged]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotalACBonus|max(0,min(INT,CannyDefenseLVL))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ActualACBonus|max(0,min(INT,CannyDefenseLVL))|TYPE=Dodge|PREMULT:2,[!PREEQUIP:1,ARMORTYPE=Medium,ARMORTYPE=Heavy,TYPE=Shield],[PREEQUIP:1,TYPE=Melee,TYPE=Ranged]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CannyDefenseLVL|MagusLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 18,
+    "record_key": "Kensai ~ Canny Defense"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Liminal Sprite ~ Repartee",
+    "delivery": "Supernatural",
+    "description": "Three times per day, when a liminal sprite successfully aids another creature's Charisma-based skill check, the creature gains a +2d4 bonus on the skill check instead of the normal +2 bonus. A creature can receive this bonus from only one liminal sprite per skill check.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:liminal_sprite_repartee",
+    "name": "Repartee",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day, when a liminal sprite successfully aids another creature's Charisma-based skill check, the creature gains a +2d4 bonus on the skill check instead of the normal +2 bonus. A creature can receive this bonus from only one liminal sprite per skill check."
+      },
+      {
+        "key": "KEY",
+        "value": "Liminal Sprite ~ Repartee"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.LiminalSpriteRacialTrait"
+      }
+    ],
+    "source_page": "p.158",
+    "traits": [
+      "LiminalSpriteRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 49,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Liminal Sprite ~ Repartee",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

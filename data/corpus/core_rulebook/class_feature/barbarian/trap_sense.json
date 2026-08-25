@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian ~ Trap Sense",
     "name": "Trap Sense",
@@ -39,6 +39,30 @@
       {
         "key": "BONUS",
         "value": "VAR|BarbarianTrapSenseLVL|BarbarianLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|-1|PREVARGTEQ:BarbarianTrapSenseLVL/3,1|PREVAREQ:Barbarian_CF_TrapSense1,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|-1|PREVARGTEQ:BarbarianTrapSenseLVL/3,2|PREVAREQ:Barbarian_CF_TrapSense2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|-1|PREVARGTEQ:BarbarianTrapSenseLVL/3,3|PREVAREQ:Barbarian_CF_TrapSense3,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|-1|PREVARGTEQ:BarbarianTrapSenseLVL/3,4|PREVAREQ:Barbarian_CF_TrapSense4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|-1|PREVARGTEQ:BarbarianTrapSenseLVL/3,5|PREVAREQ:Barbarian_CF_TrapSense5,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapSenseBonus|-1|PREVARGTEQ:BarbarianTrapSenseLVL/3,6|PREVAREQ:Barbarian_CF_TrapSense6,1"
       }
     ]
   },
@@ -56,5 +80,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

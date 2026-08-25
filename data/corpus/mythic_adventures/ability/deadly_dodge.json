@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Deadly Dodge",
+    "name": "Deadly Dodge",
+    "description": "As a swift action, you can expend one use of mythic power to gain a +4 dodge bonus to your AC until the start of your next turn. During this time, whenever a creature misses on a melee attack against you, it provokes an attack of opportunity from you. You can choose to either take this attack of opportunity or force that creature to reroll the attack and change the target to a creature of your choice that is adjacent to you and within the attacker's reach. This reroll uses the same modifiers as the initial attack roll.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Deadly Dodge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, you can expend one use of mythic power to gain a +4 dodge bonus to your AC until the start of your next turn. During this time, whenever a creature misses on a melee attack against you, it provokes an attack of opportunity from you. You can choose to either take this attack of opportunity or force that creature to reroll the attack and change the target to a creature of your choice that is adjacent to you and within the attacker's reach. This reroll uses the same modifiers as the initial attack roll."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 143,
+    "record_key": "Mythic Path Ability ~ Deadly Dodge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

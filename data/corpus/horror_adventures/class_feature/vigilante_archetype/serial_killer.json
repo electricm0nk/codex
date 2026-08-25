@@ -1,0 +1,196 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vigilante Archetype ~ Serial Killer",
+    "name": "Serial Killer",
+    "class": "Vigilante",
+    "description": "Some vigilantes adopt an innocent guise to cloak their acts of brutal murder.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vigilante Archetype ~ Serial Killer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VigilanteArchetype"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "Some vigilantes adopt an innocent guise to cloak their acts of brutal murder."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vigilante=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vigilante Archetype ~ Serial Killer],[!PREFACT:1,ABILITIES,Vigilante_Archetype_VigilanteSpecialization=True,Vigilante_Archetype_Unshakable=True,Vigilante_Archetype_VigilanteTalent4=True,Vigilante_Archetype_VigilanteTalent6=True,Vigilante_Archetype_VigilanteTalent12=True,Vigilante_Archetype_VigilanteTalent14=True,Vigilante_Archetype_SocialTalent7=True,Vigilante_Archetype_SocialTalent9=True,Vigilante_Archetype_SocialTalent19=True,Vigilante_Archetype_StartlingAppearance=True,Vigilante_Archetype_FrighteningAppearance=True,Vigilante_Archetype_StunningAppearance=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Vigilante Specialization|PRECLASS:1,Vigilante=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Thwart Pursuit|PRECLASS:1,Vigilante=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Studied Target|PRECLASS:1,Vigilante=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Charming|PRECLASS:1,Vigilante=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Death Attack|PRECLASS:1,Vigilante=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Calling Card|PRECLASS:1,Vigilante=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Grisly Murder|PRECLASS:1,Vigilante=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Quiet Death|PRECLASS:1,Vigilante=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serial Killer ~ Swift Death|PRECLASS:1,Vigilante=17"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteSpecialization|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_SocialTalent19|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_Archetype_StunningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_Avenger|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_Unshakable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_VigilanteTalent14|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_SocialTalent19|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StartlingAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_FrighteningAppearance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Vigilante_CF_StunningAppearance|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 9,
+    "record_key": "Vigilante Archetype ~ Serial Killer"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

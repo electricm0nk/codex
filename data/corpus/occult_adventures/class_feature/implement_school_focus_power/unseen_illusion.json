@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Unseen",
     "name": "Unseen [Illusion]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to become invisible, as invisibility. This effect lasts for 1 minute per occultist level you possess. You can expend 2 points of mental focus instead of 1 to use this power on a willing adjacent creature instead of yourself. You can still see creatures you make invisible with this power. If the invisible creature makes an attack or otherwise takes an action that would cause the invisibility to end, you can immediately expend 1 additional point of mental focus to allow the creature to remain invisible if the creature is within 30 feet of you. You must be at least 3rd level to select this focus power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

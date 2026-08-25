@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Legs 06",
+    "name": "Legs 06",
+    "raw_tokens": [
+      {
+        "key": "LEGS",
+        "value": "6"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_templates.lst",
+    "sha256": "5cb6120901f734a66b36c0615321e1075c05fe8c5d06bdbcc9bf698c7628817b",
+    "line": 9,
+    "record_key": "Legs 06"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

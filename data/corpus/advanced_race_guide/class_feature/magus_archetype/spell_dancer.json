@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magus Archetype ~ Spell Dancer",
     "name": "Spell Dancer",
-    "class": "Magus Archetype",
+    "class": "Magus",
     "description": "The strong emphasis on wizards within elven culture influences how even non-wizard elves see themselves. Many elven magi do not consider themselves masters of a blend of martial and magical talents, but rather a sub-category of wizards who study the effect of physical movement and techniques upon spellcasting ability. They believe their ability to cast spells while fighting is an outgrowth of the concept of the \"spell dance,\" which itself is just another kind of wizardry.",
     "raw_tokens": [
       {
@@ -71,6 +71,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Magus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Magus Archetype ~ Spell Dancer],[!PREFACT:1,ABILITIES,Magus_Archetype_ArcanePool=True,Magus_Archetype_BonusFeat5=True,Magus_Archetype_Proficiencies=True,Magus_Archetype_ClassSkills=true]"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_MediumArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ArcanePool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_BonusFeat5|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Magus_CF_ClassSkills|true"
       }
     ]
   },
@@ -87,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

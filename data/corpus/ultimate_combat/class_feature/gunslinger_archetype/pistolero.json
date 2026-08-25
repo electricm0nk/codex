@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Pistolero",
     "name": "Pistolero",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "While most gunslingers have favorite firearms, there are those rare ones who choose to specialize in onehanded firearms exclusively. These gunslingers are called pistoleros. While they lack the flexibility of being able to pick up any kind of firearm and use it with reasonable proficiency, they are crackerjack shots with pistols and similar firearms. Their skill and aim with these firearms at close range is second to none, and they rarely misfire with these weapons.",
     "raw_tokens": [
       {
@@ -67,6 +67,54 @@
       {
         "key": "ABILITY",
         "value": "Gunslinger Class Feature|AUTOMATIC|PISTOLERO ~ Pistol Training|PREABILITY:1,CATEGORY=Internal,Optional Rules Firearms ~ Guns Everywhere"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ PISTOLERO],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_Proficiencies=True,Gunslinger_Archetype_Gunsmith=True,Gunslinger_Archetype_GunTraining=True,Gunslinger_Archetype_DeadeyeDeed=True,Gunslinger_Archetype_StartlingShotDeed=True,Gunslinger_Archetype_BleedingWoundDeed=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_StartlingShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Gunsmith|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_StartlingShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BleedingWoundDeed|true"
       }
     ]
   },
@@ -83,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

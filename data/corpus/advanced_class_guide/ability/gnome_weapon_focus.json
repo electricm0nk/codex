@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Warpriest Bonus Feat ~ Gnome Weapon Focus",
+    "name": "Gnome Weapon Focus",
+    "description": "Your extensive training with traditional gnome weapons gives you an advantage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warpriest Bonus Feat ~ Gnome Weapon Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Warpriest Bonus Feat"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGnome=true"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "1"
+      },
+      {
+        "key": "PREWEAPONPROF",
+        "value": "1,TYPE.Martial"
+      },
+      {
+        "key": "DESC",
+        "value": "Your extensive training with traditional gnome weapons gives you an advantage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Gnome Weapon Focus"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Gnome|TOHIT|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +1 bonus on attack rolls with gnome weapons (weapons with \"gnome\" in the title)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/support/acg_abilities_arg.lst",
+    "sha256": "a57a3e8a72084b4ccd88f4382b3c87e3595603aef418ed671ae5d1ded47d4dbe",
+    "line": 14,
+    "record_key": "Warpriest Bonus Feat ~ Gnome Weapon Focus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

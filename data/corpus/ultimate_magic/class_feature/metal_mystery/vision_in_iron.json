@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Metal Mystery ~ Vision in Iron",
     "name": "Vision in Iron",
-    "class": "Metal Mystery",
+    "class": "Oracle",
     "description": "You can use any piece of polished metal at least the size of a dagger as a scrying device, as if using the spell scrying. You can scry for %1 rounds per day; these rounds do not need to be consecutive.|VisionInIronDuration|!PRECLASS:1,Oracle=15",
     "raw_tokens": [
       {
@@ -60,5 +60,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

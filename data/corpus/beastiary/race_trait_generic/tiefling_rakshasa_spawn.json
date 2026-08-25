@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Tiefling ~ Rakshasa-Spawn",
+    "name": "Rakshasa-Spawn (Beastbrood)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Rakshasa-Spawn"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Tiefling Subrace"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Tiefling ~ Rakshasa-Spawn"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Rakshasa"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Typical Alignment|LE"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Dex, +2 Cha, -2 Wis"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Disguise, Sense Motive"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Beastbrood gain detect thoughts as a spell-like ability."
+      },
+      {
+        "key": "INFO",
+        "value": "Ancestry|Rakshasa"
+      },
+      {
+        "key": "INFO",
+        "value": "Typical Alignment|LE"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Ability Modifiers|+2 Dex, +2 Cha, -2 Wis"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Skill Modifiers|Disguise, Sense Motive"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Spell-Like Ability|Beastbrood gain detect thoughts as a spell-like ability."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+    "sha256": "c5e0157cc152a160d6fb535fed312baccbc96ef1e560687b570b267dd1c041ca",
+    "line": 21,
+    "record_key": "Tiefling ~ Rakshasa-Spawn"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lycanthropy Corruption ~ Greater Shift Form Gift",
+    "name": "Greater Shift Form Gift",
+    "description": "When you use shift form, you can instead take your animal form, as if using polymorph. Nonmagical clothing and gear don't meld into your animal form. You don't gain any ability score adjustments (other than those gained from other manifestations), but you do gain all of the other abilities granted by polymorph for your new form.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lycanthropy Corruption ~ Greater Shift Form Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LycanthropyGreaterShiftFormGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "DESC",
+        "value": "When you use shift form, you can instead take your animal form, as if using polymorph. Nonmagical clothing and gear don't meld into your animal form. You don't gain any ability score adjustments (other than those gained from other manifestations), but you do gain all of the other abilities granted by polymorph for your new form."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 584,
+    "record_key": "Lycanthropy Corruption ~ Greater Shift Form Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

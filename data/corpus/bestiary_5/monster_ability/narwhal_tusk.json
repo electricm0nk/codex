@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Narwhal ~ Tusk",
+    "delivery": "Extraordinary",
+    "description": "A charging narwhal can make a single gore attack with its tusk in place of its normal bite attack. If it hits, the tusk deals 2d6+14 points of damage with a x3 critical multiplier.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:narwhal_tusk",
+    "name": "Tusk",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A charging narwhal can make a single gore attack with its tusk in place of its normal bite attack. If it hits, the tusk deals 2d6+14 points of damage with a x3 critical multiplier."
+      },
+      {
+        "key": "KEY",
+        "value": "Narwhal ~ Tusk"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.276"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.NarwhalRacialTrait"
+      }
+    ],
+    "source_page": "p.276",
+    "traits": [
+      "NarwhalRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Narwhal ~ Tusk",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

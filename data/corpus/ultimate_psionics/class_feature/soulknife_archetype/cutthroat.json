@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Cutthroat",
+    "name": "Cutthroat",
+    "class": "Soulknife",
+    "description": "You work to be even better at infiltration as well as how to perfectly place strikes against your opponents.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Cutthroat"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifeMediumArmorProficiency.SoulknifeShieldProficiency.SoulknifeBonusFeat.SoulknifePsychicStrike"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Cutthroat],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeMediumArmorProficiency,TYPE.SoulknifeShieldProficiency,TYPE.SoulknifeBonusFeat,TYPE.SoulknifePsychicStrike]"
+      },
+      {
+        "key": "DESC",
+        "value": "You work to be even better at infiltration as well as how to perfectly place strikes against your opponents."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Cutthroat ~ Covert Training|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Cutthroat ~ Cunning|PRECLASS:1,Soulknife=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Cutthroat ~ Sneak Attack|PRECLASS:1,Soulknife=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.280"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2134,
+    "record_key": "Soulknife Archetype ~ Cutthroat"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

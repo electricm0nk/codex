@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Efficient Packer",
+    "name": "Efficient Packer",
+    "description": "Treat your Strength score as 2 points higher when calculating your carrying capacity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Efficient Packer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Gnome Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Efficient Packer]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGnome=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat your Strength score as 2 points higher when calculating your carrying capacity."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LOADSCORE|2|TYPE=Trait"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 52,
+    "record_key": "Trait ~ Efficient Packer"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

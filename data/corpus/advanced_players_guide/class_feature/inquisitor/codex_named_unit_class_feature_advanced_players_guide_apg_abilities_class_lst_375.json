@@ -1,0 +1,105 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_advanced_players_guide_apg_abilities_class_lst_375)",
+    "name": "Codex-Named Unit (class_feature_advanced_players_guide_apg_abilities_class_lst_375)",
+    "class": "Inquisitor",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorDomain"
+      },
+      {
+        "key": "PREMULT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainDeathTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeathDomain|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Death Domain ~ Bleeding Touch"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Death Domain ~ Death's Embrace|PREVARGTEQ:DomainDeathLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDeathLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDeathDC|10+(DomainDeathLVL/2)+CHA|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainDeathTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DeathDomain|1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Core Rulebook"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "CR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 375,
+    "record_key": "Codex-Named Unit (class_feature_advanced_players_guide_apg_abilities_class_lst_375)"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "advanced_players_guide:apg_abilities_class.lst:375"
+  }
+}

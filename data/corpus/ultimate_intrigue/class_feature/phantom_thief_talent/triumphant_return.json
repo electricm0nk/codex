@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Triumphant Return",
     "name": "Triumphant Return",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief's tales are never truly forgotten. This makes it easier to establish his renown in a place he has established it before. In any settlement where the phantom thief previously gained renown, it takes only 3 days, rather than 1 week, to gain renown again.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

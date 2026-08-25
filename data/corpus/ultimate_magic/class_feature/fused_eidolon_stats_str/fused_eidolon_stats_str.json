@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fused Eidolon Stats Str",
+    "name": "Fused Eidolon Stats Str",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "FusedEidolonTemps.FusedEidolonStats"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonStatSTR|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|EidolonStatSTR|%CHOICE"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=40|TITLE=Strength Score of Eidolon"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+    "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+    "line": 1973,
+    "record_key": "Fused Eidolon Stats Str"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

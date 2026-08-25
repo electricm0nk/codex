@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption ~ Replacement Limb Stain",
+    "name": "Replacement Limb Stain",
+    "description": "You take a -2 penalty on Dexterity-based skill checks and ability checks using your hands, as well as on Dexterity-based attack rolls.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Replacement Limb Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PrometheanReplacementLimbStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "DESC",
+        "value": "You take a -2 penalty on Dexterity-based skill checks and ability checks using your hands, as well as on Dexterity-based attack rolls."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Dexterity|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Ranged,TOHIT.Finesseable|-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 770,
+    "record_key": "Promethean Corruption ~ Replacement Limb Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

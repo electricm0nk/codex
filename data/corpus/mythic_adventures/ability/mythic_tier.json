@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Tier",
+    "name": "Mythic Tier",
+    "description": "You are a %1st-tier mythic character.|MythicTierLevel|PREVAREQ:MythicTierLevel,1",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "EXPORT"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a %1st-tier mythic character.|MythicTierLevel|PREVAREQ:MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a %1nd-tier mythic character.|MythicTierLevel|PREVAREQ:MythicTierLevel,2"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a %1rd-tier mythic character.|MythicTierLevel|PREVAREQ:MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a %1th-tier mythic character.|MythicTierLevel|PREVARGTEQ:MythicTierLevel,4|PREVARNEQ:MythicTierLevel,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You are an %1th-tier mythic character.|MythicTierLevel|PREVAREQ:MythicTierLevel,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicLevel|MythicTierLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HalfMythicLevel|max(1,floor(MythicLevel/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 36,
+    "record_key": "Mythic Tier"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

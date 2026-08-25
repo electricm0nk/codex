@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": true,
+    "corpus_key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_316)",
+    "delivery": "Extraordinary",
+    "description": "[redacted PI]",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_316",
+    "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_316)",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": {
+      "coordinate": "inner_sea_bestiary:isb_abilities_race.lst:316",
+      "reason": "name_pi_blocked"
+    },
+    "source_page": "p.46",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T19:41:15Z",
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 316,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_316)",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

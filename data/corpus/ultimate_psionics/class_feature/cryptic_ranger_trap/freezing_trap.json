@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic Ranger Trap ~ Freezing Trap",
+    "name": "Freezing Trap",
+    "class": "Cryptic",
+    "description": "The trap creates a burst of ice that damages and encases the triggering creature. The creature takes 1d3+%1 points of cold damage and is entangled and stuck to the ground, similar to the effect of a tanglefoot bag. A successful Reflex save halves the damage and means the creature is not stuck to the floor by the ice. The ice is %2 inches thick, has hardness 0 and %3 hit points, and melts in 2d4 rounds.|FreezingTrapBonusDamage|FreezingTrapThickness|FreezingTrapHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic Ranger Trap ~ Freezing Trap"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.CrypticRangerTrap.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FreezingTrapBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FreezingTrapThickness|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FreezingTrapHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The trap creates a burst of ice that damages and encases the triggering creature. The creature takes 1d3+%1 points of cold damage and is entangled and stuck to the ground, similar to the effect of a tanglefoot bag. A successful Reflex save halves the damage and means the creature is not stuck to the floor by the ice. The ice is %2 inches thick, has hardness 0 and %3 hit points, and melts in 2d4 rounds.|FreezingTrapBonusDamage|FreezingTrapThickness|FreezingTrapHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FreezingTrapBonusDamage|floor(CrypticInsightLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FreezingTrapThickness|max(1,floor(TL/2))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FreezingTrapHP|FreezingTrapThickness*3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 247,
+    "record_key": "Cryptic Ranger Trap ~ Freezing Trap"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

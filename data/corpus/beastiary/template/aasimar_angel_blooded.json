@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:13Z",
+  "data": {
+    "key": "Aasimar ~ Angel-Blooded",
+    "name": "Angel-Blooded",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Angel-Blooded"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Angel-Blooded"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_templates_subrace.lst",
+    "sha256": "7553aabc194aab8b8b548459d6de1f0548619b7501b862037a057634f13ff7ff",
+    "line": 6,
+    "record_key": "Aasimar ~ Angel-Blooded"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

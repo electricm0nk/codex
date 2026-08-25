@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic ~ Disrupt Pattern",
+    "name": "Disrupt Pattern",
+    "class": "Cryptic",
+    "description": "Select one creature type as your active type when you gain focus.  You deal 1d%1+%2+%3d%1 damage as a ranged touch attack with a %4-foot range. You deal half damage if the target's type is not your active type.  This can only be used once per round.|DisruptPatternDieSize|DisruptPatternBonusDamage|EnhancedDisruptionDice|DisruptPatternRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic ~ Disrupt Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptPatternDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptPatternBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptPatternRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DisruptPatternDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnhancedDisruptionDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Select one creature type as your active type when you gain focus.  You deal 1d%1+%2+%3d%1 damage as a ranged touch attack with a %4-foot range. You deal half damage if the target's type is not your active type.  This can only be used once per round.|DisruptPatternDieSize|DisruptPatternBonusDamage|EnhancedDisruptionDice|DisruptPatternRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptPatternDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptPatternBonusDamage|CrypticPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptPatternRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisruptPatternDice|1+EnhancedDisruptionDice"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 172,
+    "record_key": "Cryptic ~ Disrupt Pattern"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Another Day",
     "name": "Another Day",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "When the vigilante is dropped unconscious due to hit point damage, he automatically stabilizes, but he can also appear to be dead, unless an examining creature succeeds at a Heal check (DC %1) or, if using magic such as deathwatch, a caster level check with the same DC (the ability to affect spells is supernatural; the rest of the ability is extraordinary). The vigilante counts as having received aid and automatically succeeds at the Constitution check to become conscious after 1 hour (unless he has actually died in the meantime).|20+VigilanteTalentLVL",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

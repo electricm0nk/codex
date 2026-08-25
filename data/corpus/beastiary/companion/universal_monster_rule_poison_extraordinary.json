@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Universal Monster Rule ~ Poison (Extraordinary)",
+    "name": "Universal Monster Rule ~ Poison (Extraordinary)",
+    "description": "Bite--injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Con; cure 1 save.|UMR_Poison_DC|PREMULT:2,[PREVAREQ:UMR_Poison_SpecificDesc,1],[PRERACE:1,Viper]",
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Bite--injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Con; cure 1 save.|UMR_Poison_DC|PREMULT:2,[PREVAREQ:UMR_Poison_SpecificDesc,1],[PRERACE:1,Viper]"
+      }
+    ],
+    "origin": "mod_only",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
+    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60",
+    "line": 69,
+    "record_key": "Universal Monster Rule ~ Poison (Extraordinary)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

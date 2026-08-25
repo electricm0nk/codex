@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Greater Dirge of Doom",
+    "category": "General",
+    "name": "Greater Dirge of Doom",
+    "description": "The haunting sound of sepulchral intonations chills the most stalwart adversary to its very core.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Improved Dirge of Doom",
+      "PREABILITY:1,CATEGORY=Special Ability,Skald ~ Dirge of Doom,Bardic Performance ~ Dirge of Doom,TYPE.DirgeOfDoom"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 82,
+    "record_key": "Greater Dirge of Doom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Archetype ~ Visionary",
     "name": "Visionary",
-    "class": "Shaman Archetype",
+    "class": "Shaman",
     "description": "The visionary is a master at divination, drawing upon her intimate relationship with the spirit world to ferret out all manner of secrets and insights about the world around her and beyond.",
     "raw_tokens": [
       {
@@ -63,6 +63,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Shaman"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Visionary],[!PREFACT:1,ABILITIES,Shaman_Archetype_WanderingSpirit=True,Shaman_Archetype_WanderingHex=True,Shaman_Archetype_WanderingSpirit=True,Shaman_Archetype_WanderingSpirit=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingHex6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpiritGreater|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingSpiritTrue|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingHex|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingSpirit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingSpirit|true"
       }
     ]
   },
@@ -79,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

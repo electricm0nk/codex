@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Vampiric Companion",
+    "category": "General",
+    "name": "Vampiric Companion",
+    "description": "Just as your undead existence mocks nature, so too are you granted a twisted companion that reflects the vile nature of vampirism. [NOT IMPLEMENTED}Your animal companion or familiar's type changes to \"undead.\" The creature gains your vampire or dhampir weaknesses and fast healing 5.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion,TYPE.Familiar",
+      "PREALIGN:LN,TN,CN,LE,NE,CE",
+      "PRECLASS:1,SPELLCASTER=10",
+      "PREFACT:1,TEMPLATES,IsDhampir=true"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 35,
+    "record_key": "Vampiric Companion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Secret Broker ~ Share Memory",
+    "name": "Share Memory",
+    "class": "Occultist",
+    "description": "A secret broker learns to use her knowledge transference powers more flexibly, allowing her to use share memory at will, but only with willing targets.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Secret Broker ~ Share Memory"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=TL|Share Memory,12+INT"
+      },
+      {
+        "key": "DESC",
+        "value": "A secret broker learns to use her knowledge transference powers more flexibly, allowing her to use share memory at will, but only with willing targets."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 108,
+    "record_key": "Secret Broker ~ Share Memory"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

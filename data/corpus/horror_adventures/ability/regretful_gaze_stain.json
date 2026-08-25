@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Shadowbound Corruption ~ Regretful Gaze Stain",
+    "name": "Regretful Gaze Stain",
+    "description": "You are withered as if by age. Reduce your Strength, Dexterity, and Constitution scores by 1 point each, or by however much they would be reduced if you were one age category older, whichever is worse for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowbound Corruption ~ Regretful Gaze Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.ShadowboundRegretfulGazeStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "DESC",
+        "value": "You are withered as if by age. Reduce your Strength, Dexterity, and Constitution scores by 1 point each, or by however much they would be reduced if you were one age category older, whichever is worse for you."
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON,DEX|-1|!PREAGESET:1,Middle-Aged"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON,DEX|-2|PREMULT:2,[PREAGESET:1,Middle Age],[!PREAGESET:1,Old]"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON,DEX|-3|PREAGESET:1,Old"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 845,
+    "record_key": "Shadowbound Corruption ~ Regretful Gaze Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

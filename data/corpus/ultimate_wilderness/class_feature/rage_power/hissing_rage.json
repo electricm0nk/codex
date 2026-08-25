@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Hissing Rage",
     "name": "Hissing Rage",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "Once per hour, the barbarian can spit venom at an adjacent enemy as a standard action. She must make a touch attack to successfully spit on a foe in this way, but she can also apply this poison as a swift action when she hits with a bite attack. The DC of the save against this poison is %1. Hissing Rage Poison (Su) Bite-contact or injury; save Fort; frequency 1/round for 6 rounds; effect 1d2 Str damage; cure 2 consecutive saves.|10+RagePowersLVL/+CON",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

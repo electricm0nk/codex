@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Strength",
+    "name": "Strength",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainStrength,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Strength Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.StrengthDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainStrengthLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainStrengthDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainStrengthTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainStrengthAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "In strength and brawn there is truth - your faith gives you incredible might and power."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Strength=1|Enlarge Person|Strength=2|Bull's Strength|Strength=3|Magic Vestment|Strength=4|Spell Immunity|Strength=5|Righteous Might|Strength=6|Stoneskin|Strength=7|Grasping Hand|Strength=8|Clenched Fist|Strength=9|Crushing Hand"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 38,
+    "record_key": "Strength"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

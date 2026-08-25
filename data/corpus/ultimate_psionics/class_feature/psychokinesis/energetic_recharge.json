@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychokinesis ~ Energetic Recharge",
+    "name": "Energetic Recharge",
+    "class": "Psychokinesis",
+    "description": "Convert up to %1 energy attack damage to power points, 1 pp per 5 damage, 1/day.|EnergeticRechargeAmount",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychokinesis ~ Energetic Recharge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnergeticRechargeAmount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Convert up to %1 energy attack damage to power points, 1 pp per 5 damage, 1/day.|EnergeticRechargeAmount"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnergeticRechargeAmount|5*PsychokinesisDisciplineLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 432,
+    "record_key": "Psychokinesis ~ Energetic Recharge"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

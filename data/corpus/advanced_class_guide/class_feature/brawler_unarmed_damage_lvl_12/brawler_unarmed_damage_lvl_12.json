@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Brawler Unarmed Damage LVL 12",
+    "name": "Brawler Unarmed Damage LVL 12",
+    "class": "Brawler",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Fine)|PREVARLTEQ:BrawlerUDAMAttackSize,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Diminutive)|PREVAREQ:BrawlerUDAMAttackSize,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Tiny)|PREVAREQ:BrawlerUDAMAttackSize,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Small)|PREVAREQ:BrawlerUDAMAttackSize,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Medium)|PREVAREQ:BrawlerUDAMAttackSize,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Large)|PREVAREQ:BrawlerUDAMAttackSize,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Huge)|PREVAREQ:BrawlerUDAMAttackSize,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Gargantuan)|PREVAREQ:BrawlerUDAMAttackSize,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brawler Unarmed Damage LVL 12 (Colossal)|PREVARGTEQ:BrawlerUDAMAttackSize,9"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 956,
+    "record_key": "Brawler Unarmed Damage LVL 12"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

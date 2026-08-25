@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_37)",
+    "name": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_37)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREGENDER",
+        "value": "Female"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MAX=1"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You bear the mental and physical scars of your sisters in the Gray Maidens, and while you never had to carry out any of the queen's commands, you feel a strong kinship with those of your sisters who have. You are affiliated with the Gray Maidens. In addition, choose two of the following benefits to represent the focus of your initial training and indoctrination. [Special] This feat is unaffiliated; a creature need not be affiliated with the Gray Maidens to select this feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_37) Training|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 37,
+    "record_key": "Codex-Named Unit (feat_adventurers_guide_ag_feats_lst_37)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description,name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_feats.lst:37"
+  }
+}

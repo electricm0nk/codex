@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Spellblight ~ Disassociation",
+    "name": "Disassociation",
+    "description": "A spellcaster with disassociation lapses into a mild insanity in which she dissociates her identity and starts to perceive herself as someone else. While subject to disassociation, a spellcaster is incapable of using spells or effects with a range of personal or of targeting herself with a spell effect. A spell with an area that includes her but does not need targeted individual creatures functions normally. Disassociation can by cured by any effect that removes confusion or insanity.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellblight ~ Disassociation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Afflictions"
+      },
+      {
+        "key": "TYPE",
+        "value": "MinorSpellblight.Spellblight.Curse.Affliction"
+      },
+      {
+        "key": "DESC",
+        "value": "A spellcaster with disassociation lapses into a mild insanity in which she dissociates her identity and starts to perceive herself as someone else. While subject to disassociation, a spellcaster is incapable of using spells or effects with a range of personal or of targeting herself with a spell effect. A spell with an area that includes her but does not need targeted individual creatures functions normally. Disassociation can by cured by any effect that removes confusion or insanity."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 9,
+    "record_key": "Spellblight ~ Disassociation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

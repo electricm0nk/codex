@@ -3,6 +3,28 @@
   "title": "Bestiary 6",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 1,
+      "denominator": 1,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 1
+      },
+      "items": [
+        {
+          "name": "Racial Traits ~ Rougarou",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Rougarou"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
       "done": 0,
@@ -10,10 +32,10 @@
       "not_started": 4,
       "denominator": 4,
       "pct": 0.0,
-      "excluded_from_percentage": 14,
+      "excluded_from_percentage": 18,
       "standing_breakdown": {
         "origin": 4,
-        "unclassified": 14
+        "unclassified": 18
       },
       "items": [
         {
@@ -89,9 +111,23 @@
         {
           "name": "Scalykind",
           "doneness": "not-started",
+          "type_facet": "Internal.DomainAbility",
+          "standing": "unclassified",
+          "display_name": "Scalykind (Internal.DomainAbility)"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "unclassified",
+          "display_name": "Scalykind (Internal)"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
-          "display_name": "Scalykind"
+          "display_name": "Scalykind (InquisitorDomain)"
         },
         {
           "name": "Serpent Companion",
@@ -138,9 +174,23 @@
         {
           "name": "Void",
           "doneness": "not-started",
+          "type_facet": "Internal.DomainAbility",
+          "standing": "unclassified",
+          "display_name": "Void (Internal.DomainAbility)"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "unclassified",
+          "display_name": "Void (Internal)"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
-          "display_name": "Void"
+          "display_name": "Void (InquisitorDomain)"
         }
       ]
     },
@@ -342,13 +392,296 @@
       ]
     },
     {
-      "kind": "monster_ability",
-      "label": "Monster Abilities",
+      "kind": "deity",
+      "label": "Deities",
       "done": 0,
       "partial": 0,
-      "not_started": 11,
-      "denominator": 11,
+      "not_started": 0,
+      "denominator": 0,
       "pct": 0.0,
+      "excluded_from_percentage": 22,
+      "standing_breakdown": {
+        "unclassified": 22
+      },
+      "items": [
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #9"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #10"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #11"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #12"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #13"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #14"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #15"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #16"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #17"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #18"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #19"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #20"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #21"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #22"
+        }
+      ]
+    },
+    {
+      "kind": "domain",
+      "label": "Domains",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 11,
+      "standing_breakdown": {
+        "unclassified": 11
+      },
+      "items": [
+        {
+          "name": "Dark Tapestry Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Dark Tapestry Subdomain"
+        },
+        {
+          "name": "Dragon Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Dragon Subdomain"
+        },
+        {
+          "name": "Entropy Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Entropy Subdomain"
+        },
+        {
+          "name": "Fear Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Fear Subdomain"
+        },
+        {
+          "name": "Judgment Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Judgment Subdomain"
+        },
+        {
+          "name": "Revelry Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Revelry Subdomain"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Scalykind"
+        },
+        {
+          "name": "Stars Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Stars Subdomain"
+        },
+        {
+          "name": "Tyranny Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Tyranny Subdomain"
+        },
+        {
+          "name": "Venom Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Venom Subdomain"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Void"
+        }
+      ]
+    },
+    {
+      "kind": "language",
+      "label": "Languages",
+      "done": 0,
+      "partial": 0,
+      "not_started": 1,
+      "denominator": 1,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 1
+      },
+      "items": [
+        {
+          "name": "Rougarou",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "origin",
+          "display_name": "Rougarou"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 5,
+      "partial": 6,
+      "not_started": 0,
+      "denominator": 11,
+      "pct": 45.5,
       "excluded_from_percentage": 5,
       "standing_breakdown": {
         "origin": 11,
@@ -357,112 +690,112 @@
       "items": [
         {
           "name": "Cursed Bite",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.CoralCapuchinRacialTrait",
           "standing": "origin",
           "display_name": "Cursed Bite"
         },
         {
           "name": "Defensive Spikes",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.KentrosaurusRacialTrait",
           "standing": "origin",
           "display_name": "Defensive Spikes"
         },
         {
           "name": "Ferocity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Ferocity"
         },
         {
           "name": "Gulp",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DunkleosteusRacialTrait",
           "standing": "origin",
           "display_name": "Gulp"
         },
         {
           "name": "Impaling Horn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ElasmotheriumRacialTrait",
           "standing": "origin",
           "display_name": "Impaling Horn"
         },
         {
           "name": "Impaling Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.KentrosaurusRacialTrait",
           "standing": "origin",
           "display_name": "Impaling Strike"
         },
         {
           "name": "Mock",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.MockingfeyRacialTrait",
           "standing": "unclassified",
           "display_name": "Mock"
         },
         {
           "name": "Moisture Dependency",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.CoralCapuchinRacialTrait",
           "standing": "origin",
           "display_name": "Moisture Dependency"
         },
         {
           "name": "Negative Energy Affinity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Negative Energy Affinity"
         },
         {
           "name": "Puncture Armor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.DevilMonkeyRacialTrait",
           "standing": "origin",
           "display_name": "Puncture Armor"
         },
         {
           "name": "Razor-Sharp Beak",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.QuetzalcoatlusRacialTrait",
           "standing": "origin",
           "display_name": "Razor-Sharp Beak"
         },
         {
           "name": "Scavenger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.GiantRavenRacialTrait",
           "standing": "origin",
           "display_name": "Scavenger"
         },
         {
           "name": "Scent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Sense",
           "standing": "unclassified",
           "display_name": "Scent"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.MockingfeyRacialTrait",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities"
         },
         {
           "name": "Sweep",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DeinotheriumRacialTrait",
           "standing": "origin",
           "display_name": "Sweep"
         },
         {
           "name": "Whip Tail",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.MokeleMbembeRacialTrait",
           "standing": "origin",
           "display_name": "Whip Tail"
@@ -596,6 +929,84 @@
           "type_facet": "Divine",
           "standing": "unclassified",
           "display_name": "Animal Shapes (Reptiles Only)"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 9,
+      "denominator": 9,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 9
+      },
+      "items": [
+        {
+          "name": "Blight",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Blight"
+        },
+        {
+          "name": "Bonus Language ~ Rougarou",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Rougarou"
+        },
+        {
+          "name": "Derro",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Derro"
+        },
+        {
+          "name": "IsRougarou",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsRougarou"
+        },
+        {
+          "name": "Munavri",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Munavri"
+        },
+        {
+          "name": "Rougarou",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Rougarou"
+        },
+        {
+          "name": "Rougarou",
+          "doneness": "not-started",
+          "type_facet": "Racial Heritage",
+          "standing": "origin",
+          "display_name": "Rougarou (Racial Heritage)"
+        },
+        {
+          "name": "Troop",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Troop"
+        },
+        {
+          "name": "Wild Hunt",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Wild Hunt"
         }
       ]
     }

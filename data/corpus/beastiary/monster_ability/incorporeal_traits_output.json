@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Incorporeal Traits Output",
+    "delivery": "Extraordinary",
+    "description": "Can be harmed only by other incorporeal creatures/+1 or better weapons/magic. 50%% chance to ignore any damage from a corporeal source. Can pass through solid objects at will. Attacks pass through armor. Always moves silently.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:incorporeal_traits_output",
+    "name": "Incorporeal Traits Output",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Can be harmed only by other incorporeal creatures/+1 or better weapons/magic. 50%% chance to ignore any damage from a corporeal source. Can pass through solid objects at will. Attacks pass through armor. Always moves silently."
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Incorporeal Traits"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1746,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Incorporeal Traits Output",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

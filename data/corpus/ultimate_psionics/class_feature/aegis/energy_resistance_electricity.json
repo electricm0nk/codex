@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Energy Resistance Electricity",
+    "name": "Energy Resistance (Electricity)",
+    "class": "Aegis",
+    "description": "You gain electricity resistance %1.|AegisElectricityResistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Energy Resistance Electricity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AegisElectricityResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain electricity resistance %1.|AegisElectricityResistance"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Electricity"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|AegisElectricityResistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisElectricityResistance|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisElectricityResistance|5|PREVARGT:AstralSuitPrereqLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisElectricityResistance|5|PREVARGT:AstralSuitPrereqLVL,9"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 52,
+    "record_key": "Aegis ~ Energy Resistance Electricity"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

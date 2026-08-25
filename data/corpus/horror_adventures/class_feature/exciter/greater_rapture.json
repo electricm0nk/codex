@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Exciter ~ Greater Rapture",
+    "name": "Greater Rapture",
+    "class": "Spiritualist",
+    "description": "An exciter increases the morale bonus his rapture grants to each applicable ability score by 2 and the morale bonus he gains on Will saves by 1. In addition, upon entering a rapture, he can apply the effects of a single spiritualist spell he knows with an emotion component to himself. The spell must have a range of touch or personal, and it must be a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exciter ~ Greater Rapture"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "DESC",
+        "value": "An exciter increases the morale bonus his rapture grants to each applicable ability score by 2 and the morale bonus he gains on Will saves by 1. In addition, upon entering a rapture, he can apply the effects of a single spiritualist spell he knows with an emotion component to himself. The spell must have a range of touch or personal, and it must be a"
+      },
+      {
+        "key": "DESC",
+        "value": "1st- or 2nd-level spell.|!PRECLASS:1,Spiritualist=15"
+      },
+      {
+        "key": "DESC",
+        "value": "1st-, 2nd-, or 3rd-level spell.|PRECLASS:1,Spiritualist=15|!PRECLASS:1,Spiritualist=18"
+      },
+      {
+        "key": "DESC",
+        "value": "1st-, 2nd-, or 3rd, or 4th-level spell.|PRECLASS:1,Spiritualist=18"
+      },
+      {
+        "key": "DESC",
+        "value": "If he uses this ability to apply the effects of a spell again before the duration of the previous spell expires, the previous spell ends immediately."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaptureStrBonus,RaptureConBonus,RaptureDexBonus,RaptureChaBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaptureSaveBonus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 308,
+    "record_key": "Exciter ~ Greater Rapture"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Void Yai ~ Void Trap",
+    "delivery": "Supernatural",
+    "description": "When a void oni uses any teleportation effect on itself (including its greater teleport and plane shift spelllike abilities, but not its teleport object spell-like ability), it can choose to arrive at its destination in void form as a free action. When it does so, it leaves behind a temporary lesser sphere of annihilation in a square of its choice that was part of its space before it teleported. This sphere of annihilation cannot be caused to move by other creatures, but the sphere itself moves at a fly speed of 30 feet (perfect) toward the closest Tiny or larger creature on the oni's next turn. If no appropriate creature is within 30 feet, the sphere does not move that round. If the sphere enters a square occupied by a creature (or if a creature touches the sphere), that creature is affected as if by a disintegrate spell (CL 20th, DC 23). Once the sphere damages a creature with this effect, the sphere vanishes-it also vanishes on its own after 24 hours in the unlikely event that it never discharges on a creature. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:void_yai_void_trap",
+    "name": "Void Trap",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a void oni uses any teleportation effect on itself (including its greater teleport and plane shift spelllike abilities, but not its teleport object spell-like ability), it can choose to arrive at its destination in void form as a free action. When it does so, it leaves behind a temporary lesser sphere of annihilation in a square of its choice that was part of its space before it teleported. This sphere of annihilation cannot be caused to move by other creatures, but the sphere itself moves at a fly speed of 30 feet (perfect) toward the closest Tiny or larger creature on the oni's next turn. If no appropriate creature is within 30 feet, the sphere does not move that round. If the sphere enters a square occupied by a creature (or if a creature touches the sphere), that creature is affected as if by a disintegrate spell (CL 20th, DC 23). Once the sphere damages a creature with this effect, the sphere vanishes-it also vanishes on its own after 24 hours in the unlikely event that it never discharges on a creature. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Void Yai ~ Void Trap"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "TYPE",
+        "value": "VoidYaiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.210",
+    "traits": [
+      "VoidYaiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1359,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Void Yai ~ Void Trap",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

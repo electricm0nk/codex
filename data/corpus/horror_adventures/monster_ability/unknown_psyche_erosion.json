@@ -1,0 +1,108 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Unknown ~ Psyche Erosion",
+    "delivery": "Supernatural",
+    "description": "Once per day, a target affected by an unknown's victimize ability that sees the unknown's true appearance must succeed at a Will save (DC %1) or take 1d6 points of Charisma damage. A successful save negates the Charisma 1d6 points of sanity damage. A successful save negates the sanity damage and also ends the unknown's victimize effect on that target. As long as a creature is the target of an unknown's victimize ability, it can't recover the damage from psyche erosion, even through magic. If the Charisma damage from psyche erosion is equal to the target's Charisma score, that creature doesn't recover ability score damage naturally even if it ceases being the target of victimize. If the sanity damage from psyche erosion is equal to the target's sanity score, that creature doesn't recover ability score damage naturally even if it ceases being the target of victimize.  Only magic can fully heal this damage. When its Charisma damage is equal to its Charisma score, When its sanity damage is equal to its sanity score, the target falls into a nightmare-filled catatonia where it continues to be followed by an unknown. This dream state lasts for 1d4 days, and at the end, the character awakes if its Charisma damage has been reduced to less than its Charisma score. sanity damage has been reduced to less than its sanity score. If not, the creature immediately loses all sense of self, becoming an unknown thrall. It replaces its Charisma score with the unknown's Charisma score, and no longer takes Charisma damage from exposure to the unknown. Over time, typically 1 to 2 weeks, the thrall becomes a new unknown, gaining this template. The unknown can share its senses with any of its thralls (even if it changes the target of its victimize ability), and as a full-round action, it can assume control of a thrall's body, as per possession (OA) . Typically, an unknown uses this ability to keep the thrall close by until it becomes an unknown. Unknowns often use thralls to lure new victims to its lair. Psyche erosion is a mind-affecting effect.",
+    "description_variables": [
+      "10+TL+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:unknown_psyche_erosion",
+    "name": "Psyche Erosion",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": " Only magic can fully heal this damage."
+      },
+      {
+        "key": "DESC",
+        "value": "1d6 points of Charisma damage. A successful save negates the Charisma|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "1d6 points of sanity damage. A successful save negates the sanity|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "Charisma damage has been reduced to less than its Charisma score.|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "If not, the creature immediately loses all sense of self, becoming an unknown thrall. It replaces its Charisma score with the unknown's Charisma score, and no longer takes Charisma damage from exposure to the unknown. Over time, typically 1 to 2 weeks, the thrall becomes a new unknown, gaining this template. The unknown can share its senses with any of its thralls (even if it changes the target of its victimize ability), and as a full-round action, it can assume control of a thrall's body, as per possession (OA) . Typically, an unknown uses this ability to keep the thrall close by until it becomes an unknown. Unknowns often use thralls to lure new victims to its lair. Psyche erosion is a mind-affecting effect."
+      },
+      {
+        "key": "DESC",
+        "value": "If the Charisma damage from psyche erosion is equal to the target's Charisma score, that creature doesn't recover ability score damage naturally even if it ceases being the target of victimize.|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "If the sanity damage from psyche erosion is equal to the target's sanity score, that creature doesn't recover ability score damage naturally even if it ceases being the target of victimize.|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a target affected by an unknown's victimize ability that sees the unknown's true appearance must succeed at a Will save (DC %1) or take|10+TL+CHA"
+      },
+      {
+        "key": "DESC",
+        "value": "When its Charisma damage is equal to its Charisma score,|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "When its sanity damage is equal to its sanity score,|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "damage and also ends the unknown's victimize effect on that target. As long as a creature is the target of an unknown's victimize ability, it can't recover the damage from psyche erosion, even through magic."
+      },
+      {
+        "key": "DESC",
+        "value": "sanity damage has been reduced to less than its sanity score.|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "the target falls into a nightmare-filled catatonia where it continues to be followed by an unknown. This dream state lasts for 1d4 days, and at the end, the character awakes if its"
+      },
+      {
+        "key": "KEY",
+        "value": "Unknown ~ Psyche Erosion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.244"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.UnknownTemplate"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.244",
+    "traits": [
+      "UnknownTemplate"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:59:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 337,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Unknown ~ Psyche Erosion",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

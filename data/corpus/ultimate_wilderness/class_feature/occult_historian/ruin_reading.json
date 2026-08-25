@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Occult Historian ~ Ruin Reading",
+    "name": "Ruin Reading",
+    "class": "Occultist",
+    "description": "An occult historian can glean secrets from ruined structures. She must spend 1 minute examining and touching part of the structure (such as a wall or a doorframe). At the end of the minute, the occult historian attempts a Knowledge (history) check. If the ruin has been claimed as a lair for a creature, the DC of this check is equal to 10 + the CR of the most powerful creature in the ruin. If the ruin holds a magic item (or multiple magic items), the DC of this check is equal to 11 + the highest caster level of all the magic items in the ruin. If the occult historian succeeds at the check, she learns the layout of the area of the ruin within 30 feet of her (including any secret doors), as well as a piece of information about the structure's history (as determined by the GM). At 5th level, the occult historian can see into a ruin's past. This reveals the same information that can be gathered with the spell retrocognition (OA), except the occult historian can use it only in ruins. If the occult historian succeeds at the check outlined above, she sees the events that occurred in the ruin over the past hour; for each minute she concentrates, she can see 1 additional hour into the ruin's past. If the result of her check exceeds the DC by 5 or more, she can see the events that occurred over the past week, plus for 1 additional week per minute she concentrates. If the result of her check exceeds the DC by 10 or more, she can see the events of the past year, plus for 1 additional year per minute she concentrates. If the result of her check exceeds the DC by 20 or more, she can see the events of the past century, plus for 1 additional century per minute she concentrates. An occult historian can use ruin reading %1 times per day.|min(5,(OccultistLVL+2)/4)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Occult Historian ~ Ruin Reading"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.OccultHistorianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "An occult historian can glean secrets from ruined structures. She must spend 1 minute examining and touching part of the structure (such as a wall or a doorframe). At the end of the minute, the occult historian attempts a Knowledge (history) check. If the ruin has been claimed as a lair for a creature, the DC of this check is equal to 10 + the CR of the most powerful creature in the ruin. If the ruin holds a magic item (or multiple magic items), the DC of this check is equal to 11 + the highest caster level of all the magic items in the ruin. If the occult historian succeeds at the check, she learns the layout of the area of the ruin within 30 feet of her (including any secret doors), as well as a piece of information about the structure's history (as determined by the GM). At 5th level, the occult historian can see into a ruin's past. This reveals the same information that can be gathered with the spell retrocognition (OA), except the occult historian can use it only in ruins. If the occult historian succeeds at the check outlined above, she sees the events that occurred in the ruin over the past hour; for each minute she concentrates, she can see 1 additional hour into the ruin's past. If the result of her check exceeds the DC by 5 or more, she can see the events that occurred over the past week, plus for 1 additional week per minute she concentrates. If the result of her check exceeds the DC by 10 or more, she can see the events of the past year, plus for 1 additional year per minute she concentrates. If the result of her check exceeds the DC by 20 or more, she can see the events of the past century, plus for 1 additional century per minute she concentrates. An occult historian can use ruin reading %1 times per day.|min(5,(OccultistLVL+2)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 147,
+    "record_key": "Occult Historian ~ Ruin Reading"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

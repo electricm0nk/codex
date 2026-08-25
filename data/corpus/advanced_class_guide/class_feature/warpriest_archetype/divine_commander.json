@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest Archetype ~ Divine Commander",
     "name": "Divine Commander",
-    "class": "Warpriest Archetype",
+    "class": "Warpriest",
     "description": "Some warpriests are called to lead great armies and face legions of foes. These divine commanders live for war and fight for glory. Their hearts quicken at battle cries, and they charge forth with their deity's symbol held high. These leaders of armies do so to promote the agenda of their faith, and lead armies of devoted followers willing to give their lives for the cause. (Several of the divine commander's abilities reference and interact with the mass combat rules in Pathfinder RPG Ultimate Campaign.)",
     "raw_tokens": [
       {
@@ -63,6 +63,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Warpriest"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Divine Commander],[!PREFACT:1,ABILITIES,Warpriest_Archetype_Blessings=True,Warpriest_Archetype_BonusFeats=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_Blessings|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_Blessings|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_BonusFeats|true"
       }
     ]
   },
@@ -79,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

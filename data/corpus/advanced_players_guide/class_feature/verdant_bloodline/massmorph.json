@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Verdant Bloodline ~ Massmorph",
     "name": "Massmorph",
-    "class": "Verdant Bloodline",
+    "class": "Sorcerer",
     "description": "As a full-round action, you can alter the size and health of plant life, as if using plant growth or diminish plants. Alternatively, you can transform %1 willing non-plant creatures (no two of which can be more than 30 feet apart) as|Sorcerer_VerdantMassmorph_Targets",
     "raw_tokens": [
       {
@@ -99,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

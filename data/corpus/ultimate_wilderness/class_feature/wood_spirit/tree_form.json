@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wood Spirit ~ Tree Form",
     "name": "Tree Form",
-    "class": "Wood Spirit",
+    "class": "Shaman",
     "description": "As a standard action, the shaman can assume the form of a plant creature as plant shape III with a duration of %1 hours. She can use this ability once per day.|ShamanLVL",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

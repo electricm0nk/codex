@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Infernal Bloodline ~ Hellfire",
     "name": "Hellfire",
-    "class": "Infernal Bloodline",
+    "class": "Sorcerer",
     "description": "You can call down a column of hellfire. This 10-foot-radius burst does %1d6 points of fire damage. Those caught in the area of your blast receive a Reflex save for half damage. Good creatures that fail their saves are shaken for %2 rounds. The DC of this save is %3.|Sorcerer_InfernalHellfire_Dice|Sorcerer_InfernalHellfire_Duration|Sorcerer_InfernalHellfire_DC",
     "raw_tokens": [
       {
@@ -124,5 +124,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

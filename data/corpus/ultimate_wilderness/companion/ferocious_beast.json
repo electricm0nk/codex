@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Companion Feat ~ Ferocious Beast",
+    "name": "Ferocious Beast",
+    "description": "The animal companion uses half its master's class level in place of its Charisma bonus on Intimidate checks to demoralize an opponent, as well as on Intimidate checks to use the Antagonize feat. In addition, the animal companion can use Intimidate to demoralize an opponent as a move action. [Special] An animal companion can't take both Ferocious Beast and Intimidating Prowess.|max(1,MasterLevel/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Companion Feat ~ Ferocious Beast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalCompanionFeat"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=FEAT,Intimidating Prowess"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Companion=1"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Intimidate=1"
+      },
+      {
+        "key": "DESC",
+        "value": "The animal companion uses half its master's class level in place of its Charisma bonus on Intimidate checks to demoralize an opponent, as well as on Intimidate checks to use the Antagonize feat. In addition, the animal companion can use Intimidate to demoralize an opponent as a move action. [Special] An animal companion can't take both Ferocious Beast and Intimidating Prowess.|max(1,MasterLevel/2)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Ferocious Beast"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 659,
+    "record_key": "Animal Companion Feat ~ Ferocious Beast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fire Yai ~ Smoke Form",
+    "delivery": "SpellLike",
+    "description": "As a standard action, a fire yai can turn into a cloud of smoke. This functions like gaseous form, except the cloud has the properties of the smoke cloud from a pyrotechnics spell (Fort DC 26 negates the effects of the smoke cloud). The fire yai can end this ability as a standard action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:fire_yai_smoke_form",
+    "name": "Smoke Form",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a fire yai can turn into a cloud of smoke. This functions like gaseous form, except the cloud has the properties of the smoke cloud from a pyrotechnics spell (Fort DC 26 negates the effects of the smoke cloud). The fire yai can end this ability as a standard action."
+      },
+      {
+        "key": "KEY",
+        "value": "Fire Yai ~ Smoke Form"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      },
+      {
+        "key": "TYPE",
+        "value": "FireYaiRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.206",
+    "traits": [
+      "FireYaiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1339,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Fire Yai ~ Smoke Form",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

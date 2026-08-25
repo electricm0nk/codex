@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Archon Subdomain (Good)",
+    "name": "Archon Subdomain (Good)",
+    "raw_tokens": [
+      {
+        "key": "PREALIGN",
+        "value": "LG,NG,CG"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Archon Subdomain (Good)],[!PREMULT:1,[PREVARGT:GoodDomain,0],[PREDOMAIN:1,Archon Subdomain (Law)]]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Archon Subdomain (Good)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Archon Subdomain (Good)=1|Divine Favor|Archon Subdomain (Good)=2|Align Weapon (Good Only)|Archon Subdomain (Good)=3|Prayer|Archon Subdomain (Good)=4|Holy Smite|Archon Subdomain (Good)=5|Dispel Evil|Archon Subdomain (Good)=6|Planar Ally (Archon Only)|Archon Subdomain (Good)=7|Holy Word|Archon Subdomain (Good)=8|Holy Aura|Archon Subdomain (Good)=9|Summon Monster IX (Good Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 10,
+    "record_key": "Archon Subdomain (Good)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

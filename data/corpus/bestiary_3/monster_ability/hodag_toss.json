@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Hodag ~ Toss",
+    "delivery": "Extraordinary",
+    "description": "A hodag charging 20 feet or more that damages a foe with an attack can throw its foe with a special combat maneuver check. The opponent must be corporeal and at least one size category smaller than the hodag. If the combat maneuver check succeeds, the hodag's opponent is thrown 10 feet through the air in a direction chosen by the hodag and falls prone. The hodag can only toss its opponent in a straight line. If an obstacle prevents the creature's movement, both the creature tossed and the object struck take 1d6 points of damage, and the creature falls prone in the space adjacent to the obstacle. A hodag can also toss an opponent 10 feet up into the air. The victim lands in the same square it started in, falls prone, and takes 1d6 points of damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:hodag_toss",
+    "name": "Toss",
+    "owners": [
+      "bestiary_3:monster:hodag"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hodag charging 20 feet or more that damages a foe with an attack can throw its foe with a special combat maneuver check. The opponent must be corporeal and at least one size category smaller than the hodag. If the combat maneuver check succeeds, the hodag's opponent is thrown 10 feet through the air in a direction chosen by the hodag and falls prone. The hodag can only toss its opponent in a straight line. If an obstacle prevents the creature's movement, both the creature tossed and the object struck take 1d6 points of damage, and the creature falls prone in the space adjacent to the obstacle. A hodag can also toss an opponent 10 feet up into the air. The victim lands in the same square it started in, falls prone, and takes 1d6 points of damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Hodag ~ Toss"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "TYPE",
+        "value": "HodagRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.148",
+    "traits": [
+      "HodagRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1044,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Hodag ~ Toss",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

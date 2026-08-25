@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Scion of Lore ~ Arcana",
     "name": "Scion of Lore ~ Arcana",
@@ -19,6 +19,10 @@
       {
         "key": "BONUS",
         "value": "SKILL|Knowledge (Arcana)|1|PRESKILL:1,Knowledge (Arcana)=1"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
       }
     ]
   },
@@ -35,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

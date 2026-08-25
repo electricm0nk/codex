@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cleric Archetype ~ Forgemaster",
     "name": "Forgemaster",
-    "class": "Cleric Archetype",
+    "class": "Cleric",
     "description": "Forgemasters are priestly dwarves who are ritual casters and expert enchanters, able to produce their rune-graven armaments with astonishing speed.",
     "raw_tokens": [
       {
@@ -79,6 +79,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cleric"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Forgemaster],[!PREFACT:1,ABILITIES,Cleric_Archetype_ChannelEnergy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy|true"
       }
     ]
   },
@@ -95,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

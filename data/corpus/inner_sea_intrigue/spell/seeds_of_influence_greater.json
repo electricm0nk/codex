@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Seeds of Influence (Greater)",
+    "school": "Enchantment",
+    "level": 4,
+    "description": "This spell functions as seeds of influence, except that if the target is protected by a spell that grants immunity, spell resistance, or a saving throw bonus against a divination or mind-affecting spell you cast on the target, you can attempt caster level checks to dispel each such effect before applying the effects of those protections against the spell. The DC of the caster level check to dispel each effect is equal to 11 + the effect's caster level. Such spells cast on the target while greater seeds of influence is active grant no protection against greater seeds of influence."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 27,
+    "record_key": "Seeds of Influence (Greater)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

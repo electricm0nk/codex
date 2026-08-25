@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dwarf Racial Subtype ~ Exiled Dwarf",
+    "name": "Exiled Dwarf",
+    "description": "Dwarves who have lost their homelands usually have the relentless and stubborn racial traits, and often have wyrmscourged as well.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf Racial Subtype ~ Exiled Dwarf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dwarf Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf Racial Subtype ~ Exiled Dwarf],[!PREFACT:1,ABILITIES,Dwarf_ReplaceStability=true,Dwarf_ReplaceHardy=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves who have lost their homelands usually have the relentless and stubborn racial traits, and often have wyrmscourged as well."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Exiled Dwarf"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dwarf Racial Trait|NORMAL|Dwarf ~ Relentless|Dwarf ~ Stubborn"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2157,
+    "record_key": "Dwarf Racial Subtype ~ Exiled Dwarf"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sylvan Bloodline ~ Fey Wings",
     "name": "Fey Wings",
-    "class": "Sylvan Bloodline",
+    "class": "Sorcerer",
     "description": "You can grow insectlike wings from your back and become one size category smaller (as if you had used reduce person), gaining a fly speed of 60 feet with average maneuverability. You can maintain this form for %1 minutes. This duration does not need to be consecutive, but it must be used in 1-minute increments. This bloodline power replaces fey magic.",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Illumination Domain ~ Aura of Enlightenment",
     "name": "Aura of Enlightenment",
-    "class": "Illumination Domain",
+    "class": "Cleric",
     "description": "You can create a 30-foot-aura of normal light.  Allies in this aura gain a +2 insight bonus on skill checks.  This counts as a 2nd-level light effect for the purposes of countering or dispelling darkness effects.  You can use this aura for %1 rounds per day.  These rounds do not need to be consecutive.|AuraOfEnlightenmentRounds",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

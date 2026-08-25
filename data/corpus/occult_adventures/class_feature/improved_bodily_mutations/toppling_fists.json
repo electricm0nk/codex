@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Improved Bodily Mutations ~ Toppling Fists",
     "name": "Toppling Fists",
-    "class": "Improved Bodily Mutations",
+    "class": "Psychic",
     "description": "The mutation mind's fists become large masses of flesh, allowing her to attempt a bull rush combat maneuver check against one creature within 10 feet of her as a standard action.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

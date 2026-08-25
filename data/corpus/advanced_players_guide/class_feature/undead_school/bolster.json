@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Undead School ~ Bolster",
     "name": "Bolster",
-    "class": "Undead School",
+    "class": "Undead",
     "description": "As a standard action, you can touch an undead creature and infuse it with negative energy. It gains a + %1 profane bonus on all attack rolls and saving throws, as well as 1 temporary hit point per Hit Die and a +2 bonus to its turn resistance. These bonuses last for %2 rounds. The bonuses and temporary hit points are immediately dispelled if the creature is within the area of a consecrate spell. You can use this ability %3 times per day.|UndeadBolsterBonus|UndeadBolsterRounds|UndeadBolsterTimes",
     "raw_tokens": [
       {
@@ -59,6 +59,10 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Wizard_CF_SchoolPower1,1"
       }
     ]
   },
@@ -76,5 +80,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "ABP_Weapon",
+    "name": "ABP_Weapon",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_WeaponBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ABP_WeaponBonusMax|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Automatic Bonus Progression|AUTOMATIC|ABP Weapon Attunement"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Attuned Weapon|Attuned Weapon (Primary)|Attuned Weapon (Off-Hand)|Attuned Weapon (Fist)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_WeaponBonus|1|PREVARGTEQ:ABP_WeaponLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_WeaponBonus|1|PREVARGTEQ:ABP_WeaponLVL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_WeaponBonus|1|PREVARGTEQ:ABP_WeaponLVL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_WeaponBonus|1|PREVARGTEQ:ABP_WeaponLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_WeaponBonus|1|PREVARGTEQ:ABP_WeaponLVL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ABP_WeaponBonusMax|min(ABP_WeaponBonus,5)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 42,
+    "record_key": "ABP_Weapon"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

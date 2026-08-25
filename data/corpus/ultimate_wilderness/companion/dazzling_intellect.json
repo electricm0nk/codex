@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Sage ~ Dazzling Intellect",
+    "name": "Dazzling Intellect",
+    "description": "A sage's Intelligence score is always equal to 5 + its master's class level, but it gains natural armor increases as if its master's class level were half what of the actual class level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sage ~ Dazzling Intellect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sage's Intelligence score is always equal to 5 + its master's class level, but it gains natural armor increases as if its master's class level were half what of the actual class level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarAC|(1+MASTERVAR(\"FamiliarLVL\"))/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarACStandard|1|TYPE=Boolean"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarIntScoreStandard|1|TYPE=Boolean"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FamiliarIntScore|5+MASTERVAR(\"FamiliarLVL\")"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 622,
+    "record_key": "Sage ~ Dazzling Intellect"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Inquisitor Archetype ~ Traceless Operative",
     "name": "Traceless Operative",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "Traceless operatives practice subterfuge and careful preparation in order to accomplish their divine mandates.",
     "raw_tokens": [
       {
@@ -111,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

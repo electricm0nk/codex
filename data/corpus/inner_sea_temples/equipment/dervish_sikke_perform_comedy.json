@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:28:11Z",
+  "data": {
+    "key": "Dervish Sikke (Perform (Comedy))",
+    "category": "MagicItems",
+    "name": "Dervish Sikke (Perform (Comedy))",
+    "cost_gp": 10000.0,
+    "weight_lbs": 1.0,
+    "description": "If the wearer is a bard, he is considered 5 class levels higher for purposes of his bardic knowledge class feature, bonuses granted by inspire courage and inspire competence are increased by 1, and can take 10 on any Perform skill check he has ranks in."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_equip_magic_items.lst",
+    "sha256": "646caf115c299b952e378432875627570c86323037e56383cf629bb26a27924b",
+    "line": 15,
+    "record_key": "Dervish Sikke (Perform (Comedy))"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

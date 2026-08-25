@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Astral Juggernaut",
+    "name": "Astral Juggernaut",
+    "class": "Aegis",
+    "description": "Treat like masterwork half-plate.  Gain the following customizations for free: fortification, hardy|PREVARLT:AstralSuitLVL,7",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Astral Juggernaut"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality.AstralSuitType"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat like masterwork half-plate.  Gain the following customizations for free: fortification, hardy|PREVARLT:AstralSuitLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "Treat like masterwork full plate.  Gain the following customizations for free: fortification, hardy|PREVARGT:AstralSuitLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "stalwart|PREVARGT:AstralSuitLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Fortification|Aegis ~ Hardy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Stalwart|PREVARGT:AstralSuitLVL,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 45,
+    "record_key": "Aegis ~ Astral Juggernaut"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

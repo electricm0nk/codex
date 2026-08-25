@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Erosion Curse",
     "name": "Erosion Curse",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman summons the powers of nature to erode a construct or object within 30 feet. This erosion deals %1d6 points of damage, ignoring hardness and damage reduction. If used against a construct or an object in another creature's possession, the construct or the creature possessing the object can attempt a Reflex saving throw (DC %2) to halve the damage. Once an object or a construct is damaged by this erosion, it cannot be the target of this hex again for 24 hours.|ShamanErosionCurseDice|ShamanErosionCurseDC",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

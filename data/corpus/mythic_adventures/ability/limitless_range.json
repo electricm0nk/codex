@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Limitless Range",
+    "name": "Limitless Range",
+    "description": "Multiply the range increment on all of your ranged and thrown weapons by 5 feet, and these weapons no longer have a maximum range increment for you. You can throw any melee weapon as if it had a range increment of 20 feet--this increment isn't multiplied by 5, but the weapon doesn't have a maximum range increment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Limitless Range"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Multiply the range increment on all of your ranged and thrown weapons by 5 feet, and these weapons no longer have a maximum range increment for you. You can throw any melee weapon as if it had a range increment of 20 feet--this increment isn't multiplied by 5, but the weapon doesn't have a maximum range increment."
+      },
+      {
+        "key": "BONUS",
+        "value": "RANGEMULT|PROJECTILE|500"
+      },
+      {
+        "key": "BONUS",
+        "value": "RANGEMULT|THROWN|500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 200,
+    "record_key": "Mythic Path Ability ~ Limitless Range"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

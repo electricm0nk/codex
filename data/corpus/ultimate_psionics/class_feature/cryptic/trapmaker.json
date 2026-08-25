@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cryptic ~ Trapmaker",
+    "name": "Trapmaker",
+    "class": "Cryptic",
+    "description": "You gain a +%1 competence bonus on Craft (traps) checks.|TrapmakerBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cryptic ~ Trapmaker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CrypticClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapmakerBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 competence bonus on Craft (traps) checks.|TrapmakerBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Traps)|TrapmakerBonus|TYPE=Competence"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrapmakerBonus|CrypticLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 173,
+    "record_key": "Cryptic ~ Trapmaker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

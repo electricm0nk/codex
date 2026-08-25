@@ -1,0 +1,123 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Ectoplasmic Creature",
+    "name": "Ectoplasmic Creature",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "DR",
+        "value": "5/Slashing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.83"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "LOCK|WIS|10"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "NONSTAT|INT"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Incorporeal"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|CHA-CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CHA|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=TYPE=Base.STACK|PRESIZEGTEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=TYPE=Base.STACK|PRESIZEGTEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=TYPE=Base.STACK|PRESIZEGTEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=TYPE=Base.STACK|PRESIZEGTEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=TYPE=Base.STACK|PRESIZEGTEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=TYPE=Base.STACK|PRESIZEGTEQ:C"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|-3|PREVAREQ:Maneuverability,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|-2|PREVAREQ:Maneuverability,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|-1|PREVAREQ:Maneuverability,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Ectoplasmic Creature|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Toughness"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": ".REMOVE.Good|.REMOVE.Evil|.REMOVE.Chaotic|.REMOVE.Lawful"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 103,
+    "record_key": "Ectoplasmic Creature"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

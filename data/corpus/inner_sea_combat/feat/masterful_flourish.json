@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Masterful Flourish",
+    "category": "Combat",
+    "name": "Masterful Flourish",
+    "description": "Your training with gladiatorial weapons gives you the upper hand when using them in performance combat. When wielding a weapon with the performance weapon special quality that belongs to a category of weapons in which you have weapon training, you may add the bonus from your weapon training to any performance combat checks made as a result of using the weapon.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Fighter ~ Weapon Training,TYPE.Weapon Training",
+      "PRETEXT:Prerequisite: Weapon training class feature."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 15,
+    "record_key": "Masterful Flourish"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

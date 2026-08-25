@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wind Mystery ~ Wind Sight",
     "name": "Wind Sight",
-    "class": "Wind Mystery",
+    "class": "Oracle",
     "description": "You ignore penalties on Perception checks based on wind and the first 100 feet of distance. At 7th level, as a standard action, you can see and hear into any area (as if using clairaudience and clairvoyance) within range as long as there is an unobstructed path for air to travel between you and the target area (this does not require line of effect, meaning the path can turn corners and go through spaces no smaller than 1 inch in diameter). You can use this ability %1 rounds per day, but these rounds do not need to be consecutive.|OracleWindSightDuration",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

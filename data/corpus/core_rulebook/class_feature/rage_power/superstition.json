@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Superstition",
     "name": "Superstition",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "You gain a +%1 morale bonus on saving throws made to resist spells, supernatural abilities, and spell-like abilities. While raging, you cannot be a willing target of any spell and must make saving throws to resist all spells, even those cast by allies.|SuperstitionSaveBonus",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

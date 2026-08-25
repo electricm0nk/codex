@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Supreme Insight ~ Discerning Vision",
+    "name": "Discerning Vision",
+    "class": "Supreme Insight",
+    "description": "You see all things as they truly are and are always treated as if under the effect of pierce the veils.  In addition, you automatically succeed on any saving throw against spells or powers of 8th level or lower that deal with modifying vision or some sort of visual pattern, such as symbol of pain.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Supreme Insight ~ Discerning Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticSupremeInsight"
+      },
+      {
+        "key": "DESC",
+        "value": "You see all things as they truly are and are always treated as if under the effect of pierce the veils.  In addition, you automatically succeed on any saving throw against spells or powers of 8th level or lower that deal with modifying vision or some sort of visual pattern, such as symbol of pain."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 231,
+    "record_key": "Supreme Insight ~ Discerning Vision"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

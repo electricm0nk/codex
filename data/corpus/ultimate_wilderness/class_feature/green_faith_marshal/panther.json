@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Green Faith Marshal ~ Panther Domain",
+    "name": "Panther",
+    "class": "Green Faith Marshal",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Green Faith Marshal ~ Panther Domain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GreenFaithMarshalDomainSelection.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPantherLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPantherDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPantherTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPantherAbilityTriggerLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Panther Domain ~ Hunter's Senses|PREVARGTEQ:DomainPantherAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Panther Domain ~ Move in Darkness|PREVARGTEQ:DomainPantherAbilityTriggerLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPantherLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPantherDC|10+(DomainPantherLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPantherTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPantherAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Inquisitor=1|True Strike|Inquisitor=2|Darkness|Inquisitor=3|Deeper Darkness|Inquisitor=4|Moonstruck|Inquisitor=5|Commune with Nature|Inquisitor=6|Mislead"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_fap.lst",
+    "sha256": "7c3db2030157f04d08ce9d813c1f22162bfaeaea7227bd40419a8d5fe75d566b",
+    "line": 8,
+    "record_key": "Green Faith Marshal ~ Panther Domain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

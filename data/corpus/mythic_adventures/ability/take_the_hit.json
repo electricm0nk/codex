@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Take the Hit",
+    "name": "Take the Hit",
+    "description": "You are a living shield for your allies. Whenever an adjacent ally takes damage from a melee or ranged attack, as an immediate action you can split the damage. You take half of the damage (rounded down), and your ally takes the remaining amount. This damage is not subject to any resistances or damage reduction you might have, but any such defenses the target of the attack possesses apply before the damage is split. You don't suffer any other effects from the attack (such as disease, grab, or poison).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Take the Hit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a living shield for your allies. Whenever an adjacent ally takes damage from a melee or ranged attack, as an immediate action you can split the damage. You take half of the damage (rounded down), and your ally takes the remaining amount. This damage is not subject to any resistances or damage reduction you might have, but any such defenses the target of the attack possesses apply before the damage is split. You don't suffer any other effects from the attack (such as disease, grab, or poison)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 404,
+    "record_key": "Mythic Path Ability ~ Take the Hit"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Investigator ~ Investigator Talents",
     "name": "Investigator Talents",
@@ -43,6 +43,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.32"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=3],[PREVAREQ:Investigator_CF_Talent3,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=5],[PREVAREQ:Investigator_CF_Talent5,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=7],[PREVAREQ:Investigator_CF_Talent7,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=9],[PREVAREQ:Investigator_CF_Talent9,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=11],[PREVAREQ:Investigator_CF_Talent11,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=13],[PREVAREQ:Investigator_CF_Talent13,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=15],[PREVAREQ:Investigator_CF_Talent15,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=17],[PREVAREQ:Investigator_CF_Talent17,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorTalentCount|-1|PREMULT:2,[PRECLASS:1,Investigator=19],[PREVAREQ:Investigator_CF_Talent19,1]"
       }
     ]
   },
@@ -60,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

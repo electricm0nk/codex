@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rogue Archetype ~ Skulking Slayer",
     "name": "Skulking Slayer",
-    "class": "Rogue Archetype",
+    "class": "Rogue",
     "description": "Pushed into a life of crime by the society around them, half orcs gravitate toward criminal activities that suit them best. Half-orc rogues leave subtle tactics and finesse to halflings and elves, and rely on brute strength and thuggery when they go about making mischief. Skulking slayers have turned the use of raw strength and surprise into an art form. A skulking slayer has the following class features.",
     "raw_tokens": [
       {
@@ -91,6 +91,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Rogue"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Skulking Slayer],[!PREFACT:1,ABILITIES,Rogue_Archetype_Trapfinding=True,Rogue_Archetype_TrapSense1=True,Rogue_Archetype_TrapSense2=True,Rogue_Archetype_TrapSense3=True,Rogue_Archetype_TrapSense4=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_CF_TrapSense4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_Trapfinding|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Rogue_Archetype_TrapSense4|true"
       }
     ]
   },
@@ -107,5 +151,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:32:31Z",
+  "data": {
+    "key": "Selected Alignment Shield Enhance Form Grave Bane",
+    "school": null,
+    "level": 6,
+    "description": "Grants +2 to AC and saves when attacked by chosen alignment type, +4 Strength, Dexterity, or Constitution, and +4 on saves vs. death magic; subject cannot gain negative levels and is automatically stabilized."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells_wordsofpower.lst",
+    "sha256": "53faed48c3b6d8ed8504b3c4a15732115da75e8d1135cb400bd90e7cd3ae10a4",
+    "line": 9,
+    "record_key": "Selected Alignment Shield Enhance Form Grave Bane"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

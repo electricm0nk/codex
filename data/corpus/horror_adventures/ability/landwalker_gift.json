@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption ~ Landwalker Gift",
+    "name": "Landwalker Gift",
+    "description": "You gain the aquatic subtype and the amphibious special quality. You gain a swim speed equal to half your land speed. If you have the swimmer in the deep manifestation, increase your swim speed by 10 feet instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Landwalker Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeepOneLandwalkerGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the aquatic subtype and the amphibious special quality. You gain a swim speed equal to half your land speed. If you have the swimmer in the deep manifestation, increase your swim speed by 10 feet instead."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Amphibious"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Deep One Corruption ~ Swim Speed (Half Land Speed)|!PREABILITY:1,CATEGORY=Special Ability,Deep One ~ Swimmer in the Deep"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|10|PREABILITY:1,CATEGORY=Special Ability,Deep One ~ Swimmer in the Deep"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 157,
+    "record_key": "Deep One Corruption ~ Landwalker Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

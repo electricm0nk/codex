@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Vetala",
+    "name": "Vetala",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DR",
+        "value": "10/Magic and Good"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRELEVEL",
+        "value": "MIN=5"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Construct,RACETYPE=Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|(CHA-STR)*TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Disguise,Perception,Sense Motive,Stealth|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus,ElectricityResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Fast Healing|Resistance to Electricity|Resistance to Fire|Vetala ~ Drain Prana|Vetala ~ Fast Healing|Vetala ~ Malevolence|Vetala ~ Paralysis|Vetala ~ Possess Corpse|Vetala ~ Weakness to Prayer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Alertness|Blind-Fight|Deceitful|Improved Initiative|Skill Focus (Disguise)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "MOVECLONE",
+        "value": "Walk,Climb,0"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Vetala"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_templates.lst",
+    "sha256": "fe601a343aaca6afdad281ce318825abf7f59f9a593ae84bf9356b7d9cb98967",
+    "line": 11,
+    "record_key": "Vetala"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

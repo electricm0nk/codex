@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T17:06:01Z",
+  "data": {
+    "key": "Hidden Wand ~ Guild",
+    "name": "Hidden Wand",
+    "description": "You've trained under the philosophy that performances enhanced by magic are best when the magical enhancement itself is not obvious. When you activate a wand (or any similar spell trigger item that's relatively easy to conceal), you may make a Bluff check (opposed by the Perception check of any creature able to see you) to conceal the use of the item.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hidden Wand ~ Guild"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.WhiteGrottoReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,White Grotto ~ Guild"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "WhiteGrottoFame,30"
+      },
+      {
+        "key": "DESC",
+        "value": "You've trained under the philosophy that performances enhanced by magic are best when the magical enhancement itself is not obvious. When you activate a wand (or any similar spell trigger item that's relatively easy to conceal), you may make a Bluff check (opposed by the Perception check of any creature able to see you) to conceal the use of the item."
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 120,
+    "record_key": "Hidden Wand ~ Guild"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Ki Strike",
+    "name": "Ki Strike",
+    "description": "DESC:You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats. As long as you have at least 1 point in your ki pool, you can make a ki strike. Ki Strike allows your unarmed attacks to be treated as|StudentKiStrikePool",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Ki Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StudentKiStrikePool|0"
+      },
+      {
+        "key": "DESC",
+        "value": "DESC:You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats. As long as you have at least 1 point in your ki pool, you can make a ki strike. Ki Strike allows your unarmed attacks to be treated as|StudentKiStrikePool"
+      },
+      {
+        "key": "DESC",
+        "value": "magic|PREVARLT:StudentOfPerfectionLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": "magic, cold iron and silver|PREVARGTEQ:StudentOfPerfectionLVL,7|PREVARLT:StudentOfPerfectionLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "magic, cold iron, silver and lawful|PREVARGTEQ:StudentOfPerfectionLVL,10|PREVARLT:StudentOfPerfectionLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "magic, cold iron, silver, lawful, and adamantine|PREVARGTEQ:StudentOfPerfectionLVL,16"
+      },
+      {
+        "key": "DESC",
+        "value": "weapons for the purpose of overcoming damage reduction."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StudentKiStrikePool|PerfectStyleKiPool+KiPoolLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 12,
+    "record_key": "Student of Perfection ~ Ki Strike"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

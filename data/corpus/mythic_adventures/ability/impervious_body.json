@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Impervious Body",
+    "name": "Impervious Body",
+    "description": "You gain DR 5/epic. This ability can be taken a second time at 6th tier or higher and a third time at 9th tier or higher. Each additional time it's taken, the DR increases by 5.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Impervious Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "ImperviousBodyAllowed,ImperviousBodyCount"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicImperviousBodyDR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImperviousBodyAllowed|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImperviousBodyCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain DR 5/epic. This ability can be taken a second time at 6th tier or higher and a third time at 9th tier or higher. Each additional time it's taken, the DR increases by 5."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Impervious Body Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicImperviousBodyDR|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImperviousBodyCount|1"
+      },
+      {
+        "key": "DR",
+        "value": "MythicImperviousBodyDR/epic"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 327,
+    "record_key": "Mythic Path Ability ~ Impervious Body"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

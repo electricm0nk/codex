@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Shatter Resilience",
+    "name": "Shatter Resilience",
+    "description": "You can channel your mythic power through your strike to lower your target's damage reduction. When you hit a creature that has DR, you can expend one use of mythic power as part of the attack to lower the target's DR by an amount equal to your tier (to a minimum of 0) for 1 minute. Multiple uses of this ability on the same creature don't stack.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Shatter Resilience"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel your mythic power through your strike to lower your target's damage reduction. When you hit a creature that has DR, you can expend one use of mythic power as part of the attack to lower the target's DR by an amount equal to your tier (to a minimum of 0) for 1 minute. Multiple uses of this ability on the same creature don't stack."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 355,
+    "record_key": "Mythic Path Ability ~ Shatter Resilience"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Basic NPC",
+    "name": "Basic NPC",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Basic Level 1|Basic Level 2|Basic Level 3|Basic Level 4|Basic Level 5|Basic Level 6|Basic Level 7|Basic Level 8|Basic Level 9|Basic Level 10|Basic Level 11|Basic Level 12|Basic Level 13|Basic Level 14|Basic Level 15|Basic Level 16|Basic Level 17|Basic Level 18|Basic Level 19|Basic Level 20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b",
+    "line": 135,
+    "record_key": "Basic NPC"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

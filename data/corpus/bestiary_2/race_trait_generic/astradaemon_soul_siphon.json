@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Astradaemon ~ Soul Siphon",
+    "name": "Soul Siphon",
+    "description": "If a Small or larger creature dies within 10 feet of an astradaemon, the daemon gains 1d8 temporary hit points and a +2 bonus to Strength for 10 minutes.  Incorporeal undead and living spirits traveling outside the body (such as a person using astral projection or magic jar) take 1d8 points of damage each round within the daemon's aura.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Astradaemon ~ Soul Siphon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If a Small or larger creature dies within 10 feet of an astradaemon, the daemon gains 1d8 temporary hit points and a +2 bonus to Strength for 10 minutes.  Incorporeal undead and living spirits traveling outside the body (such as a person using astral projection or magic jar) take 1d8 points of damage each round within the daemon's aura."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(10 ft.)"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 276,
+    "record_key": "Astradaemon ~ Soul Siphon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

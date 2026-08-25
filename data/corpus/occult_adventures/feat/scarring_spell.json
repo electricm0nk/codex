@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Scarring Spell",
+    "category": "Metamagic",
+    "name": "Scarring Spell",
+    "description": "Your emotion-affecting magic causes psychic trauma in your opponents. When a creature fails a saving throw against a scarring spell, for the next 24 hours that creature takes a -2 penalty on saving throws against emotion and fear effects you create, and a -1 penalty on saving throws against other emotion and fear effects. Penalties from multiple scarring spells don't stack. This metamagic feat can be applied only to spells with the emotion or fear descriptor. A scarring spell uses up a spell slot 1 level higher than the spell's actual level.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 63,
+    "record_key": "Scarring Spell"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

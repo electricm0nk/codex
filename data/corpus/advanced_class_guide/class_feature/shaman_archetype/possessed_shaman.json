@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Archetype ~ Possessed Shaman",
     "name": "Possessed Shaman",
-    "class": "Shaman Archetype",
+    "class": "Shaman",
     "description": "For a possessed shaman, merely communing with the spirit world is insufficient. Instead, she invites the spirits to share her body, granting them the chance to experience corporeal existence. In return, they grant her their skills and protect her from otherworldly influence.",
     "raw_tokens": [
       {
@@ -55,6 +55,38 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Shaman"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Shaman Archetype ~ Possessed Shaman],[!PREFACT:1,ABILITIES,Shaman_Archetype_SpiritMagic=True,Shaman_Archetype_Hex=True,Shaman_Archetype_WanderingHex=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_SpiritMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_Hex2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_CF_WanderingHex6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_SpiritMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_Hex|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Shaman_Archetype_WanderingHex|true"
       }
     ]
   },
@@ -71,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

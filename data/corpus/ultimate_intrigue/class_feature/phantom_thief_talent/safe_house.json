@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Safe House",
     "name": "Safe House",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief can establish a safe house in his area of renown, and he can change it every time he changes his area of renown. If he doesn't have the renown talent, he can still select this talent and place the safe house in a single location to which he has access, but he can never move the safe house from its initial location until he gains the renown talent. This safe house must be an area no larger in volume than a cube that is %1 feet per side. The safe house can be arranged any way he likes and it can be part of a larger building, like a secret room or an underground cave. Objects within this safe house can't be located by any effect that is less powerful than a discern location spell.|VigilanteTalentLVL*10",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

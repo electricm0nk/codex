@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Friendship Subdomain",
+    "name": "Friendship Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Friendship Subdomain],[PREVARLT:GoodDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Powerful Bond|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Good)|PREVARGTEQ:DomainGoodAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Holy Lance|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Good"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "DESC",
+        "value": "Your faith in your friends bolsters the strength of your faith in your god."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=1|Protection from Evil"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=2|Shield Other"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=3|Magic Circle against Evil"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=4|Holy Smite"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=5|Telepathic Bond"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=6|Blade Barrier"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=7|Holy Word"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=8|Holy Aura"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Friendship Subdomain=9|Summon Monster IX (Good Spell Only)"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Good"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 13,
+    "record_key": "Friendship Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

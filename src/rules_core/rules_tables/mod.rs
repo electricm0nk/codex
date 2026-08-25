@@ -42,11 +42,44 @@ pub mod feats_all;
 pub mod horror_adventures;
 pub mod inner_sea_bestiary;
 pub mod inner_sea_combat;
+/// Inner Sea Faiths. SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled rule set of any kind, first record family: base spell
+/// declarations transcribed from `isf_spells.lst`
+/// (`rules_tables::inner_sea_faiths::spell_list`). See
+/// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub mod inner_sea_faiths;
 pub mod inner_sea_gods;
 pub mod inner_sea_intrigue;
+/// Inner Sea Races. SD-32 `decisions.md §20`, no_record-to-zero wave --
+/// this book's FIRST compiled rule set of any kind, first record family:
+/// base spell declarations transcribed from `isr_spells.lst`
+/// (`rules_tables::inner_sea_races::spell_list`). See
+/// `src/bin/ingest_spells.rs` for the ingest path.
+pub mod inner_sea_races;
+/// Inner Sea Magic. SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled rule set of any kind, first record family: base spell
+/// declarations transcribed from `ism_spells.lst`
+/// (`rules_tables::inner_sea_magic::spell_list`). See
+/// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub mod inner_sea_magic;
+/// Inner Sea Temples. SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled rule set of any kind, first record family: base spell
+/// declarations transcribed from `istem_spells.lst`
+/// (`rules_tables::inner_sea_temples::spell_list`). See
+/// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+pub mod inner_sea_temples;
 pub mod inner_sea_world_guide;
 pub mod monster_chassis;
 pub mod monster_codex;
+/// Mythic Adventures. SD-32 `decisions.md §20`, no_record-to-zero wave --
+/// this book's FIRST compiled rule set of any kind, first record family:
+/// base spell declarations transcribed from `ma_spells.lst`
+/// (`rules_tables::mythic_adventures::spell_list`). See
+/// `src/bin/ingest_spells.rs` for the ingest path.
+pub mod mythic_adventures;
 pub mod occult_adventures;
 pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
@@ -54,6 +87,11 @@ pub mod ultimate_equipment;
 pub mod ultimate_intrigue;
 pub mod ultimate_combat;
 pub mod ultimate_magic;
+/// Ultimate Magic — Words of Power example combined spells. SD-32
+/// `decisions.md §20`, `no_record`-to-zero wave: a second, distinct
+/// source `.lst` file for the SAME shipped book (`ultimate_magic`); see
+/// this module's own doc comment for why it is a separate Rust module.
+pub mod ultimate_magic_wordsofpower;
 pub mod ultimate_psionics;
 pub mod ultimate_wilderness;
 
@@ -171,18 +209,21 @@ pub enum RuleSetId {
     /// no lane at all. This is the lane that owns them.
     Isi,
     /// Bestiary 5. SD-29 Epic 7 round 2 (companion lane, extend;
-    /// `rules_tables::bestiary_5`, 33 companion creatures + 22 companion
-    /// abilities). A "bestiary" with **zero** monsters — its pcc's `CAMPAIGN`
-    /// line says "Only Player Options Implemented" — so this rule set exists
-    /// for its companion rows and no other family.
+    /// `rules_tables::bestiary_5`, 35 companion creatures + 22 companion
+    /// abilities — all 57 of the book's `companion` units). A "bestiary" with
+    /// **zero** monsters — its pcc's `CAMPAIGN` line says "Only Player
+    /// Options Implemented" — so this rule set exists for its companion rows
+    /// and no other family.
     ///
-    /// **Two of the book's 57 `companion` units are out of this rule set's
-    /// scope by construction.** `_bestiary_5.pcc:69` loads
-    /// `support/b5_races_companion_oa.lst` under
-    /// `PRECAMPAIGN:1,Occult Adventures`, a book this repo has not ingested, so
-    /// `Familiar (Brain Mole)` and `Familiar (Chuspiki)` are not ingested — the
-    /// same ruling `RuleSetId::Ha` records for the same gate on `race_trait`
-    /// (`decisions.md §47.2`).
+    /// Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): through
+    /// 2026-08-23, `_bestiary_5.pcc:69`'s `support/b5_races_companion_oa.lst`
+    /// load under `PRECAMPAIGN:1,Occult Adventures` excluded `Familiar (Brain
+    /// Mole)` and `Familiar (Chuspiki)` on the premise that Occult Adventures
+    /// was an uningested book (the same ruling `RuleSetId::Ha` records for
+    /// the same gate on `race_trait`, `decisions.md §47.2`). That premise is
+    /// now false — Occult Adventures is ingested (`RuleSetId::Oa`) — and
+    /// `decisions.md §27b` separately overturned this exact exclusion shape,
+    /// so both rows are now transcribed.
     B5,
     /// Bestiary 6. SD-29 Epic 7 round 2 (companion lane, extend;
     /// `rules_tables::bestiary_6`, 14 companion creatures + 12 companion
@@ -318,4 +359,46 @@ pub enum RuleSetId {
     /// table ships -- `THE-BOX.md` §2.1's G4 finding (`adventurers_guide`
     /// 699 `class_feature` units) is this exact gate.
     AdventurersGuide,
+    /// Inner Sea Faiths. SD-32 Gate 0 book-onboarding precondition
+    /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003, one of the
+    /// four books `epic-breakdown.md` Epic 4 names) -- this book's FIRST
+    /// compiled rule set of any kind, first record family: base spell
+    /// records (`rules_tables::inner_sea_faiths::spell_list::SPELL_LIST`,
+    /// transcribed from `isf_spells.lst`). See
+    /// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+    InnerSeaFaiths,
+    /// Inner Sea Magic. SD-32 Gate 0 book-onboarding precondition
+    /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this
+    /// book's FIRST compiled rule set of any kind, first record family:
+    /// base spell records (`rules_tables::inner_sea_magic::spell_list::
+    /// SPELL_LIST`, transcribed from `ism_spells.lst`).
+    ///
+    /// Same book-level gate `RuleSetId::AdventurersGuide` record above:
+    /// without this variant, every `inner_sea_magic` corpus unit
+    /// (class_feature, spell, feat, equipment, equipment_modifier, class
+    /// alike) reads `not-started`/`no_compiled_rule_set_for_book`
+    /// regardless of what any per-kind table ships -- this book's 218
+    /// `class_feature` units are already ingested corpus-wide
+    /// (`data/corpus/inner_sea_magic/class_feature/`) but were unreachable
+    /// through this exact gate before this variant existed. See
+    /// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+    InnerSeaMagic,
+    /// Inner Sea Taverns. SD-32 Gate 0 book-onboarding precondition
+    /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this
+    /// book's FIRST compiled rule set of any kind. Unlike the other three
+    /// SD-32 Gate 0 books, this one has no `*_spells.lst` at all, so its
+    /// first record family is `feat` instead: `istav_feats.lst`'s 9 base
+    /// declarations, joined via the same `feat_gap_tables` mechanism
+    /// `RuleSetId::Mythic` above uses (an empty `hand_authored_feat_tables`
+    /// entry plus a `gen_feat_gap_tables::BOOK_INPUTS` row) -- so, like
+    /// `Mythic`, this book has no dedicated `rules_tables::<book>` module
+    /// directory of its own.
+    InnerSeaTaverns,
+    /// Inner Sea Temples. SD-32 Gate 0 book-onboarding precondition
+    /// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this
+    /// book's FIRST compiled rule set of any kind, first record family:
+    /// base spell records (`rules_tables::inner_sea_temples::spell_list::
+    /// SPELL_LIST`, transcribed from `istem_spells.lst`). See
+    /// `src/bin/ingest_inner_sea_setting_spells.rs` for the ingest path.
+    InnerSeaTemples,
 }

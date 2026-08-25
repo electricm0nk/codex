@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Domain Power ~ Master's Yoke",
+    "name": "Master's Yoke",
+    "description": "At 8th level, you can attempt to assert your dominance over any visible creature within 30 feet by declaring the target your property. The target can resist this effect with a successful Will save (DC %1). If the target fails the save, it is affected as if by dominate monster for %2 rounds, save that the target can choose to ignore any order you give and instead take 2 points of Constitution damage and become staggered for 1 round. You can use this ability %3 times per day. This is a language-based mind-affecting effect.|DomainLawDC|DomainLawLVL/2|DomainLawLVL/4-1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Master's Yoke"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, you can attempt to assert your dominance over any visible creature within 30 feet by declaring the target your property. The target can resist this effect with a successful Will save (DC %1). If the target fails the save, it is affected as if by dominate monster for %2 rounds, save that the target can choose to ignore any order you give and instead take 2 points of Constitution damage and become staggered for 1 round. You can use this ability %3 times per day. This is a language-based mind-affecting effect.|DomainLawDC|DomainLawLVL/2|DomainLawLVL/4-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainLawLVL/4-1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 278,
+    "record_key": "Domain Power ~ Master's Yoke"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

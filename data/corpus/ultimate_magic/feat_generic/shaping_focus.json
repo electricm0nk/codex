@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Shaping Focus",
+    "name": "Shaping Focus",
+    "description": "Your powers of shapeshifting outstrip your dabbling in the druidic faith.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.DruidWildShape"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Knowledge (Nature)=5"
+      },
+      {
+        "key": "DESC",
+        "value": "Your powers of shapeshifting outstrip your dabbling in the druidic faith."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DruidWildShape|MIN(4,classlevel(\"TYPE=PC\")+classlevel(\"TYPE=NPC\")-classlevel(\"Druid\"))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "If you are a multiclassed druid, your wild shape ability is calculated as though your druid level were four higher, to a maximum level equal to your character level."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 111,
+    "record_key": "Shaping Focus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

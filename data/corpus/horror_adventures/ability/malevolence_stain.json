@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lich Corruption ~ Malevolence Stain",
+    "name": "Malevolence Stain",
+    "description": "Your spirit is untethered from your body. You roll twice and take the lowest result on saves against spells that imprison or target your soul, such as magic jar and trap the soul, as well as against positive energy effects. If you drop below 0 hit points, your soul leaves your body and you instantly die.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Malevolence Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichMalevolenceStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "DESC",
+        "value": "Your spirit is untethered from your body. You roll twice and take the lowest result on saves against spells that imprison or target your soul, such as magic jar and trap the soul, as well as against positive energy effects. If you drop below 0 hit points, your soul leaves your body and you instantly die."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 519,
+    "record_key": "Lich Corruption ~ Malevolence Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

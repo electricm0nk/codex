@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Samurai ~ Bonus Feat",
     "name": "Bonus Feat",
@@ -35,6 +35,18 @@
       {
         "key": "BONUS",
         "value": "VAR|SamuraiBonusFeat|SamuraiLVL/6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiBonusFeat|-1|PRECLASS:1,Samurai=06|PREVAREQ:Samurai_CF_BonusFeat6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiBonusFeat|-1|PRECLASS:1,Samurai=12|PREVAREQ:Samurai_CF_BonusFeat12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiBonusFeat|-1|PRECLASS:1,Samurai=18|PREVAREQ:Samurai_CF_BonusFeat18,1"
       }
     ]
   },
@@ -52,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

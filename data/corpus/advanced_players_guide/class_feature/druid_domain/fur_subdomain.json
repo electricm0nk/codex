@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Druid Domain ~ Fur Subdomain",
     "name": "Fur Subdomain",
-    "class": "Druid Domain",
+    "class": "Druid",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "CLASS|Druid=1|Magic Fang|Druid=2|Hold Animal|Druid=3|Beast Shape I (Animals Only)|Druid=4|Summon Nature's Ally IV (Animals Only)|Druid=5|Beast Shape III (Animals Only)|Druid=6|Antilife Shell|Druid=7|Animal Shapes|Druid=8|Summon Nature's Ally VIII (Animals Only)|Druid=9|Shapechange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainTaken|1"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

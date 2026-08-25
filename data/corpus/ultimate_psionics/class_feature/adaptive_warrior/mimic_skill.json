@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Adaptive Warrior ~ Mimic Skill",
+    "name": "Mimic Skill",
+    "class": "Adaptive Warrior",
+    "description": "When focused, you can mimic any Strength, Dexterity, or Constitution skill that you have seen used within the past minute by an examined creature trained in the skill.  You are treated has having %1 ranks in the skill.|MimicSkillRanks",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adaptive Warrior ~ Mimic Skill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MimicSkillRanks|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When focused, you can mimic any Strength, Dexterity, or Constitution skill that you have seen used within the past minute by an examined creature trained in the skill.  You are treated has having %1 ranks in the skill.|MimicSkillRanks"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MimicSkillRanks|AdaptiveWarriorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.350"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1128,
+    "record_key": "Adaptive Warrior ~ Mimic Skill"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Pairaka ~ Disease",
+    "delivery": "Supernatural",
+    "description": "A pairaka carries two diseases. Its claws infect targets with bubonic plague, and any willing contact with its skin (such as through caressing, grappling, or more) exposes victims to the shakes. Bubonic Plague: Claw-injury; save Fort DC 17; onset 1 day; frequency 1/day; effect 1d4 Str damage, 1 Cha damage, and target is fatigued; cure 2 consecutive saves. Shakes: Contact; save Fort DC 13; onset 1 day; frequency 1/day; effect 1d8 Dex damage; cure 2 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:pairaka_disease",
+    "name": "Disease",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A pairaka carries two diseases. Its claws infect targets with bubonic plague, and any willing contact with its skin (such as through caressing, grappling, or more) exposes victims to the shakes. Bubonic Plague: Claw-injury; save Fort DC 17; onset 1 day; frequency 1/day; effect 1d4 Str damage, 1 Cha damage, and target is fatigued; cure 2 consecutive saves. Shakes: Contact; save Fort DC 13; onset 1 day; frequency 1/day; effect 1d8 Dex damage; cure 2 consecutive saves."
+      },
+      {
+        "key": "KEY",
+        "value": "Pairaka ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "TYPE",
+        "value": "PairakaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.88",
+    "traits": [
+      "PairakaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 736,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Pairaka ~ Disease",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

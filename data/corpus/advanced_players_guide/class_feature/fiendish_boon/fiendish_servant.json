@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fiendish Boon ~ Fiendish Servant",
     "name": "Fiendish Servant",
@@ -51,6 +51,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.121"
+      },
+      {
+        "key": "DESC",
+        "value": "Your fiendish boon allows you to gain the service of a fiendish servant. This functions as level %1 Summon Monster spell, except the duration is permanent and you can only gain the service of a single creature and that creature must either have the chaotic and evil subtypes or it must be a fiendish animal. Once selected, the choice is set, but it may be changed whenever you gain a level. As a full-round action, you may magically call your servant to your side. This ability is the equivalent of a level %2 spell. The servant immediately appears adjacent to you. You can use this ability %3 times per day. Should your fiendish servant die or be banished, you may not summon another servant for 30 days or until you gain an antipaladin level, whichever comes first. During this 30-day period, you take a -1 penalty on attack and weapon damage rolls.|FiendishServantSummonLevel|FiendishServantSpellLevel|FiendishBoonTimes|PREVARGTEQ:FiendishBoonLVL,5|PREVARLT:FiendishBoonLVL,11"
+      },
+      {
+        "key": "DESC",
+        "value": "Your fiendish boon allows you to gain the service of a fiendish servant. This functions as level %1 Summon Monster spell, except the duration is permanent and you can only gain the service of a single creature and that creature must either have the chaotic and evil subtypes or it must be a fiendish animal. Your fiendish servant gains the advanced simple template. Once selected, the choice is set, but it may be changed whenever you gain a level. As a full-round action, you may magically call your servant to your side. This ability is the equivalent of a level %2 spell. The servant immediately appears adjacent to you. You can use this ability %3 times per day. Should your fiendish servant die or be banished, you may not summon another servant for 30 days or until you gain an antipaladin level, whichever comes first. During this 30-day period, you take a -1 penalty on attack and weapon damage rolls.|FiendishServantSummonLevel|FiendishServantSpellLevel|FiendishBoonTimes|PREVARGTEQ:FiendishBoonLVL,11|PREVARLT:FiendishBoonLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "Your fiendish boon allows you to gain the service of a fiendish servant. This functions as level %1 Summon Monster spell, except the duration is permanent and you can only gain the service of a single creature and that creature must either have the chaotic and evil subtypes or it must be a fiendish animal. Your fiendish servant gains the advanced simple template and spell resistance %4. Once selected, the choice is set, but it may be changed whenever you gain a level. As a full-round action, you may magically call your servant to your side. This ability is the equivalent of a level %2 spell. The servant immediately appears adjacent to you. You can use this ability %3 times per day. Should your fiendish servant die or be banished, you may not summon another servant for 30 days or until you gain an antipaladin level, whichever comes first. During this 30-day period, you take a -1 penalty on attack and weapon damage rolls.|FiendishServantSummonLevel|FiendishServantSpellLevel|FiendishBoonTimes|FiendishServantSpellResistance|PREVARGTEQ:FiendishBoonLVL,15"
       }
     ]
   },
@@ -67,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Sorcerer Bonus Spell L7 ~ Firebrand",
+    "name": "Firebrand",
+    "class": "Sorcerer",
+    "description": "You mark several allies with a flaming rune. This rune does not cause damage, and sheds light as if it were a torch. While the firebrand burns, any creature it marks is immune to damage from any fire spell you cast. All of the target's weapons (both natural and manufactured) inflict +1d6 points of fire damage on a hit (this bonus fire damage stacks with any amount of fire damage a creature's weapons might already inflict). At any point during the spell's duration, a creature bearing a firebrand can launch a beam of fire at any target within 30 feet as a swift action. This ray requires a ranged touch attack to hit and deals 6d6 points of fire damage. Once a creature uses its firebrand to fire a ray in this manner, the effects of the spell end for that creature.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sorcerer Bonus Spell L7 ~ Firebrand"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sorcerer Bloodline Bonus Spell"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "Sorcerer_BonusSpell_Firebrand_L7,1"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "BloodlineCasterLVL,15"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Sorcerer=7|Firebrand"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "FireSchool"
+      },
+      {
+        "key": "DESC",
+        "value": "You mark several allies with a flaming rune. This rune does not cause damage, and sheds light as if it were a torch. While the firebrand burns, any creature it marks is immune to damage from any fire spell you cast. All of the target's weapons (both natural and manufactured) inflict +1d6 points of fire damage on a hit (this bonus fire damage stacks with any amount of fire damage a creature's weapons might already inflict). At any point during the spell's duration, a creature bearing a firebrand can launch a beam of fire at any target within 30 feet as a swift action. This ray requires a ranged touch attack to hit and deals 6d6 points of fire damage. Once a creature uses its firebrand to fire a ray in this manner, the effects of the spell end for that creature.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3070,
+    "record_key": "Sorcerer Bonus Spell L7 ~ Firebrand"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

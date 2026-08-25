@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Carnivorous Crystal ~ Subsonic Hum",
+    "delivery": "Supernatural",
+    "description": "An active carnivorous crystal gives off supernatural sonic vibrations. Any living creature starting its turn within this aura must succeed at a DC 22 Fortitude save or be stunned for 1 round. A creature that successfully saves cannot be affected by the same carnivorous crystal's subsonic hum for 24 hours. This is a sonic mind-affecting effect. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:carnivorous_crystal_subsonic_hum",
+    "name": "Subsonic Hum",
+    "owners": [
+      "bestiary_3:monster:carnivorous_crystal"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An active carnivorous crystal gives off supernatural sonic vibrations. Any living creature starting its turn within this aura must succeed at a DC 22 Fortitude save or be stunned for 1 round. A creature that successfully saves cannot be affected by the same carnivorous crystal's subsonic hum for 24 hours. This is a sonic mind-affecting effect. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Carnivorous Crystal ~ Subsonic Hum"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "TYPE",
+        "value": "CarnivorousCrystalRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.45",
+    "traits": [
+      "CarnivorousCrystalRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 529,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Carnivorous Crystal ~ Subsonic Hum",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

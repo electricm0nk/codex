@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fey Trickster ~ Feytouched",
+    "name": "Feytouched",
+    "class": "Fey",
+    "description": "A fey trickster's time with the fey has granted her strange powers, as well as resistance to further fey mischief. The fey trickster gains the druid's resist nature's lure and woodland stride abilities, and she counts as both fey and her original creature type for the purpose of spells and effects.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Trickster ~ Feytouched"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A fey trickster's time with the fey has granted her strange powers, as well as resistance to further fey mischief. The fey trickster gains the druid's resist nature's lure and woodland stride abilities, and she counts as both fey and her original creature type for the purpose of spells and effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 73,
+    "record_key": "Fey Trickster ~ Feytouched"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

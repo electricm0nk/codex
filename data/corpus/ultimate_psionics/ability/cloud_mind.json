@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Heartstaff ~ Cloud Mind",
+    "name": "Cloud Mind",
+    "description": "Psicrysal can manifest cloud mind 3/day, manifester level %1.|HeartstaffCloudMindML",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heartstaff ~ Cloud Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Psilike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeartstaffCloudMindML|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=MaxManifesterLVL|Cloud Mind"
+      },
+      {
+        "key": "DESC",
+        "value": "Psicrysal can manifest cloud mind 3/day, manifester level %1.|HeartstaffCloudMindML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeartstaffCloudMindML|MaxManifesterLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.438"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 219,
+    "record_key": "Heartstaff ~ Cloud Mind"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

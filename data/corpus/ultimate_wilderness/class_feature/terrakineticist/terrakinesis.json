@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terrakineticist ~ Terrakinesis",
+    "name": "Terrakinesis",
+    "class": "Kineticist",
+    "description": "[NOT IMPLEMENTED] Whenever a terrakineticist gains a wild talent that isn't a universal talent, she chooses one wild talent of the appropriate level from each of the six elements (aether, air, fire, earth, water, and wood). She can use wild talents of the same element that she chose in this way to meet prerequisites for these wild talents. Instead of gaining one kineticist blast, a terrakineticist chooses one simple blast from each element that has more than one simple blast. &nl;When in a corresponding terrain, as determined by the ranger favored terrain categories, her element changes to the corresponding element (granting her class skills, basic utility wild talent, simple blast, and elemental defense as appropriate), and she gains all the wild talents she selected from the corresponding element. Aether corresponds to urban and the Ethereal Plane; air corresponds to hill, mountain, plains, and the Plane of Air; fire corresponds to desert and the Plane of Fire; earth corresponds to underground and the Plane of Earth; water corresponds to cold, swamp, water, and the Plane of Water; and wood corresponds to forest, jungle, the First World, and the Positive Energy Plane. In areas that might count as multiple types of terrain, the GM decides which element predominates, and in certain areas not covered by the ranger favored terrains (such as the upper atmosphere) or in those with strong elemental energy (like an underground temple of a fire cult), the corresponding element might differ. If the kineticist class gains additional elements, those elements also gain corresponding terrains at the GM's discretion, and the terrakineticist chooses wild talents from those elements. A terrakineticist should almost never be in a situation that doesn't correspond to any of these elements, but in such an unusual circumstance (for instance, the void of space given the standard six elements), she loses access to all her wild talents, even her universal wild talents. &nl;When her element changes, she loses the benefits of all active wild talents from the previous element, even if it would usually last until the next time she recovers burn. However, time spent in other terrain still counts against the ability's duration; if she changes back again to the original element, the benefit returns only if it has any remaining duration. This alters elemental focus and kinetic blast.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrakineticist ~ Terrakinesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.TerrakineticistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "[NOT IMPLEMENTED] Whenever a terrakineticist gains a wild talent that isn't a universal talent, she chooses one wild talent of the appropriate level from each of the six elements (aether, air, fire, earth, water, and wood). She can use wild talents of the same element that she chose in this way to meet prerequisites for these wild talents. Instead of gaining one kineticist blast, a terrakineticist chooses one simple blast from each element that has more than one simple blast. &nl;When in a corresponding terrain, as determined by the ranger favored terrain categories, her element changes to the corresponding element (granting her class skills, basic utility wild talent, simple blast, and elemental defense as appropriate), and she gains all the wild talents she selected from the corresponding element. Aether corresponds to urban and the Ethereal Plane; air corresponds to hill, mountain, plains, and the Plane of Air; fire corresponds to desert and the Plane of Fire; earth corresponds to underground and the Plane of Earth; water corresponds to cold, swamp, water, and the Plane of Water; and wood corresponds to forest, jungle, the First World, and the Positive Energy Plane. In areas that might count as multiple types of terrain, the GM decides which element predominates, and in certain areas not covered by the ranger favored terrains (such as the upper atmosphere) or in those with strong elemental energy (like an underground temple of a fire cult), the corresponding element might differ. If the kineticist class gains additional elements, those elements also gain corresponding terrains at the GM's discretion, and the terrakineticist chooses wild talents from those elements. A terrakineticist should almost never be in a situation that doesn't correspond to any of these elements, but in such an unusual circumstance (for instance, the void of space given the standard six elements), she loses access to all her wild talents, even her universal wild talents. &nl;When her element changes, she loses the benefits of all active wild talents from the previous element, even if it would usually last until the next time she recovers burn. However, time spent in other terrain still counts against the ability's duration; if she changes back again to the original element, the benefit returns only if it has any remaining duration. This alters elemental focus and kinetic blast."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 28,
+    "record_key": "Terrakineticist ~ Terrakinesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

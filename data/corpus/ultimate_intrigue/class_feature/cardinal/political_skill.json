@@ -1,0 +1,132 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cardinal ~ Political Skill",
+    "name": "Political Skill",
+    "class": "Cleric",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cardinal ~ Political Skill"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Cleric Class Features.CardinalClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|-((ClericLVL+1)/4)|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=1|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=2|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=3|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=4|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=5|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=6|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=7|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=8|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=9|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=10|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=11|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=12|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=13|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=14|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=15|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=16|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=17|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=18|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=19|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Cleric;LEVEL=20|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericDomainCount|-1"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Bluff|Intimidate|Knowledge (geography)|Knowledge (local)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 317,
+    "record_key": "Cardinal ~ Political Skill"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

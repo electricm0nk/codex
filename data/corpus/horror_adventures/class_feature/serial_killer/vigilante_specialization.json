@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Serial Killer ~ Vigilante Specialization",
+    "name": "Vigilante Specialization",
+    "class": "Vigilante",
+    "description": "A serial killer must choose the stalker specialization. Her hidden strike is considered equivalent to a sneak attack with the same number of dice for the purpose of meeting prerequisites or using abilities that depend on sneak attack. This alters vigilante specialization.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Serial Killer ~ Vigilante Specialization"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "A serial killer must choose the stalker specialization. Her hidden strike is considered equivalent to a sneak attack with the same number of dice for the purpose of meeting prerequisites or using abilities that depend on sneak attack. This alters vigilante specialization."
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue ~ Sneak Attack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SneakAttackDice|HiddenStrikeDiceCount"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 34,
+    "record_key": "Serial Killer ~ Vigilante Specialization"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

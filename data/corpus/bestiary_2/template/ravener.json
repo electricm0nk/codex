@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Ravener",
+    "name": "Ravener",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Undead"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Dragon%,RACETYPE=Dragon"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "DragonAgeCategory,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|max(1,CHA/2)|TYPE=Deflection"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate,Perception,Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,INT,WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Ravener ~ Breath Weapon|Ravener ~ Cowering Fear|Ravener ~ Critical Hits|Ravener ~ Soul Consumption|Ravener ~ Soul Magic|Ravener ~ Soul Ward|Undead Traits"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsense (120')|Darkvision (240')"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
+    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520",
+    "line": 89,
+    "record_key": "Ravener"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

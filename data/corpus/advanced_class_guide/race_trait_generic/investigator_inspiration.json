@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Investigator ~ Inspiration",
+    "name": "Investigator ~ Inspiration",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|InvestigatorInspirationPoolBonus|ElfInvestigatorFavClassBonus/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 67,
+    "record_key": "Investigator ~ Inspiration"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

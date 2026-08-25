@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Race Builder Subtype ~ Kasatha",
+    "name": "Kasatha",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Builder Subtype ~ Kasatha"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Kasatha"
+      },
+      {
+        "key": "TYPE",
+        "value": "Race Builder Subtype"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_templates.lst",
+    "sha256": "404e4b654a1586d02a60783e48fc5f28714fde4282ec1bc4645481e269a1dab6",
+    "line": 19,
+    "record_key": "Race Builder Subtype ~ Kasatha"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

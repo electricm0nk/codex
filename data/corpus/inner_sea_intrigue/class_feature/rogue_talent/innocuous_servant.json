@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Innocuous Servant",
     "name": "Innocuous Servant",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "The rogue is an expert at appearing to be an unimportant servant, be it an attaché, bodyguard, driver, maid, kitchen assistant, or similar staff member. The rogue gains a +%1 bonus on Disguise checks to appear to be a servant, but not to impersonate a particular servant. She also gains a +%1 bonus on Bluff checks to lie to maintain this guise. While disguised as a servant, she gains a +%1 bonus on Diplomacy checks to gather information among servants. Because she is easily overlooked as a servant, she can gather information from those she serves without asking them questions directly or alerting them to her interest. Doing so takes 1d4 days and requires a successful Bluff check instead of a Diplomacy check.|InnocuousServantBonus",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

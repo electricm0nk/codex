@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption ~ Slow Aging Gift",
+    "name": "Slow Aging Gift",
+    "description": "You age more slowly than members of your base race. It takes you twice as long to reach middle age, and three times as long to reach both old age and venerable.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Slow Aging Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeepOneSlowAgingGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "DESC",
+        "value": "You age more slowly than members of your base race. It takes you twice as long to reach middle age, and three times as long to reach both old age and venerable."
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +2 bonus to your Constitution score.|PREVARGTEQ:DeepOneManifestationLevel,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 181,
+    "record_key": "Deep One Corruption ~ Slow Aging Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

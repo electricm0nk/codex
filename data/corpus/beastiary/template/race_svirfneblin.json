@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:15Z",
+  "data": {
+    "key": "Race ~ Svirfneblin",
+    "name": "Svirfneblin",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race ~ Svirfneblin"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "IsSvirfneblin"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/svirfneblin/svirfneblin_templates.lst",
+    "sha256": "b5191f6a83e417cdaf25406171786efc894738e45ff4bdd8ff1576e00a980fe0",
+    "line": 4,
+    "record_key": "Race ~ Svirfneblin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

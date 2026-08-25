@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Sacrifice",
+    "school": "Enchantment",
+    "level": 4,
+    "description": "You make a sacrifice to aid in conjuring and commanding a creature called with planar ally, planar binding, or a similar spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_spells.lst",
+    "sha256": "6ced82a6317309ca529afd1b403d66212011e766aae38468d280623dce0085cf",
+    "line": 10,
+    "record_key": "Sacrifice"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

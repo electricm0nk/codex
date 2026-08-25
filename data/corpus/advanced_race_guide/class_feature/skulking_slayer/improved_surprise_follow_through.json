@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Skulking Slayer ~ Improved Surprise Follow-Through",
     "name": "Improved Surprise Follow-Through",
-    "class": "Skulking Slayer",
+    "class": "Slayer",
     "description": "A skulking slayer can take the Improved Surprise Follow-Through feat in place of an advanced Rogue Talent",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

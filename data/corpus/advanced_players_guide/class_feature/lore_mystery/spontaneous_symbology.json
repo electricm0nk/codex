@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Lore Mystery ~ Spontaneous Symbology",
     "name": "Spontaneous Symbology",
-    "class": "Lore Mystery",
+    "class": "Oracle",
     "description": "Your knowledge of the secret history of the world has unveiled the mysterious symbols that govern reality. You can cast any RsymbolS spell using a spell slot of the appropriate level, even if the spell is not on your list of spellUs known. A symbol spell is any spell with the word RsymbolS in its name.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

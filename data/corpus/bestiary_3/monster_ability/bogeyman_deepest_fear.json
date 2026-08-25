@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bogeyman ~ Deepest Fear",
+    "delivery": "Supernatural",
+    "description": "A bogeyman is cloaked in a 30-foot aura of fear. This aura manifests as a shifting haze of images that reflect the viewer's deepest fears. The first time it ends its turn within the aura, a creature must make a DC 25 Will save or become shaken for as long as it stays within the aura. If the creature succeeds at the saving throw, it cannot be affected again by the aura for another 24 hours. This is a fear effect. The DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:bogeyman_deepest_fear",
+    "name": "Deepest Fear",
+    "owners": [
+      "bestiary_3:monster:bogeyman"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A bogeyman is cloaked in a 30-foot aura of fear. This aura manifests as a shifting haze of images that reflect the viewer's deepest fears. The first time it ends its turn within the aura, a creature must make a DC 25 Will save or become shaken for as long as it stays within the aura. If the creature succeeds at the saving throw, it cannot be affected again by the aura for another 24 hours. This is a fear effect. The DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Bogeyman ~ Deepest Fear"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "TYPE",
+        "value": "BogeymanRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.42",
+    "traits": [
+      "BogeymanRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 507,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bogeyman ~ Deepest Fear",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

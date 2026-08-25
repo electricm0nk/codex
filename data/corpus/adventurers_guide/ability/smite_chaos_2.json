@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Devil Binder ~ Smite Chaos",
+    "name": "Smite Chaos",
+    "description": "The summoner's eidolon gains the ability to smite chaos as a Hellknight (see page 90) of its Hit Dice. This ability can be used once per day and an additional time for every 4 levels beyond 6th.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Devil Binder ~ Smite Chaos"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Summoner Class Feature.DevilBinderClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      },
+      {
+        "key": "DESC",
+        "value": "The summoner's eidolon gains the ability to smite chaos as a Hellknight (see page 90) of its Hit Dice. This ability can be used once per day and an additional time for every 4 levels beyond 6th."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 64,
+    "record_key": "Devil Binder ~ Smite Chaos"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

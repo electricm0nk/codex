@@ -1,0 +1,103 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Paralysis (Extraordinary)",
+    "delivery": "Extraordinary",
+    "description": "This special attack renders the victim immobile. Paralyzed creatures cannot move, speak, or take any physical actions. The creature is rooted to the spot, frozen and helpless. Paralysis works on the body, and a character can usually resist it with a Fortitude saving throw (DC %1). Unlike hold person and similar effects, a paralysis effect does not allow a new save each round. A winged creature flying in the air at the time that it is paralyzed cannot flap its wings and falls. A swimmer can't swim and may drown. The duration of the paralysis varies and is included in the creature's description.",
+    "description_variables": [
+      "UMR_Paralysis_DC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_paralysis_extraordinary",
+    "name": "Paralysis",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Paralysis"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 rounds, DC %2)|UMR_Paralysis_DurationBonus|UMR_Paralysis_DC|PREVAREQ:UMR_Paralysis_DurationDice,0|PREVAREQ:UMR_Paralysis_DurationDieSize,0|PREVARGT:UMR_Paralysis_DurationBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2 rounds, DC %3)|UMR_Paralysis_DurationDice|UMR_Paralysis_DurationDieSize|UMR_Paralysis_DC|PREVARGTEQ:UMR_Paralysis_DurationDice,1|PREVARGTEQ:UMR_Paralysis_DurationDieSize,1|PREVAREQ:UMR_Paralysis_DurationBonus,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+%3 rounds, DC %4)|UMR_Paralysis_DurationDice|UMR_Paralysis_DurationDieSize|UMR_Paralysis_DurationBonus|UMR_Paralysis_DC|PREVARGTEQ:UMR_Paralysis_DurationDice,1|PREVARGTEQ:UMR_Paralysis_DurationDieSize,1|PREVARGTEQ:UMR_Paralysis_DurationBonus,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(1 round, DC %1)|UMR_Paralysis_DC|PREVAREQ:UMR_Paralysis_DurationDice,0|PREVAREQ:UMR_Paralysis_DurationDieSize,0|PREVAREQ:UMR_Paralysis_DurationBonus,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Paralysis_DC|10+(HD/2)+CON"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Paralysis_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Paralysis_DurationBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Paralysis_DurationDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Paralysis_DurationDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Paralysis_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This special attack renders the victim immobile. Paralyzed creatures cannot move, speak, or take any physical actions. The creature is rooted to the spot, frozen and helpless. Paralysis works on the body, and a character can usually resist it with a Fortitude saving throw (DC %1). Unlike hold person and similar effects, a paralysis effect does not allow a new save each round. A winged creature flying in the air at the time that it is paralyzed cannot flap its wings and falls. A swimmer can't swim and may drown. The duration of the paralysis varies and is included in the creature's description.|UMR_Paralysis_DC|PREVAREQ:UMR_Paralysis_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Paralysis (Extraordinary)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.302"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialAttack.Special Attack.Extraordinary"
+      }
+    ],
+    "source_page": "p.302",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Attack"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2376,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Paralysis (Extraordinary)",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

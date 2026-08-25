@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier ~ Expert Trainer",
     "name": "Expert Trainer",
@@ -23,6 +23,18 @@
       {
         "key": "DESC",
         "value": "A cavalier learns to train mounts with speed and unsurpassed expertise. The cavalier receives a +%1 bonus whenever he uses Handle Animal on an animal that serves as a mount. In addition, he can reduce the time needed to teach a mount a new trick or train a mount for a general purpose to 1 day per 1 week required by increasing the DC by +5. He can also train more than one mount at once, although each mount after the first adds +2 to the DC.|CavalierLVL/2"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "Cavalier's Expert Trainer class ability is not allowed in PFS (he receives Skill Focus [Handle Animal] instead as a bonus feat)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Skill Focus (Handle Animal)"
       }
     ]
   },
@@ -40,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

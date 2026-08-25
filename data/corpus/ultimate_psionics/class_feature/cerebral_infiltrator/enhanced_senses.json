@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cerebral Infiltrator ~ Enhanced Senses",
+    "name": "Enhanced Senses",
+    "class": "Cerebral Infiltrator",
+    "description": "You unlock your psionic talent and additional insight into interactions with others.  You gain a +%1 bonus on Sense Motive checks.|EnhancedSensesSenseMotiveBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cerebral Infiltrator ~ Enhanced Senses"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnhancedSensesSenseMotiveBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You unlock your psionic talent and additional insight into interactions with others.  You gain a +%1 bonus on Sense Motive checks.|EnhancedSensesSenseMotiveBonus"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Wild Talent"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|EnhancedSensesSenseMotiveBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnhancedSensesSenseMotiveBonus|max(1,floor(RogueLVL/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2603,
+    "record_key": "Cerebral Infiltrator ~ Enhanced Senses"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

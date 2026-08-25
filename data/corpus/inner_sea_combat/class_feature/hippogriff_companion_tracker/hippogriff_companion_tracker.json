@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hippogriff Companion Tracker",
+    "name": "Hippogriff Companion Tracker",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CompanionMasterLVL_Ranger_SableMarine|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AnimalCompanionLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisableMonstrousMount|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MonstrousMountHippogriff|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionMasterLVL_Ranger_SableMarine|RangerLVL-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AnimalCompanionLVL|CompanionMasterLVL_Ranger_SableMarine"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hunters_Bond_Animal_Companion|1"
+      },
+      {
+        "key": "FOLLOWERS",
+        "value": "Animal Companion|1"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HuntersBond|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+    "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+    "line": 183,
+    "record_key": "Hippogriff Companion Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

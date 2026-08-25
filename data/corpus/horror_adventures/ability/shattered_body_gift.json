@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption ~ Shattered Body Gift",
+    "name": "Shattered Body Gift",
+    "description": "You gain a +%1 bonus on Fortitude saves against poison and disease. Additionally, you require only half as much food and water as normal, and half as much rest as normal to gain a full night's sleep. However, you must still rest for at least 8 hours to prepare spells.|PrometheanShatteredBodyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Shattered Body Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PrometheanShatteredBodyGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PrometheanShatteredBodyBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Fortitude saves against poison and disease. Additionally, you require only half as much food and water as normal, and half as much rest as normal to gain a full night's sleep. However, you must still rest for at least 8 hours to prepare spells.|PrometheanShatteredBodyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrometheanShatteredBodyBonus|PrometheanManifestationLevel/2|TYPE=Base"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+%1 on Fortitude saves vs. poison and disease.|PrometheanShatteredBodyBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 776,
+    "record_key": "Promethean Corruption ~ Shattered Body Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

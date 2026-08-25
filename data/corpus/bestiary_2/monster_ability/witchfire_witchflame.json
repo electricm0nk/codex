@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Witchfire ~ Witchflame",
+    "delivery": "Supernatural",
+    "description": "Any creature damaged by the incorporeal touch or ranged bolt attacks of a witchfire must succeed on a DC %1 Will save or become engulfed in sickly green flames.  While these eerie flames deal no additional damage, the affected creature glows as per faerie fire and becomes sickened.  While under the effects of the witchflame, the victim gains vulnerability to fire and takes half again as much damage (+50%%) from fire attacks of any sort.  This effect persists for 10 minutes.  The supernatural flames can only be extinguished before this duration expires by a break enchantment, miracle, remove curse, or wish spell - the effective caster level of the witchflame is %2.  Any creature entering the same square as a witchfire or striking it with a melee attack must succeed on a DC %1 Will save or begin burning with witchflame, even if the attack would not otherwise harm the witchfire because of its incorporeal nature.",
+    "description_variables": [
+      "WitchfireWitchflameDC",
+      "TL"
+    ],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:witchfire_witchflame",
+    "name": "Witchflame",
+    "owners": [
+      "bestiary_2:monster:witchfire"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Witchflame"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchfireWitchflameDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchfireWitchflameDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Witchflame)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchfireWitchflameDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature damaged by the incorporeal touch or ranged bolt attacks of a witchfire must succeed on a DC %1 Will save or become engulfed in sickly green flames.  While these eerie flames deal no additional damage, the affected creature glows as per faerie fire and becomes sickened.  While under the effects of the witchflame, the victim gains vulnerability to fire and takes half again as much damage (+50%%) from fire attacks of any sort.  This effect persists for 10 minutes.  The supernatural flames can only be extinguished before this duration expires by a break enchantment, miracle, remove curse, or wish spell - the effective caster level of the witchflame is %2.  Any creature entering the same square as a witchfire or striking it with a melee attack must succeed on a DC %1 Will save or begin burning with witchflame, even if the attack would not otherwise harm the witchfire because of its incorporeal nature.|WitchfireWitchflameDC|TL"
+      },
+      {
+        "key": "KEY",
+        "value": "Witchfire ~ Witchflame"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "SpecialAttack"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1371,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Witchfire ~ Witchflame",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ]
+}

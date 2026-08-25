@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Alien Mindpaths",
+    "category": "Teamwork",
+    "name": "Alien Mindpaths",
+    "description": "[redacted PI]",
+    "prerequisites": [
+      "PREFACT:1,TEMPLATES,IsAndroid=true,IsKasatha=true,IsLashunta=true,IsTriaxian=true",
+      "PRETEXT:Android, kasatha, lashunta, or Triaxian."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 12,
+    "record_key": "Alien Mindpaths"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

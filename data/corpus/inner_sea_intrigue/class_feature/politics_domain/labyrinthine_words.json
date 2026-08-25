@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Politics Domain ~ Labyrinthine Words",
     "name": "Labyrinthine Words",
-    "class": "Politics Domain",
+    "class": "Cleric",
     "description": "You add your Wisdom modifier in addition to your Charisma modifier on Bluff checks to lie and Diplomacy checks to influence other creatures.",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

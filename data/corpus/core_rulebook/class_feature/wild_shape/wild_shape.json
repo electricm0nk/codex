@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wild Shape",
     "name": "Wild Shape",
@@ -51,6 +51,170 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.51"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Small or Medium animal.|PREVAREQ:NoAnimalShape,0|PREMULT:2,[PREVAREQ:WildShapeProgression,1],[PREVARGTEQ:WildShapeAbilityLevel,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Tiny, Small, Medium or Large animal, or a Small elemental.|PREMULT:2,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,0]|PREMULT:2,[PREVAREQ:WildShapeProgression,2],[PREVARGTEQ:WildShapeAbilityLevel,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Tiny, Small, Medium or Large animal.|PREMULT:2,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,1]|PREMULT:2,[PREVAREQ:WildShapeProgression,2],[PREVARGTEQ:WildShapeAbilityLevel,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small elemental.|PREMULT:2,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,0]|PREMULT:2,[PREVAREQ:WildShapeProgression,2],[PREVARGTEQ:WildShapeAbilityLevel,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, a Small or Medium elemental, or a Small or Medium plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, or a Small or Medium elemental.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, or a Small or Medium plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small or Medium elemental, or a Small or Medium plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small or Medium elemental.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small or Medium plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, a Small, Medium or Large elemental, or a Small, Medium or Large plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, or a Small, Medium or Large elemental.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, or a Small, Medium or Large plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small, Medium or Large elemental, or a Small, Medium or Large plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small, Medium or Large elemental.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small, Medium or Large plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, a Small, Medium, Large or Huge elemental, or a Small, Medium, Large or Huge plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, or a Small, Medium, Large or Huge elemental.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal, or a Small, Medium, Large or Huge plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small, Medium, Large or Huge elemental, or a Small, Medium, Large or Huge plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into any Diminutive, Tiny, Small, Medium, Large or Huge animal.|PREMULT:3,[PREVAREQ:NoAnimalShape,0],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small, Medium, Large or Huge elemental.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,0],[PREVAREQ:NoPlantShape,1]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "You can change into a Small, Medium, Large or Huge plant creature.|PREMULT:3,[PREVAREQ:NoAnimalShape,1],[PREVAREQ:NoElementalShape,1],[PREVAREQ:NoPlantShape,0]|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an animal, this functions as Beast Shape I|PREVAREQ:NoAnimalShape,0|PREMULT:2,[PREVAREQ:WildShapeProgression,1],[PREVARGTEQ:WildShapeAbilityLevel,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an animal, this functions as Beast Shape II|PREVAREQ:NoAnimalShape,0|PREMULT:2,[PREVAREQ:WildShapeProgression,2],[PREVARGTEQ:WildShapeAbilityLevel,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an animal, this functions as Beast Shape III|PREVAREQ:NoAnimalShape,0|PREMULT:2,[PREVARGTEQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into a plant, this functions as Plant Shape I|PREVAREQ:NoPlantShape,0|PREMULT:2,[PREVAREQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into a plant, this functions as Plant Shape II|PREVAREQ:NoPlantShape,0|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into a plant, this functions as Plant Shape III|PREVAREQ:NoPlantShape,0|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an elemental, this functions as Elemental Body I|PREVAREQ:NoElementalShape,0|PREMULT:2,[PREVAREQ:WildShapeProgression,2],[PREVARGTEQ:WildShapeAbilityLevel,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an elemental, this functions as Elemental Body II|PREVAREQ:NoElementalShape,0|PREMULT:2,[PREVAREQ:WildShapeProgression,3],[PREVARGTEQ:WildShapeAbilityLevel,3]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an elemental, this functions as Elemental Body III|PREVAREQ:NoElementalShape,0|PREMULT:2,[PREVAREQ:WildShapeProgression,4],[PREVARGTEQ:WildShapeAbilityLevel,4]"
+      },
+      {
+        "key": "DESC",
+        "value": "When changing into an elemental, this functions as Elemental Body IV|PREVAREQ:NoElementalShape,0|PREMULT:2,[PREVARGTEQ:WildShapeProgression,5],[PREVARGTEQ:WildShapeAbilityLevel,5]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WildShapeAbilityLevel|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeAbilityLevel|1|PREMULT:2,[PREVARGTEQ:DruidWildShape,4],[PREVAREQ:Druid_CF_WildShapeOptions4,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeAbilityLevel|1|PREMULT:2,[PREVARGTEQ:DruidWildShape,6],[PREVAREQ:Druid_CF_WildShapeOptions6,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeAbilityLevel|1|PREMULT:2,[PREVARGTEQ:DruidWildShape,8],[PREVAREQ:Druid_CF_WildShapeOptions8,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeAbilityLevel|1|PREMULT:2,[PREVARGTEQ:DruidWildShape,10],[PREVAREQ:Druid_CF_WildShapeOptions10,0]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildShapeAbilityLevel|1|PREMULT:2,[PREVARGTEQ:DruidWildShape,12],[PREVAREQ:Druid_CF_WildShapeOptions12,0]"
       }
     ]
   },
@@ -68,5 +232,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

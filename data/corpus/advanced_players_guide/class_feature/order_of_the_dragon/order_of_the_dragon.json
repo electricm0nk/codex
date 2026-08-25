@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Dragon",
     "name": "Order of the Dragon",
-    "class": null,
+    "class": "Dragon",
     "description": "Whenever an order of the dragon cavalier uses Survival to provide food and water for his allies or to protect his allies from harsh weather, he receives a +%1 bonus on the check.|max(1,CavalierLVL/2)",
     "raw_tokens": [
       {
@@ -69,5 +69,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

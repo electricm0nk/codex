@@ -1,0 +1,116 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Witch Archetype ~ Words of Power",
+    "name": "Words of Power Witch",
+    "description": "A words of power using witch; %1 meta words/day.|WitchMetaWordsPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WitchArchetype.WitchSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Witch=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WitchMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using witch; %1 meta words/day.|WitchMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|Barrier|Boost|Burst|Cone|Line|Personal|Selected"
+      },
+      {
+        "key": "ABILITY",
+        "value": "0-Level Witch Word|AUTOMATIC|Witch Starter Word 0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "1st-Level Witch Word|AUTOMATIC|Witch Starter Word 1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "2nd-Level Witch Word|AUTOMATIC|Witch Starter Word 2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "3rd-Level Witch Word|AUTOMATIC|Witch Starter Word 3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "4th-Level Witch Word|AUTOMATIC|Witch Starter Word 4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "5th-Level Witch Word|AUTOMATIC|Witch Starter Word 5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "6th-Level Witch Word|AUTOMATIC|Witch Starter Word 6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "7th-Level Witch Word|AUTOMATIC|Witch Starter Word 7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "8th-Level Witch Word|AUTOMATIC|Witch Starter Word 8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "9th-Level Witch Word|AUTOMATIC|Witch Starter Word 9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WitchMetaWordsPerDay|max(1,classlevel(\"Witch\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 31,
+    "record_key": "Witch Archetype ~ Words of Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

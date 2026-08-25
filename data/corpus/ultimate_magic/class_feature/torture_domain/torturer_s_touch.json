@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Torture Domain ~ Torturer's Touch",
     "name": "Torturer's Touch",
-    "class": "Torture Domain",
+    "class": "Cleric",
     "description": "You may use touch of fatigue as a spell-like ability.  Creatures that are immune to pain effects are immune to this touch.  You can use this ability %1 times per day.|DomainTortureTimes",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

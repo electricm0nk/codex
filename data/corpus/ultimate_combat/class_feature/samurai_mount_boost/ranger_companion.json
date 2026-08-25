@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Samurai Mount Boost ~ Ranger",
+    "name": "Ranger Companion",
+    "class": "Samurai",
+    "description": "Remove Ranger companion and boost Samurai Mount.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samurai Mount Boost ~ Ranger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Multiple Companions"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Hunter's Bond ~ Animal Companion"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "2,Samurai=1,Ranger=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Remove Ranger companion and boost Samurai Mount."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CompanionDisable_AnimalCompanion|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SamuraiMountLVL-3|RangerLVL|PREVARGTEQ:RangerLVL,4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+    "sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+    "line": 1951,
+    "record_key": "Samurai Mount Boost ~ Ranger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

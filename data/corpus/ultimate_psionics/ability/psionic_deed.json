@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Kaigun ~ Psionic Deed",
+    "name": "Psionic Deed",
+    "description": "You gain access to a single 1st-level deed normally available to a gunslinger.  This deed works and interacts with grit the same way as gunslinger deeds.  If you also have levels in gunslinger, you can spend grit points from that class to use this deed.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kaigun ~ Psionic Deed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain access to a single 1st-level deed normally available to a gunslinger.  This deed works and interacts with grit the same way as gunslinger deeds.  If you also have levels in gunslinger, you can spend grit points from that class to use this deed."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Kaigun Deed|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 36,
+    "record_key": "Kaigun ~ Psionic Deed"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

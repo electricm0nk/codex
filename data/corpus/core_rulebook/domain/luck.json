@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Luck",
+    "name": "Luck",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainLuck,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Luck Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.LuckDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLuckLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLuckDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLuckTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLuckAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "DESC",
+        "value": "You are infused with luck, and your mere presence can spread good fortune."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Luck=1|True Strike|Luck=2|Aid|Luck=3|Protection from Energy|Luck=4|Freedom of Movement|Luck=5|Break Enchantment|Luck=6|Mislead|Luck=7|Spell Turning|Luck=8|Moment of Prescience|Luck=9|Miracle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 30,
+    "record_key": "Luck"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

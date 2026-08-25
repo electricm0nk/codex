@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Disarming Luck",
     "name": "Disarming Luck",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "Once per day, when a catfolk rogue attempts to disable a device and fails by 5 or more, she can reroll the check as a free action. She must take the result of the reroll, even if it's worse than the original roll.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

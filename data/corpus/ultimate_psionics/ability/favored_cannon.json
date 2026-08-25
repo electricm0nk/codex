@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cannoneer ~ Favored Cannon",
+    "name": "Favored Cannon",
+    "description": "You get +%1 to attack rolls made with the culverin.|FavoredCannonBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cannoneer ~ Favored Cannon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Marksman ~ Favored Weapon"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FavoredCannonBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You get +%1 to attack rolls made with the culverin.|FavoredCannonBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FavoredCannonBonus|floor((MarksmanLVL+2)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Culverin|TOHIT|FavoredCannonBonus|TYPE=Competence"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 23,
+    "record_key": "Cannoneer ~ Favored Cannon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

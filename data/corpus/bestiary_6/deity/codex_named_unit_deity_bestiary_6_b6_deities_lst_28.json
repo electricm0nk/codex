@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:39Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_28)",
+    "name": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_28)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Evil,Plant,Water|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Qlippoth lord of tainted oceans, vile fecundity"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Blistering Womb"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Jellyfish shaped rune"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|None"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Blue"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Qlippoth Lords"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Trident"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_deities.lst",
+    "sha256": "4efea24653a7d3bd8d418ad934f8b0f1294ff22c4e0c6649460e1bb39a77d8c3",
+    "line": 28,
+    "record_key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_28)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_6:b6_deities.lst:28"
+  }
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Wandering Spirit ~ Mammoth",
     "name": "Mammoth (Wandering Spirit)",
-    "class": "Shaman Wandering Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: Enlarge person (1st), bull's strength (2nd), rage (3rd), stoneskin (4th), beast shape III (5th), tar pool (6th), summon nature's ally VII (7th), frightful aspect (8th), polar midnight (9th).",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

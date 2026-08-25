@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Evil Domain",
     "name": "Evil",
-    "class": null,
+    "class": "Cleric",
     "description": "You are sinister and cruel, and have wholly pledged your soul to the cause of evil.",
     "raw_tokens": [
       {
@@ -75,6 +75,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Evil=1|Protection from Good|Evil=2|Align Weapon (Evil Only)|Evil=3|Magic Circle against Good|Evil=4|Unholy Blight|Evil=5|Dispel Good|Evil=6|Create Undead|Evil=7|Blasphemy|Evil=8|Unholy Aura|Evil=9|Summon Monster IX (Evil Spell Only)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Evil],[PREVARLT:EvilDomain,1]"
       }
     ]
   },
@@ -92,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

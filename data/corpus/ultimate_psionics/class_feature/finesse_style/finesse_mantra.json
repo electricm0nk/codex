@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Finesse Style ~ Finesse Mantra",
+    "name": "Finesse Mantra",
+    "class": "Finesse Style",
+    "description": "+%1 bonus on ranged attacks.|(MarksmanStyleLVL+1)/4",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Finesse Style ~ Finesse Mantra"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MarksmanClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "+%1 bonus on ranged attacks.|(MarksmanStyleLVL+1)/4"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|TOHIT.Ranged|(MarksmanStyleLVL+1)/4*PsionicFocusActive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 356,
+    "record_key": "Finesse Style ~ Finesse Mantra"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

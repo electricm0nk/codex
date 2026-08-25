@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bard Archetype ~ Street Performer",
     "name": "Street Performer",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Whether acrobat, troubadour, or thespian, the street performer mixes with the masses, singing for his supper.",
     "raw_tokens": [
       {
@@ -71,6 +71,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Bard"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Street Performer],[!PREFACT:1,ABILITIES,Bard_Archetype_InspireCourage=True,Bard_Archetype_InspireCompetence=True,Bard_Archetype_InspireGreatness=True,Bard_Archetype_InspireHeroics=True,Bard_Archetype_Countersong=True,Bard_Archetype_BardicKnowledge=True,Bard_Archetype_LoreMaster=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireGreatness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_InspireHeroics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_CF_LoreMaster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCourage|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireCompetence|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireGreatness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_InspireHeroics|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_CounterSong|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_BardicKnowledge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Bard_Archetype_LoreMaster|true"
       }
     ]
   },
@@ -87,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

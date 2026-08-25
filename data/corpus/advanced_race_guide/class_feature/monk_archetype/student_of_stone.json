@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Student of Stone",
     "name": "Student of Stone",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "By following the path of the stone, students of stone give up much of monks' mobility in favor of sheer resilience.",
     "raw_tokens": [
       {
@@ -83,6 +83,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Monk"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Student of Stone],[!PREFACT:1,ABILITIES,Monk_Archetype_Evasion=True,Monk_Archetype_FastMovement=True,Monk_Archetype_HighJump=True,Monk_Archetype_ImprovedEvasion=True,Monk_Archetype_AbundantStep=True,Monk_Archetype_PerfectSelf=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_HighJump|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PerfectSelf|true"
       }
     ]
   },
@@ -99,5 +151,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

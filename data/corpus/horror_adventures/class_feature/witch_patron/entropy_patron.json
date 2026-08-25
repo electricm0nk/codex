@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Witch Patron ~ Entropy",
+    "name": "Entropy Patron",
+    "class": "Witch",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Witch Patron ~ Entropy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WitchPatron.SpecialQuality"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=1|Confusion (Lesser)|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,2],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell2]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=2|Plague Carrier|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,4],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell4]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=3|Babble|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,6],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell6]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=4|Wandering Star Motes|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,8],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell8]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=5|Feeblemind|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,10],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell10]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=6|Antimagic Field|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,12],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell12]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=7|Insanity|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,14],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell14]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=8|Symbol of Insanity|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,16],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell16]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=9|Interplanetary Teleport|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,18],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatronSpell18]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 331,
+    "record_key": "Witch Patron ~ Entropy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Domain Base ~ Scalykind",
+    "name": "Scalykind",
+    "class": "Domain Base",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Base ~ Scalykind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScalykindDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ScalykindDomain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindDC|10+(DomainScalykindLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainScalykindTimes|DomainPowerTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_class.lst",
+    "sha256": "fb3031a343dcd1408f50cd61a32f97516e73409d8cd79ead3a1e36efd1d756de",
+    "line": 7,
+    "record_key": "Domain Base ~ Scalykind"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

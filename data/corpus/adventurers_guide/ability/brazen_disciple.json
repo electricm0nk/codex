@@ -1,0 +1,136 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Unchained Monk Archetype ~ Brazen Disciple",
+    "name": "Brazen Disciple",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk Archetype ~ Brazen Disciple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.Unchained Monk Archetype"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Monk=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Unchained Monk Archetype ~ Brazen Disciple],[!PREFACT:1,ABILITIES,Monk_Archetype_ClassSkills=True,Monk_Archetype_BonusFeats=True,Monk_Archetype_StillMind=True,Monk_Archetype_PerfectSelf=True,Monk_Archetype_KiPowers12=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Brazen Disciple ~ Class Skills|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Feinting Flurry|PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Bonus Feat|PRECLASS:1,Monk=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Efreeti's Guile|PRECLASS:1,Monk=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Confounding Koan|PRECLASS:1,Monk=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brazen Disciple ~ Genie Apotheosis|PRECLASS:1,Monk=20"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_KiPowers12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StillMind|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_PerfectSelf|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_KiPowers12|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 53,
+    "record_key": "Unchained Monk Archetype ~ Brazen Disciple"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Tattoo Chamber",
     "name": "Tattoo Chamber",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante can magically absorb items through a tattoo on his hand or wrist and easily retrieve them or activate their magical abilities without making them manifest. The items seemingly disappear into the tattoo, but actually enter an extradimensional space that the vigilante can access via the tattoo. Stowing an item in this way requires a full-round action, and the space can store %1 items. These items must be items the vigilante can hold in one hand. Retrieving a stowed item requires mentally activating the tattoo as a swift action. The item appears in the cabalist's hand, so worn items must still be donned to gain their benefits. The vigilante can also activate any spell-trigger abilities of a stored item as though he were wielding the item, producing the magic effect from his tattoo rather than from the item. If the vigilante dies while items are within his tattoo chamber, those items fade into existence within 5 feet of the corpse.|1+VigilanteLVL/3",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

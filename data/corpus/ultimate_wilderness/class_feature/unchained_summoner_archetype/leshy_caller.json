@@ -1,0 +1,128 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Summoner Archetype ~ Leshy Caller",
+    "name": "Leshy Caller",
+    "class": "Unchained Summoner Archetype",
+    "description": "A leshy caller summons creatures from the First World and forges a bond with a leshy eidolon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Summoner Archetype ~ Leshy Caller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SummonerArchetype"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Class,Summoner ~ Unchained Class"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Summoner=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Unchained Summoner Archetype ~ Leshy Caller],[!PREFACT:1,ABILITIES,Summoner_Archetype_Eidolon=True,Summoner_Archetype_SummonMonster=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "A leshy caller summons creatures from the First World and forges a bond with a leshy eidolon."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Leshy Caller ~ Leshy Eidolon|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Leshy Caller ~ Summon Nature's Ally|PRECLASS:1,Summoner=1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Eidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_SummonMonster|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Agathion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Angel|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Archon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Azata|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Daemon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Demon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Devil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Div|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Elemental|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Inevitable|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Protean|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_EidolonSubtype_Psychopomp|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_pu.lst",
+    "sha256": "da1acaa10f8a05f52dab4f2f966f770ee8b9beb6abc3fd0bffad6eed91842c27",
+    "line": 9,
+    "record_key": "Unchained Summoner Archetype ~ Leshy Caller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

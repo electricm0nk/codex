@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Flood Walker ~ Patron Spells",
+    "name": "Patron Spells",
+    "class": "Witch",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flood Walker ~ Patron Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Witch Class Feature.FloodWalkerClassFeatures"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=4|Aboleth's Lung|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,8]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=10|Suffocation|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,10]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=16|Seamantle|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,16]"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Witch=18|Suffocation (Mass)|PREMULT:2,[PREVARGTEQ:WitchPatronLVL,18]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_arg.lst",
+    "sha256": "54f3a2c057555c56328ef47ef1d86dfb30eeebc9b377516682828d26ea076021",
+    "line": 14,
+    "record_key": "Flood Walker ~ Patron Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

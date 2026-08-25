@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Lament of Summer's Last Breath",
+    "school": "Abjuration",
+    "level": 2,
+    "description": "You wrap the target in a mantle of summery air, within which the ambient temperature never falls below 70 degrees Fahrenheit. Creatures with the cold subtype that start their turns in the area take 1d4 + %1 points of fire damage no saving throw. Each time an evil dragon, fey, or giant takes damage from the spell, it must succeed at a Will saving throw or become shaken for 1 round. Creatures attempting to cast a cold spell in the area must succeed at a Will save or the spell fails. Succeeding at one such save to cast a spell allows a creature to continue casting cold spells in the area for the spell's remainder."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 26,
+    "record_key": "Lament of Summer's Last Breath"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Fleshwarper",
+    "category": "Item Creation",
+    "name": "Fleshwarper",
+    "description": "You can create creatures through an abominable alchemical process. You can create fleshwarped creatures and fleshcraft grafts (see page 165). A newly created fleshwarped creature has average hit points for its Hit Dice.",
+    "prerequisites": [
+      "PREALIGN:LE,NE,CE",
+      "PRESKILL:2,Craft (alchemy)=5,Heal=5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 28,
+    "record_key": "Fleshwarper"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

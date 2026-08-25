@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Freedom Fighter",
+    "name": "Freedom Fighter",
+    "description": "Your parents allowed escaping slaves to hide in your home, and the stories you've heard from them instilled into you a deep loathing of slavery. You gain a +1 trait bonus on any skill check or attack roll made during the process of escaping capture or in helping a slave escape bondage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Freedom Fighter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Halfling Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Freedom Fighter],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREFACT:1,TEMPLATES,IsHalfling=true],[PREABILITY:1,CATEGORY=Special Ability,Adoptive Race ~ Halfling]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your parents allowed escaping slaves to hide in your home, and the stories you've heard from them instilled into you a deep loathing of slavery. You gain a +1 trait bonus on any skill check or attack roll made during the process of escaping capture or in helping a slave escape bondage."
+      },
+      {
+        "key": "CSKILL",
+        "value": "Escape Artist"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 202,
+    "record_key": "Trait ~ Freedom Fighter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

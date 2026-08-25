@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Elemental Rage (Greater)",
     "name": "Elemental Rage, Greater",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, all of the barbarian's critical hits made with melee weapons deal an additional 1d10 points of energy damage (2d10 if the weapon deals W3 damage on a critical hit, 3d10 if the weapon deals W4 on a critical hit). The type of this damage is the same as the type chosen for the elemental rage power.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

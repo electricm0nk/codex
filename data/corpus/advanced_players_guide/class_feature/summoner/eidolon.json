@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner ~ Eidolon",
     "name": "Eidolon",
@@ -27,6 +27,22 @@
       {
         "key": "BONUS",
         "value": "VAR|EidolonCompanionLVL|SummonerLVL"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidolonEvolution|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Eidolon_CF_EvolutionProgression|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidolonEvolution|3+(SummonerLVL>=2)+(SummonerLVL>=3)+if(SummonerLVL>=4,2,0)+(SummonerLVL>=5)+(SummonerLVL>=6)+(SummonerLVL>=7)+(SummonerLVL>=8)+if(SummonerLVL>=9,2,0)+(SummonerLVL>=10)+(SummonerLVL>=11)+(SummonerLVL>=12)+(SummonerLVL>=13)+if(SummonerLVL>=14,2,0)+(SummonerLVL>=15)+(SummonerLVL>=16)+(SummonerLVL>=17)+(SummonerLVL>=18)+if(SummonerLVL>=19,2,0)+(SummonerLVL>=20)|PREVAREQ:Eidolon_CF_EvolutionProgression,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion ~ Eidolon"
       }
     ]
   },
@@ -45,5 +61,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

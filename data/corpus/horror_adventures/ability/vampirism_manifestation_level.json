@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Manifestation Level",
+    "name": "Vampirism Manifestation Level",
+    "description": "Your Vampirism corruption is level %1.|VampirismManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=9|TITLE=Vampirism Manifestation Level"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VampirismManifestationLevel|0"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|VampirismManifestationLevel|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Your Vampirism corruption is level %1.|VampirismManifestationLevel"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 880,
+    "record_key": "Vampirism Manifestation Level"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

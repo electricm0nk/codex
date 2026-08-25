@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aromaphile ~ Debilitating Aroma",
+    "name": "Debilitating Aroma",
+    "class": "Mesmerist",
+    "description": "An aromaphile can imbue his hypnotic aroma with other effects. These effects are the same as those listed within the bold stare mesmerist class feature, but they affect creatures affected by his hypnotic aroma for as long as they are affected by that ability. The aromaphile chooses one option each time he gains a new debilitating aroma improvement, and the choice can't be changed later. The aromaphile can't choose the same debilitating aroma more than once unless otherwise noted.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aromaphile ~ Debilitating Aroma"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.AromaphileClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DebilitatingAromasKnown|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An aromaphile can imbue his hypnotic aroma with other effects. These effects are the same as those listed within the bold stare mesmerist class feature, but they affect creatures affected by his hypnotic aroma for as long as they are affected by that ability. The aromaphile chooses one option each time he gains a new debilitating aroma improvement, and the choice can't be changed later. The aromaphile can't choose the same debilitating aroma more than once unless otherwise noted."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Debilitating Aroma Choice|DebilitatingAromasKnown"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DebilitatingAromasKnown|(MesmeristLVL+1)/4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 105,
+    "record_key": "Aromaphile ~ Debilitating Aroma"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

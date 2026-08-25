@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Graveknight ~ Sacrilegious Aura",
+    "delivery": "Supernatural",
+    "description": "A graveknight constantly exudes an aura of intense evil and negative energy in a 30-foot radius. This aura functions as the spell desecrate and uses the graveknight's armor as an altar of sorts to double the effects granted. The graveknight constantly gains the benefits of this effect (including the bonus hit points, as this aura is part of the graveknight's creation). In addition, this miasma of fell energies hinders the channeling of positive energy. Any creature that attempts to summon positive energy in this area-such as through a cleric's channel energy ability, a paladin's lay on hands, or any spell with the healing subtype-must make a concentration check with a DC equal to 10 + 1/2 the graveknight's Hit Dice + the graveknight's Charisma modifier. If the character fails, the effect is expended but does not function.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:graveknight_sacrilegious_aura",
+    "name": "Sacrilegious Aura",
+    "owners": [
+      "bestiary_3:monster:graveknight"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A graveknight constantly exudes an aura of intense evil and negative energy in a 30-foot radius. This aura functions as the spell desecrate and uses the graveknight's armor as an altar of sorts to double the effects granted. The graveknight constantly gains the benefits of this effect (including the bonus hit points, as this aura is part of the graveknight's creation). In addition, this miasma of fell energies hinders the channeling of positive energy. Any creature that attempts to summon positive energy in this area-such as through a cleric's channel energy ability, a paladin's lay on hands, or any spell with the healing subtype-must make a concentration check with a DC equal to 10 + 1/2 the graveknight's Hit Dice + the graveknight's Charisma modifier. If the character fails, the effect is expended but does not function."
+      },
+      {
+        "key": "KEY",
+        "value": "Graveknight ~ Sacrilegious Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.Supernatural.GraveknightRacialAbility"
+      }
+    ],
+    "source_page": "p.139",
+    "traits": [
+      "RaceAbility",
+      "GraveknightRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 968,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Graveknight ~ Sacrilegious Aura",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

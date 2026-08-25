@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Hydra ~ Fast Healing",
+    "name": "Fast Healing",
+    "description": "A mythic hydra's fast healing ability is equal to its current number of heads (minimum fast healing 5). This fast healing applies only to damage dealt to the hydra's body.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Hydra ~ Fast Healing"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Hydra Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic hydra's fast healing ability is equal to its current number of heads (minimum fast healing 5). This fast healing applies only to damage dealt to the hydra's body."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 189,
+    "record_key": "Mythic Hydra ~ Fast Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

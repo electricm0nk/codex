@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Battle Mystery ~ Battlecry",
     "name": "Battlecry",
-    "class": "Battle Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can unleash an inspiring battlecry. All allies within 100 feet who hear your cry gain a +%1 morale bonus on attack rolls, skill checks, and saving throws for %2 round(s). You can use this ability %3 time(s) per day.|OracleBattlecryBonus|OracleBattlecryDuration|OracleBattlecryTimes",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

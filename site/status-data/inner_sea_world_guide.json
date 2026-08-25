@@ -3,6 +3,491 @@
   "title": "Inner Sea World Guide",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 2,
+      "denominator": 2,
+      "pct": 0.0,
+      "excluded_from_percentage": 65,
+      "standing_breakdown": {
+        "unclassified": 65,
+        "origin": 2
+      },
+      "items": [
+        {
+          "name": "Default",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Default"
+        },
+        {
+          "name": "Racial Traits ~ Gillman",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Gillman"
+        },
+        {
+          "name": "Racial Traits ~ Strix",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Racial Traits ~ Strix"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #9"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #10"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #11"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #12"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #13"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #14"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #15"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #16"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #17"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #18"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #19"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #20"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #21"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #22"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #23"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #24"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #25"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "ShoantiClan",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ShoantiClan)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #27"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #28"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #29"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #30"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #31"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #32"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #33"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #34"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #35"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #36"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #37"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #38"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #39"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #40"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #41"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #42"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #43"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #44"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "ShoantiClan",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ShoantiClan) #45"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #46"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "ShoantiClan",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ShoantiClan) #47"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "ShoantiClan",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ShoantiClan) #48"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "ShoantiClan",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ShoantiClan) #49"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "ShoantiClan",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ShoantiClan) #50"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #51"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #52"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #53"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #54"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "ShoantiClan",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ShoantiClan) #55"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #56"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #57"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #58"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #59"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #60"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #61"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #62"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Region",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Region) #63"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #64"
+        }
+      ]
+    },
+    {
       "kind": "class_feature",
       "label": "Class Features",
       "done": 0,
@@ -10,9 +495,9 @@
       "not_started": 52,
       "denominator": 52,
       "pct": 0.0,
-      "excluded_from_percentage": 119,
+      "excluded_from_percentage": 124,
       "standing_breakdown": {
-        "unclassified": 119,
+        "unclassified": 124,
         "origin": 52
       },
       "items": [
@@ -374,6 +859,13 @@
           "display_name": "Guarded Mind (SpecialQuality.Extraordinary.DomainPower) #2"
         },
         {
+          "name": "Hell Knight Plate",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Hell Knight Plate"
+        },
+        {
           "name": "Hell's Knight",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
@@ -621,9 +1113,23 @@
         {
           "name": "Scalykind",
           "doneness": "not-started",
+          "type_facet": "Internal.DomainAbility",
+          "standing": "unclassified",
+          "display_name": "Scalykind (Internal.DomainAbility)"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "unclassified",
+          "display_name": "Scalykind (Internal)"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
-          "display_name": "Scalykind"
+          "display_name": "Scalykind (InquisitorDomain)"
         },
         {
           "name": "Scholar ~ Arcana",
@@ -978,9 +1484,23 @@
         {
           "name": "Void",
           "doneness": "not-started",
+          "type_facet": "Internal.DomainAbility",
+          "standing": "unclassified",
+          "display_name": "Void (Internal.DomainAbility)"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
+          "type_facet": "Internal",
+          "standing": "unclassified",
+          "display_name": "Void (Internal)"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
           "type_facet": "InquisitorDomain",
           "standing": "unclassified",
-          "display_name": "Void"
+          "display_name": "Void (InquisitorDomain)"
         },
         {
           "name": "War",
@@ -1263,6 +1783,519 @@
           "type_facet": "PC.Prestige",
           "standing": "unclassified",
           "display_name": "[redacted PI] (PC.Prestige) #4"
+        }
+      ]
+    },
+    {
+      "kind": "deity",
+      "label": "Deities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 63,
+      "standing_breakdown": {
+        "unclassified": 63
+      },
+      "items": [
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #9"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #10"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #11"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #12"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #13"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #14"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #15"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #16"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #17"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #18"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #19"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #20"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #21"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #22"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #23"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #24"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #25"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #26"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #27"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #28"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #29"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #30"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #31"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #32"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #33"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #34"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #35"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #36"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #37"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #38"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #39"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #40"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #41"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #42"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #43"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #44"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #45"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #46"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #47"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #48"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #49"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #50"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #51"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #52"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #53"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #54"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #55"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #56"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #57"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #58"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #59"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #60"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #61"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #62"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #63"
+        }
+      ]
+    },
+    {
+      "kind": "domain",
+      "label": "Domains",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 6,
+      "standing_breakdown": {
+        "unclassified": 6
+      },
+      "items": [
+        {
+          "name": "Dark Tapestry Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Dark Tapestry Subdomain"
+        },
+        {
+          "name": "Dragon Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Dragon Subdomain"
+        },
+        {
+          "name": "Saurian Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Saurian Subdomain"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Scalykind"
+        },
+        {
+          "name": "Stars Subdomain",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Stars Subdomain"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Void"
         }
       ]
     },
@@ -1945,36 +2978,178 @@
       ]
     },
     {
+      "kind": "language",
+      "label": "Languages",
+      "done": 0,
+      "partial": 0,
+      "not_started": 4,
+      "denominator": 4,
+      "pct": 0.0,
+      "excluded_from_percentage": 14,
+      "standing_breakdown": {
+        "origin": 4,
+        "unclassified": 14
+      },
+      "items": [
+        {
+          "name": "Necril",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "origin",
+          "display_name": "Necril"
+        },
+        {
+          "name": "Polyglot",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "origin",
+          "display_name": "Polyglot"
+        },
+        {
+          "name": "Shadowtongue",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "origin",
+          "display_name": "Shadowtongue"
+        },
+        {
+          "name": "Strix",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "origin",
+          "display_name": "Strix"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.AncientLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.AncientLanguage)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.AncientLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.AncientLanguage) #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.ModernHumanLanguage)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.AncientLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.AncientLanguage) #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.ModernHumanLanguage) #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.ModernHumanLanguage) #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.ModernHumanLanguage) #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.ModernHumanLanguage) #9"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.AncientLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.AncientLanguage) #10"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.AncientLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.AncientLanguage) #11"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.ModernHumanLanguage) #12"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.ModernHumanLanguage) #13"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read.ModernHumanLanguage",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read.ModernHumanLanguage) #14"
+        }
+      ]
+    },
+    {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 6,
-      "partial": 2,
-      "not_started": 7,
-      "denominator": 15,
-      "pct": 40.0,
-      "excluded_from_percentage": 15,
+      "done": 9,
+      "partial": 4,
+      "not_started": 1,
+      "denominator": 14,
+      "pct": 64.3,
+      "excluded_from_percentage": 16,
       "standing_breakdown": {
-        "origin": 15,
-        "unclassified": 15
+        "origin": 14,
+        "unclassified": 16
       },
       "items": [
         {
           "name": "Aligned Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Aligned Strike"
         },
         {
           "name": "Aura of Corruption",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Corruption"
         },
         {
           "name": "Bay",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Bay"
@@ -2002,21 +3177,21 @@
         },
         {
           "name": "Defoliation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Defoliation"
         },
         {
           "name": "Desecrate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Aura",
           "standing": "origin",
           "display_name": "Desecrate"
         },
         {
           "name": "Difficult to Create",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Difficult to Create"
@@ -2044,7 +3219,7 @@
         },
         {
           "name": "Grant Spells",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Grant Spells"
@@ -2058,7 +3233,7 @@
         },
         {
           "name": "Hellfire Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Hellfire Breath"
@@ -2072,7 +3247,7 @@
         },
         {
           "name": "Kick",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Kick"
@@ -2081,7 +3256,7 @@
           "name": "Magic Weapon",
           "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin",
+          "standing": "unclassified",
           "display_name": "Magic Weapon"
         },
         {
@@ -2100,7 +3275,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration"
@@ -2142,7 +3317,7 @@
         },
         {
           "name": "Swift Reactions",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Swift Reactions"
@@ -2156,14 +3331,14 @@
         },
         {
           "name": "Water Breathing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Water Breathing"
         },
         {
           "name": "Winding",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Winding"
@@ -2958,6 +4133,610 @@
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Arcane.Divine) #5"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 8,
+      "denominator": 8,
+      "pct": 0.0,
+      "excluded_from_percentage": 76,
+      "standing_breakdown": {
+        "unclassified": 76,
+        "origin": 8
+      },
+      "items": [
+        {
+          "name": "Aquatic",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Aquatic"
+        },
+        {
+          "name": "Bonus Language ~ Necril",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Necril"
+        },
+        {
+          "name": "Bonus Language ~ Polyglot",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Polyglot"
+        },
+        {
+          "name": "Bonus Language ~ Shadowtongue",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Shadowtongue"
+        },
+        {
+          "name": "Bonus Language ~ Strix",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bonus Language ~ Strix"
+        },
+        {
+          "name": "Clockwork",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Clockwork"
+        },
+        {
+          "name": "Gillman",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Gillman"
+        },
+        {
+          "name": "Gillman",
+          "doneness": "not-started",
+          "type_facet": "Racial Heritage",
+          "standing": "origin",
+          "display_name": "Gillman (Racial Heritage)"
+        },
+        {
+          "name": "IsGillman",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsGillman"
+        },
+        {
+          "name": "IsStrix",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "IsStrix"
+        },
+        {
+          "name": "Nascent Demon Lord Traits",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Nascent Demon Lord Traits"
+        },
+        {
+          "name": "Strix",
+          "doneness": "not-started",
+          "type_facet": "Race Builder Subtype",
+          "standing": "unclassified",
+          "display_name": "Strix (Race Builder Subtype)"
+        },
+        {
+          "name": "Strix",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Strix"
+        },
+        {
+          "name": "Strix",
+          "doneness": "not-started",
+          "type_facet": "Racial Heritage",
+          "standing": "unclassified",
+          "display_name": "Strix (Racial Heritage)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #9"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #10"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #11"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #12"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #13"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #14"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #15"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #16"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #17"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #18"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #19"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #20"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #21"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #22"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #23"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #24"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #25"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #26"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #27"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #28"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #29"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #30"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #31"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #32"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #33"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #34"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #35"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #36"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #37"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #38"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #39"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #40"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #41"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #42"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #43"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #44"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #45"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #46"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #47"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #48"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #49"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #50"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #51"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #52"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #53"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #54"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #55"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #56"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #57"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #58"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #59"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #60"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #61"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #62"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #63"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #64"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #65"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #66"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #67"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #68"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #69"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #70"
         }
       ]
     }

@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Quah Bond",
+    "category": "Teamwork",
+    "name": "Quah Bond",
+    "description": "Your bond with your totem spirit increases around others of the same quah. If at least one Shoanti ally from the same quah who also has this feat is within 30 feet, double your benefits from the Totem Spirit feat.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Background,Shoanti",
+      "PREABILITY:1,CATEGORY=FEAT,Totem Spirit",
+      "PRETEXT:Totem Spirit (ISWG p.289), human (Shoanti)."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 49,
+    "record_key": "Quah Bond"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

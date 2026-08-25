@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager",
     "name": "Bloodrager",
-    "class": null,
+    "class": "Bloodrager",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,278 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|var(\"CL=Bloodrager\")"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bloodrager ~ Class Skills|PREVAREQ:Bloodrager_CF_ClassSkills,0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_Bloodline|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_Bloodrage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_FastMovement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodSanctuary|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodCasting|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_EschewMaterials|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_Spells|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_DamageReduction|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_GreaterBloodrage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_IndomitableWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_TirelessBloodrage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_MightyBloodrage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlineFeat6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlineFeat9|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlineFeat12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlineFeat15|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlineFeat18|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlinePower1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlinePower4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlinePower8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlinePower12|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlinePower16|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_BloodlinePower20|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_Bloodline|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_Bloodline=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_Bloodrage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_Bloodrage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_FastMovement|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_FastMovement=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodSanctuary|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodSanctuary=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodCasting|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodCasting=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_EschewMaterials|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_EschewMaterials=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_Spells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_Spells=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_DamageReduction|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_DamageReduction=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_GreaterBloodrage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_GreaterBloodrage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_IndomitableWill|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_IndomitableWill=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_TirelessBloodrage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_TirelessBloodrage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_MightyBloodrage|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_MightyBloodrage=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlineFeat6|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlineFeat6=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlineFeat9|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlineFeat9=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlineFeat12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlineFeat12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlineFeat15|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlineFeat15=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlineFeat18|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlineFeat18=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePower1|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlinePower1=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePower4|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlinePower4=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePower8|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlinePower8=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePower12|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlinePower12=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePower16|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlinePower16=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodlinePower20|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_BloodlinePower20=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_Bloodline|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerBloodline"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_Bloodrage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerBloodrage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_FastMovement|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerFastMovement"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodSanctuary|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerBloodSanctuary"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_BloodCasting|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerBloodCasting"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_EschewMaterials|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerEschewMaterials"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_DamageReduction|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerDamageReduction"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_GreaterBloodrage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerGreaterBloodrage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_IndomitableWill|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerIndomitableWill"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_TirelessBloodrage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerTirelessBloodrage"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_MightyBloodrage|1|TYPE=Boolean|PREABILITY:1,CATEGORY=Archetype,TYPE.BloodragerMightyBloodrage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_UncannyDodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_ImprovedUncannyDodge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_ArmorProficiency|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_WeaponProficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Bloodrager_CF_Spells|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_UncannyDodge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_UncannyDodge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_ImprovedUncannyDodge|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_ImprovedUncannyDodge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_ArmorProficiency|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_ArmorProficiency=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_WeaponProficiencies|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_WeaponProficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_CF_Spells|1|TYPE=Boolean|PREFACT:1,ABILITIES,Bloodrager_CF_Spells=True"
       }
     ]
   },
@@ -49,5 +321,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

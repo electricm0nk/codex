@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shadow Bloodline ~ Nighteye",
     "name": "Nighteye",
-    "class": "Shadow Bloodline",
+    "class": "Sorcerer",
     "description": "You gain darkvision %1 feet. If you already possess darkvision, its range is increased by this amount.|Sorcerer_ShadowNighteye_Range",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

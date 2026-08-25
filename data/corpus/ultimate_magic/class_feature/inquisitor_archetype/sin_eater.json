@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Sin Eater",
     "name": "Sin Eater",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "There is a sect of inquisitors in some religions that believes it is not enough to hunt the enemies of the church - one must also devour those enemies' sins. More benign versions of the practice believe that sin, or evil, is taken out of the world when a sin is devoured, denying the enemy's soul to the enemy's god and purifying the world of its taint. Followers of malevolent churches believe that consuming the sins of good folk not only corrupts the enemy soul to keep it from the celestial planes, but also taints the souls of those who witness the sin-eating or the corpse of its victim. Consuming sins empowers the sin eater, at least for a time.",
     "raw_tokens": [
       {
@@ -55,6 +55,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Sin Eater],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_Domains=True,Inquisitor_Archetype_TeamworkFeat6=True,Inquisitor_Archetype_ExploitWeakness=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TeamworkFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ExploitWeakness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TeamworkFeat6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ExploitWeakness|true"
       }
     ]
   },
@@ -71,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

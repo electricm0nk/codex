@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thoughtsinger ~ Collective",
+    "name": "Collective",
+    "class": "Thoughtsinger",
+    "description": "Join %1 minds, plus your own, within %2 feet; can manifest some powers through collective.|ThoughtsingerCollectiveMinds|ThoughtsingerCollectiveRange|!PREABILITY:1,CATEGORY=Internal,Thoughtsinger ~ Collective Range Unlimited",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thoughtsinger ~ Collective"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BardClassFeatures.SpecialQuality.Supernatural.Collective.ThrallherdLinkMinds"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThoughtsingerCollectiveMinds|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThoughtsingerCollectiveRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThoughtsingerCollectiveLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Join %1 minds, plus your own, within %2 feet; can manifest some powers through collective.|ThoughtsingerCollectiveMinds|ThoughtsingerCollectiveRange|!PREABILITY:1,CATEGORY=Internal,Thoughtsinger ~ Collective Range Unlimited"
+      },
+      {
+        "key": "DESC",
+        "value": "Join %1 minds, plus your own, on own plane; can manifest some powers through collective.|ThoughtsingerCollectiveMinds|PREMULT:2,[PREABILITY:1,CATEGORY=Internal,Thoughtsinger ~ Collective Range Unlimited],[!PREABILITY:1,CATEGORY=Internal,Thoughtsinger ~ Collective Range Planar]"
+      },
+      {
+        "key": "DESC",
+        "value": "Join %1 minds, plus your own, across planar boundaries; can manifest some powers through collective.|ThoughtsingerCollectiveMinds|ThoughtsingerCollectiveRange|PREABILITY:1,CATEGORY=Internal,Thoughtsinger ~ Collective Range Planar"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThoughtsingerCollectiveMinds|max(CHA,ThoughtsingerCollectiveLVL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThoughtsingerCollectiveRange|100+10*ThoughtsingerCollectiveLVL|!PREABILITY:1,CATEGORY=FEAT,Enlarged Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveRange|400+(40*EnlargedCollectiveLVL)|PREABILITY:1,CATEGORY=FEAT,Enlarged Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThoughtsingerCollectiveLVL|ThoughtsingerLVL|!PREABILITY:1,CATEGORY=FEAT,Expansive Collective"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThoughtsingerCollectiveLVL|HD|PREABILITY:1,CATEGORY=FEAT,Expansive Collective"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2428,
+    "record_key": "Thoughtsinger ~ Collective"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

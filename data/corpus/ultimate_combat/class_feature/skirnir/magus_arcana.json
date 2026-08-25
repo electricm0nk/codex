@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skirnir ~ Magus Arcana",
+    "name": "Magus Arcana",
+    "class": "Skirnir",
+    "description": "The following magus arcana complement the skirnir archetype - arcane redoubt, arcane redoubt (greater), enduring blade (may use on weapon or shield), pool strike*, pool strike (arcing, clinging, thundering), prescient defense, reflection*.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skirnir ~ Magus Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "The following magus arcana complement the skirnir archetype - arcane redoubt, arcane redoubt (greater), enduring blade (may use on weapon or shield), pool strike*, pool strike (arcing, clinging, thundering), prescient defense, reflection*."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 57,
+    "record_key": "Skirnir ~ Magus Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

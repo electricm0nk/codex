@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dragon Disciple ~ Draconic Crossblooded Rager Bloodline",
+    "name": "Draconic Bloodrager Bloodline",
+    "class": "Dragon Disciple",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dragon Disciple ~ Draconic Crossblooded Rager Bloodline"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dragon Disciple Bloodline Choice"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Dragon Disciple ~ Blood of Dragons"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bloodrager=1"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Blood of Dragons Bloodline|!PC,QUALIFIED[TYPE=BloodragerBloodlineChoice]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Blood of Dragons Bloodline|AUTOMATIC|%LIST"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bloodrager ~ Bloodline Tracker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodragerBloodlineCasterLVL|if(BloodragerLVL>=1,DragonDiscipleLVL,0)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 382,
+    "record_key": "Dragon Disciple ~ Draconic Crossblooded Rager Bloodline"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -3,6 +3,77 @@
   "title": "Inner Sea Races",
   "kinds": [
     {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 8,
+      "standing_breakdown": {
+        "unclassified": 8
+      },
+      "items": [
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI])"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "HumanEthnicity",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (HumanEthnicity) #8"
+        }
+      ]
+    },
+    {
       "kind": "equipment",
       "label": "Equipment",
       "done": 68,
@@ -1043,17 +1114,60 @@
       ]
     },
     {
+      "kind": "language",
+      "label": "Languages",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 4,
+      "standing_breakdown": {
+        "unclassified": 4
+      },
+      "items": [
+        {
+          "name": "Cyclops",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Cyclops"
+        },
+        {
+          "name": "Xenophobic",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "Xenophobic"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Silent",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Silent)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Spoken.Written.Read",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Spoken.Written.Read)"
+        }
+      ]
+    },
+    {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 53,
-      "partial": 14,
-      "not_started": 51,
-      "denominator": 118,
-      "pct": 44.9,
-      "excluded_from_percentage": 24,
+      "done": 58,
+      "partial": 19,
+      "not_started": 42,
+      "denominator": 119,
+      "pct": 48.7,
+      "excluded_from_percentage": 23,
       "standing_breakdown": {
-        "origin": 118,
-        "unclassified": 24
+        "origin": 119,
+        "unclassified": 23
       },
       "items": [
         {
@@ -1121,7 +1235,7 @@
         },
         {
           "name": "Cautious Brawler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.SpecialQuality.Special Quality.Special Ability",
           "standing": "origin",
           "display_name": "Cautious Brawler"
@@ -1163,14 +1277,14 @@
         },
         {
           "name": "Deceptive",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Deceptive"
         },
         {
           "name": "Deep Gillman",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Deep Gillman"
@@ -1275,7 +1389,7 @@
         },
         {
           "name": "Duplicitous",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Kitsune Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Duplicitous"
@@ -1352,7 +1466,7 @@
         },
         {
           "name": "In the Shadows",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Wayang Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "In the Shadows"
@@ -1436,7 +1550,7 @@
         },
         {
           "name": "Jungle Stalker",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Catfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Jungle Stalker"
@@ -1485,7 +1599,7 @@
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Suli Racial Trait.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Suli Racial Trait.SpecialQuality.Racial Language)"
@@ -1527,7 +1641,7 @@
         },
         {
           "name": "Limber",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Limber"
@@ -1548,7 +1662,7 @@
         },
         {
           "name": "Market Dweller",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Market Dweller"
@@ -1676,7 +1790,7 @@
           "name": "Pariah",
           "doneness": "done",
           "type_facet": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
-          "standing": "unclassified",
+          "standing": "origin",
           "display_name": "Pariah"
         },
         {
@@ -1730,7 +1844,7 @@
         },
         {
           "name": "Risky Troublemaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vanara Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Risky Troublemaker"
@@ -1779,7 +1893,7 @@
         },
         {
           "name": "Serpent Affinity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Nagaji Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Serpent Affinity"
@@ -2267,6 +2381,772 @@
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Zephyr's Fleetness"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 9,
+      "standing_breakdown": {
+        "unclassified": 9
+      },
+      "items": [
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #9"
+        }
+      ]
+    },
+    {
+      "kind": "trait",
+      "label": "Traits",
+      "done": 0,
+      "partial": 0,
+      "not_started": 92,
+      "denominator": 92,
+      "pct": 0.0,
+      "excluded_from_percentage": 4,
+      "standing_breakdown": {
+        "origin": 92,
+        "unclassified": 4
+      },
+      "items": [
+        {
+          "name": "Acknowledged Scion",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Dhampir Race Trait",
+          "standing": "origin",
+          "display_name": "Acknowledged Scion"
+        },
+        {
+          "name": "Adrenaline Rush",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Gnome Race Trait",
+          "standing": "origin",
+          "display_name": "Adrenaline Rush"
+        },
+        {
+          "name": "Aerial Harrier",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Strix Race Trait",
+          "standing": "origin",
+          "display_name": "Aerial Harrier"
+        },
+        {
+          "name": "Animal Rustler",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Orc Race Trait",
+          "standing": "origin",
+          "display_name": "Animal Rustler"
+        },
+        {
+          "name": "Augmented Spell Poisons",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Vishkanya Race Trait",
+          "standing": "origin",
+          "display_name": "Augmented Spell Poisons"
+        },
+        {
+          "name": "Bifurcated Magic",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Half-Elf Race Trait",
+          "standing": "origin",
+          "display_name": "Bifurcated Magic"
+        },
+        {
+          "name": "Brimstone Seer",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Orc Race Trait",
+          "standing": "origin",
+          "display_name": "Brimstone Seer"
+        },
+        {
+          "name": "Bully Burner",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Goblin Race Trait",
+          "standing": "origin",
+          "display_name": "Bully Burner"
+        },
+        {
+          "name": "Bureaucracy Navigator",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Bureaucracy Navigator"
+        },
+        {
+          "name": "Canopy Shooter",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Grippli Race Trait",
+          "standing": "origin",
+          "display_name": "Canopy Shooter"
+        },
+        {
+          "name": "Carrying Voice",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Sylph Race Trait",
+          "standing": "origin",
+          "display_name": "Carrying Voice"
+        },
+        {
+          "name": "Celestial Contact",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Aasimar Race Trait",
+          "standing": "origin",
+          "display_name": "Celestial Contact"
+        },
+        {
+          "name": "Commanding",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Commanding"
+        },
+        {
+          "name": "Covered Sniper",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Kasatha Race Trait",
+          "standing": "origin",
+          "display_name": "Covered Sniper"
+        },
+        {
+          "name": "Creepy",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.ChangelingRaceTrait",
+          "standing": "origin",
+          "display_name": "Creepy"
+        },
+        {
+          "name": "Disciplined Body",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.VudraniRaceTrait",
+          "standing": "origin",
+          "display_name": "Disciplined Body"
+        },
+        {
+          "name": "Dragon Friend",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Triaxian Race Trait",
+          "standing": "origin",
+          "display_name": "Dragon Friend"
+        },
+        {
+          "name": "Efficient Packer",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Gnome Race Trait",
+          "standing": "origin",
+          "display_name": "Efficient Packer"
+        },
+        {
+          "name": "Effortless Aid",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Effortless Aid"
+        },
+        {
+          "name": "Elemental Caller",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Suli Race Trait",
+          "standing": "origin",
+          "display_name": "Elemental Caller"
+        },
+        {
+          "name": "Enduring Spellcraft",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Enduring Spellcraft"
+        },
+        {
+          "name": "Experimental Escapee",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Android Race Trait",
+          "standing": "origin",
+          "display_name": "Experimental Escapee"
+        },
+        {
+          "name": "Experimental Rebel",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Half-Elf Race Trait",
+          "standing": "origin",
+          "display_name": "Experimental Rebel"
+        },
+        {
+          "name": "Favored Champion",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.ShoantiRaceTrait",
+          "standing": "origin",
+          "display_name": "Favored Champion"
+        },
+        {
+          "name": "Fierce Flanker",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Wyvaran Race Trait",
+          "standing": "origin",
+          "display_name": "Fierce Flanker"
+        },
+        {
+          "name": "Fleshwarp Exposure",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Drow Race Trait",
+          "standing": "origin",
+          "display_name": "Fleshwarp Exposure"
+        },
+        {
+          "name": "Friend to Animals",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Human Race Trait",
+          "standing": "origin",
+          "display_name": "Friend to Animals"
+        },
+        {
+          "name": "Frustrating",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Gathlain Race Trait",
+          "standing": "origin",
+          "display_name": "Frustrating"
+        },
+        {
+          "name": "Generous",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Generous"
+        },
+        {
+          "name": "Genie Heir",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Geniekin Race Trait",
+          "standing": "origin",
+          "display_name": "Genie Heir"
+        },
+        {
+          "name": "Gruff Watcher",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Gruff Watcher"
+        },
+        {
+          "name": "Guarded",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Merfolk Race Trait",
+          "standing": "origin",
+          "display_name": "Guarded"
+        },
+        {
+          "name": "Gunworker",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Dwarf Race Trait",
+          "standing": "origin",
+          "display_name": "Gunworker"
+        },
+        {
+          "name": "Hard to Pin Down",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Hard to Pin Down"
+        },
+        {
+          "name": "Honored Provider",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Ghoran Race Trait",
+          "standing": "origin",
+          "display_name": "Honored Provider"
+        },
+        {
+          "name": "Hot Headed",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Ifrit Race Trait",
+          "standing": "origin",
+          "display_name": "Hot Headed"
+        },
+        {
+          "name": "Idealized Campaigner",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Aasimar Race Trait",
+          "standing": "origin",
+          "display_name": "Idealized Campaigner"
+        },
+        {
+          "name": "Inciter",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Hobgoblin Race Trait",
+          "standing": "origin",
+          "display_name": "Inciter"
+        },
+        {
+          "name": "Ingratiating",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.ChelaxianRaceTrait",
+          "standing": "origin",
+          "display_name": "Ingratiating"
+        },
+        {
+          "name": "Insular",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Elf Race Trait",
+          "standing": "origin",
+          "display_name": "Insular"
+        },
+        {
+          "name": "Intrepid Volunteer",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Halfling Race Trait",
+          "standing": "origin",
+          "display_name": "Intrepid Volunteer"
+        },
+        {
+          "name": "Jungle Opportunist",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Catfolk Race Trait",
+          "standing": "origin",
+          "display_name": "Jungle Opportunist"
+        },
+        {
+          "name": "Kami Respect",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Kitsune Race Trait",
+          "standing": "origin",
+          "display_name": "Kami Respect"
+        },
+        {
+          "name": "Loner of the Rocks",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Oread Race Trait",
+          "standing": "origin",
+          "display_name": "Loner of the Rocks"
+        },
+        {
+          "name": "Longlung",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Monkey Goblin Race Trait",
+          "standing": "origin",
+          "display_name": "Longlung"
+        },
+        {
+          "name": "Magic Survivor",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Trox Race Trait",
+          "standing": "origin",
+          "display_name": "Magic Survivor"
+        },
+        {
+          "name": "Marked by Nature's Magic",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Skinwalker Race Trait",
+          "standing": "origin",
+          "display_name": "Marked by Nature's Magic"
+        },
+        {
+          "name": "Memory Mastery",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Gillman Race Trait",
+          "standing": "origin",
+          "display_name": "Memory Mastery"
+        },
+        {
+          "name": "Minor Wishcraft",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Geniekin Race Trait",
+          "standing": "origin",
+          "display_name": "Minor Wishcraft"
+        },
+        {
+          "name": "Mistrusted",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Half-Orc Race Trait",
+          "standing": "origin",
+          "display_name": "Mistrusted"
+        },
+        {
+          "name": "Murky Allegiance",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Fetchling Race Trait",
+          "standing": "origin",
+          "display_name": "Murky Allegiance"
+        },
+        {
+          "name": "My Word Is My Bond",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "My Word Is My Bond"
+        },
+        {
+          "name": "Nagaji Nationalist",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Nagaji Race Trait",
+          "standing": "origin",
+          "display_name": "Nagaji Nationalist"
+        },
+        {
+          "name": "Nearly Blinded",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Nearly Blinded"
+        },
+        {
+          "name": "Obsessed with Success",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.ChelaxianRaceTrait",
+          "standing": "origin",
+          "display_name": "Obsessed with Success"
+        },
+        {
+          "name": "Oral Historian",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.ShoantiRaceTrait",
+          "standing": "origin",
+          "display_name": "Oral Historian"
+        },
+        {
+          "name": "Persecuted Expatriate (Asura-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Asura-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Daemon-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Daemon-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Demodand-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Demodand-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Demon-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Demon-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Devil-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Devil-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Div-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Div-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Kyton-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Kyton-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Oni-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Oni-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Qlippoth-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Qlippoth-Spawn)"
+        },
+        {
+          "name": "Persecuted Expatriate (Rakshasa-Spawn)",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tiefling Race Trait",
+          "standing": "origin",
+          "display_name": "Persecuted Expatriate (Rakshasa-Spawn)"
+        },
+        {
+          "name": "Plague Survivor",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Human Race Trait",
+          "standing": "origin",
+          "display_name": "Plague Survivor"
+        },
+        {
+          "name": "Planetary Traveler",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Elf Race Trait",
+          "standing": "origin",
+          "display_name": "Planetary Traveler"
+        },
+        {
+          "name": "Practiced Gambler",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Practiced Gambler"
+        },
+        {
+          "name": "Promising Peacemaker",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Half-Orc Race Trait",
+          "standing": "origin",
+          "display_name": "Promising Peacemaker"
+        },
+        {
+          "name": "Ratfolk Avenger",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Ratfolk Race Trait",
+          "standing": "origin",
+          "display_name": "Ratfolk Avenger"
+        },
+        {
+          "name": "Resilient Construction",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Wyrwood Race Trait",
+          "standing": "origin",
+          "display_name": "Resilient Construction"
+        },
+        {
+          "name": "River Trader",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "River Trader"
+        },
+        {
+          "name": "Scheming Survivor",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Drow Race Trait",
+          "standing": "origin",
+          "display_name": "Scheming Survivor"
+        },
+        {
+          "name": "Seafaring Slayer",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Tengu Race Trait",
+          "standing": "origin",
+          "display_name": "Seafaring Slayer"
+        },
+        {
+          "name": "Secret-Keeper",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Svirfneblin Race Trait",
+          "standing": "origin",
+          "display_name": "Secret-Keeper"
+        },
+        {
+          "name": "Sharp Wits",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.VudraniRaceTrait",
+          "standing": "origin",
+          "display_name": "Sharp Wits"
+        },
+        {
+          "name": "Sky Quester",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Dwarf Race Trait",
+          "standing": "origin",
+          "display_name": "Sky Quester"
+        },
+        {
+          "name": "Tattooed Focus",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Tattooed Focus"
+        },
+        {
+          "name": "Tempestuous Combatant",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Tempestuous Combatant"
+        },
+        {
+          "name": "Tribal Guide",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Kobold Race Trait",
+          "standing": "origin",
+          "display_name": "Tribal Guide"
+        },
+        {
+          "name": "Trickster",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Vanara Race Trait",
+          "standing": "origin",
+          "display_name": "Trickster"
+        },
+        {
+          "name": "Vermin Driver",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Duergar Race Trait",
+          "standing": "origin",
+          "display_name": "Vermin Driver"
+        },
+        {
+          "name": "Vexed",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Kobold Race Trait",
+          "standing": "origin",
+          "display_name": "Vexed"
+        },
+        {
+          "name": "Walls of Half-Truths",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Samsaran Race Trait",
+          "standing": "origin",
+          "display_name": "Walls of Half-Truths"
+        },
+        {
+          "name": "Water Lurker",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Wayang Race Trait",
+          "standing": "origin",
+          "display_name": "Water Lurker"
+        },
+        {
+          "name": "Water Shaping",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Undine Race Trait",
+          "standing": "origin",
+          "display_name": "Water Shaping"
+        },
+        {
+          "name": "Weapon Training",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Weapon Training"
+        },
+        {
+          "name": "Weathered Patience",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Weathered Patience"
+        },
+        {
+          "name": "Winged Aloofness",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Syrinx Race Trait",
+          "standing": "origin",
+          "display_name": "Winged Aloofness"
+        },
+        {
+          "name": "Witness to Nature's Cruelty",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Witness to Nature's Cruelty"
+        },
+        {
+          "name": "Zealous",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Zealous"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI])"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Halfling Race Trait",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Trait.RaceTrait.Halfling Race Trait)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Trait.RaceTrait.Lashunta Race Trait",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Trait.RaceTrait.Lashunta Race Trait)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #4"
         }
       ]
     }

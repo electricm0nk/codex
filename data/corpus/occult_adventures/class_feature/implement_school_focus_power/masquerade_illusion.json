@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Masquerade",
     "name": "Masquerade [Illusion]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to take on the appearance of another creature that you touch. If the creature is not friendly to you, this requires a melee touch attack, but the target doesn't receive a saving throw to negate the effect. You gain a circumstance bonus on Disguise checks equal to your occultist level + 10, but only to look like the creature touched. This bonus doesn't stack with the bonuses from polymorph spells or spells like disguise self. While using this ability, you can change your disguise as a standard action by touching a different creature and assuming its appearance. You can end this effect at any time. This effect lasts for 10 minutes per occultist level you possess, but you can renew the duration at any time by expending 1 additional point of mental focus. You must be at least 7th level to select this focus power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

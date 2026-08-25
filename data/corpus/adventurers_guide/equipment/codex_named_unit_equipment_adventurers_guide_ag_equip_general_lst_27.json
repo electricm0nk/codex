@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_general_lst_27)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_general_lst_27)",
+    "cost_gp": 1500.0,
+    "weight_lbs": null,
+    "description": "Inhaled; Fort DC 21; Freq 1 min (6); Effect 1d4 bleed/1d3 Con dmg (see text); Cure 2 consecutive saves"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_equip_general.lst",
+    "sha256": "772fd7915453a284d1295d37693bda26a25db7740bba23fb1c8f368d0533f8bc",
+    "line": 27,
+    "record_key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_general_lst_27)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "adventurers_guide:ag_equip_general.lst:27"
+  }
+}

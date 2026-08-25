@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shadow Caller ~ Shadowcaster",
+    "name": "Shadowcaster",
+    "class": "Spiritualist",
+    "description": "A shadow caller adds darkness and deeper darkness to their class spell list as 2nd- and 3rd-level spells, respectively. When her shade (see below) inhabits her shadow, the shadow caller's effective caster level is one higher when she casts all spells with the shadow or darkness descriptor. This ability alters the spiritualist's spellcasting.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Caller ~ Shadowcaster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A shadow caller adds darkness and deeper darkness to their class spell list as 2nd- and 3rd-level spells, respectively. When her shade (see below) inhabits her shadow, the shadow caller's effective caster level is one higher when she casts all spells with the shadow or darkness descriptor. This ability alters the spiritualist's spellcasting."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Spiritualist=2|Darkness|Spiritualist=3|Deeper Darkness"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 124,
+    "record_key": "Shadow Caller ~ Shadowcaster"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

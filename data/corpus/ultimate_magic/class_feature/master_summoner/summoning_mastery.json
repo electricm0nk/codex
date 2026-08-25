@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Master Summoner ~ Summoning Mastery",
     "name": "Summoning Mastery",
-    "class": "Master Summoner",
+    "class": "Summoner",
     "description": "You can cast Summon Monster %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  You can use this ability when his eidolon is summoned. Only one summon monster spell may be in effect while the eidolon is summoned. If your eidolon is not summoned, the number of creatures that can be summoned with this ability is only limited by its uses per day.|SummonMonsterLvl|SummonMonsterTimes|SummonMonsterDuration",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

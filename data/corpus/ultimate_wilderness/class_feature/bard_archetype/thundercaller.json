@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bard Archetype ~ Thundercaller",
     "name": "Thundercaller",
-    "class": "Bard Archetype",
+    "class": "Bard",
     "description": "Thundercallers bear the knowledge of the ancients, wielding it like a weapon to protect the land for which they care so deeply. Their voices ring like thunder, calling the sky's wrath down upon their enemies and summoning furious rage to bolster their allies.",
     "raw_tokens": [
       {
@@ -123,5 +123,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

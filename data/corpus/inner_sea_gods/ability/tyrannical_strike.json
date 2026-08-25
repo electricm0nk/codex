@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Domain Power ~ Tyrannical Strike",
+    "name": "Tyrannical Strike",
+    "description": "At 8th level, as an immediate action upon successfully hitting an opponent with a melee attack, you can choose to forgo the damage (but not any other effects of the attack) to instead affect the creature you hit as a greater command spell, with a caster level equal of %1. You can use this ability %2 times per day.|DomainLawLVL|DomainLawLVL/4-1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Power ~ Tyrannical Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DESC",
+        "value": "At 8th level, as an immediate action upon successfully hitting an opponent with a melee attack, you can choose to forgo the damage (but not any other effects of the attack) to instead affect the creature you hit as a greater command spell, with a caster level equal of %1. You can use this ability %2 times per day.|DomainLawLVL|DomainLawLVL/4-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DomainLawLVL/4-1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 281,
+    "record_key": "Domain Power ~ Tyrannical Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

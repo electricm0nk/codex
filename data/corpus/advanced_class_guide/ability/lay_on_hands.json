@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Believer's Hands ~ Lay on Hands",
+    "name": "Lay on Hands",
+    "description": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability %1 times per day. With one use of this ability, you can heal %2d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing %2d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.|LayOnHandsTimes|LayOnHandsDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Believer's Hands ~ Lay on Hands"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.LayOnHands.Lay on Hands"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LayOnHandsLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability %1 times per day. With one use of this ability, you can heal %2d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing %2d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.|LayOnHandsTimes|LayOnHandsDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LayOnHandsDice|max(1,TL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|LayOnHandsTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Lay on Hands"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_other.lst",
+    "sha256": "b4389e52c8d9361ee77d0885d92393d7bfa3e3289a78fc25dfd666f5402fa218",
+    "line": 17,
+    "record_key": "Believer's Hands ~ Lay on Hands"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "War Hulk ~ Immovable Mountain",
+    "name": "Immovable Mountain",
+    "class": "War Hulk",
+    "description": "You gain a +%1 bonus against bull rush, trip, drag, or reposition attempts while your astral suit is active.|ImmovableMountainBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "War Hulk ~ Immovable Mountain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImmovableMountainBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus against bull rush, trip, drag, or reposition attempts while your astral suit is active.|ImmovableMountainBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImmovableMountainBonus|floor((AegisLVL-1)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMD_BullRush,CMD_Trip,CMD_Drag,CMD_Reposition|ImmovableMountainBonus|PREEQUIP:1,Astral Juggernaut"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1792,
+    "record_key": "War Hulk ~ Immovable Mountain"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

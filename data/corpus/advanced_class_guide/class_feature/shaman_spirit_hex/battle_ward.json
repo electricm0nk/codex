@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Battle Ward",
     "name": "Battle Ward",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman touches a willing creature (including herself) and grants a battle ward. The next time a foe makes an attack roll against the target, the ward activates and grants a +%1 deflection bonus to the warded creature's AC. Each subsequent time she's attacked, the defection bonus reduces by 1 (to +%2 for the second time she's attacked and +%3 for the third). The ward fades when the bonus is reduced to +0 or after 24 hours, whichever comes first.|ShamanBattleWardStartingBonus|ShamanBattleWardStartingBonus-1|ShamanBattleWardStartingBonus-2",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

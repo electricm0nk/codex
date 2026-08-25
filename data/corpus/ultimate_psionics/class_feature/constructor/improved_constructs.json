@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Constructor ~ Improved Constructs",
+    "name": "Improved Constructs",
+    "class": "Constructor",
+    "description": "You get Advanced Constructs or Boost Construct as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Constructor ~ Improved Constructs"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "You get Advanced Constructs or Boost Construct as a bonus feat."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Improved Constructs Determination"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.272"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 490,
+    "record_key": "Constructor ~ Improved Constructs"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

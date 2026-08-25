@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shadow Lord ~ Cloying Gloom Blast",
+    "delivery": "Supernatural",
+    "description": "Three times per day, the shadow lord can unleash a 30-foot cone of cloying gloom. On a failed Fortitude saving throw (DC %1), creatures in the cone are affected by a slow spell (caster level equal to the shadow lord's Hit Dice) and are blinded for the duration of the slow effect.",
+    "description_variables": [
+      "10+HD/2+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:shadow_lord_cloying_gloom_blast",
+    "name": "Cloying Gloom Blast",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day, the shadow lord can unleash a 30-foot cone of cloying gloom. On a failed Fortitude saving throw (DC %1), creatures in the cone are affected by a slow spell (caster level equal to the shadow lord's Hit Dice) and are blinded for the duration of the slow effect.|10+HD/2+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Shadow Lord ~ Cloying Gloom Blast"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1261,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Shadow Lord ~ Cloying Gloom Blast",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

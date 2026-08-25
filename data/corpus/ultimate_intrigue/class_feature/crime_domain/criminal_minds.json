@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Crime Domain ~ Criminal Minds",
     "name": "Criminal Minds",
-    "class": "Crime Domain",
+    "class": "Cleric",
     "description": "You can touch a creature and fill its mind with criminal impulses. This otherwise functions as per the crime of opportunity spell, though a target that fails its saving throw (DC %1) and acts on an impulse gets those desires out of its system and becomes immune to the effects of your criminal minds ability for 24 hours. You can use this ability %2 per day.|DomainCrimeDC|DomainCrimeTimes",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

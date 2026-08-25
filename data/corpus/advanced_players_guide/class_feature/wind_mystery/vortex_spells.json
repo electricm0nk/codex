@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wind Mystery ~ Wortex Spells",
     "name": "Vortex Spells",
-    "class": "Wind Mystery",
+    "class": "Oracle",
     "description": "Whenever you score a critical hit against an opponent with an attack spell, the target is staggered for 1 round.|!PRECLASS:1,Oracle=11",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

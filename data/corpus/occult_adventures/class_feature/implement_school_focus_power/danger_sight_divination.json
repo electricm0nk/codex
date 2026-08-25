@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Danger Sight",
     "name": "Danger Sight [Divination]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As an immediate action, you can protect yourself from harm by expending 1 point of mental focus. You can use this ability whenever you are the target of an attack or are required to attempt a saving throw against a special ability, spell, or trap. Doing so grants you a +%1 insight bonus to your AC or on your saving throw. This bonus applies only to the next attack against you or saving throw you attempt, and if not applied by the end of the round, the protection fades and you gain no benefit. You must be at least 3rd level to select this focus power.|OccultistLVL/2",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

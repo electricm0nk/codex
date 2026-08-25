@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Variant Bandersnatch ~ Primal",
+    "name": "Primal Bandersnatch (+2 CR)",
+    "description": "Primal bandersnatches have kept their ties to the ancient world of the fey. They have the extraplanar subtype, SR equal to 11 plus their CR, DR:10/cold iron, and the advanced creature simple template.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Variant Bandersnatch ~ Primal"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VariantBandersnatch.RacialAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Primal bandersnatches have kept their ties to the ancient world of the fey. They have the extraplanar subtype, SR equal to 11 plus their CR, DR:10/cold iron, and the advanced creature simple template."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Advanced Creature"
+      },
+      {
+        "key": "BONUS",
+        "value": "MISC|CR|2"
+      },
+      {
+        "key": "SR",
+        "value": "11+CR"
+      },
+      {
+        "key": "DR",
+        "value": "10/cold iron"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 466,
+    "record_key": "Variant Bandersnatch ~ Primal"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

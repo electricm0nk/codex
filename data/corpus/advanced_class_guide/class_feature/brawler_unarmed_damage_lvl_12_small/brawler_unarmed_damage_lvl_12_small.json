@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Brawler Unarmed Damage LVL 12 (Small)",
+    "name": "Brawler Unarmed Damage LVL 12 (Small)",
+    "class": "Brawler",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "UDAM",
+        "value": "1d10"
+      },
+      {
+        "key": "UMULT",
+        "value": "2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrimaryAttackDamageDice|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrimaryAttackDamageSize|10|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+    "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+    "line": 995,
+    "record_key": "Brawler Unarmed Damage LVL 12 (Small)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

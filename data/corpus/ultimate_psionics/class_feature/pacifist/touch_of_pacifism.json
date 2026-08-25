@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pacifist ~ Touch of Pacifism",
+    "name": "Touch of Pacifism",
+    "class": "Pacifist",
+    "description": "You can as a standard action make a",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pacifist ~ Touch of Pacifism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfPacifismDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TouchOfPacifismDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can as a standard action make a"
+      },
+      {
+        "key": "DESC",
+        "value": " touch attack|PREVARLT:VitalistLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": " ranged touch attack with a range of 30 feet|PREVARGTEQ:VitalistLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": " against a creature.  The attack deals %1 nonlethal hit points of damage. In addition, the target's next attack that deals hit point damage instead deals nonlethal damage and the next attack against that creature that deals hit point damage instead deals nonlethal damage.  This effect lasts for %2 rounds.  This ability can only be used on creatures with a Constitution score.|TouchOfPacifismDamage|TouchOfPacifismDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfPacifismDamage|VitalistLVL+VitalistPrimeStat+3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TouchOfPacifismDuration|VitalistPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.334"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2344,
+    "record_key": "Pacifist ~ Touch of Pacifism"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,143 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Zombie Lord",
+    "name": "Zombie Lord",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "DR",
+        "value": "5/Slashing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "286"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Incorporeal"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Undead"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|(HD*3/4)-(BASEAB)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|(HD/3)-(BASE.Fortitude)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|(HD/3)-(BASE.Reflex)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|(HD/2+2)-(BASE.Fortitude)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK|PRESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK|PRESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base.STACK|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base.STACK|PRESIZEEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|7|TYPE=Base.STACK|PRESIZEEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|11|TYPE=Base.STACK|PRESIZEEQ:C"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1-Maneuverability|PREMOVE:1,Fly=1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamSize|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Toughness"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE|LE|NE"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": ".REMOVE.Chaos|.REMOVE.Evil|.REMOVE.Good|.REMOVE.Lawful"
+      },
+      {
+        "key": "ADDLEVEL",
+        "value": "Undead|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 181,
+    "record_key": "Zombie Lord"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

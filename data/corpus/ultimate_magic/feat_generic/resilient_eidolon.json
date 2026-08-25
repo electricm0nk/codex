@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Resilient Eidolon",
+    "name": "Resilient Eidolon",
+    "description": "Your link with your eidolon is strong enough that it can remain with you for a short time after you fall unconscious or are killed.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Eidolon"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ResilientEidolonDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your link with your eidolon is strong enough that it can remain with you for a short time after you fall unconscious or are killed."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ResilientEidolonDuration|classlevel(\"Summoner\")"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "If you are knocked unconscious, fall asleep, or are killed, your eidolon remains for %1 rounds before it is banished. If you are brought back to consciousness before this duration expires, your eidolon is not banished. If the duration expires before you are brought back to consciousness, your eidolon is banished normally.|ResilientEidolonDuration"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 104,
+    "record_key": "Resilient Eidolon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

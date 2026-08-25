@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Deeper Darkness",
+    "name": "Deeper Darkness",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Deeper Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Deeper Darkness"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_DeeperDarkness_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_DeeperDarkness_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_DeeperDarkness_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_DeeperDarkness_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_DeeperDarkness_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_DeeperDarkness_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_DeeperDarkness_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_DeeperDarkness_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_DeeperDarkness_LVL|Deeper Darkness,RacialSLA_DeeperDarkness_DC|PREVAREQ:RacialSLA_DeeperDarkness_AtWill,0|PREVAREQ:RacialSLA_DeeperDarkness_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_DeeperDarkness_LVL|Deeper Darkness,RacialSLA_DeeperDarkness_DC|PREVAREQ:RacialSLA_DeeperDarkness_AtWill,1|PREVAREQ:RacialSLA_DeeperDarkness_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_DeeperDarkness_LVL|Deeper Darkness,RacialSLA_DeeperDarkness_DC|PREVAREQ:RacialSLA_DeeperDarkness_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_DeeperDarkness_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_DeeperDarkness_SpellLVL|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_DeeperDarkness_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_DeeperDarkness_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_DeeperDarkness_DC|10+RacialSLA_DeeperDarkness_SpellLVL+RacialSLA_DeeperDarkness_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 278,
+    "record_key": "Racial SLA ~ Deeper Darkness"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

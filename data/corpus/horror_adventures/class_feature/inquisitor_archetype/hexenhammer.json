@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Inquisitor Archetype ~ Hexenhammer",
     "name": "Hexenhammer",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "Some inquisitors embrace the dark powers of their traditional foes, turning such powers toward their own ends in order to pronounce judgment on those who oppose them. These inquisitors learn to use the hexes and some spells of witches, but must pay the price for dealing with supernatural powers, as they slip ever closer to the evil they seek to destroy.",
     "raw_tokens": [
       {
@@ -127,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

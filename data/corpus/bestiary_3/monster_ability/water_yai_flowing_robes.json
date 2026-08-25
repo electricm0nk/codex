@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Water Yai ~ Flowing Robes",
+    "delivery": "Supernatural",
+    "description": "A water yai wears a special silk kimono infused with magical water. This kimono grants a +6 armor bonus. These robes function as armor only for water yai.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:water_yai_flowing_robes",
+    "name": "Flowing Robes",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A water yai wears a special silk kimono infused with magical water. This kimono grants a +6 armor bonus. These robes function as armor only for water yai."
+      },
+      {
+        "key": "KEY",
+        "value": "Water Yai ~ Flowing Robes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "TYPE",
+        "value": "WaterYaiRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.212",
+    "traits": [
+      "WaterYaiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1370,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Water Yai ~ Flowing Robes",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Magic Domain",
     "name": "Magic",
-    "class": null,
+    "class": "Cleric",
     "description": "You are a true student of all things mystical, and see divinity in the purity of magic.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Magic=1|Identify|Magic=2|Magic Mouth|Magic=3|Dispel Magic|Magic=4|Imbue with Spell Ability|Magic=5|Spell Resistance|Magic=6|Antimagic Field|Magic=7|Spell Turning|Magic=8|Protection from Spells|Magic=9|Mage's Disjunction"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Magic],[PREVARLT:MagicDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

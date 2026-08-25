@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Dragon Subdomain ~ Dragonbreath",
     "name": "Dragonbreath",
-    "class": "Dragon Subdomain",
+    "class": "Dragon",
     "description": "At 4th level, you may use a breath weapon once per day as a standard action. When you gain this ability, choose acid, cold, fire, or electricity-this determines what kind of damage your breath weapon inflicts. Once you make this choice, you cannot change it later. Your breath weapon fills a 15-foot cone, and inflicts 3d6 points of damage-this damage increases by +1d6 every even number level you gain beyond 4th level. A creature hit by your dragonbreath attack can make a Reflex save (DC 10 + half your cleric level + your Constitution modifier) to take half damage. At 9th level, you can use this ability two times per day, and at 14th level you can use it 3 times a day. This ability replaces the serpent companion ability of the Scalykind domain.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

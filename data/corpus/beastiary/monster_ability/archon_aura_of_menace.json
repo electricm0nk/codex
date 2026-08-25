@@ -1,0 +1,69 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Archon ~ Aura of Menace",
+    "delivery": "Supernatural",
+    "description": "A righteous aura surrounds archons that fight or get angry. Any hostile creature within a 20-foot radius of an archon must succeed on a DC %1 Will save to resist its effects. Those who fail take a -2 penalty on attacks, AC, and saves for 24 hours or until they successfully hit the archon that generated the aura. A creature that has resisted or broken the effect cannot be affected again by the same archon's aura for 24 hours.",
+    "description_variables": [
+      "AuraOfMenaceDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:archon_aura_of_menace",
+    "name": "Aura of Menace",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(20 ft., DC %1)|AuraOfMenaceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AuraOfMenaceDC|12+(HD/2)+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AuraOfMenaceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A righteous aura surrounds archons that fight or get angry. Any hostile creature within a 20-foot radius of an archon must succeed on a DC %1 Will save to resist its effects. Those who fail take a -2 penalty on attacks, AC, and saves for 24 hours or until they successfully hit the archon that generated the aura. A creature that has resisted or broken the effect cannot be affected again by the same archon's aura for 24 hours.|AuraOfMenaceDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Archon ~ Aura of Menace"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
+    "source_page": "p.311",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1768,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Archon ~ Aura of Menace",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

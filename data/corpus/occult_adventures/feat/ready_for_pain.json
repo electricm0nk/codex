@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Ready for Pain",
+    "category": "General",
+    "name": "Ready for Pain",
+    "description": "Your implanted trick hardens the body against damage. When you implant a trick, you can grant the subject DR 1/- against nonlethal damage until the trick is triggered or its duration ends. This DR increases by 1 for every 5 mesmerist levels you possess.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Mesmerist ~ Mesmerist Tricks"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 62,
+    "record_key": "Ready for Pain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

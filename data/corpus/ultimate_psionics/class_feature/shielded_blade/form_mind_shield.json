@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Shielded Blade ~ Form Mind Shield",
+    "name": "Form Mind Shield",
+    "class": "Shielded Blade",
+    "description": "You can use your mind shield as if it were a masterwork heavy shield, including making shield bashes, but without the Armor Check penalty or Arcane Spell Failure.  You still apply the shield bonus to AC when performing a shield bash.  Your mind shield is enhanced as you gain levels, but the mind blade suffers a -1 penalty to its enhancement bonus (if any) if you have both formed at the same time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shielded Blade ~ Form Mind Shield"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use your mind shield as if it were a masterwork heavy shield, including making shield bashes, but without the Armor Check penalty or Arcane Spell Failure.  You still apply the shield bonus to AC when performing a shield bash.  Your mind shield is enhanced as you gain levels, but the mind blade suffers a -1 penalty to its enhancement bonus (if any) if you have both formed at the same time."
+      },
+      {
+        "key": "AUTO",
+        "value": "SHIELDPROF|Mind Shield"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Blade Skill|AUTOMATIC|Blade Skill ~ Mind Shield"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2197,
+    "record_key": "Shielded Blade ~ Form Mind Shield"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

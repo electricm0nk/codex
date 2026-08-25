@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Kineticist ~ Elemental Defense",
     "name": "Elemental Defense",
@@ -27,6 +27,26 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elemental Defense ~ Enveloping Winds|PREABILITY:1,CATEGORY=Special Ability,Kineticist Primary Element ~ Air"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elemental Defense ~ Flesh Of Stone|PREABILITY:1,CATEGORY=Special Ability,Kineticist Primary Element ~ Earth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elemental Defense ~ Force Ward|PREABILITY:1,CATEGORY=Special Ability,Kineticist Primary Element ~ Aether"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elemental Defense ~ Searing Flesh|PREABILITY:1,CATEGORY=Special Ability,Kineticist Primary Element ~ Fire"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Elemental Defense ~ Shroud Of Water|PREABILITY:1,CATEGORY=Special Ability,Kineticist Primary Element ~ Water"
       }
     ]
   },
@@ -43,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

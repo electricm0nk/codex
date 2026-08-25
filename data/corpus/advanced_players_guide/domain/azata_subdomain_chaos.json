@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Azata Subdomain (Chaos)",
+    "name": "Azata Subdomain (Chaos)",
+    "raw_tokens": [
+      {
+        "key": "PREALIGN",
+        "value": "CG,CN,CE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Azata Subdomain (Chaos)],[!PREMULT:1,[PREVARGT:ChaosDomain,0],[PREDOMAIN:1,Azata Subdomain (Good)]]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Azata Subdomain (Chaos)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Azata Subdomain (Chaos)=1|Expeditious Retreat|Azata Subdomain (Chaos)=2|Align Weapon (Chaos Only)|Azata Subdomain (Chaos)=3|Fly|Azata Subdomain (Chaos)=4|Chaos Hammer|Azata Subdomain (Chaos)=5|Dispel Law|Azata Subdomain (Chaos)=6|Planar Ally (Azata Only)|Azata Subdomain (Chaos)=7|Word of Chaos|Azata Subdomain (Chaos)=8|Cloak of Chaos|Azata Subdomain (Chaos)=9|Summon Monster IX (Chaos Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 14,
+    "record_key": "Azata Subdomain (Chaos)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

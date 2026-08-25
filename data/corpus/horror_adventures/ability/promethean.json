@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Corruption ~ Promethean",
+    "name": "Promethean",
+    "description": "Your body is slowly wasting away. As your body decays, you must gradually replace more and more of it with artificial components--corpse flesh, bone, wood, metal, or other exotic materials. Whenever you fail a Fortitude save against any effect or fall below 0 hit points, you must attempt a Fortitude save (DC %1). If you fail that save, some of the living components of your body begin to fail. Within the next 3 days, you or someone you trust must spend 8 hours replacing more of your body with construct parts. If you don't do so, you die, and even if you are brought back from the dead with resurrection or true resurrection (which are necessary since your body isn't viable), you still must perform the operation or you die again in 3 days. After an operation, there is a 50%% chance your corruption progresses to the next stage. If it doesn't, the DC of the above Fortitude save increases by 2 until your corruption reaches the next stage. These increases stack. While your body parts are failing (after you've failed the Fort save but before you've repaired your body), you don't have to attempt additional saves when you fail a Fortitude save or fall below 0 hit points. Once you've been repaired, you need to attempt saves in these circumstances again.|15+PrometheanManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Corruption ~ Promethean"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CorruptionType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PrometheanCorruptionResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "Your body is slowly wasting away. As your body decays, you must gradually replace more and more of it with artificial components--corpse flesh, bone, wood, metal, or other exotic materials. Whenever you fail a Fortitude save against any effect or fall below 0 hit points, you must attempt a Fortitude save (DC %1). If you fail that save, some of the living components of your body begin to fail. Within the next 3 days, you or someone you trust must spend 8 hours replacing more of your body with construct parts. If you don't do so, you die, and even if you are brought back from the dead with resurrection or true resurrection (which are necessary since your body isn't viable), you still must perform the operation or you die again in 3 days. After an operation, there is a 50%% chance your corruption progresses to the next stage. If it doesn't, the DC of the above Fortitude save increases by 2 until your corruption reaches the next stage. These increases stack. While your body parts are failing (after you've failed the Fort save but before you've repaired your body), you don't have to attempt additional saves when you fail a Fortitude save or fall below 0 hit points. Once you've been repaired, you need to attempt saves in these circumstances again.|15+PrometheanManifestationLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 circumstance bonus on saving throws related to the corruption progressing.|PrometheanCorruptionResistance|PREVARGTEQ:PrometheanCorruptionResistance,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Promethean Corruption Counter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 706,
+    "record_key": "Corruption ~ Promethean"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

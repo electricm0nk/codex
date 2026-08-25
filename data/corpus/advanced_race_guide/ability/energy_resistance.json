@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Energy Resistance",
+    "name": "Energy Resistance",
+    "description": "Choose Acid, Cold, Electricity, Fire: Resist 5 vs that element.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Energy Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderDefenseTrait.Standard"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Racial Traits,Racial Type ~ Outsider (native)"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,TYPE.Elemental Plane"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Prerequisite: Outsider (native) with ties to an elemental plane"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose Acid, Cold, Electricity, Fire: Resist 5 vs that element."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|1"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Race Builder Energy Resistance|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 206,
+    "record_key": "Builder Racial Trait ~ Energy Resistance"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Imperious Bloodline ~ Heroic Legends",
     "name": "Heroic Legends",
-    "class": "Imperious Bloodline",
+    "class": "Sorcerer",
     "description": "You may inspire greatness or inspire heroics as a bard of %1th level by sacrificing a spell slot as a swift or move action. The effect lasts a number of rounds equal to the sacrificed spell's level; this duration is doubled for human recipients.|Sorcerer_Imperious_BloodlinePower15LVL",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

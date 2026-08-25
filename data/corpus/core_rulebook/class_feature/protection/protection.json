@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Protection Domain",
     "name": "Protection",
-    "class": null,
+    "class": "Cleric",
     "description": "Your faith is your greatest source of protection, and you can use that faith to defend others. In addition, you receive a +1 resistance bonus on saving throws. This bonus increases by 1 for every 5 levels you possess.",
     "raw_tokens": [
       {
@@ -83,6 +83,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Protection=1|Sanctuary|Protection=2|Shield Other|Protection=3|Protection from Energy|Protection=4|Spell Immunity|Protection=5|Spell Resistance|Protection=6|Antimagic Field|Protection=7|Repulsion|Protection=8|Mind Blank|Protection=9|Prismatic Sphere"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Protection],[PREVARLT:ProtectionDomain,1]"
       }
     ]
   },
@@ -101,5 +105,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

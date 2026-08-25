@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Corruption ~ Vampirism",
+    "name": "Vampirism",
+    "description": "Being drained-but not killed-at least six times by a vampire within a month or less causes this corruption. Powerful vampires or curses can cause this corruption more rapidly. Vampirism progresses when you feed off and kill a sentient creature. Each week, you need to drink the blood of sentient creatures one size category smaller than you or larger until you drain enough to deal Constitution damage equal to your manifestation level. If you don't have the fangs manifestation, you must feed on a helpless or willing creature. If you haven't drunk enough blood after a week, you must succeed at a Will save (DC %1) each day until you have. If you fail, the next time you rest, your corruption takes over and you unconsciously hunt and feed, drinking a sentient creature dry. If circumstances make it impossible to feed (such as if you are tied down or in a locale with nothing to feed upon) you start to starve as if you had not eaten in 3 days (Core Rulebook 445), and you continue to thirst for blood and struggle to escape and feed until you have received five times the amount of blood from sentient creatures you normally require. If your allies are able to restrain and feed you, your corruption doesn't progress. However, the DC of the Will save against your corruption progressing increases by 2. These increases stack, and last until your corruption reaches the next stage. Whenever you drop below 0 hit points, you must attempt a save as if you hadn't drunk enough blood that week.|15+VampirismManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Corruption ~ Vampirism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CorruptionType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VampirismCorruptionResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "DESC",
+        "value": "Being drained-but not killed-at least six times by a vampire within a month or less causes this corruption. Powerful vampires or curses can cause this corruption more rapidly. Vampirism progresses when you feed off and kill a sentient creature. Each week, you need to drink the blood of sentient creatures one size category smaller than you or larger until you drain enough to deal Constitution damage equal to your manifestation level. If you don't have the fangs manifestation, you must feed on a helpless or willing creature. If you haven't drunk enough blood after a week, you must succeed at a Will save (DC %1) each day until you have. If you fail, the next time you rest, your corruption takes over and you unconsciously hunt and feed, drinking a sentient creature dry. If circumstances make it impossible to feed (such as if you are tied down or in a locale with nothing to feed upon) you start to starve as if you had not eaten in 3 days (Core Rulebook 445), and you continue to thirst for blood and struggle to escape and feed until you have received five times the amount of blood from sentient creatures you normally require. If your allies are able to restrain and feed you, your corruption doesn't progress. However, the DC of the Will save against your corruption progressing increases by 2. These increases stack, and last until your corruption reaches the next stage. Whenever you drop below 0 hit points, you must attempt a save as if you hadn't drunk enough blood that week.|15+VampirismManifestationLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 circumstance bonus on saving throws related to the corruption progressing.|VampirismCorruptionResistance|PREVARGTEQ:VampirismCorruptionResistance,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Vampirism Corruption Counter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 876,
+    "record_key": "Corruption ~ Vampirism"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

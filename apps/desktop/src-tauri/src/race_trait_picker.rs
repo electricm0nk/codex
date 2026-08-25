@@ -113,7 +113,11 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::feat_effects::{display_value_deltas_from_feats, FeatDisplayValueDeltas};
-use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, RaceTraitRecord, TraitRole};
+use codex::rules_core::race_resolver::{
+    adopted_race_choose_selectors, adoptive_parentage_options, load_race_corpus, RaceCorpus, RaceTraitRecord,
+    TraitRole,
+};
+use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};
 
 use crate::authoring_workbench::codex_repo_root;
 use crate::race_catalog::{book_code, RACE_CORPUS_BOOKS};
@@ -227,10 +231,94 @@ pub struct RacePickerDto {
     pub alternates: Vec<AlternateTraitDto>,
 }
 
+/// One trait an [`AdoptiveParentageOptionDto`] grants, resolved against the
+/// adopted race's own already-ingested standard traits.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdoptiveParentageGrantDto {
+    pub key: String,
+    pub name: String,
+}
+
+/// One "Adoptive Parentage" option (`decisions.md §16` item 2, SD-32 card-11
+/// T2b lane): a member of `Human ~ Adoptive Parentage`'s `CHOOSE:
+/// ABILITYSELECTION|Adoptive Parentage|ANY` pool (that alternate trait is
+/// itself one of `Human`'s own [`AlternateTraitDto`] rows, above — a Human
+/// character replaces Bonus Feat with it, then picks one of these). Not
+/// race-scoped the way [`RacePickerDto`] is, because picking one is a Human
+/// character's choice of *which other race* to have been adopted by, not a
+/// trait of the race named here.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdoptiveParentageOptionDto {
+    /// The corpus key, e.g. `"Dwarf"` — no explicit `KEY:` token upstream, so
+    /// the option's own display name doubles as both its key and the race it
+    /// adopts.
+    pub key: String,
+    pub name: String,
+    pub book: String,
+    pub adopted_race: String,
+    /// Real corpus `DESC:` prose, verbatim — every option this menu serves
+    /// carries a fixed, argument-free sentence (no `%N` substitution, pinned
+    /// by [`every_adoptive_parentage_option_carries_real_prose_and_real_grants`]),
+    /// so unlike [`AlternateTraitDto::description`] this is read from the
+    /// stored field rather than re-rendered against a feat list.
+    pub description: String,
+    /// The already-ingested traits this option grants. Empty is a legitimate,
+    /// honestly-reported answer — never papered over with an invented trait.
+    pub grants: Vec<AdoptiveParentageGrantDto>,
+}
+
+/// One Trait this [`AdoptedRaceOptionDto`] can grant, resolved against the
+/// real `kind: trait` pool (`codex::rules_core::trait_pool`) rather than
+/// this corpus's own race-trait population.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdoptedRaceTraitGrantDto {
+    pub key: String,
+    pub name: String,
+    pub description: Option<String>,
+    pub book: String,
+}
+
+/// One "Adopted Race" selector (`decisions.md §25`): a character of the
+/// named race's own type may pick ONE trait from that race's real Trait
+/// pool. Structurally the closest existing row is
+/// [`AdoptiveParentageOptionDto`] (any-race-selectable, names a target), but
+/// the pool here is a different content kind entirely (`kind: trait`, never
+/// this corpus's own `race_trait` population) -- hence a separate DTO rather
+/// than folding this into that one.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdoptedRaceOptionDto {
+    pub key: String,
+    pub name: String,
+    pub book: String,
+    pub adopted_race: String,
+    /// The real Trait pool this option offers. Empty is a legitimate,
+    /// honestly-reported answer for a race whose Trait pool this project has
+    /// not (yet) ingested — never papered over with a fabricated trait. See
+    /// `codex::rules_core::trait_pool` module doc comment for the current
+    /// ingest status.
+    pub grants: Vec<AdoptedRaceTraitGrantDto>,
+    /// `true` for a row whose own `CHOOSE:` token this project could not
+    /// read a pool suffix from at all — a malformed-row finding surfaced
+    /// rather than silently treated as "empty pool". Never true for any of
+    /// the 14 real oracle rows this cycle ingested.
+    pub malformed_choose_token: bool,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AlternateRacialTraitsResponse {
     pub races: Vec<RacePickerDto>,
+    /// `Human ~ Adoptive Parentage`'s CHOOSE pool, resolved. See
+    /// [`AdoptiveParentageOptionDto`].
+    pub adoptive_parentage_options: Vec<AdoptiveParentageOptionDto>,
+    /// The 14 "Adopted Race" selectors (`decisions.md §25`), resolved
+    /// against the real Trait pool. See [`AdoptedRaceOptionDto`]. Additive
+    /// field — a consumer that does not read it is unaffected.
+    pub adopted_race_options: Vec<AdoptedRaceOptionDto>,
     /// Corpus files that could not be read, plus any failure to locate the
     /// corpus at all. Empty in a healthy checkout.
     pub diagnostics: Vec<String>,
@@ -688,13 +776,72 @@ fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
         });
     }
 
+    let adoptive_parentage_options: Vec<AdoptiveParentageOptionDto> = adoptive_parentage_options(corpus)
+        .into_iter()
+        .map(|option| AdoptiveParentageOptionDto {
+            key: option.key,
+            name: option.name,
+            book: book_code(&option.book_id),
+            adopted_race: option.adopted_race,
+            description: option.description.unwrap_or_default(),
+            grants: option
+                .grants
+                .into_iter()
+                .map(|grant| AdoptiveParentageGrantDto { key: grant.key, name: grant.name })
+                .collect(),
+        })
+        .collect();
+
+    // SD-32 `decisions.md §25` cycle 2: `codex_repo_root()` gives the same
+    // corpus root the race corpus itself just loaded from, so the Trait pool
+    // and the selectors it resolves against are read from the identical
+    // on-disk state, not two different checkouts.
+    let adopted_race_options: Vec<AdoptedRaceOptionDto> = match codex_repo_root() {
+        Ok(root) => {
+            let corpus_root = root.join("data/corpus");
+            let dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
+            let pool_roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS
+                .iter()
+                .zip(dirs.iter())
+                .map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() })
+                .collect();
+            let trait_pool = load_trait_pool(&pool_roots);
+            let selectors = adopted_race_choose_selectors(corpus);
+            resolve_adopted_race_options(&selectors, &trait_pool)
+                .into_iter()
+                .map(|option| AdoptedRaceOptionDto {
+                    key: option.key,
+                    name: option.name,
+                    book: book_code(&option.book_id),
+                    adopted_race: option.adopted_race,
+                    grants: option
+                        .grants
+                        .into_iter()
+                        .map(|grant| AdoptedRaceTraitGrantDto {
+                            key: grant.key,
+                            name: grant.name,
+                            description: grant.description,
+                            book: book_code(&grant.book_id),
+                        })
+                        .collect(),
+                    malformed_choose_token: option.malformed_choose_token,
+                })
+                .collect()
+        }
+        // The corpus root could not be located at all -- `diagnostics` below
+        // already reports this same failure for the rest of the response, so
+        // this half degrades to an honest empty list rather than a second,
+        // differently-worded error.
+        Err(_) => Vec::new(),
+    };
+
     let diagnostics =
         corpus.diagnostics().iter().map(|diagnostic| format!("{}: {}", diagnostic.path, diagnostic.message)).collect();
 
     let mut findings = multi_flag_gate_findings(corpus);
     findings.extend(preability_guard_findings(corpus));
 
-    AlternateRacialTraitsResponse { races, diagnostics, findings }
+    AlternateRacialTraitsResponse { races, adoptive_parentage_options, adopted_race_options, diagnostics, findings }
 }
 
 /// Resolves one race against a chosen alternate set, by calling
@@ -865,6 +1012,8 @@ fn menu_or_error() -> AlternateRacialTraitsResponse {
         Ok(corpus) => build_menu(corpus),
         Err(err) => AlternateRacialTraitsResponse {
             races: Vec::new(),
+            adoptive_parentage_options: Vec::new(),
+            adopted_race_options: Vec::new(),
             diagnostics: vec![format!("race corpus unavailable: {err}")],
             findings: Vec::new(),
         },
@@ -982,8 +1131,8 @@ mod tests {
         let menu = menu();
         assert_eq!(
             menu.races.len(),
-            38,
-            "38 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+            39,
+            "39 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
              Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1 + \
              SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16: Catfolk, Kitsune, \
              Ratfolk, Strix, Suli, Wayang) + SD31-E6-F4-004's Advanced Race Guide follow-on \
@@ -991,14 +1140,18 @@ mod tests {
              Advanced Race Guide follow-on batch of 2 (2026-08-17: Changeling, Samsaran -- \
              closing `arg_races.lst`'s full 37-row playable-race roster) + SD-31 wave-24's \
              Rougarou (Bestiary 6, 2026-08-20, chassis + 8 standard-tier traits, no ARG \
-             alternate-trait content)"
+             alternate-trait content) + SD-32 card-11 T2b lane's Dhampir (Bestiary 2, \
+             2026-08-23, chassis + standard tier only)"
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 357,
-            "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
+            total, 370,
+            "ARG's 153 Alternate-classified records + Monster Codex's 8 (4 original, SD-29 \
+             decisions.md §43, + SD-32 card-11 T2b lane's 4 new Ratfolk alternates, \
+             2026-08-23) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
-             race-trait extend lane) + Inner Sea Races' 67 (§45, the same lane's round 2) \
+             race-trait extend lane) + Inner Sea Races' 76 (67, §45, the same lane's round 2, \
+             + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) \
              + Horror Adventures' 41 (§47, round 3) \
              + Core Essentials' 16 heritages (§49, round 4; the book's other 48 records \
              are the replacement rows those heritages grant and are never menu rows) \
@@ -1033,7 +1186,9 @@ mod tests {
         // one race at a time instead of only in the total.
         let expected: &[(&str, usize)] = &[
             ("Aasimar", 17),    // ARG 9 + ISR 2 + CE 6 (heritages)
-            ("Catfolk", 6),     // ARG 6 (SD-31-E6-F4-003, 2026-08-16)
+            // ARG 6 (SD-31-E6-F4-003, 2026-08-16) + ISR 1 (`Jungle Stalker`,
+            // a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22)
+            ("Catfolk", 7),
             ("Drow", 7),        // ARG 6 + ISR 1
             ("Duergar", 8),     // ARG 5 + MC 2 + ISR 1
             ("Dwarf", 30),      // ARG 17 + ISR 7 + HA 6
@@ -1045,7 +1200,9 @@ mod tests {
             // (`TraitRole::FlagGranted`), so all 3 alternates ARE selectable
             // menu rows -- unlike Strix/Suli, Throwback's own grants are not
             // themselves alternates, so nothing is subtracted here.
-            ("Gillman", 3),     // ARG 3 (SD31-E6-F4-006, 2026-08-17)
+            // ARG 3 (SD31-E6-F4-006, 2026-08-17) + ISR 1 (`Deep Gillman`,
+            // a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22)
+            ("Gillman", 4),
             ("Gnome", 23),      // ARG 12 + ISR 6 + HA 5
             ("Goblin", 10),     // ARG 7 + MC 2 + ISR 1
             ("Grippli", 5),     // ARG 4 + ISR 1 (SD-31 Epic 1-F2)
@@ -1055,18 +1212,31 @@ mod tests {
             ("Hobgoblin", 10),  // ARG 9 + ISR 1
             ("Human", 33),      // ARG 15 + ISR 12 + HA 6
             ("Ifrit", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
-            ("Kitsune", 2),     // ARG 2 (SD-31-E6-F4-003, 2026-08-16)
+            // ARG 2 (SD-31-E6-F4-003, 2026-08-16) + ISR 1 (`Duplicitous`,
+            // a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22)
+            ("Kitsune", 3),
             ("Kobold", 5),      // ARG 4 + ISR 1
             ("Merfolk", 4),     // ARG 3 + ISR 1
-            ("Nagaji", 1),      // ARG 1 (SD31-E6-F4-006, 2026-08-17)
+            // ARG 1 (SD31-E6-F4-006, 2026-08-17) + ISR 1 (`Serpent Affinity`,
+            // a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22)
+            ("Nagaji", 2),
             ("Oread", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Orc", 5),         // ARG 4 + ISR 1
-            ("Ratfolk", 4),     // ARG 4 (SD-31-E6-F4-003, 2026-08-16)
+            // ARG 4 (SD-31-E6-F4-003, 2026-08-16) + Monster Codex 4
+            // (Cheek Pouches/Cleanliness/Lab Rat/Surface Sprinter, SD-32
+            // card-11 T2b lane, 2026-08-23; Surface Sprinter's own 2
+            // replacement rows are `FlagGranted`, not counted here) + ISR 1
+            // (`Market Dweller`, a sibling SD-32 card-11 T2b lane's
+            // stale-regen fix, 2026-08-22).
+            ("Ratfolk", 9),
             // Strix's real ARG total is 6, but `Wing-Clipped` grants
             // `Wing-Clipped ~ Strix ~ Flight` (`TraitRole::FlagGranted`), so
             // only 5 are menu rows -- the same shape `Dwarf ~ Saltbeard`
             // already sets for `Saltbeard ~ Dwarf ~ Greed`.
-            ("Strix", 5),       // ARG 5 selectable + 1 FlagGranted (SD-31-E6-F4-003)
+            // ARG 5 selectable + 1 FlagGranted (SD-31-E6-F4-003) + ISR 1
+            // (`Cautious Brawler`, a sibling SD-32 card-11 T2b lane's
+            // stale-regen fix, 2026-08-22)
+            ("Strix", 6),
             // Suli's real ARG total is 5, but `Energy Strike` grants all 4 of
             // `Earthfoot`/`Firehand`/`Icewalk`/`Shockshield`
             // (`TraitRole::FlagGranted`), so only 1 is a menu row.
@@ -1080,14 +1250,22 @@ mod tests {
             // `Tree Stranger ~ Vanara ~ Speed` (`TraitRole::FlagGranted`),
             // but that grant is not itself an alternate so nothing is
             // subtracted -- both 2 alternates ARE selectable menu rows.
-            ("Vanara", 2),      // ARG 2 (SD31-E6-F4-006, 2026-08-17)
-            ("Vishkanya", 2),   // ARG 2 (SD31-E6-F4-006, 2026-08-17)
-            ("Wayang", 1),      // ARG 1 (SD-31-E6-F4-003, 2026-08-16)
+            // ARG 2 (SD31-E6-F4-006, 2026-08-17) + ISR 1 (`Risky
+            // Troublemaker`, a sibling SD-32 card-11 T2b lane's stale-regen
+            // fix, 2026-08-22)
+            ("Vanara", 3),
+            // ARG 2 (SD31-E6-F4-006, 2026-08-17) + ISR 1 (`Deceptive`, same
+            // sibling fix -- its own dependent row `Deceptive ~ Vishkanya ~
+            // Limber` is `FlagGranted`, not counted here)
+            ("Vishkanya", 3),
+            // ARG 1 (SD-31-E6-F4-003, 2026-08-16) + ISR 1 (`In the
+            // Shadows`, same sibling fix)
+            ("Wayang", 2),
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 357);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 370);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1314,9 +1492,11 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 357,
-            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
-             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
+            checked, 370,
+            "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk \
+             alternates, 2026-08-23) + 1 APG (SD-29 decisions.md §43) + 76 Inner Sea Races \
+             (67, §45, + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, \
+             2026-08-22) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
              19 SD-31-E6-F4-003 (2026-08-16, ARG's own 6-race chassis batch) + 8 \
              SD31-E6-F4-006 (2026-08-17, ARG's own follow-on 4-race chassis batch)"
@@ -1888,9 +2068,17 @@ mod tests {
         // heritage/alternate-trait content in the pinned oracle at all
         // (confirmed: no `*_subrace.lst` file, no `Rougarou_Replace*` flag
         // ever set to `True` anywhere in the corpus).
-        assert_eq!((standard, alternates), (361, 357));
+        // SD-32 card-11 T2b lane (2026-08-23) adds Dhampir (Bestiary 2):
+        // 1 more `race`/ chassis and 12 more standard rows (361 -> 373),
+        // plus Monster Codex's 4 new Ratfolk alternates (357 -> 361) --
+        // its `Adopted Race ~ Dhampir` row stays deferred, same browse-only
+        // stub disposition as Rougarou's `Adopted Race ~ Rougarou` above.
+        // A sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen
+        // fix (2026-08-22) adds 9 more alternates (361 -> 370); `standard`
+        // is unmoved, that fix wrote no chassis/standard-tier content.
+        assert_eq!((standard, alternates), (373, 370));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 718);
+        assert_eq!(checked, 743);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.
@@ -1906,22 +2094,25 @@ mod tests {
                 }
             }
         }
-        // Exactly one, and it is the record the defect was reported against.
-        // Its stored prose is the ingest-time collapse of a row whose `%N`
-        // arguments the ingest could not finish, so it shipped reading "Three
-        // times per day… they only gain a bonus" with the magnitudes simply
-        // absent. Rendering restores them for every player, character or not.
+        // `Halfling ~ Adaptable Luck` was here until SD-32's card-11 T2b
+        // formula-interpreter wiring (2026-08-23,
+        // `race_trait_formula_binding::resolve_same_row_formula`):
+        // `ingest_race_traits.rs` now resolves the row's real `%2` argument
+        // (`Halfling_AdaptableLuck_Bonus-1`, a same-row formula, not a
+        // literal) the same way this module's own `render_trait_description`
+        // already did, so the two agree and the record no longer shows up as
+        // "differs from the ingest-time collapse". The remaining three carry
+        // a genuinely different shape: each one's unresolved `DESC:` argument
+        // names a variable this row never defines at all (`Nagaji_
+        // RacialCasterlevel`, `Suli_ElementalAssault_Duration`, `Undine_
+        // NereidFascination_Duration` all depend on cross-record/character
+        // state — total level, another class feature's own variable — not on
+        // an expression over this row's own literals), so no same-row formula
+        // evaluator, wired or not, can close them from ingested data alone.
         assert_eq!(
             changed,
             vec![
                 "Oversized Goblin",
-                "Halfling ~ Adaptable Luck",
-                // SD31-E6-F4-006 (2026-08-17): `Nagaji ~ Hypnotic Gaze`'s
-                // `DESC:` carries two args (`Nagaji_RacialCasterlevel` and
-                // `11+Nagaji_RacialCastingMod`) the ingest could not resolve
-                // to a same-row literal, the identical shape `Adaptable
-                // Luck`/`Nereid Fascination` already establish -- dropped at
-                // ingest time, restored by rendering.
                 "Nagaji ~ Hypnotic Gaze",
                 "Suli ~ Energy Strike",
                 "Undine ~ Nereid Fascination"
@@ -1968,5 +2159,106 @@ mod tests {
         // Reported rather than pinned: widening what the engine can resolve
         // must not fail here, and neither must a record quietly guessing.
         println!("trait rows still reporting an unresolved DESC argument: {dropping}");
+    }
+
+    /// `decisions.md §16` item 2 / SD-32 card-11 T2b: the real IPC builder
+    /// `reach_gate` executes carries the 7 `Human ~ Adoptive Parentage`
+    /// CHOOSE-pool options, each with a real description and real resolved
+    /// grants — not just the resolver-level `adoptive_parentage_options`
+    /// this cycle also unit-tests in `race_resolver`, but the actual Tauri
+    /// command surface a player's frontend would call.
+    #[test]
+    fn the_menu_command_itself_carries_all_seven_adoptive_parentage_options_with_real_grants() {
+        let menu = menu();
+        let keys: Vec<&str> = menu.adoptive_parentage_options.iter().map(|o| o.key.as_str()).collect();
+        assert_eq!(keys, vec!["Drow", "Dwarf", "Elf", "Gnome", "Grippli", "Halfling", "Orc"]);
+        for option in &menu.adoptive_parentage_options {
+            assert_eq!(option.book, "ARG", "the ARG book code, matching every other ARG row on this menu");
+            assert_eq!(option.adopted_race, option.key);
+            assert!(!option.description.trim().is_empty());
+            let grant_names: Vec<&str> = option.grants.iter().map(|g| g.name.as_str()).collect();
+            assert_eq!(grant_names, vec!["Weapon Familiarity", "Languages"]);
+        }
+    }
+
+    /// SD-32 `decisions.md §25` cycle 2: the menu command carries all 14 real
+    /// "Adopted Race" selectors this cycle's new `selector_only`
+    /// `BookSource`s ingested, correctly book-coded, and none flagged
+    /// malformed (every real oracle row's `CHOOSE:` token parses).
+    ///
+    /// **13 of 14 resolve a real grant, via a real `kind: trait` write.**
+    /// `epic-6-kind-trait` cycle 2 built this resolver against a temporary
+    /// `ability/`-directory fallback because `shape_ledger.py`'s kind-blind
+    /// join blocked the real `--kind trait` ingest. Cycle 3 (this cycle): a
+    /// sibling cycle fixed that join and ran `ingest_generic_kind.py --kind
+    /// trait` for real; `trait_pool::load_trait_pool`'s fallback is retired
+    /// (see that module's own doc comment), and this test now proves the 13
+    /// real grants resolve from `data/corpus/inner_sea_races/trait_generic/`
+    /// -- the modelled `kind: trait` schema `decisions.md §25` specifies --
+    /// with no fallback read anywhere in the path. Rougarou is honestly 0:
+    /// cycle 1's own corpus-wide scan proved no book anywhere grants a
+    /// Rougarou Race Trait (`race_resolver.rs`'s own `rougarou` chassis
+    /// comment: no `Rougarou_Replace*` flag is ever set `True` anywhere in
+    /// the pinned oracle), re-confirmed this cycle by re-running the same
+    /// scan against the freshly-bootstrapped oracle (§0 below / this cycle's
+    /// receipt) -- a hard impossibility of source data (`decisions.md §27b`),
+    /// not a gap.
+    #[test]
+    fn the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_with_real_grants() {
+        let menu = menu();
+        let keys: Vec<&str> = menu.adopted_race_options.iter().map(|o| o.key.as_str()).collect();
+        assert_eq!(
+            keys,
+            vec![
+                "Adopted Race ~ Catfolk",
+                "Adopted Race ~ Dhampir",
+                "Adopted Race ~ Fetchling",
+                "Adopted Race ~ Grippli",
+                "Adopted Race ~ Ifrit",
+                "Adopted Race ~ Oread",
+                "Adopted Race ~ Ratfolk",
+                "Adopted Race ~ Rougarou",
+                "Adopted Race ~ Skinwalker",
+                "Adopted Race ~ Suli",
+                "Adopted Race ~ Sylph",
+                "Adopted Race ~ Undine",
+                "Adopted Race ~ Vanara",
+                "Adopted Race ~ Vishkanya",
+            ]
+        );
+        for option in &menu.adopted_race_options {
+            assert!(!option.malformed_choose_token, "{:?}: every real oracle row must parse cleanly", option.key);
+            if option.key == "Adopted Race ~ Rougarou" {
+                assert!(option.grants.is_empty(), "Rougarou's pool is genuinely, corpus-wide empty");
+                continue;
+            }
+            assert_eq!(
+                option.grants.len(),
+                1,
+                "{:?}: exactly 1 real inner_sea_races pool member expected",
+                option.key
+            );
+            let grant = &option.grants[0];
+            assert!(!grant.name.trim().is_empty(), "{:?}: grant must carry a real name", option.key);
+            assert_eq!(grant.book, "ISR", "{:?}: the real pool member's own book", option.key);
+            assert!(
+                grant.description.as_deref().is_some_and(|d| !d.trim().is_empty()),
+                "{:?}: grant must carry real corpus prose",
+                option.key
+            );
+        }
+        // The one real corpus prose sample, pinned by exact text so a future
+        // regeneration that silently changed the content would be caught.
+        let oread = menu.adopted_race_options.iter().find(|o| o.key == "Adopted Race ~ Oread").unwrap();
+        assert_eq!(oread.grants[0].name, "Loner of the Rocks");
+        assert_eq!(
+            oread.grants[0].description.as_deref(),
+            Some(
+                "You gain a +1 trait bonus on Heal and Survival checks. Your bonus on Survival \
+                 checks increases by 1 in underground or mountain environments."
+            )
+        );
+        let books: BTreeSet<&str> = menu.adopted_race_options.iter().map(|o| o.book.as_str()).collect();
+        assert_eq!(books, BTreeSet::from(["B2", "B3", "B5", "B6"]));
     }
 }

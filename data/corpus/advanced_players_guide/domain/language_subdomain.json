@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Language Subdomain",
+    "name": "Language Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Language Subdomain],[PREVARLT:RuneDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Language Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Language Subdomain=1|Comprehend Languages|Language Subdomain=2|Secret Page|Language Subdomain=3|Tongues|Language Subdomain=4|Explosive Runes|Language Subdomain=5|Telepathic Bond|Language Subdomain=6|Glyph of Warding (Greater)|Language Subdomain=7|Instant Summons|Language Subdomain=8|Symbol of Death|Language Subdomain=9|Teleportation Circle"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 45,
+    "record_key": "Language Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

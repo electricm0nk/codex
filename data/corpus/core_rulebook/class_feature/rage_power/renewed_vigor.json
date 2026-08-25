@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Renewed Vigor",
     "name": "Renewed Vigor",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "As a standard action, you heal %1d8+%2 points of damage. This power is can only be used once per day and only while raging.|RenewedVigorDice|RenewedVigorBonus",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

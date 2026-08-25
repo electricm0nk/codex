@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Throw Pattern",
+    "name": "Throw Pattern",
+    "class": "Insight",
+    "description": "You learn how to throw a link to your own pattern, giving you the ability to teleport up to %1 ft. as a standard action.|ThrowPatternDistance",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Throw Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThrowPatternDistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You learn how to throw a link to your own pattern, giving you the ability to teleport up to %1 ft. as a standard action.|ThrowPatternDistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThrowPatternDistance|50"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 225,
+    "record_key": "Insight ~ Throw Pattern"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

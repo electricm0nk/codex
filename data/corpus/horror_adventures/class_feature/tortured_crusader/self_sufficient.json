@@ -1,0 +1,124 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Tortured Crusader ~ Self-Sufficient",
+    "name": "Self-Sufficient",
+    "class": "Paladin",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tortured Crusader ~ Self-Sufficient"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Paladin Class Feature.TorturedCrusaderClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "TYPE=Craft|Heal|Knowledge (Arcana)|Knowledge (Dungeoneering)|Knowledge (Nobility)|Knowledge (Planes)|Knowledge (Religion)|Perception|TYPE=Profession|Ride|Sense Motive|Spellcraft|Stealth|Survival|Use Magic Device"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=1|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=2|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=3|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=4|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=5|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=6|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=7|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=8|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=9|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=10|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=11|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=12|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=13|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=14|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=15|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=16|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=17|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=18|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=19|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILLPOOL|CLASS=Paladin;LEVEL=20|2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+    "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+    "line": 194,
+    "record_key": "Tortured Crusader ~ Self-Sufficient"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

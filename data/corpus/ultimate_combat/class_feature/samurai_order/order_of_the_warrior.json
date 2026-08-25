@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Samurai Order ~ Order of the Warrior",
     "name": "Order of the Warrior",
-    "class": "Samurai Order",
+    "class": "Samurai",
     "description": "Most samurai swear themselves to the code of the warrior, which emphasizes duty, honor, loyalty, and obedience. This code extends not only to the samurai's lord and master, but also to his comrades and family. Samurai who follow the order of the warrior are among the most trusted and feared warriors in the land. An order of the warrior samurai adds Knowledge (history) and Knowledge (nobility) to his list of class skills, and can make Knowledge (nobility) checks untrained. If he has ranks in the skill, he receives a +%1 bonus on the check as long as the check involves the nobles or politics of his land.|max(SamuraiLVL/2,1)",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

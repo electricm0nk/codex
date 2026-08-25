@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Warpriest Archetype ~ Cult Leader",
     "name": "Cult Leader",
-    "class": "Warpriest Archetype",
+    "class": "Warpriest",
     "description": "Referred to as fanatics, lunatics, or obsessives, cultists see themselves as genuine devotees of their deity. And the hierarchs of those devotees, the cult leaders, are the most fanatical of them all. Cult leaders are known for turning reasonable hearts toward corrupted teachings and striking at those that get in the way of their agenda.",
     "raw_tokens": [
       {
@@ -67,6 +67,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Warpriest"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Warpriest Archetype ~ Cult Leader],[!PREFACT:1,ABILITIES,Warpriest_Archetype_BonusFeats=True,Warpriest_Archetype_ClassSkills=True,Warpriest_Archetype_Proficiencies=True,Warpriest_Archetype_ChannelEnergy=True,Warpriest_Archetype_FocusWeapon=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_FocusWeapon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat12|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_CF_BonusFeat15|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Warpriest_Archetype_FocusWeapon|true"
       }
     ]
   },
@@ -83,5 +143,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

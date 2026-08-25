@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Reflection",
     "name": "Reflection",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "You can sacrifice 1 or more points from your arcane pool as an immediate action to reflect a spell back at its caster. This functions as Spell Turning, but only if the targeted spell is of a level equal to or lower than the number of points expended.  If insufficient points are expended, they instead grant an insight bonus on any saving throws allowed by the spell, equal to the number of points spent.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

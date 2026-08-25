@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Hollow Serpent ~ Desiccation Aura",
+    "delivery": "Supernatural",
+    "description": "A cloud of moisture-draining dust fills the air in a 30-foot radius around a hollow serpent. Living creatures within this area must make a DC 26 Fortitude save or take 1d6 points of Strength damage as water is leached from their flesh. Whether or not the save is successful, a creature cannot be affected again by the same hollow serpent's desiccation aura for 24 hours. Creatures without fleshy bodies are immune to this aura, while creatures with the aquatic or water subtypes take a -4 penalty on the saving throw. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:hollow_serpent_desiccation_aura",
+    "name": "Desiccation Aura",
+    "owners": [
+      "bestiary_3:monster:hollow_serpent"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A cloud of moisture-draining dust fills the air in a 30-foot radius around a hollow serpent. Living creatures within this area must make a DC 26 Fortitude save or take 1d6 points of Strength damage as water is leached from their flesh. Whether or not the save is successful, a creature cannot be affected again by the same hollow serpent's desiccation aura for 24 hours. Creatures without fleshy bodies are immune to this aura, while creatures with the aquatic or water subtypes take a -4 penalty on the saving throw. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Hollow Serpent ~ Desiccation Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.149"
+      },
+      {
+        "key": "TYPE",
+        "value": "HollowSerpentRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.149",
+    "traits": [
+      "HollowSerpentRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1049,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Hollow Serpent ~ Desiccation Aura",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

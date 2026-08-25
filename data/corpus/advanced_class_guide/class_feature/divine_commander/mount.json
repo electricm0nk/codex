@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Divine Commander ~ Mount",
     "name": "Mount",
@@ -47,6 +47,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.129"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bloodrager=1"
       }
     ]
   },
@@ -63,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

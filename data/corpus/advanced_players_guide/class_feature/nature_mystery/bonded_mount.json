@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Nature Mystery ~ Bonded Mount",
     "name": "Bonded Mount",
-    "class": "Nature Mystery",
+    "class": "Oracle",
     "description": "You gain the service of an unusually intelligent, strong, and loyal mount. The creature must be one that you are capable of riding and is suitable as a mount. A Medium oracle can select a camel or a horse. A Small oracle can select a pony or wolf, but can also select a boar or a dog if she is at least 4th level. This mount functions as a druid's animal companion, using your oracle level as your effective druid level. Bonded mounts have an Intelligence score of at least 6.",
     "raw_tokens": [
       {
@@ -59,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

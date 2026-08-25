@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Druid Archetype ~ Road Keeper",
     "name": "Road Keeper",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "Guardians of the lonely paths between cities, road keepers protect the wild from travelers, and travelers from the wild.",
     "raw_tokens": [
       {
@@ -119,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

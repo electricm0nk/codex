@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Holy Tactician ~ Guide The Battle",
     "name": "Guide the Battle",
-    "class": "Holy Tactician",
+    "class": "Tactician",
     "description": "At 8th level, the paladin can direct her allies into an advantageous position once per round as a move action. Each ally (if physically able to) can move 5 feet without expending an action. This movement does not provoke attacks of opportunity. The allies must be able to see or hear the paladin in order to make this movement and cannot be flat-footed. At 15th level, her allies can make this 5-foot move and ignore difficult terrain. This ability replaces aura of resolve.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

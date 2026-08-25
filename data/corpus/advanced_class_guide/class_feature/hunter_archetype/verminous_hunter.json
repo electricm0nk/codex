@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Hunter Archetype ~ Verminous Hunter",
     "name": "Verminous Hunter",
-    "class": "Hunter Archetype",
+    "class": "Hunter",
     "description": "A verminous hunter calls on the ceaseless, single-minded dedication of vermin to hunt and overwhelm her prey. Where other hunters invoke the cunning, animalistic powers of the alpha predators, she calls on the powers of the lowest life forms, reaching out to the spider instead of the monkey, the mantis instead of the snake, or the moth instead of the owl.",
     "raw_tokens": [
       {
@@ -67,6 +67,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Hunter"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Verminous Hunter],[!PREFACT:1,ABILITIES,Hunter_Archetype_AnimalCompanion=True,Hunter_Archetype_WildEmpathy=True,Hunter_Archetype_AnimalFocus=True,Hunter_Archetype_WoodlandStride=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_CF_WoodlandStride|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalCompanion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_WildEmpathy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_AnimalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Hunter_Archetype_WoodlandStride|true"
       }
     ]
   },
@@ -83,5 +123,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

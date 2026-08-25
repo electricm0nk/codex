@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Unexpected Strike",
     "name": "Unexpected Strike",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "You can make an attack of opportunity against a foe that moves into any square threatened by you, regardless of whether that movement would normally provoke an attack of opportunity. This power can only be used once per rage.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

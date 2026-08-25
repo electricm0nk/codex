@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Terrain Dominance ~ Swamp",
     "name": "Terrain Dominance (Swamp)",
-    "class": "Terrain Dominance",
+    "class": "Ranger",
     "description": "The horizon walker gains tremorsense with a 30-foot range. He must be at least 5th level before selecting this power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Adaptive Warrior ~ Examine Technique",
+    "name": "Examine Technique",
+    "class": "Adaptive Warrior",
+    "description": "When focused, you can examine %1 creatures within line of sight.  When focus is expended, you lose access to any examined techniques.|ExamineTechniqueTargets",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Adaptive Warrior ~ Examine Technique"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ExamineTechniqueTargets|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When focused, you can examine %1 creatures within line of sight.  When focus is expended, you lose access to any examined techniques.|ExamineTechniqueTargets"
+      },
+      {
+        "key": "DESC",
+        "value": " You can use this ability 1/round as a move action.|!PRECLASS:1,Adaptive Warrior=6"
+      },
+      {
+        "key": "DESC",
+        "value": " You can use this ability 1/round as a swift action.|PRECLASS:1,Adaptive Warrior=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ExamineTechniqueTargets|AdaptiveWarriorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.349"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1126,
+    "record_key": "Adaptive Warrior ~ Examine Technique"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

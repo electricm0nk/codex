@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mountain Kami",
+    "name": "Mountain Kami",
+    "description": "When an elder jinushigami's ward includes the tallest peak in a range or region, it gains the use of flesh to stone and wall of stone three times per day each.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.ElderJinushigami"
+      },
+      {
+        "key": "DESC",
+        "value": "When an elder jinushigami's ward includes the tallest peak in a range or region, it gains the use of flesh to stone and wall of stone three times per day each."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1118,
+    "record_key": "Mountain Kami"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Flexible School Power ~ Transmutation ~ Physical Enhancement",
+    "name": "Physical Enhancement",
+    "description": "You gain a +%1 enhancement bonus to one physical ability score (Strength, Dexterity, or Constitution). You can change this bonus to a new ability score when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVARLT:Ability_FlexibleSchool_TransmutationLVL,20",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flexible School Power ~ Transmutation ~ Physical Enhancement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Transmutation School ~ Physical Enhancement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationPhysicalEnhancementBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TransmutationPhysicalEnhancementProgression|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus to one physical ability score (Strength, Dexterity, or Constitution). You can change this bonus to a new ability score when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVARLT:Ability_FlexibleSchool_TransmutationLVL,20"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 enhancement bonus to two physical ability scores (Strength, Dexterity, or Constitution). You can change this bonus to new ability scores when you prepare spells.|TransmutationPhysicalEnhancementBonus|PREVAREQ:Ability_FlexibleSchool_TransmutationLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementProgression|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementProgression|1|PREVARGTEQ:Ability_FlexibleSchool_TransmutationLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TransmutationPhysicalEnhancementBonus|min(5,(Ability_FlexibleSchool_TransmutationLVL/5)+1)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.82"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 462,
+    "record_key": "Flexible School Power ~ Transmutation ~ Physical Enhancement"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

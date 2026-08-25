@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Geomancer ~ Terrain Stride",
+    "name": "Terrain Stride",
+    "class": "Occultist",
+    "description": "As a swift action, a geomancer can expend 1 point of mental focus invested in the terrain to increase all of his movement speeds by 10 feet.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Geomancer ~ Terrain Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.GeomancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "As a swift action, a geomancer can expend 1 point of mental focus invested in the terrain to increase all of his movement speeds by 10 feet."
+      },
+      {
+        "key": "DESC",
+        "value": "The geomancer can expend 2 points of mental focus invested in the terrain to instead increase all of his movement speeds by 20 feet.|PRECLASS:1,Occultist=5"
+      },
+      {
+        "key": "DESC",
+        "value": "This affects only movement speeds he already has. The duration of a geomancer's terrain stride ability is 1 hour."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 136,
+    "record_key": "Geomancer ~ Terrain Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

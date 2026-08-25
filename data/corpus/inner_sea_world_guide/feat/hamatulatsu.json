@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Hamatulatsu",
+    "category": "Combat",
+    "name": "Hamatulatsu",
+    "description": "You have mastered a deadly fighting form inspired by the hideous attacks of the barbed devil. Unarmed attacks can inflict piercing damage and sicken foes. You have mastered a deadly fighting form inspired by the hideous attacks of the barbed devil. Your unarmed attacks can deal either bludgeoning or piercing damage. You decide which type of damage you deal whenever you attack a foe, but you may only choose one type at a time. If you critically hit a foe with your unarmed strike while doing piercing damage, the additional pain caused by the strike causes the foe to become sickened for 1 round (or staggered for 1 round if the target is already sickened). Multiple critical hits in a round against a single foe do not increases the duration of the sickened or staggered condition.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Improved Unarmed Strike,Weapon Focus (Unarmed Strike)"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 27,
+    "record_key": "Hamatulatsu"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

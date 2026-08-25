@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Frugal Trapsmith",
     "name": "Frugal Trapsmith",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "When a rogue with this talent constructs a mechanical trap, she only pays 75%% of the normal cost.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

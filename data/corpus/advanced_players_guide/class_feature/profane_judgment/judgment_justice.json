@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Profane Judgment ~ Justice",
     "name": "Judgment / Justice",
-    "class": "Profane Judgment",
+    "class": "Inquisitor",
     "description": "This judgment spurs the inquisitor to seek justice, granting a +%1 profane bonus on all attack rolls.|1+InqJudgeJusticeLVL/5",
     "raw_tokens": [
       {
@@ -35,6 +35,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.39"
+      },
+      {
+        "key": "DESC",
+        "value": "This bonus is doubled on all attack rolls made to confirm critical hits.|PREVARGTEQ:InqJudgeJusticeLVL,10"
       }
     ]
   },
@@ -51,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

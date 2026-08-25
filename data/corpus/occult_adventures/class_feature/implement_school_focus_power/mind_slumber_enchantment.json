@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Mind Slumber",
     "name": "Mind Slumber [Enchantment]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "By expending 1 point of mental focus as a standard action, you can lull a living creature into a deep mental slumber, forcing it to view the world as a dream. The target must be within 30 feet of you, and it can attempt a Will saving throw to negate the effect. If it fails the save, the creature falls asleep, although it still perceives the world around it as a dream. This doesn't cause the creature to fall prone, but it does drop whatever it is holding. The creature can't take any actions while in this state, but it isn't helpless - it perceives danger as part of its dream. The creature remains asleep for %1 rounds or until it takes any amount of damage, which immediately wakes it. At the end of each of its turns, it receives another Will saving throw to end the effect. The creature can be manipulated or examined without waking it, but it can't be moved from its square without waking it. This is a mind-affecting compulsion effect. Regardless of whether it succeeds at the save, the target is then immune to this effect for 24 hours. You must be at least 3rd level to select this focus power.|OccultistLVL",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

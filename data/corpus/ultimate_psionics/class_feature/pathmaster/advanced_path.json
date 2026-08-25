@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pathmaster ~ Advanced Path",
+    "name": "Advanced Path",
+    "class": "Pathmaster",
+    "description": "You gain the Advanced Path feat for your chosen warrior's path, or any psionic or combat feat as a bonus feat if you already have your Advanced Path feat.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pathmaster ~ Advanced Path"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain the Advanced Path feat for your chosen warrior's path, or any psionic or combat feat as a bonus feat if you already have your Advanced Path feat."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Pathmaster Advanced Path Feat|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2077,
+    "record_key": "Pathmaster ~ Advanced Path"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

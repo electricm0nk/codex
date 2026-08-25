@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Verdant Bloodline ~ Rooting",
     "name": "Rooting",
-    "class": "Verdant Bloodline",
+    "class": "Sorcerer",
     "description": "As a move action, you can extend roots into the ground. Your speed is reduced to 5 feet, but you gain a +4 bonus to natural armor and a +10 bonus to CMD against bull rush, overrun, reposition, and trip maneuvers. You also gain tremorsense 30 feet and fast healing 1. You can use this power for %1 minutes per day. This duration need not be consecutive, but it must be used in 1-minute increments.|Sorcerer_VerdantRooting_Duration",
     "raw_tokens": [
       {
@@ -100,5 +100,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

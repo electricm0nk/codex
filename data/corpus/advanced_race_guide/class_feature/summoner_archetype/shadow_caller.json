@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Summoner Archetype ~ Shadow Caller",
     "name": "Shadow Caller",
-    "class": "Summoner Archetype",
+    "class": "Summoner",
     "description": "While most summoners can call any manner of creature from across the planes to serve them in combat, supplementing the skills of their eidolon with a diverse range of creatures, others eschew this broad utility and instead concentrate upon calling forth entities from the Shadow Plane. A shadow caller has the following class features.",
     "raw_tokens": [
       {
@@ -59,6 +59,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Summoner"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Shadow Caller],[!PREFACT:1,ABILITIES,Summoner_Archetype_Eidolon=True,Summoner_Archetype_ClassSkills=true]"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_Eidolon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_Archetype_ClassSkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Summoner_CF_ClassSkills|true"
       }
     ]
   },
@@ -75,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

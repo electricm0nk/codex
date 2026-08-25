@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Immunity to Effects Targeting Specific Numbers of Creatures",
+    "delivery": "Extraordinary",
+    "description": "You are never subject to effects that target a specific number of creatures.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:immunity_to_effects_targeting_specific_numbers_of_creatures",
+    "name": "Immunity to Effects Targeting Specific Numbers of Creatures",
+    "owners": [
+      "bestiary_4:monster:rat_king"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Immunity to Effects Targeting Specific Numbers of Creatures"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You are never subject to effects that target a specific number of creatures."
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Immunity to Effects Targeting Specific Numbers of Creatures",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

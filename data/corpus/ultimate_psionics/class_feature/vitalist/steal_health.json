@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist ~ Steal Health",
+    "name": "Steal Health",
+    "class": "Vitalist",
+    "description": "Deal %1 hit points of damage and heal same amount|StealHealthLVL+VitalistPrimeStat",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist ~ Steal Health"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StealHealthLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Deal %1 hit points of damage and heal same amount|StealHealthLVL+VitalistPrimeStat"
+      },
+      {
+        "key": "DESC",
+        "value": " as touch attack.|PREVARLT:StealHealthLVL,7"
+      },
+      {
+        "key": "DESC",
+        "value": " as 30-ft. ranged touch attack.|PREVARGT:StealHealthLVL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StealHealthLVL|VitalistLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 960,
+    "record_key": "Vitalist ~ Steal Health"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

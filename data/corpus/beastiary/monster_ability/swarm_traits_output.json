@@ -1,0 +1,65 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Swarm Traits Output",
+    "delivery": "Extraordinary",
+    "description": "A swarm is not subject to critical hits or flanking, they cannot be tripped, grappled, or bull rushed, and they cannot grapple an opponent. Swarms are never staggered or reduced to a dying state by damage. A swarm is immune to any spell or effect that targets a specific number of creatures, with the exception of mind-affecting effects. A swarm takes half again as much damage (+50%%) from spells or effects that affect an area, such as splash weapons and many evocation spells. A swarm takes half damage from slashing and piercing weapons. A swarm composed of Fine or Diminutive creatures is immune to all weapon damage and are also susceptible to high winds, such as those created by a gust of wind spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:swarm_traits_output",
+    "name": "Swarm Traits Output",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A swarm composed of Fine or Diminutive creatures is immune to all weapon damage and are also susceptible to high winds, such as those created by a gust of wind spell.|PRESIZELTEQ:D"
+      },
+      {
+        "key": "DESC",
+        "value": "A swarm is not subject to critical hits or flanking, they cannot be tripped, grappled, or bull rushed, and they cannot grapple an opponent. Swarms are never staggered or reduced to a dying state by damage. A swarm is immune to any spell or effect that targets a specific number of creatures, with the exception of mind-affecting effects. A swarm takes half again as much damage (+50%%) from spells or effects that affect an area, such as splash weapons and many evocation spells."
+      },
+      {
+        "key": "DESC",
+        "value": "A swarm takes half damage from slashing and piercing weapons.|PRESIZEGT:D"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Swarm Traits"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.312"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Defensive"
+      }
+    ],
+    "rename": null,
+    "source_page": "p.312",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "ingested_at": "2026-08-23T22:58:47Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1752,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Swarm Traits Output",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

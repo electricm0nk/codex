@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Nimble Climber",
     "name": "Nimble Climber",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "When a rogue with this talent fails a Climb check by 5 or more, she can immediately make another Climb check at the surface's base DC +10. If successful, she stops her fall by clinging onto the surface. The rogue does not take falling damage when she stops her fall in this manner.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

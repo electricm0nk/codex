@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Bond of Blood",
     "name": "Bond of Blood",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The cabalist has a magical bond to life-giving blood. When the cabalist deals bleed damage or 5 or more points of piercing or slashing damage to an adjacent living creature, he gains %1d6 temporary hit points. These temporary hit points last for 1 hour, and the cabalist can't gain temporary hit points again from bond of blood during that hour (even if he loses all the temporary hit points from bond of blood before that time).|1+VigilanteLVL/4",
     "raw_tokens": [
       {
@@ -61,5 +61,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Death Slayer ~ Channel Energy",
     "name": "Channel Energy",
-    "class": "Death Slayer",
+    "class": "Slayer",
     "description": "A death slayer gains the power to harm undead with positive energy. This ability functions as a cleric's ability to channel positive energy to deal damage to undead (but not to heal living creatures), and it counts as channel energy for the purposes of qualifying for feats or determining effects that rely on channel energy. A death slayer uses her class level as her effective cleric level when channeling energy. She can channel energy %1 times per day. She deals %2d%3 points of damage. Death slayer levels stack with levels in any class that grants channel energy (if any) for the purpose of determining the number of damage dice her channel energy ability deals to undead, but this channel energy can never do anything other than harm undead. An undead creature that takes damage from this channeled energy can attempt a Will save to halve the damage; the DC of this save is %4. The death slayer must be able to present either her holy symbol or a sawtooth sabre to use this ability.|DeathSlayerChannelEnergyTimes|DeathSlayerChannelPositiveEnergyDice|DeathSlayerChannelPositiveEnergyDieSize|DeathSlayerChannelPositiveEnergyDC",
     "raw_tokens": [
       {
@@ -111,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

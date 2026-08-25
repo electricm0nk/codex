@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Haunted Occultist Implement School ~ Necromancy",
+    "name": "Necromancy",
+    "class": "Haunted Occultist Implement School",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Haunted Occultist Implement School ~ Necromancy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Haunted Implement School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=SpecialAbility,Occultist Implement School ~ Necromancy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Base Focus Power ~ Mind Fear"
+      },
+      {
+        "key": "FACT",
+        "value": "OccultistSchool_Necromancy|True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HauntedImplementSpirit|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 277,
+    "record_key": "Haunted Occultist Implement School ~ Necromancy"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

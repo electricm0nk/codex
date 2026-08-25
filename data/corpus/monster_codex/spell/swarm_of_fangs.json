@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Swarm of Fangs",
+    "school": "Conjuration",
+    "level": 3,
+    "description": "You summon a swarm consisting of thousands of animate, flying teeth in a 10-foot-by-10-foot cube. These fangs attack all creatures within the swarm's area. You can summon the swarm so that it shares an area with other creatures, and you can move the swarm up to 40 feet each round as a move action. If you choose not to move the swarm, it automatically moves up to 40 feet to envelop the nearest creature (including you) if it has not already done so. Creatures caught inside the swarm's area of effect take 2d6 points of damage. The fangs deal damage to all creatures sharing their area when they first appear, and at the end of their movement each round."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
+    "sha256": "fb504808c5c3b320b1c082f4cdb66fbf22297ae9929f2486aab2684f7a361787",
+    "line": 26,
+    "record_key": "Swarm of Fangs"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

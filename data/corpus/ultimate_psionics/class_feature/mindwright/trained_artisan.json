@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mindwright ~ Trained Artisan",
+    "name": "Trained Artisan",
+    "class": "Mindwright",
+    "description": "You gain a +%1 bonus on Craft and Profession skills.|TrainedArtisanBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mindwright ~ Trained Artisan"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrainedArtisanBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Craft and Profession skills.|TrainedArtisanBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE.Craft,TYPE.Profession|TrainedArtisanBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrainedArtisanBonus|max(1,floor(PsionLVL/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1985,
+    "record_key": "Mindwright ~ Trained Artisan"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Armored Blade ~ Shape Mind Armaments",
+    "name": "Shape Mind Armaments",
+    "class": "Armored Blade",
+    "description": "You can shape your mind armor as well as your mind blade.  Shaping mind armor is a separate action from shaping a mind blade.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Armored Blade ~ Shape Mind Armaments"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You can shape your mind armor as well as your mind blade.  Shaping mind armor is a separate action from shaping a mind blade."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Soulknife ~ Shape Mind Blade"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2147,
+    "record_key": "Armored Blade ~ Shape Mind Armaments"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

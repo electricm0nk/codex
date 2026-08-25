@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Flesh Rot",
     "name": "Flesh Rot [Necromancy]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can make a melee touch attack and expend 1 point of mental focus to cause the flesh of a living creature to rot and wither. If the attack hits, the target takes 1d8 points of damage + 1 point per occultist level you possess. For every 4 occultist levels you possess beyond 3rd, the target takes an additional 1d8 points of damage (to a maximum of 5d8 at 19th level). If you miss with the melee touch attack, this power is wasted with no effect. You must be at least 3rd level to select this focus power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

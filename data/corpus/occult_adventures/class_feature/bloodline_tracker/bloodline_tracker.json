@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Bloodline Tracker",
+    "name": "Bloodline Tracker",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_IntuitiveSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_IntuitiveSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BloodlineFeat_LogicalSpell|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_GhostWhip_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EctoplasmicSnare_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_SpiritBoundBlade_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_WallOfEctoplasm_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EctoplasmicEruption_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MindThrustI_L1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_IdInsinuationI_L2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_EgoWhipI_L3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_IntellectFortressI_L4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_PsychicCrushI_L5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_MentalBarrierV_L6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_TowerofIronWillIII_L7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Bilocation_L8|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Sorcerer_BonusSpell_Microcosm_L9|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 1809,
+    "record_key": "Bloodline Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

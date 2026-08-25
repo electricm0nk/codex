@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Oath against Undeath",
     "name": "Oath against Undeath",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "You vow to restore the natural state of death to any animate corpse you encounter, and destroy the undead energy in the process.",
     "raw_tokens": [
       {
@@ -67,6 +67,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath against Undeath],[!PREFACT:1,ABILITIES,Paladin_Archetype_DetectEvil=True,Paladin_Archetype_Mercy3=True,Paladin_Archetype_Mercy9=True,Paladin_Archetype_AuraOfResolve=True,Paladin_Archetype_AuraOfJustice=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DetectEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_AuraOfJustice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DetectEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfResolve|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_AuraOfJustice|true"
       }
     ]
   },
@@ -83,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

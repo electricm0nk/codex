@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Bloodline ~ Draconic",
     "name": "Draconic Bloodline",
-    "class": "Sorcerer Bloodline",
+    "class": "Sorcerer",
     "description": "At some point in your family's history, a dragon interbred with your bloodline, and now its ancient power flows through your veins.|PREVAREQ:Sorcerer_Draconic_Description,0",
     "raw_tokens": [
       {
@@ -163,6 +163,90 @@
       {
         "key": "ASPECT",
         "value": "Bloodline|Draconic"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Black)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Black,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Black)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Black,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Blue)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Blue,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Blue)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Blue,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Green)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Green,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Green)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Green,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Red)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Red,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Red)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Red,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (White)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_White,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (White)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_White,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Brass)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Brass,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Brass)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Brass,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Bronze)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Bronze,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Bronze)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Bronze,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Copper)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Copper,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Copper)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Copper,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Gold)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Gold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Gold)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Gold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Silver)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Silver,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Bloodline|Draconic (Silver)|PREVAREQ:Sorcerer_DraconicBloodlineChoice_Silver,1"
       }
     ]
   },
@@ -180,5 +264,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Domain Base ~ Void",
+    "name": "Void",
+    "class": "Domain Base",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Domain Base ~ Void"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoidDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoidDomain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVoidLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVoidDC|10+(DomainVoidLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVoidTimes|DomainPowerTimes"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_class.lst",
+    "sha256": "fb3031a343dcd1408f50cd61a32f97516e73409d8cd79ead3a1e36efd1d756de",
+    "line": 8,
+    "record_key": "Domain Base ~ Void"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

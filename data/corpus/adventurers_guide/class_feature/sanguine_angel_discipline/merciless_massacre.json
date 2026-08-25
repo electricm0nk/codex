@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sanguine Angel Discipline ~ Merciless Massacre",
     "name": "Merciless Massacre",
-    "class": "Sanguine Angel Discipline",
+    "class": "Sanguine Angel",
     "description": "When the sanguine angel hits a cowering or panicked creature with a melee attack or reduces a creature to negative hit points with a melee attack, as a swift action she can deal an additional 1d8+%1 damage to that creature.|SanguineAngelLVL",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

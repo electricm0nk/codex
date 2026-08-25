@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Sensory Link",
+    "name": "Sensory Link",
+    "description": "As a standard action, you can see and hear through your familiar's eyes and ears. While using this ability, you can't see or hear using your normal senses. You can speak through your familiar using any language you know, even if the familiar can't normally speak. You may end the link and restore your own senses as a standard action. While linked, you can expend one use of mythic power to cast a spell and have it originate from your familiar instead of you. You must have a familiar to select this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Sensory Link"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,TYPE.Familiar],[PREVARGTEQ:FamiliarMasterLVL,1]"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you can see and hear through your familiar's eyes and ears. While using this ability, you can't see or hear using your normal senses. You can speak through your familiar using any language you know, even if the familiar can't normally speak. You may end the link and restore your own senses as a standard action. While linked, you can expend one use of mythic power to cast a spell and have it originate from your familiar instead of you. You must have a familiar to select this ability."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 252,
+    "record_key": "Mythic Path Ability ~ Sensory Link"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

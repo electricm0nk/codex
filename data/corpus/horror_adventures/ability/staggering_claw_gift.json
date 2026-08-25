@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Staggering Claw Gift",
+    "name": "Staggering Claw Gift",
+    "description": "%1 times per day, you can make a staggering claw attack as a standard action. If you hit, the target must succeed at a Fortitude save (DC %2)or be staggered for %3 rounds.|GhoulManifestationLevel|10+TL/2+GhoulManifestationLevel|GhoulManifestationLevel/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Staggering Claw Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.GhoulStaggeringClawGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times per day, you can make a staggering claw attack as a standard action. If you hit, the target must succeed at a Fortitude save (DC %2)or be staggered for %3 rounds.|GhoulManifestationLevel|10+TL/2+GhoulManifestationLevel|GhoulManifestationLevel/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 275,
+    "record_key": "Ghoul Corruption ~ Staggering Claw Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

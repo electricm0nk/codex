@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_265)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_265)",
+    "description": "If you have performed your daily obedience, your jaw distends slightly and you grow prominent canines. You gain a bite attack that deals 1d4 points of damage if you're Medium or 1d3 points of damage if you're Small, plus half your Strength bonus. When part of a full attack, the bite attack is made at your full base attack bonus -5. You can also make a bite attack as part of the action to maintain or break free from a grapple. This attack is resolved before the grapple check is attempted. If the bite attack hits, you gain a +2 bonus on your grapple check and any other grapple check against the same creature this round.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, your jaw distends slightly and you grow prominent canines. You gain a bite attack that deals 1d4 points of damage if you're Medium or 1d3 points of damage if you're Small, plus half your Strength bonus. When part of a full attack, the bite attack is made at your full base attack bonus -5. You can also make a bite attack as part of the action to maintain or break free from a grapple. This attack is resolved before the grapple check is attempted. If the bite attack hits, you gain a +2 bonus on your grapple check and any other grapple check against the same creature this round."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 265,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_265)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:265"
+  }
+}

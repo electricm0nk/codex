@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch Hex ~ Blight",
     "name": "Blight",
-    "class": "Witch Hex",
+    "class": "Witch",
     "description": "DC %1 |WitchHexDC_Blight",
     "raw_tokens": [
       {
@@ -51,6 +51,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.66"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=5"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Seasons Subdomain=4"
       }
     ]
   },
@@ -67,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

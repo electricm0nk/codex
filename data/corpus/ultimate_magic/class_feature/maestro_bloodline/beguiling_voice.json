@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Maestro Bloodline ~ Beguiling Voice",
     "name": "Beguiling Voice",
-    "class": "Maestro Bloodline",
+    "class": "Sorcerer",
     "description": "You can use the sound of your voice to lull a target creature into taking no action. This ability acts as the daze spell, except it is language-dependent, has a duration of 1 round, and affects a living creature with no more than %1 Hit Dice. You can use this ability %2 times per day.|Sorcerer_MaestroBeguilingVoice_HD|Sorcerer_Maestro_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

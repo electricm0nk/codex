@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Gathlain ~ Tree-Born",
+    "name": "Tree-Born",
+    "description": "Some gathlains take after their tree ancestors, standing more firmly but moving more slowly. They have no Constitution penalty but have a base speed of 20 feet and a fly speed of 30 feet (clumsy maneuverability).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gathlain ~ Tree-Born"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gathlain Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gathlain ~ Tree-Born],[!PREFACT:1,ABILITIES,Gathlain_ReplaceAbilityScores=True,Gathlain_ReplaceSpeed=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gathlains take after their tree ancestors, standing more firmly but moving more slowly. They have no Constitution penalty but have a base speed of 20 feet and a fly speed of 30 feet (clumsy maneuverability)."
+      },
+      {
+        "key": "DESC",
+        "value": "This replaces the penalty to Constitution and alters speed.|!PREABILITY:1,CATEGORY=Special Ability,Gathlain ~ Tree-Born"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Gathlain Racial Trait|AUTOMATIC|Tree-Born ~ Gathlain ~ Ability Scores|Tree-Born ~ Gathlain ~ Speed"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "FACT",
+        "value": "Gathlain_ReplaceAbilityScores|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Gathlain_ReplaceSpeed|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 55,
+    "record_key": "Gathlain ~ Tree-Born"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

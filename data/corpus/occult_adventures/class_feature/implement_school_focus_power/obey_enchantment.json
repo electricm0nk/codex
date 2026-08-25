@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Obey",
     "name": "Obey [Enchantment]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can issue a command to one living creature by expending 1 point of mental focus. This functions as command. The target must be within 30 feet and capable of understanding your order. The target can attempt a Will save to negate this effect. If the creature is the same creature type as you, it takes a -2 penalty on this saving throw.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

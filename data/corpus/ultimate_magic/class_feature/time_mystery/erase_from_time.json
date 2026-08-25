@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Time Mystery ~ Erase from Time",
     "name": "Erase from Time",
-    "class": "Time Mystery",
+    "class": "Oracle",
     "description": "As a melee touch attack, you can temporarily remove a creature from time altogether. The target creature must make a Fortitude save (DC %1) or vanish completely for %2 rounds. No magic or divinations can detect the creature during this time, as it exists outside of time and space-in effect, the creature ceases to exist for the duration of this ability. At the end of the duration, the creature reappears unharmed in the space it last occupied (or the nearest possible space, if the original space is now occupied). You can use this ability %3/day.|EraseFromTimeDC|EraseFromTimeDuration|EraseFromTimeTimes",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

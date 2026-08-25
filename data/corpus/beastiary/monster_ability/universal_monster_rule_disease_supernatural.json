@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Disease (Supernatural)",
+    "delivery": "Extraordinary",
+    "description": "A creature with this ability causes disease in those it contacts. The effects of the disease, including its save, frequency, and cure, are included in the creature's description. The saving throw to negate the disease is usually a Fort save (DC 10 + 1/2 infecting creature's racial HD + the creature's Con modifier; the exact DC is given in the creature's descriptive text). Disease can be removed through remove disease and similar effects.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:universal_monster_rule_disease_supernatural",
+    "name": "Disease",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Disease"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Disease_DC|10+(max(HD,CompanionHD)/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UMR_Disease_DC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Disease)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Disease_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Disease_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with this ability causes disease in those it contacts. The effects of the disease, including its save, frequency, and cure, are included in the creature's description. The saving throw to negate the disease is usually a Fort save (DC 10 + 1/2 infecting creature's racial HD + the creature's Con modifier; the exact DC is given in the creature's descriptive text). Disease can be removed through remove disease and similar effects.|PREVAREQ:UMR_Disease_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Disease (Supernatural)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.Special Ability.SpecialAttack.Special Attack.Extraordinary"
+      }
+    ],
+    "source_page": "p.299",
+    "traits": [
+      "Universal Monster Rule",
+      "Special Ability",
+      "Special Attack"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2370,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Disease (Supernatural)",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

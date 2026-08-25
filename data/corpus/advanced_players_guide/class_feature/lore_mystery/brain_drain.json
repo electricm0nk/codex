@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Lore Mystery ~ Brain Drain",
     "name": "Brain Drain",
-    "class": "Lore Mystery",
+    "class": "Oracle",
     "description": "You can take a standard action to violently probe the mind of a single intelligent enemy within 100 feet. The target receives a Will save (DC %1) to negate the effect and immediately knows the source of this harmful mental prying. Those who fail this save are wracked with pain, taking %2d4 points of damage. After successfully attacking with this ability, you may use a full-round action to sort through the jumble of stolen thoughts and memories to make a single Knowledge check using the victimUs skill bonus. The randomly stolen thoughts remain in your mind for a %3 rounds. Treat the knowledge gained as if you used detect thoughts. This is a mind-affecting effect. You can use this ability %4 time(s) per day.|OracleRevelationsDC|OracleBrainDrainDamageDice|OracleBrainDrainDuration|OracleBrainDrainTimes",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

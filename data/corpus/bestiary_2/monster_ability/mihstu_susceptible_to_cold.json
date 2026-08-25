@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mihstu ~ Susceptible to Cold",
+    "delivery": "Extraordinary",
+    "description": "Magical cold stuns a mihstu rather than damaging it.  If the creature fails its save against a magical cold effect, it is stunned for 1 round and then staggered for an additional 1d4 rounds.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:mihstu_susceptible_to_cold",
+    "name": "Susceptible to Cold",
+    "owners": [
+      "bestiary_2:monster:mihstu"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Magical cold stuns a mihstu rather than damaging it.  If the creature fails its save against a magical cold effect, it is stunned for 1 round and then staggered for an additional 1d4 rounds."
+      },
+      {
+        "key": "KEY",
+        "value": "Mihstu ~ Susceptible to Cold"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.190"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.190",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 829,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mihstu ~ Susceptible to Cold",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

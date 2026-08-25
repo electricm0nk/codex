@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Beast Rider",
+    "name": "Beast Rider",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "COMPANIONLIST",
+        "value": "Special Mount|Companion (Gorthek)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/support/mc_abilities_feat_arg.lst",
+    "sha256": "a6ededf00414e12dd644f4642719d27cebf295e1b27cd6ae1a4074dcf4646ed2",
+    "line": 5,
+    "record_key": "Beast Rider"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Mantle of the Magic Warriors",
+    "school": "Transmutation",
+    "level": 5,
+    "description": "You weave golden masks shaped like animals around the targets' faces, imbuing each target with an animal spirit that matches her strength of character. Each target gains one animal special ability of your choice granted by beast shape I. You can choose a different special ability for each target."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 29,
+    "record_key": "Mantle of the Magic Warriors"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

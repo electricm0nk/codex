@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Wayfinder Ioun Stone Resonant Power ~ Dusty Rose Prism",
+    "name": "Dusty Rose Prism",
+    "description": "+2 insight bonus on CMB and to CMD.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayfinder Ioun Stone Resonant Power ~ Dusty Rose Prism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Slotted Ioun Stone Resonant Power"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 insight bonus on CMB and to CMD."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB,CMD|2|TYPE=Insight"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
+    "line": 106,
+    "record_key": "Wayfinder Ioun Stone Resonant Power ~ Dusty Rose Prism"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

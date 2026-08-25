@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Battle Wilder ~ Physical Overload",
+    "name": "Physical Overload",
+    "class": "Wilder",
+    "description": "You are able to push yourself and greatly increase your combat ability.  Once per day, you can invoke a combat surge and gain a +8 enhancement bonus to both Strength and Constitution for %1 rounds.  In addition, while under the affects of physical overload, you treat your base attack bonus as equal to your battle wilder level, which may grant additional iterative attacks.  Invoking physical overload comes with a guaranteed psychic enervation that does double the normal effect when the physical overload ends and this psychic enervation cannot be modified by feats or other abilities that would mitigate or otherwise alter it.|PhysicalOverloadDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battle Wilder ~ Physical Overload"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PhysicalOverloadDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to push yourself and greatly increase your combat ability.  Once per day, you can invoke a combat surge and gain a +8 enhancement bonus to both Strength and Constitution for %1 rounds.  In addition, while under the affects of physical overload, you treat your base attack bonus as equal to your battle wilder level, which may grant additional iterative attacks.  Invoking physical overload comes with a guaranteed psychic enervation that does double the normal effect when the physical overload ends and this psychic enervation cannot be modified by feats or other abilities that would mitigate or otherwise alter it.|PhysicalOverloadDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhysicalOverloadDuration|max(1,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|BASEAB|5"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,CON|8|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2365,
+    "record_key": "Battle Wilder ~ Physical Overload"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus",
+    "derived:tempbonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

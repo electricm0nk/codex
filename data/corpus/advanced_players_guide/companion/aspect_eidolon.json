@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Aspect",
+    "name": "Aspect ~ Eidolon",
+    "description": "You grant 2 points of Evolutions to Master.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.EvolutionChoice.Supernatural"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,10"
+      },
+      {
+        "key": "DESC",
+        "value": "You grant 2 points of Evolutions to Master."
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 112,
+    "record_key": "Evolution ~ Aspect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

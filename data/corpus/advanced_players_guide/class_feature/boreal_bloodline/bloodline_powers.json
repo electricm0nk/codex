@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Boreal Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Boreal Bloodline",
+    "class": "Sorcerer",
     "description": "Your connection to primeval winters grants you a mastery of cold magic that few can match, and a savagery that fewer still can withstand.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

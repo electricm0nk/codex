@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Death's Shot",
     "name": "Death's Shot",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "Three times per day, as an immediate action when the gunmaster scores a critical hit, he can attempt to kill his enemy instantly. When the gunmaster uses this talent, the target must succeed at a Fortitude saving throw with a DC %1. On a failed saving throw, the target dies instantly.|10+VigilanteLVL/2+DEX",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

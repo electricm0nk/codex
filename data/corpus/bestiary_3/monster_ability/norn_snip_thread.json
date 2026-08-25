@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Norn ~ Snip Thread",
+    "delivery": "Supernatural",
+    "description": "As a standard action up to three times per day but no more often than once every 1d4 rounds, a norn may produce a golden thread linked to a creature's fate and then attempt to snip it short with her shears. The target creature must be within 120 feet and in the norn's line of sight. The target immediately takes 20d6 points of damage (Fortitude DC 30 for half). If the target dies from this damage, the norn has cut through the thread-in this case, the target may only be restored to life via miracle, wish, or divine intervention. This is a death effect. The Save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:norn_snip_thread",
+    "name": "Snip Thread",
+    "owners": [
+      "bestiary_3:monster:norn"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action up to three times per day but no more often than once every 1d4 rounds, a norn may produce a golden thread linked to a creature's fate and then attempt to snip it short with her shears. The target creature must be within 120 feet and in the norn's line of sight. The target immediately takes 20d6 points of damage (Fortitude DC 30 for half). If the target dies from this damage, the norn has cut through the thread-in this case, the target may only be restored to life via miracle, wish, or divine intervention. This is a death effect. The Save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Norn ~ Snip Thread"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "TYPE",
+        "value": "NornRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.202",
+    "traits": [
+      "NornRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1324,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Norn ~ Snip Thread",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

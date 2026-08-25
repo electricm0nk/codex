@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Clan Warden ~ Warden's Gaze",
+    "name": "Warden's Gaze",
+    "description": "You gain a +%1 bonus on initiative checks and Knowledge (Geography), Perception, Stealth, and Survival skills when you are in your home community.|WardensGazeBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Clan Warden ~ Warden's Gaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WardensGazeBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on initiative checks and Knowledge (Geography), Perception, Stealth, and Survival skills when you are in your home community.|WardensGazeBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WardensGazeBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WardensGazeBonus|2*floor((InquisitorLVL-3)/5)|PRECLASS:1,Inquisitor=8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.340"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 71,
+    "record_key": "Clan Warden ~ Warden's Gaze"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

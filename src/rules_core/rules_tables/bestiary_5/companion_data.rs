@@ -8,18 +8,34 @@
 //!
 //! Sources, with the file AND line each record was read from carried per row:
 //!   * `b5_races_companion.lst` -- 33 companion creature rows
+//!   * `b5_races_companion_oa.lst` -- 2 companion creature rows
 //!   * `b5_abilities_companion.lst` -- 22 companion ability rows
-//!
-//! NOT transcribed -- out of this rule set's scope by construction, not by
-//! omission (`decisions.md §47.2`): the book's pcc loads these rows only under
-//! a campaign this repo has not ingested.
-//!   * `Familiar (Brain Mole)` -- `b5_races_companion_oa.lst`, `PRECAMPAIGN:1,Occult Adventures`
-//!   * `Familiar (Chuspiki)` -- `b5_races_companion_oa.lst`, `PRECAMPAIGN:1,Occult Adventures`
 
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
-/// Every bestiary_5 companion creature (33 rows).
+/// Every bestiary_5 companion creature (35 rows).
 pub(super) static COMPANIONS: &[CompanionRecord] = &[
+    CompanionRecord {
+        key: "Familiar (Brain Mole)",
+        name: "Familiar (Brain Mole)",
+        size: Some("T"),
+        speeds: &[Speed { mode: "Walk", feet: 20 }, Speed { mode: "Burrow", feet: 20 }],
+        reach_feet: Some(0),
+        race_type: Some("Magical Beast"),
+        race_subtype: None,
+        monster_class: Some("Magical Beast:2"),
+        type_segments: &["Companion", "Familiar", "Magical Beast"],
+        natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[SkillAbilityDiffBonus { skills: &["Climb", "Swim"], formula: "DEX-STR" }],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: -6 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 4 }],
+        natural_armor: None,
+        source_page: Some("p.46"),
+        ability_keys: &[],
+        external_ability_refs: &[],
+        source_file: "b5_races_companion_oa.lst",
+        source_line: 5,
+    },
     CompanionRecord {
         key: "Companion (Cameroceras)",
         name: "Companion (Cameroceras)",
@@ -39,6 +55,27 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Cameroceras"],
         external_ability_refs: &["Cameroceras ~ Pressure Adaptation", "Grab"],
         source_file: "b5_races_companion.lst",
+        source_line: 6,
+    },
+    CompanionRecord {
+        key: "Familiar (Chuspiki)",
+        name: "Familiar (Chuspiki)",
+        size: Some("T"),
+        speeds: &[Speed { mode: "Walk", feet: 30 }, Speed { mode: "Fly", feet: 60 }],
+        reach_feet: Some(0),
+        race_type: Some("Magical Beast"),
+        race_subtype: Some("Air"),
+        monster_class: Some("Magical Beast:3"),
+        type_segments: &["Companion", "Familiar", "Magical Beast"],
+        natural_attacks: &[NaturalAttack { name: "Tail Fan", damage_dice: Some("1d4") }, NaturalAttack { name: "Air Blast", damage_dice: Some("0") }],
+        natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[SkillAbilityDiffBonus { skills: &["Climb", "Swim"], formula: "DEX-STR" }],
+        stat_adjustments: &[StatAdjustment { ability: "STR", amount: -4 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: -2 }, StatAdjustment { ability: "CHA", amount: 2 }],
+        natural_armor: None,
+        source_page: Some("p.56"),
+        ability_keys: &[],
+        external_ability_refs: &[],
+        source_file: "b5_races_companion_oa.lst",
         source_line: 6,
     },
     CompanionRecord {

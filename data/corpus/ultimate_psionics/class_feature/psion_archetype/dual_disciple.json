@@ -1,0 +1,105 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Archetype ~ Dual Disciple",
+    "name": "Dual Disciple",
+    "class": "Psion",
+    "description": "You strive to unlock the secrets of multiple disciplines.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psion Archetype ~ Dual Disciple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsionArchetype.PsionDisciplineClassSkills.PsionFeat10.PsionFeat15"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.PsionicDiscipline"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psion Archetype ~ Dual Disciple],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsionDisciplineClassSkills,TYPE.PsionFeat10,TYPE.PsionFeat15]"
+      },
+      {
+        "key": "DESC",
+        "value": "You strive to unlock the secrets of multiple disciplines."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psion Feat|-1|PRECLASS:1,Psion=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Psion Feat|-1|PRECLASS:1,Psion=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Secondary Discipline|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Psion|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Psychometabolism|1|PREABILITY:1,CATEGORY=Special Ability,Psychometabolism Discipline"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Psychokinesis|1|PREABILITY:1,CATEGORY=Special Ability,Psychokinesis Discipline"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Psychoportation|1|PREABILITY:1,CATEGORY=Special Ability,Psychoportation Discipline"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Clairsentience|1|PREABILITY:1,CATEGORY=Special Ability,Clairsentience Discipline"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Metacreativity|1|PREABILITY:1,CATEGORY=Special Ability,Metacreativity Discipline"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SCHOOL.Telepathy|1|PREABILITY:1,CATEGORY=Special Ability,Telepathy Discipline"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.274"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1937,
+    "record_key": "Psion Archetype ~ Dual Disciple"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

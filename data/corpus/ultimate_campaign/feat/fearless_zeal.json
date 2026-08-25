@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Fearless Zeal",
+    "category": "Story",
+    "name": "Fearless Zeal",
+    "description": "[Not Implemented] You're willing to lay down your life for your faith. [DEFERRED-WITH-REASON: uca_feats.lst:66 -- .MOD BENEFIT: row reads correctly through \"...but\" then splices verbatim into Damned's own BENEFIT: row (uca_feats.lst:37) starting at \"before the DC of spells and spell-like abilities...\"; upstream corpus defect, not repaired by inventing text.]",
+    "prerequisites": [
+      "PRETEXT:Prerequisite:You must be ordained as a sacred (or profane) champion of your faith by a high-ranking member of its clergy, or have the Devoted, Faith-Bringer, or Moral Debt background. Such an honor goes above and beyond the normal oaths required of a cleric or paladin."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_feats.lst",
+    "sha256": "88b71be5562539ad46225d0488893728859db6adbfe6e08c374a9f09a45fd623",
+    "line": 14,
+    "record_key": "Fearless Zeal"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

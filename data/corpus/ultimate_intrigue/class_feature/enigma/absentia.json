@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Enigma ~ Absentia",
+    "name": "Absentia",
+    "class": "Mesmerist",
+    "description": "All creatures adjacent to the enigma subconsciously ignore him. Adjacent creatures are always treated as flat-footed to the enigma and are not considered to be directly observing the enigma for the purpose of the Stealth skill. This effect ends immediately if the enigma makes a successful attack against any creature, but automatically resumes at the beginning of his next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enigma ~ Absentia"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "All creatures adjacent to the enigma subconsciously ignore him. Adjacent creatures are always treated as flat-footed to the enigma and are not considered to be directly observing the enigma for the purpose of the Stealth skill. This effect ends immediately if the enigma makes a successful attack against any creature, but automatically resumes at the beginning of his next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 58,
+    "record_key": "Enigma ~ Absentia"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Celebrity Perks",
     "name": "Celebrity Perks",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief is a celebrity in his area of renown, and adoring fans are all too eager to shower him with the fundamental necessities. While within his area of renown, he can always receive common meals or lodging (worth up to %1 gp per meal or night) for free, and can avoid paying taxes or bribes of %1 gp or less. If he wants a particular nonmagical item worth %2 gp or less, he can spend 1d10 minutes interacting with people in his area of renown to receive the item from a fan (if he ever sells such a gift from a fan, he loses this social talent permanently).|CelebrityPerksMealsBribes|CelebrityPerksGifts",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

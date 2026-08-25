@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cleric Archetype ~ Divine Strategist",
     "name": "Divine Strategist",
-    "class": "Cleric Archetype",
+    "class": "Cleric",
     "description": "The divine strategist leads the armies of the faithful, not from the front lines but through her clever strategy and tactical acumen.",
     "raw_tokens": [
       {
@@ -59,6 +59,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cleric"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Divine Strategist],[!PREFACT:1,ABILITIES,Cleric_Archetype_Domains=True,Cleric_Archetype_ChannelEnergy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_CF_ChannelEnergy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_Domains|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cleric_Archetype_ChannelEnergy|true"
       }
     ]
   },
@@ -75,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

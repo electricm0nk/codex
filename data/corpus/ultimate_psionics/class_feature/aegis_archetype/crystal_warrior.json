@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis Archetype ~ Crystal Warrior",
+    "name": "Crystal Warrior",
+    "class": "Aegis",
+    "description": "You have learned to form a psicrystal and shape your astral suit around it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis Archetype ~ Crystal Warrior"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.AegisArchetype.AegisCustomizationPoint1.AegisAstralRepair.AegisInvigoratingSuit.AegisCustomizationPoint4.AegisReconfigureUse7.AegisCannibalizeSuit"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Aegis=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Crystal Warrior ~ Aegis Archetype],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AegisAstralRepair,TYPE.AegisInvigoratingSuit,TYPE.AegisReconfigureUse7,TYPE.AegisCannibalizeSuit]"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to form a psicrystal and shape your astral suit around it."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Crystal Warrior ~ Psicrystal Affinity|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Crystal Warrior ~ Form Astral Suit|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Crystal Warrior ~ Missive|PRECLASS:1,Aegis=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Crystal Warrior ~ Psicrystal Containment|PRECLASS:1,Aegis=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Crystal Warrior ~ Energy Blast|PRECLASS:1,Aegis=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Crystal Warrior ~ Psicrystal Shot|PRECLASS:1,Aegis=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Crystal Warrior ~ Tactical Suit|PRECLASS:1,Aegis=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aegis Class Feature|AUTOMATIC|Crystal Warrior ~ Perfect Merger|PRECLASS:1,Aegis=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1625,
+    "record_key": "Aegis Archetype ~ Crystal Warrior"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

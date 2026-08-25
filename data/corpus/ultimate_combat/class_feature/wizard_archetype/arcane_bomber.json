@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wizard Archetype ~ Arcane Bomber",
     "name": "Arcane Bomber",
-    "class": "Wizard Archetype",
+    "class": "Wizard",
     "description": "To many wizards, the experimentation of the alchemist seems quaint, if not dangerous or frightening. A few wizards take up the secrets of the bomb, however, fusing alchemy with their already considerable magical power.",
     "raw_tokens": [
       {
@@ -51,6 +51,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Wizard"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Arcane Bomber],[!PREFACT:1,ABILITIES,Wizard_Archetype_Cantrips=True,Wizard_Archetype_ArcaneBond=True,Wizard_Archetype_ArcaneSchool=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_Cantrips|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_CF_ArcaneSchool|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_Cantrips|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Wizard_Archetype_ArcaneSchool|true"
       }
     ]
   },
@@ -67,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

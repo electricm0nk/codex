@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Archetype ~ Wildsoul",
     "name": "Wildsoul",
-    "class": "Vigilante Archetype",
+    "class": "Vigilante",
     "description": "Within some vigilantes are incredible innate abilities that, although normally the domain of natural beasts, inexplicably aid them in fighting their enemies. These vigilantes have ties to the creature whose abilities they emulate, whether from a distant lycanthrope ancestor, a divine touch, unnatural experimentation, or something else altogether.",
     "raw_tokens": [
       {
@@ -95,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

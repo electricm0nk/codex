@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Paladin Archetype ~ Gray Paladin",
     "name": "Gray Paladin",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Gray paladins have discovered that in a world of intrigue, a strict code of honor hinders their options. Their divergence from the paladin's normal code still drains them, but somehow, they have found a way to avoid losing all of their powers.",
     "raw_tokens": [
       {
@@ -151,5 +151,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

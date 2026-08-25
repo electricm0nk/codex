@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Cerebremancer ~ Mind over Magic",
+    "name": "Mind over Magic",
+    "class": "Cerebremancer",
+    "description": "Spend %1 power points to increase save DC of a spell by %2.|2*MindOverMagic|MindOverMagic",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cerebremancer ~ Mind over Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CerebremancerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindOverMagic|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Spend %1 power points to increase save DC of a spell by %2.|2*MindOverMagic|MindOverMagic"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindOverMagic|min(2,floor((2+CerebremancerLVL)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.354"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1177,
+    "record_key": "Cerebremancer ~ Mind over Magic"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

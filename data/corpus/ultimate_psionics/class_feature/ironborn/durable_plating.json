@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ironborn ~ Durable Plating",
+    "name": "Durable Plating",
+    "class": "Ironborn",
+    "description": "You gain DR %1/- as long as you are wearing medium or heavy armor.  This damage reduction stacks with that gained from adamantine armor.|DurablePlatingDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ironborn ~ Durable Plating"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FighterClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DurablePlatingDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain DR %1/- as long as you are wearing medium or heavy armor.  This damage reduction stacks with that gained from adamantine armor.|DurablePlatingDR"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ironborn ~ Durable Plating DR|PREVARGTEQ:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\")+var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DurablePlatingDR|min(5,floor((FighterLVL+1)/4))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2505,
+    "record_key": "Ironborn ~ Durable Plating"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

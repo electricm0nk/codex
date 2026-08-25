@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Violent Accident",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "You curse the target to suffer a violent accident within the next 24 hours. You have no control over the form the accident takes or when it strikes. The target can avoid being cursed with spell resistance when you cast the spell, but otherwise receives no saving throw. Regardless of the accident's nature, it is magically empowered to deal an amount of damage equal to (min(5,(CASTERLEVEL)))d8, and the damage is of a type appropriate to the source of damage (such as fire for an explosion or bludgeoning for a falling object). When the accident occurs, the target can attempt a Reflex saving throw to reduce the damage by half. Although others might be surprised or inconvenienced by the accident, it damages only the target."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 32,
+    "record_key": "Violent Accident"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

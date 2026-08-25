@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Thoughtful Reexamining",
     "name": "Thoughtful Reexamining",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "Once per day, a rogue with this talent can reroll a Knowledge, Sense Motive, or Perception skill check to try to gain new or better information from the roll. This reroll can be made any time during the same day as the original check.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

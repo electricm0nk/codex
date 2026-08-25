@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer ~ Slayer Talents",
     "name": "Slayer Talents",
@@ -35,6 +35,50 @@
       {
         "key": "BONUS",
         "value": "VAR|SlayerTalentLVL|SlayerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,2|PREVAREQ:Slayer_CF_Talent2,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,4|PREVAREQ:Slayer_CF_Talent4,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,6|PREVAREQ:Slayer_CF_Talent6,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,8|PREVAREQ:Slayer_CF_Talent8,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,10|PREVAREQ:Slayer_CF_Talent10,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,12|PREVAREQ:Slayer_CF_Talent12,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,14|PREVAREQ:Slayer_CF_Talent14,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,16|PREVAREQ:Slayer_CF_Talent16,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,18|PREVAREQ:Slayer_CF_Talent18,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|-1|PREVARGTEQ:SlayerTalentLVL,20|PREVAREQ:Slayer_CF_Talent20,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Slayer Talent|HumanSlayerFavClassBonus/6"
       }
     ]
   },
@@ -52,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

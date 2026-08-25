@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "data": {
+    "key": "Lich",
+    "name": "Lich",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DR",
+        "value": "LichDR/Bludgeoning"
+      },
+      {
+        "key": "DR",
+        "value": "LichDR/Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LichDR|0"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Sense Motive,Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS,CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LichDR|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Touch|DAMAGE|floor(TL/2)-STR"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Climb|Disguise|Fly|Intimidate|Knowledge (Arcana)|Knowledge (Religion)|Perception|Sense Motive|Spellcraft|Stealth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Lich"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Immunity to Cold|Immunity to Electricity|Lich ~ Fear Aura|Lich ~ Paralyzing Touch|Lich ~ Rejuvenation|Undead Traits|Undead Traits"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE|LE|NE"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Lich"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Touch,Weapon.Natural.Weapon Group Natural.Melee.Finesseable,*1,1d8"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst",
+    "sha256": "7c27e01584c43c548e0c2c3ed900332d774628c6a8c56a5be4992cba036085d1",
+    "line": 67,
+    "record_key": "Lich"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

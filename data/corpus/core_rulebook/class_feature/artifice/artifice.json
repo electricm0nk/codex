@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Artifice Domain",
     "name": "Artifice",
-    "class": null,
+    "class": "Cleric",
     "description": "You can repair damage to objects, animate objects with life, and create objects from nothing.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Artifice=1|Animate Rope|Artifice=2|Wood Shape|Artifice=3|Stone Shape|Artifice=4|Minor Creation|Artifice=5|Fabricate|Artifice=6|Major Creation|Artifice=7|Wall of Iron|Artifice=8|Instant Summons|Artifice=9|Prismatic Sphere"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Artifice],[PREVARLT:ArtificeDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

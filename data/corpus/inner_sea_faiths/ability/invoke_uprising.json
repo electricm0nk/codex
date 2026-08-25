@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Evangelist Boon ~ Milani ~ Invoke Uprising",
+    "name": "Invoke Uprising",
+    "description": "If you have performed your daily obedience, you are automatically aware of any creature within 10 feet of you that is currently under the effects of a charm, compulsion, or possession effect. Three times per day as a swift action, you can inspire such a creature to throw off the influence, granting that creature a new saving throw to immediately end the effect. If the effect does not normally allow a saving throw, calculate the save DC as normal if it is a spell; if it's not a spell, the DC is equal to 10 + 1/2 the source's Hit Dice + the source's Charisma modifier. The creature gains a +%1 sacred bonus on this saving throw. This bonus is doubled if you include a physical touch as part of your invocation to rise up against the effect. In either case, this is a language-dependent effect.|max(1,CHA)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evangelist Boon ~ Milani ~ Invoke Uprising"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, you are automatically aware of any creature within 10 feet of you that is currently under the effects of a charm, compulsion, or possession effect. Three times per day as a swift action, you can inspire such a creature to throw off the influence, granting that creature a new saving throw to immediately end the effect. If the effect does not normally allow a saving throw, calculate the save DC as normal if it is a spell; if it's not a spell, the DC is equal to 10 + 1/2 the source's Hit Dice + the source's Charisma modifier. The creature gains a +%1 sacred bonus on this saving throw. This bonus is doubled if you include a physical touch as part of your invocation to rise up against the effect. In either case, this is a language-dependent effect.|max(1,CHA)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 272,
+    "record_key": "Evangelist Boon ~ Milani ~ Invoke Uprising"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

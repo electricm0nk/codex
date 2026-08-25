@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted Boon ~ Ghlaunder ~ Polluted Servant",
+    "name": "Polluted Servant",
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can summon a hezrou demon (Bestiary p.62) to serve you. The demon follows your commands for %1 rounds before vanishing back to its home. It doesn't obey commands that would make it perform overtly good acts, and if such instructions are particularly egregious, they could prompt the demon to attack you.|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted Boon ~ Ghlaunder ~ Polluted Servant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, once per day as a standard action, you can summon a hezrou demon (Bestiary p.62) to serve you. The demon follows your commands for %1 rounds before vanishing back to its home. It doesn't obey commands that would make it perform overtly good acts, and if such instructions are particularly egregious, they could prompt the demon to attack you.|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 163,
+    "record_key": "Exalted Boon ~ Ghlaunder ~ Polluted Servant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

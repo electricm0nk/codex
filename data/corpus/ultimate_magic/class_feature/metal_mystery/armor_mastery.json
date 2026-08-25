@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Metal Mystery ~ Armor Mastery",
     "name": "Armor Mastery",
-    "class": "Metal Mystery",
+    "class": "Oracle",
     "description": "You become more maneuverable while wearing armor. You can move at your normal speed in medium armor that is made of metal. This does not grant proficiency in armor. Whenever you are wearing metal armor, you reduce the armor check penalty by %1 (to a minimum of 0) and increase the maximum Dexterity bonus allowed by your armor by %1.|ArmorMasteryBonus",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

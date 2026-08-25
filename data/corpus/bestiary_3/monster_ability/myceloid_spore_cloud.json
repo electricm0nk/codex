@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Myceloid ~ Spore Cloud",
+    "delivery": "Extraordinary",
+    "description": "Once per day as a standard action, a myceloid can expel a 10-foot-radius burst of spores centered on itself. This cloud persists for 1d3 rounds. Any creature caught in this cloud or that moves through it is exposed to the myceloid's purple pox disease-a creature need save only once against any one spore cloud, however, before becoming permanently immune to that particular spore cloud's effects. The spore cloud does not hamper vision.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:myceloid_spore_cloud",
+    "name": "Spore Cloud",
+    "owners": [
+      "bestiary_3:monster:myceloid"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a standard action, a myceloid can expel a 10-foot-radius burst of spores centered on itself. This cloud persists for 1d3 rounds. Any creature caught in this cloud or that moves through it is exposed to the myceloid's purple pox disease-a creature need save only once against any one spore cloud, however, before becoming permanently immune to that particular spore cloud's effects. The spore cloud does not hamper vision."
+      },
+      {
+        "key": "KEY",
+        "value": "Myceloid ~ Spore Cloud"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "TYPE",
+        "value": "MyceloidRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.196",
+    "traits": [
+      "MyceloidRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1282,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Myceloid ~ Spore Cloud",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blade Skill ~ Improved Armor",
+    "name": "Improved Armor",
+    "class": "Blade Skill",
+    "description": "Your mind armor improves depending on its form.  Light form is treaded as if not wearing armor, while still gaining the armor bonus to Armor Class.  Medium form is treated as masterwork breastplate.  Heavy form is treated as masterwork full plate.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blade Skill ~ Improved Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BladeSkill.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Armored Blade ~ Form Mind Armaments"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mind armor improves depending on its form.  Light form is treaded as if not wearing armor, while still gaining the armor bonus to Armor Class.  Medium form is treated as masterwork breastplate.  Heavy form is treated as masterwork full plate."
+      },
+      {
+        "key": "AUTO",
+        "value": "ARMORPROF|Improved Mind Armor"
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Improved Mind Armor (Heavy)|Improved Mind Armor (Light)|Improved Mind Armor (Medium)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.279"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 818,
+    "record_key": "Blade Skill ~ Improved Armor"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

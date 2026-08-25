@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:33:12Z",
+  "data": {
+    "key": "Shifter",
+    "name": "Shifter",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "10"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShifterLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|ShifterLVL|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude|ShifterLVL/2+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Reflex|ShifterLVL/2+2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|ShifterLVL/3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShifterLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABFull|ShifterLVL|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Fortitude|ShifterLVL|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Reflex|ShifterLVL|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Will|ShifterLVL|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Shf"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_classes.lst",
+    "sha256": "3688074f918c94b32fffaf1013ee8d4224c8ae619fed991044ca78cc5a45539e",
+    "line": 8,
+    "record_key": "Shifter"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_class_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

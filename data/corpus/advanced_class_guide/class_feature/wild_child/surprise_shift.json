@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Child ~ Surprise Shift",
     "name": "Surprise Shift",
-    "class": "Wild Child",
+    "class": "Brawler",
     "description": "The wild child can move 5 feet as a move action. This movement does not provoke attacks of opportunity and does not count as a 5-foot step.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

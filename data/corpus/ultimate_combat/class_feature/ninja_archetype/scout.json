@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ninja Archetype ~ Scout",
+    "name": "Scout",
+    "class": "Ninja",
+    "description": "Not all rogues live in the city. Scouts frequently roam the wilderness, often banding together as bandits, but sometimes serving as guides, as trailblazers, or as companions to a ranger or barbarian warrior. More comfortable with sneaking and hiding outdoors, the scout is still effective in the city and the dungeon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ninja Archetype ~ Scout"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.NinjaArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Ninja=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ninja Archetype ~ Scout],[!PREFACT:1,ABILITIES,Ninja_Archetype_UncannyDodge=True,Ninja_Archetype_ImprovedUncannyDodge=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Not all rogues live in the city. Scouts frequently roam the wilderness, often banding together as bandits, but sometimes serving as guides, as trailblazers, or as companions to a ranger or barbarian warrior. More comfortable with sneaking and hiding outdoors, the scout is still effective in the city and the dungeon."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ninja Class Feature|AUTOMATIC|Scout ~ Scout's Charge|PRECLASS:1,Ninja=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ninja Class Feature|AUTOMATIC|Scout ~ Skirmisher|PRECLASS:1,Ninja=8"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.134"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Ninja"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_CF_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_CF_ImprovedUncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_Archetype_UncannyDodge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ninja_Archetype_ImprovedUncannyDodge|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_apg.lst",
+    "sha256": "8d1bc9f8696d58ae00db0a0700367b8e92dedb1c864e7fdfbe208a36b42a8592",
+    "line": 5,
+    "record_key": "Ninja Archetype ~ Scout"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

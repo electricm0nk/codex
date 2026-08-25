@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Corruption ~ Children of the Night Stain",
+    "name": "Children of the Night Stain",
+    "description": "You take a -3 penalty on Handle Animal and Ride checks against animals (except those you summon with this manifestation's gift).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vampirism Corruption ~ Children of the Night Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.VampirismChildrenOfTheNightStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "DESC",
+        "value": "You take a -3 penalty on Handle Animal and Ride checks against animals (except those you summon with this manifestation's gift)."
+      },
+      {
+        "key": "DESC",
+        "value": "You affect non-hostile animals as if you had an unnatural aura (Bestiary 281).|PREVARGTEQ:VampirismManifestationLevel,5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 896,
+    "record_key": "Vampirism Corruption ~ Children of the Night Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

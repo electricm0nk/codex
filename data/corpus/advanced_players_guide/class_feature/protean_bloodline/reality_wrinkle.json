@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Protean Bloodline ~ Reality Wrinkle",
     "name": "Reality Wrinkle",
-    "class": "Protean Bloodline",
+    "class": "Sorcerer",
     "description": "You can surround yourself with a mobile, 10-foot-radius emanation of mutable reality. This rippling distortion is similar to solid fog but does not provide concealment or block line of sight. Your movement is not slowed by this aura. Attacks from outside the aura suffer a 20%% miss chance against targets inside the aura. You may use this ability %1 rounds per day, though this duration need not be continuous.|Sorcerer_ProteanRealityWrinkle_Duration",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

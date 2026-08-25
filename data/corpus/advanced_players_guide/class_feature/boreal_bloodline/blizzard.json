@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Boreal Bloodline ~ Blizzard",
     "name": "Blizzard",
-    "class": "Boreal Bloodline",
+    "class": "Sorcerer",
     "description": "You can create a savage winter storm centered on you. This power acts as control winds, but in addition the entire area (not including the \"eye\" at the center of the storm) is affected as a sleet storm and all in the area are exposed to extreme cold. You may use this ability once per day.",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

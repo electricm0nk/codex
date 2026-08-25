@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gaslighter ~ Phantasmal Force",
+    "name": "Phantasmal Force",
+    "class": "Mesmerist",
+    "description": "A gaslighter can force the target of his horrid mask ability to recoil from its reflection. Whenever the gaslighter uses horrid mask, if an affected target begins its turn adjacent to a mirror, it must succeed at a Will save (DC %1) or be compelled to either flee from the mirror (or the creature holding it) to beyond 30 feet or attempt to destroy the mirror (or the creature holding it). This is a gaze attack, and the target can attempt to avert its eyes.|10+MesmeristLVL/2+CHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gaslighter ~ Phantasmal Force"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.GaslighterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "DESC",
+        "value": "A gaslighter can force the target of his horrid mask ability to recoil from its reflection. Whenever the gaslighter uses horrid mask, if an affected target begins its turn adjacent to a mirror, it must succeed at a Will save (DC %1) or be compelled to either flee from the mirror (or the creature holding it) to beyond 30 feet or attempt to destroy the mirror (or the creature holding it). This is a gaze attack, and the target can attempt to avert its eyes.|10+MesmeristLVL/2+CHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 175,
+    "record_key": "Gaslighter ~ Phantasmal Force"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

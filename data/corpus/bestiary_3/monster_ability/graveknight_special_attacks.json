@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Graveknight ~ Special Attacks",
+    "delivery": null,
+    "description": "A graveknight gains the following special attacks. Save DCs are equal to 10 + 1/2 the graveknight's HD + the graveknight's Charisma modifier unless otherwise noted.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_3:monster_ability:graveknight_special_attacks",
+    "name": "Special Attacks",
+    "owners": [
+      "bestiary_3:monster:graveknight"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A graveknight gains the following special attacks. Save DCs are equal to 10 + 1/2 the graveknight's HD + the graveknight's Charisma modifier unless otherwise noted."
+      },
+      {
+        "key": "KEY",
+        "value": "Graveknight ~ Special Attacks"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialAttack.GraveknightRacialAbility"
+      }
+    ],
+    "source_page": "p.139",
+    "traits": [
+      "RaceAbility",
+      "GraveknightRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 970,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Graveknight ~ Special Attacks",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

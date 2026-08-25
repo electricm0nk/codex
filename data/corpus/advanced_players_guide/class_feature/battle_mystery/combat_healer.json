@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Battle Mystery ~ Combat Healer",
     "name": "Combat Healer",
-    "class": "Battle Mystery",
+    "class": "Oracle",
     "description": "You cast cure spells as a swift action by expending two spell slots. This does not increase the level of the spell. You can use this ability %1 time(s) per day.|OracleCombatHealerTimes",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vampirism Corruption Stages",
+    "name": "Vampirism Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Vampirism Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VampirismCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|VampirismCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-Once you feed on an innocent sentient creature, your alignment shifts one step toward evil and spells that detect undead sense you, though the peculiar result they return informs the caster that you're still a living creature. Other spells and effects don't treat you as undead."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-The second time this happens, your alignment shifts another step toward evil and you are affected by spells and abilities as if your creature type were undead (including bane and the favored enemy class feature). This doesn't grant you any of the immunities of being undead, nor does it make you immune to effects that target living creatures or change how negative and positive energy affect you."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-The third time this occurs, you become an NPC vampire under the GM's control."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Vampirism Corruption Stage %1|VampirismCorruptionStage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 879,
+    "record_key": "Vampirism Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

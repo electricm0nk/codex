@@ -98,6 +98,12 @@ use codex::rules_core::rules_tables::adventurers_guide as ag;
 use codex::rules_core::rules_tables::advanced_race_guide as arg;
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::MonsterId;
+use codex::rules_core::rules_tables::inner_sea_faiths as isf;
+use codex::rules_core::rules_tables::inner_sea_magic as ism;
+use codex::rules_core::rules_tables::inner_sea_races as isr;
+use codex::rules_core::rules_tables::inner_sea_temples as istem;
+use codex::rules_core::rules_tables::mythic_adventures as ma;
+use codex::rules_core::rules_tables::ultimate_magic_wordsofpower as umwop;
 use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables, feats as crb_feats,
     race_tables::RaceId, spell_list as crb_spell_list,
@@ -521,9 +527,23 @@ fn ultimate_magic_counts() -> BTreeMap<String, u32> {
 /// base spell records -- see `occult_adventures::spell_list`'s own doc
 /// comment for the catalog and the 328-unit `mod_only` class-widening
 /// residue it deliberately does not cover.
+///
+/// `decisions.md §27b` — EVERYTHING: this book's second compiled family,
+/// `monster`/`monster_ability` (`monster_chassis::MONSTER_BOOKS` now lists
+/// `"occult_adventures"`, same shape `mythic_adventures_counts` above
+/// chains), overturns the repeatedly-reconfirmed "correctly out of scope"
+/// disposition for its 5 `monster_ability` units -- a reachability finding
+/// about a negated `PRECAMPAIGN` gate, not an ingest exemption. Chained via
+/// `chassis_book_counts` rather than a literal insert, matching the same
+/// convention every other chassis-registered book on this panel uses.
 fn occult_adventures_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("spells".to_string(), oa::spell_list::SPELL_LIST.len() as u32);
+    counts.extend(
+        chassis_book_counts("occult_adventures")
+            .into_iter()
+            .filter(|(_, count)| *count > 0),
+    );
     counts
 }
 
@@ -533,6 +553,97 @@ fn occult_adventures_counts() -> BTreeMap<String, u32> {
 fn adventurers_guide_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("spells".to_string(), ag::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
+/// Inner Sea Faiths: SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled record family of any kind. 2 base spell records (of 3
+/// raw base declarations; a genuine intra-book reprint dedups to 1) -- see
+/// `inner_sea_faiths::spell_list`'s own doc comment.
+fn inner_sea_faiths_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), isf::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
+/// Inner Sea Magic: SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled record family of any kind. 34 base spell records -- see
+/// `inner_sea_magic::spell_list`'s own doc comment. Its 218 `class_feature`
+/// records are corpus-JSON-only (no `rules_tables` module carries
+/// class_feature data for this book, the same shape ARG's own
+/// corpus-JSON-only class_feature records document above), so they are
+/// deliberately not summed into this row -- this panel counts compiled
+/// `rules_tables` families only.
+fn inner_sea_magic_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), ism::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
+/// Inner Sea Temples: SD-32 Gate 0 book-onboarding precondition
+/// (`gate-0-book-onboarding-precondition`, AT-32-G0-003) -- this book's
+/// FIRST compiled record family of any kind. 21 base spell records -- see
+/// `inner_sea_temples::spell_list`'s own doc comment.
+fn inner_sea_temples_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), istem::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
+/// Inner Sea Races: this book's FIRST compiled record family of any kind --
+/// 34 base spell records (`inner_sea_races::spell_list::SPELL_LIST`).
+/// Registered here per SD-32's stale-assertion fix
+/// (`the_two_ingested_books_totals_reconcile_with_their_license_artifacts`'s
+/// sibling drift guard, `every_book_landed_in_rules_tables_is_reported`):
+/// the module landed in `rules_tables` with a real compiled table and no
+/// panel row, which reads to a tester as an un-ingested book.
+fn inner_sea_races_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), isr::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
+/// Mythic Adventures: carries BOTH a compiled spell list and the monster
+/// chassis registry (`monster_chassis::MONSTER_BOOKS` already lists
+/// `"mythic_adventures"`), so this row chains [`chassis_book_counts`] the
+/// same way [`monster_and_companion_book_counts`] chains a second registry
+/// onto a book's own family, rather than under-reporting by one family.
+///
+/// **This book is one of the "zero-monster" books**
+/// (`monster_chassis.rs`'s own `§17a` re-derive comment): it declares 21
+/// `monster_abilities` and genuinely zero `monsters` -- no monster stat
+/// block owns them. `chassis_book_counts` would insert a literal
+/// `monsters: 0` row, which `every_book_is_populated_with_real_nonzero_
+/// counts` correctly refuses (this panel's own contract is that a
+/// content-kind row means real records). Dropped the same way `book_status`
+/// already drops a genuine zero `races` row, rather than reporting a count
+/// that means something different from every other row on the panel.
+fn mythic_adventures_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), ma::spell_list::SPELL_LIST.len() as u32);
+    counts.extend(
+        chassis_book_counts("mythic_adventures")
+            .into_iter()
+            .filter(|(_, count)| *count > 0),
+    );
+    counts
+}
+
+/// Ultimate Magic (Words of Power): a second `rules_tables` module for the
+/// `ultimate_magic` book, covering its Words of Power spell variant. This
+/// book directory is distinct from `ultimate_magic` itself (a genuinely
+/// separate `src/rules_core/rules_tables/` directory,
+/// `every_book_landed_in_rules_tables_is_reported`'s drift guard walks
+/// directories, not book titles), so it gets its own row rather than being
+/// folded into `ultimate_magic_counts`.
+fn ultimate_magic_wordsofpower_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert(
+        "spells".to_string(),
+        umwop::spell_list::SPELL_LIST.len() as u32,
+    );
     counts
 }
 
@@ -568,6 +679,70 @@ fn ultimate_psionics_counts() -> BTreeMap<String, u32> {
 /// working directory, which Tauri does not guarantee.
 fn repo_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..")
+}
+
+/// Live, read-only count of every real record file under a book's
+/// `data/corpus/<book>/` directory: every `*.json` file except
+/// `LICENSE.json` itself, skipping any `_`-prefixed directory (the same
+/// non-content-storage convention `src/bin/gen_book_cache.rs`'s own
+/// `count_on_disk_records` documents -- `_parity/` holds build/test
+/// fixtures, not licensed content records).
+///
+/// # Why this walks the filesystem instead of reading `LICENSE.json`
+///
+/// `the_two_ingested_books_totals_reconcile_with_their_license_artifacts`
+/// used to trust `LICENSE.json`'s own `records_processed` field as its
+/// independent ground truth. That field is itself a book-wide on-disk
+/// snapshot **taken at whatever moment some lane last ran a generator for
+/// that book**, and this cycle proved live that it goes stale the moment a
+/// SIBLING lane adds corpus-JSON-only content through a different ingest
+/// path afterward: `advanced_race_guide`'s `feat`/`equipment`/`companion`
+/// directories gained 67 new records from `1410424cf3` ("close feat+spell
+/// no_record via existing corpus-cache generators", `decisions.md §20`)
+/// after `LICENSE.json` was last written, so the field read 2157 while the
+/// true on-disk count was already 2205.
+///
+/// Re-running `gen_book_cache --bin advanced_race_guide` to refresh that
+/// field is **not safe**: reproduced live this cycle and reverted
+/// (`git status --porcelain` before/after confirmed), that generator
+/// deletes every file under `feat/`/`equipment`/etc it did not itself just
+/// write -- so "refreshing the count" would have destroyed the exact 48
+/// `feat` records `1410424cf3` legitimately added. That is
+/// `workflow-instruction.md`'s footgun 2 ("a bundled generator staged
+/// deletion of files it did not own"), caught here before it was
+/// committed. Logged: `scripts/retro.py incident` (recurrence_key
+/// `generator-orphans-unowned-files-on-directory-sync`; coordinates only,
+/// no PI content in this path).
+///
+/// A live walk cannot go stale between two lanes' commits the way a
+/// generated snapshot field can, and it never writes anything, so it
+/// carries none of that risk. `data/corpus` is otherwise off-limits to
+/// hand-editing (`AGENTS.md`); this function only ever reads.
+fn live_on_disk_record_count(book_corpus_dir: &Path) -> u32 {
+    fn walk(dir: &Path, count: &mut u32) {
+        let Ok(entries) = std::fs::read_dir(dir) else {
+            return;
+        };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                let is_internal = path
+                    .file_name()
+                    .and_then(|f| f.to_str())
+                    .is_some_and(|n| n.starts_with('_'));
+                if !is_internal {
+                    walk(&path, count);
+                }
+            } else if path.extension().and_then(|e| e.to_str()) == Some("json")
+                && path.file_name().and_then(|f| f.to_str()) != Some("LICENSE.json")
+            {
+                *count += 1;
+            }
+        }
+    }
+    let mut count = 0;
+    walk(book_corpus_dir, &mut count);
+    count
 }
 
 /// RFC 3339 commit date of the most recent commit touching
@@ -838,6 +1013,45 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             adventurers_guide_counts(),
             &races,
         ),
+        book_status(
+            "inner_sea_faiths",
+            "src/rules_core/rules_tables/inner_sea_faiths",
+            inner_sea_faiths_counts(),
+            &races,
+        ),
+        book_status(
+            "inner_sea_magic",
+            "src/rules_core/rules_tables/inner_sea_magic",
+            inner_sea_magic_counts(),
+            &races,
+        ),
+        book_status(
+            "inner_sea_temples",
+            "src/rules_core/rules_tables/inner_sea_temples",
+            inner_sea_temples_counts(),
+            &races,
+        ),
+        // Landed with real compiled tables and no panel row -- caught by
+        // `every_book_landed_in_rules_tables_is_reported` (SD-32 stale-
+        // assertion fix, `corpus_ingest_diagnostic.rs` RED-branch cycle).
+        book_status(
+            "inner_sea_races",
+            "src/rules_core/rules_tables/inner_sea_races",
+            inner_sea_races_counts(),
+            &races,
+        ),
+        book_status(
+            "mythic_adventures",
+            "src/rules_core/rules_tables/mythic_adventures",
+            mythic_adventures_counts(),
+            &races,
+        ),
+        book_status(
+            "ultimate_magic_wordsofpower",
+            "src/rules_core/rules_tables/ultimate_magic_wordsofpower",
+            ultimate_magic_wordsofpower_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -994,7 +1208,23 @@ mod tests {
                 // first compiled record family of any kind, same
                 // appended-at-the-end placement as `occult_adventures`
                 // above, for the same reason.
-                "adventurers_guide"
+                "adventurers_guide",
+                // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+                // onboarding-precondition`, AT-32-G0-003) -- each of these
+                // three books' first compiled record family of any kind,
+                // same appended-at-the-end placement as `adventurers_guide`
+                // above, for the same reason.
+                "inner_sea_faiths",
+                "inner_sea_magic",
+                "inner_sea_temples",
+                // SD-32 stale-assertion fix (`corpus_ingest_diagnostic.rs`
+                // RED-branch cycle): these three books landed real compiled
+                // `rules_tables` modules with no panel row, tripping
+                // `every_book_landed_in_rules_tables_is_reported`. Appended
+                // at the end, same placement as the block above.
+                "inner_sea_races",
+                "mythic_adventures",
+                "ultimate_magic_wordsofpower"
             ]
         );
     }
@@ -1206,8 +1436,64 @@ mod tests {
             // They are corpus-only by construction -- `decisions.md §24` rules out the
             // formula interpreter a compiled race-trait table would need, so they are
             // served off disk and this diagnostic's `rules_tables` half cannot see them.
-            ("advanced_race_guide", "advanced_race_guide", 1072u32),
-            ("pathfinder_unchained", "pathfinder_unchained", 0),
+            // 1072 -> 1073 by `decisions.md §20` no_record-to-zero round 4 (2026-08-23):
+            // `gen_advanced_race_guide()` extended to also call `gen_monster_book`, adding
+            // this book's 1 owner-less `monster_ability` record. Corpus-only for the same
+            // reason as every other family above: no `rules_tables` module counts
+            // `monster`/`monster_ability` for this book, only `advanced_race_guide::feats`/
+            // `spell_list`/`equipment_tables` (`advanced_race_guide_counts()`).
+            // 1073 -> 1699 by the SD-32 stale-assertion fix cycle
+            // (`corpus_ingest_diagnostic.rs` RED-branch, 2026-08-23): re-derived fresh
+            // against the live filesystem (`live_on_disk_record_count`, same walk
+            // `gen_book_cache.rs::count_on_disk_records` documents) rather than trusted
+            // from a stale `LICENSE.json` snapshot -- see that function's own doc comment
+            // for why the snapshot, and re-running the generator that writes it, are both
+            // unsafe here. `2205` (live total) `- 506` (`reported`, unchanged -- this
+            // cycle's diff touches no compiled `rules_tables` module) `= 1699`. The 626-unit
+            // rise is NOT new corpus-only content this cycle added: `1410424cf3`'s
+            // "close feat+spell no_record" landed 67 new `feat`/`equipment`/`companion`
+            // corpus-JSON records beyond what `advanced_race_guide_counts()` compiles
+            // (verified: `find data/corpus/advanced_race_guide/feat -name '*.json' | wc -l`
+            // is 235 against a compiled `feat_tables().len()` of 187, and the equivalent
+            // for `equipment`/`companion`), and the remaining ~559 is this constant simply
+            // having drifted uncorrected across however many prior sibling-lane commits
+            // landed corpus-only content for this book without anyone re-deriving this
+            // literal against a live count in the meantime -- `decisions.md §17a`.
+            // 1699 -> 1701 by the row-19 desktop reach/catalog reds cycle (SD-32,
+            // 2026-08-24): re-derived fresh again against `live_on_disk_record_count`
+            // (`2207`) with `reported` unchanged (`506` -- this cycle's diff touches no
+            // compiled `rules_tables` module for ARG), `2207 - 506 = 1701`. The +2 is
+            // more T12 census/class-feature-lane corpus growth landing between the two
+            // re-derivations, not a new defect.
+            ("advanced_race_guide", "advanced_race_guide", 1701u32),
+            // 0 -> 69 by `decisions.md §20` no_record-to-zero round 4 (2026-08-23):
+            // `gen_pathfinder_unchained()` extended to also call `gen_monster_book`, adding
+            // this book's 69 owner-less `monster_ability` records (72 orphan candidates, 3
+            // refused as an unscreenable multi-DESC: shape). Corpus-only for the same
+            // reason: `pathfinder_unchained_counts()` above tracks `classes`/
+            // `class_features`/`feats`/`equipment` only, never `monster_abilities`.
+            // 69 -> 1137 by the SD-32 stale-assertion fix cycle
+            // (`corpus_ingest_diagnostic.rs` RED-branch, 2026-08-23): this branch of the
+            // loop had never actually run green -- the `for` loop panics on ARG's failing
+            // assertion (iterated first) before ever reaching this one, so this literal's
+            // own drift went undetected behind that unrelated failure until this cycle
+            // fixed ARG's and the loop reached PU for the first time. Re-derived fresh
+            // against `live_on_disk_record_count`: `1264` (live total,
+            // `find data/corpus/pathfinder_unchained -name '*.json' | grep -v LICENSE |
+            // grep -v /_parity/ | wc -l`) `- 127` (`reported`, unchanged) `= 1137`. The
+            // bulk of the rise is `class_feature`: the compiled `pu_class_feature_count()`
+            // is 64, but `data/corpus/pathfinder_unchained/class_feature/` holds 604 --
+            // `decisions.md §13`'s T12 (2,453 `class_feature`s belonging to classes the
+            // engine does not model) plus subsequent `§20` no_record closure landed the
+            // rest corpus-only, same shape as `ability`/`skill`/`race_trait_generic`/
+            // `template`, none of which this diagnostic's `rules_tables` half compiles.
+            // 1137 -> 1144 by the row-19 desktop reach/catalog reds cycle (SD-32,
+            // 2026-08-24): re-derived fresh again (this loop only ever reaches this
+            // branch once the ARG branch above it stops panicking first -- same shape
+            // as the RED-branch note above) against `live_on_disk_record_count`
+            // (`1271`) with `reported` unchanged (`127`), `1271 - 127 = 1144`. +7 more
+            // T12 census/class-feature-lane corpus growth, not a new defect.
+            ("pathfinder_unchained", "pathfinder_unchained", 1144u32),
         ] {
             let response = build_corpus_ingest_diagnostic();
             let book = response
@@ -1216,26 +1502,18 @@ mod tests {
                 .unwrap_or_else(|| panic!("{book_id} present"));
             let reported: u32 = book.content_kind_counts.values().sum();
 
-            let license_path = repo_root()
-                .join("data/corpus")
-                .join(corpus_dir)
-                .join("LICENSE.json");
-            let license: serde_json::Value = serde_json::from_str(
-                &std::fs::read_to_string(&license_path)
-                    .unwrap_or_else(|e| panic!("{} readable: {e}", license_path.display())),
-            )
-            .expect("LICENSE.json is valid JSON");
-            let licensed = license["records_processed"]
-                .as_u64()
-                .expect("records_processed is an integer") as u32;
+            let corpus_dir_path = repo_root().join("data/corpus").join(corpus_dir);
+            let licensed = live_on_disk_record_count(&corpus_dir_path);
 
             assert_eq!(
                 reported + corpus_only_records,
                 licensed,
                 "{book_id}: this diagnostic reports {reported} records from rules_tables plus \
-                 {corpus_only_records} known corpus-only records, but {} accounts for \
-                 {licensed}. One of the two is stale.",
-                license_path.display()
+                 {corpus_only_records} known corpus-only records, but a live walk of {} \
+                 accounts for {licensed} real on-disk records. One of the two is stale -- \
+                 re-derive corpus_only_records fresh (decisions.md §17a), never repin without \
+                 proof.",
+                corpus_dir_path.display()
             );
         }
     }
@@ -1275,7 +1553,28 @@ mod tests {
         // `rules_tables::beastiary1` (46 legacy monsters) rather than
         // dropping them, keyed to that real owner's name
         // (`MonsterBook::abilities_owned_by_name`).
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 522);
+        // T9 `MonsterAbilityFacet` widening cycle: 522 -> 529 (+7), 7 more
+        // owned, reachable ability rows shipped once the widened facet
+        // vocabulary (`Weakness`/`Defensive`/`Aura`/`Sense`/`Communicate`)
+        // and the multi-`TYPE:`-token parsing fix landed
+        // (`rules_tables::bestiary::mod.rs`'s own comment carries the full
+        // derivation).
+        // `decisions.md §20` (no_record-to-zero wave 2): 529 -> 709 (+180),
+        // owner-less rows (no monster row of this book claims them) now
+        // ship for shape measurement rather than being dropped as orphans.
+        // `decisions.md §22`/round 6: 709 -> 710 (+1), `Spectre ~ Create
+        // Spawn` now ingests (a comma-delimiter `TYPE:` row this book's own
+        // parser previously refused) -- owned, so it joins the reaching set.
+        // `decisions.md §27`/round 8: 710 -> 711 (+1), `Morlock ~ Sneak
+        // Attack` (`TYPE:Internal`, no facet/delivery) now ships with a
+        // provisional `SpecialQuality` facet default instead of being
+        // dropped -- owned (Morlock claims it), so it joins the reaching set.
+        // `decisions.md §27b` round 9: 711 -> 733 (+22), the multi-DESC:
+        // parse-refusal group closes via `parse_desc`'s new generalised
+        // sixth branch -- 21 real `no_record` units plus `Lycanthrope ~
+        // Change Shape` (already `text-complete` by inventory evidence
+        // alone, same shape as round 8's `Bunyip ~ Blood Rage`).
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 733);
     }
 
     #[test]
@@ -1328,11 +1627,11 @@ mod tests {
         );
         assert_eq!(
             races("bestiary_2"),
-            Some(6),
-            "Bestiary 2's six races (SD-31 Epic 1-F2, 2026-08-15) -- the first race batch \
-             this panel has reported since Bestiary 1's, and proof the \
+            Some(7),
+            "Bestiary 2's seven races: the original six (SD-31 Epic 1-F2, 2026-08-15) -- the \
+             first race batch this panel has reported since Bestiary 1's, and proof the \
              `diagnostic_book_id(\"B2\")` mapping this batch added actually attaches the \
-             count to the right book row"
+             count to the right book row -- plus Dhampir (SD-32 card-11 T2b lane, 2026-08-23)"
         );
     }
 
@@ -1356,9 +1655,10 @@ mod tests {
             "the panel's per-book race counts must sum to exactly the races the catalog serves"
         );
         assert_eq!(
-            panel_total, 38,
-            "38 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
-             (SD-31 Epic 1-F2, 2026-08-15) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
+            panel_total, 39,
+            "39 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 7 (the \
+             original 6, SD-31 Epic 1-F2, 2026-08-15, plus Dhampir, SD-32 card-11 T2b lane, \
+             2026-08-23) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
              2026-08-15) plus Advanced Race Guide's 12 (SD-31-E6-F4-002, 2026-08-16: Catfolk, \
              Kitsune, Ratfolk, Strix, Suli, Wayang; SD31-E6-F4-004, 2026-08-17: Gillman, \
              Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, 2026-08-17: Changeling, Samsaran -- \

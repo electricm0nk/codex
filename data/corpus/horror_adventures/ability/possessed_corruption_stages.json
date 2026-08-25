@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Possessed Corruption Stages",
+    "name": "Possessed Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Possessed Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PossessedCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|PossessedCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-The first time you fail, you move one step closer to the spirit's alignment (GM's choice) and the spirit controls your actions until the next sunrise."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-The second time you fail, your alignment changes to match the spirit's, the spirit controls your actions until the next sunrise, and you have lapses of control and personality regardless of influence."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-The third time you fail the saving throw, the spirit steals full control of your body and you become an NPC under the GM's control. This NPC has the possessed corruption with you as the possessing spirit."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Possessed Corruption Stage %1|PossessedCorruptionStage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 626,
+    "record_key": "Possessed Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

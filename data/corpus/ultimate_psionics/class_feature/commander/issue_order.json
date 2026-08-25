@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Commander ~ Issue Order",
+    "name": "Issue Order",
+    "class": "Commander",
+    "description": "You can, as a swift action, direct one member of your collective to take an action that requires either a standard or move action. On that member's next turn, they must perform that command unless they make a successful Will saving throw (DC %1).  This functions like a strategy, including using the same pool of limited uses per day.|UnwillingParticipantDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Commander ~ Issue Order"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can, as a swift action, direct one member of your collective to take an action that requires either a standard or move action. On that member's next turn, they must perform that command unless they make a successful Will saving throw (DC %1).  This functions like a strategy, including using the same pool of limited uses per day.|UnwillingParticipantDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2272,
+    "record_key": "Commander ~ Issue Order"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

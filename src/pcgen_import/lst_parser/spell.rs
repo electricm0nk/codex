@@ -280,8 +280,69 @@ pub fn parse_lst_spell_row(
         };
     }
 
-    // Malformed: no tab separator at all.
+    // Malformed: no tab separator at all -- EXCEPT a bare `.COPY=` row,
+    // which is valid, minimal PCGen syntax: a `.COPY=` declaration states
+    // nothing beyond its own name (it inherits every other field from the
+    // base record it names), so a real corpus row can legitimately consist
+    // of the name column alone with no trailing tab at all (real example:
+    // `book_of_the_damned_volume_1/botd1_spells.lst:16`,
+    // `"Teleport (Greater).COPY=Greater Teleport (Self Plus 50 Lbs. Of
+    // Objects Only)"`, no tab anywhere on the line). Treating this as
+    // malformed silently dropped the row before any caller ever saw it,
+    // masking it as a corpus gap rather than a real, resolvable `.COPY=`
+    // variant. Every other tab-less line remains malformed, unchanged.
     if !raw_line.contains('\t') {
+        let bare_name = trimmed_start.trim_end();
+        if bare_name.contains(".COPY=") {
+            let payload = LstSpellRecordPayload {
+                name: bare_name.to_string(),
+                output_name: None,
+                spell_type: None,
+                classes: None,
+                school: None,
+                descriptor: None,
+                sub_school: None,
+                components: None,
+                casting_time: None,
+                range: None,
+                item: None,
+                target_area: None,
+                duration: None,
+                save_info: None,
+                spell_resistance: None,
+                source_page: None,
+                source_link: None,
+                description: None,
+                description_raw: None,
+            };
+            return LstRowParse {
+                record: Some(LstSpellRecord {
+                    line_number,
+                    source_path,
+                    name: bare_name.to_string(),
+                    output_name: None,
+                    spell_type: None,
+                    classes: None,
+                    school: None,
+                    descriptor: None,
+                    sub_school: None,
+                    components: None,
+                    casting_time: None,
+                    range: None,
+                    item: None,
+                    target_area: None,
+                    duration: None,
+                    save_info: None,
+                    spell_resistance: None,
+                    source_page: None,
+                    source_link: None,
+                    description: None,
+                    description_raw: None,
+                    payload,
+                }),
+                diagnostics: Vec::new(),
+            };
+        }
         return LstRowParse {
             record: None,
             diagnostics: vec![LstParseDiagnostic {
@@ -485,4 +546,46 @@ pub fn parse_lst_spell_file(path: impl AsRef<Path>) -> Result<LstSpellFile, LstP
 
 fn starts_with_known_tag(value: &str) -> bool {
     KNOWN_TAGS.iter().any(|(tag, _name)| value.starts_with(tag))
+}
+
+#[cfg(test)]
+mod copy_only_row_tests {
+    use super::*;
+
+    /// RED before this cycle's fix: a bare `.COPY=` row (no tab anywhere on
+    /// the line -- the real corpus shape at
+    /// `book_of_the_damned_volume_1/botd1_spells.lst:16`) was rejected as
+    /// `MalformedRow` and produced no record at all, silently dropping a
+    /// real, resolvable `.COPY=` variant before `ingest_spells.rs` ever saw
+    /// it. GREEN after: the row parses, `name` carries the raw
+    /// `base.COPY=variant` string unchanged (unpacked downstream by
+    /// `ingest_spells.rs::copy_variant_split`), every other field is `None`
+    /// (never fabricated), and zero diagnostics fire.
+    #[test]
+    fn bare_copy_row_with_no_tab_parses_instead_of_malformed() {
+        let raw = "Teleport (Greater).COPY=Greater Teleport (Self Plus 50 Lbs. Of Objects Only)";
+        let parsed = parse_lst_spell_row("test.lst", 16, raw);
+        assert!(
+            parsed.diagnostics.is_empty(),
+            "expected no diagnostics, got {:?}",
+            parsed.diagnostics
+        );
+        let record = parsed.record.expect("expected a record, got None");
+        assert_eq!(record.name, raw);
+        assert_eq!(record.classes, None);
+        assert_eq!(record.school, None);
+        assert_eq!(record.description, None);
+    }
+
+    /// A genuinely malformed tab-less row that is NOT a `.COPY=` shape
+    /// still reports `MalformedRow` exactly as before -- this fix is
+    /// narrowly scoped to the one real shape it targets, not a blanket
+    /// relaxation of the tab requirement.
+    #[test]
+    fn bare_non_copy_row_with_no_tab_is_still_malformed() {
+        let parsed = parse_lst_spell_row("test.lst", 1, "Fireball");
+        assert!(parsed.record.is_none());
+        assert_eq!(parsed.diagnostics.len(), 1);
+        assert_eq!(parsed.diagnostics[0].kind, LstParseDiagnosticKind::MalformedRow);
+    }
 }

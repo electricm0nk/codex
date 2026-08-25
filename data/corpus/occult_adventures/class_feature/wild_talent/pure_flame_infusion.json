@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Pure-Flame Infusion",
     "name": "Pure-Flame Infusion",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element fire; Type substance infusion; Level 7; Burn 4 Associated Blasts blue flame Saving Throw none You open a direct conduit to the purest elemental fire and send it surging forth. Your infused blast ignores spell resistance.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

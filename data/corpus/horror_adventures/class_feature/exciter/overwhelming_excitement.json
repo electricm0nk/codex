@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Exciter ~ Overwhelming Excitement",
+    "name": "Overwhelming Excitement",
+    "class": "Spiritualist",
+    "description": "An exciter can share the effects of his rapture with willing allies within 10 feet. He must expend 2 additional rounds of his rapture each round for each ally sharing its effects. The exciter's allies share all effects of the rapture except the rage powers; each ally must end its turn within 10 feet of the exciter, or the effects of the rapture end for that ally and it becomes fatigued. Whenever he is not sharing the effects of his rapture with an ally, the exciter now retains the benefits of his phantom in his consciousness even during rapture.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exciter ~ Overwhelming Excitement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.69"
+      },
+      {
+        "key": "DESC",
+        "value": "An exciter can share the effects of his rapture with willing allies within 10 feet. He must expend 2 additional rounds of his rapture each round for each ally sharing its effects. The exciter's allies share all effects of the rapture except the rage powers; each ally must end its turn within 10 feet of the exciter, or the effects of the rapture end for that ally and it becomes fatigued. Whenever he is not sharing the effects of his rapture with an ally, the exciter now retains the benefits of his phantom in his consciousness even during rapture."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 307,
+    "record_key": "Exciter ~ Overwhelming Excitement"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

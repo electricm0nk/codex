@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Spirit Totem",
     "name": "Spirit Totem",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, the spirits that surround the barbarian make it difficult for her enemies to see her. The spirits grant the barbarian a 20%% miss chance against ranged attacks and melee attacks made by creatures that are not adjacent to the barbarian (typically due to reach).",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

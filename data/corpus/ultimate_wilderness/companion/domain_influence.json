@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Emissary ~ Domain Influence",
+    "name": "Domain Influence",
+    "description": "The emissary gains a spark of divine power from the deity its master worships. Choose one of that deity's domains that grants a 1st-level domain power usable a number of times per day equal to 3 + the user's Wisdom modifier. The emissary can use that power once per day. [NOTE:Not fully restricted. Check domain power before choosing!]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emissary ~ Domain Influence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Supernatural.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainPowerTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainAbilityTriggerLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The emissary gains a spark of divine power from the deity its master worships. Choose one of that deity's domains that grants a 1st-level domain power usable a number of times per day equal to 3 + the user's Wisdom modifier. The emissary can use that power once per day. [NOTE:Not fully restricted. Check domain power before choosing!]"
+      },
+      {
+        "key": "BONUS",
+        "value": "DOMAIN|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainPowerTimes|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainAbilityTriggerLVL|DomainLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 567,
+    "record_key": "Emissary ~ Domain Influence"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

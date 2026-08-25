@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Eagle",
+    "name": "Eagle",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eagle Domain ~ Familiar|PREVARGTEQ:DomainEagleAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eagle Domain ~ Hawkeye"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eagle Domain ~ Aerial Evasion|PREVARGTEQ:DomainEagleAbilityTriggerLVL,6"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEagleLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEagleDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEagleTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEagleAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEagleLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEagleDC|10+(DomainEagleLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEagleTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainEagleAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Eagle=1|Aspect of the Falcon|Eagle=2|Eagle's Splendor|Eagle=3|Fly|Eagle=4|River of Wind|Eagle=5|Overland Flight|Eagle=6|Eagle Aerie|Eagle=7|Animal Shapes (Birds Only)|Eagle=8|Sunburst|Eagle=9|Winds of Vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
+    "line": 15,
+    "record_key": "Eagle"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

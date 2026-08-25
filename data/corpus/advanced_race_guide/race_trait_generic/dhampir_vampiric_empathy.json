@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dhampir ~ Vampiric Empathy",
+    "name": "Vampiric Empathy",
+    "description": "Though dhampirs often relate poorly to humanoids, some share an affinity with baser creatures. These dhampirs gain the ability to communicate with bats, rats, and wolves as if under the effects of a speak with animals spell (caster level equal to 1/2 the dhampir's Hit Dice). In addition, they gain a +2 racial bonus on Diplomacy checks when dealing with these animals. Whenever these dhampirs initiate an exchange, animals begin with a starting attitude of indifferent. This is a supernatural ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dhampir ~ Vampiric Empathy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dhampir ~ Vampiric Empathy],[!PREFACT:1,ABILITIES,Dhampir_ReplaceSkilled=True]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Dhampir_VampiricEmpathy_CL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Though dhampirs often relate poorly to humanoids, some share an affinity with baser creatures. These dhampirs gain the ability to communicate with bats, rats, and wolves as if under the effects of a speak with animals spell (caster level equal to 1/2 the dhampir's Hit Dice). In addition, they gain a +2 racial bonus on Diplomacy checks when dealing with these animals. Whenever these dhampirs initiate an exchange, animals begin with a starting attitude of indifferent. This is a supernatural ability."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces manipulative.|!PREABILITY:1,CATEGORY=Special Ability,Dhampir ~ Vampiric Empathy"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Dhampir_VampiricEmpathy_CL|TL/2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on Diplomacy checks when dealing with bats, rats, and wolves."
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You have the ability to communicate with bats, rats, and wolves as if under the effects of a speak with animals spell (caster level %1).|Dhampir_VampiricEmpathy_CL"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceSkilled|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 397,
+    "record_key": "Dhampir ~ Vampiric Empathy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

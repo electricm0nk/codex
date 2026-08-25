@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Defoliant Bomb",
     "name": "Defoliant Bomb*",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "When the alchemist creates a bomb, he can choose to have it deal extra damage against plant creatures but less damage against other creatures. Against creatures with the plant type, a defoliant bomb deals %1d8 points of damage instead of %1d6. Against all other creatures, the defoliant bomb only deals %1d4 points of damage instead of %1d6. This is a poison effect. A defoliant bomb kills all normal vegetation in the target's square and its splash area; any plant-based difficult terrain in the affected area becomes normal terrain.|ceil(AlchemistDiscoveryLVL/2)",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

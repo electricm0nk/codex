@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Summer Rage",
     "name": "Summer Rage",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "The barbarian channels the heat of late summer, making the air around her hot and oppressive. A creature within the barbarian's reach becomes fatigued as long as it remains within the barbarian's reach unless it succeeds at a Fortitude save (DC %1) to become immune for 24 hours.|10+RagePowersLVL/+CON",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

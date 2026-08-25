@@ -1,7 +1,10 @@
 # Support-state matrix
 
 > Scope: The typed control-plane carrier that records what the rules engine currently, honestly supports — documentary truth, not computed mechanics.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure). **Path correction 2026-08-22**
+> (SD-32 closure epilogue): pilot_compute.rs (old path src/rules_core/pilot_compute.rs, no longer valid) updated to
+> `src/rules_core/pilot_compute/mod.rs` — the module became a directory during SD-31; no other
+> content in this doc re-verified.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What the matrix is
@@ -22,7 +25,7 @@ fixed content from the SD-13 seed; SD-19-and-later cycles append one school or e
 landed cycle, and the doc comment is explicit that a widening cycle never rewrites an existing row's
 identity — only its `support_state`/`evidence_tier`/notes fields change in place.
 
-This module is documentary: nothing in `rules_core`'s compute path (`src/rules_core/pilot_compute.rs`,
+This module is documentary: nothing in `rules_core`'s compute path (`src/rules_core/pilot_compute/mod.rs`,
 `src/rules_core/spellbook.rs`, etc.) reads the matrix to decide what to compute. The matrix is a truth ledger read
 by humans, tests, and the desktop bridge — not an input to the engine itself.
 
@@ -141,7 +144,7 @@ The matrix and the engine's fail-honest diagnostics (see [rules-engine.md](./rul
 fail-honest pattern") are two different honesty mechanisms operating at two different scopes, and it
 is worth keeping them distinct:
 
-- A **claim-blocking diagnostic** (`ComputationDiagnostic.claim_blocking: bool` in `src/rules_core/pilot_compute.rs`) is a per-request, runtime signal: it fires (or doesn't) each time `compute_pilot_base_chassis` runs against a specific `CharacterInput`, and it governs whether *that one receipt* is blocked.
+- A **claim-blocking diagnostic** (`ComputationDiagnostic.claim_blocking: bool` in `src/rules_core/pilot_compute/mod.rs`) is a per-request, runtime signal: it fires (or doesn't) each time `compute_pilot_base_chassis` runs against a specific `CharacterInput`, and it governs whether *that one receipt* is blocked.
 - A **matrix row** is a per-capability, static, hand-authored signal: it records the engine's current overall posture for a named dimension (e.g. "Paladin hybrid chassis") independent of any single request, and it only changes when a contributor lands new grounding evidence and edits the source.
 
 They are consistent with each other by construction, not by any code-level link: a row can only
@@ -158,7 +161,7 @@ corresponding row edit.
 Landing new support for a race, class, level band, spell school, or equipment category is a two-part
 change, and both parts are required before a row may move:
 
-1. **Land the runtime evidence first.** Add the real computation (in `src/rules_core/pilot_compute.rs` or the relevant per-domain engine — see [rules-engine.md](./rules-engine.md)) and a test file that exercises it end to end. The row's eventual `grounding_ref` must name this real file; a row's `grounding_ref` is never written before the file it cites exists.
+1. **Land the runtime evidence first.** Add the real computation (in `src/rules_core/pilot_compute/mod.rs` or the relevant per-domain engine — see [rules-engine.md](./rules-engine.md)) and a test file that exercises it end to end. The row's eventual `grounding_ref` must name this real file; a row's `grounding_ref` is never written before the file it cites exists.
 2. **Then edit the row, or append a new one, in `seeded_current_truth()`.** What changes depends on the evidence tier reached:
    - Moving from `Unverified`/`Observed` to any tier with real runtime evidence requires updating `evidence_tier` (to at least `Computed`) and `evidence_freshness` (to `RefreshableFromLiveProof`, since a live test now exists to refresh from).
    - Moving `support_state` toward `Supported` requires that `blocker_or_lossiness_note` either becomes empty or is rewritten to name only the semantics that are genuinely still missing — never left stale from a prior, less-complete state.

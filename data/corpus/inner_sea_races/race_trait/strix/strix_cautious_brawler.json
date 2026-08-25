@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T22:30:42Z",
+  "data": {
+    "key": "Strix ~ Cautious Brawler",
+    "name": "Cautious Brawler",
+    "race_key": "Strix",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Strix Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Strix_ReplaceHatred",
+      "Strix_ReplaceSuspicious"
+    ],
+    "description": "Because strix are careful to avoid injuring other strix even when they fight with each other, they develop a talent for fighting without causing lasting harm. They gain a +1 racial bonus on damage rolls when dealing nonlethal damage and take no attack penalty when dealing nonlethal damage with a lethal weapon. This racial trait replaces hatred and suspicious.",
+    "source_page": "p.216",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strix ~ Cautious Brawler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Strix Racial Trait.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Strix ~ Cautious Brawler],[!PREFACT:1,ABILITIES,Strix_ReplaceHatred=True,Strix_ReplaceSuspicious=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Because strix are careful to avoid injuring other strix even when they fight with each other, they develop a talent for fighting without causing lasting harm. They gain a +1 racial bonus on damage rolls when dealing nonlethal damage and take no attack penalty when dealing nonlethal damage with a lethal weapon."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces hatred and suspicious.|!PREABILITY:1,CATEGORY=Special Ability,Strix ~ Cautious Brawler"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on damage rolls when dealing nonlethal damage and take no attack penalty when dealing nonlethal damage with a lethal weapon."
+      },
+      {
+        "key": "FACT",
+        "value": "Strix_ReplaceHatred|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Strix_ReplaceSuspicious|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1243,
+    "record_key": "Strix ~ Cautious Brawler"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

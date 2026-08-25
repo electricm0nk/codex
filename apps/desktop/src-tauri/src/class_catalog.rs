@@ -18,6 +18,9 @@ use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::{
     self as pu_class_chassis, PuClassId,
 };
 
+use crate::authoring_workbench::codex_repo_root;
+use crate::class_catalog_generic::generic_class_catalog_entries;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ClassCatalogEntryDto {
@@ -92,6 +95,20 @@ pub fn build_class_catalog() -> ClassCatalogResponse {
         }
     }
 
+    // SD-32 T12 Epic 10 row 20 cycle 4: widened with the 60 (of the 61 real
+    // conventional PC classes row20-cycle3 found across 13 of the 17
+    // `classes`-family gap books; see `class_catalog_generic.rs`'s own
+    // module doc for the 61st, `Demoniac`, and why it does not resolve yet)
+    // classes whose BAB/save progression is computed generically from their
+    // own corpus `raw_tokens` rather than hand-authored, per `decisions.md
+    // §17` ("stop treating every object as a snowflake"). A missing repo
+    // root (packaged-app deployment without `data/corpus/` bundled, the
+    // same caveat `class_feature_descriptions.rs` already documents) skips
+    // this widening rather than panicking the whole catalog.
+    if let Ok(repo_root) = codex_repo_root() {
+        entries.extend(generic_class_catalog_entries(&repo_root));
+    }
+
     ClassCatalogResponse { entries }
 }
 
@@ -122,7 +139,13 @@ mod tests {
         // 20 levels each: 220 + 80 = 300. The eleven CRB counts below are
         // asserted unchanged in the same test, so a PU row landing on a CRB
         // class instead of beside it fails here rather than passing quietly.
-        assert_eq!(response.entries.len(), 300);
+        //
+        // SD-32 T12 Epic 10 row 20 cycle 4 added the 60 generically-computed
+        // conventional-PC classes (`class_catalog_generic.rs`): 808 more
+        // rows (`python3` sweep over their own `MAXLEVEL`/`Prestige`-default
+        // per-class row counts, cited in that module's doc comment) ->
+        // 300 + 808 = 1108.
+        assert_eq!(response.entries.len(), 1108);
 
         let counts = |class_id: &str| {
             response

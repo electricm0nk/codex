@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Aegis ~ Reach",
+    "name": "Reach",
+    "class": "Aegis",
+    "description": "You gain 5 ft. of reach",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Reach"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization.SpecialAttack"
+      },
+      {
+        "key": "PREVARGT",
+        "value": "AstralSuitPrereqLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain 5 ft. of reach"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|REACH|5"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "TYPE",
+        "value": "AberrantCustomization"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 145,
+    "record_key": "Aegis ~ Reach"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

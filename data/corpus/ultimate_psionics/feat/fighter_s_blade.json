@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Fighter's Blade",
+    "category": "General",
+    "name": "Fighter's Blade",
+    "description": "Treat your class level as four higher to determine your enhanced mind blade class feature and which blade skills you can select, to a maximum of your character level.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Soulknife ~ Enhanced Mind Blade"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 130,
+    "record_key": "Fighter's Blade"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

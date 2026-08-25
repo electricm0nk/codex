@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:14Z",
+  "data": {
+    "key": "Dragon Attacks (Medium)",
+    "name": "Dragon Attacks (Medium)",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wing|TOHIT|-5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Wing|DAMAGE|-(STR/2)"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.NaturalPrimary.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claws,Weapon.Natural.NaturalPrimary.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*2,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Wing,Weapon.Natural.NaturalSecondary.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*2,1d4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_templates.lst",
+    "sha256": "a62dd8a0dded1abf6f5d1a04157353247641ed4a020ba28e144caf82c29caa33",
+    "line": 1005,
+    "record_key": "Dragon Attacks (Medium)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

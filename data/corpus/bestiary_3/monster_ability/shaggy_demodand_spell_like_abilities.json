@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Shaggy Demodand ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 20th; concentration +25) Constant-detect good, detect magic, see invisibility At will-detect thoughts (DC 17), fear (DC 19), gaseous form, greater dispel magic, invisibility (self only), magic circle against good 3/day-empowered cloudkill (DC 20), fog cloud, quickened ray of enfeeblement (DC 16), stinking cloud (DC 18) 1/day-blasphemy (DC 22), chaos hammer (DC 19), mass charm monster (DC 23), summon (level 6, 1d6 tarry demodands or 1d4 slimy demodands 60%%)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:shaggy_demodand_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:demodand_shaggy"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 20th; concentration +25) Constant-detect good, detect magic, see invisibility At will-detect thoughts (DC 17), fear (DC 19), gaseous form, greater dispel magic, invisibility (self only), magic circle against good 3/day-empowered cloudkill (DC 20), fog cloud, quickened ray of enfeeblement (DC 16), stinking cloud (DC 18) 1/day-blasphemy (DC 22), chaos hammer (DC 19), mass charm monster (DC 23), summon (level 6, 1d6 tarry demodands or 1d4 slimy demodands 60%%)"
+      },
+      {
+        "key": "KEY",
+        "value": "Shaggy Demodand ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "ShaggyDemodandRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "ShaggyDemodandRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 637,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Shaggy Demodand ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

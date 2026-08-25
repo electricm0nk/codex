@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Water",
+    "name": "Water",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainWater,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Water Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.WaterDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainWaterAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manipulate water and mist and ice, conjure creatures of water, and resist cold."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Water=1|Obscuring Mist|Water=2|Fog Cloud|Water=3|Water Breathing|Water=4|Control Water|Water=5|Ice Storm|Water=6|Cone of Cold|Water=7|Elemental Body IV (Water Only)|Water=8|Horrid Wilting|Water=9|Elemental Swarm (Water Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 43,
+    "record_key": "Water"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

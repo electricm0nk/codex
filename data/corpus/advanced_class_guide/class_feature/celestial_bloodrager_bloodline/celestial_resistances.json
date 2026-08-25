@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Celestial Bloodrager Bloodline ~ Celestial Resistances",
     "name": "Celestial Resistances",
-    "class": "Celestial Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "You gain Resistance %1 to acid and cold.|Bloodrager_Celestial_CelestialResistances_ResistBonus",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

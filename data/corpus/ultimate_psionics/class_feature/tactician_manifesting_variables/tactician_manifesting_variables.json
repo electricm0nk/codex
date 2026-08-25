@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Tactician Manifesting Variables",
+    "name": "Tactician Manifesting Variables",
+    "class": "Tactician",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianML|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaxManifesterLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianPLStatScore|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianPKL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianMPL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianPowersKnown|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TacticianMaxPowerLevel|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianML|TacticianLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianML|var(\"BL=Tactician\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaxManifesterLVL|TacticianML|TYPE=NoStack"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianPLStatScore|INTSCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianPKL|TacticianLVL+var(\"BL=Tactician\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianMPL|TacticianLVL+var(\"BL=Tactician\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianPowersKnown|TacticianPKL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TacticianMaxPowerLevel|min(9,floor((TacticianMPL+1)/2),TacticianPLStatScore-10)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 908,
+    "record_key": "Tactician Manifesting Variables"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

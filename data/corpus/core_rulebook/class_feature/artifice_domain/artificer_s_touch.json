@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Artifice Domain ~ Artificer's Touch",
     "name": "Artificer's Touch",
-    "class": "Artifice Domain",
+    "class": "Cleric",
     "description": "You can cast Mending at will (CL %1) to repair damaged objects. In addition, you can cause damage to objects and construct creatures by striking them with a melee touch attack. Objects and constructs take 1d6+%2 points of damage. This attack bypasses up to %1 points of damage reduction and hardness. You can use this ability %3 times per day.|DomainArtificeLVL|DomainArtificeLVL/2|ArtificersTouchTimes|PREVARGTEQ:DomainArtificeLVL,2",
     "raw_tokens": [
       {
@@ -69,5 +69,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

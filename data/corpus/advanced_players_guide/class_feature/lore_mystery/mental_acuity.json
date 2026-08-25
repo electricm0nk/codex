@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Lore Mystery ~ Mental Acuity",
     "name": "Mental Acuity",
-    "class": "Lore Mystery",
+    "class": "Oracle",
     "description": "Your explorations into the secret mysteries of the world have granted you a preternatural understanding of all things and you just keep getting smarter. You gain a +1 inherent bonus to Intelligence upon taking this revelation and another at every third oracle level gained thereafter. You must be at least 7th level to select this revelation.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

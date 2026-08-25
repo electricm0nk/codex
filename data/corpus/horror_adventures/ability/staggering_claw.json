@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Staggering Claw",
+    "name": "Staggering Claw",
+    "description": "Your touch weakens the muscles of your victims.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Staggering Claw"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GhoulManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "GhoulManifestationLevel,4"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Ghoul Corruption ~ Rending Claws"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch weakens the muscles of your victims."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghoul Staggering Claw Stain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghoul Staggering Claw Gift Choice|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 273,
+    "record_key": "Ghoul Corruption ~ Staggering Claw"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

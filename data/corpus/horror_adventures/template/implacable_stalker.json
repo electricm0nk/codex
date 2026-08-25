@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Implacable Stalker",
+    "name": "Implacable Stalker",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.238"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=3"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Implacable Stalker"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|6|TYPE=Base.STACK"
+      },
+      {
+        "key": "DR",
+        "value": "5/-"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus,ColdResistanceBonus,FireResistanceBonus,ElectricityResistanceBonus,SonicResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.All|10|PREMOVE:1,Walk=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4|!PRERACE:1,RACETYPE=Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4|PRERACE:1,RACETYPE=Undead"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Intimidate|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|6|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Survival=Tracking|6|TYPE=Racial"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Diehard|Endurance|Intimidating Prowess|Toughness"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_templates.lst",
+    "sha256": "2bdc330c9f1d4fcc2fd799ba7dd02a4511dab172cf39abefcd480a3a0f9d2edb",
+    "line": 17,
+    "record_key": "Implacable Stalker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

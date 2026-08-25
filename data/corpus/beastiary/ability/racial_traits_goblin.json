@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Goblin",
+    "name": "Racial Traits ~ Goblin",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Goblin_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Goblin Racial Trait|AUTOMATIC|Goblin ~ Ability Scores|PREVAREQ:Goblin_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_abilities_globalvar.lst",
+    "sha256": "7170da71e685dd73a8357bcf2bdf72b864f3cca4761ca57f035db51ea15b2687",
+    "line": 10,
+    "record_key": "Racial Traits ~ Goblin"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

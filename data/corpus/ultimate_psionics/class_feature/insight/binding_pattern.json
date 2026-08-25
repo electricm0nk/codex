@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Binding Pattern",
+    "name": "Binding Pattern",
+    "class": "Insight",
+    "description": "You can cause creatures struck with your disrupt pattern ability to become entangled for %1 rounds, although the disrupt pattern damage is minimized.  Entangled creatures can attempt to break free as a move action, making a Strength or Escape Artist check.  The DC for this check is %2.|BindingPatternDuration|BindingPatternDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Binding Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CrypticInsightLVL,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BindingPatternDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BindingPatternDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause creatures struck with your disrupt pattern ability to become entangled for %1 rounds, although the disrupt pattern damage is minimized.  Entangled creatures can attempt to break free as a move action, making a Strength or Escape Artist check.  The DC for this check is %2.|BindingPatternDuration|BindingPatternDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BindingPatternDC|CrypticInsightDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BindingPatternDuration|CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 190,
+    "record_key": "Insight ~ Binding Pattern"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

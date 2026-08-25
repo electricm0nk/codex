@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Uncanny Grapple",
+    "name": "Uncanny Grapple",
+    "description": "Upon making a successful grapple combat maneuver check against a creature you are grappling, you can perform one of the following actions: throw, crush, or swing. For a throw, you can throw the target of your grapple up to %1 feet; if the creature strikes a solid object before reaching this distance, it takes 1d6 points of damage per 10 feet of the remaining throwing distance and lands prone. For a crush, you deal %2d6 points of nonlethal damage. For a swing, you can use the target as a weapon against another creature, treating the grappled creature as a two-handed weapon. If you succeed at a melee attack against an opponent adjacent to the target, both that opponent and the grappled creature take 1d8 points of bludgeoning damage from this attack + 1-1/2 x your Strength modifier.|Ability_UncannyGrapple_Range|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Uncanny Grapple"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_UncannyGrapple_Range|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Upon making a successful grapple combat maneuver check against a creature you are grappling, you can perform one of the following actions: throw, crush, or swing. For a throw, you can throw the target of your grapple up to %1 feet; if the creature strikes a solid object before reaching this distance, it takes 1d6 points of damage per 10 feet of the remaining throwing distance and lands prone. For a crush, you deal %2d6 points of nonlethal damage. For a swing, you can use the target as a weapon against another creature, treating the grappled creature as a two-handed weapon. If you succeed at a melee attack against an opponent adjacent to the target, both that opponent and the grappled creature take 1d8 points of bludgeoning damage from this attack + 1-1/2 x your Strength modifier.|Ability_UncannyGrapple_Range|MythicLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_UncannyGrapple_Range|10*MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 278,
+    "record_key": "Mythic Path Ability ~ Uncanny Grapple"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

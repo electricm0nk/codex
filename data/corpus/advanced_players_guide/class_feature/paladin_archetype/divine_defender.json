@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Divine Defender",
     "name": "Divine Defender",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Some paladins see themselves as the last line of defense between the teeming hordes of evil and the innocent folk trying to make a living in a harsh, unforgiving world. These defenders spend their lives protecting others and taking on foes that the common man should not even know exist. To aid them in their holy mission, they have special powers to protect themselves and those around them. The divine defender has the following class features.",
     "raw_tokens": [
       {
@@ -51,6 +51,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Divine Defender],[!PREFACT:1,ABILITIES,Paladin_Archetype_Mercy=True,Paladin_Archetype_DivineBond=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_Mercy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Mercy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineBond|true"
       }
     ]
   },
@@ -67,5 +87,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

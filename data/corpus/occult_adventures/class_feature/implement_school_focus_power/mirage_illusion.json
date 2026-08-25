@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Mirage",
     "name": "Mirage [Illusion]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to cloak an area in illusion, allowing you to change the area's appearance. You can affect up to one 5-foot cube area for every occultist level you posses, changing the appearance in a way that seems natural to the surroundings, subject to GM discretion. You could, for example, hide a door or passageway, make a table appear to be covered in food, or even create the illusion of a pit. You can't make creatures or objects invisible with this power, but you can change the appearance of an object or create an illusion for creatures to hide behind. This functions as major image, and creatures that physically interact with the illusion in any way can attempt a Will save to see through the mirage. You must be at least 5th level to select this focus power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

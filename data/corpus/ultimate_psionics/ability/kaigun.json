@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Marksman Archetype ~ Kaigun",
+    "name": "Kaigun",
+    "description": "You are a marksman who opts to focus your training with firearms, becoming a deadly gun-wielder.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman Archetype ~ Kaigun"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MarksmanArchetype.MarksmanBucklerProficiency.MarksmanPointBlankShot.MarksmanEvadeArrows1.MarksmanPower6.MarksmanDisengage.MarksmanPower10"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Marksman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Marksman Archetype ~ Kaigun],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanBucklerProficiency,TYPE.MarksmanPointBlankShot,TYPE.MarksmanEvadeArrows1,TYPE.MarksmanPower6,TYPE.MarksmanDisengage,TYPE.MarksmanPower10]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are a marksman who opts to focus your training with firearms, becoming a deadly gun-wielder."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Firearm"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Exotic Weapon Proficiency (Firearms)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Kaigun ~ Gun Wielder|PRECLASS:1,Marksman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Kaigun ~ Psionic Deed|PRECLASS:1,Marksman=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Kaigun ~ Telekinetic Reload|PRECLASS:1,Marksman=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Kaigun ~ Mental Grit|PRECLASS:1,Marksman=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Kaigun ~ Focused Control|PRECLASS:1,Marksman=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Marksman;LEVEL=2|-1|PRECLASS:1,Marksman=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Marksman;LEVEL=3|-1|PRECLASS:1,Marksman=10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EvadeArrows|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 34,
+    "record_key": "Marksman Archetype ~ Kaigun"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

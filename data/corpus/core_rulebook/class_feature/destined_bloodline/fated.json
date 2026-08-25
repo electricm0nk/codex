@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Destined Bloodline ~ Fated",
     "name": "Fated",
-    "class": "Destined Bloodline",
+    "class": "Sorcerer",
     "description": "You gain a +%1 luck bonus on all of your saving throws and to your AC during surprise rounds and when you are otherwise unaware of an attack.|Sorcerer_DestinedFated_LuckBonus",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

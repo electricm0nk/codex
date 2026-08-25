@@ -4,31 +4,38 @@ stc_id: GOV-OGL-PI-BLACKLIST
 canonical: false
 owner: Todd Hintzmann
 scope: SD-27 (Shape B v1 license-stripping, all in-scope and future-state books)
-status: DRAFT — operator-reviewable, not unilaterally binding
-review_state: pending_operator_sign_off
-last_reviewed_at: 2026-07-27
+status: SIGNED-OFF — amended and operator-approved per decisions.md §19
+review_state: signed_off
+last_reviewed_at: 2026-08-23
 canonical_source: docs/governance/ogl-pi-blacklist.md (this file)
 related_artifacts:
   - src/rules_core/shape_b_v1.rs (the schema this blacklist feeds)
   - docs/release/SD-27-future-state-book-content-ingestion/decisions.md §17 (license-stripping doctrine)
   - docs/release/SD-27-future-state-book-content-ingestion/forward-scope-register.md §1.4 (initial blacklist source)
+  - docs/release/SD-32-compute-library-and-cause-closure/decisions.md §19 (2026-08-23 operator sign-off: amendments 3a-3d approved, §19b/§19c rulings)
+  - docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/t9-pi-signoff-package.md (the review this sign-off acts on)
 date: 2026-07-27
+sign_off_date: 2026-08-23
 ---
 
 # OGL/PI Field-Classification Blacklist
 
-> ## ⚠️ DRAFT — OPERATOR SIGN-OFF REQUIRED, NOT SELF-EXECUTING
+> ## ✅ SIGNED OFF (2026-08-23) — amended per `SD-32 decisions.md §19`, standing caution below still applies
 >
-> This document is a **content-licensing / legal classification draft**, not
-> a binding automated policy. `decisions.md §17` frames Product Identity
-> classification as requiring operator review, not silent automation —
-> nothing in this repository treats this file as authoritative until an
-> operator has reviewed and accepted a given book's classification pass.
-> Cycle E2.0.5 (this document's origin) only lands the *schema* and the
-> *initial* blacklist; it does not retro-fit any book's data. Per-book
-> retro-fit cycles (E2.0.6+) apply this blacklist and must record what they
-> found — including any field this draft missed — back into this file
-> before that book's data is considered license-clean.
+> This document was a **content-licensing / legal classification draft**
+> from its 2026-07-27 origin through SD-32 card 11's T9 review. The operator
+> has now reviewed the audit at `t9-pi-signoff-package.md` and approved all
+> four amendments in §2.3/§2.3a-c/§4 below (`SD-32 decisions.md §19`), so this file is
+> **in force as amended** — it is no longer "not yet binding." `decisions.md
+> §17` (SD-27) still frames Product Identity classification as requiring
+> operator review, not silent automation; that review has now happened for
+> the amendments below, but it does **not** retroactively bless every future
+> book's data sight-unseen. Cycle E2.0.5 (this document's origin) landed the
+> *schema* and the *initial* blacklist; it did not retro-fit any book's
+> data. Per-book retro-fit cycles (E2.0.6+, and T9's own per-record review
+> per `SD-32 decisions.md §18`/§19) apply this blacklist and must record
+> what they found — including any field this draft missed — back into this
+> file before that book's data is considered license-clean.
 >
 > **If you are a future cycle (human or agent) reading this file to decide
 > what to redact:** treat every classification below as a starting
@@ -113,6 +120,42 @@ field.
 |---|---|---|
 | `description` | `SpellCacheData`, `EquipmentCacheData`, `FeatTableEntry` | Spell/equipment/feat flavor and rules text sometimes references "your deity" generically (OGL — no proper name) but could reference a specific named deity, NPC, or place in some entries (PI). CRB's real `Atonement`/`Commune`/`Miracle` spell descriptions found during this cycle's authoring use only the generic "your deity," not a proper name — but this is not proven exhaustively for every record in every book. |
 | `detail` | `RaceTraitEntry` | Could carry a named homeland/place in some race entries. |
+| `description` (PCGen `DESC:`/`SPECIALS:`/`SA:`/`BENEFIT:` free-text tags) | `companion`-kind ability rows | Summoner-eidolon-evolution, animal-companion-trick, and familiar-archetype rules text. Reviewed corpus-wide (443 originally-uncertain rows, full read): entirely generic game mechanic in every row inspected — no deity/place/NPC content found. Presumptively OGL under §1(d)/(e)'s mechanic exclusion. 360 of the 443 nonetheless remain `still_undecidable` here, not because content was found, but because the classifier could not positively rule out a lowercase creature-species reference or an unlisted capitalized token in each one — see §4.2 for what closes this. |
+| `description` (same tags) | `monster_ability`-kind rows | Special-ability text routinely embeds the *owning creature's own name* (via `KEY:<Creature> ~ <Ability>` and/or the DESC prose itself, e.g. "a jinushigami wields..."). Requires per-record judgment tied to the referenced creature's own PI status, not the ability row's content in isolation — if the named creature is not part of the SRD's declared-Open monster list, the ability row carries the same PI exposure as the creature name. See `SD-32 decisions.md §19b` — the operator has ruled that the row's own declaration governs (no declaration = not PI by association alone); the 954 previously-undecidable units this row named are `clear` under that ruling. |
+
+**Added by `SD-32 decisions.md §19a` amendment 3a (2026-08-23, operator-approved).** Verbatim source: `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-3-closure-invariant/t9-pi-signoff-package.md §3a`. Both `companion` and `monster_ability` had *no* field-classification entry at all before this amendment, which is why 802 of T9's original 1,344 uncertain units had nowhere to look.
+
+### 2.3a Normalization rule for the term-list scan (all six kinds; `SD-32 decisions.md §19a` amendment 3b, 2026-08-23)
+
+> The term-list scan MUST case-fold and apply a bounded OCR-confusion
+> normalization (at minimum: lowercase-l/uppercase-I/digit-1/exclamation-mark
+> collapsed to one canonical character, matching the recorded
+> lrori/Irori incident's error class; 0/o collapsed; rn folded to m) before
+> substring matching, using WORD-BOUNDARY matching rather than bare
+> substring. Word-boundary matching is required, not optional: a naive
+> case-fold-only re-scan without it reopens a false-positive class where a
+> short blacklist term (e.g. "Nex") collides with an ordinary English word
+> ("next") the original case-sensitive scan never matched — found
+> independently by two of the three review lanes and fixed the same way in
+> both. The PCGen field delimiter "|" must NOT be included in any
+> OCR-confusion table — folding it produces a false NEGATIVE on the Cayden
+> CaiLean incident itself (confirmed by direct test).
+
+Implemented in `scripts/sd32_t9_pi_review_feat_equipment.py` (`normalized_term_hit`) and `scripts/sd32_t9_pi_exposure_audit.py`'s sibling review scripts; tested in `scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py`.
+
+### 2.3b `.COPY=`/`.MOD` inheritance rule (`SD-32 decisions.md §19a` amendment 3c, 2026-08-23)
+
+> A PCGen `.COPY=`/`.MOD` row inherits its base item's declared
+> NAMEISPI:YES/DESCISPI:YES status. A `.COPY=` derivative is mechanically
+> the same named item as its base, with only cosmetic overrides
+> (enhancement, price, name) — it is not new content. Resolve by
+> same-file base-key lookup against the base's own declaration.
+
+Resolves 5 units (`Gelugon Plate`, `Hellknight Half-Plate Barding`, `Hellknight Leather Barding`, `Hellknight Plate Barding`, `Maiden's Panoply` — all `adventurers_guide` equipment) from `clear` to `blocked`. Implemented in `scripts/sd32_t9_pi_review_feat_equipment.py` (`build_key_pi_index`/`find_base_item_pi`); tested in `scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py`.
+
+### 2.3c Term-list additions (`SD-32 decisions.md §19a` amendment 3d, 2026-08-23)
+
+`Aldori` (underlies the already-blocked "Aldori Dueling Sword", found via a feat prerequisite citation) and `Magaambya`/`Magaambyan` (a Golarion institution name, same shape as the existing place/nation terms) are added to the term list, bringing the review-script copies to 60 terms (`scripts/sd32_t9_pi_review_feat_equipment.py`; see `scripts/tests/test_sd32_t9_pi_normalization_and_inheritance.py`). Left undecided by the reviewing lane because the terms appear in mechanical `PREABILITY` prerequisite fields rather than a record's own name or flavour — the operator has now made that call (`SD-32 decisions.md §19a`): the citing record redacts too. **`src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS`** (production, 57 terms, asserted at `pi_screening.rs` line ~261) is not yet updated to 60 — that change belongs to the T9 onboarding cycle that actually transcribes corpus data under this amended blacklist, since bumping the production term list triggers cache regeneration across every already-shipped book, which is out of scope for this read-only sign-off-application cycle.
 
 ## 3. Redistribution posture (feeds the per-book `LICENSE.json`)
 
@@ -190,6 +233,62 @@ not silently diverge from this shared file:
   `PI_BLACKLIST_TERMS` is now 57 terms (55 + these two). Both records
   re-screened and confirmed clean on disk and in the compiled table after
   the fix.
+
+### Per-scope note: T9 PI sign-off (SD-32 card 11, `decisions.md §19`, 2026-08-23)
+
+- **Two new terms added to the shared list** (§2.3c above): `Aldori`, `Magaambya`/`Magaambyan`.
+  `PI_BLACKLIST_TERMS` is now 60 terms in the script-side copies (57 + these three: `Aldori`, `Magaambya`, `Magaambyan`).
+- **`.COPY=`/`.MOD` inheritance rule added** (§2.3b): resolves 5 previously-`clear` T9
+  equipment units to `blocked` — see that section for the named records.
+- **§2.3 gained two new kind entries** (`companion`, `monster_ability`) with the
+  normalization rule (§2.3a) applied to all six kinds' term scan, not only the kind that
+  found the original incident.
+- This sign-off does not itself redact any T9 record — a separate onboarding cycle
+  (SD-32 card 11, not yet dispatched at sign-off time) applies these rules to the
+  corpus and writes each affected book's `LICENSE.json` per §5 below.
+
+### Per-book override: Inner Sea Gods, equipment (added by cycle `t9-onboarding`/`pi-key-rawtokens-screen` follow-up, 2026-08-23)
+
+- **One new term added to the shared list** (the term itself is deliberately
+  not repeated here — see `src/rules_core/pi_screening.rs::PI_BLACKLIST_TERMS`'s
+  own trailing entry, which is this document's actual canonical source, not
+  illustrative text) — classified PI (a deity name, "names and descriptions
+  of characters... personas" per OGL §1(e)), the pinned oracle's OWN
+  lowercase-possessive spelling of an already-blacklisted deity name (index
+  9 of the same array). Found by the corpus-wide `data.key`/`data.raw_tokens`
+  screen (`scripts/pi_key_rawtokens_audit.py`, `pi-key-rawtokens-screen`
+  cycle) confirming `decisions.md §19a`'s own case-fold-normalized Python
+  scan against the SIGNED-OFF list — the production Rust
+  `pi_screening.rs::classify_field` this codebase's `equipment` generator
+  (`src/bin/gen_equipment_gap_tables.rs`) actually runs at ingest time has NO
+  case-fold normalization, so it never caught the oracle's lowercase
+  variant. `isg_equip.lst:232` (the `Wayfinder Of Zephyrs` record's `DESC`
+  token) shipped unredacted in both
+  `data/corpus/inner_sea_gods/equipment/wayfinder_of_zephyrs.json`'s
+  `data.description` and its `raw_tokens[DESC]` copy until this fix. Same
+  shape as the Inner Sea Gods override immediately above (an oracle
+  spelling/casing variant of an existing blacklisted deity), same
+  resolution — fold the exact variant into the shared list rather than
+  changing the scan's general matching rule. Verified before folding in:
+  this variant (any case) occurs in exactly one PCGen source file at
+  exactly two lines — one already excluded via that record's own
+  `NAMEISPI:YES` declaration (line 20, an altar item naming the same deity),
+  the other this leak (line 232) — so adding it does not widen redaction
+  anywhere beyond this one record. **A whole-list case-fold was considered
+  and rejected** for the Rust production copy: `PI_BLACKLIST_TERMS` includes
+  a 3-letter term prone to colliding with an ordinary English word once
+  case-folded (the same shape `§2.3a`'s own word-boundary guard exists to
+  prevent, above), and a case-fold without that guard would reopen the
+  identical collision class in the Rust copy — which deliberately has NO
+  word-boundary guard at all, because real corpus identifiers concatenate a
+  PI term into another identifier
+  with no separator (e.g. a class-feature key ending `...LVL` immediately
+  after a deity/place name). A single, verified, narrow term addition
+  carries none of that risk. `PI_BLACKLIST_TERMS` (Rust production copy) is
+  now 61 terms (60 + this one) — one ahead of the script-side copies' 60
+  until a future sign-off cycle folds this addition into `§2.3c` the way
+  the three `§19a` additions were. Re-derive:
+  `cargo test --locked --lib rules_core::pi_screening::tests::term_list_matches_the_reference_copy_plus_the_documented_acg_addition`.
 
 No other entries yet — cycles 2.0.6-2.0.9 (CRB, APG, ACG, Bestiary 1 retro-fits)
 append here as they run.

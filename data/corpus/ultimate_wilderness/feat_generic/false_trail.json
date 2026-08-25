@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "False Trail",
+    "name": "False Trail",
+    "description": "You create a false trail to throw off pursuers, enabling you to increase your lead on those following you or make them lose your trail entirely.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,Survival=3"
+      },
+      {
+        "key": "DESC",
+        "value": "You create a false trail to throw off pursuers, enabling you to increase your lead on those following you or make them lose your trail entirely."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You can create a false trail in the wilderness via a combination of misleading footprints, discarded items, torn scraps of clothing, and other signs. When you create a false trail, you determine the direction it leads. A creature tracking you must succeed at a Perception or Survival check (DC %1) to determine the trail is fake when first encountering it. On a success, the creature can continue to track you as normal. The effect of a failure to identify the trail as false depends on the time and effort spent making it. &nl;Quick: A quick false trail takes 10 minutes to complete. A creature that fails to identify the trail as false follows it for 1d4x1,000 feet. &nl;[Normal] A normal false trail takes 1 hour to complete. A creature that fails to identify the trail as false follows it for 1d4 miles. &nl;Elaborate: An elaborate false trail takes 4 hours to complete. A creature that fails to identify the trail as false follows it for 2d6 miles. &nl;After a creature that fails to identify a false trail follows it for the determined distance, it can attempt another Perception or Survival check with a +5 bonus. On a success, the creature realizes it's following a false trail and can continue to track you as normal after backtracking to the start of the false trail (or wherever you diverged from the false trail). On a failure, the creature continues to move in the direction of the false trail for an additional mile. After each mile, it can attempt a new check with a cumulative +5 bonus.|10+TL/2+WIS"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 48,
+    "record_key": "False Trail"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

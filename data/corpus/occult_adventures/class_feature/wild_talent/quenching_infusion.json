@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Quenching Infusion",
     "name": "Quenching Infusion",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element water; Type substance infusion; Level 1; Burn 1 Associated Blasts charged water, water Saving Throw none Your blast puts out nonmagical fires as if they had been touched by a water elemental. If you increase the burn cost to 2 or reduce the damage to 0, it also dispels magical fires as if you were a water elemental with a number of Hit Dice equal to your kineticist level.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

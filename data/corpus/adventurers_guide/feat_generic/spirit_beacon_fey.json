@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Spirit Beacon (Fey)",
+    "name": "Spirit Beacon (Fey)",
+    "description": "You are more aware of the supernatural forces that influence the world-and, consequently, are more easily noticed by them.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Iron Will"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_WIS,15"
+      },
+      {
+        "key": "DESC",
+        "value": "You are more aware of the supernatural forces that influence the world-and, consequently, are more easily noticed by them."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.169"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +1 bonus on Perception and Sense Motive checks against fey creatures. If you have 10 or more ranks in one of these skills, the bonus increases to +2 for that skill. You also gain a +1 dodge bonus to your Armor Class against fey creatures, and a +1 insight bonus on Will saving throws against spells, spell-like abilities, and supernatural abilities of fey creatures. Any condition that causes you to lose your Dexterity bonus to AC also causes you to lose the AC and saving throw bonuses from this feat. [Special] You shine like a light to the eyes of spirits. Fey, outsiders, and undead creatures gain a +2 bonus on Perception checks to notice you."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 60,
+    "record_key": "Spirit Beacon (Fey)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

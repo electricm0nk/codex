@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "data": {
+    "key": "Physical Acceleration",
+    "name": "Physical Acceleration",
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Egoist,Gifted Blade,Marksman,Psychic Warrior=3|Sighted Seeker,Vitalist=4"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Psychometabolism"
+      },
+      {
+        "key": "COMPS",
+        "value": "Au"
+      },
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "DESC",
+        "value": "You move faster, gain +1 on attack rolls, AC, and Reflex saves."
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants a +1 bonus on attack rolls and a +1 dodge bonus to AC and Reflex saves"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|Reflex|1|TYPE=Dodge"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|1|TYPE=Dodge"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|ATTACKS|1|TYPE=Enhancement"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|TOHIT|1|TYPE=Temporary"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|POSTMOVEADD|TYPE.ALL|min(MOVEBASE,30)|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_powers.lst",
+    "sha256": "81fdd7a4262066f630c0db104e743f5f78388b2df76409d50ba2a13c7a233f3a",
+    "line": 340,
+    "record_key": "Physical Acceleration"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

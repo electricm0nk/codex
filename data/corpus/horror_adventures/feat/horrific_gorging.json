@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Horrific Gorging",
+    "category": "Combat",
+    "name": "Horrific Gorging",
+    "description": "In the space of a few horrific seconds, you can chew up and gulp down an entire humanoid body. As a full-round action, you can completely consume a dead, unconscious, paralyzed, or otherwise helpless humanoid creature that you could normally swallow with your swallow whole ability. When you do, you deal bite damage as a critical hit and swallow the humanoid as your swallow whole special ability. Allies of the swallowed creature within 30 feet that can see you indulge in this horrific feast must succeed at a Will save (DC ) to avoid being shaken for 1d4 rounds. This part of the ability is a mind-affecting fear effect.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Swallow Whole",
+      "PREABILITY:1,CATEGORY=Internal,Bite",
+      "PRESIZEGTEQ:L"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 30,
+    "record_key": "Horrific Gorging"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

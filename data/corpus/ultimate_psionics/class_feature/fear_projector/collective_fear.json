@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fear Projector ~ Collective Fear",
+    "name": "Collective Fear",
+    "class": "Fear Projector",
+    "description": "You have learned to channel your powers over fear through your collective.  You can choose one member of your collective and treat that as the source for any fear-based effect you use, including your project fear ability, by expending your psionic focus while creating the effect to be redirected.  This ability includes altering what reatures can be targeted by an effect, what creatures are affected by an effect, and the like.  In addition, the member of your collective slelected is shrouded in frightening images that provide a +%1 deflection bonus to AC until the end of its next turn.|CollectiveFearACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fear Projector ~ Collective Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CollectiveFearACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned to channel your powers over fear through your collective.  You can choose one member of your collective and treat that as the source for any fear-based effect you use, including your project fear ability, by expending your psionic focus while creating the effect to be redirected.  This ability includes altering what reatures can be targeted by an effect, what creatures are affected by an effect, and the like.  In addition, the member of your collective slelected is shrouded in frightening images that provide a +%1 deflection bonus to AC until the end of its next turn.|CollectiveFearACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveFearACBonus|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CollectiveFearACBonus|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2278,
+    "record_key": "Fear Projector ~ Collective Fear"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

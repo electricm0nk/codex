@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Witch Hunter",
     "name": "Witch Hunter",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "When pursuing justice for their faith, inquisitors sometimes hunt sorcerers, witches, wizards, and other practitioners of arcane magic-but especially witches, since their devotion to a patron is often seen as suspect by many religions.",
     "raw_tokens": [
       {
@@ -63,6 +63,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Witch Hunter],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_DetectAlignment=True,Inquisitor_Archetype_DiscernLies=True,Inquisitor_Archetype_TrueJudgment=True,Inquisitor_Archetype_Track=True,Inquisitor_Archetype_ExploitWeakness=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DiscernLies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_TrueJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_ExploitWeakness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DetectAlignment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DiscernLies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_TrueJudgment|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_ExploitWeakness|true"
       }
     ]
   },
@@ -79,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

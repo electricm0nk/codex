@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Reincarnated Oracle ~ Oracle Revelation",
     "name": "Oracle Revelation",
-    "class": "Reincarnated Oracle",
+    "class": "Oracle",
     "description": "You gain a standard Oracle Revelation of your chosen mystery.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

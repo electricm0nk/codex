@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Buccaneer",
     "name": "Buccaneer",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "Freebooters who cling to the convoluted codes that rule independent ships, the buccaneer is a gunslinger of the high seas. Their exploits are fueled by the thrill of danger and often by the temporary courage provided by grog. A buccaneer has the following class features.",
     "raw_tokens": [
       {
@@ -99,6 +99,90 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Gunslinger"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Buccaneer],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_QuickClearDeed=True,Gunslinger_Archetype_PistolWhipDeed=True,Gunslinger_Archetype_DeadShotDeed=True,Gunslinger_Archetype_LightningReloadDeed=True,Gunslinger_Archetype_Grit=True,Gunslinger_Archetype_Nimble=True,Gunslinger_Archetype_GunTraining1=True,Gunslinger_Archetype_GunTraining2=True,Gunslinger_Archetype_GunTraining4=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_QuickClearDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_PistolWhipDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_DeadShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_LightningReloadDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Grit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_QuickClearDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_PistolWhipDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_DeadShotDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_LightningReloadDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Grit|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_GunTraining4|true"
       }
     ]
   },
@@ -115,5 +199,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

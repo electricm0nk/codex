@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Combat Style Feat ~ Point Blank Master",
     "name": "Point Blank Master",
-    "class": "Ranger Combat Style Feat",
+    "class": "Ranger",
     "description": null,
     "raw_tokens": [
       {
@@ -43,6 +43,10 @@
       {
         "key": "ABILITY",
         "value": "FEAT|VIRTUAL|Point Blank Master (%LIST)|PREVARLT:var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Weapon Focus"
       }
     ]
   },
@@ -59,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Heavens Spirit ~ Stardust",
     "name": "Stardust",
-    "class": "Heavens Spirit",
+    "class": "Shaman",
     "description": "As a standard action, the shaman causes stardust to materialize around one creature within 30 feet. This stardust causes the target to shed light as a candle, and it cannot benefit from concealment or any invisibility effects. The creature takes a %1 penalty on attack rolls and sight-based Perception checks. This effect lasts for %2 rounds level. Sightless creatures cannot be affected by this ability. The shaman can use this ability %3/day.|ShamanStardustPenalty|ShamanStardustDuration|ShamanStardustTimes",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

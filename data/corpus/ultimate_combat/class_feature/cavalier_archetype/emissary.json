@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Archetype ~ Emissary",
     "name": "Emissary",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "Cavaliers serve many roles on the battlefield, from bold leaders and shock troops to dashing knights and mounted juggernauts. Some cavaliers, however, focus more on speed and mobility than they do on the raw power of the mounted charge. On foot or in the saddle, the emissary is usually first to meet the enemy, with a pointed lance, a drawn sword, or terms for surrender.",
     "raw_tokens": [
       {
@@ -71,6 +71,66 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cavalier"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Emissary],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Proficiencies=True,Cavalier_Archetype_Tactician=True,Cavalier_Archetype_Banner=True,Cavalier_Archetype_GreaterTactician=True,Cavalier_Archetype_GreaterBanner=True,Cavalier_Archetype_SupremeCharge=True,Cavalier_Archetype_BonusFeat=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_HeavyArmorProficiency|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_SupremeCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_BonusFeat|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Tactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Banner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterTactician|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_GreaterBanner|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_SupremeCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_BonusFeat|true"
       }
     ]
   },
@@ -87,5 +147,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

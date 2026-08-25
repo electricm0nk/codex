@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Shadow Hunter ~ Mind Reaver",
+    "name": "Mind Reaver",
+    "description": "You can expend a spell slot as a free action to gain additional daily uses of your mind thrust racial power (ML %1).  For each spell level expended, you gain one additional use of your racial ability.  These additional daily uses last only until you recover your spells for the day.|MindReaverML",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Hunter ~ Mind Reaver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MindReaverML|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend a spell slot as a free action to gain additional daily uses of your mind thrust racial power (ML %1).  For each spell level expended, you gain one additional use of your racial ability.  These additional daily uses last only until you recover your spells for the day.|MindReaverML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindReaverML|InquisitorLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.335"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 61,
+    "record_key": "Shadow Hunter ~ Mind Reaver"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

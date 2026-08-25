@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Dragon ~ Edicts",
     "name": "Edicts",
-    "class": "Order of the Dragon",
+    "class": "Dragon",
     "description": "The cavalier must remain loyal to his allies and must always work to further the aims of the group. He must protect his allies from harm and defend their honor when called into doubt.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

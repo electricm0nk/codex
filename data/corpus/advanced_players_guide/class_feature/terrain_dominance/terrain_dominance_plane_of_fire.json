@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Terrain Dominance ~ Plane (Fire)",
     "name": "Terrain Dominance (Plane of Fire)",
-    "class": "Terrain Dominance",
+    "class": "Ranger",
     "description": "The horizon walker gains fire resistance 20 (this replaces the character's file resistance from mastery of the Plane of Fire terrain) and a +1 competence bonus on all attack and damage rolls again creatures of the fire subtype.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

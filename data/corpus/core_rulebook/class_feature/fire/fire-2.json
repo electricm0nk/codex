@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Sorcerer Elemental Bloodline (Fire)",
     "name": "Fire",
-    "class": null,
+    "class": "Sorcerer",
     "description": "One of the four elements infuses your being, and you can draw upon its power in times of need. At first level, you must select one of the four elements: air, earth, fire, or water. This choice cannot be changed. A number of your abilities grant resistances and deal damage based on your element. Fire is associate with the Fire energy type and the base movement type (+30 feet base speed).",
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "BONUS",
         "value": "VAR|Sorcerer_ElementalBloodlineChoice_Fire|1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Fire],[PREVARLT:FireDomain,1]"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

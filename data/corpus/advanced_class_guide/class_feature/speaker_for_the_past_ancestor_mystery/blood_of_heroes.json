@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Speaker for the Past Ancestor Mystery ~ Blood of Heroes",
     "name": "Blood of Heroes",
-    "class": "Speaker for the Past Ancestor Mystery",
+    "class": "Oracle",
     "description": "As a move action, you can call upon your ancestors to grant you extra bravery in battle. You gain a +%1 morale bonus on attack rolls, damage rolls, and Will saves against fear for %2 rounds. You can use this ability %3/day.|BloodOfHeroesBonus|BloodOfHeroesDuration|BloodOfHeroesTimes",
     "raw_tokens": [
       {
@@ -76,5 +76,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

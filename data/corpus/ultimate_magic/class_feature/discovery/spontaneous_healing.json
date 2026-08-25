@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Spontaneous Healing",
     "name": "Spontaneous Healing",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You gain the ability to heal from wounds rapidly. As a free action once per round, you can heal 5 hit points as if you had the fast healing ability. You can heal %1 hit points per day in this manner. If you fall unconscious because of hit point damage and you still have healing available from this ability, the ability activates automatically each round until you are conscious again or the ability is depleted for the day.|SpontaneousHealingAmount",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

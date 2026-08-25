@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Baku ~ Mental Drain",
+    "delivery": "Supernatural",
+    "description": "When a baku attacks with a claw, it can choose, as a swift action, to deal 1d4 points of Intelligence damage on that attack. A DC 22 Will save negates this ability damage. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:baku_mental_drain",
+    "name": "Mental Drain",
+    "owners": [
+      "bestiary_3:monster:baku"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a baku attacks with a claw, it can choose, as a swift action, to deal 1d4 points of Intelligence damage on that attack. A DC 22 Will save negates this ability damage. The save DC is Charisma-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Baku ~ Mental Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "TYPE",
+        "value": "BakuRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.31",
+    "traits": [
+      "BakuRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 440,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Baku ~ Mental Drain",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

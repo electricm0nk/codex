@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Sanguine Angel Discipline ~ Driving Assault",
     "name": "Driving Assault",
-    "class": "Sanguine Angel Discipline",
+    "class": "Sanguine Angel",
     "description": "When making a full attack, the sanguine angel can take a -2 penalty on melee attack rolls for 1 round. If she does, the first time in that round that she hits a creature of her size or smaller with a melee attack, she can attempt a bull rush combat maneuver check to push the creature back 5 feet. She gains a +2 bonus on this combat maneuver check and does not provoke attacks of opportunity when performing the bull rush, but regardless of the result, she cannot push the target further than 5 feet. If the sanguine angel pushes a creature in this way, she can immediately move into its space without provoking attacks of opportunity.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Valkyrie ~ Holy Zeal",
+    "delivery": "Supernatural",
+    "description": "A valkyrie adds her Charisma modifier as a deflection bonus to her Armor Class.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:valkyrie_holy_zeal",
+    "name": "Holy Zeal",
+    "owners": [
+      "bestiary_3:monster:valkyrie"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A valkyrie adds her Charisma modifier as a deflection bonus to her Armor Class."
+      },
+      {
+        "key": "KEY",
+        "value": "Valkyrie ~ Holy Zeal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      },
+      {
+        "key": "TYPE",
+        "value": "ValkyrieRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.277",
+    "traits": [
+      "ValkyrieRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1655,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Valkyrie ~ Holy Zeal",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Inevitable ~ Constructed",
+    "delivery": "Extraordinary",
+    "description": "Although inevitables are living outsiders, their bodies are constructed of physical components, and in many ways they function as constructs. For the purposes of effects targeting creatures by type (such as a ranger's favored enemy and bane weapons), inevitables count as both outsiders and constructs. They are immune to death effects, disease, mind-affecting effects, necromancy effects, paralysis, poison, sleep, stun, and any effect that requires a Fortitude save (unless the effect also works on objects, or is harmless). Inevitables are not subject to nonlethal damage, ability damage, ability drain, fatigue, exhaustion, or energy drain. They are not at risk of death from massive damage. They have bonus hit points as constructs of their size.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:inevitable_constructed",
+    "name": "Constructed",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|10|PRESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|20|PRESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|30|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|40|PRESIZEEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|60|PRESIZEEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|80|PRESIZEEQ:C"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Although inevitables are living outsiders, their bodies are constructed of physical components, and in many ways they function as constructs. For the purposes of effects targeting creatures by type (such as a ranger's favored enemy and bane weapons), inevitables count as both outsiders and constructs. They are immune to death effects, disease, mind-affecting effects, necromancy effects, paralysis, poison, sleep, stun, and any effect that requires a Fortitude save (unless the effect also works on objects, or is harmless). Inevitables are not subject to nonlethal damage, ability damage, ability drain, fatigue, exhaustion, or energy drain. They are not at risk of death from massive damage. They have bonus hit points as constructs of their size."
+      },
+      {
+        "key": "KEY",
+        "value": "Inevitable ~ Constructed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.308",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1992,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Inevitable ~ Constructed",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

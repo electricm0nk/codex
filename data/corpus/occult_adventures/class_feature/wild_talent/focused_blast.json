@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Focused Blast",
     "name": "Focused Blast",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element universal; Type form infusion; Level 2; Burn 2 Associated Blasts any simple Saving Throw none; You focus your blast in a concentrated attack. You gain a +1 enhancement bonus on your attack roll with the blast and your caster level check to overcome spell resistance. You can increase the burn cost of this infusion by 2 to increase the enhancement bonus by 1, to a maximum of +5 for 10 burn. You can reduce your blast’s total damage by half to reduce the burn cost of this infusion by half as well.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

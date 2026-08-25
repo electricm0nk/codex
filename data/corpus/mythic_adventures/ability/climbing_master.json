@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Climbing Master",
+    "name": "Climbing Master",
+    "description": "You gain a climb speed equal to your base land speed and a +8 racial bonus on Climb checks. If you already have a climb speed, your base climb speed increases by 30 feet. In addition, you retain your Dexterity bonus to AC while climbing. You can climb perfectly flat or smooth surfaces, treating them as if they had a Climb DC of 40.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Climbing Master"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a climb speed equal to your base land speed and a +8 racial bonus on Climb checks. If you already have a climb speed, your base climb speed increases by 30 feet. In addition, you retain your Dexterity bonus to AC while climbing. You can climb perfectly flat or smooth surfaces, treating them as if they had a Climb DC of 40."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Climbing Master ~ Has Climb|Climbing Master ~ No Climb"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|8|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 132,
+    "record_key": "Mythic Path Ability ~ Climbing Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

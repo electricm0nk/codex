@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Shabti ~ Size",
+    "name": "Medium",
+    "description": "Shabtis are Medium creatures and receive no bonuses or penalties due to their size.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shabti ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Racial Size"
+      },
+      {
+        "key": "DESC",
+        "value": "Shabtis are Medium creatures and receive no bonuses or penalties due to their size."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 206,
+    "record_key": "Shabti ~ Size"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

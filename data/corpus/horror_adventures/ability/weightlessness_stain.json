@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Possessed Corruption ~ Weightlessness Stain",
+    "name": "Weightlessness Stain",
+    "description": "You take a -%1 penalty on saving throws and to your CMD against attacks and effects that would move or trip you, as well as on all combat maneuver checks except those made to escape a grapple.CorruptionWeightlessnessPenalty",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Possessed Corruption ~ Weightlessness Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PossessedWeightlessnessStain"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CorruptionWeightlessnessPenalty|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
+      },
+      {
+        "key": "DESC",
+        "value": "You take a -%1 penalty on saving throws and to your CMD against attacks and effects that would move or trip you, as well as on all combat maneuver checks except those made to escape a grapple.CorruptionWeightlessnessPenalty"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorruptionWeightlessnessPenalty|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CorruptionWeightlessnessPenalty|-2|PREVARGTEQ:PossessedManifestationLevel,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 699,
+    "record_key": "Possessed Corruption ~ Weightlessness Stain"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

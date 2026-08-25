@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Judgment ~ Smiting",
     "name": "Judgment / Smiting",
-    "class": "Judgment",
+    "class": "Inquisitor",
     "description": "This judgment bathes the inquisitor's weapons in a divine light. The inquisitor's weapons count as magic for the purposes of bypassing damage reduction.",
     "raw_tokens": [
       {
@@ -35,6 +35,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.39"
+      },
+      {
+        "key": "DESC",
+        "value": "The inquisitor's weapons also count as one alignment type (chaotic, evil, good, or lawful) for the purpose of bypassing damage reduction. The type selected must match one of the inquisitor's alignments|PREALIGN:LG,NG,CG,LN,CN,LE,NE,CE|PREVARGTEQ:InqJudgeSmitingLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": "The inquisitor's weapons also count as adamantine for the purpose of overcoming damage reduction (but not for reducing hardness).|PREVARGTEQ:InqJudgeSmitingLVL,10"
       }
     ]
   },
@@ -51,5 +59,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

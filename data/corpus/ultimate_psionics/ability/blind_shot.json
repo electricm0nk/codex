@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Psionic Deed ~ Blind Shot",
+    "name": "Blind Shot",
+    "description": "At 15th level, the gunslinger can spend 1 grit point as a free action and have the blindsight ability until the end of her next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psionic Deed ~ Blind Shot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GunslingerClassFeatures.SpecialQuality.DeedsLvl15.DeedHasCost.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "At 15th level, the gunslinger can spend 1 grit point as a free action and have the blindsight ability until the end of her next turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 62,
+    "record_key": "Psionic Deed ~ Blind Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

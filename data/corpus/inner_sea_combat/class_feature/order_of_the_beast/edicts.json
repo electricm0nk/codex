@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Beast ~ Edicts",
     "name": "Edicts",
-    "class": "Order of the Beast",
+    "class": "Cavalier",
     "description": "The cavalier wreaks havoc wherever he goes. An order of the beast cavalier must never show mercy and, when crossed, exacts the maximum possible revenge. The cavalier must seek out conflict at every juncture and cannot avoid a fight if provoked. That which he cannot steal, pillage, or claim, he must completely destroy or desecrate.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

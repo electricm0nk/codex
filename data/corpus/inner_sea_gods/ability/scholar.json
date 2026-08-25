@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted ~ Scholar",
+    "name": "Scholar",
+    "description": "The exalted come from many backgrounds and study different aspects of their chosen faiths. At 1st level, an exalted may select one additional Knowledge skill to add to her list of class skills.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted ~ Scholar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exalted Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The exalted come from many backgrounds and study different aspects of their chosen faiths. At 1st level, an exalted may select one additional Knowledge skill to add to her list of class skills."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
+    "line": 95,
+    "record_key": "Exalted ~ Scholar"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

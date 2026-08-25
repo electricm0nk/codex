@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Brawler Archetype ~ Venomfist",
     "name": "Venomfist",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "Thanks to alchemical experiments and rigorous study of venomous creatures, a venomfist has toxic unarmed strikes.",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

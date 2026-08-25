@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch Archetype ~ Bonded Witch",
     "name": "Bonded Witch",
-    "class": "Witch Archetype",
+    "class": "Witch",
     "description": "While all witches commune with the unknown, the blend of human ingenuity and adept learning mixed with elven blood gives some half-elves a unique conduit to channel the powers of the arcane. Bonded witches forsake familiars as vessels of power in favor of a specific object that grants them powers above and beyond those of their patron alone, as they tap into the powerful magic of the item itself.",
     "raw_tokens": [
       {
@@ -51,6 +51,18 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Witch"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Bonded Witch],[!PREFACT:1,ABILITIES,Witch_Archetype_Familiar=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Familiar|true"
       }
     ]
   },
@@ -67,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

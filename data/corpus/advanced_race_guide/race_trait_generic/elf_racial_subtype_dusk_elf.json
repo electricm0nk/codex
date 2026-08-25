@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf Racial Subtype ~ Dusk Elf",
+    "name": "Dusk Elf",
+    "description": "Rather than being tied to the terrain around them, some elves are linked to the night itself. Though not tied to demon worship and evil as drow are, these elves are similarly attuned to the magical concepts of darkness and shadow. These elves have the arcane focus, darkvision, dreamspeaker, and silent hunter alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf Racial Subtype ~ Dusk Elf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elf Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf Racial Subtype ~ Dusk Elf],[!PREFACT:1,ABILITIES,Elf_ReplaceWeaponFamiliarity=true,Elf_ReplaceVision=true,Elf_ReplaceElvenImmunities=true,Elf_ReplaceElvenMagic=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Rather than being tied to the terrain around them, some elves are linked to the night itself. Though not tied to demon worship and evil as drow are, these elves are similarly attuned to the magical concepts of darkness and shadow. These elves have the arcane focus, darkvision, dreamspeaker, and silent hunter alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Dusk Elf"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Elf Racial Trait|NORMAL|Elf ~ Arcane Focus|Elf ~ Darkvision|Elf ~ Dreamspeaker|Elf ~ Silent Hunter"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2162,
+    "record_key": "Elf Racial Subtype ~ Dusk Elf"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

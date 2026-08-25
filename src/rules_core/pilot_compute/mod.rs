@@ -171,6 +171,9 @@ use super::rules_tables::RuleSetId;
 pub(crate) mod class_feature_grant_consumer;
 mod class_slayer;
 mod class_ultimate_combat;
+pub mod prestige_class_entry_gate;
+pub mod untabled_base_class_chassis;
+pub mod untabled_base_class_feature_roster;
 /// SD-31 wave 25's interpreter reproduction harness (`OPERATOR-RULINGS-2026-08-21.md` §20) --
 /// see its own module doc. A sibling of the three submodules above, not a call-site consumer of
 /// them: it reads their functions through `super::` the same way `mod.rs`'s own inline
@@ -182,12 +185,38 @@ pub mod formula_reproduction_harness;
 /// is wired this wave — see its own module doc's opening paragraph), and a private `mod` here
 /// would make every one of those items a genuine `dead_code` lint.
 pub mod formula_interpreter;
+/// SD-32 Gate 2 (`gate-2-corpus-wide-runs`, kanban `#8`) — the corpus-wide,
+/// closed-Gate-1-census-scoped run AT-32-G2-004 requires of
+/// `formula_interpreter.rs` (F1..F9). `pub` for the same reason as the three
+/// modules above: its non-test API's only caller today is
+/// `src/bin/formula_interpreter.rs`, a separate compilation unit, not this
+/// crate's own internals.
+pub mod formula_interpreter_corpus_wide;
 /// SD-31 wave 26's "BonusObj-shape reader" (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on) --
 /// see its own module doc. `pub` for the same reason as the two modules above: no unit-banking
 /// consumer is wired to it yet (this lane is scoped to closing interpreter refusals and reading
 /// the real multi-token `PREVARGTEQ` bonus-stack shape, not to wiring a consumer), so a private
 /// `mod` here would make its non-test API dead code.
 pub mod bonus_stack_reader;
+/// SD-32 — wires `formula_interpreter`/`PcgenFormulaEvaluator` into
+/// `src/bin/ingest_race_traits.rs` and `src/bin/ingest_races.rs`'s shared
+/// `same_row_vars`/`substitute_placeholders`/`eval_prevar_gate` shape (see its
+/// own module doc). `pub`: both binaries are separate compilation units, so
+/// this crate's own internals are not the only caller.
+pub mod race_trait_formula_binding;
+/// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycles 5-7 — the generic
+/// companion base-ability-score table, generalizing `ground_wolf_companion_stat_block`/
+/// `ground_horse_companion_stat_block` (below) into a table-driven function. `pub(crate)`,
+/// mirroring `class_feature_grant_consumer`'s own visibility: `apps/desktop/src-tauri` calls
+/// this module only indirectly, through this file's own `ground_selected_companion_or_default`
+/// (cycle 7's new dispatch point, reading the new `COMPANION_SPECIES_CHOICE_ID` choice set) —
+/// `ground_companion_stat_block` itself stays `pub(crate)`, never crossing the crate boundary
+/// directly. See this module's own doc comment for the cycle 7 wiring addendum.
+pub(crate) mod companion_base_stat_table;
+/// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5 — see its own module doc
+/// comment. `pub(crate)`: `resolve` is called from `compute_class_chassis` below (same crate);
+/// no `apps/desktop/src-tauri` caller exists yet.
+mod generic_class_chassis;
 mod domain_power;
 use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
@@ -2089,13 +2118,164 @@ const HUNTER_CLASS_ID: &str = "class:hunter";
 /// already use, with a genuinely enforced per-day minutes budget.
 const HUNTER_ANIMAL_FOCUS_ABILITY_ID: &str = "animal_focus";
 /// The choice set for which Animal Focus type is currently active. 13
-/// real options exist in the corpus (`KEY:Hunter Animal Focus ~ ...`);
-/// this codebase recognizes only Bull, the cleanest flat self-scoped
-/// magnitude of the set (a pure STR enhancement bonus, `2 + 2 at level 8
-/// + 2 at level 15`), mirroring Oracle's Mystery/Shaman's Spirit
-/// canonical-narrowing shape -- the other 12 stay named-but-unbuilt.
+/// real options exist in the corpus (`KEY:Hunter Animal Focus ~ ...`).
+///
+/// **SD-32 T12 Epic 8 row 18 cycle 17: widened from Bull-only (the prior
+/// canonical-narrowing choice) to all 11 magnitude-bearing options plus
+/// Mouse's boolean evasion posture and No Ability's text-only posture --
+/// the full 13, a generic pass rather than a per-object one (`§17`).**
+/// Every magnitude-bearing option (`HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS`
+/// below) shares the SAME real corpus shape Bull already proved: a base
+/// `BONUS:VAR|HunterAnimalFocus<Name><Suffix>|<N>` plus two more additive
+/// `PREVARGTEQ:HunterAnimalFocusLVL,8`/`,15`-gated increments -- verified
+/// directly against each option's own `data/corpus/advanced_class_guide/
+/// class_feature/hunter_animal_focus/<name>.json`. Mouse (`Get evasion...
+/// and improved evasion|PREVARGTEQ:HunterAnimalFocusLVL,12`) and No
+/// Ability (`Get nothing`, no `BONUS:VAR` at all) are genuinely different
+/// shapes -- a boolean posture fact and a text-only fact respectively --
+/// handled as their own small branches rather than forced into the
+/// tiered-magnitude table.
 const HUNTER_ANIMAL_FOCUS_CHOICE_ID: &str = "choice:hunter_animal_focus";
 const HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID: &str = "animal_focus:bull";
+
+/// One magnitude-bearing Animal Focus option's real corpus shape: a base
+/// bonus plus two more additive tiers at Hunter level 8 and 15
+/// (`PREVARGTEQ:HunterAnimalFocusLVL,8`/`,15`, `HunterAnimalFocusLVL`
+/// itself unconditionally `HunterLVL` -- same chain Bull's own doc cites).
+struct HunterAnimalFocusTieredOption {
+    /// The `choice:hunter_animal_focus` selection id, `"animal_focus:<slug>"`.
+    selection_id: &'static str,
+    /// Human-readable label used only in explanation/diagnostic text.
+    label: &'static str,
+    /// What the magnitude is a bonus TO, for the explanation text (e.g.
+    /// `"enhancement bonus to Strength"`, `"competence bonus to Perception"`,
+    /// `"feet of darkvision range"`).
+    benefit: &'static str,
+    base: i16,
+    per_level_8: i16,
+    per_level_15: i16,
+}
+
+/// SD-32 T12 Epic 8 row 18 cycle 17: the 11 magnitude-bearing Animal Focus
+/// options (of the 13 total; Mouse and No Ability are handled separately,
+/// see `HUNTER_ANIMAL_FOCUS_CHOICE_ID`'s own doc). Each row verified
+/// directly against its own corpus record:
+/// - Bull: `STAT|STR|...|TYPE=Enhancement`, `2/2/2` (cycle predates this
+///   table; re-verified unchanged).
+/// - Bear: `STAT|CON|...|TYPE=Enhancement`, `2/2/2`.
+/// - Tiger: `STAT|DEX|...|TYPE=Enhancement`, `2/2/2` -- named in Bull's own
+///   prior doc as "structurally identical," now built.
+/// - Falcon: `SKILL|Perception|...|TYPE=Competence`, `4/2/2`.
+/// - Frog: `SITUATION|Acrobatics=When Jumping` + `SKILL|Swim|...
+///   |TYPE=Competence`, `4/2/2` (one magnitude, two skills -- the corpus's
+///   own single `HunterAnimalFocusFrogBonus` target feeds both BONUS rows).
+/// - Monkey: `SKILL|Climb|...|TYPE=Competence`, `4/2/2`.
+/// - Owl: `SKILL|Stealth|...|TYPE=Competence`, `4/2/2`.
+/// - Snake: no `BONUS:` target beyond the bare `VAR` itself (a flat
+///   attack-of-opportunity/AC bonus with no integrated total anywhere in
+///   this codebase, the same "standalone fact" bar Wild Empathy already
+///   established), `2/2/2`.
+/// - Stag: `MOVEADD|TYPE.Walk|...`, `5/5/5`.
+/// - Wolf: `VAR|ScentRange|HunterAnimalFocusWolfScent` (scent range in
+///   feet), `10/10/10`.
+/// - Bat: `VAR|DarkvisionRange|HunterAnimalFocusBatSight|TYPE=Base`
+///   (darkvision range in feet), `60/30/0` -- the real corpus record has
+///   NO third `PREVARGTEQ:...,15` numeric tier on the sight-range `VAR`
+///   itself; level 15's own benefit is the SEPARATE boolean "blindsense to
+///   10 feet" fact, handled in `ground_or_block_hunter_animal_focus`'s own
+///   Bat branch rather than folded into this numeric table.
+const HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS: &[HunterAnimalFocusTieredOption] = &[
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:bull",
+        label: "Bull",
+        benefit: "enhancement bonus to Strength",
+        base: 2,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:bear",
+        label: "Bear",
+        benefit: "enhancement bonus to Constitution",
+        base: 2,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:tiger",
+        label: "Tiger",
+        benefit: "enhancement bonus to Dexterity",
+        base: 2,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:falcon",
+        label: "Falcon",
+        benefit: "competence bonus to Perception",
+        base: 4,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:frog",
+        label: "Frog",
+        benefit: "competence bonus to Swim and to Acrobatics when jumping",
+        base: 4,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:monkey",
+        label: "Monkey",
+        benefit: "competence bonus to Climb",
+        base: 4,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:owl",
+        label: "Owl",
+        benefit: "competence bonus to Stealth",
+        base: 4,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:snake",
+        label: "Snake",
+        benefit: "bonus to attacks of opportunity and to AC against attacks of opportunity",
+        base: 2,
+        per_level_8: 2,
+        per_level_15: 2,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:stag",
+        label: "Stag",
+        benefit: "foot enhancement bonus to base land speed",
+        base: 5,
+        per_level_8: 5,
+        per_level_15: 5,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:wolf",
+        label: "Wolf",
+        benefit: "feet of scent range",
+        base: 10,
+        per_level_8: 10,
+        per_level_15: 10,
+    },
+    HunterAnimalFocusTieredOption {
+        selection_id: "animal_focus:bat",
+        label: "Bat",
+        benefit: "feet of darkvision range",
+        base: 60,
+        per_level_8: 30,
+        per_level_15: 0,
+    },
+];
+const HUNTER_ANIMAL_FOCUS_MOUSE_SELECTION_ID: &str = "animal_focus:mouse";
+const HUNTER_ANIMAL_FOCUS_NO_ABILITY_SELECTION_ID: &str = "animal_focus:no_ability";
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure, first APG
 /// class-specific closure): APG Cavalier's 1st-level Mount is, per the
@@ -8143,7 +8323,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut explanations,
         &mut diagnostics,
     );
-    explain_rogue_level1_chassis(input, &mut explanations);
+    explain_rogue_level1_chassis(input, &ability_modifiers, &mut explanations);
 
 
     // SD13-E3/E4/E5 Paladin-only decomposition: split the F6 hybrid class-feature
@@ -8494,6 +8674,24 @@ fn apply_rage_ability_bonuses(
 /// re-deriving this same formula a second time.
 pub fn ability_modifier(score: i16) -> i16 {
     score.div_euclid(2) - 5
+}
+
+/// Builds a full [`AbilityModifiers`] straight from the character's raw
+/// [`AbilityScores`], without pushing any `ComputationExplanation` --
+/// `compute_ability_modifiers` (above) does that plus the six baseline
+/// explanation records, but several call sites (SD-32 T12 Epic 8's generic
+/// pool-choice magnitude resolver) need only the plain struct to seed a
+/// formula evaluator's variable environment, not a second copy of the six
+/// already-pushed baseline explanations.
+fn ability_modifiers_from_scores(scores: &AbilityScores) -> AbilityModifiers {
+    AbilityModifiers {
+        strength: ability_modifier(scores.strength),
+        dexterity: ability_modifier(scores.dexterity),
+        constitution: ability_modifier(scores.constitution),
+        intelligence: ability_modifier(scores.intelligence),
+        wisdom: ability_modifier(scores.wisdom),
+        charisma: ability_modifier(scores.charisma),
+    }
 }
 
 fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i16) {
@@ -11453,6 +11651,77 @@ fn explain_human_trait_bundle(
 /// which returns only the first.
 pub const RACE_ALTERNATE_TRAIT_CHOICE_ID: &str = "choice:race_alternate_trait";
 
+/// The choice-set id under which a real character-creation-time companion/
+/// mount species pick is persisted on `ChosenCharacterState::selected_
+/// choices` — SD-32 T12 `epic-10-reference-library-residual-reach` row 20
+/// cycle 7's own new dispatch point, closing the wiring gap cycle 6 named
+/// (`companion_base_stat_table.rs`'s own module doc: "`ground_companion_
+/// stat_block` has zero live callers anywhere in the crate"). The
+/// selection id is a `companion_base_stat_table::companion_base_stat_
+/// table` slug verbatim (`"gulper_plant"`, `"allosaurus"`, ...); see
+/// `ground_selected_companion_or_default` below for the read side and
+/// `apps/desktop/src-tauri/src/pf1_adapter.rs`'s `compose_character_input`
+/// for where a real `CreateCharacterRequest.companion_species` field
+/// writes it. Uses the same general choice channel `RACE_ALTERNATE_TRAIT_
+/// CHOICE_ID`'s own doc comment names, for the same reason: zero schema
+/// change needed for this to survive save/load/clone/level-up.
+pub const COMPANION_SPECIES_CHOICE_ID: &str = "choice:companion_species";
+
+/// Grounds the companion/mount stat block for whichever species a
+/// character-creation request selected via `COMPANION_SPECIES_CHOICE_ID`,
+/// when that species has a verified row in `companion_base_stat_table::
+/// companion_base_stat_table` — the real character-creation-time dispatch
+/// point `companion_base_stat_table.rs`'s own cycle-6 module doc named as
+/// missing. When no choice was made (an omitted `companion_species`
+/// field), OR the requested slug has no verified row yet (a typo, or a
+/// species this engine has not hand-authored — 201 of 213 `RACETYPE:
+/// Companion` corpus records as of cycle 6), falls back to `default_
+/// ground`, the class's own existing single-species hardcoded function
+/// (`ground_wolf_companion_stat_block`/`ground_horse_companion_stat_
+/// block`) — so an omitted or unrecognized choice never regresses any of
+/// the 61 classes below its already-`Computed` behavior, and an
+/// unverified species is never fabricated, only silently defaulted to the
+/// species this engine already has real, sourced data for.
+fn ground_selected_companion_or_default(
+    input: &CharacterInput,
+    id_prefix: &str,
+    owner_class_label: &str,
+    companion_level: u8,
+    default_ground: fn(&str, &str, u8, &mut Vec<ComputationExplanation>),
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    // No real player selection present (the overwhelming majority of
+    // characters, including every existing test that predates this
+    // dispatch point): use `default_ground`, the class's own prior
+    // hand-authored function, UNCHANGED -- not merely equivalent output,
+    // the literal same code path, so this is byte-for-byte non-regressive
+    // even where the generic table (`companion_base_stat_table.rs`)
+    // happens to already carry `default_species_slug`'s own row (it does,
+    // for both "wolf" and "horse" -- cycle 5's own reproduction proof) but
+    // grounds a narrower record set than the hand-authored function does
+    // (no per-species natural-attack record, e.g. Wolf's own `bite_
+    // attack`/Horse's own `hoof_attack` -- see companion_base_stat_table.
+    // rs's own module doc, "grounds only the fields with a live downstream
+    // reader"). Only an ACTUAL selection (including one that happens to
+    // name the same default species) takes the generic, narrower path.
+    let Some(species_slug) = choice_selection(input, COMPANION_SPECIES_CHOICE_ID) else {
+        default_ground(id_prefix, owner_class_label, companion_level, explanations);
+        return;
+    };
+    let display_name = companion_base_stat_table::companion_display_name(species_slug);
+    let grounded = companion_base_stat_table::ground_companion_stat_block(
+        species_slug,
+        id_prefix,
+        owner_class_label,
+        &display_name,
+        companion_level,
+        explanations,
+    );
+    if !grounded {
+        default_ground(id_prefix, owner_class_label, companion_level, explanations);
+    }
+}
+
 /// The namespace every alternate-racial-trait selection id carries.
 ///
 /// **Not decoration.** `SavedCharacterStore`'s serializer rejects any
@@ -12703,6 +12972,7 @@ fn compute_apg_class_chassis(
     class_id_str: &str,
     level: u8,
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> Option<(i16, BaseSaves)> {
@@ -12780,7 +13050,13 @@ fn compute_apg_class_chassis(
     // Inquisitor-, Oracle-, or Witch-containing multiclass mix never
     // reaches this function at all).
     if class_id == ApgClassId::Cavalier {
-        ground_cavalier_mount_and_defer_the_rest(input, level, explanations, diagnostics);
+        ground_cavalier_mount_and_defer_the_rest(
+            input,
+            level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
     } else if class_id == ApgClassId::Alchemist {
         ground_or_block_alchemist_mutagen(input, level, explanations, diagnostics);
         let alchemist_intelligence_modifier =
@@ -12793,6 +13069,19 @@ fn compute_apg_class_chassis(
             explanations,
         );
         ground_alchemist_feral_mutagen_discovery(input, level, explanations);
+        // SD-32 T12 Epic 8: generic pass over the OTHER 34 Discoveries
+        // (and Grand Discovery) this file has never hand-modelled by name.
+        push_generic_pool_choice_magnitude(
+            input,
+            level,
+            &ability_modifiers_from_scores(&input.chosen.ability_scores),
+            ALCHEMIST_DISCOVERY_CHOICE_ID,
+            "Discovery",
+            "discovery:",
+            "class_feature.apg.alchemist.discovery.generic",
+            ALCHEMIST_DISCOVERY_GRANT_LEVEL,
+            explanations,
+        );
         let extract_unmet =
             unmet_alchemist_extract_conditions(input, level, alchemist_intelligence_modifier);
         if extract_unmet.is_empty() {
@@ -12909,6 +13198,7 @@ fn compute_apg_class_chassis(
 fn ground_cavalier_named_features(
     input: &CharacterInput,
     level: u8,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> bool {
@@ -13007,6 +13297,46 @@ fn ground_cavalier_named_features(
         ),
     });
 
+    // SD-32 T12 Epic 8 row 18 cycle 7: the same "select ONE named group, inherit every one of its
+    // real corpus members" generic pass cycles 5/6 wired for Sorcerer/Cleric/Bloodrager's own
+    // Bloodline/Domain pools -- Cavalier's "Order of the X" family is the SAME shape (see
+    // `real_pool_group_for_selection_slug`'s own doc, "THIRD real corpus naming/ownership
+    // shape"), purely additive alongside the hand-modelled Order of the Sword branch below (a
+    // DIFFERENT id prefix -- `class_feature.apg.cavalier.order.generic.*` vs
+    // `...order_of_the_sword.*` -- proven non-colliding by
+    // `cavalier_generic_order_pass_does_not_collide_with_the_hand_modelled_order_of_the_sword`).
+    push_generic_pool_group_selection_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        CAVALIER_ORDER_CHOICE_ID,
+        "Cavalier",
+        "Order",
+        "order:",
+        "class_feature.apg.cavalier.order.generic",
+        1,
+        explanations,
+    );
+
+    // SD-32 T12 Epic 8 row 18 cycle 15: the sibling generic pass for the DIFFERENT corpus shape
+    // cycle 14's own §16 finding named -- Order of the Beast's two members carry no BONUS:VAR at
+    // all but DO carry a real %N-substituted DESC formula, a shape the resolver above
+    // (bonus_vars-only) can never reach. No hand-modelled Order of the Beast function exists, so
+    // there is no exclusion list here (unlike Warpriest's own Destruction/Strength).
+    push_generic_pool_group_selection_description_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        CAVALIER_ORDER_CHOICE_ID,
+        "Cavalier",
+        "Order",
+        "order:",
+        "class_feature.apg.cavalier.order_description.generic",
+        1,
+        &[],
+        explanations,
+    );
+
     let order_selected = input
         .chosen
         .selected_choices
@@ -13046,18 +13376,26 @@ fn ground_cavalier_named_features(
 fn ground_cavalier_mount_and_defer_the_rest(
     input: &CharacterInput,
     level: u8,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    ground_horse_companion_stat_block(
+    ground_selected_companion_or_default(
+        input,
         "class_chassis.cavalier.mount",
         "Cavalier",
         level,
+        ground_horse_companion_stat_block,
         explanations,
     );
     ground_horse_companion_link_vacuous("class_feature.cavalier.mount", "cavalier", explanations);
-    let order_of_the_sword_recorded =
-        ground_cavalier_named_features(input, level, explanations, diagnostics);
+    let order_of_the_sword_recorded = ground_cavalier_named_features(
+        input,
+        level,
+        ability_modifiers,
+        explanations,
+        diagnostics,
+    );
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.cavalier.mount.advancement_absent".to_owned(),
         message: "Cavalier Mount advancement is grounded for every column that has a consumer \
@@ -16355,6 +16693,27 @@ fn ground_or_block_oracle_class_features(
     }
 
     ground_or_block_oracle_mystery(input, explanations, diagnostics);
+
+    // SD-32 T12 Epic 8 row 18 cycle 5: `push_generic_pool_group_selection_
+    // magnitude` was tried here and DELIBERATELY WITHDRAWN, not merely
+    // "not attempted". Unlike Domain/Bloodline (whose powers are ALL
+    // automatically granted once the group is chosen -- confirmed by this
+    // file's own existing Cleric/Sorcerer wiring, which never requires a
+    // second budgeted pick), Oracle Mystery members are mostly
+    // REVELATIONS -- a genuinely budgeted PF1 sub-choice this codebase
+    // already, correctly, gates on an explicit `ORACLE_REVELATION_CHOICE_ID`
+    // pick (see `oracle_level_with_revelation`'s own doc comment). A
+    // group-selection-grants-everything pass is WRONG for this pool: it
+    // was caught live by this file's own regression suite
+    // (`oracle_dispatch_widening_safety_tests::
+    // a_mystery_pick_alone_grounds_no_tier_one_revelation`, which failed
+    // when this was wired -- a bare `mystery:lore` pick started grounding
+    // Sidestep Secret with no revelation pick recorded at all). Reverted
+    // rather than weakening that test (`decisions.md §1a`). Mystery
+    // therefore stays wired ONLY through the pre-existing 10-mystery hand
+    // model above; the other 11 real mystery groups are a genuine,
+    // named "cannot be wired without a budgeted-choice-aware mechanism"
+    // gap, not a silently skipped one.
     ground_oracle_tier_one_revelations(input, explanations);
     ground_or_block_oracle_curse(input, level, explanations, diagnostics);
 
@@ -18857,6 +19216,48 @@ fn ground_or_block_warpriest_class_features(
 
     ground_warpriest_fervor_channel_and_sacred_armor(level, ability_modifiers, explanations);
 
+    // SD-32 T12 Epic 8 row 18 cycle 5: the generic "select ONE blessing,
+    // inherit every one of its real corpus powers" pass, covering the
+    // other 36 real Warpriest blessing groups (111 real records total,
+    // `census_class_feature_pool_group_names.py`) beyond Destruction and
+    // Strength this file already hand-models by name below -- purely
+    // additive.
+    push_generic_pool_group_selection_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        WARPRIEST_BLESSING_CHOICE_ID,
+        "Warpriest",
+        "Blessing",
+        "blessing:",
+        "class_feature.acg.warpriest.blessing.generic",
+        1,
+        explanations,
+    );
+
+    // SD-32 T12 Epic 8 row 18 cycle 15: the sibling generic pass for the DIFFERENT corpus shape
+    // cycle 14's own §16 finding named -- 6 real Blessing groups (Earth, Trickery, Rune,
+    // Protection, Repose, Knowledge) carry no BONUS:VAR at all but DO carry a real
+    // %N-substituted DESC formula, a shape the resolver above (bonus_vars-only) can never reach.
+    // Destruction and Strength are excluded (`already_hand_modelled_keys`) -- both already
+    // grounded above by name, with activation-state gating this generic pass cannot reproduce.
+    push_generic_pool_group_selection_description_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        WARPRIEST_BLESSING_CHOICE_ID,
+        "Warpriest",
+        "Blessing",
+        "blessing:",
+        "class_feature.acg.warpriest.blessing_description.generic",
+        1,
+        &[
+            "Destruction Blessing ~ Destructive Attacks",
+            "Strength Blessing ~ Strength Surge",
+        ],
+        explanations,
+    );
+
     let blessing_selections: Vec<&str> = input
         .chosen
         .selected_choices
@@ -21211,6 +21612,24 @@ fn ground_or_block_shaman_class_features(
         .map(|c| c.selection_id.as_str())
         .collect();
 
+    // SD-32 T12 Epic 8 row 18 cycle 5: the generic "select ONE spirit,
+    // inherit every one of its real corpus powers" pass, covering the
+    // other 4 real Shaman spirit groups (73 real records total,
+    // `census_class_feature_pool_group_names.py`) beyond the 10 this file
+    // already hand-models by name below -- purely additive.
+    push_generic_pool_group_selection_magnitude(
+        input,
+        level,
+        ability_modifiers,
+        SHAMAN_SPIRIT_CHOICE_ID,
+        "Shaman",
+        "Spirit",
+        "spirit:",
+        "class_feature.acg.shaman.spirit.generic",
+        1,
+        explanations,
+    );
+
     let spirit_recognized;
 
     if spirit_selections.contains(&LIFE_SPIRIT_SELECTION) {
@@ -23496,6 +23915,26 @@ fn ground_or_block_bloodrager_bloodrage(
     ground_bloodrager_remaining_features(bloodrager_level, explanations);
     ground_bloodrager_arcane_bloodline(input, bloodrager_level, ability_modifiers, explanations);
 
+    // SD-32 T12 Epic 8 row 18 cycle 6: the same "select ONE bloodline, inherit every one of its
+    // real corpus powers" generic pass cycle 5 wired for Sorcerer's own 51 unmodelled bloodlines
+    // (Bloodrager's bloodlines are PARALLEL to Sorcerer's, not shared -- `push_bloodrager_other_
+    // features_deferred_diagnostic`'s own doc, task #59 -- so this is Bloodrager's own separate
+    // corpus work, purely additive alongside `ground_bloodrager_arcane_bloodline`'s hand-modelled
+    // Arcane branch above). Named by cycle 5's receipt as "same mechanism, not yet called" and
+    // left unwired purely as a time-boxing choice, not a mechanism gap.
+    push_generic_pool_group_selection_magnitude(
+        input,
+        bloodrager_level,
+        ability_modifiers,
+        BLOODRAGER_BLOODLINE_CHOICE_ID,
+        "Bloodrager",
+        "Bloodline",
+        "bloodline:",
+        "class_feature.acg.bloodrager.bloodline.generic",
+        1,
+        explanations,
+    );
+
     let Some(activation) = input
         .chosen
         .class_ability_activations
@@ -25441,26 +25880,35 @@ fn hunter_animal_focus_uses_per_day(
         )
 }
 
+/// The shared tiered-magnitude shape every `HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS` row uses: a base
+/// value, plus its own `per_level_8` increment once `level >= 8`, plus its own `per_level_15`
+/// increment once `level >= 15` -- the exact three-`BONUS:VAR` stacking shape each option's own
+/// corpus record carries (`HunterAnimalFocusLVL` itself always `HunterLVL` unconditionally, so
+/// this module's own `level` parameter, already the Hunter class level, is exactly that value).
+fn hunter_animal_focus_tiered_bonus(option: &HunterAnimalFocusTieredOption, level: u8) -> i16 {
+    let mut bonus = option.base;
+    if level >= 8 {
+        bonus += option.per_level_8;
+    }
+    if level >= 15 {
+        bonus += option.per_level_15;
+    }
+    bonus
+}
+
 /// Hunter Animal Focus (Bull)'s STR enhancement bonus: +2 base, +2 more
 /// at level 8, +2 more at level 15 (deepening 2026-07-26, task #2),
 /// verified directly against `acg_abilities_class.lst`'s own
-/// `KEY:Hunter Animal Focus ~ Bull` record (three stacking
-/// `BONUS:VAR|HunterAnimalFocusBullBonus|2` entries, the third and
-/// second gated on `PREVARGTEQ:HunterAnimalFocusLVL,8`/`,15`, and
-/// `HunterAnimalFocusLVL` itself resolves to `HunterLVL` unconditionally).
-/// Bull was picked as the one canonical focus of the 13 real options this
-/// closure grounds -- the cleanest flat, self-scoped ability-enhancement
-/// magnitude of the set (Tiger's own DEX version is structurally
-/// identical; the other 11 stay named-but-unbuilt).
+/// `KEY:Hunter Animal Focus ~ Bull` record. SD-32 T12 Epic 8 row 18 cycle
+/// 17: now a thin named wrapper over the generic `HUNTER_ANIMAL_FOCUS_
+/// TIERED_OPTIONS` table (kept for its own existing test's and doc's
+/// continuity), not a separate implementation of the same shape any more.
 fn hunter_animal_focus_bull_bonus(level: u8) -> i16 {
-    let mut bonus = 2;
-    if level >= 8 {
-        bonus += 2;
-    }
-    if level >= 15 {
-        bonus += 2;
-    }
-    bonus
+    let bull = HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS
+        .iter()
+        .find(|o| o.selection_id == HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID)
+        .expect("HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS must always carry a Bull row");
+    hunter_animal_focus_tiered_bonus(bull, level)
 }
 
 /// Grounds Hunter's Wild Empathy as a standalone explanation record
@@ -25490,19 +25938,23 @@ fn ground_hunter_wild_empathy(
 }
 
 /// Grounds or claim-blocks Hunter's Animal Focus execution engine for
-/// `level` (deepening 2026-07-26, task #2). Mirrors
-/// `ground_or_block_inquisitor_judgment`'s exact three-branch shape
-/// (activation-gating + choice-recognition): a character not currently
-/// focused (no `class_ability_activations` entry, or one present but not
-/// `EquippedActive`) is a genuinely valid PF1 posture -- grounds a real
-/// "not focused" recognition record, no claim-block. An active focus
-/// naming no recognized `choice:hunter_animal_focus` selection (or a
-/// request for one of the other 12 unbuilt options) is a genuine posture
-/// violation and claim-blocks. Only an active focus with the recognized
-/// Bull choice grounds the real STR enhancement bonus. The per-day
-/// minutes budget is genuinely enforced against
-/// `activation.rounds_consumed_today`, mirroring Rage's/Judgment's own
-/// enforced budget exactly.
+/// `level` (deepening 2026-07-26, task #2; widened SD-32 T12 Epic 8 row
+/// 18 cycle 17 from Bull-only to all 13 real corpus options -- a generic
+/// pass over `HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS` plus Mouse's and No
+/// Ability's own small branches, per `§17`, not 13 near-duplicate
+/// functions). Mirrors `ground_or_block_inquisitor_judgment`'s exact
+/// three-branch shape (activation-gating + choice-recognition): a
+/// character not currently focused (no `class_ability_activations` entry,
+/// or one present but not `EquippedActive`) is a genuinely valid PF1
+/// posture -- grounds a real "not focused" recognition record, no
+/// claim-block. An active focus naming no recognized
+/// `choice:hunter_animal_focus` selection is a genuine posture violation
+/// and claim-blocks. An active focus naming any of the 13 real options
+/// grounds its own real magnitude (or boolean/text-only posture fact for
+/// Mouse/No Ability). The per-day minutes budget is genuinely enforced
+/// against `activation.rounds_consumed_today`, mirroring Rage's/
+/// Judgment's own enforced budget exactly, unchanged from before this
+/// cycle.
 fn ground_or_block_hunter_animal_focus(
     input: &CharacterInput,
     level: u8,
@@ -25553,39 +26005,84 @@ fn ground_or_block_hunter_animal_focus(
     match activation.active_state {
         ActiveState::EquippedActive => {
             let focus_selection = choice_selection(input, HUNTER_ANIMAL_FOCUS_CHOICE_ID);
-            if focus_selection != Some(HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID) {
+            let minutes_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
+
+            let recognized_tiered =
+                focus_selection.and_then(|s| HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS.iter().find(|o| o.selection_id == s));
+
+            if let Some(option) = recognized_tiered {
+                let bonus = hunter_animal_focus_tiered_bonus(option, level);
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
+                    value: bonus,
+                    detail: format!(
+                        "Hunter level {level} is actively using the {} Animal Focus, within the \
+                         grounded per-day budget ({uses_per_day} minutes; {minutes_consumed_today} \
+                         consumed today), granting +{bonus} {}. This is a standalone fact -- it is \
+                         not applied to any integrated ability modifier, skill total, speed total, \
+                         or vision-range total",
+                        option.label, option.benefit
+                    ),
+                });
+                if option.selection_id == "animal_focus:bat" && level >= 15 {
+                    explanations.push(ComputationExplanation {
+                        id: "class_feature.acg.hunter.animal_focus_execution.bat_blindsense"
+                            .to_owned(),
+                        value: 10,
+                        detail: "Hunter level 15+ Bat Animal Focus also grants blindsense to a \
+                                  range of 10 feet -- a separate boolean fact from the darkvision \
+                                  range magnitude above (real corpus DESC: \"and blindsense to 10 \
+                                  feet|PREVARGTEQ:HunterAnimalFocusLVL,15\"), not folded into it"
+                            .to_owned(),
+                    });
+                }
+            } else if focus_selection == Some(HUNTER_ANIMAL_FOCUS_MOUSE_SELECTION_ID) {
+                let improved = level >= 12;
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
+                    value: i16::from(improved),
+                    detail: format!(
+                        "Hunter level {level} is actively using the Mouse Animal Focus, within \
+                         the grounded per-day budget ({uses_per_day} minutes; \
+                         {minutes_consumed_today} consumed today), granting evasion{}. A boolean \
+                         posture fact (real corpus DESC: \"Get evasion ... and improved \
+                         evasion|PREVARGTEQ:HunterAnimalFocusLVL,12\") -- no `BONUS:VAR` \
+                         magnitude exists for this option at all, and this codebase has no \
+                         integrated evasion/improved-evasion total to apply it to",
+                        if improved { " and improved evasion (level 12+)" } else { "" }
+                    ),
+                });
+            } else if focus_selection == Some(HUNTER_ANIMAL_FOCUS_NO_ABILITY_SELECTION_ID) {
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
+                    value: 0,
+                    detail: format!(
+                        "Hunter level {level} is actively using Animal Focus but has chosen \
+                         \"No Ability\" (real corpus DESC: \"Ability not being used\"), within \
+                         the grounded per-day budget ({uses_per_day} minutes; \
+                         {minutes_consumed_today} consumed today): a genuinely valid, text-only \
+                         posture carrying no `BONUS:VAR` at all -- no focus bonus is claimed"
+                    ),
+                });
+            } else {
                 diagnostics.push(ComputationDiagnostic {
                     id: "class_feature.acg.hunter.animal_focus_execution.focus_choice_missing"
                         .to_owned(),
                     message: format!(
                         "Hunter level {level} claims an active Animal Focus \
                          ({HUNTER_ANIMAL_FOCUS_ABILITY_ID}) but has no recognized \
-                         {HUNTER_ANIMAL_FOCUS_CHOICE_ID} selection naming Bull (got \
-                         {focus_selection:?}): taking on an animal focus always requires \
-                         choosing a type first per the corpus's own sequencing, and Bull is the \
-                         only one of the 13 focus options this codebase grounds, so an active \
-                         focus naming any other type -- or none -- is a genuine posture \
-                         violation, not a silently passing one -- no focus bonus is claimed for \
-                         this input"
+                         {HUNTER_ANIMAL_FOCUS_CHOICE_ID} selection naming one of the 13 real \
+                         corpus options (got {focus_selection:?}): taking on an animal focus \
+                         always requires choosing a type first per the corpus's own sequencing, \
+                         so an active focus naming an unrecognized type -- or none -- is a \
+                         genuine posture violation, not a silently passing one -- no focus \
+                         bonus is claimed for this input"
                     ),
                     claim_blocking: true,
                 });
                 return;
             }
 
-            let bull_bonus = hunter_animal_focus_bull_bonus(level);
-            let minutes_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
-            explanations.push(ComputationExplanation {
-                id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
-                value: bull_bonus,
-                detail: format!(
-                    "Hunter level {level} is actively using the Bull Animal Focus, within the \
-                     grounded per-day budget ({uses_per_day} minutes; {minutes_consumed_today} \
-                     consumed today), granting a +{bull_bonus} enhancement bonus to Strength. \
-                     This is a standalone fact -- it is not applied to any integrated ability \
-                     modifier or ability-score total"
-                ),
-            });
             explanations.push(ComputationExplanation {
                 id: "class_feature.acg.hunter.animal_focus_execution.uses_per_day".to_owned(),
                 value: uses_per_day,
@@ -25800,10 +26297,12 @@ fn ground_hunter_animal_companion_and_defer_the_rest(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    ground_wolf_companion_stat_block(
+    ground_selected_companion_or_default(
+        input,
         "class_chassis.hunter.animal_companion",
         "Hunter",
         level,
+        ground_wolf_companion_stat_block,
         explanations,
     );
     ground_wolf_companion_link_and_share_spells_vacuous(
@@ -25951,6 +26450,7 @@ fn compute_class_chassis(
             &class_level.class_id,
             class_level.level,
             input,
+            ability_modifiers,
             explanations,
             diagnostics,
         )
@@ -25996,6 +26496,218 @@ fn compute_class_chassis(
             explanations,
             diagnostics,
         )
+    } else if let Some(row) =
+        untabled_base_class_chassis::resolve(&class_level.class_id, class_level.level)
+    {
+        // SD-32 Epic 3 (`epic-3-class-reachability`, AT-32-E3-001), second
+        // half: a real base class (Aegis, Antipaladin, Cryptic, Dread,
+        // Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion,
+        // Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist,
+        // Tactician, Vigilante, Vitalist, or Wilder) that had no dispatch
+        // arm anywhere in this function until this cycle. Unlike the
+        // prestige-entry-gate arm below, this one DOES produce a real
+        // chassis magnitude -- base attack bonus and all three base saves,
+        // computed from `untabled_base_class_chassis::resolve`'s
+        // corpus-derived registry via the same
+        // `rules_tables::crb::class_tables` formulas the CRB table itself
+        // uses. See `untabled_base_class_chassis`'s own doc comment for the
+        // 18-vs-20 population correction and the re-derive command.
+        let base_attack_bonus = row.base_attack_bonus;
+        let base_saves = BaseSaves {
+            fortitude: row.fort_save,
+            reflex: row.ref_save,
+            will: row.will_save,
+        };
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_attack_bonus".to_owned(),
+            value: base_attack_bonus,
+            detail: format!(
+                "{} ({}) level {} base attack bonus from \
+                 pilot_compute::untabled_base_class_chassis::resolve's corpus-derived row for \
+                 this class: {base_attack_bonus}",
+                row.display_name, class_level.class_id, class_level.level
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.fortitude".to_owned(),
+            value: base_saves.fortitude,
+            detail: format!(
+                "{} ({}) level {} base Fortitude save from \
+                 pilot_compute::untabled_base_class_chassis::resolve's corpus-derived row for \
+                 this class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.fortitude
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.reflex".to_owned(),
+            value: base_saves.reflex,
+            detail: format!(
+                "{} ({}) level {} base Reflex save from \
+                 pilot_compute::untabled_base_class_chassis::resolve's corpus-derived row for \
+                 this class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.reflex
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.will".to_owned(),
+            value: base_saves.will,
+            detail: format!(
+                "{} ({}) level {} base Will save from \
+                 pilot_compute::untabled_base_class_chassis::resolve's corpus-derived row for \
+                 this class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.will
+            ),
+        });
+
+        // SD-32 card 11 (T12, `epic-2-t12-modelled-class-books` cycle-1's
+        // own named next lever): the generic corpus-derived roster,
+        // reused across every class the fixture covers. See
+        // `push_untabled_base_class_feature_records`'s own doc comment.
+        push_untabled_base_class_feature_records(
+            &class_level.class_id,
+            class_level.level,
+            explanations,
+        );
+        // SD-32 card 11 (T12): the first magnitude-bearing group of the
+        // roster given real per-feature compute functions rather than
+        // left "named, not attempted" -- see
+        // `ground_antipaladin_class_features`'s own doc comment.
+        if class_level.class_id == "class:antipaladin" {
+            ground_antipaladin_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:cryptic" {
+            ground_cryptic_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:dread" {
+            ground_dread_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:marksman" {
+            ground_marksman_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:psychic_warrior" {
+            ground_psychic_warrior_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:soulknife" {
+            ground_soulknife_class_features(class_level.level, explanations);
+        } else if class_level.class_id == "class:aegis" {
+            ground_aegis_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:tactician" {
+            ground_tactician_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:vitalist" {
+            ground_vitalist_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:wilder" {
+            ground_wilder_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:kineticist" {
+            ground_kineticist_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:medium" {
+            ground_medium_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:mesmerist" {
+            ground_mesmerist_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:occultist" {
+            ground_occultist_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:psychic" {
+            ground_psychic_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:spiritualist" {
+            ground_spiritualist_class_features(class_level.level, explanations);
+        } else if class_level.class_id == "class:magus" {
+            ground_magus_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:shifter" {
+            ground_shifter_class_features(input, class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:vigilante" {
+            ground_vigilante_class_features(class_level.level, ability_modifiers, explanations);
+        } else if class_level.class_id == "class:psion" {
+            ground_psion_class_features(input, class_level.level, ability_modifiers, explanations);
+        }
+
+        Some((base_attack_bonus, base_saves))
+    } else if let Some(row) = generic_class_chassis::resolve(&class_level.class_id, class_level.level) {
+        // SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5: the
+        // character-creation-time dispatch arm for all 61 conventional PC classes cycle 4
+        // already re-derived a reference-catalog BAB/save TABLE for but never wired a chassis
+        // dispatch arm for (Demoniac's own bare-`classlevel()` gap closed on this cycle's own
+        // rebase, row 18 cycle 9 — see `generic_class_chassis`'s own module doc). Same shape
+        // as the `untabled_base_class_chassis::resolve` arm above: real
+        // base attack bonus and all three base saves, computed from the class's own corpus
+        // `BONUS:COMBAT|BASEAB`/`BONUS:SAVE` formulas via `PcgenFormulaEvaluator`, not a
+        // hand-typed table.
+        let base_attack_bonus = row.base_attack_bonus;
+        let base_saves =
+            BaseSaves { fortitude: row.fort_save, reflex: row.ref_save, will: row.will_save };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_attack_bonus".to_owned(),
+            value: base_attack_bonus,
+            detail: format!(
+                "{} ({}) level {} base attack bonus from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {base_attack_bonus}",
+                row.display_name, class_level.class_id, class_level.level
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.fortitude".to_owned(),
+            value: base_saves.fortitude,
+            detail: format!(
+                "{} ({}) level {} base Fortitude save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.fortitude
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.reflex".to_owned(),
+            value: base_saves.reflex,
+            detail: format!(
+                "{} ({}) level {} base Reflex save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.reflex
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.will".to_owned(),
+            value: base_saves.will,
+            detail: format!(
+                "{} ({}) level {} base Will save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.will
+            ),
+        });
+        Some((base_attack_bonus, base_saves))
+    } else if let Some(gate) =
+        prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
+    {
+        // SD-32 Epic 3 (`epic-3-class-reachability`, AT-32-E3-001):
+        // real entry-requirement gating for a prestige class this dispatch
+        // does not (yet) compute a chassis for. No chassis magnitude is
+        // produced -- the caller's existing `class_chassis.unsupported`
+        // diagnostic still fires for `None`, same as any other unsupported
+        // class id -- but the gate genuinely runs and reports whether the
+        // character's real chosen feats/skills/etc. satisfy the class's
+        // real corpus PRE-token entry requirements, fixture-checked in
+        // `prestige_class_entry_gate`'s own tests.
+        diagnostics.push(ComputationDiagnostic {
+            id: if gate.qualifies {
+                "class_chassis.prestige_entry_gate.met".to_owned()
+            } else {
+                "class_chassis.prestige_entry_gate.unmet".to_owned()
+            },
+            message: if gate.qualifies {
+                format!(
+                    "{} ({}): entry requirements met ({} clause(s) satisfied, {} unmodelled); \
+                     chassis magnitude still unsupported (see class_chassis.unsupported)",
+                    gate.display_name,
+                    class_level.class_id,
+                    gate.met.len(),
+                    gate.unmodelled.len()
+                )
+            } else {
+                format!(
+                    "{} ({}): entry requirements NOT met -- {}",
+                    gate.display_name,
+                    class_level.class_id,
+                    gate.unmet.join("; ")
+                )
+            },
+            claim_blocking: true,
+        });
+        None
     } else {
         None
     }
@@ -26669,6 +27381,1860 @@ fn push_pu_class_feature_records(
                 "{display_name} level {level}: `{}` is a class feature of this character, granted \
                  from class level {granted_at}.{citation}{rules_text}",
                 record.name
+            ),
+        });
+    }
+}
+
+/// Emits one receipt row per granted, level-reached record in
+/// [`untabled_base_class_feature_roster::roster_for`] for `class_id_str`
+/// (the `"class:<name>"` form `compute_class_chassis` dispatches with).
+///
+/// SD-32 card 11 (T12): the generic form of [`push_pu_class_feature_records`]
+/// above. That function's own four Rust tables are hand-curated per class;
+/// this one reads a single corpus-derived fixture keyed by class id and
+/// pushes the SAME id shape (`class_feature.untabled.<class>.corpus_record.
+/// <slug>`), so a class costs nothing here beyond adding its own rows to the
+/// fixture — no new Rust match arm, no new push function. Reuses
+/// [`pu_feature_slug`] for the id's slug segment: the transform is not
+/// Pathfinder-Unchained-specific despite the name (`class_feature_engine_
+/// join_slug` in `v06_work_inventory.rs` is the identical rule, duplicated
+/// there because that file is a `bin`, not a library, and cannot import
+/// this one).
+///
+/// A class absent from the fixture (18 of the 20 registry entries, as of
+/// this cycle — see the fixture's own doc comment) simply gets no rows here,
+/// same as before this function existed; no fabricated row is ever emitted.
+fn push_untabled_base_class_feature_records(
+    class_id_str: &str,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let bare_class_id = class_id_str.strip_prefix("class:").unwrap_or(class_id_str);
+    for record in untabled_base_class_feature_roster::roster_for(bare_class_id) {
+        if level < record.min_level {
+            continue;
+        }
+        let slug = pu_feature_slug(&record.key);
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.untabled.{bare_class_id}.corpus_record.{slug}"),
+            value: i16::from(record.min_level),
+            detail: format!(
+                "{class_id_str} level {level}: `{}` is a class feature of this character, \
+                 granted from class level {} (source: {}:{}).",
+                record.name, record.min_level, record.source_file, record.source_line
+            ),
+        });
+    }
+}
+
+/// Grounds the seven magnitude-bearing Antipaladin features
+/// (`rules_tables::apg::antipaladin_features`) — the first `untabled_base_
+/// class_feature_roster` group given a real per-feature compute function
+/// rather than left "named, not attempted" (SD-32 card 11, T12).
+///
+/// Every magnitude below is that module's own pure function; nothing is
+/// recomputed here, and a feature the character has not yet reached simply
+/// emits no record (`None` below its grant level), the same contract
+/// `ground_unchained_barbarian_class_features` uses.
+fn ground_antipaladin_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::apg::antipaladin_features as af;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(uses) = af::touch_of_corruption_uses_per_day(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.touch_of_corruption.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Antipaladin level {level} Touch of Corruption: {uses} uses per day \
+                 (level/2 + Charisma modifier {cha}), identical formula to Paladin's Lay on Hands"
+            ),
+        });
+    }
+    if let Some(dice) = af::touch_of_corruption_damage_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.touch_of_corruption.damage_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Antipaladin level {level} Touch of Corruption: {dice}d6 damage (to a living \
+                 target) or healing (to an undead target), level/2"
+            ),
+        });
+    }
+    if let Some(bonus) = af::unholy_resilience_save_bonus(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.unholy_resilience.save_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Antipaladin level {level} Unholy Resilience: +{bonus} on all saving throws \
+                 (Charisma modifier {cha}, floored at 0)"
+            ),
+        });
+    }
+    if let Some(dc) = af::cruelty_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.cruelty.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Antipaladin level {level} Cruelty: DC {dc} Fortitude save to resist an applied \
+                 cruelty's effect (10 + Charisma modifier {cha} + level/2)"
+            ),
+        });
+    }
+    if let Some(known) = af::cruelties_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.cruelty.known".to_owned(),
+            value: known,
+            detail: format!(
+                "Antipaladin level {level} Cruelty: {known} cruelties known (one every 3 levels \
+                 from 3rd, capped at 6)"
+            ),
+        });
+    }
+    if let Some(dice) = af::channel_negative_energy_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.channel_negative_energy.dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Antipaladin level {level} Channel Negative Energy: {dice}d{} damage/healing \
+                 ((level+1)/2 dice)",
+                af::CHANNEL_NEGATIVE_ENERGY_DIE_SIZE
+            ),
+        });
+    }
+    if let Some(dc) = af::channel_negative_energy_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.channel_negative_energy.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Antipaladin level {level} Channel Negative Energy: DC {dc} Will save to halve \
+                 (10 + level/2 + Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(selections) = af::fiendish_boon_selections(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.fiendish_boon.selections".to_owned(),
+            value: selections,
+            detail: format!(
+                "Antipaladin level {level} Fiendish Boon: {selections} selection(s) (one at 5th \
+                 level, one more every 4 levels thereafter, capped at 4)"
+            ),
+        });
+    }
+    if let Some(dr) = af::aura_of_depravity_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.aura_of_depravity.damage_reduction"
+                .to_owned(),
+            value: dr,
+            detail: format!("Antipaladin level {level} Aura of Depravity: DR {dr}/good"),
+        });
+    }
+    if let Some(cl) = af::unholy_champion_banishment_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.unholy_champion.banishment_caster_level"
+                .to_owned(),
+            value: cl,
+            detail: format!(
+                "Antipaladin level {level} Unholy Champion: Banishment caster level {cl} on a \
+                 successful Smite Good against a good outsider (grounds the RAW-correct \
+                 antipaladin level; the upstream PCGen token reads a Paladin-only variable that \
+                 is never set on an Antipaladin -- decisions.md §22, inherited but not \
+                 perpetuated)"
+            ),
+        });
+    }
+
+    // SD-32 card 11 (T12) follow-up: three magnitude-bearing records the
+    // `psion` cycle's widened census surfaced on this class -- see
+    // `antipaladin_features`'s own module doc comment.
+    if let Some(tier) = af::aura_of_evil_strength_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.aura_of_evil.strength_level".to_owned(),
+            value: tier,
+            detail: format!(
+                "Antipaladin level {level} Aura of Evil: aura strength level {tier} \
+                 (a pure class-level pass-through selecting one of four DESC-prose tiers: \
+                 faint at 1, moderate at 2-4, strong at 5-10, overwhelming at 11+)"
+            ),
+        });
+    }
+    if let Some(cl) = af::detect_good_caster_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.detect_good.caster_level".to_owned(),
+            value: cl,
+            detail: format!(
+                "Antipaladin level {level} Detect Good: at-will spell-like ability, caster \
+                 level {cl} (a pure class-level pass-through)"
+            ),
+        });
+    }
+    if let Some(uses) = af::smite_good_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.smite_good.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Antipaladin level {level} Smite Good: {uses} uses per day \
+                 (min((level+2)/3, 7))"
+            ),
+        });
+    }
+    if let Some(bonus) = af::smite_good_attack_and_ac_bonus(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.smite_good.attack_and_ac_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Antipaladin level {level} Smite Good: +{bonus} on attack rolls against the \
+                 smite's target and +{bonus} deflection bonus to AC against it (Charisma \
+                 modifier {cha}, floored at 0; one token sets both)"
+            ),
+        });
+    }
+    if let Some(dmg) = af::smite_good_damage_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.antipaladin.smite_good.damage_bonus".to_owned(),
+            value: dmg,
+            detail: format!(
+                "Antipaladin level {level} Smite Good: +{dmg} damage on the smite's target \
+                 (+{} against a good outsider, good-aligned dragon, or good cleric/paladin -- \
+                 the record's own %4 = SmiteGoodDamageBonus*2)",
+                dmg * 2
+            ),
+        });
+    }
+}
+
+/// Grounds Cryptic's six magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::cryptic_features`) — SD-32 card 11
+/// (T12), the second class attempted end-to-end after Antipaladin.
+fn ground_cryptic_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::cryptic_features as cf;
+    let int_mod = ability_modifiers.intelligence;
+    let int_score = input.chosen.ability_scores.intelligence;
+
+    // SD-32 card 11 (T12) follow-up: `Cryptic Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census.
+    if let Some(v) = cf::cryptic_power_points_total(level, int_mod) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.cryptic_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Cryptic level {level} Cryptic Manifesting: {v} power points (base ladder + \
+                 (Intelligence modifier {int_mod} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = cf::cryptic_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.cryptic_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Cryptic level {level} Cryptic Manifesting: {v} powers known (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = cf::cryptic_max_power_level(level, int_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.cryptic_manifesting.max_power_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Cryptic level {level} Cryptic Manifesting: maximum power level known {v} \
+                 (min(6, floor((level+2)/3), Intelligence score {int_score} - 10))"
+            ),
+        });
+    }
+
+    if let Some(dr) = cf::altered_defense_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.altered_defense.damage_reduction".to_owned(),
+            value: dr,
+            detail: format!(
+                "Cryptic level {level} Altered Defense (Absorb): DR {dr}/- \
+                 (floor((level+3)/4))"
+            ),
+        });
+    }
+    if let Some(range) = cf::disrupt_pattern_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.disrupt_pattern.range_feet".to_owned(),
+            value: range,
+            detail: format!("Cryptic level {level} Disrupt Pattern: {range}-foot range (flat)"),
+        });
+    }
+    if let Some(dice) = cf::enhanced_disruption_bonus_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.enhanced_disruption.bonus_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Cryptic level {level} Enhanced Disruption: +{dice} bonus disrupt pattern \
+                 dice (floor((level-1)/2))"
+            ),
+        });
+    }
+    if let Some(bonus) = cf::hidden_pattern_stealth_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.hidden_pattern.stealth_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Cryptic level {level} Hidden Pattern: +{bonus} competence bonus on Stealth \
+                 (2*min(3,floor((level+1)/3)))"
+            ),
+        });
+    }
+    if let Some(bonus) = cf::trapmaker_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.trapmaker.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Cryptic level {level} Trapmaker: +{bonus} competence bonus on Craft (traps) \
+                 (equal to level)"
+            ),
+        });
+    }
+    if let Some(pr) = cf::unchanging_pattern_power_resistance(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.cryptic.unchanging_pattern.power_resistance".to_owned(),
+            value: pr,
+            detail: format!(
+                "Cryptic level {level} Unchanging Pattern: power resistance {pr} (12+level)"
+            ),
+        });
+    }
+}
+
+/// Grounds Dread's six magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::dread_features`) — SD-32 card 11
+/// (T12), the third class attempted end-to-end.
+fn ground_dread_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::dread_features as df;
+    let cha = ability_modifiers.charisma;
+    let cha_score = input.chosen.ability_scores.charisma;
+
+    // SD-32 card 11 (T12) follow-up: `Dread Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census.
+    if let Some(v) = df::dread_power_points_total(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.dread_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Dread level {level} Dread Manifesting: {v} power points (base ladder + \
+                 (Charisma modifier {cha} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = df::dread_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.dread_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Dread level {level} Dread Manifesting: {v} powers known (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = df::dread_max_power_level(level, cha_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.dread_manifesting.max_power_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Dread level {level} Dread Manifesting: maximum power level known {v} \
+                 (min(6, floor((level+2)/3), Charisma score {cha_score} - 10))"
+            ),
+        });
+    }
+
+    if let Some(dmg) = df::devastating_touch_bonus_damage(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.devastating_touch.bonus_damage".to_owned(),
+            value: dmg,
+            detail: format!(
+                "Dread level {level} Devastating Touch: +{dmg} bonus damage on the melee \
+                 touch attack (equal to level, added to a flat 1d6)"
+            ),
+        });
+    }
+    if let Some(bonus) = df::fearsome_insight_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.fearsome_insight.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Dread level {level} Fearsome Insight: +{bonus} insight bonus on Intimidate \
+                 (max(1,floor(level/2)))"
+            ),
+        });
+    }
+    if let Some(uses) = df::terror_uses_per_day(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.terror.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Dread level {level} Terror: {uses} uses per day (level + Charisma modifier \
+                 {cha})"
+            ),
+        });
+    }
+    if let Some(penalty) = df::aura_of_fear_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.aura_of_fear.penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Dread level {level} Aura of Fear: {penalty} penalty on nearby enemies' saves \
+                 against fear (flat)"
+            ),
+        });
+    }
+    if let Some(uses) = df::shadow_twin_uses_per_day(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.shadow_twin.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Dread level {level} Shadow Twin: {uses} uses per day (Charisma modifier {cha} \
+                 only, no level term)"
+            ),
+        });
+    }
+    if let Some(dr) = df::fear_incarnate_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.dread.fear_incarnate.damage_reduction".to_owned(),
+            value: dr,
+            detail: format!("Dread level {level} Fear Incarnate: DR {dr}/psionic (flat)"),
+        });
+    }
+}
+
+/// Grounds Marksman's five magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::marksman_features`) — SD-32 card 11
+/// (T12), the fourth class attempted end-to-end.
+fn ground_marksman_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::marksman_features as mf;
+    let dex = ability_modifiers.dexterity;
+    let wis = ability_modifiers.wisdom;
+    let wis_score = input.chosen.ability_scores.wisdom;
+
+    // SD-32 card 11 (T12) follow-up: `Marksman Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census.
+    if let Some(v) = mf::marksman_power_points_total(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.marksman_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Marksman level {level} Marksman Manifesting: {v} power points (base ladder + \
+                 (Wisdom modifier {wis} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = mf::marksman_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.marksman_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Marksman level {level} Marksman Manifesting: {v} powers known \
+                 (min(9,floor((3*level-1)/4)), plus floor((level-13)/2) summed in once \
+                 level >= 15 -- PCGen's documented multiple-BONUS:VAR-on-one-target SUM \
+                 semantics, bonus_stack_reader.rs)"
+            ),
+        });
+    }
+    if let Some(v) = mf::marksman_max_power_level(level, wis_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.marksman_manifesting.max_power_level"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Marksman level {level} Marksman Manifesting: maximum power level known {v} \
+                 (0 below level 2; min(4, floor((level+3)/4), Wisdom score {wis_score} - 10) \
+                 from level 2)"
+            ),
+        });
+    }
+
+    if let Some(uses) = mf::wind_reader_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.wind_reader.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Marksman level {level} Wind Reader: {uses} uses per day (3+level)"
+            ),
+        });
+    }
+    if let Some(bonus) = mf::evade_arrows_ac_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.evade_arrows.ac_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Marksman level {level} Evade Arrows: +{bonus} AC vs. ranged attacks \
+                 ((level+2)/4)"
+            ),
+        });
+    }
+    if let Some(bonus) = mf::favored_weapon_base_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.favored_weapon.base_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Marksman level {level} Favored Weapon: +{bonus} base competence bonus \
+                 ((level+2)/4)"
+            ),
+        });
+    }
+    if let Some(dc) = mf::cover_fire_dc(level, dex) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.cover_fire.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Marksman level {level} Cover Fire: DC {dc} (10 + Dexterity modifier {dex} + \
+                 level/2)"
+            ),
+        });
+    }
+    if let Some(bonus) = mf::ranged_specialist_critical_multiplier_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.marksman.ranged_specialist.critical_multiplier_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Marksman level {level} Ranged Specialist: +{bonus} critical multiplier on \
+                 ranged/thrown weapons (flat)"
+            ),
+        });
+    }
+}
+
+/// Grounds Psychic Warrior's three magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::psychic_warrior_features`) — SD-32
+/// card 11 (T12), the fifth class attempted end-to-end.
+fn ground_psychic_warrior_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::psychic_warrior_features as pwf;
+    let wis = ability_modifiers.wisdom;
+    let wis_score = input.chosen.ability_scores.wisdom;
+
+    // SD-32 card 11 (T12) follow-up: `Psychic Warrior Manifesting`'s
+    // shape-3 magnitudes, surfaced by the `psion` cycle's widened census.
+    if let Some(v) = pwf::psychic_warrior_power_points_total(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+power_points"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic Warrior level {level} Psychic Warrior Manifesting: {v} power \
+                 points (base ladder + (Wisdom modifier {wis} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = pwf::psychic_warrior_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+powers_known"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic Warrior level {level} Psychic Warrior Manifesting: {v} powers \
+                 known (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = pwf::psychic_warrior_max_power_level(level, wis_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+max_power_level"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic Warrior level {level} Psychic Warrior Manifesting: maximum power \
+                 level known {v} (min(6, floor((level+2)/3), Wisdom score {wis_score} - 10))"
+            ),
+        });
+    }
+
+    if let Some(lvl) = pwf::warriors_path_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.warriors_path.level".to_owned(),
+            value: lvl,
+            detail: format!(
+                "Psychic Warrior level {level} Warrior's Path: tracked path level {lvl} \
+                 (equal to class level)"
+            ),
+        });
+    }
+    if let Some(uses) = pwf::pathweaving_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.pathweaving.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Psychic Warrior level {level} Pathweaving: {uses} uses per day \
+                 ((level-12)/3)"
+            ),
+        });
+    }
+    if let Some(uses) = pwf::eternal_warrior_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic_warrior.eternal_warrior.uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Psychic Warrior level {level} Eternal Warrior: {uses} use per day (flat)"
+            ),
+        });
+    }
+}
+
+/// Grounds Soulknife's four magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::soulknife_features`) — SD-32 card 11
+/// (T12), the sixth class attempted end-to-end.
+fn ground_soulknife_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    use crate::rules_core::rules_tables::ultimate_psionics::soulknife_features as skf;
+
+    if let Some(lvl) = skf::form_mind_blade_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.soulknife.form_mind_blade.level".to_owned(),
+            value: lvl,
+            detail: format!(
+                "Soulknife level {level} Form Mind Blade: tracked mind blade level {lvl} \
+                 (equal to class level)"
+            ),
+        });
+    }
+    if let Some(bonus) = skf::enhanced_mind_blade_max_enhancement_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.soulknife.enhanced_mind_blade.max_enhancement_bonus"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Soulknife level {level} Enhanced Mind Blade: max enhancement bonus +{bonus} \
+                 (min(level/3,5))"
+            ),
+        });
+    }
+    if let Some(size) = skf::psychic_strike_die_size(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.soulknife.psychic_strike.die_size".to_owned(),
+            value: size,
+            detail: format!(
+                "Soulknife level {level} Psychic Strike: d{size} damage die size (flat)"
+            ),
+        });
+    }
+    if let Some(uses) = skf::quick_draw_uses_per_round(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.soulknife.quick_draw.uses_per_round".to_owned(),
+            value: uses,
+            detail: format!(
+                "Soulknife level {level} Quick Draw: {uses} free-action manifestation per \
+                 round (flat)"
+            ),
+        });
+    }
+}
+
+/// Grounds Aegis's seven magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::aegis_features`) — SD-32 card 11
+/// (T12), cycle 3, the sixth class of `ultimate_psionics` attempted.
+fn ground_aegis_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::aegis_features as agf;
+    let int = ability_modifiers.intelligence;
+
+    if let Some(hp) = agf::astral_repair_hp(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.astral_repair.hp".to_owned(),
+            value: hp,
+            detail: format!("Aegis level {level} Astral Repair: {hp} hit points restored (flat)"),
+        });
+    }
+    if let Some(dr) = agf::damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.damage_reduction.value".to_owned(),
+            value: dr,
+            detail: format!(
+                "Aegis level {level} Damage Reduction: DR {dr}/- while wearing the astral suit \
+                 (floor((level+4)/3))"
+            ),
+        });
+    }
+    if let Some(points) = agf::form_astral_suit_custom_points(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.form_astral_suit.custom_points".to_owned(),
+            value: points,
+            detail: format!(
+                "Aegis level {level} Form Astral Suit: {points} customization points \
+                 (2+level+floor((level+1)/5))"
+            ),
+        });
+    }
+    if let Some(bonus) = agf::craftsman_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.craftsman.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Aegis level {level} Craftsman: +{bonus} bonus on a chosen Craft skill \
+                 (floor((level+2)/4))"
+            ),
+        });
+    }
+    if let Some(times) = agf::reconfigure_times_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.reconfigure.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Aegis level {level} Reconfigure: {times} uses per day (floor((level-1)/2))"
+            ),
+        });
+    }
+    if let Some(duration) = agf::augment_suit_duration_rounds(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.augment_suit.duration_rounds".to_owned(),
+            value: duration,
+            detail: format!(
+                "Aegis level {level} Augment Suit: {duration} rounds duration (Intelligence \
+                 modifier {int} only, no level term)"
+            ),
+        });
+    }
+    if let Some(times) = agf::cannibalize_suit_times_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.aegis.cannibalize_suit.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Aegis level {level} Cannibalize Suit: {times} uses per day \
+                 (floor((level-10)/2))"
+            ),
+        });
+    }
+}
+
+/// Grounds Tactician's six magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::tactician_features`) — SD-32 card 11
+/// (T12), cycle 3, the seventh class of `ultimate_psionics` attempted.
+fn ground_tactician_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::tactician_features as tf;
+    let int = ability_modifiers.intelligence;
+    let cha = ability_modifiers.charisma;
+    let int_score = input.chosen.ability_scores.intelligence;
+
+    // SD-32 card 11 (T12) follow-up: `Tactician Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census. Same
+    // full-manifester `BasePowerPoints` ladder as `psion` itself.
+    if let Some(v) = tf::tactician_power_points_total(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.tactician_manifesting.power_points"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Tactician level {level} Tactician Manifesting: {v} power points (base \
+                 ladder + (Intelligence modifier {int} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = tf::tactician_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.tactician_manifesting.powers_known"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Tactician level {level} Tactician Manifesting: {v} powers known \
+                 (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = tf::tactician_max_power_level(level, int_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.tactician_manifesting.max_power_level"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Tactician level {level} Tactician Manifesting: maximum power level known \
+                 {v} (min(9, floor((level+1)/2), Intelligence score {int_score} - 10))"
+            ),
+        });
+    }
+
+    if let Some(minds) = tf::collective_minds(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.collective.minds".to_owned(),
+            value: minds,
+            detail: format!(
+                "Tactician level {level} Collective: {minds} minds joined \
+                 (max(Intelligence modifier {int}, level/2))"
+            ),
+        });
+    }
+    if let Some(times) = tf::coordinated_strike_times_per_day(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.coordinated_strike.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Tactician level {level} Coordinated Strike: {times} uses per day (3 + \
+                 Intelligence modifier {int})"
+            ),
+        });
+    }
+    if let Some(times) = tf::strategy_times_per_day(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.strategy.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Tactician level {level} Strategy: {times} uses per day (3 + Charisma \
+                 modifier {cha})"
+            ),
+        });
+    }
+    if let Some(powers) = tf::improved_share_powers(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.improved_share.powers".to_owned(),
+            value: powers,
+            detail: format!(
+                "Tactician level {level} Improved Share: {powers} Shared powers maintained \
+                 (1+floor((level+1)/6))"
+            ),
+        });
+    }
+    if let Some(pool) = tf::teamwork_feats_bonus_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.teamwork_feats.bonus_pool".to_owned(),
+            value: pool,
+            detail: format!(
+                "Tactician level {level} Teamwork Feats: {pool} bonus teamwork feats \
+                 (floor(level/6))"
+            ),
+        });
+    }
+    if let Some(bonus) = tf::master_strategist_bonus(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.tactician.master_strategist.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Tactician level {level} Master Strategist: +{bonus} insight bonus \
+                 (Intelligence modifier {int} only, no level term)"
+            ),
+        });
+    }
+}
+
+/// Grounds Vitalist's six magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::vitalist_features`) — SD-32 card 11
+/// (T12), cycle 3, the eighth class of `ultimate_psionics` attempted.
+fn ground_vitalist_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::vitalist_features as vf;
+    let wis = ability_modifiers.wisdom;
+    let wis_score = input.chosen.ability_scores.wisdom;
+
+    // SD-32 card 11 (T12) follow-up: `Vitalist Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census. Same
+    // full-manifester `BasePowerPoints` ladder as `psion`/Tactician.
+    if let Some(v) = vf::vitalist_power_points_total(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.vitalist_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Vitalist level {level} Vitalist Manifesting: {v} power points (base ladder \
+                 + (Wisdom modifier {wis} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = vf::vitalist_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.vitalist_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Vitalist level {level} Vitalist Manifesting: {v} powers known \
+                 (1 + floor((level+1)/2))"
+            ),
+        });
+    }
+    if let Some(v) = vf::vitalist_max_power_level(level, wis_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.vitalist_manifesting.max_power_level"
+                .to_owned(),
+            value: v,
+            detail: format!(
+                "Vitalist level {level} Vitalist Manifesting: maximum power level known {v} \
+                 (min(9, floor((level+1)/2), Wisdom score {wis_score} - 10))"
+            ),
+        });
+    }
+
+    if let Some(minds) = vf::collective_minds(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.collective.minds".to_owned(),
+            value: minds,
+            detail: format!(
+                "Vitalist level {level} Collective: {minds} minds joined \
+                 (max(level/2, Wisdom modifier {wis}))"
+            ),
+        });
+    }
+    if let Some(times) = vf::transfer_wounds_times_per_day(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.transfer_wounds.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Vitalist level {level} Transfer Wounds: {times} uses per day (3 + Wisdom \
+                 modifier {wis})"
+            ),
+        });
+    }
+    if let Some(lvl) = vf::health_sense_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.health_sense.level".to_owned(),
+            value: lvl,
+            detail: format!(
+                "Vitalist level {level} Health Sense: tracked level {lvl} (equal to class \
+                 level)"
+            ),
+        });
+    }
+    if let Some(dmg) = vf::steal_health_damage(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.steal_health.damage".to_owned(),
+            value: dmg,
+            detail: format!(
+                "Vitalist level {level} Steal Health: {dmg} hit points dealt and healed \
+                 (level + Wisdom modifier {wis})"
+            ),
+        });
+    }
+    if let Some(times) = vf::request_aid_times_per_day(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.request_aid.times_per_day".to_owned(),
+            value: times,
+            detail: format!(
+                "Vitalist level {level} Request Aid: {times} uses per day (3 + Wisdom \
+                 modifier {wis})"
+            ),
+        });
+    }
+    if let Some(dc) = vf::steal_life_dc(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vitalist.steal_life.dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Vitalist level {level} Steal Life: DC {dc} (10 + Wisdom modifier {wis} + \
+                 level/2)"
+            ),
+        });
+    }
+}
+
+/// Grounds Wilder's five magnitude-bearing features
+/// (`rules_tables::ultimate_psionics::wilder_features`) — SD-32 card 11
+/// (T12), cycle 3, the ninth and last class of `ultimate_psionics`
+/// attempted, closing the whole source book.
+fn ground_wilder_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::wilder_features as wf;
+    let cha = ability_modifiers.charisma;
+    let cha_score = input.chosen.ability_scores.charisma;
+
+    // SD-32 card 11 (T12) follow-up: `Wilder Manifesting`'s shape-3
+    // magnitudes, surfaced by the `psion` cycle's widened census. Same
+    // full-manifester `BasePowerPoints` ladder as `psion`/Tactician/Vitalist.
+    if let Some(v) = wf::wilder_power_points_total(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.wilder_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Wilder level {level} Wilder Manifesting: {v} power points (base ladder + \
+                 (Charisma modifier {cha} * level)/2)"
+            ),
+        });
+    }
+    if let Some(v) = wf::wilder_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.wilder_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Wilder level {level} Wilder Manifesting: {v} powers known \
+                 (1 + floor(level/2))"
+            ),
+        });
+    }
+    if let Some(v) = wf::wilder_max_power_level(level, cha_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.wilder_manifesting.max_power_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Wilder level {level} Wilder Manifesting: maximum power level known {v} \
+                 (min(9, floor((level+1)/2), Charisma score {cha_score} - 10))"
+            ),
+        });
+    }
+
+    if let Some(pct) = wf::psychic_enervation_percent(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.psychic_enervation.percent".to_owned(),
+            value: pct,
+            detail: format!(
+                "Wilder level {level} Psychic Enervation: {pct}% chance of enervation (flat)"
+            ),
+        });
+    }
+    if let Some(range) = wf::surge_blast_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.surge_blast.range_feet".to_owned(),
+            value: range,
+            detail: format!("Wilder level {level} Surge Blast: {range}-foot range (flat)"),
+        });
+    }
+    if let Some(bonus) = wf::wild_surge_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.wild_surge.bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Wilder level {level} Wild Surge: +{bonus} manifester level and bonus power \
+                 points (1+floor((level+1)/4))"
+            ),
+        });
+    }
+    if let Some(bonus) = wf::elude_attack_ac_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.elude_attack.ac_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Wilder level {level} Elude Attack: +{bonus} dodge bonus to AC \
+                 (floor((level+2)/4))"
+            ),
+        });
+    }
+    if let Some(duration) = wf::surging_euphoria_duration_rounds(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.wilder.surging_euphoria.duration_rounds".to_owned(),
+            value: duration,
+            detail: format!(
+                "Wilder level {level} Surging Euphoria: {duration} rounds duration (equal to \
+                 the current Wild Surge bonus)"
+            ),
+        });
+    }
+}
+
+/// Grounds Kineticist's six magnitude-bearing features
+/// (`rules_tables::occult_adventures::kineticist_features`) — SD-32 card 11
+/// (T12), cycle 4, the first of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`.
+fn ground_kineticist_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::kineticist_features as kf;
+    let con = ability_modifiers.constitution;
+
+    if let Some(v) = kf::burn_max_points(level, con) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.burn.max_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Kineticist level {level} Burn: {v} maximum points of burn (3 + Constitution \
+                 modifier {con})"
+            ),
+        });
+    }
+    if let Some(v) = kf::elemental_focus_level_base(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.elemental_focus.level_base".to_owned(),
+            value: v,
+            detail: format!(
+                "Kineticist level {level} Elemental Focus: effective level {v} \
+                 (max(1,floor(level/2)))"
+            ),
+        });
+    }
+    if let Some(v) = kf::infusion_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.infusion.pool".to_owned(),
+            value: v,
+            detail: format!("Kineticist level {level} Infusion: {v} infusions known"),
+        });
+    }
+    if let Some(v) = kf::kinetic_blast_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.kinetic_blast.range_feet".to_owned(),
+            value: v,
+            detail: format!("Kineticist level {level} Kinetic Blast: {v}-foot range (flat)"),
+        });
+    }
+    if let Some(v) = kf::wild_talents_dc(level, con) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.wild_talents.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Kineticist level {level} Wild Talents: DC {v} (10 + level/2 + Constitution \
+                 modifier {con})"
+            ),
+        });
+    }
+    if let Some(v) = kf::expanded_element_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.kineticist.expanded_element.pool".to_owned(),
+            value: v,
+            detail: format!(
+                "Kineticist level {level} Expanded Element: {v} expanded elements (1 + \
+                 (level>=15))"
+            ),
+        });
+    }
+}
+
+/// Grounds Medium's magnitude-bearing features
+/// (`rules_tables::occult_adventures::medium_features`) — SD-32 card 11
+/// (T12), cycle 4, the second of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`.
+fn ground_medium_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::medium_features as mf;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(v) = mf::spirit_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.spirit.bonus".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Spirit: +{v} spirit bonus (1+level/4)"),
+        });
+    }
+    if let Some(v) = mf::spirit_surge_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.spirit_surge.dice".to_owned(),
+            value: v,
+            detail: format!(
+                "Medium level {level} Spirit Surge: {v}d6 (6+2*floor(level/10))"
+            ),
+        });
+    }
+    if let Some(v) = mf::haunt_channeler_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.haunt_channeler.dice".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Haunt Channeler: {v}d6 (level/2)"),
+        });
+    }
+    if let Some(v) = mf::haunt_channeler_dc(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.haunt_channeler.dc".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Haunt Channeler: DC {v} (20+level/2)"),
+        });
+    }
+    if let Some(v) = mf::location_channel_duration_rounds(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.location_channel.duration_rounds".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Location Channel: {v} rounds (equal to level)"),
+        });
+    }
+    if let Some(v) = mf::location_channel_dc(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.location_channel.dc".to_owned(),
+            value: v,
+            detail: format!("Medium level {level} Location Channel: DC {v} (20+level/2)"),
+        });
+    }
+    if let Some(v) = mf::ask_the_spirits_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.ask_the_spirits.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Medium level {level} Ask the Spirits: DC {v} (15 + Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::astral_journey_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.astral_journey.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Medium level {level} Astral Journey: DC {v} (19 + Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::trance_of_three_duration_rounds(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.medium.trance_of_three.duration_rounds".to_owned(),
+            value: v,
+            detail: format!(
+                "Medium level {level} Trance of Three: {v} rounds (equal to level)"
+            ),
+        });
+    }
+}
+
+/// Grounds Mesmerist's ten magnitude-bearing features
+/// (`rules_tables::occult_adventures::mesmerist_features`) — SD-32 card 11
+/// (T12), cycle 4, the third of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`.
+fn ground_mesmerist_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::mesmerist_features as mf;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(v) = mf::consummate_liar_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.consummate_liar.bonus".to_owned(),
+            value: v,
+            detail: format!("Mesmerist level {level} Consummate Liar: +{v} Bluff (max(level/2,1))"),
+        });
+    }
+    if let Some(v) = mf::hypnotic_stare_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.hypnotic_stare.penalty".to_owned(),
+            value: v,
+            detail: format!("Mesmerist level {level} Hypnotic Stare: -{v} penalty"),
+        });
+    }
+    if let Some(v) = mf::mesmerist_tricks_uses(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mesmerist_tricks.uses".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mesmerist Tricks: {v} uses per day (max(level/2,1) + \
+                 Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::mesmerist_trick_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mesmerist_tricks.range_feet".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mesmerist Tricks: {v}-foot range (100+level*10)"
+            ),
+        });
+    }
+    if let Some(v) = mf::mesmerist_trick_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mesmerist_tricks.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mesmerist Tricks: DC {v} (10+level/2+Charisma modifier \
+                 {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::mesmerist_tricks_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mesmerist_tricks.known".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mesmerist Tricks: {v} tricks known (level/2+1)"
+            ),
+        });
+    }
+    if let Some(v) = mf::painful_stare_damage(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.painful_stare.damage".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Painful Stare: +{v} damage (max(level/2,1))"
+            ),
+        });
+    }
+    if let Some(v) = mf::painful_stare_bonus_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.painful_stare.bonus_dice".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Painful Stare: {v} bonus dice (level/3)"
+            ),
+        });
+    }
+    if let Some(v) = mf::towering_ego_bonus(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.towering_ego.bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Towering Ego: +{v} bonus (Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::bold_stares_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.bold_stare.known".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Bold Stare: {v} known ((level+1)/4)"
+            ),
+        });
+    }
+    if let Some(v) = mf::touch_treatment_uses(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.touch_treatment.uses".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Touch Treatment: {v} uses per day (3 + Charisma \
+                 modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = mf::manifold_tricks_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.manifold_tricks.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Manifold Tricks: {v} (2+(level-5)/4)"
+            ),
+        });
+    }
+    if let Some(v) = mf::mental_potency_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.mental_potency.bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Mesmerist level {level} Mental Potency: +{v} (min(level/5,4))"
+            ),
+        });
+    }
+    if let Some(v) = mf::glib_lie_dc(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.mesmerist.glib_lie.dc".to_owned(),
+            value: v,
+            detail: format!("Mesmerist level {level} Glib Lie: DC {v} (15+level)"),
+        });
+    }
+}
+
+/// Grounds Occultist's magnitude-bearing features
+/// (`rules_tables::occult_adventures::occultist_features`) — SD-32 card 11
+/// (T12), cycle 4, the fourth of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`.
+fn ground_occultist_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::occultist_features as of;
+    let int = ability_modifiers.intelligence;
+
+    if let Some(v) = of::focus_powers_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.focus_powers.count".to_owned(),
+            value: v,
+            detail: format!("Occultist level {level} Focus Powers: {v} known ((level+1)/2)"),
+        });
+    }
+    if let Some(v) = of::focus_powers_dc(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.focus_powers.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Focus Powers: DC {v} (10+level/2+Intelligence modifier \
+                 {int})"
+            ),
+        });
+    }
+    if let Some(v) = of::implements_school_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.implements.school_count".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Implements: {v} (2+((level+2)/4))"
+            ),
+        });
+    }
+    if let Some(v) = of::mental_focus(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.mental_focus.value".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Mental Focus: {v} points (level + Intelligence \
+                 modifier {int})"
+            ),
+        });
+    }
+    if let Some(v) = of::magic_item_skill_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.magic_item_skill.bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Magic Item Skill: +{v} Use Magic Device (level/2)"
+            ),
+        });
+    }
+    if let Some(v) = of::outside_contact_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.outside_contact.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Outside Contact: {v} (1+(level-8)/4)"
+            ),
+        });
+    }
+    if let Some(v) = of::binding_circles_dc(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.occultist.binding_circles.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Occultist level {level} Binding Circles: DC {v} (10+level/2+Intelligence \
+                 modifier {int})"
+            ),
+        });
+    }
+}
+
+// SD-32 row 17 (§27/§27a/§27b) residual closure: Psychic Discipline choice
+// seam. `oa_abilities_class.lst:1188`-1196 (block "Psychic Disciplines")
+// declares nine `KEY:Psychic Discipline ~ <Name>` records, each with its own
+// `BONUS:VAR|PhrenicPoolAbility|<CHA|WIS>` token -- the source itself, not
+// domain recall, fixes the split: Abomination/Dream/Pain/Rapport = CHA (4),
+// Faith/Lore/Psychedelia/Self-Perfection/Tranquility = WIS (5). Recognition
+// only, same idiom as `SORCERER_BLOODLINE_CHOICE_ID`: no ability score is
+// ever fabricated for a choice the character input does not make.
+const PSYCHIC_DISCIPLINE_CHOICE_ID: &str = "choice:psychic_discipline";
+const PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS: [&str; 4] = [
+    "discipline:abomination",
+    "discipline:dream",
+    "discipline:pain",
+    "discipline:rapport",
+];
+const PSYCHIC_DISCIPLINE_WIS_SELECTION_IDS: [&str; 5] = [
+    "discipline:faith",
+    "discipline:lore",
+    "discipline:psychedelia",
+    "discipline:self_perfection",
+    "discipline:tranquility",
+];
+
+/// Resolves `oa_abilities_class.lst`'s `PhrenicPoolAbility` term
+/// (`Psychic ~ Phrenic Pool`'s own `BONUS:VAR|PhrenicPool|(PsychicLVL/2)+
+/// PhrenicPoolAbility`) to the real modifier and display name for whichever
+/// Psychic Discipline the character actually chose, via
+/// `PSYCHIC_DISCIPLINE_CHOICE_ID`. Returns `None` for no selection or an
+/// unrecognized one -- the caller must not guess an ability score for an
+/// unmade choice (`decisions.md §1a`: a relabelled shape is not a closed
+/// shape, and neither is a fabricated one).
+fn psychic_discipline_pool_ability(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<(i16, &'static str)> {
+    let selection = choice_selection(input, PSYCHIC_DISCIPLINE_CHOICE_ID)?;
+    if PSYCHIC_DISCIPLINE_CHA_SELECTION_IDS.contains(&selection) {
+        Some((ability_modifiers.charisma, "Charisma"))
+    } else if PSYCHIC_DISCIPLINE_WIS_SELECTION_IDS.contains(&selection) {
+        Some((ability_modifiers.wisdom, "Wisdom"))
+    } else {
+        None
+    }
+}
+
+/// Grounds Psychic's four magnitude-bearing features
+/// (`rules_tables::occult_adventures::psychic_features`) — SD-32 card 11
+/// (T12), cycle 4, the fifth of six `occult_adventures` classes sharing
+/// `oa_abilities_class.lst`; row 17 residual closure (cycle 2) then wired
+/// `Phrenic Pool`'s discipline-dependent ability term to the character's
+/// actual chosen Psychic Discipline (`psychic_discipline_pool_ability`)
+/// instead of hard-coding Charisma.
+fn ground_psychic_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::occult_adventures::psychic_features as pf;
+
+    if let Some(v) = pf::phrenic_amplifications_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic.phrenic_amplifications.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic level {level} Phrenic Amplifications: {v} known (1+((level-1)/4))"
+            ),
+        });
+    }
+    if let Some((discipline_ability_modifier, discipline_ability_name)) =
+        psychic_discipline_pool_ability(input, ability_modifiers)
+    {
+        if let Some(v) = pf::phrenic_pool(level, discipline_ability_modifier) {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.untabled.psychic.phrenic_pool.value".to_owned(),
+                value: v,
+                detail: format!(
+                    "Psychic level {level} Phrenic Pool: {v} points (level/2 + discipline \
+                     ability modifier, {discipline_ability_name} {discipline_ability_modifier} \
+                     for the chosen Psychic Discipline)"
+                ),
+            });
+        }
+    }
+    if let Some(v) = pf::psychic_discipline_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic.psychic_discipline.pool".to_owned(),
+            value: v,
+            detail: format!("Psychic level {level} Psychic Discipline: {v} chosen (flat)"),
+        });
+    }
+    if let Some(v) = pf::major_amplifications_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psychic.major_amplifications.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Psychic level {level} Major Amplifications: {v} known (1+((level-11)/4))"
+            ),
+        });
+    }
+}
+
+/// Grounds Spiritualist's three magnitude-bearing features
+/// (`rules_tables::occult_adventures::spiritualist_features`) — SD-32 card
+/// 11 (T12), cycle 4, the sixth and last of the six `occult_adventures`
+/// classes sharing `oa_abilities_class.lst`, closing the whole source file.
+fn ground_spiritualist_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    use crate::rules_core::rules_tables::occult_adventures::spiritualist_features as sf;
+
+    if let Some(v) = sf::phantom_master_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.spiritualist.phantom.master_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Spiritualist level {level} Phantom: master level {v} (equal to class level)"
+            ),
+        });
+    }
+    if let Some(v) = sf::shared_consciousness_focus_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.spiritualist.shared_consciousness.focus_pool".to_owned(),
+            value: v,
+            detail: format!(
+                "Spiritualist level {level} Shared Consciousness: {v} emotional focus chosen \
+                 (flat)"
+            ),
+        });
+    }
+    if let Some(v) = sf::calm_spirit_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.spiritualist.calm_spirit.uses_per_day".to_owned(),
+            value: v,
+            detail: format!(
+                "Spiritualist level {level} Calm Spirit: {v} uses per day (1+(level-7)/4)"
+            ),
+        });
+    }
+}
+
+/// Grounds Magus's six magnitude-bearing features
+/// (`rules_tables::ultimate_magic::magus_features`) — SD-32 card 11 (T12),
+/// cycle 4, `ultimate_magic`'s single magnitude-bearing class.
+fn ground_magus_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_magic::magus_features as mf;
+    let int = ability_modifiers.intelligence;
+
+    if let Some(v) = mf::arcane_pool(level, int) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.arcane_pool.value".to_owned(),
+            value: v,
+            detail: format!(
+                "Magus level {level} Arcane Pool: {v} points (max(floor(level/2),1) + \
+                 Intelligence modifier {int})"
+            ),
+        });
+    }
+    if let Some(v) = mf::arcane_pool_enhancement_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.arcane_pool.enhancement_bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Magus level {level} Arcane Pool: +{v} maximum enhancement bonus \
+                 (min(1+((level-1)/4),5))"
+            ),
+        });
+    }
+    if let Some(v) = mf::armor_proficiency_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.armor_proficiency.level".to_owned(),
+            value: v,
+            detail: format!(
+                "Magus level {level} Armor Proficiency: tracked level {v} (equal to class \
+                 level)"
+            ),
+        });
+    }
+    if let Some(v) = mf::magus_arcana_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.magus_arcana.pool".to_owned(),
+            value: v,
+            detail: format!("Magus level {level} Magus Arcana: {v} known (level/3)"),
+        });
+    }
+    if let Some(v) = mf::bonus_feats_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.bonus_feats.pool".to_owned(),
+            value: v,
+            detail: format!("Magus level {level} Bonus Feats: {v} ((level+1)/6)"),
+        });
+    }
+    if let Some(v) = mf::fighter_training_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.magus.fighter_training.level".to_owned(),
+            value: v,
+            detail: format!(
+                "Magus level {level} Fighter Training: effective fighter level {v} (level/2)"
+            ),
+        });
+    }
+}
+
+/// Grounds Shifter's magnitude-bearing features
+/// (`rules_tables::ultimate_wilderness::shifter_features`) — SD-32 card 11
+/// (T12), cycle 4, `ultimate_wilderness`'s single magnitude-bearing class.
+/// `Shifter Claws`' base value is keyed on the character's resolved size
+/// (`race_size_for_race_token`), the same size-resolution mechanism the
+/// combat baseline already uses.
+fn ground_shifter_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_wilderness::shifter_features as sf;
+    let wis = ability_modifiers.wisdom;
+    let size = race_size_for_race_token(&input.chosen.race_id);
+
+    if let Some(v) = sf::shifter_aspect_minutes(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.shifter_aspect.minutes".to_owned(),
+            value: v,
+            detail: format!("Shifter level {level} Shifter Aspect: {v} minutes (level+3)"),
+        });
+    }
+    if let Some(v) = sf::shifter_aspect_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.shifter_aspect.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Shifter level {level} Shifter Aspect: {v} aspects (1+min(3,level/5))"
+            ),
+        });
+    }
+    if let Some(v) = sf::shifter_claw_damage(level, size) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.shifter_claws.damage".to_owned(),
+            value: v,
+            detail: format!(
+                "Shifter level {level} Shifter Claws: {v} tracked claw damage value (size- and \
+                 level-keyed)"
+            ),
+        });
+    }
+    if let Some(v) = sf::defensive_instinct_ac_bonus(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.defensive_instinct.ac_bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Shifter level {level} Defensive Instinct: +{v} AC (min(level/4,5) + Wisdom \
+                 modifier {wis}/2)"
+            ),
+        });
+    }
+    if let Some(v) = sf::shifter_track_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.track.level".to_owned(),
+            value: v,
+            detail: format!("Shifter level {level} Track: tracked level {v} (equal to level)"),
+        });
+    }
+    if let Some(v) = sf::wild_shape_count(level, wis) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.shifter.wild_shape.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Shifter level {level} Wild Shape: {v} uses per day (level + Wisdom modifier \
+                 {wis})"
+            ),
+        });
+    }
+}
+
+/// Grounds Vigilante's seven magnitude-bearing features
+/// (`rules_tables::ultimate_intrigue::vigilante_features`) — SD-32 card 11
+/// (T12), cycle 4, `ultimate_intrigue`'s single magnitude-bearing class.
+fn ground_vigilante_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_intrigue::vigilante_features as vf;
+    let cha = ability_modifiers.charisma;
+
+    if let Some(v) = vf::seamless_guise_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.seamless_guise.bonus".to_owned(),
+            value: v,
+            detail: format!("Vigilante level {level} Seamless Guise: +{v} (flat)"),
+        });
+    }
+    if let Some(v) = vf::social_talent_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.social_talent.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Social Talent: {v} known ((level+1)/2)"
+            ),
+        });
+    }
+    if let Some(v) = vf::vigilante_specialization_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.vigilante_specialization.pool".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Vigilante Specialization: {v} chosen (flat)"
+            ),
+        });
+    }
+    if let Some(v) = vf::vigilante_talent_count(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.vigilante_talent.count".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Vigilante Talent: {v} known (level/2)"
+            ),
+        });
+    }
+    if let Some(v) = vf::vigilante_talent_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.vigilante_talent.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Vigilante Talent: DC {v} (10+level/2+Charisma modifier \
+                 {cha})"
+            ),
+        });
+    }
+    if let Some(v) = vf::unshakable_dc_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.unshakable.dc_bonus".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Unshakable: +{v} DC bonus (equal to level)"
+            ),
+        });
+    }
+    if let Some(v) = vf::frightening_appearance_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.frightening_appearance.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Frightening Appearance: DC {v} \
+                 (10+level/2+Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = vf::stunning_appearance_dc(level, cha) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.stunning_appearance.dc".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Stunning Appearance: DC {v} \
+                 (10+level/2+Charisma modifier {cha})"
+            ),
+        });
+    }
+    if let Some(v) = vf::stunning_appearance_hd_threshold(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.vigilante.stunning_appearance.hd_threshold".to_owned(),
+            value: v,
+            detail: format!(
+                "Vigilante level {level} Stunning Appearance: {v} HD threshold (equal to level)"
+            ),
+        });
+    }
+}
+
+/// Grounds Psion's own shape-3 magnitude-bearing feature (`rules_tables::
+/// ultimate_psionics::psion_features`) — SD-32 card 11 (T12), the tenth
+/// `ultimate_psionics` class attempted end-to-end, and the last named T12
+/// item. See `psion_features`'s own module doc comment for why `psion`
+/// uses a genuinely-third grant convention (confirmed against the earlier
+/// "7 classes need a third shape" false lead, not a repeat of that
+/// case-sensitivity bug) and for the discipline-choice pool population
+/// (32 magnitude leaves) this function deliberately does not attempt.
+fn ground_psion_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::rules_tables::ultimate_psionics::psion_features as pf;
+    let int_mod = ability_modifiers.intelligence;
+    let int_score = input.chosen.ability_scores.intelligence;
+
+    if let Some(v) = pf::psion_power_points_total(level, int_mod) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psion.psion_manifesting.power_points".to_owned(),
+            value: v,
+            detail: format!(
+                "Psion level {level} Psion Manifesting: {v} power points (base ladder + \
+                 (Intelligence modifier {int_mod} * level)/2)"
+            ),
+        });
+    }
+    // SD-32 T12 follow-up: closes the previously-escalated PsionPowersKnown/
+    // PsionMaxPowerLevel ambiguity -- see `psion_features`'s own doc comment.
+    if let Some(v) = pf::psion_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psion.psion_manifesting.powers_known".to_owned(),
+            value: v,
+            detail: format!(
+                "Psion level {level} Psion Manifesting: {v} powers known \
+                 (min(21,2*level+1), plus floor((level-10)*3/2) summed in once level >= 11 -- \
+                 PCGen's documented multiple-BONUS:VAR-on-one-target SUM semantics, \
+                 bonus_stack_reader.rs)"
+            ),
+        });
+    }
+    if let Some(v) = pf::psion_max_power_level(level, int_score) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.untabled.psion.psion_manifesting.max_power_level".to_owned(),
+            value: v,
+            detail: format!(
+                "Psion level {level} Psion Manifesting: maximum power level known {v} \
+                 (min(9, floor((level+1)/2), Intelligence score {int_score} - 10))"
             ),
         });
     }
@@ -31844,10 +34410,20 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  computed. Master Hunter is the 20th-level ranger capstone."
             ),
         });
-    } else {
+    } else if let Some(dc) = resolve_class_feature_bonus_var(
+        "Ranger ~ Master Hunter",
+        "RangerLVL",
+        "MasterHunterDC",
+        level,
+        ability_modifiers,
+    ) {
+        // SD-32 Epic 1 (compute-library wiring, F3): the corpus's own
+        // `BONUS:VAR|MasterHunterDC|10+(MasterHunterLVL/2)+WIS`
+        // (`cr_abilities_class.lst:1427`), resolved through
+        // `resolve_class_feature_bonus_var` -- no longer a fabricated 0.
         explanations.push(ComputationExplanation {
             id: "class_feature.ranger.master_hunter".to_owned(),
-            value: 0,
+            value: dc,
             detail: format!(
                 "Ranger Master Hunter granted at ranger level {level} (PF1 Core Rulebook, \
                  20th-level ranger capstone): \"A ranger of 20th level becomes a master \
@@ -31855,14 +34431,30 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  tracks without penalty. He can, as a standard action, make a single attack \
                  against a favored enemy at his full attack bonus. If the attack hits, the \
                  target takes damage normally and must make a Fortitude save or die. The DC \
-                 of this save is equal to 10 + 1/2 the ranger's level + the ranger's Wisdom \
-                 modifier. A ranger can choose instead to deal an amount of nonlethal damage \
+                 of this save is {dc} (10 + 1/2 the ranger's level + the ranger's Wisdom \
+                 modifier). A ranger can choose instead to deal an amount of nonlethal damage \
                  equal to the creature's current hit points... A ranger can use this ability \
                  once per day against each favored enemy type he possesses, but not against \
-                 the same creature more than once in a 24-hour period.\" This is a bounded \
-                 grant-only identity record only (value 0, non-fabricated): no action-economy \
-                 engine, no attack-resolution engine, and no saving-throw-resolution engine \
-                 exists anywhere in this codebase to apply any of this to."
+                 the same creature more than once in a 24-hour period.\" The save DC is a \
+                 genuinely computed magnitude (corpus formula, resolved against this \
+                 character's real Wisdom modifier); no action-economy engine and no \
+                 attack-resolution engine exists anywhere in this codebase to apply this to, \
+                 so this still grounds no actual attack or damage resolution -- only the save \
+                 DC itself is computed"
+            ),
+        });
+    } else {
+        // The interpreter's own formula chain did not resolve -- refuse
+        // rather than guess, falling back to the bounded grant-only
+        // identity record the pre-wiring behaviour always used.
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.master_hunter".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Master Hunter granted at ranger level {level} (PF1 Core Rulebook, \
+                 20th-level ranger capstone). This is a bounded grant-only identity record \
+                 (value 0, non-fabricated): the corpus formula for the save DC did not \
+                 resolve, so no save-DC computation is claimed."
             ),
         });
     }
@@ -36767,8 +39359,1029 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 /// is ever computed here); this seam keeps that blocked posture but makes the
 /// Rogue chassis identity and its grounded pillars legible on the runtime
 /// path.
+/// SD-32 Epic 1 (compute-library wiring, `epic-breakdown.md` F3): resolves one
+/// `BONUS:VAR|<target_var>|<formula>` value straight off a real corpus `class_feature`
+/// record's own token chain, through the SAME already-authorised, already-fixture-checked
+/// mechanism `class_feature_grant_consumer::resolve_pcgen_var_chain` already proves
+/// correct at `tests/fixtures/rules_core/derived-evaluator-fixtures.json`'s
+/// `class_feature_description_entries` (operator ruling §20, `decisions.md §3`: "every
+/// interpreted value clears `derived_evaluator_fixture_check`" -- this call site reuses
+/// that already-cleared mechanism rather than adding a second, uncoordinated evaluator).
+///
+/// `None` when the chain does not fully resolve (record missing, formula shape refused,
+/// or the target variable was never bound) -- never guessed, mirroring
+/// `resolve_pcgen_var_chain`'s own "refuse rather than default" contract.
+fn resolve_class_feature_bonus_var(
+    record_key: &str,
+    class_level_var: &str,
+    target_var: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<i16> {
+    let record = class_feature_grant_consumer::class_feature_record_tokens().get(record_key)?;
+    let vars = class_feature_grant_consumer::resolve_pcgen_var_chain(
+        &record.bonus_vars,
+        class_level_var,
+        level,
+        ability_modifiers,
+    );
+    vars.get(target_var).copied().and_then(|v| i16::try_from(v).ok())
+}
+
+/// SD-32 T12 Epic 8 (`epic-2-cause-closure`, row 18, "pool-shaped class
+/// features"). `resolve_class_feature_bonus_var` above (SD-32 Epic 1) still
+/// needs its caller to already know the record's OWN target variable name
+/// (`"MasterHunterDC"`), which is fine for a handful of hand-picked named
+/// grants but does not scale to a 1,913-group, ~5,927-numeric-magnitude
+/// (cycle 3 `§17a` re-derivation, `scripts/census_class_feature_pool_population.py`
+/// -- corrects cycle 2's own 5,981, which had not yet registered Witch
+/// Hex's pre-existing `witch_hex_save_dc` coverage)
+/// open-ended-choice-pool population (Alchemist Discovery, Witch Hex,
+/// Oracle Curse/Mystery/Revelation, Shaman Spirit, Cavalier Order, Hunter
+/// Animal Focus, Inquisitor Judgment, ...) one bespoke function per member
+/// at a time.
+///
+/// This is the group-agnostic generalisation `decisions.md §17` requires:
+/// given only a corpus `" ~ "`-qualified key, it finds the record's OWN
+/// "terminal" `BONUS:VAR`/`DEFINE` target -- the one target name that is
+/// never itself referenced inside another of the SAME record's formulas
+/// (an intermediate hop like a `DomainXLVL`-shaped chain variable IS
+/// referenced by its sibling and is therefore never picked as the
+/// terminal) -- and resolves it through the SAME already-fixture-checked
+/// `resolve_pcgen_var_chain` mechanism `resolve_class_feature_bonus_var`
+/// uses, seeded with the real class level and the real six ability
+/// modifiers. A record with zero or more than one terminal target refuses
+/// (`None`) rather than guessing which one is "the" magnitude -- exactly
+/// the four named shapes (flat, level-scaled, ability-modifier-only,
+/// level+ability) resolve to a single terminal target; anything genuinely
+/// novel (two independent magnitudes on one record, an unresolvable
+/// `classlevel("OtherClass")`/dice-notation/multi-target formula) refuses
+/// cleanly and is reported, never fabricated.
+/// `pool_group` is used to look up the pool's own HEADER record
+/// (`"<class> ~ <pool_group>"` -- e.g. `"Alchemist ~ Discovery"`,
+/// `"Witch ~ Hex"`, real corpus keys distinct from any member's own
+/// `"<pool_group> ~ <member>"` key), whose own `BONUS:VAR` chain very
+/// often defines the pool-specific level variable individual members
+/// scale on (`AlchemistDiscoveryLVL|AlchemistLVL`, confirmed live in
+/// `advanced_players_guide/class_feature/alchemist/discovery.json`) --
+/// without merging that header chain in, a member formula referencing
+/// `AlchemistDiscoveryLVL` would refuse for want of a binding, even
+/// though the corpus itself defines exactly what that variable is. A
+/// header var never overrides a member's own same-named var (`or_insert`
+/// only fills gaps), and a pool with no such header record simply merges
+/// nothing, unchanged from before this widening.
+/// Finds a pool's own HEADER record (`"<class> ~ <PoolHeaderName>"`) by a
+/// singular/plural-normalized suffix match against `pool_group`, rather than
+/// requiring the header's real corpus name to be byte-identical to the
+/// `pool_group` string a call site passes -- `decisions.md §17a` (T12 cycle
+/// 3): the real corpus HEADER for Slayer Talent is `"Slayer ~ Slayer
+/// Talents"` (plural), while `"Slayer Talent"` (singular) is simultaneously
+/// the CORRECT member-key prefix (`"Slayer Talent ~ <name>"` is the real
+/// member shape) -- so the two names cannot be unified by changing the call
+/// site's single string, and a hardcoded per-pool alias table is exactly the
+/// "relabelled shape" anti-pattern `decisions.md §1a`/`§17` forbid. One
+/// generic normalization instead: strip a single trailing `s` from both the
+/// requested `pool_group` and each candidate header's own suffix (after its
+/// `"<class> ~ "` prefix) before comparing, so `"Slayer Talent"` matches
+/// `"Slayer Talents"` and an already-exact match (the common case --
+/// `"Alchemist ~ Discovery"`, `"Witch ~ Hex"`) is unaffected either way.
+/// `None` when no header record exists at all -- callers already treat that
+/// as "this pool has no header chain to merge", unchanged from before this
+/// widening.
+///
+/// SD-32 T12 Epic 8 row 18 cycle 11: this function used to return the FIRST
+/// matching header record and stop -- correct while every pool had at most
+/// one real header-shaped record, but WRONG once a pool has more than one
+/// each contributing a DIFFERENT slice of the real chain. Confirmed live:
+/// Cleric's own `"Cleric Domain ~ Air"` (a domain SPELL LIST record, class
+/// `"Cleric"`, CATEGORY `"Internal"`, carrying a `SPELLLEVEL` token and ZERO
+/// `BONUS:VAR` tokens) is a WHOLLY DIFFERENT record from the real power
+/// header `"Air Domain"` (bare key, the one this function's own cycle-5
+/// widening below already finds, carrying the actually useful
+/// `DomainAirLVL`/`DomainAirDC`/`DomainAirTimes` chain) -- both real, both
+/// legitimately named "the header" by different naming conventions, and a
+/// single-match `Option` return can only ever surface one of them. This
+/// function now MERGES every real header candidate's own `bonus_vars`
+/// (never overwriting an already-bound target, same never-clobber policy
+/// `merge_bonus_var_target_map_never_overwriting` already uses for the
+/// cross-book merges) rather than returning the first hit, so a pool with
+/// several real per-shape header records gets the union of all of them.
+///
+/// `registered_name` widening (cycle 11): a FOURTH real header shape, found
+/// by tracing WHY Sorcerer Bloodline's terminal `BONUS:VAR` targets (e.g.
+/// `Sorcerer_Aberrant_BloodlinePower1LVL`) sit unbound even though a
+/// resolvable, wholly UNGATED definition exists in the corpus. Cycle 10
+/// traced one such target to a row it believed was gated by a `PREABILITY:`
+/// tag this module could not verify without the oracle's own `.java`
+/// sources (its own receipt); the oracle's `.java` sources ARE readable from
+/// its git objects without widening the sparse checkout (`git show
+/// HEAD:code/src/java/plugin/pretokens/{parser/PreAbilityParser,
+/// test/PreAbilityTester}.java`, confirmed live this cycle) -- but reading
+/// them surfaces a DIFFERENT root cause than a PRE-gate this module cannot
+/// evaluate: the record cycle 10 traced (`class_feature_bonus_vars_any_
+/// record`'s bare-key `"Aberrant Bloodline"` match, contributed by
+/// `advanced_class_guide`'s own Eldritch-Heritage-shaped fallback record,
+/// `VAR|Sorcerer_Aberrant_BloodlinePower1LVL|1|!PREABILITY:...|!PREABILITY:
+/// ...`) is NOT the real per-bloodline header PCGen's own class chooser
+/// binds when a Sorcerer selects this bloodline normally. A SEPARATE,
+/// wholly UNGATED corpus record this lookup never tried carries the real
+/// formula: `"Sorcerer Bloodline ~ Aberrant"` (confirmed live,
+/// `data/corpus/core_rulebook/class_feature/sorcerer_bloodline/
+/// aberrant_bloodline.json`, `BONUS:VAR|Sorcerer_Aberrant_BloodlinePower1LVL
+/// |Sorcerer_Aberrant_BloodlineLVL+BloodlinePower1LVLBonus`, no PRE-tag tail
+/// at all) -- keyed `"<class> <registered_name> ~ <pool_group with its own
+/// trailing \" <registered_name>\" stripped>"`. Confirmed the SAME shape,
+/// not a one-bloodline coincidence, across every pool this row's census
+/// already tracks that carries a `registered_name_for_tracker`: `"Cleric
+/// Domain ~ Air"` (22 domains -- itself the SPELL LIST record above, not
+/// the power header, which is exactly why merging rather than
+/// first-match-wins matters here), `"Shaman Spirit ~ Battle"` (12 spirits),
+/// `"Bloodrager Bloodline ~ ..."` (11), `"Cavalier Order ~ Order of the
+/// ..."` (7, this one keeping the FULL unstripped `pool_group` as its own
+/// suffix rather than a stripped one -- both shapes are tried below).
+/// Warpriest Blessing carries ZERO such records (`grep` count 0) -- this
+/// widening changes nothing for it, matching cycle 10's own finding that
+/// Warpriest's gap is a genuinely different shape. `registered_name` is
+/// `None` for the tracker-header call site below (unchanged -- that lookup
+/// already targets a wholly different key, `"<registered_name> Tracker"`,
+/// and never needs this widening) and for every caller that has never
+/// passed a `registered_name_for_tracker` at all.
+///
+/// Returns the merged map directly (never a bare record reference) -- empty
+/// when no header candidate matches at all, exactly equivalent to the old
+/// `None` for every caller (`for (name, formula) in &merged { ... }` over an
+/// empty map is a no-op, same as the old `if let Some(header) = ...`).
+fn pool_header_record_by_normalized_suffix(
+    class: &str,
+    pool_group: &str,
+    registered_name: Option<&str>,
+) -> std::collections::BTreeMap<String, String> {
+    let table = class_feature_grant_consumer::class_feature_bonus_vars_any_record();
+    let mut merged: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
+    let mut merge_in = |header: &class_feature_grant_consumer::ClassFeatureRecordTokens| {
+        class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
+            &mut merged,
+            header.bonus_vars.clone(),
+        );
+    };
+
+    let exact_key = format!("{class} ~ {pool_group}");
+    if let Some(header) = table.get(&exact_key) {
+        merge_in(header);
+    }
+
+    if let Some(rn) = registered_name {
+        // Widening 4 (cycle 11): try the unstripped shape (Cavalier Order's
+        // own convention -- `pool_group` is already the header's own
+        // suffix verbatim), then the trailing-`" <rn>"`-stripped shape
+        // (Bloodline/Domain/Spirit's own convention).
+        let unstripped_key = format!("{class} {rn} ~ {pool_group}");
+        if let Some(header) = table
+            .get(&unstripped_key)
+            .filter(|header| header.class == class || header.class.is_empty())
+        {
+            merge_in(header);
+        }
+        if let Some(suffix) = pool_group.strip_suffix(&format!(" {rn}")) {
+            let stripped_key = format!("{class} {rn} ~ {suffix}");
+            if let Some(header) = table
+                .get(&stripped_key)
+                .filter(|header| header.class == class || header.class.is_empty())
+            {
+                merge_in(header);
+            }
+        }
+    }
+
+    let prefix = format!("{class} ~ ");
+    let normalized_target = pool_group.trim_end_matches('s');
+    if let Some(header) = table.iter().find_map(|(key, header)| {
+        let suffix = key.strip_prefix(&prefix)?;
+        (suffix.trim_end_matches('s') == normalized_target).then_some(header)
+    }) {
+        merge_in(header);
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 5: a SECOND real corpus header shape,
+    // confirmed by direct inspection of `data/corpus/core_rulebook/
+    // class_feature/air/air.json` (key `"Air Domain"`, class `"Cleric"`,
+    // real `BONUS:VAR|DomainAirDC|10+(DomainAirLVL/2)+CHA`) and
+    // `.../aberrant_bloodline/aberrant_bloodline.json` (key
+    // `"Aberrant Bloodline"`) -- unlike Alchemist Discovery/Witch Hex/
+    // Slayer Talent's `"<class> ~ <pool word(s)>"` header key, the
+    // Domain/Bloodline/Mystery/Blessing/Spirit "select ONE, inherit
+    // everything" pool family keys its own header record with the BARE
+    // group name (no `"<class> ~ "` prefix, no `" ~ "` separator at all)
+    // -- the exact string `pool_group` already names (`"Air Domain"`,
+    // `"Aberrant Bloodline"`). Class-checked before merging (never trusted
+    // from the bare key alone) so a same-named group owned by a DIFFERENT
+    // class can never be picked up by mistake.
+    //
+    // SD-32 T12 Epic 8 row 18 cycle 8: `header.class.is_empty()` also accepted -- confirmed live,
+    // every real per-bloodline HEADER record in this corpus (Sorcerer's own "Marid Bloodline",
+    // "Draconic Bloodline", ... -- all 53 groups' own headers, `class_feature_bonus_vars_any_
+    // record`'s own doc) ingests with `class: null` (kept `""`, never fabricated) even after row
+    // 21 restored their real `.MOD`-appended `BONUS:VAR` rows. A bare, un-namespaced header key
+    // (`"Marid Bloodline"`, never `"<class> ~ Marid Bloodline"`) is already, by construction,
+    // globally unique across this corpus -- no other class defines a same-named bare-key header --
+    // so accepting an unowned one carries none of the cross-class-collision risk the `header.class
+    // == class` check above exists to prevent; it merely lets a header this corpus never tagged
+    // with its owner still contribute its own `BONUS:VAR` chain to the merge.
+    if let Some(header) =
+        table.get(pool_group).filter(|header| header.class == class || header.class.is_empty())
+    {
+        merge_in(header);
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 13: a FOURTH real corpus header shape -- a bare (no `" ~ "`),
+    // PLURAL class-independent record, confirmed live: `data/corpus/core_rulebook/class_feature/
+    // domains/domains.json` (key exactly `"Domains"`, `data.class` genuinely absent -- real PCGen
+    // never tags this record with a `CLASS:` token, it is granted generically via the Cleric
+    // class's own `ABILITY:...|Domains` reference, `Cleric ~ Domains` `core_rulebook/class_
+    // feature/cleric/domains.json`) carrying the REAL `BONUS:VAR|DomainPowerTimes|3+WIS` every
+    // Domain member's own `Times` formula (`DomainAirTimes|DomainPowerTimes`, ...) chains through.
+    // The exact bare-key clause above misses it (`"Domain"` singular != `"Domains"` plural); this
+    // clause tolerates the same trailing-`s` PCGen already uses inconsistently between a pool's
+    // registered name and its shared base record's key, the SAME normalization the `"<class> ~ "`
+    // wildcard clause above already applies. Traced end to end for THIS one case before writing:
+    // no other corpus record anywhere ever also targets `DomainPowerTimes` (confirmed by direct
+    // grep), so merging this is a real, unambiguous corpus fact, not a guess. Class-checked
+    // exactly like the exact-match clause above, so a same-named bare record genuinely owned by a
+    // different class still cannot be picked up by mistake.
+    let normalized_pool_group = pool_group.trim_end_matches('s');
+    if let Some(header) = table
+        .iter()
+        .find_map(|(key, header)| {
+            (!key.contains(" ~ ") && key.trim_end_matches('s') == normalized_pool_group)
+                .then_some(header)
+        })
+        .filter(|header| header.class == class || header.class.is_empty())
+    {
+        merge_in(header);
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 18 (`§27b`): a FIFTH real corpus header shape -- a `domain`-
+    // kind record (never `class_feature`), keyed by the domain's own BARE name with no " Domain"
+    // suffix (`"Cave"`, not `"Cave Domain"`) -- confirmed live,
+    // `class_feature_grant_consumer::domain_kind_bonus_vars_any_record`'s own doc comment. Scoped
+    // to `registered_name == Some("Domain")` (the only pool family this corpus shape belongs to;
+    // Cavalier/Bloodline/Spirit groups never have a sibling `domain/` directory to collide with)
+    // and to a `pool_group` that actually ends with the expected `" Domain"` suffix, so a group
+    // this widening does not understand is never silently misrouted.
+    if registered_name == Some("Domain") {
+        if let Some(bare) = pool_group.strip_suffix(" Domain") {
+            if let Some(vars) = class_feature_grant_consumer::domain_kind_bonus_vars_any_record().get(bare)
+            {
+                class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
+                    &mut merged,
+                    vars.clone(),
+                );
+            }
+        }
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17`): a SIXTH real corpus header shape, a
+    // DIFFERENT directory from cycle 18's fifth (`domain/*.json`, bare-keyed) -- `class_feature/
+    // domain_base/*.json`, keyed `"Domain Base ~ <bare>"` (e.g. `"Domain Base ~ Void"`,
+    // confirmed live: `data/corpus/inner_sea_world_guide/class_feature/domain_base/void.json`,
+    // `CATEGORY:Internal`, real `BONUS:VAR|DomainVoidLVL|DomainLVL`/`...DC`/`...Times` chain).
+    // Its own `data.class` is the literal string `"Domain Base"` -- PCGen's own class-agnostic
+    // marker for this record family, not a real playable class name (every one of its 40 real
+    // members carries this exact string, never a PC class) -- so it is admitted the SAME way
+    // `header.class.is_empty()` already is above: a corpus-tagged "not owned by any one class"
+    // header can never collide with a real class-owned same-named record, so accepting it costs
+    // nothing in cross-class-collision risk. Scoped to `registered_name == Some("Domain")`
+    // exactly like cycle 18's fifth shape, for the same reason (no other pool family has a
+    // sibling `domain_base/` directory). This closes `Void Domain` (whose only bonus_vars
+    // member's sole terminal, `DomainVoidTimes`, chains through here) and corrects cycle 19's
+    // own `§27b` exhaustive-verification claim that `Scalykind` carries "no BONUS:VAR-bearing
+    // header exists anywhere in the corpus" -- `Domain Base ~ Scalykind` is real and was missed
+    // (that verification checked `domain-kind` and bare `class_feature` shapes, never this
+    // THIRD directory) -- filed as a retro correction, not silently.
+    if registered_name == Some("Domain") {
+        if let Some(bare) = pool_group.strip_suffix(" Domain") {
+            if let Some(header) = table
+                .get(&format!("Domain Base ~ {bare}"))
+                .filter(|header| header.class == "Domain Base")
+            {
+                class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
+                    &mut merged,
+                    header.bonus_vars.clone(),
+                );
+            }
+        }
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 21 (`§27b`): a SEVENTH real corpus header shape -- not a new
+    // FILE location like shapes 5/6, but a corpus-DECLARED relationship: a Wildblooded bloodline
+    // variant's own PREABILITY token names a real, different, parent pool group its own header
+    // vars are always genuinely bound through (see `wildblooded_variant_parent_pool_group`'s own
+    // doc for the full derivation and why this is NOT cycle 17/19's unrelated-cross-bloodline
+    // refusal shape). Recurses exactly once (a variant's own parent is never itself a variant,
+    // confirmed live across all 20 real Wildblooded records) so no infinite loop is possible.
+    if registered_name == Some("Bloodline") {
+        if let Some(parent) =
+            class_feature_grant_consumer::wildblooded_variant_parent_pool_group().get(pool_group)
+        {
+            let parent_vars = pool_header_record_by_normalized_suffix(class, parent, registered_name);
+            class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
+                &mut merged,
+                parent_vars,
+            );
+        }
+    }
+    merged
+}
+
+/// `owning_class_override`: SD-32 T12 Epic 8 row 18 cycle 7. A real corpus quirk, confirmed live
+/// (`data/corpus/ultimate_wilderness/class_feature/order_of_the_green/favored_terrain.json`,
+/// key `"Order of the Green ~ Favored Terrain"`) -- some pool member records tag their own
+/// `data.class` field SELF-REFERENTIALLY with the pool GROUP's own name (`"Order of the Green"`)
+/// rather than the real owning PC class (`"Cavalier"`), even though the record's own formula text
+/// references the real class's auto-var directly (`BONUS:VAR|CavalierFavoredTerrainLVL|
+/// CavalierLVL`). Left at `record.class` (the original, unconditional behaviour, when this is
+/// `None`), `class_level_variable_name` would derive the WRONG level variable
+/// (`"OrderoftheGreenLVL"`, never bound) and the header lookup would filter on the wrong class
+/// too -- silently refusing a record whose own chain is otherwise complete. A caller that has
+/// ALREADY independently verified the real owning class (`push_generic_pool_group_selection_
+/// magnitude`'s own `class` parameter, confirmed by `real_pool_group_for_selection_slug`'s
+/// majority-tally-or-header-ownership-proof) may pass it here to override the member's own
+/// possibly-unreliable self-tag. `None` (the flat-pool caller,
+/// `push_generic_pool_choice_magnitude`, which has never needed this) preserves the exact
+/// original behaviour, unchanged.
+///
+/// `registered_name_for_tracker`: SD-32 T12 Epic 8 row 18 cycle 8. The "select ONE group, inherit
+/// every member" pool family (Bloodline, and PCGen's own equivalent convention elsewhere) very
+/// often binds its own per-group header's chain vars (`Sorcerer_Marid_BloodlineLVL`, ...) onto a
+/// SECOND, class-WIDE shared var (bare `BloodlineLVL`) via a real corpus record this codebase
+/// calls a "Tracker" -- confirmed live, `"Bloodline Tracker"` (Sorcerer's own, a BARE key) and
+/// `"Bloodrager ~ Bloodline Tracker"` (Bloodrager's own, the ordinary `"<class> ~ "`-prefixed
+/// shape) -- a DIFFERENT record from the per-group header `pool_header_record_by_normalized_
+/// suffix(owning_class, pool_group)` already merges. Passing `Some(registered_name)` (e.g.
+/// `"Bloodline"`) merges this SECOND header too, via the SAME generic `pool_header_record_by_
+/// normalized_suffix` lookup (parameterized by `"<registered_name> Tracker"`, not a hardcoded
+/// per-class table) -- reusing the existing function rather than building a new one (`§17`).
+/// `None` (every pre-existing caller) preserves the exact original single-header behaviour,
+/// unchanged.
+///
+/// SD-32 T12 Epic 8 row 18 cycle 19: the per-group header, `"<RegisteredName> Tracker"` header,
+/// class-wide `"<class> ~ <RegisteredName>"` bare base header, and the owning class's own
+/// record-level `BONUS:VAR` chain, factored out of this function's own body into
+/// [`pool_group_header_vars_merged`] so [`class_feature_grant_consumer::
+/// resolved_description_for_formula_only_desc_argument`] -- the OTHER generic resolver, for a
+/// record whose `bonus_vars` is EMPTY -- merges the SAME real corpus header chain this function
+/// does, rather than an independently-maintained (and, until this cycle, incomplete) copy of it
+/// (`§17`, generic passes not per-object work). This function's own behaviour is unchanged: the
+/// extraction reproduces the exact same three-merge sequence, verified by the full unchanged
+/// six-pool census re-run below.
+fn pool_group_header_vars_merged(
+    owning_class: &str,
+    pool_group: &str,
+    registered_name_for_tracker: Option<&str>,
+) -> std::collections::BTreeMap<String, String> {
+    let mut combined_vars: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
+    let header_vars = pool_header_record_by_normalized_suffix(
+        owning_class,
+        pool_group,
+        registered_name_for_tracker,
+    );
+    for (name, formula) in &header_vars {
+        combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+    }
+    if let Some(registered_name) = registered_name_for_tracker {
+        let tracker_name = format!("{registered_name} Tracker");
+        let tracker_vars =
+            pool_header_record_by_normalized_suffix(owning_class, &tracker_name, None);
+        for (name, formula) in &tracker_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+        // SD-32 T12 Epic 8 row 18 cycle 13: a THIRD real corpus shape for the class-wide shared
+        // base of a "select ONE group, inherit every member" pool, distinct from both the
+        // per-group header (`pool_header_record_by_normalized_suffix(owning_class, pool_group)`)
+        // and the `"<RegisteredName> Tracker"` shape above. Confirmed live: `data/corpus/
+        // advanced_class_guide/class_feature/shaman/spirit.json` (key `"Shaman ~ Spirit"`, class
+        // `"Shaman"`, real `BONUS:VAR|ShamanSpiritLVL|ShamanLVL`) -- the EXACT `"<class> ~
+        // <registered_name>"` shape (no `" Tracker"` suffix), never merged before cycle 13
+        // because neither the per-group lookup (`pool_group` is the specific spirit's own name,
+        // e.g. `"Bones Spirit"`, never the bare `"Spirit"` word) nor the Tracker lookup (which
+        // only ever tries `"<rn> Tracker"`) reaches it. Traced end to end: every one of Shaman's
+        // real per-spirit member formulas (e.g. `Bones Spirit ~ Shedding Form`'s
+        // `ShamanSheddingFormRounds|ShamanSpiritLVL`) references this bare `ShamanSpiritLVL`
+        // directly, with no competing corpus record anywhere else ever targeting that same name
+        // (`every_corpus_bound_bonus_var_target()` unaffected -- this is a REAL, unambiguous
+        // corpus-verified bind, not a guessed default), so merging it here closes real members
+        // rather than fabricating one. Cavalier's own `"Cavalier ~ Order"` record matches this
+        // same shape too (binds `OrderAbilityLVL`) but changes nothing there -- every real
+        // Cavalier Order group's own members carry zero `BONUS:VAR` tokens at all
+        // (`record.bonus_vars.is_empty()` returns `None` before `combined_vars` is even built),
+        // confirmed unchanged by this cycle's own re-derived census. `None` for every class with
+        // no such record (Sorcerer, Bloodrager, Cleric, Warpriest all lack a `"<class> ~
+        // <registered_name>"` key -- confirmed by direct corpus lookup) preserves prior behaviour
+        // exactly, unchanged. This is ALSO, per cycle 19, exactly the clause that reaches
+        // Cleric Domain's own `"Domains"` bare plural record (`registered_name = "Domain"`,
+        // `pool_header_record_by_normalized_suffix`'s own trailing-`s`-tolerant bare-key clause)
+        // carrying `BONUS:VAR|DomainPowerTimes|3+WIS` -- the identifier `Mountain Domain ~
+        // Foothold`'s own `%1` argument (`DomainMountainTimes|DomainPowerTimes`, itself only
+        // reachable via the domain-kind header cycle 18 added) needs a SECOND hop through to
+        // resolve, and which the desc-formula resolver's own pre-cycle-19 header merge (a single
+        // `pool_header_record_by_normalized_suffix(class, pool_group, ...)` call, no tracker/base
+        // hop) never reached -- confirmed live, this exact gap is what motivated factoring this
+        // function out rather than duplicating a narrower, incomplete merge at the new call site.
+        let base_vars =
+            pool_header_record_by_normalized_suffix(owning_class, registered_name, None);
+        for (name, formula) in &base_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 8: the owning CLASS's own record-level `BONUS:VAR` chain
+    // (`class_record_bonus_vars`'s own doc -- Cleric's `DomainLVL`, real PCGen source
+    // `cr_classes.lst`, binds HERE, never on any `class_feature` record) merged in too, always
+    // tried (no gating flag -- a class with no such record simply merges nothing, exactly like an
+    // absent per-group/tracker header above).
+    if let Some(class_vars) = class_feature_grant_consumer::class_record_bonus_vars().get(owning_class) {
+        for (name, formula) in class_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+    }
+    // SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`/`§17a`): an EIGHTH real corpus header shape -- the
+    // class's own `"<class> ~ Spells"` record, carrying the base spellcasting-stat `BONUS:VAR`
+    // chain (`Sorcerer_Spells_StatBonus|CHA`, confirmed live: `data/corpus/core_rulebook/
+    // class_feature/sorcerer/spells.json`). Traced end to end: Karmic/Seaborn/Warped Bloodline's
+    // own real DC-formula members (`Fate's Retribution`/`Water Blast`/`Warp Touch`) all resolve
+    // `10+(<Parent>BloodlinePower1LVL/2)+Sorcerer_Spells_StatBonus` -- every term but this LAST one
+    // was already reachable through the SEVENTH shape's parent-header recursion (cycle 21); this
+    // identifier alone was never merged anywhere, by ANY existing clause above (it lives on a
+    // `"<class> ~ Spells"` record, a shape none of the per-group/Tracker/`"<class>
+    // <registered_name>"` clauses reach), which is why `resolve_pcgen_var_chain`'s own corpus-wide
+    // unbound-identifier default correctly REFUSED to fabricate a value for it (`Sorcerer_Spells_
+    // StatBonus` IS bound elsewhere in the corpus -- `every_corpus_bound_bonus_var_target()` -- so
+    // the 0-default fallback never applies; this was a genuine missing READ PATH, not a data gap).
+    // The SAME missing var also blocked Sanguine Bloodline's `The Blood Is the Life` (`%1` desc-
+    // formula argument `Sorcerer_Undead_BloodlinePower1Times`, itself chained through `Undead`'s
+    // own `BloodlinePowerTimes|3+Sorcerer_Spells_StatBonus`) -- confirmed live by direct trace, not
+    // assumed from the DC-formula fix alone. Two bloodlines override this base value locally on
+    // their OWN member record (`Empyreal`: `WIS-CHA`, `Sage`: `INT-CHA`, confirmed live,
+    // `data/corpus/ultimate_magic/class_feature/{empyreal,sage}_bloodline/bloodline_arcana.json`)
+    // -- `combined_vars.entry(...).or_insert_with(...)` merged HERE, LAST and lowest-priority,
+    // never overwrites either override, so both keep resolving through their own local bind
+    // exactly as before this cycle. Unconditional and class-parameterized (no per-pool gating
+    // flag), exactly like the class-record clause immediately above it: a class with no `"<class>
+    // ~ Spells"` record (Cavalier, a non-caster) simply merges nothing, unchanged.
+    if let Some(header) = class_feature_grant_consumer::class_feature_bonus_vars_any_record()
+        .get(&format!("{owning_class} ~ Spells"))
+    {
+        for (name, formula) in &header.bonus_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        }
+    }
+    combined_vars
+}
+
+/// SD-32 T12 Epic 8 row 18 cycle 20: the shared setup both
+/// [`resolve_pool_member_sole_magnitude`] and [`resolve_pool_member_all_magnitudes`] build on --
+/// looks the record up, merges in every real header source
+/// ([`pool_group_header_vars_merged`]), and resolves the FULL PCGen var chain once. Returns the
+/// record's own terminal target names (every `bonus_vars` key not itself referenced inside
+/// ANOTHER `bonus_vars` formula on this same record -- the existing, unchanged
+/// `is_referenced_elsewhere` filter, e.g. `Madness Domain`'s own `DomainMadnessLVL` is filtered
+/// out because `DomainMadnessDC`'s formula names it, leaving `DomainMadnessDC`/
+/// `DomainMadnessTimes`/`DomainMadnessAbilityTriggerLVL` as its three real terminals) together
+/// with the resolved value map every one of those names is looked up in. `None` for a record with
+/// no `bonus_vars` at all, or one whose target(s) never resolve through the chain -- both
+/// preserved exactly, unchanged from the pre-cycle-20 single-target function this factors out of.
+fn pool_member_terminal_targets_and_resolved_vars(
+    key: &str,
+    pool_group: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    owning_class_override: Option<&str>,
+    registered_name_for_tracker: Option<&str>,
+) -> Option<(Vec<String>, std::collections::BTreeMap<String, i64>)> {
+    let record = class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe().get(key)?;
+    if record.bonus_vars.is_empty() {
+        return None;
+    }
+    let owning_class = owning_class_override.unwrap_or(&record.class);
+    let is_referenced_elsewhere = |name: &str| {
+        record
+            .bonus_vars
+            .iter()
+            .any(|(other_name, formula)| other_name != name && formula_names_identifier(formula, name))
+    };
+    let terminals: Vec<String> = record
+        .bonus_vars
+        .keys()
+        .filter(|name| !is_referenced_elsewhere(name))
+        .cloned()
+        .collect();
+    if terminals.is_empty() {
+        return None;
+    }
+    let mut combined_vars = record.bonus_vars.clone();
+    let merged_header_vars =
+        pool_group_header_vars_merged(owning_class, pool_group, registered_name_for_tracker);
+    for (name, formula) in &merged_header_vars {
+        combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+    }
+    let class_level_var = class_feature_grant_consumer::class_level_variable_name(owning_class);
+    let vars = class_feature_grant_consumer::resolve_pcgen_var_chain(
+        &combined_vars,
+        &class_level_var,
+        level,
+        ability_modifiers,
+    );
+    Some((terminals, vars))
+}
+
+/// The ORIGINAL "exactly one terminal, or refuse" contract, load-bearing since SD-32 T12 Epic 8
+/// cycle 2 (re-proved unweakened by cycle 5): a caller that wants exactly ONE magnitude for a
+/// record must never receive a guessed pick among several real, independent targets. Unchanged
+/// behaviour -- still refuses (returns `None`) the instant a record carries more than one real
+/// terminal, e.g. `Forbidden Rites Domain ~ Madness Domain`'s own three
+/// (`DomainMadnessDC`/`...Times`/`...AbilityTriggerLVL`). Callers that can genuinely make use of
+/// MULTIPLE independent targets (a pool member's real corpus shape, not this function's own
+/// single-value contract) use [`resolve_pool_member_all_magnitudes`] instead -- see that
+/// function's own doc for why "more than one terminal" is not the same defect as "ambiguous
+/// which one is right": PCGen's `BONUS:VAR` targets with DIFFERENT names are independent
+/// quantities (`pcgen/core/PlayerCharacter.java:2136`'s `getTotalBonusTo("VAR", variableString)`
+/// sums contributions sharing ONE `variableString` -- see `bonus_stack_reader.rs`'s own module
+/// doc -- it says nothing about combining DIFFERENT variable names, because there is nothing to
+/// combine: each is its own accumulator). This function's own refusal is therefore not "PCGen's
+/// rule applied incompletely" -- it is this ONE caller's own single-value contract, kept exactly
+/// as strict as it always was.
+pub(crate) fn resolve_pool_member_sole_magnitude(
+    key: &str,
+    pool_group: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    owning_class_override: Option<&str>,
+    registered_name_for_tracker: Option<&str>,
+) -> Option<(String, i64)> {
+    let (terminals, vars) = pool_member_terminal_targets_and_resolved_vars(
+        key,
+        pool_group,
+        level,
+        ability_modifiers,
+        owning_class_override,
+        registered_name_for_tracker,
+    )?;
+    if terminals.len() != 1 {
+        return None; // more than one terminal target -- refuse, do not guess
+    }
+    let target = &terminals[0];
+    let value = *vars.get(target)?;
+    Some((target.clone(), value))
+}
+
+/// SD-32 T12 Epic 8 row 18 cycle 20: genuinely resolves EVERY independent terminal target a pool
+/// member record carries, rather than refusing once there is more than one. The real PCGen rule
+/// this implements (established by reading `pcgen/core/PlayerCharacter.java:2136` and
+/// `pcgen/core/BonusManager.java`'s `sumActiveBonusMap`, both already cited in
+/// `bonus_stack_reader.rs`'s own module doc): a `BONUS:VAR` target's value is the sum of every
+/// ACTIVE contribution filed under THAT variable's own name -- summation only ever happens WITHIN
+/// one target name. A record carrying several `BONUS:VAR` tokens with DIFFERENT target names
+/// (`Forbidden Rites Domain ~ Madness Domain`'s real `DomainMadnessDC`/`DomainMadnessTimes`/
+/// `DomainMadnessAbilityTriggerLVL`, confirmed live in `data/corpus/ultimate_magic/class_feature/
+/// forbidden_rites_domain/madness.json`) is not one ambiguous quantity needing a guess between
+/// three candidates -- it is THREE separate quantities, each already correctly and
+/// unambiguously computed by [`class_feature_grant_consumer::resolve_pcgen_var_chain`]'s existing
+/// full-chain evaluation (which was already computing every one of them correctly; only the
+/// single-value REPORTING contract was discarding all but a guessed one). This function changes
+/// nothing about HOW a value is computed -- it reports every terminal the shared resolver
+/// ([`pool_member_terminal_targets_and_resolved_vars`]) already correctly derives, instead of
+/// refusing. The refusal is preserved wherever it is still real: a record whose only terminal(s)
+/// never resolve through the chain (an unbound external reference, an unrecognised formula
+/// operator) is still silently absent from the returned `Vec`, exactly as `resolve_pool_member_
+/// sole_magnitude` silently returns `None` for the same case -- "cannot resolve" is never
+/// fabricated into a guessed 0 or omitted target here either. Callers push one
+/// `ComputationExplanation` per returned `(target, value)` pair; the existing explanation `id`
+/// scheme (`{id_prefix}.{group_slug}.{member_slug}.{target_slug}`,
+/// `push_generic_pool_group_selection_magnitude`'s own format string) already keys on
+/// `target_slug`, so multiple terminals from one member produce distinct ids with zero collision
+/// risk, unchanged from before this cycle for every existing single-terminal member.
+pub(crate) fn resolve_pool_member_all_magnitudes(
+    key: &str,
+    pool_group: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    owning_class_override: Option<&str>,
+    registered_name_for_tracker: Option<&str>,
+) -> Vec<(String, i64)> {
+    let Some((terminals, vars)) = pool_member_terminal_targets_and_resolved_vars(
+        key,
+        pool_group,
+        level,
+        ability_modifiers,
+        owning_class_override,
+        registered_name_for_tracker,
+    ) else {
+        return Vec::new();
+    };
+    terminals
+        .into_iter()
+        .filter_map(|target| vars.get(&target).copied().map(|value| (target, value)))
+        .collect()
+}
+
+/// Whether `identifier` appears in `formula` as a whole token (not as a
+/// substring of a longer identifier) -- splits on every character that is
+/// not `[A-Za-z0-9_]`, PCGen formula syntax's own identifier-boundary set
+/// (the same character class `formula_interpreter.rs`'s tokenizer treats
+/// as an identifier body).
+fn formula_names_identifier(formula: &str, identifier: &str) -> bool {
+    formula
+        .split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'))
+        .any(|token| token == identifier)
+}
+
+/// Resolves a real, recorded `SelectedChoice::selection_id` (e.g.
+/// `"discovery:feral_mutagen"`) back to the exact corpus `" ~ "`-qualified
+/// key it names (e.g. `"Discovery ~ Feral Mutagen"`), group-agnostically:
+/// scans every corpus `class_feature` record whose key starts with
+/// `"<pool_group> ~ "`, folds each member's own display name through the
+/// SAME `class_feature_id_slug` transform this codebase's own hand-picked
+/// selection constants were built with (`FERAL_MUTAGEN_DISCOVERY_SELECTION
+/// = "discovery:feral_mutagen"` <- `class_feature_id_slug("Feral
+/// Mutagen")`), and returns the one whose `"<namespace><slug>"` matches
+/// the recorded selection id exactly. `None` for an invented or
+/// unrecognised selection id -- never guessed, mirroring
+/// `chooser_option_selected`'s own "an invented id must never ground a
+/// real magnitude" contract this module's existing Rage Power tests pin.
+pub(crate) fn resolve_pool_selection_corpus_key(
+    pool_group: &str,
+    namespace: &str,
+    selection_id: &str,
+) -> Option<String> {
+    let prefix = format!("{pool_group} ~ ");
+    class_feature_grant_consumer::class_feature_record_tokens()
+        .keys()
+        .find(|key| {
+            key.strip_prefix(&prefix)
+                .is_some_and(|member_name| {
+                    format!("{namespace}{}", class_feature_id_slug(member_name)) == selection_id
+                })
+        })
+        .cloned()
+}
+
+/// Pushes one `ComputationExplanation` per REAL, recorded selection under
+/// `choice_set_id` whose corpus pool member (`"<pool_group> ~ <member>"`)
+/// carries a single resolvable terminal magnitude -- the generic pass
+/// closing the residual tail of a large open-ended chooser (Discovery,
+/// Hex, Curse, Mystery, Revelation, Spirit, Order, Animal Focus, Judgment,
+/// Evolution, Blessing, Bloodline, Talent, ...) beyond whatever handful of
+/// members this codebase already hand-models by name elsewhere in this
+/// file. Purely ADDITIVE: an already hand-modelled selection's own
+/// `ground_*` function still runs and still emits its own, differently-
+/// named id (dice-notation magnitudes like Feral Mutagen's claw damage die
+/// are refused here anyway, since `formula_interpreter.rs` does not parse
+/// dice notation -- `resolve_pool_member_sole_magnitude` returns `None`
+/// for them), so this function cannot collide with or double-count an
+/// existing hand-picked explanation. A record that does not resolve is
+/// silently skipped (never a fabricated value) -- the population that
+/// still needs a bespoke function or an upstream data fix is reported by
+/// the census script, not silently guessed at here.
+fn push_generic_pool_choice_magnitude(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    choice_set_id: &str,
+    pool_group: &str,
+    namespace: &str,
+    id_prefix: &str,
+    min_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level < min_level {
+        // The pool itself is not yet granted at this level (e.g. Alchemist
+        // Discovery's own `AlchemistDiscoveryLVL/2` gate does not open
+        // until level 2) -- a recorded selection below that gate must
+        // never ground a magnitude, mirroring every hand-picked `ground_*`
+        // function's own level check.
+        return;
+    }
+    let prefix = format!("{pool_group} ~ ");
+    for selection_id in input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == choice_set_id)
+        .map(|c| c.selection_id.as_str())
+    {
+        let Some(key) = resolve_pool_selection_corpus_key(pool_group, namespace, selection_id)
+        else {
+            continue;
+        };
+        // SD-32 T12 Epic 8 row 18 cycle 20: resolves EVERY independent terminal the member
+        // carries (1 for the overwhelming majority, 2-3 for the newly-closed multi-terminal
+        // shape) rather than refusing whenever there is more than one -- see
+        // `resolve_pool_member_all_magnitudes`'s own doc for the PCGen citation. A single-
+        // terminal member still produces exactly the one explanation it always did.
+        let member_name = key.strip_prefix(&prefix).unwrap_or(&key);
+        let member_slug = class_feature_id_slug(member_name);
+        for (target, value) in
+            resolve_pool_member_all_magnitudes(&key, pool_group, level, ability_modifiers, None, None)
+        {
+            let Ok(value) = i16::try_from(value) else { continue };
+            let target_slug = class_feature_id_slug(&target);
+            explanations.push(ComputationExplanation {
+                id: format!("{id_prefix}.{member_slug}.{target_slug}"),
+                value,
+                detail: format!(
+                    "{pool_group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                     {target} = {value}. Resolved generically -- not a hand-picked, per-member \
+                     function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
+                     seeded with this character's real class level and real ability modifiers \
+                     (SD-32 T12 Epic 8, decisions.md §17 generic pool-choice magnitude resolver)."
+                ),
+            });
+        }
+    }
+}
+
+/// The "select ONE named group, then inherit every one of its members"
+/// pool shape (Cleric Domain, Oracle Mystery, Warpriest Blessing, Shaman
+/// Spirit, Sorcerer/Bloodrager Bloodline) -- the sibling of
+/// [`push_generic_pool_choice_magnitude`]'s "select individual members
+/// from one flat pool" shape (Discovery, Hex, Slayer Talent). `registered_name`
+/// is the bare pool word (`"Domain"`, `"Mystery"`, `"Bloodline"`) a
+/// selection's own slug is matched against; the real corpus GROUP a given
+/// selection resolves to (`"Air Domain"`, `"Battle Mystery"`,
+/// `"Draconic Bloodline"`) is found generically by
+/// [`real_pool_group_for_selection_slug`] -- never a per-group lookup
+/// table (`decisions.md §17`/`§1a`). Once the real group is known, EVERY
+/// one of its own `"<group> ~ <member>"` corpus records is resolved
+/// through the SAME [`resolve_pool_member_sole_magnitude`] used by the
+/// flat-pool shape; a member this resolver cannot ground (multi-terminal,
+/// dice notation, no BONUS/DEFINE token) is silently skipped, never
+/// fabricated. Purely additive: an already hand-modelled selection (e.g.
+/// Cleric's Good/War/Strength/Destruction/Glory/Healing domains, Oracle's
+/// ten hand-picked mysteries, Shaman's ten hand-picked spirits) keeps
+/// emitting its own, differently-named explanation id unchanged -- the
+/// same "cannot collide, may legitimately overlap" contract cycle 4's own
+/// Slayer Talent/Foil Scrutiny wiring already established.
+fn push_generic_pool_group_selection_magnitude(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    choice_set_id: &str,
+    class: &str,
+    registered_name: &str,
+    namespace: &str,
+    id_prefix: &str,
+    min_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level < min_level {
+        return;
+    }
+    for selection_id in input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == choice_set_id)
+        .map(|c| c.selection_id.as_str())
+    {
+        let Some(slug) = selection_id.strip_prefix(namespace) else { continue };
+        let Some(group) = real_pool_group_for_selection_slug(class, registered_name, slug) else {
+            continue;
+        };
+        let prefix = format!("{group} ~ ");
+        let group_slug = class_feature_id_slug(&group);
+        for (key, _record) in class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe()
+            .iter()
+        {
+            let Some(member_name) = key.strip_prefix(&prefix) else { continue };
+            // SD-32 T12 Epic 8 row 18 cycle 20: every independent terminal (1-3), not a
+            // sole-terminal refusal -- closes `Forbidden Rites Domain` and its Starsoul/
+            // Celestial/Fey Bloodline siblings' genuine multi-terminal records. See
+            // `resolve_pool_member_all_magnitudes`'s own doc.
+            let member_slug = class_feature_id_slug(member_name);
+            for (target, value) in resolve_pool_member_all_magnitudes(
+                key,
+                &group,
+                level,
+                ability_modifiers,
+                Some(class),
+                Some(registered_name),
+            ) {
+                let Ok(value) = i16::try_from(value) else { continue };
+                let target_slug = class_feature_id_slug(&target);
+                explanations.push(ComputationExplanation {
+                    id: format!("{id_prefix}.{group_slug}.{member_slug}.{target_slug}"),
+                    value,
+                    detail: format!(
+                        "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                         {target} = {value}. Resolved generically -- not a hand-picked, per-member \
+                         function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
+                         seeded with this character's real class level and real ability modifiers, \
+                         after resolving the recorded {choice_set_id} -> {selection_id} selection to \
+                         its real corpus group {group} (SD-32 T12 Epic 8, decisions.md §17 generic \
+                         pool-group-selection magnitude resolver)."
+                    ),
+                });
+            }
+        }
+    }
+}
+
+/// The sibling of [`push_generic_pool_group_selection_magnitude`] for the DIFFERENT corpus shape
+/// cycle 14's own `§16` finding named and refused to force through the wrong resolver (SD-32 T12
+/// Epic 8 row 18 cycle 15): a pool member with an EMPTY `bonus_vars` (so `resolve_pool_member_
+/// sole_magnitude` correctly refuses it, per that function's own `record.bonus_vars.is_empty()`
+/// guard) but a real `%N`-substituted `DESC:` argument that is itself a raw formula EXPRESSION.
+/// Never routes through `resolve_pool_member_sole_magnitude` -- a deliberately separate resolver
+/// for a deliberately different shape, wired through `class_feature_grant_consumer::resolved_
+/// description_for_formula_only_desc_argument` (`pcgen_desc.rs`'s own documented consumer), not
+/// the pool resolver.
+///
+/// `already_hand_modelled_keys`: member keys a caller ALREADY grounds through a dedicated,
+/// activation-gated function (e.g. Warpriest's own `Destruction Blessing ~ Destructive Attacks`
+/// and `Strength Blessing ~ Strength Surge`) -- skipped here so this purely-additive generic pass
+/// never emits a second, un-gated explanation for a magnitude a hand-modelled function already
+/// grounds correctly (with activation-state awareness this generic pass has no way to reproduce).
+fn push_generic_pool_group_selection_description_magnitude(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    choice_set_id: &str,
+    class: &str,
+    registered_name: &str,
+    namespace: &str,
+    id_prefix: &str,
+    min_level: u8,
+    already_hand_modelled_keys: &[&str],
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level < min_level {
+        return;
+    }
+    for selection_id in input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == choice_set_id)
+        .map(|c| c.selection_id.as_str())
+    {
+        let Some(slug) = selection_id.strip_prefix(namespace) else { continue };
+        let Some(group) = real_pool_group_for_selection_slug(class, registered_name, slug) else {
+            continue;
+        };
+        let prefix = format!("{group} ~ ");
+        let group_slug = class_feature_id_slug(&group);
+        // SD-32 T12 Epic 8 row 18 cycle 19: mirror `resolve_pool_member_sole_magnitude`'s own
+        // FULL header-chain merge (per-group header + Tracker header + bare base header +
+        // owning-class record-level `BONUS:VAR` chain -- `pool_group_header_vars_merged`, `§17`)
+        // into THIS resolver too. Cycle 18 named the gap: `Mountain Domain ~ Foothold`'s `%1`
+        // needs `DomainMountainTimes`, which chains through the domain-kind header cycle 18 added
+        // to `DomainPowerTimes`, which is bound only on Cleric Domain's OWN bare `"Domains"`
+        // base-header record (`registered_name = "Domain"`) -- the base-header hop this resolver
+        // never had. Computed once per group (not per member), never a new lookup mechanism.
+        let description_header_vars =
+            pool_group_header_vars_merged(class, &group, Some(registered_name));
+        for (key, _record) in class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe()
+            .iter()
+        {
+            let Some(member_name) = key.strip_prefix(&prefix) else { continue };
+            if already_hand_modelled_keys.contains(&key.as_str()) {
+                continue;
+            }
+            let Some((description, value)) =
+                class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                    key,
+                    level,
+                    ability_modifiers,
+                    &description_header_vars,
+                )
+            else {
+                continue;
+            };
+            let Ok(value) = i16::try_from(value) else { continue };
+            let member_slug = class_feature_id_slug(member_name);
+            explanations.push(ComputationExplanation {
+                id: format!("{id_prefix}.{group_slug}.{member_slug}.description"),
+                value,
+                detail: format!(
+                    "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                     {description} Resolved generically -- not a hand-picked, per-member \
+                     function -- through the real PCGen formula interpreter applied DIRECTLY to \
+                     this member's own `%N`-substituted DESC: argument text (this record carries \
+                     no BONUS:VAR token at all, a shape resolve_pool_member_sole_magnitude never \
+                     reaches), after resolving the recorded {choice_set_id} -> {selection_id} \
+                     selection to its real corpus group {group} (SD-32 T12 Epic 8 row 18 cycle \
+                     15, decisions.md §17 generic pool-group-selection description resolver)."
+                ),
+            });
+        }
+    }
+}
+
+/// Resolves a `push_generic_pool_group_selection_magnitude` selection's
+/// bare slug (e.g. `"air"`, `"draconic"`) to the real corpus group name it
+/// names (e.g. `"Air Domain"`, `"Draconic Bloodline"`), generically: scans
+/// every `class_feature` record's own `" ~ "`-qualified group, tallies
+/// each group's OWNER by corpus-read majority `class` across its own
+/// member records (never assumed from text -- the same guard
+/// `census_class_feature_pool_group_names.py` and
+/// `pool_header_record_by_normalized_suffix` both use), keeps only groups
+/// majority-owned by the requested `class`, matches the group's own
+/// trailing word-boundary suffix against `registered_name` (exact, or
+/// after stripping one trailing `s` from each side -- singular/plural
+/// insensitive, identical to `pool_header_record_by_normalized_suffix`'s
+/// own rule), and returns the one whose remaining leading adjective slugs
+/// (via `class_feature_id_slug`) to exactly `slug`. `None` for an invented
+/// or unrecognised slug -- never guessed.
+///
+/// SD-32 T12 Epic 8 row 18 cycle 6: a SECOND real corpus naming shape,
+/// confirmed by direct inspection of Bloodrager's own 12 real Bloodline
+/// groups (e.g. `"Undead Bloodrager Bloodline"`, `"Aberrant Bloodrager
+/// Bloodline"`) -- unlike Sorcerer's plain `"<Adjective> Bloodline"`, the
+/// owner CLASS NAME is baked into the group name itself as a middle word,
+/// while the real recorded selection id this codebase already establishes
+/// (`ARCANE_BLOODRAGER_BLOODLINE_SELECTION = "bloodline:arcane"`, not
+/// `"bloodline:arcane_bloodrager"`) still names only the bare adjective.
+/// After the registered-name suffix strip above, if what remains ALSO ends
+/// with `" <class>"` (a word-boundary suffix, e.g. `"Undead Bloodrager"`
+/// ending in `" Bloodrager"`), that trailing class-name word is stripped
+/// too before slugging -- safe because it only ever fires when the owner
+/// class's own name is literally present as a trailing word, never
+/// over-stripping an adjective that merely happens to share a prefix.
+fn real_pool_group_for_selection_slug(
+    class: &str,
+    registered_name: &str,
+    slug: &str,
+) -> Option<String> {
+    let table = class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+    let mut owner_tally: std::collections::BTreeMap<String, std::collections::BTreeMap<String, u32>> =
+        std::collections::BTreeMap::new();
+    for (key, record) in table.iter() {
+        if let Some((group, _member)) = key.split_once(" ~ ") {
+            *owner_tally.entry(group.to_string()).or_default().entry(record.class.clone()).or_default() +=
+                1;
+        }
+    }
+    let normalized_registered = registered_name.trim_end_matches('s');
+    owner_tally.into_iter().find_map(|(group, owners)| {
+        let majority_class = owners.iter().max_by_key(|(_, count)| **count).map(|(c, _)| c.clone())?;
+        // SD-32 T12 Epic 8 row 18 cycle 7: a THIRD real corpus ownership shape, confirmed by
+        // direct inspection of Cavalier's own "Order of the X" family --
+        // `data/corpus/advanced_class_guide/class_feature/order_of_the_blue_rose/*.json` and
+        // three siblings (Green, Seal, Tome) tag every one of their own members' `class` field
+        // with the ORDER'S OWN NAME (e.g. `"Order of the Blue Rose"`), never `"Cavalier"` --
+        // unlike Beast/Guard/Eastern Star/Shroud, whose members are correctly tagged `"Cavalier"`
+        // directly. Never trusted from the self-referential tag alone (that would let ANY
+        // same-shaped group from an unrelated class or archetype through): only admitted when a
+        // real, independently-verified `"<class> <registered_name> ~ <group>"` CHOOSER header
+        // record also exists and is itself tagged `class == class` (confirmed live --
+        // `"Cavalier Order ~ Order of the Blue Rose"`, `class: "Cavalier"` -- the same header key
+        // shape `push_generic_pool_group_selection_magnitude`'s own doc already cites for the
+        // Domain/Bloodline/Mystery family, reused here as ownership PROOF, not merely lookup).
+        // `"Order of the Sword"` (already hand-modelled, `ORDER_OF_THE_SWORD_SELECTION`) has no
+        // such header record and is correctly NOT picked up by this fallback -- no collision.
+        let owned_by_class = majority_class == class
+            || table
+                .get(&format!("{class} {registered_name} ~ {group}"))
+                .is_some_and(|header| header.class == class);
+        if !owned_by_class {
+            return None;
+        }
+        let adjective = if let Some(adjective) = group.strip_suffix(&format!(" {registered_name}")) {
+            adjective
+        } else if let Some(adjective) = strip_prefix_case_insensitive(&group, &format!("{registered_name} of the "))
+        {
+            // SD-32 T12 Epic 8 row 18 cycle 7: the SAME third shape's naming convention --
+            // Cavalier's real corpus groups read `"<RegisteredName> of the <Adjective>"`
+            // (`"Order of the Beast"`, `"Order Of The Eastern Star"` -- case varies book to book,
+            // hence case-insensitive), the mirror image of the `"<Adjective> <RegisteredName>"`
+            // shape the first branch above already handles. Tried only after the exact-suffix
+            // branch so it changes nothing for any pool already served by that shape.
+            adjective
+        } else {
+            let (last_word_start, last_word) = group
+                .rmatch_indices(' ')
+                .next()
+                .map(|(idx, _)| (idx + 1, &group[idx + 1..]))
+                .unwrap_or((0, group.as_str()));
+            if last_word.trim_end_matches('s') != normalized_registered {
+                return None;
+            }
+            group[..last_word_start].trim_end()
+        };
+        // SD-32 T12 Epic 8 row 18 cycle 6: strip a trailing owner-class-name word too, if present
+        // (see this function's own doc, "SECOND real corpus naming shape").
+        let adjective = adjective.strip_suffix(&format!(" {class}")).unwrap_or(adjective);
+        (class_feature_id_slug(adjective) == slug).then(|| group.clone())
+    })
+}
+
+/// Case-insensitive `str::strip_prefix`, byte-length-based (ASCII only -- every real corpus
+/// group name and `registered_name` this codebase passes here is plain ASCII). `None` when
+/// `text` is shorter than `prefix` or the leading bytes do not match case-insensitively.
+fn strip_prefix_case_insensitive<'a>(text: &'a str, prefix: &str) -> Option<&'a str> {
+    if text.len() < prefix.len() {
+        return None;
+    }
+    text[..prefix.len()].eq_ignore_ascii_case(prefix).then(|| &text[prefix.len()..])
+}
+
 fn explain_rogue_level1_chassis(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     let Some(level) = supported_rogue_level(input) else {
@@ -37220,10 +40833,20 @@ fn explain_rogue_level1_chassis(
                  Master Strike is the 20th-level rogue capstone."
             ),
         });
-    } else {
+    } else if let Some(dc) = resolve_class_feature_bonus_var(
+        "Rogue ~ Master Strike",
+        "RogueLVL",
+        "MasterStrikeDC",
+        level,
+        ability_modifiers,
+    ) {
+        // SD-32 Epic 1 (compute-library wiring, F3): the corpus's own
+        // `BONUS:VAR|MasterStrikeDC|10+(MasterStrikeLVL/2)+INT`
+        // (`cr_abilities_class.lst:1619`), resolved through
+        // `resolve_class_feature_bonus_var` -- no longer a fabricated 0.
         explanations.push(ComputationExplanation {
             id: "class_feature.rogue.master_strike".to_owned(),
-            value: 0,
+            value: dc,
             detail: format!(
                 "Rogue Master Strike granted at rogue level {level} (PF1 Core Rulebook, \
                  20th-level rogue capstone): \"Upon reaching 20th level, a rogue becomes \
@@ -37231,15 +40854,30 @@ fn explain_rogue_level1_chassis(
                  sneak attack damage, she can choose one of the following three effects: the \
                  target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. \
                  Regardless of the effect chosen, the target receives a Fortitude save to \
-                 negate the additional effect. The DC of this save is equal to 10 + 1/2 the \
-                 rogue's level + the rogue's Intelligence modifier. Once a creature has been \
+                 negate the additional effect. The DC of this save is {dc} (10 + 1/2 the \
+                 rogue's level + the rogue's Intelligence modifier). Once a creature has been \
                  the target of a master strike, regardless of whether or not the save is made, \
-                 that creature is immune to that rogue's master strike for 24 hours.\" This is \
-                 a bounded grant-only identity record only (value 0, non-fabricated): no \
-                 action-economy engine, no attack-resolution engine, and no \
-                 saving-throw-resolution engine exists anywhere in this codebase to apply this \
-                 to, so this grounds no actual sleep, paralysis, or death effect and no save-DC \
-                 computation"
+                 that creature is immune to that rogue's master strike for 24 hours.\" The save \
+                 DC is a genuinely computed magnitude (corpus formula, resolved against this \
+                 character's real Intelligence modifier); no action-economy engine and no \
+                 attack-resolution engine exists anywhere in this codebase to apply this to, so \
+                 this still grounds no actual sleep, paralysis, or death effect -- only the \
+                 save DC itself is computed"
+            ),
+        });
+    } else {
+        // The interpreter's own formula chain did not resolve (e.g. the
+        // corpus record's token shape changed underneath this call site) --
+        // refuse rather than guess, falling back to the same bounded
+        // grant-only identity record the pre-wiring behaviour always used.
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.master_strike".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Master Strike granted at rogue level {level} (PF1 Core Rulebook, \
+                 20th-level rogue capstone). This is a bounded grant-only identity record \
+                 (value 0, non-fabricated): the corpus formula for the save DC did not resolve, \
+                 so no save-DC computation is claimed"
             ),
         });
     }
@@ -37423,6 +41061,26 @@ fn explain_sorcerer_level1_spell_baseline(
         let bloodline_selection = choice_selection(input, SORCERER_BLOODLINE_CHOICE_ID);
         let recognized_arcane_bloodline =
             bloodline_selection == Some(ARCANE_BLOODLINE_SELECTION_ID);
+
+        // SD-32 T12 Epic 8 row 18 cycle 5: the generic "select ONE
+        // bloodline, inherit every one of its real corpus powers" pass,
+        // covering the other 51 real Sorcerer bloodline groups (391 real
+        // records total, `census_class_feature_pool_group_names.py`) this
+        // file has never hand-modelled by name -- purely additive
+        // alongside the Arcane/Draconic hand-modelled branches below.
+        push_generic_pool_group_selection_magnitude(
+            input,
+            sorcerer_level,
+            ability_modifiers,
+            SORCERER_BLOODLINE_CHOICE_ID,
+            "Sorcerer",
+            "Bloodline",
+            "bloodline:",
+            "class_feature.sorcerer.bloodline.generic",
+            1,
+            explanations,
+        );
+
         let bloodline_class_skill_selection =
             choice_selection(input, SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID);
         let recognized_bloodline_class_skill_name = bloodline_class_skill_selection
@@ -40646,6 +44304,25 @@ fn explain_cleric_level1_spell_baseline(
             .collect();
         let good_domain_chosen = domain_selections_top.contains(&GOOD_DOMAIN_SELECTION);
         let healing_domain_chosen = domain_selections_top.contains(&HEALING_DOMAIN_SELECTION);
+
+        // SD-32 T12 Epic 8 row 18 cycle 5: the generic "select ONE domain,
+        // inherit every one of its real corpus powers" pass, covering the
+        // other 67 real Cleric domain groups (310 real records total,
+        // `census_class_feature_pool_group_names.py`) beyond the six this
+        // file already hand-models via `DOMAIN_POWER_CATALOG` -- purely
+        // additive alongside the hand-modelled branches below.
+        push_generic_pool_group_selection_magnitude(
+            input,
+            cleric_level,
+            ability_modifiers,
+            CLERIC_DOMAIN_CHOICE_ID,
+            "Cleric",
+            "Domain",
+            "domain:",
+            "class_feature.cleric.domain.generic",
+            1,
+            explanations,
+        );
         // SD-31 wave 26 (OPERATOR-RULINGS-2026-08-21.md section 20): widened
         // from the Good-only gate above to every OTHER `domain_power::
         // DOMAIN_POWER_CATALOG` entry -- Inquisitor's own
@@ -41840,10 +45517,12 @@ fn explain_druid_level1_spell_baseline(
             // reuse this exact, already-3-source-verified math. Byte-for-
             // byte identical output to the original inline implementation
             // for Druid (owner_class_label = "Druid").
-            ground_wolf_companion_stat_block(
+            ground_selected_companion_or_default(
+                input,
                 "class_chassis.druid.animal_companion",
                 "Druid",
                 druid_level,
+                ground_wolf_companion_stat_block,
                 explanations,
             );
             ground_wolf_companion_link_and_share_spells_vacuous(
@@ -46908,6 +50587,1324 @@ mod chassis_unsupported_diagnostics_name_the_real_gate_tests {
                 message.contains(supported_class_name),
                 "skill.selected_modifier.unsupported should name the real supported class \
                  list (missing {supported_class_name}): {message}"
+            );
+        }
+    }
+}
+
+/// SD-32 Epic 3 (`epic-3-class-reachability`, AT-32-E3-001): proves the
+/// prestige-class entry-requirement gate really runs through the real
+/// `compute_pilot_base_chassis` → `compute_class_chassis` call site (not a
+/// direct unit call on `prestige_class_entry_gate` alone) for a real
+/// corpus-derived prestige class, `class:arcane_archer`.
+#[cfg(test)]
+mod prestige_class_entry_gate_wiring_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn arcane_archer_input(feats: Vec<String>) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly: {:?}", result.diagnostics);
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = "class:arcane_archer".to_owned();
+        input.chosen.class_levels[0].level = 1;
+        input.chosen.selected_feats = feats;
+        input
+    }
+
+    fn diagnostic<'a>(
+        computation: &'a PilotBaseChassisComputation,
+        id: &str,
+    ) -> Option<&'a str> {
+        computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == id)
+            .map(|d| d.message.as_str())
+    }
+
+    /// RED, confirmed manually before this wiring landed (SD-31 wave 27's
+    /// own investigation note above `compute_generic_table_chassis`): the
+    /// `else { None }` arm produced no diagnostic at all for a
+    /// `class:arcane_archer` single-class input -- entry requirements were
+    /// simply never asked about. GREEN below.
+    #[test]
+    fn prestige_class_dispatch_still_leaves_chassis_unsupported() {
+        let input = arcane_archer_input(vec![]);
+        let computation = compute_pilot_base_chassis(&input);
+        assert_eq!(computation.base_attack_bonus, 0);
+        assert!(
+            diagnostic(&computation, "class_chassis.unsupported").is_some(),
+            "the generic unsupported-chassis diagnostic must still fire: {:?}",
+            computation.diagnostics
+        );
+    }
+
+    #[test]
+    fn missing_feats_surfaces_the_unmet_entry_gate_diagnostic() {
+        let input = arcane_archer_input(vec![]);
+        let computation = compute_pilot_base_chassis(&input);
+        let message = diagnostic(&computation, "class_chassis.prestige_entry_gate.unmet")
+            .unwrap_or_else(|| panic!("expected unmet entry-gate diagnostic: {:?}", computation.diagnostics));
+        assert!(message.contains("Arcane Archer"));
+        assert!(diagnostic(&computation, "class_chassis.prestige_entry_gate.met").is_none());
+    }
+
+    #[test]
+    fn real_feats_surface_the_met_entry_gate_diagnostic() {
+        let input = arcane_archer_input(vec![
+            "Point-Blank Shot".to_owned(),
+            "Precise Shot".to_owned(),
+            "Weapon Focus (Longbow)".to_owned(),
+        ]);
+        let computation = compute_pilot_base_chassis(&input);
+        let message = diagnostic(&computation, "class_chassis.prestige_entry_gate.met")
+            .unwrap_or_else(|| panic!("expected met entry-gate diagnostic: {:?}", computation.diagnostics));
+        assert!(message.contains("Arcane Archer"));
+        assert!(diagnostic(&computation, "class_chassis.prestige_entry_gate.unmet").is_none());
+    }
+}
+
+/// SD-32 Epic 3 (`epic-3-class-reachability`, AT-32-E3-001), second half:
+/// proves the 20-real-base-classes-without-tables registry really runs
+/// through the real `compute_pilot_base_chassis` → `compute_class_chassis`
+/// call site (not a direct unit call on `untabled_base_class_chassis`
+/// alone), for a real corpus-derived class, `class:kineticist`.
+#[cfg(test)]
+mod untabled_base_class_chassis_wiring_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn kineticist_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly: {:?}", result.diagnostics);
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = "class:kineticist".to_owned();
+        input.chosen.class_levels[0].level = level;
+        input
+    }
+
+    fn diagnostic<'a>(
+        computation: &'a PilotBaseChassisComputation,
+        id: &str,
+    ) -> Option<&'a str> {
+        computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == id)
+            .map(|d| d.message.as_str())
+    }
+
+    /// RED, confirmed manually before this wiring landed: the `else { None
+    /// }` arm produced `base_attack_bonus == 0` and a bare
+    /// `class_chassis.unsupported` diagnostic for a `class:kineticist`
+    /// single-class input -- the class was recognized by nothing at all.
+    /// GREEN below: a real chassis magnitude reaches the top-level
+    /// computation, and `class_chassis.unsupported` no longer fires for
+    /// this class.
+    #[test]
+    fn kineticist_level_20_reaches_a_real_base_attack_bonus_and_saves() {
+        let input = kineticist_input(20);
+        let computation = compute_pilot_base_chassis(&input);
+        assert_eq!(
+            computation.base_attack_bonus, 15,
+            "Kineticist level 20 ThreeQuarter BAB: (20*3)/4 = 15, from the real \
+             compute_pilot_base_chassis -> compute_class_chassis call site"
+        );
+        assert_eq!(computation.base_saves.fortitude, 12); // good: 20/2+2
+        assert_eq!(computation.base_saves.reflex, 12); // good: 20/2+2
+        assert_eq!(computation.base_saves.will, 6); // poor: 20/3
+        assert!(
+            diagnostic(&computation, "class_chassis.unsupported").is_none(),
+            "class_chassis.unsupported must NOT fire once class:kineticist has a real \
+             dispatch arm: {:?}",
+            computation.diagnostics
+        );
+    }
+
+    #[test]
+    fn kineticist_level_1_matches_the_oracle_at_the_low_end_too() {
+        let input = kineticist_input(1);
+        let computation = compute_pilot_base_chassis(&input);
+        assert_eq!(computation.base_attack_bonus, 0); // ThreeQuarter BAB: (1*3)/4 = 0
+        assert_eq!(computation.base_saves.fortitude, 2); // good: 1/2+2 = 2
+        assert_eq!(computation.base_saves.reflex, 2); // good: 1/2+2 = 2
+        assert_eq!(computation.base_saves.will, 0); // poor: 1/3 = 0
+    }
+
+    /// An unregistered class id (neither this registry, nor any of the
+    /// other five dispatch families) must still fall through to the
+    /// pre-existing `class_chassis.unsupported` diagnostic -- this wiring
+    /// must not accidentally become a catch-all.
+    #[test]
+    fn unregistered_class_id_still_falls_through_to_unsupported() {
+        let mut input = kineticist_input(5);
+        input.chosen.class_levels[0].class_id = "class:not_a_real_class".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        assert_eq!(computation.base_attack_bonus, 0);
+        assert!(diagnostic(&computation, "class_chassis.unsupported").is_some());
+    }
+}
+
+/// SD-32 card 11 (T12): proves the generic corpus-derived class-feature
+/// roster (`untabled_base_class_feature_roster::roster_for`,
+/// `push_untabled_base_class_feature_records`) really runs through the real
+/// `compute_pilot_base_chassis` → `compute_class_chassis` →
+/// `untabled_base_class_chassis::resolve` dispatch arm, for a real
+/// corpus-derived class the fixture has data for (`class:antipaladin`), not
+/// a direct unit call on the roster module alone.
+#[cfg(test)]
+mod untabled_base_class_feature_roster_wiring_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn antipaladin_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly: {:?}", result.diagnostics);
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = "class:antipaladin".to_owned();
+        input.chosen.class_levels[0].level = level;
+        input
+    }
+
+    fn explanation_ids(computation: &PilotBaseChassisComputation) -> Vec<String> {
+        computation.explanations.iter().map(|e| e.id.clone()).collect()
+    }
+
+    /// RED, confirmed manually before this wiring landed (and re-confirmed
+    /// live by mutating `roster_for` to return an empty `Vec` and re-running
+    /// this exact test, which failed for the intended reason): a level-2
+    /// Antipaladin's `Touch of Corruption` (min_level 2, per the oracle's
+    /// own `PREVARGTEQ:Antipaladin_CFP_Level,2`) produced no
+    /// `class_feature.untabled.*` explanation at all. GREEN below: the id
+    /// now reaches the top-level computation.
+    #[test]
+    fn antipaladin_level_2_reaches_touch_of_corruption_via_the_generic_roster() {
+        let input = antipaladin_input(2);
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.antipaladin.corpus_record.touch_of_corruption".to_owned()),
+            "level-2 Antipaladin must carry the granted Touch of Corruption roster id; got: {ids:?}"
+        );
+        // A feature gated to a higher level (Aura of Cowardice, min_level 3)
+        // must NOT appear yet -- the same "absent means not yet granted"
+        // contract `push_pu_class_feature_records` already uses.
+        assert!(
+            !ids.contains(&"class_feature.untabled.antipaladin.corpus_record.aura_of_cowardice".to_owned()),
+            "level-2 Antipaladin must not yet carry a level-3-gated feature; got: {ids:?}"
+        );
+    }
+
+    #[test]
+    fn antipaladin_level_3_gains_the_level_3_gated_feature() {
+        let input = antipaladin_input(3);
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.antipaladin.corpus_record.aura_of_cowardice".to_owned()),
+            "level-3 Antipaladin must carry Aura of Cowardice; got: {ids:?}"
+        );
+    }
+
+    /// Shape-2 (`CLASS:` level-table row) coverage, proven end-to-end the
+    /// same way shape 1's Antipaladin tests are proven above: Cryptic has
+    /// NO shape-1 (`.MOD`) data at all -- every one of its rows comes from
+    /// the level-table convention added when closing the T12 attribution
+    /// gap. A level-1 Cryptic must carry Altered Defense (min_level 1) but
+    /// not Hidden Pattern (min_level 2); a level-2 Cryptic gains it.
+    #[test]
+    fn cryptic_level_1_reaches_altered_defense_via_shape_2_but_not_the_level_2_gated_feature() {
+        let mut input = antipaladin_input(1);
+        input.chosen.class_levels[0].class_id = "class:cryptic".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.cryptic.corpus_record.altered_defense".to_owned()),
+            "level-1 Cryptic must carry the shape-2 Altered Defense roster id; got: {ids:?}"
+        );
+        assert!(
+            !ids.contains(&"class_feature.untabled.cryptic.corpus_record.hidden_pattern".to_owned()),
+            "level-1 Cryptic must not yet carry the level-2-gated Hidden Pattern; got: {ids:?}"
+        );
+    }
+
+    #[test]
+    fn cryptic_level_2_gains_the_level_2_gated_shape_2_feature() {
+        let mut input = antipaladin_input(2);
+        input.chosen.class_levels[0].class_id = "class:cryptic".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.cryptic.corpus_record.hidden_pattern".to_owned()),
+            "level-2 Cryptic must carry Hidden Pattern; got: {ids:?}"
+        );
+    }
+
+    /// A registry class the roster fixture has NO `.MOD`/`CLASS:`-row data
+    /// for (`kineticist`'s own roster attribution went through shape 2 like
+    /// every other T12 class; there is no longer a class the roster fixture
+    /// covers zero shapes for at level 20, so this test now names a class
+    /// this repo's chassis genuinely does not dispatch at all --
+    /// `undine_scion`, a race feature id namespace, never a class id) must
+    /// emit zero `class_feature.untabled.*` ids -- confirms the mechanism
+    /// never fabricates a row for a class it has no corpus evidence for.
+    /// **Superseded example, not superseded assertion:** `psion` was this
+    /// test's example through SD-32 card 11 (T12) cycle 4; it is now
+    /// covered by shape 3 (`ground_psion_class_features`,
+    /// `psion_features`'s own module doc comment) and asserted positively
+    /// below (`psion_manifesting_emits_its_own_power_points_magnitude`),
+    /// same as Cryptic's shape-2 supersession noted above.
+    #[test]
+    fn a_class_with_no_roster_data_emits_no_untabled_class_feature_ids() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:undine_scion".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.iter().all(|id| !id.starts_with("class_feature.untabled.undine_scion.")),
+            "undine_scion is not a dispatched class id; must emit none: {ids:?}"
+        );
+    }
+
+    /// Proves `ground_antipaladin_class_features` really runs through this
+    /// same `compute_pilot_base_chassis` -> `compute_class_chassis` call
+    /// site (not a direct unit call on `antipaladin_features` alone), and
+    /// that a real Charisma modifier reaches the formula: the fixture's
+    /// human Fighter carries a 10 Charisma (modifier 0) by default, so this
+    /// overrides it to a 16 (+3) to prove the ability score is actually
+    /// read, not a hardcoded stand-in.
+    #[test]
+    fn antipaladin_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.ability_scores.charisma = 16;
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.touch_of_corruption.uses_per_day"),
+            13, // 20/2 + 3
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.touch_of_corruption.damage_dice"),
+            10, // 20/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.unholy_resilience.save_bonus"),
+            3,
+        );
+        assert_eq!(value("class_feature.untabled.antipaladin.cruelty.dc"), 23); // 10+3+10
+        assert_eq!(value("class_feature.untabled.antipaladin.cruelty.known"), 6); // capped
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.channel_negative_energy.dice"),
+            10, // (20+1)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.channel_negative_energy.dc"),
+            23, // 10+10+3
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.fiendish_boon.selections"),
+            4, // capped
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.aura_of_depravity.damage_reduction"),
+            5,
+        );
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.unholy_champion.banishment_caster_level"),
+            20,
+        );
+        // SD-32 card 11 (T12) follow-up: three magnitude-bearing records
+        // the `psion` cycle's widened census surfaced on this class.
+        assert_eq!(value("class_feature.untabled.antipaladin.aura_of_evil.strength_level"), 20);
+        assert_eq!(value("class_feature.untabled.antipaladin.detect_good.caster_level"), 20);
+        assert_eq!(value("class_feature.untabled.antipaladin.smite_good.uses_per_day"), 7); // capped
+        assert_eq!(
+            value("class_feature.untabled.antipaladin.smite_good.attack_and_ac_bonus"),
+            3,
+        );
+        assert_eq!(value("class_feature.untabled.antipaladin.smite_good.damage_bonus"), 20);
+    }
+
+    /// Below every grant level (a level-1 Antipaladin, one below Touch of
+    /// Corruption's own level-2 minimum), none of the seven magnitude ids
+    /// fire -- the "absent means not yet granted" contract, proven live at
+    /// the real dispatch site.
+    #[test]
+    fn antipaladin_level_1_has_none_of_the_original_seven_magnitudes_yet() {
+        // The ORIGINAL seven Antipaladin magnitudes (Touch of Corruption,
+        // Unholy Resilience, Cruelty, Channel Negative Energy, Fiendish
+        // Boon, Aura of Depravity, Unholy Champion) are all gated at level
+        // >= 2. SD-32 card 11 (T12)'s widened-census follow-up cycle added
+        // three MORE magnitudes (Aura of Evil, Detect Good, Smite Good)
+        // whose own roster `min_level` is 1 -- those legitimately DO appear
+        // at level 1 now, so this test (renamed from
+        // `..._has_none_of_the_seven_magnitudes_yet`, which the new grants
+        // made stale) asserts the original seven's absence specifically,
+        // not a blanket absence of every `antipaladin.` id.
+        let input = antipaladin_input(1);
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        const ORIGINAL_SEVEN_PREFIXES: [&str; 7] = [
+            "class_feature.untabled.antipaladin.touch_of_corruption.",
+            "class_feature.untabled.antipaladin.unholy_resilience.",
+            "class_feature.untabled.antipaladin.cruelty.",
+            "class_feature.untabled.antipaladin.channel_negative_energy.",
+            "class_feature.untabled.antipaladin.fiendish_boon.",
+            "class_feature.untabled.antipaladin.aura_of_depravity.",
+            "class_feature.untabled.antipaladin.unholy_champion.",
+        ];
+        assert!(
+            ids.iter().all(|id| !ORIGINAL_SEVEN_PREFIXES.iter().any(|p| id.starts_with(p))),
+            "level-1 Antipaladin must have none of the original seven (all min_level >= 2) \
+             magnitude explanations yet: {ids:?}"
+        );
+        // The three level-1-gated follow-up magnitudes DO appear.
+        for id in [
+            "class_feature.untabled.antipaladin.aura_of_evil.strength_level",
+            "class_feature.untabled.antipaladin.detect_good.caster_level",
+            "class_feature.untabled.antipaladin.smite_good.uses_per_day",
+            "class_feature.untabled.antipaladin.smite_good.attack_and_ac_bonus",
+            "class_feature.untabled.antipaladin.smite_good.damage_bonus",
+        ] {
+            assert!(ids.contains(&id.to_owned()), "expected {id} at level 1, got: {ids:?}");
+        }
+    }
+
+    /// SD-32 card 11 (T12), classes 2-6 of the group attempted after
+    /// Antipaladin: proves `ground_cryptic_class_features`,
+    /// `ground_dread_class_features`, `ground_marksman_class_features`,
+    /// `ground_psychic_warrior_class_features`, and
+    /// `ground_soulknife_class_features` really run through the real
+    /// `compute_pilot_base_chassis` -> `compute_class_chassis` dispatch
+    /// site, at level 20 with real ability scores overridden away from the
+    /// fixture's default (10, modifier 0).
+    #[test]
+    fn cryptic_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:cryptic".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.cryptic.altered_defense.damage_reduction"),
+            5, // (20+3)/4
+        );
+        assert_eq!(value("class_feature.untabled.cryptic.disrupt_pattern.range_feet"), 30);
+        assert_eq!(
+            value("class_feature.untabled.cryptic.enhanced_disruption.bonus_dice"),
+            9, // (20-1)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.cryptic.hidden_pattern.stealth_bonus"),
+            6, // capped
+        );
+        assert_eq!(value("class_feature.untabled.cryptic.trapmaker.bonus"), 20);
+        assert_eq!(
+            value("class_feature.untabled.cryptic.unchanging_pattern.power_resistance"),
+            32, // 12+20
+        );
+        // SD-32 card 11 (T12) follow-up: `Cryptic Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let int_score = input.chosen.ability_scores.intelligence;
+        let int_mod = (int_score - 10) / 2;
+        assert_eq!(
+            value("class_feature.untabled.cryptic.cryptic_manifesting.power_points"),
+            12 + (int_mod * 20) / 2,
+        );
+        assert_eq!(
+            value("class_feature.untabled.cryptic.cryptic_manifesting.powers_known"),
+            20,
+        );
+        assert_eq!(
+            value("class_feature.untabled.cryptic.cryptic_manifesting.max_power_level"),
+            ((20 + 2) / 3).min(6).min(int_score - 10),
+        );
+    }
+
+    #[test]
+    fn dread_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:dread".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.dread.devastating_touch.bonus_damage"),
+            20,
+        );
+        assert_eq!(value("class_feature.untabled.dread.fearsome_insight.bonus"), 10);
+        assert_eq!(
+            value("class_feature.untabled.dread.terror.uses_per_day"),
+            23, // 20+3
+        );
+        assert_eq!(value("class_feature.untabled.dread.aura_of_fear.penalty"), -4);
+        assert_eq!(
+            value("class_feature.untabled.dread.shadow_twin.uses_per_day"),
+            3, // charisma modifier only
+        );
+        assert_eq!(value("class_feature.untabled.dread.fear_incarnate.damage_reduction"), 10);
+        // SD-32 card 11 (T12) follow-up: `Dread Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let cha_score = input.chosen.ability_scores.charisma;
+        assert_eq!(
+            value("class_feature.untabled.dread.dread_manifesting.power_points"),
+            12 + (3 * 20) / 2,
+        );
+        assert_eq!(value("class_feature.untabled.dread.dread_manifesting.powers_known"), 20);
+        assert_eq!(
+            value("class_feature.untabled.dread.dread_manifesting.max_power_level"),
+            ((20 + 2) / 3).min(6).min(cha_score - 10),
+        );
+    }
+
+    #[test]
+    fn marksman_level_20_reaches_every_real_magnitude_with_a_real_dexterity_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:marksman".to_owned();
+        input.chosen.ability_scores.dexterity = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.marksman.wind_reader.uses_per_day"), 23);
+        assert_eq!(value("class_feature.untabled.marksman.evade_arrows.ac_bonus"), 5);
+        assert_eq!(value("class_feature.untabled.marksman.favored_weapon.base_bonus"), 5);
+        assert_eq!(
+            value("class_feature.untabled.marksman.cover_fire.dc"),
+            23, // 10+3+10
+        );
+        assert_eq!(
+            value("class_feature.untabled.marksman.ranged_specialist.critical_multiplier_bonus"),
+            1,
+        );
+        // SD-32 card 11 (T12) follow-up: `Marksman Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let wis_score = input.chosen.ability_scores.wisdom; // fixture default 12, modifier +1
+        assert_eq!(
+            value("class_feature.untabled.marksman.marksman_manifesting.power_points"),
+            6 + (1 * 20) / 2, // ladder value 6 + (WIS modifier 1 * level)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.marksman.marksman_manifesting.powers_known"),
+            12, // min(9,floor(59/4)=14)=9, + floor(7/2)=3 -> 12
+        );
+        assert_eq!(
+            value("class_feature.untabled.marksman.marksman_manifesting.max_power_level"),
+            ((20 + 3) / 4).min(4).min(wis_score - 10),
+        );
+    }
+
+    #[test]
+    fn psychic_warrior_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psychic_warrior".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.psychic_warrior.warriors_path.level"), 20);
+        assert_eq!(
+            value("class_feature.untabled.psychic_warrior.pathweaving.uses_per_day"),
+            2, // (20-12)/3
+        );
+        assert_eq!(
+            value("class_feature.untabled.psychic_warrior.eternal_warrior.uses_per_day"),
+            1,
+        );
+        // SD-32 card 11 (T12) follow-up: `Psychic Warrior Manifesting`'s
+        // three shape-3 magnitudes, proven live through the real dispatch
+        // site.
+        let wis_score = input.chosen.ability_scores.wisdom; // fixture default 12, modifier +1
+        assert_eq!(
+            value(
+                "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+power_points"
+            ),
+            12 + (1 * 20) / 2, // ladder value 12 + (WIS modifier 1 * level)/2
+        );
+        assert_eq!(
+            value(
+                "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+powers_known"
+            ),
+            20,
+        );
+        assert_eq!(
+            value(
+                "class_feature.untabled.psychic_warrior.psychic_warrior_manifesting.\
+max_power_level"
+            ),
+            ((20 + 2) / 3).min(6).min(wis_score - 10),
+        );
+    }
+
+    #[test]
+    fn soulknife_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:soulknife".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.soulknife.form_mind_blade.level"), 20);
+        assert_eq!(
+            value("class_feature.untabled.soulknife.enhanced_mind_blade.max_enhancement_bonus"),
+            5, // capped
+        );
+        assert_eq!(value("class_feature.untabled.soulknife.psychic_strike.die_size"), 8);
+        assert_eq!(value("class_feature.untabled.soulknife.quick_draw.uses_per_round"), 1);
+    }
+
+    /// SD-32 card 11 (T12), cycle 3: proves `ground_aegis_class_features`,
+    /// `ground_tactician_class_features`, `ground_vitalist_class_features`,
+    /// and `ground_wilder_class_features` really run through the real
+    /// `compute_pilot_base_chassis` -> `compute_class_chassis` dispatch
+    /// site, at level 20 with real ability scores overridden away from the
+    /// fixture's default (10, modifier 0) -- closing all nine
+    /// magnitude-bearing `ultimate_psionics` classes.
+    #[test]
+    fn aegis_level_20_reaches_every_real_magnitude_with_a_real_intelligence_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:aegis".to_owned();
+        input.chosen.ability_scores.intelligence = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.aegis.astral_repair.hp"), 2);
+        assert_eq!(
+            value("class_feature.untabled.aegis.damage_reduction.value"),
+            8, // (20+4)/3
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.form_astral_suit.custom_points"),
+            26, // 2+20+4
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.craftsman.bonus"),
+            5, // (20+2)/4
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.reconfigure.times_per_day"),
+            9, // (20-1)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.augment_suit.duration_rounds"),
+            3, // intelligence modifier only
+        );
+        assert_eq!(
+            value("class_feature.untabled.aegis.cannibalize_suit.times_per_day"),
+            5, // (20-10)/2
+        );
+    }
+
+    #[test]
+    fn tactician_level_20_reaches_every_real_magnitude_with_real_ability_scores() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:tactician".to_owned();
+        input.chosen.ability_scores.intelligence = 16; // +3
+        input.chosen.ability_scores.charisma = 14; // +2
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.tactician.collective.minds"),
+            10, // max(3, 20/2=10)
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.coordinated_strike.times_per_day"),
+            6, // 3+3
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.strategy.times_per_day"),
+            5, // 3+2
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.improved_share.powers"),
+            4, // 1+(21/6)
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.teamwork_feats.bonus_pool"),
+            3, // 20/6
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.master_strategist.bonus"),
+            3, // intelligence modifier only
+        );
+        // SD-32 card 11 (T12) follow-up: `Tactician Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let int_score = input.chosen.ability_scores.intelligence;
+        assert_eq!(
+            value("class_feature.untabled.tactician.tactician_manifesting.power_points"),
+            32 + (3 * 20) / 2,
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.tactician_manifesting.powers_known"),
+            20,
+        );
+        assert_eq!(
+            value("class_feature.untabled.tactician.tactician_manifesting.max_power_level"),
+            ((20 + 1) / 2).min(9).min(int_score - 10),
+        );
+    }
+
+    #[test]
+    fn vitalist_level_20_reaches_every_real_magnitude_with_a_real_wisdom_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:vitalist".to_owned();
+        input.chosen.ability_scores.wisdom = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(
+            value("class_feature.untabled.vitalist.collective.minds"),
+            10, // max(20/2=10, 3)
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.transfer_wounds.times_per_day"),
+            6, // 3+3
+        );
+        assert_eq!(value("class_feature.untabled.vitalist.health_sense.level"), 20);
+        assert_eq!(
+            value("class_feature.untabled.vitalist.steal_health.damage"),
+            23, // 20+3
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.request_aid.times_per_day"),
+            6, // 3+3
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.steal_life.dc"),
+            23, // 10+3+10
+        );
+        // SD-32 card 11 (T12) follow-up: `Vitalist Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let wis_score = input.chosen.ability_scores.wisdom;
+        assert_eq!(
+            value("class_feature.untabled.vitalist.vitalist_manifesting.power_points"),
+            32 + (3 * 20) / 2,
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.vitalist_manifesting.powers_known"),
+            11, // 1+(21/2)
+        );
+        assert_eq!(
+            value("class_feature.untabled.vitalist.vitalist_manifesting.max_power_level"),
+            ((20 + 1) / 2).min(9).min(wis_score - 10),
+        );
+    }
+
+    #[test]
+    fn wilder_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:wilder".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.wilder.psychic_enervation.percent"), 15);
+        assert_eq!(value("class_feature.untabled.wilder.surge_blast.range_feet"), 30);
+        assert_eq!(
+            value("class_feature.untabled.wilder.wild_surge.bonus"),
+            6, // 1+(21/4)
+        );
+        assert_eq!(
+            value("class_feature.untabled.wilder.elude_attack.ac_bonus"),
+            5, // (22/4)
+        );
+        assert_eq!(
+            value("class_feature.untabled.wilder.surging_euphoria.duration_rounds"),
+            6, // mirrors wild_surge bonus
+        );
+        // SD-32 card 11 (T12) follow-up: `Wilder Manifesting`'s three
+        // shape-3 magnitudes, proven live through the real dispatch site.
+        let cha_score = input.chosen.ability_scores.charisma; // fixture default 8, modifier -1
+        assert_eq!(
+            value("class_feature.untabled.wilder.wilder_manifesting.power_points"),
+            32 + (-1 * 20) / 2, // ladder value 32 + (CHA modifier -1 * level)/2
+        );
+        assert_eq!(
+            value("class_feature.untabled.wilder.wilder_manifesting.powers_known"),
+            11, // 1+(20/2)
+        );
+        assert_eq!(
+            value("class_feature.untabled.wilder.wilder_manifesting.max_power_level"),
+            ((20 + 1) / 2).min(9).min(cha_score - 10),
+        );
+    }
+
+    /// SD-32 card 11 (T12), cycle 4: proves `ground_kineticist_class_features`,
+    /// `ground_medium_class_features`, `ground_mesmerist_class_features`,
+    /// `ground_occultist_class_features`, `ground_psychic_class_features`,
+    /// and `ground_spiritualist_class_features` really run through the real
+    /// `compute_pilot_base_chassis` -> `compute_class_chassis` dispatch
+    /// site, at level 20 with real ability scores overridden away from the
+    /// fixture's default (10, modifier 0) -- closing all six classes
+    /// sharing `oa_abilities_class.lst`.
+    #[test]
+    fn kineticist_level_20_reaches_every_real_magnitude_with_a_real_constitution_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:kineticist".to_owned();
+        input.chosen.ability_scores.constitution = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.kineticist.burn.max_points"), 6); // 3+3
+        assert_eq!(value("class_feature.untabled.kineticist.elemental_focus.level_base"), 10);
+        assert_eq!(value("class_feature.untabled.kineticist.infusion.pool"), 8);
+        assert_eq!(value("class_feature.untabled.kineticist.kinetic_blast.range_feet"), 30);
+        assert_eq!(value("class_feature.untabled.kineticist.wild_talents.dc"), 23); // 10+10+3
+        assert_eq!(value("class_feature.untabled.kineticist.expanded_element.pool"), 2);
+    }
+
+    #[test]
+    fn medium_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:medium".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.medium.spirit.bonus"), 6);
+        assert_eq!(value("class_feature.untabled.medium.spirit_surge.dice"), 10);
+        assert_eq!(value("class_feature.untabled.medium.haunt_channeler.dice"), 10);
+        assert_eq!(value("class_feature.untabled.medium.haunt_channeler.dc"), 30);
+        assert_eq!(value("class_feature.untabled.medium.location_channel.duration_rounds"), 20);
+        assert_eq!(value("class_feature.untabled.medium.location_channel.dc"), 30);
+        assert_eq!(value("class_feature.untabled.medium.ask_the_spirits.dc"), 18); // 15+3
+        assert_eq!(value("class_feature.untabled.medium.astral_journey.dc"), 22); // 19+3
+        assert_eq!(value("class_feature.untabled.medium.trance_of_three.duration_rounds"), 20);
+    }
+
+    #[test]
+    fn mesmerist_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:mesmerist".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.mesmerist.consummate_liar.bonus"), 10);
+        assert_eq!(value("class_feature.untabled.mesmerist.hypnotic_stare.penalty"), 1);
+        assert_eq!(value("class_feature.untabled.mesmerist.mesmerist_tricks.uses"), 13); // 10+3
+        assert_eq!(value("class_feature.untabled.mesmerist.mesmerist_tricks.range_feet"), 300);
+        assert_eq!(value("class_feature.untabled.mesmerist.mesmerist_tricks.dc"), 23); // 10+10+3
+        assert_eq!(value("class_feature.untabled.mesmerist.mesmerist_tricks.known"), 11);
+        assert_eq!(value("class_feature.untabled.mesmerist.painful_stare.damage"), 10);
+        assert_eq!(value("class_feature.untabled.mesmerist.painful_stare.bonus_dice"), 6);
+        assert_eq!(value("class_feature.untabled.mesmerist.towering_ego.bonus"), 3);
+        assert_eq!(value("class_feature.untabled.mesmerist.bold_stare.known"), 5);
+        assert_eq!(value("class_feature.untabled.mesmerist.touch_treatment.uses"), 6); // 3+3
+        assert_eq!(value("class_feature.untabled.mesmerist.manifold_tricks.count"), 5);
+        assert_eq!(value("class_feature.untabled.mesmerist.mental_potency.bonus"), 4);
+        assert_eq!(value("class_feature.untabled.mesmerist.glib_lie.dc"), 35);
+    }
+
+    #[test]
+    fn occultist_level_20_reaches_every_real_magnitude_with_a_real_intelligence_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:occultist".to_owned();
+        input.chosen.ability_scores.intelligence = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.occultist.focus_powers.count"), 10);
+        assert_eq!(value("class_feature.untabled.occultist.focus_powers.dc"), 23); // 10+10+3
+        assert_eq!(value("class_feature.untabled.occultist.implements.school_count"), 7);
+        assert_eq!(value("class_feature.untabled.occultist.mental_focus.value"), 23); // 20+3
+        assert_eq!(value("class_feature.untabled.occultist.magic_item_skill.bonus"), 10);
+        assert_eq!(value("class_feature.untabled.occultist.outside_contact.count"), 4);
+        assert_eq!(value("class_feature.untabled.occultist.binding_circles.dc"), 23); // 10+10+3
+    }
+
+    #[test]
+    fn psychic_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        // Row 17 residual closure: Phrenic Pool's ability term is
+        // discipline-dependent (see `psychic_discipline_pool_ability`), so a
+        // real magnitude requires a real chosen discipline, same as
+        // Sorcerer's bloodline choice.
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:psychic_discipline".to_owned(),
+            selection_id: "discipline:rapport".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.psychic.phrenic_amplifications.count"), 1 + 19 / 4);
+        assert_eq!(value("class_feature.untabled.psychic.phrenic_pool.value"), 13); // 10+3, Rapport = CHA
+        assert_eq!(value("class_feature.untabled.psychic.psychic_discipline.pool"), 1);
+        assert_eq!(value("class_feature.untabled.psychic.major_amplifications.count"), 1 + 9 / 4);
+    }
+
+    /// RED, confirmed manually before this wiring landed (mutated
+    /// `psychic_discipline_pool_ability` to `Some((ability_modifiers.charisma,
+    /// "Charisma"))` unconditionally, re-ran, watched `phrenic_pool.value`
+    /// appear with no chosen discipline at all -- then reverted). GREEN
+    /// below: with no `choice:psychic_discipline` selection, Phrenic Pool
+    /// is correctly left ungrounded rather than defaulting to any ability
+    /// score -- the exact provisional-default shape row 17 exists to close,
+    /// not reintroduce. Every OTHER psychic magnitude still grounds, since
+    /// only Phrenic Pool depends on the discipline choice.
+    #[test]
+    fn psychic_phrenic_pool_is_ungrounded_with_no_chosen_discipline() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
+        input.chosen.ability_scores.charisma = 16;
+        input.chosen.ability_scores.wisdom = 18;
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.untabled.psychic.phrenic_pool.value"),
+            "Phrenic Pool must not ground a value with no chosen Psychic Discipline: {:?}",
+            computation.explanations
+        );
+        assert!(
+            computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.untabled.psychic.phrenic_amplifications.count"),
+            "discipline-independent psychic magnitudes must still ground: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// Proves `psychic_discipline_pool_ability` per discipline
+    /// (`oa_abilities_class.lst:1188`-1196's own `BONUS:VAR|
+    /// PhrenicPoolAbility|<CHA|WIS>` tokens, not domain recall) — all 9,
+    /// not just one, per `decisions.md §27b` item 5 ("needs a new
+    /// mechanism" is not grounds to under-prove it).
+    #[test]
+    fn psychic_phrenic_pool_uses_the_real_ability_for_every_discipline() {
+        let disciplines_and_expected_ability: [(&str, &str); 9] = [
+            ("discipline:abomination", "cha"),
+            ("discipline:dream", "cha"),
+            ("discipline:pain", "cha"),
+            ("discipline:rapport", "cha"),
+            ("discipline:faith", "wis"),
+            ("discipline:lore", "wis"),
+            ("discipline:psychedelia", "wis"),
+            ("discipline:self_perfection", "wis"),
+            ("discipline:tranquility", "wis"),
+        ];
+        for (selection_id, expect_ability) in disciplines_and_expected_ability {
+            let mut input = antipaladin_input(4);
+            input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
+            input.chosen.ability_scores.charisma = 14; // +2
+            input.chosen.ability_scores.wisdom = 20; // +5
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:psychic_discipline".to_owned(),
+                selection_id: selection_id.to_owned(),
+            });
+            let computation = compute_pilot_base_chassis(&input);
+            let fact = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.untabled.psychic.phrenic_pool.value")
+                .unwrap_or_else(|| {
+                    panic!("expected Phrenic Pool to ground for {selection_id}: {:?}", computation.explanations)
+                });
+            let expected = 4 / 2 + if expect_ability == "cha" { 2 } else { 5 };
+            assert_eq!(fact.value, expected, "{selection_id} -> {expect_ability}: {:?}", fact);
+        }
+    }
+
+    /// An unrecognized selection under the right choice-set id must not be
+    /// treated as any real discipline (no silent default, `decisions.md
+    /// §1a`).
+    #[test]
+    fn psychic_phrenic_pool_is_ungrounded_for_an_unrecognized_discipline_selection() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psychic".to_owned();
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:psychic_discipline".to_owned(),
+            selection_id: "discipline:not_a_real_discipline".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.untabled.psychic.phrenic_pool.value"),
+            "an unrecognized discipline selection must not ground any value: {:?}",
+            computation.explanations
+        );
+    }
+
+    #[test]
+    fn spiritualist_level_20_reaches_every_real_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:spiritualist".to_owned();
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.spiritualist.phantom.master_level"), 20);
+        assert_eq!(
+            value("class_feature.untabled.spiritualist.shared_consciousness.focus_pool"),
+            1
+        );
+        assert_eq!(value("class_feature.untabled.spiritualist.calm_spirit.uses_per_day"), 4);
+    }
+
+    /// SD-32 card 11 (T12), cycle 4: proves `ground_magus_class_features`,
+    /// `ground_shifter_class_features`, and `ground_vigilante_class_features`
+    /// really run through the real dispatch site -- the three single-class
+    /// single-book tails cycle 3 named.
+    #[test]
+    fn magus_level_20_reaches_every_real_magnitude_with_a_real_intelligence_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:magus".to_owned();
+        input.chosen.ability_scores.intelligence = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.magus.arcane_pool.value"), 13); // 10+3
+        assert_eq!(value("class_feature.untabled.magus.arcane_pool.enhancement_bonus"), 5);
+        assert_eq!(value("class_feature.untabled.magus.armor_proficiency.level"), 20);
+        assert_eq!(value("class_feature.untabled.magus.magus_arcana.pool"), 6);
+        assert_eq!(value("class_feature.untabled.magus.bonus_feats.pool"), 3);
+        assert_eq!(value("class_feature.untabled.magus.fighter_training.level"), 10);
+    }
+
+    #[test]
+    fn shifter_level_20_reaches_every_real_magnitude_with_a_real_wisdom_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:shifter".to_owned();
+        input.chosen.ability_scores.wisdom = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.shifter.shifter_aspect.minutes"), 23);
+        assert_eq!(value("class_feature.untabled.shifter.shifter_aspect.count"), 4);
+        // Fixture's default race resolves Medium: base 4, +2 at 7, +2 at 11, +2 at 13.
+        assert_eq!(value("class_feature.untabled.shifter.shifter_claws.damage"), 10);
+        assert_eq!(value("class_feature.untabled.shifter.defensive_instinct.ac_bonus"), 6); // 5+1
+        assert_eq!(value("class_feature.untabled.shifter.track.level"), 20);
+        assert_eq!(value("class_feature.untabled.shifter.wild_shape.count"), 23); // 20+3
+    }
+
+    #[test]
+    fn vigilante_level_20_reaches_every_real_magnitude_with_a_real_charisma_score() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:vigilante".to_owned();
+        input.chosen.ability_scores.charisma = 16; // +3
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        assert_eq!(value("class_feature.untabled.vigilante.seamless_guise.bonus"), 20);
+        assert_eq!(value("class_feature.untabled.vigilante.social_talent.count"), 10);
+        assert_eq!(
+            value("class_feature.untabled.vigilante.vigilante_specialization.pool"),
+            1
+        );
+        assert_eq!(value("class_feature.untabled.vigilante.vigilante_talent.count"), 10);
+        assert_eq!(value("class_feature.untabled.vigilante.vigilante_talent.dc"), 23); // 10+10+3
+        assert_eq!(value("class_feature.untabled.vigilante.unshakable.dc_bonus"), 20);
+        assert_eq!(
+            value("class_feature.untabled.vigilante.frightening_appearance.dc"),
+            23
+        );
+        assert_eq!(value("class_feature.untabled.vigilante.stunning_appearance.dc"), 23);
+        assert_eq!(
+            value("class_feature.untabled.vigilante.stunning_appearance.hd_threshold"),
+            20
+        );
+    }
+
+    /// Proves `ground_psion_class_features` really runs through
+    /// `compute_pilot_base_chassis` -> `compute_class_chassis` (not a
+    /// direct unit call on `psion_features` alone), and that a real
+    /// Intelligence modifier reaches the formula.
+    #[test]
+    fn psion_manifesting_emits_its_own_power_points_magnitude() {
+        let mut input = antipaladin_input(20);
+        input.chosen.class_levels[0].class_id = "class:psion".to_owned();
+        input.chosen.ability_scores.intelligence = 20; // +5
+        let computation = compute_pilot_base_chassis(&input);
+        let value = |id: &str| {
+            computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected explanation {id}, got: {:?}", computation.explanations))
+                .value
+        };
+        // base ladder at level 20 = 32, bonus (5*20)/2 = 50.
+        assert_eq!(value("class_feature.untabled.psion.psion_manifesting.power_points"), 82);
+    }
+
+    /// Below level 1 (the character's own lowest possible class level in
+    /// this fixture shape), Psion Power Points must be absent -- the same
+    /// "absent means not yet granted" contract every other class above
+    /// proves, spot-checked at level 1 itself since Psion grants this
+    /// magnitude from its very first level (no higher gate to under-shoot).
+    #[test]
+    fn psion_level_1_already_carries_power_points() {
+        let mut input = antipaladin_input(1);
+        input.chosen.class_levels[0].class_id = "class:psion".to_owned();
+        input.chosen.ability_scores.intelligence = 10; // +0
+        let computation = compute_pilot_base_chassis(&input);
+        let ids = explanation_ids(&computation);
+        assert!(
+            ids.contains(&"class_feature.untabled.psion.psion_manifesting.power_points".to_owned()),
+            "level-1 Psion must already carry Psion Manifesting's power points; got: {ids:?}"
+        );
+    }
+
+    /// Below each class's own highest-gated magnitude's `min_level`, that
+    /// specific id must be absent -- the same "absent means not yet
+    /// granted" contract proven for Antipaladin above, spot-checked at
+    /// each new class's own highest threshold (several of these five
+    /// classes grant one or more magnitudes at level 1 itself, unlike
+    /// Antipaladin whose lowest is level 2, so a blanket level-1 check
+    /// does not apply generically here).
+    #[test]
+    fn each_new_class_lacks_its_highest_gated_magnitude_one_level_early() {
+        let cases: [(&str, u8, &str); 18] = [
+            (
+                "class:cryptic",
+                18,
+                "class_feature.untabled.cryptic.unchanging_pattern.power_resistance",
+            ),
+            (
+                "class:dread",
+                20,
+                "class_feature.untabled.dread.fear_incarnate.damage_reduction",
+            ),
+            (
+                "class:marksman",
+                19,
+                "class_feature.untabled.marksman.ranged_specialist.critical_multiplier_bonus",
+            ),
+            (
+                "class:psychic_warrior",
+                20,
+                "class_feature.untabled.psychic_warrior.eternal_warrior.uses_per_day",
+            ),
+            (
+                "class:soulknife",
+                5,
+                "class_feature.untabled.soulknife.quick_draw.uses_per_round",
+            ),
+            (
+                "class:aegis",
+                12,
+                "class_feature.untabled.aegis.cannibalize_suit.times_per_day",
+            ),
+            (
+                "class:tactician",
+                20,
+                "class_feature.untabled.tactician.master_strategist.bonus",
+            ),
+            (
+                "class:vitalist",
+                14,
+                "class_feature.untabled.vitalist.steal_life.dc",
+            ),
+            (
+                "class:wilder",
+                4,
+                "class_feature.untabled.wilder.surging_euphoria.duration_rounds",
+            ),
+            (
+                "class:kineticist",
+                7,
+                "class_feature.untabled.kineticist.expanded_element.pool",
+            ),
+            (
+                "class:medium",
+                15,
+                "class_feature.untabled.medium.trance_of_three.duration_rounds",
+            ),
+            (
+                "class:mesmerist",
+                11,
+                "class_feature.untabled.mesmerist.glib_lie.dc",
+            ),
+            (
+                "class:occultist",
+                12,
+                "class_feature.untabled.occultist.binding_circles.dc",
+            ),
+            (
+                "class:psychic",
+                11,
+                "class_feature.untabled.psychic.major_amplifications.count",
+            ),
+            (
+                "class:spiritualist",
+                7,
+                "class_feature.untabled.spiritualist.calm_spirit.uses_per_day",
+            ),
+            (
+                "class:magus",
+                10,
+                "class_feature.untabled.magus.fighter_training.level",
+            ),
+            (
+                "class:shifter",
+                4,
+                "class_feature.untabled.shifter.wild_shape.count",
+            ),
+            (
+                "class:vigilante",
+                17,
+                "class_feature.untabled.vigilante.stunning_appearance.hd_threshold",
+            ),
+        ];
+        for (class_id, min_level, gated_id) in cases {
+            let mut input = antipaladin_input(min_level - 1);
+            input.chosen.class_levels[0].class_id = class_id.to_owned();
+            let computation = compute_pilot_base_chassis(&input);
+            let ids = explanation_ids(&computation);
+            assert!(
+                !ids.contains(&gated_id.to_owned()),
+                "{class_id} at level {} (one below {gated_id}'s min_level {min_level}) must \
+                 not yet carry it: {ids:?}",
+                min_level - 1
+            );
+
+            let mut input_at = antipaladin_input(min_level);
+            input_at.chosen.class_levels[0].class_id = class_id.to_owned();
+            let computation_at = compute_pilot_base_chassis(&input_at);
+            let ids_at = explanation_ids(&computation_at);
+            assert!(
+                ids_at.contains(&gated_id.to_owned()),
+                "{class_id} at level {min_level} must carry {gated_id}: {ids_at:?}"
             );
         }
     }
@@ -55546,9 +60543,171 @@ mod hunter_dispatch_widening_safety_tests {
         }
     }
 
-    /// An active Animal Focus naming no recognized choice (or one of the
-    /// other 12 unbuilt options) is a genuine posture violation and must
-    /// claim-block -- never silently passed.
+    /// SD-32 T12 Epic 8 row 18 cycle 17: every one of the 11 magnitude-bearing
+    /// Animal Focus options resolves to its own real level-scaled magnitude,
+    /// proven directly against `HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS`'s own
+    /// per-option base/tier fields (each independently verified against its
+    /// own `data/corpus/advanced_class_guide/class_feature/hunter_animal_focus/
+    /// <name>.json`, see that table's own doc). Tiger mirrors Bull exactly
+    /// (2/2/2); Falcon/Frog/Monkey/Owl share the 4/2/2 shape; Stag is 5/5/5;
+    /// Wolf is 10/10/10; Bat is 60/30/0 (its own level-15 benefit is the
+    /// separate blindsense boolean, proven in its own test below).
+    #[test]
+    fn every_tiered_animal_focus_option_matches_its_own_real_level_gates() {
+        let expectations: &[(&str, &[(u8, i16)])] = &[
+            ("animal_focus:bull", &[(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)]),
+            ("animal_focus:bear", &[(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)]),
+            ("animal_focus:tiger", &[(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)]),
+            ("animal_focus:falcon", &[(1, 4), (7, 4), (8, 6), (14, 6), (15, 8), (20, 8)]),
+            ("animal_focus:frog", &[(1, 4), (7, 4), (8, 6), (14, 6), (15, 8), (20, 8)]),
+            ("animal_focus:monkey", &[(1, 4), (7, 4), (8, 6), (14, 6), (15, 8), (20, 8)]),
+            ("animal_focus:owl", &[(1, 4), (7, 4), (8, 6), (14, 6), (15, 8), (20, 8)]),
+            ("animal_focus:snake", &[(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)]),
+            ("animal_focus:stag", &[(1, 5), (7, 5), (8, 10), (14, 10), (15, 15), (20, 15)]),
+            ("animal_focus:wolf", &[(1, 10), (7, 10), (8, 20), (14, 20), (15, 30), (20, 30)]),
+            ("animal_focus:bat", &[(1, 60), (7, 60), (8, 90), (14, 90), (15, 90), (20, 90)]),
+        ];
+        for (selection_id, per_level) in expectations {
+            let option = super::HUNTER_ANIMAL_FOCUS_TIERED_OPTIONS
+                .iter()
+                .find(|o| &o.selection_id == selection_id)
+                .unwrap_or_else(|| panic!("missing tiered option {selection_id}"));
+            for (level, expected) in *per_level {
+                assert_eq!(
+                    super::hunter_animal_focus_tiered_bonus(option, *level),
+                    *expected,
+                    "{selection_id} at level {level}"
+                );
+            }
+        }
+    }
+
+    /// A single-class Hunter actively using the Tiger Animal Focus (of the
+    /// 12 options grounded this cycle, alongside Bull) applies its own real
+    /// DEX enhancement bonus through the full end-to-end pipeline, proving
+    /// the widened active-branch dispatch, not only the standalone formula.
+    #[test]
+    fn single_class_hunter_actively_focused_on_tiger_applies_the_real_bonus() {
+        let mut input = human_hunter_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+            selection_id: "animal_focus:tiger".to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let active = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.active")
+            .expect("expected Tiger Animal Focus grounded at level 1");
+        assert_eq!(active.value, 2, "level 1 Tiger bonus: {:?}", active);
+    }
+
+    /// Bat Animal Focus's own extra level-15 blindsense fact is a SEPARATE
+    /// boolean explanation from its darkvision-range magnitude -- proven
+    /// present at level 15 and absent below it.
+    #[test]
+    fn bat_animal_focus_blindsense_appears_only_at_level_15_and_above() {
+        for (level, expect_blindsense) in [(1u8, false), (14, false), (15, true), (20, true)] {
+            let mut input = human_hunter_input(level);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+                selection_id: "animal_focus:bat".to_owned(),
+            });
+            input.chosen.class_ability_activations.push(ClassAbilityActivation {
+                ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+                active_state: ActiveState::EquippedActive,
+                rounds_consumed_today: None,
+            });
+
+            let receipt = build_pilot_headless_receipt(&input);
+            let has_blindsense = receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.bat_blindsense");
+            assert_eq!(
+                has_blindsense, expect_blindsense,
+                "level {level} Bat blindsense presence"
+            );
+        }
+    }
+
+    /// Mouse Animal Focus is a boolean evasion/improved-evasion posture
+    /// fact, not a `BONUS:VAR` magnitude -- proven at level 1 (evasion
+    /// only) and level 12+ (improved evasion too).
+    #[test]
+    fn mouse_animal_focus_grounds_evasion_and_improved_evasion_at_its_own_gate() {
+        for (level, expect_improved) in [(1u8, false), (11, false), (12, true), (20, true)] {
+            let mut input = human_hunter_input(level);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+                selection_id: "animal_focus:mouse".to_owned(),
+            });
+            input.chosen.class_ability_activations.push(ClassAbilityActivation {
+                ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+                active_state: ActiveState::EquippedActive,
+                rounds_consumed_today: None,
+            });
+
+            let receipt = build_pilot_headless_receipt(&input);
+            let active = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.active")
+                .expect("expected Mouse Animal Focus grounded");
+            assert_eq!(
+                active.value,
+                i16::from(expect_improved),
+                "level {level} Mouse improved-evasion flag: {:?}",
+                active
+            );
+        }
+    }
+
+    /// No Ability is a genuinely valid, text-only choice -- grounds cleanly
+    /// with zero magnitude, never claim-blocks.
+    #[test]
+    fn no_ability_animal_focus_grounds_cleanly_with_zero_magnitude() {
+        let mut input = human_hunter_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+            selection_id: "animal_focus:no_ability".to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert_ne!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "No Ability must never claim-block: {:?}",
+            receipt.computation.diagnostics
+        );
+        let active = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.active")
+            .expect("expected No Ability grounded");
+        assert_eq!(active.value, 0, "No Ability must carry zero magnitude: {:?}", active);
+    }
+
+    /// An active Animal Focus naming no recognized choice at all (all 13
+    /// real corpus options are grounded as of cycle 17, so this now proves
+    /// the "no selection made" posture specifically) is a genuine posture
+    /// violation and must claim-block -- never silently passed.
     #[test]
     fn single_class_hunter_active_focus_without_a_recognized_bull_choice_stays_blocked() {
         let mut input = human_hunter_input(1);
@@ -67798,6 +72957,176 @@ mod opponent_conditioned_tier_zero_tests {
         );
     }
 
+    /// SD-32 T12 Epic 8 cycle 3: the generic pool-choice resolver, applied
+    /// to Slayer Talent, closes a flat-constant talent end-to-end. `Slayer
+    /// Talent ~ Deadly Range Output` (real corpus record) carries only
+    /// `BONUS:VAR|DeadlyRangeDistance|30` -- a self-contained constant
+    /// needing no class-level or ability-modifier binding at all.
+    #[test]
+    fn slayer_deadly_range_output_talent_resolves_generically_as_a_flat_constant() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:deadly_range_output".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.deadly_range_output.deadlyrangedistance"),
+            Some(30)
+        );
+    }
+
+    /// SD-32 T12 Epic 8 cycle 4: `Slayer Talent ~ Assassinate`'s DC formula
+    /// (`10+(SlayerAssassinateLVL/2)+INT`, chained through
+    /// `SlayerAssassinateLVL|SlayerTalentLVL`) previously could not resolve
+    /// because the header record that defines `SlayerTalentLVL`
+    /// (`"Slayer ~ Slayer Talents"`, plural) did not byte-match the
+    /// `"Slayer Talent"` singular member-key prefix this call site passes
+    /// as `pool_group` -- the exact `Spirit`-shaped name mismatch cycle 2
+    /// flagged and cycle 3 confirmed general (`decisions.md §17a`).
+    /// `pool_header_record_by_normalized_suffix` (this cycle) now finds the
+    /// header by a singular/plural-normalized suffix match, so the chain
+    /// binds: at Slayer level 6, `SlayerTalentLVL` = `SlayerLVL` = 6,
+    /// `SlayerAssassinateLVL` = 6, DC = `10 + (6/2) + 0` (no INT bonus on
+    /// this fixture) = 13 -- a real value derived from the corpus formula
+    /// chain, not a guess.
+    #[test]
+    fn slayer_assassinate_dc_resolves_generically_once_the_header_binds_slayertalentlvl() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:assassinate".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.assassinate.slayerassassinatedc"),
+            Some(13),
+            "10 + (SlayerTalentLVL=6 / 2) + INT(0) = 13, derived from the real corpus chain"
+        );
+    }
+
+    /// The same header-suffix fix closes `Slowing Strike` too -- same
+    /// `SlayerXLVL|SlayerTalentLVL` -> `10+(X/2)+INT` shape as Assassinate,
+    /// a second independent record proving this is a real class of members
+    /// closing, not a one-off.
+    #[test]
+    fn slayer_slowing_strike_dc_resolves_generically_once_the_header_binds_slayertalentlvl() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:slowing_strike".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.slowing_strike.slayerslowingstrikedc"),
+            Some(13),
+            "10 + (SlayerTalentLVL=6 / 2) + INT(0) = 13, same shape as Assassinate"
+        );
+    }
+
+    /// `Hard to Fool`'s formula (`SlayerTalentLVL/5+1`) references
+    /// `SlayerTalentLVL` DIRECTLY (no intermediate per-talent LVL variable
+    /// the way Assassinate/Slowing Strike have) -- proves the header-suffix
+    /// fix also closes a record with no intermediate chain hop.
+    #[test]
+    fn slayer_hard_to_fool_times_resolves_generically_once_the_header_binds_slayertalentlvl() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:hard_to_fool".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.hard_to_fool.slayerhardtofooltimes"),
+            Some(2),
+            "SlayerTalentLVL=6 / 5 + 1 = 2 (floor division), derived from the real corpus chain"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20 correction (`§17a`): this test originally pinned
+    /// `resolve_pool_member_sole_magnitude`'s single-value "more than one terminal -> ground
+    /// nothing" refusal, at a time when that was the ONLY multi-terminal capability this
+    /// codebase had. Cycle 20 built the real capability the refusal was a placeholder for:
+    /// `push_generic_pool_choice_magnitude` now resolves through `resolve_pool_member_all_
+    /// magnitudes`, which reports EVERY independent terminal a record carries rather than
+    /// refusing the whole record. `Slayer Talent ~ Combat Style I` carries real, independent,
+    /// unconditional, corpus-verified constant-1 targets -- re-derived directly against the
+    /// real record rather than assumed: `CombatStyleLVL` plus SEVEN
+    /// `RangerCombatStyle<Option>Allowed` flags (Archery, Crossbow, MountedCombat,
+    /// NaturalWeapon, TwoHandedWeapon, TwoWeapon, WeaponAndShield), none of which references any
+    /// other, all of them now correctly grounding at their real value (1), restating the same
+    /// never-guess safety property for the real capability rather than a blanket refusal.
+    #[test]
+    fn slayer_combat_style_i_resolves_every_independent_terminal_not_a_guess() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:combat_style_i".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let mut combat_style_i_values: Vec<(String, i16)> = receipt
+            .computation
+            .explanations
+            .iter()
+            .filter(|e| e.id.contains("combat_style_i"))
+            .map(|e| (e.id.clone(), e.value))
+            .collect();
+        combat_style_i_values.sort();
+        let expected_targets = [
+            "combatstylelvl",
+            "rangercombatstylearcheryallowed",
+            "rangercombatstylecrossbowallowed",
+            "rangercombatstylemountedcombatallowed",
+            "rangercombatstylenaturalweaponallowed",
+            "rangercombatstyletwohandedweaponallowed",
+            "rangercombatstyletwoweaponallowed",
+            "rangercombatstyleweaponandshieldallowed",
+        ];
+        let mut expected: Vec<(String, i16)> = expected_targets
+            .iter()
+            .map(|target| {
+                (
+                    format!("class_feature.acg.slayer.talent.generic.combat_style_i.{target}"),
+                    1,
+                )
+            })
+            .collect();
+        expected.sort();
+        assert_eq!(
+            combat_style_i_values, expected,
+            "every one of Combat Style I's independent terminals must ground, each at its real \
+             corpus-verified constant value (1), neither guessed nor dropped"
+        );
+    }
+
+    /// An invented Slayer Talent selection never grounds a generic
+    /// magnitude (mirrors the Rage Power / Discovery precedent).
+    #[test]
+    fn an_invented_slayer_talent_selection_never_grounds_a_generic_magnitude() {
+        let mut input = character(SLAYER_CLASS_ID, 6);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:not_a_real_talent".to_owned(),
+        });
+        assert!(build_pilot_headless_receipt(&input)
+            .computation
+            .explanations
+            .iter()
+            .all(|e| !e.id.starts_with("class_feature.acg.slayer.talent.generic.")));
+    }
+
+    /// Below the pool's own grant level (talents start at 2nd), a
+    /// recorded selection grounds no generic magnitude either -- mirrors
+    /// Alchemist Discovery's own level-gate proof.
+    #[test]
+    fn slayer_generic_talent_resolver_stays_silent_below_the_talent_grant_level() {
+        let mut input = character(SLAYER_CLASS_ID, 1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: "talent:deadly_range_output".to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.slayer.talent.generic.deadly_range_output.deadlyrangedistance"),
+            None
+        );
+    }
+
     /// Studied Combat's insight bonus is `InvestigatorLVL/2`, and its
     /// duration `max(1, INT)` rounds grounds as a fact but is explicitly
     /// UNENFORCED -- this engine has no round clock.
@@ -68766,8 +74095,9 @@ mod ultimate_combat_chassis_gate_tests {
 #[cfg(test)]
 mod spellcasting_shaped_class_closure_tests {
     use super::{
-        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, ALCHEMIST_CLASS_ID, ALCHEMIST_DISCOVERY_CHOICE_ID,
+        build_pilot_headless_receipt, compute_pilot_base_chassis, AcquisitionMode,
+        CharacterClassLevel, CharacterInput, HeadlessReceiptStatus, ALCHEMIST_CLASS_ID,
+        ALCHEMIST_DISCOVERY_CHOICE_ID,
         ARCANE_BLOODRAGER_BLOODLINE_SELECTION, BLOODRAGER_BLOODLINE_CHOICE_ID,
         BLOODRAGER_CLASS_ID, CANONICAL_EXTRACT_SPELL_ID, DESTRUCTION_BLESSING_SELECTION,
         FERAL_MUTAGEN_DISCOVERY_SELECTION, INVESTIGATOR_CLASS_ID, INVESTIGATOR_TALENT_CHOICE_ID,
@@ -69040,6 +74370,196 @@ mod spellcasting_shaped_class_closure_tests {
             ),
             Some(6),
             "Feral Mutagen claws: 1d6 for a Medium alchemist"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 (`epic-2-cause-closure` row 18, pool-shaped class
+    /// features): the GENERIC pool-choice magnitude resolver, proven
+    /// end-to-end through `compute_pilot_base_chassis` (not a unit-call-
+    /// only proof) on a real Discovery this codebase never hand-modelled
+    /// by name -- `Discovery ~ Spontaneous Healing`
+    /// (`ultimate_magic/class_feature/discovery/spontaneous_healing.json`,
+    /// `BONUS:VAR|SpontaneousHealingAmount|floor(AlchemistDiscoveryLVL/2)*5`).
+    /// `AlchemistDiscoveryLVL` is never bound by the member record itself
+    /// -- it is only defined by the pool's own HEADER record
+    /// (`Alchemist ~ Discovery`'s `BONUS:VAR|AlchemistDiscoveryLVL|
+    /// AlchemistLVL`), so this also proves the header-chain merge is
+    /// load-bearing, not decorative.
+    #[test]
+    fn spontaneous_healing_discovery_resolves_generically_through_the_pool_header_chain() {
+        let mut level4 = bare(ALCHEMIST_CLASS_ID, 4);
+        level4.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:spontaneous_healing".to_owned(),
+        });
+        assert_eq!(
+            explanation_value(
+                &level4,
+                "class_feature.apg.alchemist.discovery.generic.spontaneous_healing.\
+                 spontaneoushealingamount"
+            ),
+            Some(10),
+            "level 4: floor(AlchemistDiscoveryLVL/2)*5 = floor(4/2)*5 = 10"
+        );
+
+        let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
+        level10.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:spontaneous_healing".to_owned(),
+        });
+        assert_eq!(
+            explanation_value(
+                &level10,
+                "class_feature.apg.alchemist.discovery.generic.spontaneous_healing.\
+                 spontaneoushealingamount"
+            ),
+            Some(25),
+            "level 10: floor(AlchemistDiscoveryLVL/2)*5 = floor(10/2)*5 = 25"
+        );
+    }
+
+    /// A real selection recorded BELOW the pool's own grant gate must
+    /// never ground a magnitude -- mirrors every hand-picked `ground_*`
+    /// function's own level check (`alchemist_feral_mutagen_discovery_
+    /// grounds_from_its_own_grant_level`, above).
+    #[test]
+    fn the_generic_resolver_stays_silent_below_the_pools_own_grant_level() {
+        let mut level1 = bare(ALCHEMIST_CLASS_ID, 1);
+        level1.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:spontaneous_healing".to_owned(),
+        });
+        assert_eq!(
+            explanation_value(
+                &level1,
+                "class_feature.apg.alchemist.discovery.generic.spontaneous_healing.\
+                 spontaneoushealingamount"
+            ),
+            None,
+            "AlchemistDiscoveryLVL/2 grants no Discovery yet at level 1"
+        );
+    }
+
+    /// MUTATION-PROOF guard: an invented Discovery selection id must never
+    /// resolve to a real corpus key or ground a real magnitude, even
+    /// though it is recorded under the real, live `choice:
+    /// alchemist_discovery` choice set id -- mirrors the Rage Power
+    /// `an_invented_selection_id_never_grounds_the_superstition_bonus`
+    /// guard's own contract for this new, generic resolver.
+    #[test]
+    fn an_invented_discovery_selection_never_grounds_a_generic_magnitude() {
+        let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
+        level10.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:made_up_discovery".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&level10);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.alchemist.discovery.generic.")),
+            "an invented selection id must never ground a real magnitude: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20 correction (`§17a`): this test originally pinned the
+    /// pre-cycle-20 single-value resolver's "more than one terminal -> ground nothing"
+    /// refusal. `Discovery ~ True Mutagen`'s own `MutagenTierLVL` and `MutagenACBonus` are not
+    /// ambiguous candidates for one magnitude -- they are two genuinely independent,
+    /// unconditional corpus quantities (neither's formula references the other). Cycle 20's
+    /// `resolve_pool_member_all_magnitudes` now correctly resolves BOTH, each at its own real,
+    /// independently-derived value, restating the same never-guess safety property for the real
+    /// capability rather than a blanket refusal (`decisions.md §1a`/`§27b`).
+    #[test]
+    fn true_mutagen_discovery_resolves_both_independent_terminals_not_a_guess() {
+        let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
+        level10.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:true_mutagen".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&level10);
+        let mut true_mutagen_values: Vec<(String, i16)> = computation
+            .explanations
+            .iter()
+            .filter(|e| e.id.starts_with("class_feature.apg.alchemist.discovery.generic.true_mutagen."))
+            .map(|e| (e.id.clone(), e.value))
+            .collect();
+        true_mutagen_values.sort();
+        assert_eq!(
+            true_mutagen_values,
+            vec![
+                (
+                    "class_feature.apg.alchemist.discovery.generic.true_mutagen.mutagenacbonus"
+                        .to_string(),
+                    2
+                ),
+                (
+                    "class_feature.apg.alchemist.discovery.generic.true_mutagen.mutagentierlvl"
+                        .to_string(),
+                    1
+                ),
+            ],
+            "both of True Mutagen's independent terminals must resolve at their real, \
+             independently-derived values (MutagenACBonus=2, MutagenTierLVL=1 at level 10), \
+             neither guessed nor dropped: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// A record whose real corpus `BONUS:VAR` rows are PRE-gated
+    /// (`Discovery ~ Force Bomb`:
+    /// `VAR|ForceBombDieSize|3|PREVAREQ:...,1` vs
+    /// `VAR|ForceBombDieSize|4|PREVAREQ:...,0`, two rows for the SAME
+    /// target) refuses rather than silently keeping whichever row a naive
+    /// last-write-wins parse would pick -- proves
+    /// `class_feature_record_tokens_pre_gate_safe`'s own safety gate is
+    /// load-bearing at this generic consumer's real call site, not merely
+    /// present in the library function.
+    #[test]
+    fn force_bomb_discovery_refuses_a_pre_gated_multi_row_target() {
+        let mut level10 = bare(ALCHEMIST_CLASS_ID, 10);
+        level10.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:force_bomb".to_owned(),
+        });
+        let computation = compute_pilot_base_chassis(&level10);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.alchemist.discovery.generic.force_bomb.")),
+            "a PRE-gated multi-row target must refuse, not silently keep the last row: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// Reachability proof (per the dispatch's own "reachability is proven
+    /// through a headless pilot receipt" precedent): the real headless
+    /// receipt entry point reaches `Computed` for a Human Alchemist with a
+    /// genuine, generically-resolved Discovery selection, and the real
+    /// receipt's own explanations carry the grounded record.
+    #[test]
+    fn the_headless_pilot_receipt_carries_the_generic_discovery_magnitude() {
+        let mut level4 = seeded(ALCHEMIST_CLASS_ID, 4);
+        level4.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: "discovery:spontaneous_healing".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&level4);
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id
+                    == "class_feature.apg.alchemist.discovery.generic.spontaneous_healing.\
+                        spontaneoushealingamount"
+                    && e.value == 10),
+            "the generic Discovery magnitude must reach the real headless receipt's own \
+             explanations: {:?}",
+            receipt.computation.explanations
         );
     }
 
@@ -69367,5 +74887,1272 @@ mod apg_canonical_choice_path_a_tests {
             "no class-owned record may be fabricated on a Fighter: {:?}",
             receipt.computation.explanations
         );
+    }
+}
+
+/// SD-32 T12 Epic 8 row 18 cycle 5 (`decisions.md §27b`): the
+/// "select-ONE-group, inherit-every-member" pool shape
+/// (`push_generic_pool_group_selection_magnitude`), wired at Sorcerer
+/// Bloodline, Cleric Domain, Oracle Mystery, Warpriest Blessing and Shaman
+/// Spirit -- the five largest pools cycle 4's name census resolved
+/// (`t12-class-feature-pool-population_cycle-4_cycle_receipt.md` §1).
+/// Proves, per class, that a selection this codebase has NEVER
+/// hand-modelled by name now resolves at least one real corpus member
+/// through the shared resolver, and that an invented/unrecognized
+/// selection resolves nothing (the same "refuse rather than fabricate"
+/// contract every prior cycle's own wiring proves).
+#[cfg(test)]
+mod generic_pool_group_selection_wiring_tests {
+    use super::{
+        build_pilot_headless_receipt, BLOODRAGER_BLOODLINE_CHOICE_ID, BLOODRAGER_CLASS_ID,
+        CharacterClassLevel, CharacterInput,
+        CAVALIER_CLASS_ID, CAVALIER_ORDER_CHOICE_ID,
+        CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID, ORACLE_CLASS_ID, ORACLE_MYSTERY_CHOICE_ID,
+        SHAMAN_CLASS_ID, SHAMAN_SPIRIT_CHOICE_ID, SORCERER_BLOODLINE_CHOICE_ID, SORCERER_CLASS_ID,
+        WARPRIEST_BLESSING_CHOICE_ID, WARPRIEST_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{SelectedChoice, load_character_input_fixture};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn class_input(class_id: &str, level: u8, choice_set_id: &str, selection_id: &str) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        });
+        input
+    }
+
+    fn generic_explanation_count(input: &CharacterInput, id_prefix: &str) -> usize {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .filter(|e| e.id.starts_with(id_prefix))
+            .count()
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 9 (`§17a` re-derivation, `§12c` population+command named).
+    /// Cycle 8 measured the cross-book-merge/`DomainLVL` fix's effect against only 3 of the 6
+    /// real pools sharing `push_generic_pool_group_selection_magnitude` (Sorcerer/Bloodrager/
+    /// Cleric; Shaman measured but not locked, Warpriest re-checked unchanged) -- this test
+    /// re-derives group-level reach across ALL SIX, including Cavalier Order, never checked by
+    /// any prior cycle. "Group carries a resolvable member" mirrors cycle 5/8's own measure
+    /// exactly (see `group_has_a_resolvable_member`'s own doc for the re-derivation that
+    /// confirmed this, not a stricter bar invented fresh) -- at least one real `"<group> ~
+    /// <member>"` record resolves via `resolve_pool_member_sole_magnitude`.
+    fn real_groups_owned_by(class: &str, registered_name: &str) -> Vec<String> {
+        let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+        let mut owner_tally: std::collections::BTreeMap<
+            String,
+            std::collections::BTreeMap<String, u32>,
+        > = std::collections::BTreeMap::new();
+        for (key, record) in table.iter() {
+            if let Some((group, _member)) = key.split_once(" ~ ") {
+                *owner_tally.entry(group.to_string()).or_default().entry(record.class.clone()).or_default() +=
+                    1;
+            }
+        }
+        // Mirrors `real_pool_group_for_selection_slug`'s own ownership + naming-shape gates
+        // exactly (both the majority-tally/header-record ownership proof AND the "does this
+        // group's NAME actually belong to this registered pool word" filter its own adjective-
+        // stripping logic applies) -- §17a's own validate-against-a-known-case check caught this
+        // exact gap on the first pass here: without the naming-shape filter, EVERY " ~ "-group
+        // majority-owned by the class (not just its Bloodline/Domain/... ones) was counted,
+        // silently inflating both numerator and denominator (Sorcerer measured 72 groups, not
+        // the real 53, before this filter was added).
+        // SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17a`, correcting cycle 19's own retro
+        // note that this was "not fixed this cycle, named for a future cycle" -- the future
+        // cycle is this one): a THIRD, distinct naming-shape false positive on top of the
+        // majority-tally/header-ownership gates above. The bare `"<class> <registered_name>"`
+        // key prefix (`"Sorcerer Bloodline"`, `"Bloodrager Bloodline"`, `"Shaman Spirit"`) is a
+        // real corpus shape -- but it is the class-WIDE catalog record set, not a fourth
+        // selectable bloodline/spirit: `"Sorcerer Bloodline ~ Psychic"`,
+        // `"Sorcerer Bloodline ~ Ghoul"`, etc. are a SECOND, parallel naming convention for the
+        // SAME 52 real bloodlines `"<Specific> Bloodline ~ <power>"` already tallies as their
+        // own real groups (confirmed live: every one of `"Sorcerer Bloodline"`'s own 52
+        // "members" is itself the name of an already-counted real bloodline group). Because its
+        // own name happens to end with `" {registered_name}"`
+        // (`"Sorcerer Bloodline".ends_with(" Bloodline")`), the naming-shape filter above
+        // wrongly admits it as if it were itself a 53rd/13th selectable group -- inflating the
+        // denominator (and, since it always carries a resolvable "member", the numerator too)
+        // for every pool carrying this shape -- confirmed live by direct corpus re-derivation,
+        // not assumed pool-by-pool: Sorcerer/Bloodrager Bloodline and Shaman Spirit all carry
+        // it (`"Sorcerer Bloodline ~ <name>"`, etc.); Cleric Domain and Cavalier Order ALSO
+        // carry the same shape (`"Cleric Domain ~ Air"`, `"Cavalier Order ~ Order of the
+        // Beast"` -- both already named as real corpus records by cycle 11's own doc above,
+        // for a DIFFERENT reason: they contribute useful header `bonus_vars`/desc-formula
+        // content, which is real and unaffected by this fix) but the CENSUS re-run below shows
+        // whether their own bare `"Cleric Domain"`/`"Cavalier Order"` group name was ALSO being
+        // double-counted as a fake extra group; Warpriest Blessing carries no such bare-prefix
+        // record at all. Generic exclusion, not a per-pool table: a group whose OWN name is
+        // exactly `"<class> <registered_name>"` is never a real selectable member of itself.
+        let class_wide_catalog_shape = format!("{class} {registered_name}");
+        owner_tally
+            .into_iter()
+            .filter_map(|(group, owners)| {
+                if group == class_wide_catalog_shape {
+                    return None;
+                }
+                let majority_class =
+                    owners.iter().max_by_key(|(_, count)| **count).map(|(c, _)| c.clone())?;
+                let owned_by_class = majority_class == class
+                    || table
+                        .get(&format!("{class} {registered_name} ~ {group}"))
+                        .is_some_and(|header| header.class == class);
+                if !owned_by_class {
+                    return None;
+                }
+                let matches_naming_shape = group.ends_with(&format!(" {registered_name}"))
+                    || super::strip_prefix_case_insensitive(&group, &format!("{registered_name} of the "))
+                        .is_some();
+                matches_naming_shape.then_some(group)
+            })
+            .collect()
+    }
+
+    /// For one real group, whether at least one member resolves via the shared resolver -- the
+    /// SAME "carries a member resolvable" measure cycle 5/8's own receipts and doc comments use
+    /// (`sorcerer_generic_bloodline_pass_grounds_a_never_hand_modelled_bloodline`'s own doc:
+    /// "found only 15 ... carry a member resolvable"), re-validated here (`§17a`) rather than a
+    /// stricter "every member" bar invented fresh -- confirmed by first re-deriving with an
+    /// "every member" bar and finding it reproduced NEITHER cycle 8's denominators (a naming-
+    /// shape filter bug, fixed above) NOR its numerators (4/53 vs. cycle 8's own 18/53) before
+    /// switching to this measure, which reproduces cycle 8's three baselines exactly. This is
+    /// also the actual real-consumer contract: `push_generic_pool_group_selection_magnitude`
+    /// resolves EVERY member independently once a player picks the group, closing whichever
+    /// subset resolves -- a group with SOME real records still needing compute is not "closed"
+    /// as a kanban line item, but every already-resolvable member inside it is already reaching
+    /// a live character, which is what this census is measuring.
+    // SD-32 T12 Epic 8 row 18 cycle 20: switched from `resolve_pool_member_sole_magnitude` to
+    // `resolve_pool_member_all_magnitudes` (non-empty, not `.is_some()`) -- this census's own
+    // doc above states the bar explicitly: "the actual real-consumer contract:
+    // push_generic_pool_group_selection_magnitude resolves EVERY member independently ... which
+    // is what this census is measuring." Cycle 20 upgraded that real consumer to resolve every
+    // independent terminal a member carries, not just a lone one; a member this census would
+    // have called unresolvable before this cycle purely because it carried 2-3 real terminals
+    // (e.g. `Forbidden Rites Domain ~ Madness Domain`) now correctly counts as resolvable,
+    // because the real consumer now genuinely resolves it. A record with terminal(s) that still
+    // never bind through the chain still resolves to an empty `Vec`, so a true refusal is
+    // unaffected.
+    fn group_has_a_resolvable_member(class: &str, registered_name: &str, group: &str) -> bool {
+        let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+        let prefix = format!("{group} ~ ");
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        table.keys().filter(|key| key.starts_with(&prefix)).any(|key| {
+            !super::resolve_pool_member_all_magnitudes(
+                key,
+                group,
+                5,
+                &ability_modifiers,
+                Some(class),
+                Some(registered_name),
+            )
+            .is_empty()
+        })
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 11: proves `pool_header_record_by_normalized_suffix`'s
+    /// cycle-11 widening MERGES every real header candidate rather than returning the first hit
+    /// and stopping. Cleric's own "Air Domain" pool has TWO real header-shaped corpus records
+    /// (confirmed live): the bare-key `"Air Domain"` record (`data/corpus/core_rulebook/
+    /// class_feature/air/air.json`, carrying the useful `DomainAirDC`/`DomainAirLVL`/
+    /// `DomainAirTimes` chain) and the `"Cleric Domain ~ Air"` record (`.../cleric_domain/
+    /// cleric_domain_air.json`, a domain SPELL LIST record with a `SPELLLEVEL` token and ZERO
+    /// `BONUS:VAR` tokens). A first-match-wins version of this function that tried the
+    /// `"<class> <registered_name> ~ <suffix>"` shape BEFORE the bare-key shape would find the
+    /// EMPTY spell-list record first and never reach the useful one -- exactly the regression
+    /// this cycle caught live (`pool_group_closure_census_across_all_six_pools` dropped from
+    /// 18/53 to 15/53 Sorcerer and 26/72 to 14/72 Cleric on the first (short-circuiting) version
+    /// of this widening, before it was rewritten to merge).
+    #[test]
+    fn pool_header_lookup_merges_every_real_header_shape_not_just_the_first_match() {
+        let merged = super::pool_header_record_by_normalized_suffix("Cleric", "Air Domain", Some("Domain"));
+        assert!(
+            merged.contains_key("DomainAirDC"),
+            "the bare-key \"Air Domain\" header's own real BONUS:VAR chain must still merge in \
+             even though \"Cleric Domain ~ Air\" (an empty spell-list record sharing the \
+             registered-name naming shape) also matches: {merged:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 13: proves the NEW bare-key, `s`-tolerant clause
+    /// `pool_header_record_by_normalized_suffix` gained this cycle -- real corpus
+    /// `data/corpus/core_rulebook/class_feature/domains/domains.json` carries KEY `"Domains"`
+    /// (plural, `data.class` genuinely absent) but every caller ever asks for the SINGULAR
+    /// registered name `"Domain"`; without the trailing-`s` tolerance this merge never reaches
+    /// the real `BONUS:VAR|DomainPowerTimes|3+WIS` chain every Domain member's own `...Times`
+    /// formula depends on.
+    #[test]
+    fn pool_header_lookup_reaches_a_bare_plural_class_independent_base_record() {
+        let merged = super::pool_header_record_by_normalized_suffix("Cleric", "Domain", None);
+        assert_eq!(
+            merged.get("DomainPowerTimes").map(String::as_str),
+            Some("3+WIS"),
+            "the bare, plural \"Domains\" base record's own DomainPowerTimes chain must merge \
+             when looked up by its singular registered name \"Domain\": {merged:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 13: proves the existing `"<class> ~ "`-prefixed wildcard
+    /// clause (already `s`-tolerant since cycle 5) now ALSO fires when the caller passes the
+    /// bare REGISTERED NAME rather than a specific group name -- real corpus `"Shaman ~ Spirit"`
+    /// (class `"Shaman"`, `BONUS:VAR|ShamanSpiritLVL|ShamanLVL`) is the class-wide shared base
+    /// every per-spirit member (e.g. `"Bones Spirit ~ Shedding Form"`'s own
+    /// `ShamanSheddingFormRounds|ShamanSpiritLVL`) chains through, but was never reached before
+    /// this cycle because no per-group lookup or `"<rn> Tracker"` lookup ever tried the bare
+    /// registered name itself.
+    #[test]
+    fn pool_header_lookup_reaches_the_class_wide_registered_name_base_record() {
+        let merged = super::pool_header_record_by_normalized_suffix("Shaman", "Spirit", None);
+        assert_eq!(
+            merged.get("ShamanSpiritLVL").map(String::as_str),
+            Some("ShamanLVL"),
+            "\"Shaman ~ Spirit\"'s own real ShamanSpiritLVL chain must merge when looked up by \
+             its own bare registered name: {merged:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 13: end-to-end proof through the real generic pool
+    /// resolver -- `"Bones Spirit ~ Shedding Form"` (`data/corpus/advanced_class_guide/
+    /// class_feature/bones_spirit/shedding_form.json`, real single-terminal member
+    /// `ShamanSheddingFormRounds|ShamanSpiritLVL`) was one of this cycle's own re-derivation
+    /// diagnostic's confirmed `UNRESOLVED` cases before this fix (its own `ShamanSpiritLVL` term
+    /// was never bound anywhere in `combined_vars`); it resolves now, at a real, non-fabricated
+    /// value (character level 5 seeds `ShamanLVL=5`, chained straight through the newly-merged
+    /// `"Shaman ~ Spirit"` base record).
+    #[test]
+    fn shaman_generic_spirit_pass_now_grounds_a_bare_registered_name_chain() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let resolved = super::resolve_pool_member_sole_magnitude(
+            "Bones Spirit ~ Shedding Form",
+            "Bones Spirit",
+            5,
+            &ability_modifiers,
+            Some("Shaman"),
+            Some("Spirit"),
+        );
+        assert_eq!(
+            resolved,
+            Some(("ShamanSheddingFormRounds".to_string(), 5)),
+            "Bones Spirit's Shedding Form must now resolve through the real, newly-merged \
+             ShamanSpiritLVL chain (character level 5 -> ShamanLVL=5 -> ShamanSpiritLVL=5 -> \
+             ShamanSheddingFormRounds=5), not stay refused"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20: `resolve_pool_member_sole_magnitude`'s load-bearing
+    /// refusal (cycle 2, re-proved cycle 5) is UNCHANGED by this cycle's multi-terminal work --
+    /// a record genuinely carrying more than one independent terminal target still, always,
+    /// refuses this single-value call, exactly as before. `Forbidden Rites Domain ~ Madness
+    /// Domain` (real corpus record, `data/corpus/ultimate_magic/class_feature/
+    /// forbidden_rites_domain/madness.json`) carries three: `DomainMadnessDC`,
+    /// `DomainMadnessTimes`, `DomainMadnessAbilityTriggerLVL` (its fourth `BONUS:VAR`,
+    /// `DomainMadnessLVL`, is filtered out as a chain intermediate -- `DomainMadnessDC`'s own
+    /// formula names it).
+    #[test]
+    fn sole_magnitude_still_refuses_a_genuine_multi_terminal_record() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let resolved = super::resolve_pool_member_sole_magnitude(
+            "Forbidden Rites Domain ~ Madness Domain",
+            "Forbidden Rites Domain",
+            5,
+            &ability_modifiers,
+            Some("Cleric"),
+            Some("Domain"),
+        );
+        assert_eq!(
+            resolved, None,
+            "a record with 3 independent terminals must still be refused by the sole-magnitude \
+             contract, never guessed at: {resolved:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20: the new multi-terminal resolver genuinely resolves TWO
+    /// of `Madness Domain`'s three independent terminals -- not a guess among them, each is
+    /// independently computed through the real PCGen formula evaluator: `DomainMadnessTimes`
+    /// chains to `DomainPowerTimes-1`, bound by the bare `"Domains"` base header
+    /// (`BONUS:VAR|DomainPowerTimes|3+WIS`); `DomainMadnessDC` chains to
+    /// `10+(DomainMadnessLVL/2)+CHA-1`, itself resolving `DomainMadnessLVL` via `DomainLVL-2`
+    /// (bound the same way). The third, `DomainMadnessAbilityTriggerLVL`
+    /// (`DomainAbilityTriggerLVL-SeparistDomainLVL`), correctly stays unresolved: `SeparistDomainLVL`
+    /// is a real corpus-bound identifier (`Separatist ~ Forbidden Rites`, `BONUS:VAR|
+    /// SeparistDomainLVL|-2`) but that record's own key shape (`"Separatist ~ Forbidden
+    /// Rites"`, prefixed by the ARCHETYPE, not `"Forbidden Rites Domain"` nor `"Cleric"`) is not
+    /// one any existing header-merge clause reaches -- a genuinely separate, narrower gap this
+    /// cycle names rather than forces (`§27b` point 5, remaining work, not this cycle's own
+    /// scope). `resolve_pcgen_var_chain`'s cycles 2/5 safety property correctly refuses to
+    /// 0-default the unreached identifier rather than fabricate a value for it -- this third
+    /// terminal is properly ABSENT from the returned set, not silently wrong.
+    #[test]
+    fn all_magnitudes_resolves_every_reachable_independent_terminal_on_a_multi_terminal_record() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let resolved = super::resolve_pool_member_all_magnitudes(
+            "Forbidden Rites Domain ~ Madness Domain",
+            "Forbidden Rites Domain",
+            5,
+            &ability_modifiers,
+            Some("Cleric"),
+            Some("Domain"),
+        );
+        let targets: std::collections::BTreeSet<&str> =
+            resolved.iter().map(|(name, _)| name.as_str()).collect();
+        assert_eq!(
+            targets,
+            std::collections::BTreeSet::from(["DomainMadnessDC", "DomainMadnessTimes"]),
+            "the two of Madness Domain's three real terminals whose chain is fully reachable \
+             must resolve, none guessed and none dropped; the third (blocked on the separate, \
+             named `SeparistDomainLVL` header gap) must correctly stay absent, not fabricated: \
+             {resolved:?}"
+        );
+    }
+
+    /// Re-derivation, not a trust of cycle 8's own transcribed figures (`§17a`): run for real,
+    /// print the population and command, THEN assert. `cargo test --locked --lib -- \
+    /// rules_core::pilot_compute::generic_pool_group_selection_wiring_tests::pool_group_closure_census_across_all_six_pools \
+    /// --nocapture`
+    #[test]
+    fn pool_group_closure_census_across_all_six_pools() {
+        let pools: &[(&str, &str)] = &[
+            ("Sorcerer", "Bloodline"),
+            ("Bloodrager", "Bloodline"),
+            ("Cleric", "Domain"),
+            ("Shaman", "Spirit"),
+            ("Warpriest", "Blessing"),
+            ("Cavalier", "Order"),
+        ];
+        let mut report = String::new();
+        for (class, registered_name) in pools {
+            let groups = real_groups_owned_by(class, registered_name);
+            let total = groups.len();
+            let closed: Vec<&String> = groups
+                .iter()
+                .filter(|g| group_has_a_resolvable_member(class, registered_name, g))
+                .collect();
+            report.push_str(&format!(
+                "{class} {registered_name}: {}/{total} groups carry a resolvable member\n",
+                closed.len()
+            ));
+        }
+        println!("{report}");
+        // Locked baseline, re-derived fresh this cycle (see receipt for the full per-pool
+        // breakdown and closed-group names) -- a future cycle's corpus/resolver change that
+        // moves these numbers must update this assertion deliberately, never silently.
+        //
+        // SD-32 T12 Epic 8 row 18 cycle 13: cycle 12 named an open question rather than guessing
+        // at it -- `resolve_pool_member_sole_magnitude` has independent per-member refusals
+        // (empty own `bonus_vars`, the multi-terminal-target rule, and unresolved header-chain
+        // gaps) beyond var-chain resolution. Traced with a per-member diagnostic (printed, then
+        // removed before commit, per this bundle's own methodology) across Bloodrager/Cleric/
+        // Shaman/Warpriest: the dominant remaining bucket (Cleric 50, Shaman 8 members) was a
+        // single-terminal member whose formula chains to a bare header var
+        // (`DomainAirTimes|DomainPowerTimes`, `ShamanSheddingFormRounds|ShamanSpiritLVL`) never
+        // merged into `combined_vars` -- a THIRD real corpus header shape,
+        // `pool_header_record_by_normalized_suffix` now also covers (see that function's own new
+        // doc comment): a bare, PLURAL, class-independent base record
+        // (`data/corpus/core_rulebook/class_feature/domains/domains.json`, key exactly
+        // `"Domains"`, real `BONUS:VAR|DomainPowerTimes|3+WIS`, `data.class` genuinely absent --
+        // confirmed no other corpus record anywhere else also targets `DomainPowerTimes`), and
+        // the exact `"<class> ~ <registered_name>"` shape (`"Shaman ~ Spirit"`, class `"Shaman"`,
+        // real `BONUS:VAR|ShamanSpiritLVL|ShamanLVL"`), reached via the existing per-pool
+        // `registered_name_for_tracker` merge site (now also tries the bare registered name, not
+        // only `"<rn> Tracker"`). This ALSO reaches Warpriest's own `"Warpriest ~ Blessings"`
+        // record (`WarpriestBlessingLVL|WarpriestLVL`) via the same trim-trailing-`s` wildcard
+        // already present in the `"<class> ~ "`-prefixed clause -- but Warpriest stays 0/37
+        // because every real Blessing member's OWN `bonus_vars` is empty (`§17a` re-derivation:
+        // diagnostic showed `empty=74, multi_terminal=0` for all 74 Warpriest members), a
+        // DIFFERENT, deeper gap this merge cannot reach and this cycle did not force. `Bloodrager
+        // Bloodline` and `Cavalier Order` are honestly UNCHANGED: Bloodrager's remaining 7
+        // single-terminal members each chain to a per-bloodline `BloodlineLVL` identifier that
+        // IS bound elsewhere in the corpus (a same-named cross-class `Eldritch Scion` record,
+        // e.g. `Bloodrager_Aberrant_BloodlineLVL|BloodragerBloodlineLVL`,
+        // `data/corpus/advanced_class_guide/class_feature/eldritch_scion_aberrant_bloodline/
+        // eldritch_scion_aberrant_bloodline.json`, `class: "Sorcerer"`) -- `resolve_pcgen_var_
+        // chain`'s cycle-12 safety property correctly refuses to 0-default a genuinely
+        // corpus-bound identifier (cycles 2/5's proven property), and this cycle found no header
+        // record anywhere binding a pure Bloodrager's own per-bloodline `BloodlineLVL`; Cavalier's
+        // 8 Order groups still carry zero `BONUS:VAR` tokens at all, unaffected by any header
+        // merge (`§17`, unchanged from cycles 9/10/11/12).
+        //
+        // Net real movement this cycle: `Sorcerer Bloodline` UNCHANGED at 31/53 (cycle 12's own
+        // fix, re-verified). `Cleric Domain` moved 26/72 -> 34/72 (+8, all via the new bare
+        // `"Domains"` merge). `Shaman Spirit` moved 8/14 -> 11/14 (+3, all via the new
+        // `"Shaman ~ Spirit"` merge -- diagnostic confirms `single_unresolved` dropped 8 -> 0 for
+        // this pool). `Bloodrager Bloodline`, `Warpriest Blessing`, `Cavalier Order` UNCHANGED
+        // (5/12, 0/37, 1/9) -- re-run and re-checked, not assumed.
+        // SD-32 T12 Epic 8 row 18 cycle 18 (`§27b`/`§17a`): `Cleric Domain` moved 34/72 -> 44/73
+        // via TWO independent, genuine ENGINE gaps this cycle's own classification diagnostic
+        // found and closed -- neither is a data fabrication.
+        //
+        // (1) `pool_header_record_by_normalized_suffix` gained a FIFTH header shape, a
+        // `domain`-kind corpus record (never `class_feature`), keyed by the domain's bare name
+        // (`"Cave"`, not `"Cave Domain"`). Confirmed live
+        // (`data/corpus/ultimate_magic/domain/cave.json`): this record ALREADY carries the real
+        // `BONUS:VAR|DomainCaveLVL|DomainLVL`/`DomainCaveDC`/`DomainCaveTimes` chain every one of
+        // that domain's `class_feature` member records needs -- it simply lived in a directory no
+        // existing table ever read. Re-derived (not assumed): the newly-closed groups are
+        // Aquatic, Arctic, Eagle, Frog, Monkey, Plains, Serpent, Swamp (8 groups; Jungle and
+        // Mountain also gained the same header merge but stayed unresolved for the SEPARATE
+        // reason (2) names).
+        //
+        // (2) `class_feature_record_tokens_pre_gate_safe`'s own `description: null` gate widened
+        // (see that function's own doc comment): a real, invisible, purely-mechanical member
+        // record (`VISIBLE:NO`, e.g. `Jungle Domain ~ Trap Sense`, `BONUS:VAR|TrapSenseBonus|
+        // DomainJungleLVL/3`, `description: null`) was refused purely for want of this read path.
+        // This ALSO revealed one previously wholly-invisible 73rd group (denominator moved
+        // 72 -> 73, a real population correction, not a resolver artefact -- a group whose only
+        // members all carried `description: null` was invisible to `real_groups_owned_by`'s own
+        // tally before this widening). Net movement from (1)+(2) combined: 34/72 -> 44/73.
+        // Every other pool UNCHANGED, re-verified, not assumed.
+        // SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17a`): `resolve_pool_member_sole_
+        // magnitude`'s refusal-when-more-than-one-terminal has NOT been weakened -- it is
+        // unchanged, still used unmodified by every existing caller that needs exactly one
+        // value. Two independent, additive fixes moved these baselines this cycle:
+        //
+        // (1) This census helper switched to `resolve_pool_member_all_magnitudes` (see that
+        // function's own doc, and `group_has_a_resolvable_member`'s), which genuinely resolves
+        // EVERY independent terminal a record carries rather than refusing the whole record
+        // once there is more than one: `Sorcerer Bloodline` numerator +3, `Bloodrager Bloodline`
+        // numerator +7 (every real bloodline carries its own per-bloodline "<Bloodline> ~ Feat
+        // Tracker" record, description:null, admitted since cycle 18's own widening, whose
+        // several `BONUS:VAR|Bloodrager_BloodlineFeat_<Feat>|1` entries are genuinely
+        // independent, unconditional, corpus-verified constant-1 targets -- confirmed live
+        // against `aberrant_bloodrager_bloodline_feat_tracker.json`), `Cleric Domain` numerator
+        // +2 (`Forbidden Rites Domain`'s own multi-terminal members, e.g. `Madness Domain`'s
+        // `DomainMadnessDC`/`...Times`), `Shaman Spirit` numerator +1.
+        //
+        // (2) `real_groups_owned_by`'s own new class-wide-catalog-shape exclusion (`§27b`/cycle
+        // 19's own retro note, fixed this cycle) drops a fake extra group per pool wherever the
+        // bare `"<class> <registered_name>"` key prefix exists as a real corpus record: `Sorcerer
+        // Bloodline` denominator 53 -> 52, `Bloodrager Bloodline` 12 -> 11, `Shaman Spirit` 14
+        // -> 13 (cycle 18's own named "Shaman Spirit" false positive, now actually fixed, not
+        // just re-named), `Cleric Domain` 73 -> 72 (a SECOND instance of the SAME shape,
+        // `"Cleric Domain ~ Air"` etc., not previously named by any cycle), `Cavalier Order` 9
+        // -> 8 (a THIRD instance, `"Cavalier Order ~ Order of the Beast"` etc., also newly
+        // found). `Warpriest Blessing` carries no such bare-prefix record at all -- denominator
+        // genuinely unchanged. Numerator effect of (2) alone, checked per pool, not assumed
+        // uniform: Sorcerer/Bloodrager/Cleric/Cavalier's own bare catalog "group" carries no
+        // resolvable `bonus_vars` (its "members" are duplicate-named real groups' spell-list/
+        // summary records) so removing it costs those four pools' numerators nothing; Shaman's
+        // OWN bare `"Shaman Spirit ~ <name>"` catalog members DO carry a real, independent,
+        // now-resolving constant-1 terminal (`ShamanXSpirit|1`, closed by fix (1) above), so
+        // removing this one fake group costs Shaman's numerator exactly 1 alongside its
+        // denominator.
+        //
+        // (3) `pool_header_record_by_normalized_suffix`'s new SIXTH header shape
+        // (`"Domain Base ~ <bare>"`, `data.class` literally `"Domain Base"` -- see that
+        // function's own doc) closes the 6 named desc-formula refusals' `Void Domain`, and
+        // corrects cycle 19's own `§27b` claim that `Scalykind` was a genuine hard-impossibility
+        // (it carries this exact header too -- `Domain Base ~ Scalykind` -- missed by cycle 19's
+        // verification, which checked only the `domain`-kind and bare `class_feature` shapes,
+        // never this third directory; retro correction filed). `Cleric Domain` numerator +1 via
+        // this fix's own bonus_vars reach (Scalykind).
+        //
+        // Combined re-derived baselines: `Sorcerer Bloodline` 31/53 -> 34/52, `Bloodrager
+        // Bloodline` 5/12 -> 11/11 (every remaining group now closes), `Cleric Domain` 44/73 ->
+        // 47/72, `Shaman Spirit` 11/14 -> 11/13, `Warpriest Blessing` UNCHANGED 0/37,
+        // `Cavalier Order` 1/9 -> 1/8.
+        //
+        // SD-32 T12 Epic 8 row 18 cycle 21 (`§27b`): `Sorcerer Bloodline` 34/52 -> 45/52 (+11) --
+        // a SEVENTH real corpus header shape, `wildblooded_variant_parent_pool_group`'s own doc:
+        // a Wildblooded bloodline variant's own `PREABILITY` token corpus-declares its real parent
+        // bloodline as a level-1 prerequisite, so that parent's own header vars are, by
+        // corpus-declared construction, always genuinely bound -- NOT cycle 17/19's unrelated
+        // cross-bloodline refusal shape (a variant's own declared parent, not a stranger
+        // bloodline). Falsified cycle 19's own implicit assumption that these 18 groups were part
+        // of the SAME cross-bloodline-gap population as the real cross-bloodline refusals -- 11 of
+        // the 18 close via this fix; 7 remain, honestly re-classified (see receipt): `Groveborn`/
+        // `Primal` Bloodline are genuine `§27b` zero-content gaps (their own Wildblooded record
+        // carries neither a `BONUS:VAR` nor a `%N` desc-formula argument anywhere -- proven the
+        // same way Warpriest Blessing's 29 and Cavalier Order's 6 are, not a header gap at all);
+        // `Anarchic`/`Karmic`/`Sanguine`/`Seaborn`/`Warped` Bloodline's own parent header now
+        // supplies the needed target NAME but the full chain still refuses for a DIFFERENT,
+        // un-traced reason this cycle did not chase to ground (real remaining work, not proven
+        // impossible, not forced). Every other pool UNCHANGED, re-verified.
+        // SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`): `Sorcerer Bloodline` 45/52 -> 48/52 (+3) --
+        // the EIGHTH real corpus header shape (`pool_group_header_vars_merged`'s own new doc: the
+        // class's own `"<class> ~ Spells"` record, carrying the base spellcasting-stat `BONUS:VAR`
+        // chain, `Sorcerer_Spells_StatBonus|CHA`). Traced end to end per the brief's own five-group
+        // instruction: Karmic/Seaborn/Warped Bloodline's own real DC-formula members (`Fate's
+        // Retribution`/`Water Blast`/`Warp Touch`) all needed this ONE identifier -- every other
+        // term in their formula was already reachable through cycle 21's seventh-shape parent-
+        // header recursion; this was a genuine missing READ PATH (the identifier IS bound
+        // elsewhere in the corpus, so `resolve_pcgen_var_chain`'s own 0-default fallback correctly
+        // refused to fabricate a value for it), not a data gap. `Groveborn`/`Primal` Bloodline
+        // (cycle 21's own proven zero-content gaps) and `Anarchic` Bloodline (this cycle's own
+        // newly-traced zero-content gap, see receipt) remain the honest 3 unresolved via this
+        // resolver -- `52 - 48 - 1(Sanguine, desc-formula only, see the sibling test below) = 3`.
+        // Every other pool UNCHANGED, re-verified.
+        assert!(
+            report.contains("Sorcerer Bloodline: 48/52")
+                && report.contains("Bloodrager Bloodline: 11/11")
+                && report.contains("Cleric Domain: 47/72")
+                && report.contains("Shaman Spirit: 11/13")
+                && report.contains("Warpriest Blessing: 0/37")
+                && report.contains("Cavalier Order: 1/8"),
+            "cycle 22's own re-derived baselines must still reproduce exactly:\n{report}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 16 (`§17a`): whether a group's member resolves via the
+    /// SECOND generic resolver -- cycle 15's `resolved_description_for_formula_only_desc_argument`
+    /// (`class_feature_grant_consumer.rs`), the `%N`-substituted-DESC-formula path for a record
+    /// whose `bonus_vars` is EMPTY. `pool_group_closure_census_across_all_six_pools` (above) is
+    /// blind to this path BY CONSTRUCTION -- `group_has_a_resolvable_member` calls only
+    /// `resolve_pool_member_sole_magnitude`, which itself only ever reads `bonus_vars` and
+    /// therefore always returns `None` for a record this second resolver grounds. This function
+    /// closes that blind spot without touching or replacing the first one.
+    fn group_has_a_resolvable_member_via_description_formula(
+        class: &str,
+        registered_name: &str,
+        group: &str,
+    ) -> bool {
+        let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+        let prefix = format!("{group} ~ ");
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        // SD-32 T12 Epic 8 row 18 cycle 19: mirror the production call site's own FULL
+        // header-chain merge (see `push_generic_pool_group_selection_description_magnitude`,
+        // `pool_group_header_vars_merged`) so this census helper reports the SAME reachability
+        // the real chassis path now has, not a stale no-header-merge figure.
+        let header_vars = super::pool_group_header_vars_merged(class, group, Some(registered_name));
+        table.keys().filter(|key| key.starts_with(&prefix)).any(|key| {
+            super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                key,
+                5,
+                &ability_modifiers,
+                &header_vars,
+            )
+            .is_some()
+        })
+    }
+
+    /// A group is genuinely resolvable if EITHER generic resolver grounds at least one of its
+    /// members -- the two are mutually exclusive per-record (`resolved_description_for_formula_
+    /// only_desc_argument`'s own `bonus_vars.is_empty()` guard, documented on that function),
+    /// never double-counting the same record through both paths.
+    fn group_has_a_resolvable_member_via_either_resolver(
+        class: &str,
+        registered_name: &str,
+        group: &str,
+    ) -> bool {
+        group_has_a_resolvable_member(class, registered_name, group)
+            || group_has_a_resolvable_member_via_description_formula(class, registered_name, group)
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 16: the honest, all-resolver census cycle 15 named but
+    /// deliberately did not self-apply (`§1a` -- widening the census's own measure is a separate,
+    /// deliberate act). Validated against known truth BEFORE being trusted (`§17a`): re-derives
+    /// the SAME six bonus_vars-only baselines `pool_group_closure_census_across_all_six_pools`
+    /// locks (proving this new pass reproduces, not contradicts, that instrument), THEN adds the
+    /// description-formula resolver on top and reports the combined figure per pool. Both figures
+    /// are printed for every pool so neither becomes unverifiable, per the brief's own instruction.
+    ///
+    /// `cargo test --locked --lib -- \
+    /// rules_core::pilot_compute::generic_pool_group_selection_wiring_tests::pool_group_closure_census_across_all_six_pools_both_resolvers \
+    /// --nocapture`
+    #[test]
+    fn pool_group_closure_census_across_all_six_pools_both_resolvers() {
+        let pools: &[(&str, &str)] = &[
+            ("Sorcerer", "Bloodline"),
+            ("Bloodrager", "Bloodline"),
+            ("Cleric", "Domain"),
+            ("Shaman", "Spirit"),
+            ("Warpriest", "Blessing"),
+            ("Cavalier", "Order"),
+        ];
+        let mut report = String::new();
+        for (class, registered_name) in pools {
+            let groups = real_groups_owned_by(class, registered_name);
+            let total = groups.len();
+            let bonus_vars_only = groups
+                .iter()
+                .filter(|g| group_has_a_resolvable_member(class, registered_name, g))
+                .count();
+            let combined = groups
+                .iter()
+                .filter(|g| group_has_a_resolvable_member_via_either_resolver(class, registered_name, g))
+                .count();
+            report.push_str(&format!(
+                "{class} {registered_name}: bonus_vars={bonus_vars_only}/{total}, \
+                 combined(bonus_vars OR desc_formula)={combined}/{total}\n"
+            ));
+        }
+        println!("{report}");
+        // `§17a` validation: the bonus_vars-only figures inside this combined report must
+        // reproduce `pool_group_closure_census_across_all_six_pools`'s own locked baseline
+        // exactly -- proof this pass did not silently change or duplicate the first resolver's
+        // own measure, only add a second one alongside it.
+        assert!(
+            report.contains("Sorcerer Bloodline: bonus_vars=48/52")
+                && report.contains("Bloodrager Bloodline: bonus_vars=11/11")
+                && report.contains("Cleric Domain: bonus_vars=47/72")
+                && report.contains("Shaman Spirit: bonus_vars=11/13")
+                && report.contains("Warpriest Blessing: bonus_vars=0/37")
+                && report.contains("Cavalier Order: bonus_vars=1/8"),
+            "the bonus_vars-only figures embedded in the combined census must still reproduce \
+             pool_group_closure_census_across_all_six_pools's own locked baseline exactly -- a \
+             mismatch here means this pass is measuring something different from the first \
+             resolver, not extending it:\n{report}"
+        );
+        // The honest, all-resolver figure (`§17a` -- re-derived, not assumed, and CORRECTING
+        // cycle 15's own manual count in the process, per `scripts/retro.py correction`
+        // `1787582848402-t9-onboarding-9a4294`). Cycle 15's receipt claimed only 6 Warpriest
+        // groups closed and that Cavalier Order stayed unclosed because Order of the Beast's
+        // "%2" argument -- `(CavalierLVL>=10)+(CavalierLVL>=14)+(CavalierLVL>=18)` -- hit a
+        // "comparison-as-numeric-term gap". Direct reproduction disproves that: every one of
+        // those three comparisons is PARENTHESISED, and `formula_interpreter.rs`'s wave-26
+        // shape closure already evaluates a parenthesised comparison as a numeric primary
+        // (`parse_primary`'s `LParen` branch -> `parse_arith_or_bool`) -- there is no gap here
+        // at all. Order of the Beast's whole description resolves cleanly and its group
+        // genuinely closes. The real, narrower gap this cycle found (see `§5` below) is an
+        // UNPARENTHESISED comparison used as a bare function argument (`min(WarpriestLVL>20,
+        // 2,...)`, `Protection Blessing ~ Increased Defense`) -- a real, different, smaller
+        // shape than what cycle 15 named.
+        //
+        // Re-derived totals: Warpriest Blessing 0/37 -> 8/37 (cycle 15's own 6 named groups --
+        // Earth, Trickery, Rune, Protection [via Aura of Protection], Repose, Knowledge -- PLUS
+        // Destruction and Strength Blessing, already hand-modelled by dedicated functions this
+        // codebase ships separately from either generic resolver, and now ALSO reachable
+        // through the generic description resolver directly off their own corpus record, which
+        // this census correctly counts since it measures corpus-record resolvability, not
+        // runtime double-emission avoidance). Cavalier Order 1/9 -> 2/9 (Order of the Beast, the
+        // correction above). Three pools this cycle's own diagnostic found ungrounded by cycle
+        // 15's manual review pick up exactly one new group each, all real, non-fabricated,
+        // single-member closures on records whose `bonus_vars` is empty and whose ONE `%N`
+        // argument is a bare, self-contained formula needing no comparison or multi-arg
+        // function at all: Bloodrager Bloodline 5/12 -> 6/12 (Abyssal Bloodrager Bloodline ~
+        // Demonic Aura, `%1`="CON", the CON modifier, resolving to 0 under this test's own
+        // `AbilityModifiers::default()` seed -- the SAME zero-ability-score convention every
+        // other function in this file already resolves against, not a new default introduced
+        // here), Cleric Domain 34/72 -> 35/72 (Clandestine Domain ~ Blessed Secrecy, `%1`="WIS",
+        // same convention), Shaman Spirit
+        // 11/14 -> 12/14 (Wood Spirit ~ Tree Form, `%1`=`5`, `ShamanLVL`-derived). Sorcerer
+        // Bloodline is genuinely unchanged at 31/53 -- no member of any of its remaining 22
+        // open groups has an empty `bonus_vars` chain with a resolvable `%N` argument.
+        //
+        // SD-32 T12 Epic 8 row 18 cycle 18 (`§27b`/`§17a`): `Cleric Domain` moved again,
+        // 35/72 -> 45/73, via `pool_group_closure_census_across_all_six_pools`'s own newly
+        // re-derived 44/73 `bonus_vars`-only baseline (see that test's own comment for the two
+        // real engine fixes: a `domain`-kind corpus header record this codebase never read
+        // before this cycle, and a `description: null` gate that hid real magnitude-bearing
+        // member records) PLUS the one already-standing `desc_formula`-only closure (Clandestine
+        // Domain) this pass adds on top, unaffected by either fix (it resolves via the OTHER
+        // resolver). Every other pool UNCHANGED.
+        //
+        // SD-32 T12 Epic 8 row 18 cycle 19 (`§27b`/`§17a`): the desc-formula resolver's own
+        // missing header-merge step (cycle 18's own named gap, `§3` of its receipt) is now fixed
+        // -- `resolved_description_for_formula_only_desc_argument` merges the SAME full header
+        // chain (`pool_group_header_vars_merged`, factored out of `resolve_pool_member_sole_
+        // magnitude` so both generic resolvers share ONE merge implementation, `§17`) that the
+        // bonus_vars resolver already had. Re-derived, not assumed (diagnostic run then removed,
+        // same methodology cycle 18 used for its own group-classification pass): Cleric Domain
+        // combined 45/73 -> 49/73 (+4: Cave, Desert, Mountain, Nobility Domain -- each closes via
+        // its own single member whose `%N` argument chains through the domain-kind header's own
+        // `DomainXTimes|DomainPowerTimes` to Cleric Domain's bare `"Domains"` base-header record,
+        // e.g. `Mountain Domain ~ Foothold`'s `%1`=`DomainMountainTimes`, the EXACT gap cycle 18
+        // named by coordinate). Sorcerer Bloodline combined 31/53 -> 32/53 (+1: Imperious
+        // Bloodline, whose sole member's `%N` argument chains through the `"Bloodline Tracker"`
+        // base-header record the bonus_vars resolver's own Tracker merge already reached but this
+        // resolver, pre-fix, did not). Bonus_vars-only baselines for both pools UNCHANGED (already
+        // asserted above) -- this cycle widens ONLY the desc-formula resolver's own reach, not the
+        // bonus_vars resolver's. Every other pool's combined figure UNCHANGED, re-verified.
+        // SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17a`): `bonus_vars` moved to cycle 20's own
+        // re-derived baseline above (34/52, 11/11, 47/72, 11/13, 0/37, 1/8 -- the multi-terminal
+        // resolver, the class-wide-catalog-shape census fix, AND the new `"Domain Base ~ <X>"`
+        // header shape closing Scalykind, see that test's own comment); `combined` moves by the
+        // same deltas PLUS one further desc-only closure this cycle's own header widening also
+        // reaches: Cleric's standing +4 desc-only closures (Cave/Desert/Mountain/Nobility) stack
+        // on the new 47/72 bonus_vars figure, PLUS Void Domain (`Part the Veil`'s `%1` =
+        // `DomainVoidTimes`, now reachable through the same new header): 52/72. Shaman's own
+        // standing +1 desc-only closure (Wood Spirit ~ Tree Form) stacks unchanged on the new
+        // 11/13: 12/13. Sorcerer/Bloodrager/Warpriest/Cavalier combined move by their own
+        // bonus_vars deltas alone, no further desc-only closure found for them this cycle.
+        // SD-32 T12 Epic 8 row 18 cycle 21 (`§27b`): `Sorcerer Bloodline` bonus_vars 34/52 ->
+        // 45/52 via the Wildblooded-parent-header seventh shape (see the OTHER census test's own
+        // comment for the full derivation); `combined` moves by the same delta, no further
+        // desc-only closure found. Every other pool UNCHANGED.
+        // SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`): `Sorcerer Bloodline` bonus_vars 45/52 ->
+        // 48/52 via the eighth shape (`"<class> ~ Spells"`'s own `Sorcerer_Spells_StatBonus`,
+        // see the OTHER census test's own comment) -- Karmic/Seaborn/Warped Bloodline. `combined`
+        // moves ONE FURTHER, 48/52 -> 49/52: Sanguine Bloodline's `The Blood Is the Life` (empty
+        // `bonus_vars`, `%1` desc-formula argument `Sorcerer_Undead_BloodlinePower1Times`) needed
+        // the SAME missing identifier one hop further down its own parent's `BloodlinePowerTimes|
+        // 3+Sorcerer_Spells_StatBonus` chain -- confirmed live, traced end to end, not assumed
+        // from the DC-formula fix alone. `Anarchic Bloodline ~ Wild Feedback` (this cycle's own
+        // newly-traced group) carries neither a `BONUS:VAR` token nor a `%N` desc-formula argument
+        // anywhere in any of its 3 real members -- a genuine `§27b` zero-content hard gap, the
+        // SAME proof standard as `Groveborn`/`Primal` (cycle 21). `52 - 49 = 3` unresolved:
+        // Groveborn, Primal, Anarchic -- all three now exhaustively `§27b`-proven, zero real,
+        // un-traced Sorcerer Bloodline work remaining. Every other pool UNCHANGED.
+        assert!(
+            report.contains("Sorcerer Bloodline: bonus_vars=48/52, combined(bonus_vars OR desc_formula)=49/52")
+                && report.contains("Bloodrager Bloodline: bonus_vars=11/11, combined(bonus_vars OR desc_formula)=11/11")
+                && report.contains("Cleric Domain: bonus_vars=47/72, combined(bonus_vars OR desc_formula)=52/72")
+                && report.contains("Shaman Spirit: bonus_vars=11/13, combined(bonus_vars OR desc_formula)=12/13")
+                && report.contains("Warpriest Blessing: bonus_vars=0/37, combined(bonus_vars OR desc_formula)=8/37")
+                && report.contains("Cavalier Order: bonus_vars=1/8, combined(bonus_vars OR desc_formula)=2/8"),
+            "the honest all-resolver figure this cycle re-derived must reproduce exactly -- a \
+             future cycle's corpus/resolver change that moves these numbers must update this \
+             assertion deliberately, never silently:\n{report}"
+        );
+    }
+
+    /// Celestial is a real Sorcerer bloodline (`data/corpus/advanced_class_guide/
+    /// class_feature/celestial_bloodline/*.json`, 53 real bloodline groups total
+    /// per the cycle-4 census) this codebase has never hand-modelled by name --
+    /// only Arcane and Draconic are. Its "Ascension" member (`Sorcerer_
+    /// CelestialAscension_ResistanceBonus|10`, verified directly against the
+    /// corpus) is a flat constant needing no external chain var, so it resolves
+    /// through the shared resolver without any hand-picked `ground_sorcerer_*`
+    /// function. (A direct corpus survey this cycle ran across all 53 real
+    /// Bloodline groups found only 15 -- Aquatic, Arcane, Boreal, Celestial,
+    /// Destined, Dreamspun, Empyreal, Infernal, Protean, Sage, Serpentine,
+    /// Shadow, Starsoul, Stormborn, Verdant -- carry a member resolvable
+    /// WITHOUT the missing per-bloodline header chain; the other 38 correctly
+    /// refuse, see this cycle's receipt.)
+    #[test]
+    fn sorcerer_generic_bloodline_pass_grounds_a_never_hand_modelled_bloodline() {
+        let input =
+            class_input(SORCERER_CLASS_ID, 5, SORCERER_BLOODLINE_CHOICE_ID, "bloodline:celestial");
+        let count = generic_explanation_count(&input, "class_feature.sorcerer.bloodline.generic");
+        assert!(
+            count > 0,
+            "Celestial Bloodline must ground at least one real corpus member generically"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`): Karmic is a real Wildblooded Sorcerer
+    /// Bloodline VARIANT (`data/corpus/ultimate_magic/class_feature/karmic_bloodline/*.json`,
+    /// `Wildblooded ~ Karmic`'s own `PREABILITY` corpus-declares its real parent, `Destined`).
+    /// Its "Fate's Retribution" member's DC formula
+    /// (`10+(Sorcerer_Destined_BloodlinePower1LVL/2)+Sorcerer_Spells_StatBonus`) needed BOTH
+    /// cycle 21's seventh shape (the Wildblooded-parent-header recursion, for
+    /// `Sorcerer_Destined_BloodlinePower1LVL`) AND this cycle's eighth shape (`"Sorcerer ~
+    /// Spells"`'s own `Sorcerer_Spells_StatBonus|CHA`) to ground -- proves the two shapes
+    /// compose correctly on a real character, not just in the census's own group-membership
+    /// tally. At character level 20, CHA modifier 0 (`AbilityModifiers::default()`), this
+    /// resolves to exactly `Sorcerer_KarmicFatesRetribution_DC = 30`
+    /// (`10 + ((BloodlineLVL=2*SorcererLVL=40)/2=20) + CHA(0)`), matching the direct-resolver
+    /// trace this cycle's own receipt cites.
+    #[test]
+    fn sorcerer_generic_bloodline_pass_grounds_karmic_wildblooded_variant() {
+        let input =
+            class_input(SORCERER_CLASS_ID, 20, SORCERER_BLOODLINE_CHOICE_ID, "bloodline:karmic");
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id.starts_with("class_feature.sorcerer.bloodline.generic"));
+        assert!(
+            explanation.is_some(),
+            "Karmic Bloodline must ground at least one real corpus member generically"
+        );
+    }
+
+    /// Plant is a real Cleric domain this codebase's `DOMAIN_POWER_CATALOG`
+    /// does NOT hand-model (only Good/War/Strength/Destruction/Glory/Healing
+    /// are), one of the 67 remaining real domain groups the cycle-4 census
+    /// names. Its "Wooden Fist" member (`WoodenFistRounds|3+WIS`) needs only
+    /// an ability modifier, resolving without the missing per-domain header
+    /// chain. (A direct corpus survey found only 5 of the 67 remaining real
+    /// Domain groups -- Heresy, Oblivion, Plant, Tactics, Wolf -- carry such a
+    /// member; the rest correctly refuse, see this cycle's receipt.)
+    #[test]
+    fn cleric_generic_domain_pass_grounds_a_never_hand_modelled_domain() {
+        let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:plant");
+        let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
+        assert!(count > 0, "Plant Domain must ground at least one real corpus member generically");
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 19: the desc-formula resolver's own missing header-merge
+    /// step, named by coordinate in cycle 18's own receipt (`§3`: "the desc-formula resolver has
+    /// no header-merge step of its own to find it"). `Mountain Domain ~ Foothold`'s real corpus
+    /// `%1` argument is the bare identifier `DomainMountainTimes`, chaining through the
+    /// domain-kind header cycle 18 added (`DomainMountainTimes|DomainPowerTimes|TYPE=Domain`) to
+    /// Cleric Domain's own bare `"Domains"` base-header record (`DomainPowerTimes|3+WIS`) --
+    /// UNRESOLVABLE with an empty header map (proves the gap was real), resolvable once
+    /// `pool_group_header_vars_merged` is passed in (proves the fix, mirroring cycle 8's own
+    /// header-merge fix for the OTHER resolver, `§17`).
+    #[test]
+    fn mountain_domain_foothold_desc_formula_needs_the_header_merge_to_resolve() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let key = "Mountain Domain ~ Foothold";
+        let empty_header_vars: std::collections::BTreeMap<String, String> =
+            std::collections::BTreeMap::new();
+        assert!(
+            super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                key,
+                5,
+                &ability_modifiers,
+                &empty_header_vars,
+            )
+            .is_none(),
+            "without the header merge, Foothold's %1 argument (DomainMountainTimes) must stay \
+             unresolvable -- proves the pre-cycle-19 gap was real, not already closed some other way"
+        );
+        let header_vars =
+            super::pool_group_header_vars_merged("Cleric", "Mountain Domain", Some("Domain"));
+        let resolved =
+            super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                key,
+                5,
+                &ability_modifiers,
+                &header_vars,
+            );
+        assert!(
+            resolved.is_some(),
+            "with the real header chain merged in, Foothold's %1 argument must resolve -- \
+             DomainMountainTimes -> DomainPowerTimes -> 3+WIS"
+        );
+        let (_, value) = resolved.unwrap();
+        assert_eq!(
+            value, 3,
+            "DomainPowerTimes = 3+WIS, WIS modifier 0 under AbilityModifiers::default()"
+        );
+    }
+
+    /// Oracle Mystery is DELIBERATELY NOT wired to
+    /// `push_generic_pool_group_selection_magnitude` (see the withdrawal
+    /// comment at `ground_or_block_oracle_class_features`'s own call site):
+    /// unlike Domain/Bloodline, most Mystery members are budgeted
+    /// REVELATIONS this codebase already, correctly, gates on an explicit
+    /// `ORACLE_REVELATION_CHOICE_ID` pick -- a blanket "selecting the
+    /// mystery alone grants every member" pass is factually wrong for this
+    /// pool. Wiring it live tripped this file's own pre-existing regression
+    /// (`oracle_dispatch_widening_safety_tests::
+    /// a_mystery_pick_alone_grounds_no_tier_one_revelation`), which is
+    /// authoritative and was correctly left unweakened. This test proves
+    /// the withdrawal: no `class_feature.apg.oracle.mystery.generic`
+    /// explanation is ever emitted, on a mystery this file has never
+    /// hand-modelled by name (Ancestor) or one it has (Lore).
+    #[test]
+    fn oracle_generic_mystery_pass_is_deliberately_not_wired() {
+        for selection in ["mystery:ancestor", "mystery:lore"] {
+            let input = class_input(ORACLE_CLASS_ID, 5, ORACLE_MYSTERY_CHOICE_ID, selection);
+            let count = generic_explanation_count(&input, "class_feature.apg.oracle.mystery.generic");
+            assert_eq!(
+                count, 0,
+                "Oracle Mystery must never emit a generic group-selection explanation for \
+                 {selection} -- the mechanism is withdrawn for this pool, not merely quiet"
+            );
+        }
+    }
+
+    /// Air is a real Warpriest blessing this file's Destruction/Strength
+    /// hand-modelling does not cover, one of the 36 remaining real blessing
+    /// groups the cycle-4 census names. Unlike Bloodline/Domain/Mystery,
+    /// Blessing genuinely closes NOTHING new: a direct corpus survey across
+    /// all 38 real Blessing groups found not one single-terminal member whose
+    /// formula avoids both the missing per-blessing header chain AND a
+    /// `classlevel("Warpriest")` call this resolver deliberately refuses to
+    /// bank through (`formula_interpreter.rs`'s own documented cross-class
+    /// gap). This is the honest "cannot be wired without extending the
+    /// resolver itself" case the brief asks to name rather than force --
+    /// proven here as a safe, unweakened refusal, not silently skipped.
+    #[test]
+    fn warpriest_generic_blessing_pass_correctly_refuses_every_unmodelled_blessing() {
+        let input = class_input(WARPRIEST_CLASS_ID, 5, WARPRIEST_BLESSING_CHOICE_ID, "blessing:air");
+        let count = generic_explanation_count(&input, "class_feature.acg.warpriest.blessing.generic");
+        assert_eq!(
+            count, 0,
+            "Air Blessing is a real, recognized selection with real corpus members -- this must \
+             be a genuine, safe refusal (no resolvable single-terminal member exists yet), not a \
+             silent miss on a selection this pool fails to recognize at all"
+        );
+    }
+
+    /// Wood is a real Shaman spirit beyond this file's ten hand-picked spirits
+    /// (Life/Battle/Bones/Flame/Heavens/Lore/Nature/Stone/Waves/Wind), one of
+    /// the 4 remaining real spirit groups the cycle-4 census names (Mammoth,
+    /// Wood, and two internal `Shaman(...)Spirit` dispatcher groups). A direct
+    /// corpus survey found none of the 4 carry a member resolvable without the
+    /// missing per-spirit header chain -- same honest "cannot close without
+    /// extending the resolver" finding as Blessing, proven as a safe refusal.
+    #[test]
+    fn shaman_generic_spirit_pass_correctly_refuses_every_unmodelled_spirit() {
+        let input = class_input(SHAMAN_CLASS_ID, 5, SHAMAN_SPIRIT_CHOICE_ID, "spirit:wood");
+        let count = generic_explanation_count(&input, "class_feature.acg.shaman.spirit.generic");
+        assert_eq!(
+            count, 0,
+            "Wood Spirit is a real, recognized selection with real corpus members -- this must be \
+             a genuine, safe refusal, not a silent miss on a selection this pool fails to \
+             recognize at all"
+        );
+    }
+
+    /// Safety: an invented selection resolves to nothing, on any of the five
+    /// wired pools -- the same "refuse rather than fabricate" contract every
+    /// prior cycle's own generic resolver already proves.
+    #[test]
+    fn invented_selections_ground_nothing_on_any_wired_pool() {
+        let cases: &[(&str, u8, &str, &str, &str)] = &[
+            (
+                SORCERER_CLASS_ID,
+                5,
+                SORCERER_BLOODLINE_CHOICE_ID,
+                "bloodline:not_a_real_bloodline",
+                "class_feature.sorcerer.bloodline.generic",
+            ),
+            (
+                CLERIC_CLASS_ID,
+                5,
+                CLERIC_DOMAIN_CHOICE_ID,
+                "domain:not_a_real_domain",
+                "class_feature.cleric.domain.generic",
+            ),
+            (
+                WARPRIEST_CLASS_ID,
+                5,
+                WARPRIEST_BLESSING_CHOICE_ID,
+                "blessing:not_a_real_blessing",
+                "class_feature.acg.warpriest.blessing.generic",
+            ),
+            (
+                SHAMAN_CLASS_ID,
+                5,
+                SHAMAN_SPIRIT_CHOICE_ID,
+                "spirit:not_a_real_spirit",
+                "class_feature.acg.shaman.spirit.generic",
+            ),
+        ];
+        for (class_id, level, choice_set_id, selection_id, id_prefix) in cases {
+            let input = class_input(class_id, *level, choice_set_id, selection_id);
+            assert_eq!(
+                generic_explanation_count(&input, id_prefix),
+                0,
+                "an invented selection ({choice_set_id} -> {selection_id}) must never ground \
+                 anything"
+            );
+        }
+    }
+
+    /// Undead is a real Bloodrager bloodline (`data/corpus/advanced_class_guide/class_feature/
+    /// undead_bloodrager_bloodline/*.json`, 12 real Bloodrager bloodline groups total) this file
+    /// has never hand-modelled by name -- only Arcane is (`ground_bloodrager_arcane_bloodline`).
+    /// A direct corpus survey this cycle ran across all 12 real Bloodrager Bloodline groups found
+    /// 4 -- Aberrant, Arcane, Elemental, Undead -- carry a member resolvable WITHOUT the missing
+    /// per-bloodline header chain; the other 8 correctly refuse, same shape as Sorcerer's own
+    /// Bloodline pool (this cycle's receipt).
+    #[test]
+    fn bloodrager_generic_bloodline_pass_grounds_a_never_hand_modelled_bloodline() {
+        let input = class_input(BLOODRAGER_CLASS_ID, 5, BLOODRAGER_BLOODLINE_CHOICE_ID, "bloodline:undead");
+        let count = generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.generic");
+        assert!(count > 0, "Undead Bloodline must ground at least one real corpus member generically");
+    }
+
+    /// Safety: the generic Bloodrager Bloodline pass never fires for Arcane, the ONE bloodline
+    /// this file already hand-models via `ground_bloodrager_arcane_bloodline` -- proving the two
+    /// mechanisms cannot double-count even though Arcane's own corpus members would otherwise
+    /// resolve through the generic pass too (its own registered-name/namespace match is identical
+    /// to any other Bloodrager bloodline). `ground_bloodrager_arcane_bloodline`'s own explanation
+    /// ids are `class_feature.acg.bloodrager.bloodline.arcane.*`, a DIFFERENT id prefix from the
+    /// generic pass's `class_feature.acg.bloodrager.bloodline.generic.*` -- both may legitimately
+    /// fire side by side without collision, mirroring the Sorcerer Arcane/Draconic contract cycle
+    /// 5 already established; this test only proves the generic id itself does not go empty
+    /// (still resolves something) for the hand-modelled bloodline too, since Arcane's own corpus
+    /// members are real records like any other.
+    #[test]
+    fn bloodrager_generic_bloodline_pass_does_not_collide_with_the_hand_modelled_arcane_bloodline() {
+        let input = class_input(BLOODRAGER_CLASS_ID, 5, BLOODRAGER_BLOODLINE_CHOICE_ID, "bloodline:arcane");
+        let generic_count =
+            generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.generic");
+        let hand_modelled_count =
+            generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.arcane");
+        assert!(hand_modelled_count > 0, "the pre-existing hand-modelled Arcane branch must still fire");
+        assert!(
+            generic_count > 0,
+            "the generic pass must independently ground Arcane's own resolvable corpus members too"
+        );
+    }
+
+    /// Green is a real Cavalier order (`data/corpus/*/class_feature/order_of_the_green/*.json`)
+    /// this file has never hand-modelled by name -- only Order of the Sword is
+    /// (`ground_cavalier_named_features`'s own `ORDER_OF_THE_SWORD_SELECTION` branch). SD-32 T12
+    /// Epic 8 row 18 cycle 7's THIRD real corpus naming/ownership shape
+    /// (`real_pool_group_for_selection_slug`'s own doc) is what makes "Order of the Green" findable
+    /// at all -- its own group name does not end in `" Order"`, so neither of cycles 5/6's two
+    /// existing branches would ever match it; its own corpus `class` field is also
+    /// self-referential (`"Order of the Green"`, never `"Cavalier"`), so it is only admitted
+    /// because a real, independently-verified `"Cavalier Order ~ Order of the Green"` CHOOSER
+    /// header record also exists and is itself tagged `class: "Cavalier"` (the ownership-proof
+    /// fallback this cycle added). Its "Favored Terrain" member (`BONUS:VAR|FavoredTerrainPool|
+    /// (CavalierFavoredTerrainLVL+4)/6` chained to the SAME record's own
+    /// `BONUS:VAR|CavalierFavoredTerrainLVL|CavalierLVL`) is a genuine two-hop, self-contained
+    /// chain needing no missing header var, resolving without any hand-picked `ground_cavalier_*`
+    /// function. A direct corpus survey this cycle ran across all 8 real, Cavalier-owned Order
+    /// groups (Beast, Guard, Eastern Star, Shroud, Blue Rose, Green, Seal, Tome) found exactly ONE
+    /// -- Green -- carries a member resolvable this way; Guard and Tome each carry one real
+    /// numeric member too (`BONUS:SKILL|...`, Knowledge (nobility) / Linguistics), but
+    /// `parse_bonus_var_tokens_pre_gate_safe` only ever reads `BONUS:VAR` tokens (this module's
+    /// own documented scope), so a `BONUS:SKILL`-only member correctly refuses, same shape as
+    /// every other pool's own `classlevel(...)`/missing-header refusals; the other 5 orders are
+    /// pure DESC-only display members (`§7` DONE already, not a resolver gap, the same correction
+    /// cycle 6 made for Warpriest Blessing).
+    #[test]
+    fn cavalier_generic_order_pass_grounds_a_never_hand_modelled_order() {
+        let input = class_input(CAVALIER_CLASS_ID, 5, CAVALIER_ORDER_CHOICE_ID, "order:green");
+        let count = generic_explanation_count(&input, "class_feature.apg.cavalier.order.generic");
+        assert!(count > 0, "Order of the Green must ground at least one real corpus member generically");
+    }
+
+    /// Safety: the generic Cavalier Order pass never fires for Sword, the ONE order this file
+    /// already hand-models via the `ORDER_OF_THE_SWORD_SELECTION` branch in
+    /// `ground_cavalier_named_features` -- proving the two mechanisms cannot double-count even
+    /// though "Order of the Sword" has no `"Cavalier Order ~ Order of the Sword"` CHOOSER header at
+    /// all (its own corpus members are tagged `class: "Order of the Sword"`, matching neither the
+    /// majority-class check nor the header-ownership-proof fallback) -- the generic pass correctly,
+    /// safely refuses it outright, never colliding with the hand-modelled branch.
+    #[test]
+    fn cavalier_generic_order_pass_does_not_collide_with_the_hand_modelled_order_of_the_sword() {
+        let input = class_input(CAVALIER_CLASS_ID, 5, CAVALIER_ORDER_CHOICE_ID, "order:sword");
+        let generic_count =
+            generic_explanation_count(&input, "class_feature.apg.cavalier.order.generic");
+        let hand_modelled_count =
+            generic_explanation_count(&input, "class_feature.apg.cavalier.order_of_the_sword");
+        assert!(hand_modelled_count > 0, "the pre-existing hand-modelled Order of the Sword branch must still fire");
+        assert_eq!(
+            generic_count, 0,
+            "Order of the Sword has no Cavalier-owned CHOOSER header in this corpus, so the \
+             generic pass must safely refuse it (not fabricate a match), never colliding with the \
+             hand-modelled branch"
+        );
+    }
+
+    /// Safety: an invented selection resolves to nothing on the Cavalier Order pool either.
+    #[test]
+    fn invented_cavalier_order_selection_grounds_nothing() {
+        let input =
+            class_input(CAVALIER_CLASS_ID, 5, CAVALIER_ORDER_CHOICE_ID, "order:not_a_real_order");
+        assert_eq!(
+            generic_explanation_count(&input, "class_feature.apg.cavalier.order.generic"),
+            0,
+            "an invented Cavalier Order selection must never ground anything"
+        );
+    }
+
+    /// Abyssal is a real Sorcerer bloodline cycle 7 found blocked (its own per-bloodline header,
+    /// `"Abyssal Bloodline"`, chains `Sorcerer_Abyssal_BloodlineLVL -> BloodlineLVL`, and
+    /// `BloodlineLVL` itself binds only on the corpus-wide, cross-book-duplicated `"Bloodline
+    /// Tracker"` record -- SD-32 T12 Epic 8 row 18 cycle 8's own `registered_name_for_tracker`
+    /// widening in `resolve_pool_member_sole_magnitude`). `§17a` re-derivation this cycle (after
+    /// row 21 restored the per-book `.MOD` rows `"Bloodline Tracker"` itself carries) found the
+    /// var STILL unbound: 8 separate book files share the SAME bare key, and the prior
+    /// `or_insert_with` kept only whichever book sorted first alphabetically
+    /// (`advanced_class_guide`, a single leftover `DEFINE`) over `core_rulebook`'s own complete
+    /// 308-token copy -- a second, cross-book collision loss surviving row 21's per-file fix.
+    /// `class_feature_bonus_vars_any_record`'s own MERGE-across-books widening (this cycle) is
+    /// what makes `BloodlineLVL` findable at all. Its "Bloodline Arcana" member (`Sorcerer_
+    /// AbyssalBloodlineArcana_SummonDR|max(Sorcerer_Abyssal_BloodlineLVL/2,1)`) is real level-
+    /// scaled magnitude.
+    #[test]
+    fn sorcerer_generic_bloodline_pass_grounds_abyssal_via_the_cross_book_tracker_merge() {
+        let input = class_input(SORCERER_CLASS_ID, 5, SORCERER_BLOODLINE_CHOICE_ID, "bloodline:abyssal");
+        let count = generic_explanation_count(&input, "class_feature.sorcerer.bloodline.generic");
+        assert!(count > 0, "Abyssal Bloodline must ground at least one real corpus member generically");
+    }
+
+    /// Verdant is a real Bloodrager bloodline cycle 7 found blocked, needing `BloodragerBloodlineLVL`
+    /// -- bound on `"Bloodrager ~ Bloodline Tracker"` (Bloodrager's own, differently-shaped tracker
+    /// key, `"<class> ~ Bloodline Tracker"` rather than Sorcerer's bare `"Bloodline Tracker"`),
+    /// found via the SAME generic `registered_name_for_tracker` widening (this cycle) reusing
+    /// `pool_header_record_by_normalized_suffix` unchanged -- no per-class special case. Its "Oaken
+    /// Skin" member (`VerdantBloodragerOakenSkin|1+(BloodragerBloodlineLVL/4)`) is real level-
+    /// scaled magnitude.
+    #[test]
+    fn bloodrager_generic_bloodline_pass_grounds_verdant_via_the_tracker_merge() {
+        let input = class_input(BLOODRAGER_CLASS_ID, 5, BLOODRAGER_BLOODLINE_CHOICE_ID, "bloodline:verdant");
+        let count = generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.generic");
+        assert!(count > 0, "Verdant Bloodline must ground at least one real corpus member generically");
+    }
+
+    /// Animal is a real Cleric domain cycle 7 found blocked, needing `DomainAnimalLVL` (the
+    /// "Animal Domain" header's own chain) which itself needs `DomainLVL` -- bound ONLY on the
+    /// CLERIC CLASS RECORD (`data/corpus/core_rulebook/class/cleric.json`, `BONUS:VAR|DomainLVL|
+    /// ClericLVL`), never on any `class_feature` record at all (cycle 7's own receipt, "out of
+    /// `class_feature`'s ingestion scope entirely"). Row 21 restored `raw_tokens` onto all 168 real
+    /// class records; this cycle's own NEW `class_record_bonus_vars` table (mirroring `class_
+    /// feature_bonus_vars_any_record`'s shape one dir level up) is the missing READ side, merged
+    /// into `resolve_pool_member_sole_magnitude` unconditionally (every owning class, not gated by
+    /// a family flag). Its "Animal Companion" member (`AnimalCompanionMasterLVL|DomainAnimalLVL-3`)
+    /// is a genuine two-hop chain terminating on the class record.
+    #[test]
+    fn cleric_generic_domain_pass_grounds_animal_via_the_class_record_merge() {
+        let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:animal");
+        let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
+        assert!(count > 0, "Animal Domain must ground at least one real corpus member generically");
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17`): proves the SIXTH real header shape,
+    /// `"Domain Base ~ <bare>"` (`data.class` literally `"Domain Base"`, `pool_header_record_by_
+    /// normalized_suffix`'s own new doc) reaches Void Domain's real corpus chain end to end.
+    /// `Void Domain ~ Part the Veil`'s own `%N` desc-formula argument (`DomainVoidTimes`) was
+    /// unreachable before this cycle because its ONLY binding lived on `"Domain Base ~ Void"`, a
+    /// key shape no prior header clause tried. Tested at the same resolver level
+    /// `mountain_domain_foothold_desc_formula_needs_the_header_merge_to_resolve` above uses --
+    /// this pool has no production `push_generic_pool_group_selection_description_magnitude`
+    /// call site wired yet (only Cavalier Order and Warpriest Blessing do; a pre-existing gap,
+    /// unrelated to and not fixed by this cycle, named here rather than silently worked around).
+    #[test]
+    fn cleric_generic_domain_pass_grounds_void_via_the_domain_base_header_merge() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let key = "Void Domain ~ Part the Veil";
+        let header_vars = super::pool_group_header_vars_merged("Cleric", "Void Domain", Some("Domain"));
+        let resolved =
+            super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
+                key,
+                5,
+                &ability_modifiers,
+                &header_vars,
+            );
+        assert!(
+            resolved.is_some(),
+            "Part the Veil's %1 argument (DomainVoidTimes) must resolve through the new \
+             \"Domain Base ~ Void\" header merge: {resolved:?}"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 20 correction (`§27b`/`§17a`): cycle 19's own exhaustive
+    /// verification claimed `Scalykind` (one of its named 12 "genuine hard-impossibility data
+    /// gaps") carries "no BONUS:VAR-bearing header exists anywhere in the corpus" -- that check
+    /// covered the `domain`-kind and bare `class_feature` header shapes only, never the THIRD,
+    /// `class_feature/domain_base/` directory this cycle found (`"Domain Base ~ Scalykind"` is
+    /// real, `BONUS:VAR|DomainScalykindLVL|DomainLVL`). This test proves the correction:
+    /// `resolve_pool_member_all_magnitudes` now genuinely resolves a real Scalykind member,
+    /// disproving the prior hard-impossibility claim for this ONE domain (the other 11 named
+    /// domains were re-checked this cycle and remain genuinely headerless in all three shapes).
+    #[test]
+    fn cleric_generic_domain_pass_grounds_scalykind_correcting_cycle_19s_hard_impossibility_claim() {
+        let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
+        let table = super::class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe();
+        let prefix = "Scalykind Domain ~ ";
+        let resolved_any = table.keys().filter(|key| key.starts_with(prefix)).any(|key| {
+            !super::resolve_pool_member_all_magnitudes(
+                key,
+                "Scalykind Domain",
+                5,
+                &ability_modifiers,
+                Some("Cleric"),
+                Some("Domain"),
+            )
+            .is_empty()
+        });
+        assert!(
+            resolved_any,
+            "Scalykind Domain must now have at least one real corpus member resolve \
+             generically, correcting cycle 19's own hard-impossibility claim"
+        );
+    }
+
+    /// SD-32 T12 Epic 8 row 18 cycle 15: `push_generic_pool_group_selection_description_magnitude`,
+    /// the sibling generic pass cycle 14's own `§16` finding named -- Earth Blessing carries no
+    /// `BONUS:VAR` at all (`resolve_pool_member_sole_magnitude` returns `None` for it, confirmed
+    /// by the `class_feature.acg.warpriest.blessing.generic` prefix staying empty below), but its
+    /// own "Armor of Earth" member carries a real `%1`-substituted DESC formula
+    /// (`"if(WarpriestLVL<19,1+((WarpriestLVL/2)-5),5)"`) this new resolver reaches directly.
+    #[test]
+    fn warpriest_generic_blessing_description_pass_grounds_a_zero_bonus_var_blessing() {
+        let input = class_input(WARPRIEST_CLASS_ID, 8, WARPRIEST_BLESSING_CHOICE_ID, "blessing:earth");
+        let old_shape_count =
+            generic_explanation_count(&input, "class_feature.acg.warpriest.blessing.generic");
+        assert_eq!(
+            old_shape_count, 0,
+            "Earth Blessing's own members carry no BONUS:VAR at all -- the bonus_vars-only \
+             resolver must find nothing"
+        );
+        let description_count = generic_explanation_count(
+            &input,
+            "class_feature.acg.warpriest.blessing_description.generic",
+        );
+        assert!(
+            description_count > 0,
+            "Earth Blessing's own %N-substituted DESC formula must ground generically through \
+             the new description resolver"
+        );
+    }
+
+    /// The same proof for Cavalier Order of the Beast -- ZERO `BONUS:VAR` tokens on any of its
+    /// own real members (cycle 12's own finding, unchanged), but "Wild Mount Shape" carries a
+    /// real `%1`-substituted DESC formula (`%1` = a bare `CavalierLVL` reference) this new
+    /// resolver reaches. "Class Skills" (`max(floor(CavalierLVL/2))`, a single-argument `max()`
+    /// call) is a real corpus shape the formula interpreter's own documented `min`/`max`
+    /// "at least 2 arguments" rule refuses -- an honest refusal, not fabricated, so it does not
+    /// need to be the member this test proves through.
+    #[test]
+    fn cavalier_generic_order_description_pass_grounds_order_of_the_beast() {
+        let input = class_input(CAVALIER_CLASS_ID, 10, CAVALIER_ORDER_CHOICE_ID, "order:beast");
+        let old_shape_count =
+            generic_explanation_count(&input, "class_feature.apg.cavalier.order.generic");
+        assert_eq!(
+            old_shape_count, 0,
+            "Order of the Beast's own members carry no BONUS:VAR at all -- the bonus_vars-only \
+             resolver must find nothing"
+        );
+        let description_count = generic_explanation_count(
+            &input,
+            "class_feature.apg.cavalier.order_description.generic",
+        );
+        assert!(
+            description_count > 0,
+            "Order of the Beast's own %N-substituted DESC formula must ground generically \
+             through the new description resolver"
+        );
+    }
+
+    /// Safety: the new description resolver never fires a SECOND time for Destruction or
+    /// Strength Blessing, both already grounded by their own dedicated, activation-gated
+    /// functions -- proving `already_hand_modelled_keys` genuinely excludes them rather than
+    /// merely happening not to collide.
+    #[test]
+    fn warpriest_generic_blessing_description_pass_never_double_grounds_destruction_or_strength() {
+        for selection in ["blessing:destruction", "blessing:strength"] {
+            let input = class_input(WARPRIEST_CLASS_ID, 8, WARPRIEST_BLESSING_CHOICE_ID, selection);
+            let description_count = generic_explanation_count(
+                &input,
+                "class_feature.acg.warpriest.blessing_description.generic",
+            );
+            assert_eq!(
+                description_count, 0,
+                "{selection} is already hand-modelled -- the generic description pass must \
+                 exclude its own key, never emit a duplicate explanation for the same magnitude"
+            );
+        }
+    }
+
+    /// Safety: an invented Blessing/Order selection grounds nothing through the new resolver
+    /// either -- the same "refuse rather than fabricate" contract every other generic pass proves.
+    #[test]
+    fn invented_selections_ground_nothing_through_the_description_resolver() {
+        let cases: &[(&str, u8, &str, &str, &str)] = &[
+            (
+                WARPRIEST_CLASS_ID,
+                8,
+                WARPRIEST_BLESSING_CHOICE_ID,
+                "blessing:not_a_real_blessing",
+                "class_feature.acg.warpriest.blessing_description.generic",
+            ),
+            (
+                CAVALIER_CLASS_ID,
+                10,
+                CAVALIER_ORDER_CHOICE_ID,
+                "order:not_a_real_order",
+                "class_feature.apg.cavalier.order_description.generic",
+            ),
+        ];
+        for (class_id, level, choice_set_id, selection_id, id_prefix) in cases {
+            let input = class_input(class_id, *level, choice_set_id, selection_id);
+            assert_eq!(
+                generic_explanation_count(&input, id_prefix),
+                0,
+                "an invented selection ({choice_set_id} -> {selection_id}) must never ground \
+                 anything through the description resolver"
+            );
+        }
     }
 }

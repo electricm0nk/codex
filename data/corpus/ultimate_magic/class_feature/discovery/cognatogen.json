@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Cognatogen",
     "name": "Cognatogen",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You gain the ability to create a cognatogen, a mutagen-like mixture that heightens one mental ability score at the expense of a physical ability score.  If the cognatogen enhances your Intelligence, it applies a penalty to your Strength. If it enhances your Wisdom, it applies a penalty to your Dexterity. If it enhances your Charisma, it applies a penalty to your Constitution. Otherwise, this ability works just like the mutagen ability (including the natural armor bonus). Anytime you would prepare a mutagen, you may instead prepare a cognatogen. All limitations of mutagens apply to cognatogens as if they were the same substance-you can only maintain one mutagen or cognatogen at a time, a cognatogen that is not in your possession becomes inert, drinking a cognatogen makes a non-alchemist sick, and so on. When the effect of the cognatogen ends, you take 2 points of ability damage to the ability score penalized by the cognatogen. The infuse mutagen discovery and the persistent mutagen class ability apply to cognatogens.",
     "raw_tokens": [
       {
@@ -136,5 +136,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

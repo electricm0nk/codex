@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Flame Mystery ~ Fire Breath",
     "name": "Fire Breath",
-    "class": "Flame Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can unleash a 15-foot cone of flame from your mouth. This flame deals %1d4 points of fire damage. A Reflex save halves this damage. You can use this ability %2 times per day. The save DC is Charisma-based.|classlevel(\"Oracle\")|1+(classlevel(\"Oracle\")/5)",
     "raw_tokens": [
       {
@@ -27,6 +27,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.47"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "FireSchool"
+      },
+      {
+        "key": "DESC",
+        "value": "Up to thrice during this spell's duration, you can belch forth a cone of fire as a standard action. The first cone deals 4d6 points of fire damage to every creature in the area. The second cone of flame deals 2d6 points of fire damage to every creature in the area. The third cone of flame deals 1d6 points of fire damage to every creature in the area. A successful Reflex save halves this damage. After the third cone of flame, the spell ends.|PRERULE:1,DisplayFullSpell"
       }
     ]
   },
@@ -44,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

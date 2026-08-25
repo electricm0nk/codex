@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Slayer Talent ~ Stealthy Sniper",
     "name": "Stealthy Sniper",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "When a slayer with this talent uses the Stealth skill to snipe, she only suffers a -10 penalty on the Stealth check, instead of -20.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Water Dancer ~ Burn",
+    "name": "Burn",
+    "class": "Monk",
+    "description": "A water dancer gains the burn class feature of the kineticist class. A water dancer can overexert himself to channel more power than normal, pushing past the limit of what is safe for his body by accepting burn. Some of his wild talents allow him to accept burn in exchange for a greater effect, while others require him to accept a certain amount of burn to use that talent at all. For each point of burn he accepts, a water dancer takes 1 point of nonlethal damage per character level. This damage can't be healed by any means other than getting a full night's rest, which removes all burn and associated nonlethal damage. Nonlethal damage from burn can't be reduced or redirected, and a water dancer incapable of taking nonlethal damage can't accept burn. A water dancer can accept only 1 point of burn per round. This limit rises to 2 points of burn at 6th level, and rises by 1 additional point every 3 levels thereafter. A water dancer can't choose to accept burn if it would put his total number of points of burn higher than 3 + his Constitution modifier (though he can be forced to accept more burn from a source outside his control). A water dancer who has accepted burn never benefits from abilities that allow him to ignore or alter the effects he receives from nonlethal damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Water Dancer ~ Burn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Features.WaterDancerClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A water dancer gains the burn class feature of the kineticist class. A water dancer can overexert himself to channel more power than normal, pushing past the limit of what is safe for his body by accepting burn. Some of his wild talents allow him to accept burn in exchange for a greater effect, while others require him to accept a certain amount of burn to use that talent at all. For each point of burn he accepts, a water dancer takes 1 point of nonlethal damage per character level. This damage can't be healed by any means other than getting a full night's rest, which removes all burn and associated nonlethal damage. Nonlethal damage from burn can't be reduced or redirected, and a water dancer incapable of taking nonlethal damage can't accept burn. A water dancer can accept only 1 point of burn per round. This limit rises to 2 points of burn at 6th level, and rises by 1 additional point every 3 levels thereafter. A water dancer can't choose to accept burn if it would put his total number of points of burn higher than 3 + his Constitution modifier (though he can be forced to accept more burn from a source outside his control). A water dancer who has accepted burn never benefits from abilities that allow him to ignore or alter the effects he receives from nonlethal damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 117,
+    "record_key": "Water Dancer ~ Burn"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

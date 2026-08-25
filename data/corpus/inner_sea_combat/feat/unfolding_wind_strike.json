@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Unfolding Wind Strike",
+    "category": "Combat",
+    "name": "Unfolding Wind Strike",
+    "description": "The wind through which your thrown weapons fly directs them to their target or back to your hand. When using Perfect Style, you double the range increment of any thrown weapon you wield. You can spend 1 ki point as a swift action to imbue a number of thrown weapons equal to your Wisdom bonus with the returning or seeking weapon special ability for 1 round.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Perfect Style,Quick Draw",
+      "PREMULT:1,[PRETOTALAB:9],[PREVARGTEQ:MonkLVL,9]",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]",
+      "PRESTAT:1,WIS=13",
+      "PRETEXT:Prerequisites: Dex 13, Wis 13, Perfect Style, Quick Draw, base attack bonus +9 or monk level 9th."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst",
+    "sha256": "d77ff4698e10a0e51f391d4d1a489ad30acc64122d09842e1007a670cf81db5b",
+    "line": 27,
+    "record_key": "Unfolding Wind Strike"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Psychic Curse",
     "name": "Psychic Curse [Necromancy]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to curse a living creature within 30 feet with your psychic magic. You can choose one of the following effects: memory lapse, mental block, or pain confusion. If you choose memory lapse, the target loses its memory of the past 1 hour per occultist level you possess. If you choose mental block, you can proscribe one specific action, such as attacking with a type of weapon, casting a specific spell, or something else suitably specific (subject to the GM's discretion). The target can't take that action without first succeeding at a Will save. If it fails, it can take other actions instead. If it attempts the prohibited action again on subsequent rounds, it gains a cumulative +2 bonus on the save until it succeeds. If you select pain confusion, the creature is confused for 1d4 rounds whenever it is damaged by a critical hit. The target can attempt a Will save to negate this effect. This effect lasts for 1 day per occultist level you possess. A creature can't be under the effects of more than one psychic curse at a time. This is a mind-affecting curseUM effect. You must be at least 5th level to select this focus power.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Stymphalidies ~ Wing Razors",
+    "delivery": "Extraordinary",
+    "description": "A stymphalidies's metallic feathers are razor-sharp. In addition to being able to slash creatures with its wings as a melee attack, it may beat its wings, flinging two large, feathered shards at a single target. These wing razors deal 2d6 points of damage and cause bleed, with a range increment of 50 feet. A stymphalidies can use this attack a number of times per day equal to its Constitution modifier (5 times per day for most stymphalidies).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:stymphalidies_wing_razors",
+    "name": "Wing Razors",
+    "owners": [
+      "bestiary_3:monster:stymphalidies"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A stymphalidies's metallic feathers are razor-sharp. In addition to being able to slash creatures with its wings as a melee attack, it may beat its wings, flinging two large, feathered shards at a single target. These wing razors deal 2d6 points of damage and cause bleed, with a range increment of 50 feet. A stymphalidies can use this attack a number of times per day equal to its Constitution modifier (5 times per day for most stymphalidies)."
+      },
+      {
+        "key": "KEY",
+        "value": "Stymphalidies ~ Wing Razors"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.257"
+      },
+      {
+        "key": "TYPE",
+        "value": "StymphalidiesRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.257",
+    "traits": [
+      "StymphalidiesRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1581,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Stymphalidies ~ Wing Razors",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

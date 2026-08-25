@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:11:34Z",
+  "data": {
+    "key": "Sense Motive",
+    "name": "Sense Motive",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "WIS"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wisdom.Base"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "AnimalCompanionSkill,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|3|TYPE=ClassSkill|PRECSKILL:1,Sense Motive|PRESKILL:1,Sense Motive=1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_skills.lst",
+    "sha256": "4cb379aac1fcb20677623cecf3842a30eef88d79d4fe4fe00fbc0f49f856c9ea",
+    "line": 97,
+    "record_key": "Sense Motive"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

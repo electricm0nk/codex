@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Emotional Focus ~ Dedication",
     "name": "Dedication",
-    "class": "Phantom Emotional Focus",
+    "class": "Phantom",
     "description": "Either through a sense of love or the desire to f inish some unfinished task, a phantom with this emotional focus has an undying devotion to something or someone in the world. It's often the case that a phantom with this emotional focus has a strong familial tie with its spiritualist master. A dedication phantom most often appears as a strong and stern protector with a watchful gaze, and its service to its spiritualist is unwavering. These spirits exude auras of blue, or sometimes rose if their love for their spiritualist masters in life was great. Many times these auras manifest as a halo, giving these phantoms a divine appearance, no matter their actual alignment or opinions on matters of religion.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

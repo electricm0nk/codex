@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Boreal Bloodline ~ Snow Shroud",
     "name": "Snow Shroud",
-    "class": "Boreal Bloodline",
+    "class": "Sorcerer",
     "description": "You ignore concealment and Perception penalties in natural or magical snow, ice, fog, and similar weather conditions. In addition, you can surround yourself with a cloak of swirling snow for %1 rounds per day. This power acts and deals damage as a fire shield (chill shield) that sheds no light. It provides a 20%% miss chance on attacks made against you and grants a +%2 bonus on Stealth checks in snowy or icy areas.|Sorcerer_BorealSnowShroud_Duration|Sorcerer_BorealSnowShroud_StealthBonus",
     "raw_tokens": [
       {
@@ -112,5 +112,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

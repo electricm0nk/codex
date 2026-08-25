@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Occultist Physical Enhancement ~ Dexterity",
     "name": "Dexterity",
-    "class": "Occultist Physical Enhancement",
+    "class": "Occultist",
     "description": "Gain a +%1 temporary enhancement bonus to Dexterity.|OccultistPhysicalEnhancement",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Berbalang ~ Projection",
+    "delivery": "Supernatural",
+    "description": "Once per day as a full-round action, a berbalang can enter a trance that separates the creature's spirit from its body. This splits the berbalang's current hit points in half between its body and its spirit. The berbalang's spirit body gains the incorporeal subtype and special ability; otherwise, it retains the same statistics as its physical self with the following changes: AC 19, touch 19, flat-footed 10 (+4 Dex, +4 deflection, +1 dodge), single incorporeal touch attack that deals 1d4 Constitution damage on a hit as its sole attack. This spirit projection can travel no more than 1 mile away from the berbalang's body. Because the creature is only partially in existence when in this state, its body gains displacement as the spell. When separated in this way, the berbalang's body is unconscious and helpless. If the berbalang's body is injured while in this state, the separated projection immediately returns to its body, and the body loses displacement. If the physical body is slain, the spirit body immediately dies as well. If the spirit is reduced to 0 or fewer hit points, it returns to the body immediately. A berbalang in spirit form can end the effect at any time as a standard action, at which point the spirit immediately returns to the body. When a berbalang's spirit form returns to the body, add both the spirit body's hit points and the physical body's hit points back together to determine the creature's current hit point total.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:berbalang_projection",
+    "name": "Projection",
+    "owners": [
+      "bestiary_3:monster:berbalang"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a full-round action, a berbalang can enter a trance that separates the creature's spirit from its body. This splits the berbalang's current hit points in half between its body and its spirit. The berbalang's spirit body gains the incorporeal subtype and special ability; otherwise, it retains the same statistics as its physical self with the following changes: AC 19, touch 19, flat-footed 10 (+4 Dex, +4 deflection, +1 dodge), single incorporeal touch attack that deals 1d4 Constitution damage on a hit as its sole attack. This spirit projection can travel no more than 1 mile away from the berbalang's body. Because the creature is only partially in existence when in this state, its body gains displacement as the spell. When separated in this way, the berbalang's body is unconscious and helpless. If the berbalang's body is injured while in this state, the separated projection immediately returns to its body, and the body loses displacement. If the physical body is slain, the spirit body immediately dies as well. If the spirit is reduced to 0 or fewer hit points, it returns to the body immediately. A berbalang in spirit form can end the effect at any time as a standard action, at which point the spirit immediately returns to the body. When a berbalang's spirit form returns to the body, add both the spirit body's hit points and the physical body's hit points back together to determine the creature's current hit point total."
+      },
+      {
+        "key": "KEY",
+        "value": "Berbalang ~ Projection"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "TYPE",
+        "value": "BerbalangRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.40",
+    "traits": [
+      "BerbalangRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 498,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Berbalang ~ Projection",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

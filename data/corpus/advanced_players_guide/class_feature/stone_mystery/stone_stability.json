@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Stone Mystery ~ Stone Stability",
     "name": "Stone Stability",
-    "class": "Stone Mystery",
+    "class": "Oracle",
     "description": "You receive a +4 bonus to your Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground. At 5th level, you gain Improved Trip as a bonus feat. At 10th level, you gain Greater Trip as a bonus feat. You do not need to meet the prerequisites to gain these feats.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

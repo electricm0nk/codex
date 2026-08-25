@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Stars Subdomain",
+    "name": "Stars Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Stars Subdomain],[PREVARLT:VoidDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Guarded Mind|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Void)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ The Stars Are Right|PREVARGTEQ:DomainVoidLVL,8"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VoidDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainVoidTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VoidDomain|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVoidLVL|DomainLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVoidDC|10+(DomainVoidLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainVoidTimes|DomainPowerTimes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Stars Subdomain=1|Feather Fall|Stars Subdomain=2|Hypnotic Pattern|Stars Subdomain=3|Fly|Stars Subdomain=4|Planar Binding (Lesser)|Stars Subdomain=5|Overland Flight|Stars Subdomain=6|Planar Binding|Stars Subdomain=7|Sunbeam|Stars Subdomain=8|Planar Binding (Greater)|Stars Subdomain=9|Meteor Swarm"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_domains.lst",
+    "sha256": "eb8b3691d0dd1377e752304342599964193b50dbf4643ad30c7bee0adb9f7977",
+    "line": 9,
+    "record_key": "Stars Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

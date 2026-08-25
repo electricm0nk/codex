@@ -255,24 +255,100 @@ mod tests {
     /// this book's own module doc comment above) instead of crashing the
     /// whole run, and the other 92 now ship for real: 401 + 92 = 493.
     #[test]
-    fn the_book_ships_every_stat_block_and_only_the_owned_abilities() {
+    fn the_book_ships_every_stat_block_and_every_owned_ability() {
         assert_eq!(monsters().len(), 314);
         // 493 -> 511 (SD31-W21-MONSTER-001, +18): the `CATEGORY:Internal`
         // bundle-row ownership hop resolved 18 previously-orphaned ability
         // rows this book's monsters name only indirectly.
-        assert_eq!(monster_abilities().len(), 511);
+        // 511 -> 571 (T9 `MonsterAbilityFacet` widening cycle, +60): the
+        // widened facet vocabulary (`Weakness`/`Defensive`/`Aura`/`Sense`/
+        // `Communicate`) shipped 60 more owned, reachable ability rows that
+        // previously carried a `TYPE:` shape the chassis did not model. 9
+        // owned rows remain excluded and named on stderr — 3 with no
+        // `TYPE:` token at all, 2 bare-delivery-only (`Extraordinary` with
+        // no facet segment), and 4 needing a per-record read
+        // (`ModifyHP`/`Spelllike`-typo/`SpecialAttck`-typo/an
+        // un-investigated `Bunyip ~ Blood Rage`) — see
+        // `scripts/transcribe_monster_tables.py bestiary_2`'s own stderr for
+        // the live list.
+        // 571 owned + 85 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 656. The owner-less count is pinned separately
+        // below (`every_owner_less_ability_is_a_named_and_pinned_non_reach`),
+        // so this assertion is now over the OWNED subset only.
+        // 571/656 -> 572/657 (`decisions.md §22`/round 6, +1 owned): the
+        // `SpecialAttck` typo-fold resolved `Tick Swarm ~ Cling`'s facet for
+        // the first time -- this file's own pins were missed when round 6
+        // bumped the identical delta in `apps/desktop/src-tauri/src/
+        // reach_gate.rs`; re-derived here, not caused by this cycle's own
+        // diff (`git diff --stat` for `bestiary_2/monster_data.rs` shows
+        // zero deletions, only the 3 trailing `codex_generated_name`/
+        // `rename_*` fields appended per record).
+        // 572/657 -> 580/665 (`decisions.md §27`/round 8, +8 owned): the
+        // `TYPE:`-facet-vocabulary-gap group closes via the provisional
+        // `SpecialQuality` default -- all 8 are namespaced `<Monster> ~
+        // <Ability>` keys whose owner resolves through the existing prefix
+        // pass (`Aurumvorax ~ Rake`, `Bunyip ~ Blood Rage`, `Carnivorous
+        // Blob ~ Split`, `Denizen of Leng ~ Planar Fast Healing`, `Howler ~
+        // Abyssal Strike`, `Lamia Matriarch ~ Spells`, `Mothman ~ Agent of
+        // Fate`, `Yrthak ~ Sonic Lance`), so all 8 land in `owned`, none in
+        // the owner-less pin below.
+        // 580/665 -> 582/667 (`decisions.md §27b` round 9, +2 owned): the
+        // multi-DESC: `PREVAREQ`/`PREVARGT`-gated parse-refusal group closes
+        // via `parse_desc`'s new generalised sixth branch -- `Telepathy ~
+        // Miles` and `Voidworm ~ Change Shape` (`ce_abilities_race.lst:1955`/
+        // `:2043`, round 6's own named 2-row `bestiary_2` share) both
+        // resolve a real owner through the existing prefix pass, so both
+        // land in `owned`, none in the owner-less pin below.
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 582);
+        assert_eq!(monster_abilities().len(), 667);
     }
 
-    /// Every transcribed ability row is owned by a monster row of this book.
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// An owner-less ability row no longer forbids shipping: an un-ingested
+    /// row's shape cannot be measured, so the 85 rows no monster row of this
+    /// book claims now SHIP with `owners: &[]`, and this test's job changes
+    /// from "forbid an empty owner list" to "pin the EXACT set of records
+    /// that carry one" — a silent new arrival OR a silent disappearance both
+    /// fail here, by name, the same discipline
+    /// `rules_tables::bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_non_reach`
+    /// established. `list_monster_catalog` never walks these directly (only
+    /// a monster's own `ability_keys`), so shipping them does not surface a
+    /// stub; each key is pinned separately, by name, in `reach_gate.rs::
+    /// UNREACHED_RECORD_FINDINGS` under `("bestiary_2", "monster_abilities")`
+    /// as a proven non-reach, not a silent claim of reachability.
     #[test]
-    fn no_shipped_monster_ability_is_an_orphan() {
-        for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} reaches no monster and would load without ever being shown",
-                ability.key
-            );
-        }
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            85,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py bestiary_2` run, and update the matching \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0xfb07_0eb2_4302_5d02,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+        );
     }
 
     /// Every owner named by a shipped ability is itself a shipped monster.
@@ -408,36 +484,22 @@ mod tests {
         );
     }
 
-    /// The 65 orphan rows are pinned by the corpus line each one is, so a
-    /// regeneration that quietly pulls one in fails here naming the line that
-    /// returned. Three shapes are represented: an ability namespaced to a
-    /// TEMPLATE rather than a race (`Draconal`), one namespaced to a monster
-    /// that lives in another book, and one whose owner is a `.COPY=` row this
-    /// transcription drops.
-    ///
-    /// Spot-pinned rather than all 65 enumerated: the exhaustive statement is
-    /// `the_book_ships_every_stat_block_and_only_the_owned_abilities`'s 401,
-    /// and duplicating a 65-line list here would be a second copy of the
-    /// generated header that drifts.
+    /// **Superseded `decisions.md §20`.** The 805-line row (cascaded from the
+    /// dropped `.COPY=` variant at `b2_races.lst:594`) now ships as an
+    /// owner-less record instead of being excluded — it is one of the 85
+    /// pinned by `every_owner_less_ability_is_a_named_and_pinned_non_reach`
+    /// above. Confirmed present, not merely absent-from-exclusion.
     #[test]
-    fn the_orphan_ability_rows_are_not_records() {
-        // 805 is the cascaded one: its only owner is the `.COPY=` variant at
-        // `b2_races.lst:594`, so it is an orphan BECAUSE that row is not
-        // transcribed. Pinning it is what makes the cascade a checked property
-        // rather than a sentence in a comment.
-        //
-        // 472 (`Brine Dragon ~ Capsize`) and 502 (`Umbral Dragon ~ Create
-        // Shadows`) dropped from this list under `SD31-W21-MONSTER-001`: each
-        // is owned by its real dragon (`Dragon (Brine)` / `Dragon (Umbral)`)
-        // through the `CATEGORY:Internal` bundle-row ownership hop
-        // (`transcribe_monster_tables.py::find_internal_bundle_ability_refs`)
-        // and both now ship for real.
-        for line in [54u32, 55, 56, 80, 223, 805] {
-            assert!(
-                !monster_abilities().iter().any(|a| a.source_line == line),
-                "b2_abilities_race.lst:{line} is owned by no monster row of this book \
-                 and must not ship"
-            );
-        }
+    fn the_copy_cascaded_orphan_ships_owner_less() {
+        let ability = monster_abilities()
+            .iter()
+            .find(|a| a.source_line == 805)
+            .expect("b2_abilities_race.lst:805 ships for shape measurement (decisions.md §20)");
+        assert!(
+            ability.owners.is_empty(),
+            "{} was expected owner-less (its only owner is the un-transcribed `.COPY=` row at \
+             b2_races.lst:594)",
+            ability.key
+        );
     }
 }

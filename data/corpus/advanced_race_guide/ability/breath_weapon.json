@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Breath Weapon",
+    "name": "Breath Weapon",
+    "description": "Choose Acid, Cold, Electricity, Fire: 1/day gain 15-ft cone or 20-ft line breath weapon (1d6 damage, Reflex save negates, Con-based DC); take again for 30-ft or 50-ft area, half damage on failed save, +1 use/day (multiple times); +1d6 damage (multiple times); cost increased by 1 RP each additional time taken.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Breath Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.RacialTrait.BuilderOffenseTrait.Standard"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose Acid, Cold, Electricity, Fire: 1/day gain 15-ft cone or 20-ft line breath weapon (1d6 damage, Reflex save negates, Con-based DC); take again for 30-ft or 50-ft area, half damage on failed save, +1 use/day (multiple times); +1d6 damage (multiple times); cost increased by 1 RP each additional time taken."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 471,
+    "record_key": "Builder Racial Trait ~ Breath Weapon"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

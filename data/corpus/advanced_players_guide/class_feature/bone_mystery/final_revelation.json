@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bone Mystery ~ Final Revelation",
     "name": "Final Revelation",
-    "class": "Bone Mystery",
+    "class": "Oracle",
     "description": "You become a master of death. Once per round, you can cast bleed or stabilize as a free action. If you are brought to below 0 hit points, you automatically stabilize. You can cast animate dead at will without paying a material component cost (although you are still subject to the usual Hit Die control limit). Once per day, you can cast power word kill, but the spell can target a creature with 150 hit points or less.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

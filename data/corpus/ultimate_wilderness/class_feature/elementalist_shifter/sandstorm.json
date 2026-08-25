@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elementalist Shifter ~ Sandstorm",
     "name": "Sandstorm",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "Combining the high winds of air and fine particulates of earth produces a sandstorm that extends out to a radius of 20 feet from the elementalist shifter. All light levels in the area diminish by one step, and creatures caught in the effect take 1d6 points of nonlethal damage each round they remain within the sandstorm.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

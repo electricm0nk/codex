@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Discovery (Opposition Research)",
+    "name": "Discovery (Opposition Research)",
+    "description": "You have broken through the mental barriers that made it hard for you to prepare spells from one of your opposition schools.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Discovery.WizardBonus"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.ArcaneSchool"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "FeatQualifier_WizardLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "You have broken through the mental barriers that made it hard for you to prepare spells from one of your opposition schools."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Arcane Opposition School|-1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "By completing strenuous studies, you have broken through the mental barriers that made it hard for you to prepare spells from one of your opposition schools. Select one wizard opposition school; preparing spells of this school now only requires one spell slot of the appropriate level instead of two, and you no longer have the -4 Spellcraft penalty for crafting items from that school."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
+    "line": 237,
+    "record_key": "Discovery (Opposition Research)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

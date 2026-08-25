@@ -1,0 +1,156 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Spiritualist Archetype ~ Exciter",
+    "name": "Exciter",
+    "class": "Spiritualist",
+    "description": "Psychic magic draws upon the twin and sometimes opposed powers of thought and emotion, but an exciter cares little for rationality. The phantom that accompanies him fills him with unbridled exultation, as he lets feeling and passion rule and sharpen his mind and body into a glorious fusion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist Archetype ~ Exciter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SpiritualistArchetype"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "DESC",
+        "value": "Psychic magic draws upon the twin and sometimes opposed powers of thought and emotion, but an exciter cares little for rationality. The phantom that accompanies him fills him with unbridled exultation, as he lets feeling and passion rule and sharpen his mind and body into a glorious fusion."
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Spiritualist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Spiritualist Archetype ~ Exciter],[!PREFACT:1,ABILITIES,Spiritualist_Archetype_Phantom=True,Spiritualist_Archetype_PhantomsEmotionalFocus=True,Spiritualist_Archetype_PhantomRecall=True,Spiritualist_Archetype_EthericTether=True,Spiritualist_Archetype_BondedSenses=True,Spiritualist_Archetype_SpiritualBond=True,Spiritualist_Archetype_SpiritualInterference=True,Spiritualist_Archetype_FusedConsciousness=True,Spiritualist_Archetype_GreaterSpiritualInterference=True]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exciter ~ Merged Phantom|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exciter ~ Rapture|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exciter ~ Fast Movement|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exciter ~ Excitation|PRECLASS:1,Spiritualist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exciter ~ Rapturous Rage|PRECLASS:1,Spiritualist=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exciter ~ Perfect Passion|PRECLASS:1,Spiritualist=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exciter ~ Overwhelming Excitement|PRECLASS:1,Spiritualist=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Exciter ~ Greater Rapture|PRECLASS:1,Spiritualist=12"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Phantom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_PhantomsEmotionalFocus|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_PhantomRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_EthericTether|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_BondedSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SpiritualBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_FusedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_GreaterSpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_PhantomRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_EthericTether|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_BondedSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SpiritualBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SpiritualInterference|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_FusedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_GreaterSpiritualInterference|true"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 297,
+    "record_key": "Spiritualist Archetype ~ Exciter"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

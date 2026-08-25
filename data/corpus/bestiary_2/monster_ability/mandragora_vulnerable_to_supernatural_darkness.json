@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mandragora ~ Vulnerable to Supernatural Darkness",
+    "delivery": "Extraordinary",
+    "description": "In areas of supernatural darkness (such as those created by deeper darkness, but not by darkness), a mandragora is slowed, as the slow spell.",
+    "description_variables": [],
+    "facet": "Weakness",
+    "key": "bestiary_2:monster_ability:mandragora_vulnerable_to_supernatural_darkness",
+    "name": "Vulnerable to Supernatural Darkness",
+    "owners": [
+      "bestiary_2:monster:mandragora"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "In areas of supernatural darkness (such as those created by deeper darkness, but not by darkness), a mandragora is slowed, as the slow spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Mandragora ~ Vulnerable to Supernatural Darkness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
+    "source_page": "p.185",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 811,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Mandragora ~ Vulnerable to Supernatural Darkness",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

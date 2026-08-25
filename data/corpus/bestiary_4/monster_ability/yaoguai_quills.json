@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Yaoguai ~ Quills",
+    "delivery": "Extraordinary",
+    "description": "A creature attacking the yaoguai with a melee weapon, an unarmed strike, or a natural weapon takes 1d8+7 points of piercing damage from the yaoguai's quills. Melee weapons with reach do not endanger their users in this way.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:yaoguai_quills",
+    "name": "Quills",
+    "owners": [
+      "bestiary_4:monster:yaoguai"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature attacking the yaoguai with a melee weapon, an unarmed strike, or a natural weapon takes 1d8+7 points of piercing damage from the yaoguai's quills. Melee weapons with reach do not endanger their users in this way."
+      },
+      {
+        "key": "KEY",
+        "value": "Yaoguai ~ Quills"
+      },
+      {
+        "key": "TYPE",
+        "value": "YaoguaiMakersGift.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "YaoguaiMakersGift"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1480,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Yaoguai ~ Quills",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

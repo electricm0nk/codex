@@ -1,0 +1,115 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:15Z",
+  "data": {
+    "key": "Skeletal Champion",
+    "name": "Skeletal Champion",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "DR",
+        "value": "5/Bludgeoning"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Skeletal Champion HitDice"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Undead,RACETYPE=Construct"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK|PRESIZEGTEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK|PRESIZEGTEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.STACK|PRESIZEGTEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|3|TYPE=Base.STACK|PRESIZEGTEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base.STACK|PRESIZEGTEQ:C"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Climb|Disguise|Fly|Intimidate|Knowledge (Arcana)|Knowledge (Religion)|Perception|Sense Motive|Spellcraft|Stealth"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Immunity to Cold"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Initiative"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE|LE|NE"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Skeletal Champion"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw|PREHANDSGT:0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawAttacks|if(HANDS>=3,HANDS-2,0)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst",
+    "sha256": "7c27e01584c43c548e0c2c3ed900332d774628c6a8c56a5be4992cba036085d1",
+    "line": 98,
+    "record_key": "Skeletal Champion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

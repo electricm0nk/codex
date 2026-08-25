@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Girtablilu ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting-injury; save Fort DC 20; frequency 1/round for 6 rounds; effect 1d4 Dex; cure 2 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:girtablilu_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_3:monster:girtablilu"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sting-injury; save Fort DC 20; frequency 1/round for 6 rounds; effect 1d4 Dex; cure 2 consecutive saves."
+      },
+      {
+        "key": "KEY",
+        "value": "Girtablilu ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "TYPE",
+        "value": "GirtabliluRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.130",
+    "traits": [
+      "GirtabliluRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 921,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Girtablilu ~ Poison",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

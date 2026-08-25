@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Travel",
+    "name": "Travel",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainTravel,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Travel Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.TravelDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainTravelAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE=Walk|10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "DESC",
+        "value": "You are an explorer and find enlightenment in the simple joy of travel, be it by foot or conveyance or magic. Increase your base speed by 10 feet."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Travel=1|Longstrider|Travel=2|Locate Object|Travel=3|Fly|Travel=4|Dimension Door|Travel=5|Teleport|Travel=6|Find the Path|Travel=7|Teleport (Greater)|Travel=8|Phase Door|Travel=9|Astral Projection"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 40,
+    "record_key": "Travel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,117 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fear in Flesh ~ Strengthened by Fear",
+    "name": "Strengthened by Fear",
+    "class": "Fear in Flesh",
+    "description": "You can channel the fear of those around you into a physical boost to your own form.  As a swift action, %1/day, you can gain a +%2 insight bonus to your natural armor and a +%3 insight bonus to one physical ability score (Strength, Dexterity, or Constitution) for %4 rounds.  You can only use this ability if there is a creature within your line of sight with the shaken, frightened, or panicked condition.|StrengthenedByFearTimes|StrengthenedByFearNABonus|StrengthenedByFearStatBonus1|StrengthenedByFearDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fear in Flesh ~ Strengthened by Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DreadClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthenedByFearTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthenedByFearNABonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthenedByFearDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthenedByFearStatBonus1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthenedByFearStatBonus2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "StrengthenedByFearStatBonus3|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel the fear of those around you into a physical boost to your own form.  As a swift action, %1/day, you can gain a +%2 insight bonus to your natural armor and a +%3 insight bonus to one physical ability score (Strength, Dexterity, or Constitution) for %4 rounds.  You can only use this ability if there is a creature within your line of sight with the shaken, frightened, or panicked condition.|StrengthenedByFearTimes|StrengthenedByFearNABonus|StrengthenedByFearStatBonus1|StrengthenedByFearDuration"
+      },
+      {
+        "key": "DESC",
+        "value": " You also get a +%1 insight bonus to a second physical ability score.|StrengthenedByFearStatBonus2|PREVARGTEQ:DreadLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": " You also get a +%1 insight bonus to your third physical ability score.|StrengthenedByFearStatBonus3|PREVARGTEQ:DreadLVL,12"
+      },
+      {
+        "key": "DESC",
+        "value": " [Add the Strengthened By Fear template to activate.]"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthenedByFearTimes|floor(DreadLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthenedByFearNABonus|min(floor(DreadLVL/4),3)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthenedByFearDuration|DreadLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthenedByFearStatBonus1|min(2*floor(DreadLVL/4),6)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthenedByFearStatBonus2|max(0,min(2*floor((DreadLVL-4)/4),4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|StrengthenedByFearStatBonus3|max(0,min(2*floor((DreadLVL-8)/4),2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|StrengthenedByFearTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1871,
+    "record_key": "Fear in Flesh ~ Strengthened by Fear"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

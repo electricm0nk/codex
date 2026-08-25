@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption ~ Greater Shattered Body",
+    "name": "Greater Shattered Body",
+    "description": "Nearly all your body is replaced by artificial components.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Greater Shattered Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PrometheanManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PrometheanManifestationLevel,5"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Promethean Corruption ~ Shattered Body"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "DESC",
+        "value": "Nearly all your body is replaced by artificial components."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Promethean Greater Shattered Body Gift Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Promethean Greater Shattered Body Stain Choice|1"
+      },
+      {
+        "key": "DESC",
+        "value": "[Special] You can gain this manifestation only if you have failed another corruption progression saving throw and replaced more of your body with construct parts since the time you took shattered body."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 734,
+    "record_key": "Promethean Corruption ~ Greater Shattered Body"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

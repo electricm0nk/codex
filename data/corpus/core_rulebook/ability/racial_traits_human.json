@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Human",
+    "name": "Racial Traits ~ Human",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Human_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Human Racial Trait|AUTOMATIC|Human ~ Ability Scores|PREVAREQ:Human_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/human/human_abilities_globalvar.lst",
+    "sha256": "f6dc7e1e351550cb862d8e4870d1a86edcbbf550341e334bdb5eff943d6ded6c",
+    "line": 10,
+    "record_key": "Racial Traits ~ Human"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

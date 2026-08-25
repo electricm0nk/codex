@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Wind Subdomain",
+    "name": "Wind Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Wind Subdomain],[PREVARLT:AirDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Wind Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.97"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Wind Subdomain=1|Whispering Wind|Wind Subdomain=2|Wind Wall|Wind Subdomain=3|Gaseous Form|Wind Subdomain=4|Air Walk|Wind Subdomain=5|Control Winds|Wind Subdomain=6|Wind Walk|Wind Subdomain=7|Elemental Body IV (Air Only)|Wind Subdomain=8|Whirlwind|Wind Subdomain=9|Winds of Vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 76,
+    "record_key": "Wind Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Annihilator ~ Size Matters",
+    "name": "Size Matters",
+    "class": "Annihilator",
+    "description": "When forming your astral suit into either astral armor or astral juggernaut forms, you become Medium sized.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Annihilator ~ Size Matters"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AegisClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When forming your astral suit into either astral armor or astral juggernaut forms, you become Medium sized."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Size Matters Size Change|PREEQUIP:1,Astral Armor,Astral Juggernaut"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.311"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1776,
+    "record_key": "Annihilator ~ Size Matters"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

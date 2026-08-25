@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bones Spirit ~ Touch of the Grave",
     "name": "Touch of the Grave",
-    "class": "Bones Spirit",
+    "class": "Shaman",
     "description": "As a standard action, the shaman can make a melee touch attack infused with negative energy that deals 1d4 + %1 points of damage. She can instead touch an undead creature to heal it of the same amount of damage. A shaman can use this ability %2/day.|ShamanTouchOfTheGraveBonusDamage|ShamanTouchOfTheGraveTimes",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

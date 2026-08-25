@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Marid Bloodline ~ Water's Fury",
     "name": "Water's Fury",
-    "class": "Marid Bloodline",
+    "class": "Sorcerer",
     "description": "You gain the ability to summon a rushing jet of water from the elemental plane of water and direct it against your foes. As a standard action, you can create a jet of water in a 60-foot line that deals %1d6 points of damage, and blinds the target that was struck for 1d6 rounds. A Reflex save (DC %2) reduces the damage by half and negates the blinding effect.|Sorcerer_MaridWatersFury_Dice|Sorcerer_MaridWatersFury_DC",
     "raw_tokens": [
       {
@@ -88,5 +88,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

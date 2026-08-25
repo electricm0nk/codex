@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Protean Bloodline ~ Avatar of Chaos",
     "name": "Avatar of Chaos",
-    "class": "Protean Bloodline",
+    "class": "Sorcerer",
     "description": "You are infused with the essence of raw chaos. You gain immunity to acid, petrification, and polymorph effects (except when cast on self), as well as a +%1 bonus to save DCs and on checks to overcome spell penetration against creatures with the lawful subtype.|Sorcerer_ProteanAvatarOfChaos_SaveBonus",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Unicorn ~ Magic Circle against Evil",
+    "delivery": "Supernatural",
+    "description": "This ability continually duplicates the effect of the spell. The unicorn cannot suppress this ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:unicorn_magic_circle_against_evil",
+    "name": "Magic Circle against Evil",
+    "owners": [
+      "beastiary:monster:unicorn"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability continually duplicates the effect of the spell. The unicorn cannot suppress this ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Unicorn ~ Magic Circle against Evil"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "TYPE",
+        "value": "UnicornRacialTrait.SpecialQuality.Supernatural.Aura"
+      }
+    ],
+    "source_page": "p.269",
+    "traits": [
+      "UnicornRacialTrait",
+      "Aura"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:25:51Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1200,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Unicorn ~ Magic Circle against Evil",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

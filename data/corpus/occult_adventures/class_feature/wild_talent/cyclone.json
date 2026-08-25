@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Cyclone",
     "name": "Cyclone",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element air; Type form infusion; Level 4; Burn 3 Associated Blasts air, blizzard, sandstorm, thunderstorm Saving Throw Reflex half You create a circular rush of wind. All creatures and objects within a 20-foot-radius burst centered on you take half your blast's normal amount of damage. The saving throw DC is Dexterity-based.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

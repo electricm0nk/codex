@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mantis Magic ~ Secret Society",
+    "name": "Mantis Magic",
+    "description": "Add the selected spell to one of your classes' spell list.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mantis Magic ~ Secret Society"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.CrimsonCitadelReward"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Crimson Citadel ~ Secret Society"
+      },
+      {
+        "key": "DESC",
+        "value": "Add the selected spell to one of your classes' spell list."
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Blood Mist|Bloody Claws|Creeping Doom|Giant Vermin|Insect Plague|Spider Climb|Summon Swarm|Swarm Skin|Vermin Shape I|Vermin Shape II|Vomit Swarm"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 178,
+    "record_key": "Mantis Magic ~ Secret Society"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

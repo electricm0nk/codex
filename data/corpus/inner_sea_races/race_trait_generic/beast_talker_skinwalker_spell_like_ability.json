@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Beast Talker ~ Skinwalker ~ Spell-Like Ability",
+    "name": "Spell-Like Ability",
+    "description": "A skinwalker with a Wisdom score of 11 or higher can use speak with animals at will as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Beast Talker ~ Skinwalker ~ Spell-Like Ability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Skinwalker Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Skinwalker ~ Beast Talker"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,Skinwalker_ReplaceSpellLikeAbility=True"
+      },
+      {
+        "key": "DESC",
+        "value": "A skinwalker with a Wisdom score of 11 or higher can use speak with animals at will as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Speak with Animals|PRESTAT:1,WIS=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SpeakWithAnimals_DCMod|WIS-CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_SpeakWithAnimals_AtWill|1|TYPE=Boolean"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1218,
+    "record_key": "Beast Talker ~ Skinwalker ~ Spell-Like Ability"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

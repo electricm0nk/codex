@@ -1,7 +1,10 @@
 # Homebrew authoring and oracle validation
 
 > Scope: the headless GE-08 package-authoring surface and the GE-05 oracle-parity surface, as they exist today.
-> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure)
+> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure). **Path correction
+> 2026-08-22** (SD-32 closure epilogue): pilot_compute.rs (old path src/rules_core/pilot_compute.rs, no longer valid) updated to
+> `src/rules_core/pilot_compute/mod.rs` — the module became a directory during SD-31; no other
+> content in this doc re-verified.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 Both modules covered here are deliberately narrow, bounded proof slices, not
@@ -93,7 +96,7 @@ On `Supported`, the bounded AC computation is:
 The doc comment on that constant and the module-level doc comment both explain
 why 16, not a re-run of the real combat path: GE-06's deterministic AC
 baseline of 17 is grounded with Dodge already selected into the bonus-feat
-slot, and that combat path (`src/rules_core/pilot_compute.rs`) is "locked to
+slot, and that combat path (`src/rules_core/pilot_compute/mod.rs`) is "locked to
 the exact Dodge posture" (it requires `feat:dodge` and hard-codes the Dodge AC
 bonus) — so 16 is that same baseline with Dodge's contribution subtracted out,
 not an independent guess. Every outcome (including `Blocked`/`Unsupported`)

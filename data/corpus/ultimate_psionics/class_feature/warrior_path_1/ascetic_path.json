@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Warrior Path 1 ~ Ascetic Path",
+    "name": "Ascetic Path",
+    "class": "Warrior",
+    "description": "You have studied with the mystics of the ancient temples.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Warrior Path 1 ~ Ascetic Path"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ascetic Path.PsychicWarriorClassFeatures.FirstWarriorPath.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsceticPathTranceLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsceticPathLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AsceticPathLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have studied with the mystics of the ancient temples."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Ascetic ~ Path Skill|Path Skill Acrobatics|Path Skill Autohypnosis|Path Skill Knowledge_Religion"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Ascetic ~ Expanded Path|PREVARGTEQ:WarriorPathLVL,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psychic Warrior Class Feature|AUTOMATIC|Path Power ~ Path Skill Bonuses|PREVARGTEQ:WarriorPathLVL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Path Power|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Path Power|1|PREVARGTEQ:WarriorPathLVL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsceticPathTranceLVL|AsceticPathLVL+WarriorPathTranceLVLBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsceticPathLVL|WarriorPathLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AsceticPathLVL|WarriorPathLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 546,
+    "record_key": "Warrior Path 1 ~ Ascetic Path"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

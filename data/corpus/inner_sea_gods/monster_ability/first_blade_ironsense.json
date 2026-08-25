@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "First Blade ~ Ironsense",
+    "delivery": "Extraordinary",
+    "description": "The First Blade automatically detects iron objects within %1 feet, just as if it possessed the blindsight ability.",
+    "description_variables": [
+      "IronsenseRange"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:first_blade_ironsense",
+    "name": "Ironsense",
+    "owners": [
+      "inner_sea_gods:monster:the_first_blade"
+    ],
+    "source_page": null,
+    "traits": [
+      "Vision"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 21,
+    "record_key": "First Blade ~ Ironsense"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Persecuted Expatriate (Rakshasa-Spawn)",
+    "name": "Persecuted Expatriate (Rakshasa-Spawn)",
+    "description": "You gain a +1 bonus on Sense Motive checks. This is always a class skill for you.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Persecuted Expatriate (Rakshasa-Spawn)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Tiefling Race Trait"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Tiefling (Rakshasa-Spawn)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Persecuted Expatriate (Rakshasa-Spawn)]"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 bonus on Sense Motive checks. This is always a class skill for you."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Sense Motive|1|TYPE=Trait"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Sense Motive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 101,
+    "record_key": "Trait ~ Persecuted Expatriate (Rakshasa-Spawn)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

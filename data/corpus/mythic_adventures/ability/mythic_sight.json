@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Mythic Sight",
+    "name": "Mythic Sight",
+    "description": "When you take this ability, you gain blindsense out to a range of 30 feet. You can take this ability twice. The second time you take it, you can see illusions and magical deceptions for what they truly are, as if using true seeing. This ability doesn't apply to illusions and magical effects that were cast by other mythic creatures or that are affecting other mythic creatures. If this ability is dispelled, you can resume it as a free action.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Mythic Sight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.SpellLike"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "Mythic_Sight,2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MythicSightLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Mythic_Sight|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you take this ability, you gain blindsense out to a range of 30 feet. You can take this ability twice. The second time you take it, you can see illusions and magical deceptions for what they truly are, as if using true seeing. This ability doesn't apply to illusions and magical effects that were cast by other mythic creatures or that are affecting other mythic creatures. If this ability is dispelled, you can resume it as a free action."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Mythic Sight ~ Blindsense"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Mythic Sight ~ True Seeing|PREVARGTEQ:MythicSightLVL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicSightLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Sight|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 393,
+    "record_key": "Mythic Path Ability ~ Mythic Sight"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "AbilityScoreNegative -4 ~ Intelligence",
+    "name": "-4 Intelligence",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "AbilityScoreNegative -4 ~ Intelligence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Builder"
+      },
+      {
+        "key": "TYPE",
+        "value": "AbilityScoreNegative4.AbilityScoreNegativeMental4.Intelligence"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Builder,TYPE.Intelligence],[PREABILITY:1,CATEGORY=Builder,AbilityScoreNegative -4 ~ Intelligence]"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4|TYPE=Racial"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 160,
+    "record_key": "AbilityScoreNegative -4 ~ Intelligence"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

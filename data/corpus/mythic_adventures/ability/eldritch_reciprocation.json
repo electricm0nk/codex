@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Eldritch Reciprocation",
+    "name": "Eldritch Reciprocation",
+    "description": "You can choose to take extra damage from an arcane spell to replenish mythic power. When you are hit by or fail a saving throw against an arcane spell that deals hit point damage, as an immediate action you can choose to take damage as if that spell were affected by the Maximize Spell feat. If the spell's damage can't be increased by the Maximize Spell feat or is already under the effect of the Maximize Spell feat, you instead take double damage from it. The spell's damage ignores your spell resistance, energy resistance, energy immunities, and other protections against damage. If you take at least 25 points of damage from the spell, you regain one use of mythic power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Eldritch Reciprocation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You can choose to take extra damage from an arcane spell to replenish mythic power. When you are hit by or fail a saving throw against an arcane spell that deals hit point damage, as an immediate action you can choose to take damage as if that spell were affected by the Maximize Spell feat. If the spell's damage can't be increased by the Maximize Spell feat or is already under the effect of the Maximize Spell feat, you instead take double damage from it. The spell's damage ignores your spell resistance, energy resistance, energy immunities, and other protections against damage. If you take at least 25 points of damage from the spell, you regain one use of mythic power."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 383,
+    "record_key": "Mythic Path Ability ~ Eldritch Reciprocation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

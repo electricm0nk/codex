@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Verdant Companion ~ Photosynthesis",
+    "name": "Photosynthesis",
+    "description": "As long as it stays in the sunlight for at least 8 hours per day, a verdant companion doesn't need to eat. Otherwise, it eats normally for an animal of its kind.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Verdant Companion ~ Photosynthesis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "As long as it stays in the sunlight for at least 8 hours per day, a verdant companion doesn't need to eat. Otherwise, it eats normally for an animal of its kind."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 522,
+    "record_key": "Verdant Companion ~ Photosynthesis"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

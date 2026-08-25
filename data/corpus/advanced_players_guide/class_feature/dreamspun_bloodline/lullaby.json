@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Dreamspun Bloodline ~ Lullaby",
     "name": "Lullaby",
-    "class": "Dreamspun Bloodline",
+    "class": "Sorcerer",
     "description": "You can use lullaby as a spelllike ability %1 times per day. This effect lasts for 1 minute and does not require concentration. The penalty on saves versus sleep effects increases to -4.|Sorcerer_Dreamspun_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

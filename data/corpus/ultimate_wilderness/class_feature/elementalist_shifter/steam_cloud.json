@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elementalist Shifter ~ Steam Cloud",
     "name": "Steam Cloud",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "When the elementalist shifter enters a minor form of fire and water at the same time, the heat of fire and moisture of water generate an explosive area of steam around her out to a radius of 20 feet as per obscuring mist. The mist remains in place until she ends her elemental aspect; it doesn't move with her.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

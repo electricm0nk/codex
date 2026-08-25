@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Maneuvering Dodge",
     "name": "Maneuvering Dodge",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "Whenever a foe of the rogue's size or larger misses the rogue with a melee attack, the rogue gains a +%1 bonus on any Acrobatics, Climb, Fly, and Swim checks she attempts for 1 round.|ManeuveringDodgeBonus",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

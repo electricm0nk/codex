@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:27:07Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_21)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_21)",
+    "cost_gp": 3320.0,
+    "weight_lbs": null,
+    "description": "Level 9 Diviner; Protection - Average lock (DC 25), and the 5th-level spells are hidden with secret page. The special word is \"reveal\".; Opposition Schools - Illusion, transmutation; Spells - 5.contact other plane(S), major creation, telepathic bond(S); 4.detect scrying(S), locate creature(S), remove curse, scrying(S); 3.arcane sight(S), clairaudience/clairvoyance, secret page(OP), tongues; 2.detect thoughts(S), flaming sphere, locate object(S), resist energy, see invisibility(S), summon monster II; 1.cause fear, comprehend languages(S), detect secret doors(S), detect undead(S), disguise self(OP), identify(S), protection from evil, protection from law, true strike(S); Preparation Ritual - Eyes of Rul Thaven"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5",
+    "line": 21,
+    "record_key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_21)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_magic:um_equip_general.lst:21"
+  }
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch Archetype ~ Scarred Witch Doctor",
     "name": "Scarred Witch Doctor",
-    "class": "Witch Archetype",
+    "class": "Witch",
     "description": "The scarred witch doctor draws power from her ability to endure pain and suffering. She mutilates her own flesh, inflicting horrific scars, in order to attract the attention of her patron. Rather than call forth a familiar, she creates a repulsive fetish mask that she uses as a repository for her power.",
     "raw_tokens": [
       {
@@ -79,6 +79,26 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Witch"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Scarred Witch Doctor],[!PREFACT:1,ABILITIES,Witch_Archetype_Familiar=True,Witch_Archetype_Hex1=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Familiar|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex1|true"
       }
     ]
   },
@@ -95,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

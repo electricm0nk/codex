@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "data": {
+    "key": "Profession (Siege Engineer)",
+    "name": "Profession (Siege Engineer)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "WIS"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Wisdom.Profession"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Profession (Siege Engineer)|3|TYPE=ClassSkill|PRECSKILL:1,Profession (Siege Engineer)|PRESKILL:1,Profession (Siege Engineer)=1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_skills.lst",
+    "sha256": "b92371b758e8bb88a0ed5d9daf5cd8aeac424d52cd998a7483fba7d2b150b206",
+    "line": 7,
+    "record_key": "Profession (Siege Engineer)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist Archetype ~ Lifemonger",
+    "name": "Lifemonger",
+    "class": "Vitalist",
+    "description": "You view health and vitality as a commodity to be distributed for the good of the group.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist Archetype ~ Lifemonger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VitalistArchetype.VitalistTransferWounds.VitalistSwiftAid.VitalistExpandedKnowledge9.VitalistStealLife"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vitalist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vitalist Archetype ~ Lifemonger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.VitalistTransferWounds,TYPE.VitalistSwiftAid,TYPE.VitalistExpandedKnowledge9,TYPE.VitalistStealLife]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Duergar,Duergar ~ Psionic"
+      },
+      {
+        "key": "DESC",
+        "value": "You view health and vitality as a commodity to be distributed for the good of the group."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Lifemonger ~ The Greater Good|PRECLASS:1,Vitalist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Lifemonger ~ Fortifying Energy|PRECLASS:1,Vitalist=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Lifemonger ~ Lull the Sleeper|PRECLASS:1,Vitalist=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Lifemonger ~ I Know Best|PRECLASS:1,Vitalist=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Lifemonger ~ Touched by Madness|PRECLASS:1,Vitalist=14"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Vitalist=1|Slumber"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2310,
+    "record_key": "Vitalist Archetype ~ Lifemonger"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

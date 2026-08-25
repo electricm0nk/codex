@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Aberrant Bloodrager Bloodline ~ Staggering Strike",
     "name": "Staggering Strike",
-    "class": "Aberrant Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "When you confirm a critical hit, the target must succeed a Fortitude saving throw (DC %1) or be staggered for 1 round. These effects stack with the Staggering Critical feat. The target must save against each effect individually.|Bloodrager_Aberrant_StaggeringStrike_DC",
     "raw_tokens": [
       {
@@ -84,5 +84,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

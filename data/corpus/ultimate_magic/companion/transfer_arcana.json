@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Black Blade ~ Transfer Arcana",
+    "name": "Transfer Arcana",
+    "description": "Once per day, a magus can attempt to siphon points from his black blade's arcane pool into his own arcane pool. Doing so takes a full-round action and the magus must succeed at a Will saving throw with a DC of %1. If the magus succeeds, he regains 1 point to his arcane pool for every 2 points he saps from his black blade. If he fails the saving throw, the magus becomes fatigued (but can try again). If he is fatigued, he becomes exhausted instead. He cannot use this ability if he is exhausted.|BBEgo",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Black Blade ~ Transfer Arcana"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a magus can attempt to siphon points from his black blade's arcane pool into his own arcane pool. Doing so takes a full-round action and the magus must succeed at a Will saving throw with a DC of %1. If the magus succeeds, he regains 1 point to his arcane pool for every 2 points he saps from his black blade. If he fails the saving throw, the magus becomes fatigued (but can try again). If he is fatigued, he becomes exhausted instead. He cannot use this ability if he is exhausted.|BBEgo"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Blackblade"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 73,
+    "record_key": "Black Blade ~ Transfer Arcana"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

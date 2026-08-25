@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Verdant Bloodline ~ Photosynthesis",
     "name": "Photosynthesis",
-    "class": "Verdant Bloodline",
+    "class": "Sorcerer",
     "description": "You feed upon nature's raw essence. Your need to eat and sleep is reduced as if wearing a ring of sustenance, and you gain a +%1 racial bonus on saving throws made against poison and sleep effects.|Sorcerer_VerdantPhotosynthesis_SaveBonus",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

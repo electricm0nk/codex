@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Clarifying Channel",
+    "category": "General",
+    "name": "Clarifying Channel",
+    "description": "Your channeled energy heals the body and opens the mind to the possibility of true love. Once per day when you channel positive energy to heal living creatures, if any of the creatures you healed are currently affected by one or more charms or compulsions that allowed a saving throw, you grant each of those creatures an immediate save to prematurely end one of those effects. Creatures healed gain a sacred bonus on this save equal to your Charisma bonus (minimum +1).",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PREMULT:1,[PREVARGTEQ:ClericChannelPositiveEnergyDice,1],[PREVARGTEQ:ClericChannelNegativeEnergyDice,1],[PREVARGTEQ:OracleChannelDice,1]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 27,
+    "record_key": "Clarifying Channel"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

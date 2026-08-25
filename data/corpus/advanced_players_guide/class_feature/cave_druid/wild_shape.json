@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cave Druid ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Cave Druid",
+    "class": "Druid",
     "description": "A cave druid gains this ability at 6th level, except that her effective druid level for this ability is equal to her druid level - 2. She cannot use wild shape to adopt a plant form. At 10th level, the cave druid can assume the form of a Small or Medium ooze as if using beast shape III, and at 12th level that of a Tiny or Large ooze as if using beast shape IV (treating the ooze as if it were a magical beast without a natural armor bonus). When in ooze form, the cave druid has no discernible anatomy and is immune to poison, sneak attacks, and critical hits.",
     "raw_tokens": [
       {
@@ -43,6 +43,30 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.99"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Small or Medium ooze as if using beast shape III (treating the ooze as if it were a magical beast without a natural armor bonus).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Cave Druid|PREVAREQ:WildShapeProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Tiny or Large ooze as if using beast shape IV (treating the ooze as if it were a magical beast without a natural armor bonus).|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Small or Medium vermin as if using beast shape IV (treating the vermin as an animal to determine its ability and natural armor modifiers).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Desert Druid|PREVAREQ:WildShapeProgression,4"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Tiny or Large vermin as if using beast shape IV (treating the vermin as an animal to determine its ability and natural armor modifiers).|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Desert Druid|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Large giant as if using giant form I.|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mountain Druid|PREVAREQ:WildShapeProgression,5"
+      },
+      {
+        "key": "DESC",
+        "value": "can assume the form of a Huge giant as if using giant form II.|PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mountain Druid|PREVAREQ:WildShapeProgression,7"
       }
     ]
   },
@@ -59,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

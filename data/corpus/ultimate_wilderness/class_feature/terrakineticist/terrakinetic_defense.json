@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terrakineticist ~ Terrakinetic Defense",
+    "name": "Terrakinetic Defense",
+    "class": "Kineticist",
+    "description": "A terrakineticist's elemental defense wild talent changes with her corresponding element, just like her other wild talents. However, unlike her other wild talents, any burn she invests in one element's elemental defense carries over to her elemental defense when her element changes. For instance, if a 6th-level terrakineticist invested 2 points of burn in flesh of stone to gain 2 additional points of damage reduction and then entered a city and changed to aether, she would have 2 points of burn invested in force ward and increase the force ward's temporary hit points by 6. This alters elemental defense.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terrakineticist ~ Terrakinetic Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Kineticist Class Features.TerrakineticistClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A terrakineticist's elemental defense wild talent changes with her corresponding element, just like her other wild talents. However, unlike her other wild talents, any burn she invests in one element's elemental defense carries over to her elemental defense when her element changes. For instance, if a 6th-level terrakineticist invested 2 points of burn in flesh of stone to gain 2 additional points of damage reduction and then entered a city and changed to aether, she would have 2 points of burn invested in force ward and increase the force ward's temporary hit points by 6. This alters elemental defense."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 29,
+    "record_key": "Terrakineticist ~ Terrakinetic Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:27:07Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_33)",
+    "category": "General",
+    "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_33)",
+    "cost_gp": 20710.0,
+    "weight_lbs": 12.0,
+    "description": "Level 19 Universalist; Spells - 9.shapechange, weird, wish, world wave; 8.giant form II, polar ray, scintillating pattern, seamantle, trap the soul; 7.control weather, elemental body IV, phantasmal revenge, power word blind, rampart, spell turning; 6.beast shape IV, cloak of dreams, control water, fluid form, getaway, lightning field, plant shape II; 5.comet, fabricate, fire snake, geyser, hold monster, overland flight, planar adaptation, telekinesis; 4.dragon's breath, dimension door, firefall, greater invisibility, moonstruck, resilient sphere, true form, wandering star motes; 3.blink, cloak of winds, elemental aura, fly, lightwall, shifting sands, twilight knife, versatile weapon; 2.accelerate poison, arrow eruption, dust of twilight, elemental speech, alter self, fire breath, share language, slipstream; 1.alter winds, ant haul, endure elements, feather fall, flare burst, identify, stone fist, touch of the sea, true strike, vanish; Preparation Ritual - Defensive Boon"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5",
+    "line": 33,
+    "record_key": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_33)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_magic:um_equip_general.lst:33"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_128)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_128)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Air,Chaos,Evil,Trickery|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Demon lord of the sky, temptation, winged creatures"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|King of the Wind Demons"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Himself, right hand raised"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|All flying animals"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Brown|Red"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Demon Lords"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Longsword"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.320"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 128,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_128)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:128"
+  }
+}

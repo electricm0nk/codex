@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Clear Mind",
+    "name": "Clear Mind",
+    "class": "Unchained Barbarian",
+    "description": "When you fail a Will saving throw, you can attempt another Will saving throw at the end of your next turn (using the original DC). If the second saving throw is successful, you are treated as if you succeeded at the first saving throw, negating or reducing the effect as determined by the spell or effect. If this second saving throw fails, you suffer the full effects of the spell or effect as normal.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Clear Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Clear Mind"
+      },
+      {
+        "key": "DESC",
+        "value": "When you fail a Will saving throw, you can attempt another Will saving throw at the end of your next turn (using the original DC). If the second saving throw is successful, you are treated as if you succeeded at the first saving throw, negating or reducing the effect as determined by the spell or effect. If this second saving throw fails, you suffer the full effects of the spell or effect as normal."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.10"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 346,
+    "record_key": "Unchained Rage Power ~ Clear Mind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Vetala-Born ~ Skilled",
+    "name": "Skilled",
+    "description": "Ajibachanas gain a +2 racial bonus on Escape Artist and Use Magic Device checks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vetala-Born ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dhampir Racial Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Ajibachanas gain a +2 racial bonus on Escape Artist and Use Magic Device checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist,Use Magic Device|2|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Escape Artist, +2 Use Magic Device"
+      },
+      {
+        "key": "FACT",
+        "value": "Dhampir_ReplaceSkilled|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
+    "line": 74,
+    "record_key": "Vetala-Born ~ Skilled"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

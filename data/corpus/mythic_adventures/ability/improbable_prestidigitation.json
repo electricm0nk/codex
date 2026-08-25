@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Improbable Prestidigitation",
+    "name": "Improbable Prestidigitation",
+    "description": "You can attempt a Sleight of Hand check to hide or retrieve objects in a personal extradimensional space, similar to a glove of storing. You can take 10 or 20 on this check, and the space can hold up to %1 cubic|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Improbable Prestidigitation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt a Sleight of Hand check to hide or retrieve objects in a personal extradimensional space, similar to a glove of storing. You can take 10 or 20 on this check, and the space can hold up to %1 cubic|MythicLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "foot|PREVAREQ:MythicLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "feet|PREVARNEQ:MythicLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "of material. An item the size of a potion or dagger can be stored or retrieved with a successful DC 20 Sleight of Hand check; the DC increases to 25 for an item roughly the size of a one-handed weapon. Storing an item is a swift action, and retrieving it is a move action. As a swift action, you can expend one use of mythic power to retrieve any number of items from your extradimensional space."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 189,
+    "record_key": "Mythic Path Ability ~ Improbable Prestidigitation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

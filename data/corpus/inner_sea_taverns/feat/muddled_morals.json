@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Muddled Morals",
+    "category": "General",
+    "name": "Muddled Morals",
+    "description": "Your conviction is strong... unless you've had a few drinks. You gain a +2 bonus on saving throws against effects that affect you based on your alignment. In addition, choose an alignment one step away from your true alignment; when you are drunk (or worse), spells and other effects affect you as if this alignment were your alignment.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst",
+    "sha256": "7906f2a2b36a01031788d3270949a8f4e83b1eed239a50ba2a6790be72898e63",
+    "line": 9,
+    "record_key": "Muddled Morals"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

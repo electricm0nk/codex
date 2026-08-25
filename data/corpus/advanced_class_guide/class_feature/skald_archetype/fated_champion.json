@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Skald Archetype ~ Fated Champion",
     "name": "Fated Champion",
-    "class": "Skald Archetype",
+    "class": "Skald",
     "description": "Many cultures see fate as a limit that is both stifling and unwanted, regardless of the destiny that lurks in the days and years ahead. Among cultures where skalds are the keepers of lore and wisdom, there are those who learn to read the winds of fate and take up the mantle of the fated champion, knowing and embracing their destined paths with strength borne of conviction.",
     "raw_tokens": [
       {
@@ -59,6 +59,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Skald"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Skald Archetype ~ Fated Champion],[!PREFACT:1,ABILITIES,Skald_Archetype_WellVersed=True,Skald_Archetype_DirgeOfDoom=True,Skald_Archetype_MasterSkald=True,Skald_Archetype_SpellKenning=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_MasterSkald|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_CF_SpellKenning|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_WellVersed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_DirgeOfDoom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_MasterSkald|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Skald_Archetype_SpellKenning|true"
       }
     ]
   },
@@ -75,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

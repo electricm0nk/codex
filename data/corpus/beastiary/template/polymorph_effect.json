@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T16:43:15Z",
+  "data": {
+    "key": "Polymorph Effect",
+    "name": "Polymorph Effect",
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|DisableArmorBonus|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisableShieldBonus|1|TYPE=Base"
+      },
+      {
+        "key": "DESC",
+        "value": "Removes Armor and Shield Bonuses from creature."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst",
+    "sha256": "7c27e01584c43c548e0c2c3ed900332d774628c6a8c56a5be4992cba036085d1",
+    "line": 158,
+    "record_key": "Polymorph Effect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

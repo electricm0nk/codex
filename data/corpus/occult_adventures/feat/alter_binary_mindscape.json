@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Alter Binary Mindscape",
+    "category": "General",
+    "name": "Alter Binary Mindscape",
+    "description": "You can shift and change a binary mindscape to your advantage during a psychic duel. When you cast instigate psychic duel and create a binary mindscape (see page 235), the arena you create puts your enemy at a disadvantage. Your opponent must spend 1 more manifestation point than normal when creating any defensive manifestations.",
+    "prerequisites": [
+      "PRESPELL:1,Instigate Psychic Duel",
+      "PRESTAT:1,INT=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 7,
+    "record_key": "Alter Binary Mindscape"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

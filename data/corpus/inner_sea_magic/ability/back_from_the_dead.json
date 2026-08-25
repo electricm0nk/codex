@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Back from the Dead ~ Monastery",
+    "name": "Back from the Dead",
+    "description": "Your fame has reached a point where you can request a single raise dead spell from your church at some point free of charge. This can be for a trusted ally who fell in combat, a beloved NPC, or even for yourself. Once you use this benefit, you must pay normally for subsequent raise dead spells or other resurrection effects from your church.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Back from the Dead ~ Monastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your fame has reached a point where you can request a single raise dead spell from your church at some point free of charge. This can be for a trusted ally who fell in combat, a beloved NPC, or even for yourself. Once you use this benefit, you must pay normally for subsequent raise dead spells or other resurrection effects from your church."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 127,
+    "record_key": "Back from the Dead ~ Monastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

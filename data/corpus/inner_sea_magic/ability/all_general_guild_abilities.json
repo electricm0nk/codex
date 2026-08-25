@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "All General Guild Abilities",
+    "name": "All General Guild Abilities",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Esoteric Training No ~ Guild|PREMULT:3,[PREVARGTEQ:GuildFame,35],[PRECLASS:1,ANY=2],[PRECLASS:1,SPELLCASTER=1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Guildmaster ~ Guild|PREVARGTEQ:GuildFame,50"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Eclectic Training Choice|1|PREMULT:3,[PREVARGTEQ:GuildFame,5],[PRECLASS:1,ANY=2],[PRECLASS:1,SPELLCASTER=1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Senior Guild Member Choice|1|PREVARGTEQ:GuildFame,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Esoteric Training Choice|1|PREMULT:2,[PREVARGTEQ:GuildFame,35],[PRECLASS:1,SPELLCASTER=2]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 41,
+    "record_key": "All General Guild Abilities"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

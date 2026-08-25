@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hate-Monger ~ Insidious Hatred",
+    "name": "Insidious Hatred",
+    "class": "Mesmerist",
+    "description": "A hate-monger can sow hatred and strife under the pretense of assisting others. He can use his touch treatment only on others, but as part of the action of using touch treatment, he can cast any targeted spell from the mental manipulator list that does not have a range of \"personal\" and has a casting time of 1 standard action or less, targeting only the creature that receives his touch treatment. That creature doesn't realize the hate-monger has cast a spell, and considers any manifestations to be part of the touch treatment. Other creatures notice as normal. The target creature takes a -2 penalty on its saving throw and to its spell resistance against the spell. This ability alters touch treatment.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hate-Monger ~ Insidious Hatred"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "DESC",
+        "value": "A hate-monger can sow hatred and strife under the pretense of assisting others. He can use his touch treatment only on others, but as part of the action of using touch treatment, he can cast any targeted spell from the mental manipulator list that does not have a range of \"personal\" and has a casting time of 1 standard action or less, targeting only the creature that receives his touch treatment. That creature doesn't realize the hate-monger has cast a spell, and considers any manifestations to be part of the touch treatment. Other creatures notice as normal. The target creature takes a -2 penalty on its saving throw and to its spell resistance against the spell. This ability alters touch treatment."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 183,
+    "record_key": "Hate-Monger ~ Insidious Hatred"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

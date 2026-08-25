@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Death Slayer ~ Swift Smite",
     "name": "Swift Smite",
-    "class": "Death Slayer",
+    "class": "Slayer",
     "description": "A death slayer can use her Channel Smite feat an additional %1 times per day without expending a use of her total channel energy uses per day. She cannot use these additional uses of Channel Smite to use channel energy in the regular way. Whenever she uses Channel Smite, she can activate the ability as an immediate action after she rolls for a melee attack but before the result is revealed.|DeathSlayerLVL",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

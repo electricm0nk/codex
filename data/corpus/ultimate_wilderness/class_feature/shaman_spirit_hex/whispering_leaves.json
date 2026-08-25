@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Whispering Leaves",
     "name": "Whispering Leaves",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "Whenever the shaman is within 10 feet of a tree or undergrowth, she cast whispering wind as a spell-like ability with a caster level equal to her shaman level. The targeted area must also contain trees or undergrowth, which relay the message in a gentle, rustling voice.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Starting Gold ~ UI",
+    "name": "Starting Gold ~ UI",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Starting Gold UI ~ Random|Starting Gold UI ~ Maximum|Starting Gold UI ~ Average"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_templates.lst",
+    "sha256": "6b3f93bd80a51032d941b2a70aabf96597b4784fa96800e8e8b75d7981534344",
+    "line": 7,
+    "record_key": "Starting Gold ~ UI"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

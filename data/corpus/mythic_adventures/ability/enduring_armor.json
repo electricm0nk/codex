@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Enduring Armor",
+    "name": "Enduring Armor",
+    "description": "You are protected by armor made of force. This armor grants you an armor bonus to AC equal to %1. This ability is an abjuration effect with a spell level of %2. If this armor is dispelled or otherwise ended, you can reactivate it as a swift action.|Ability_EnduringArmor_ACBonus|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Enduring Armor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_EnduringArmor_ACBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are protected by armor made of force. This armor grants you an armor bonus to AC equal to %1. This ability is an abjuration effect with a spell level of %2. If this armor is dispelled or otherwise ended, you can reactivate it as a swift action.|Ability_EnduringArmor_ACBonus|MythicLevel"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_EnduringArmor_ACBonus|3+MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|Ability_EnduringArmor_ACBonus|TYPE=Armor"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 163,
+    "record_key": "Mythic Path Ability ~ Enduring Armor"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

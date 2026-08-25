@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wood Mystery ~ Lignification",
     "name": "Lignification",
-    "class": "Wood Mystery",
+    "class": "Oracle",
     "description": "You can turn a creature into wood %1/day. As a standard action, you may direct your gaze against a single creature within 30 feet. The targeted creature (along with all its carried gear) must make a Fortitude save (DC %2) or turn into a mindless, inert statue made out of wood for %3 rounds. This ability otherwise functions as a flesh to stone spell, except the target turns to wood instead of stone. This can be reversed by any effect that can reverse flesh to stone.|LignificationTimes|LignificationDC|LignificationDuration",
     "raw_tokens": [
       {
@@ -76,5 +76,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

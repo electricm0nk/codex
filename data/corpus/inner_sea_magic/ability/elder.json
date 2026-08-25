@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Elder ~ Monastery",
+    "name": "Elder",
+    "description": "You are highly regarded in your monastery. You no longer need to pay tithes for tuition. Every time you would normally pay tuition, you instead earn that amount of gold as your salary.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elder ~ Monastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You are highly regarded in your monastery. You no longer need to pay tithes for tuition. Every time you would normally pay tuition, you instead earn that amount of gold as your salary."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 128,
+    "record_key": "Elder ~ Monastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

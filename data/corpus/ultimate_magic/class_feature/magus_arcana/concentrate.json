@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Concentrate",
     "name": "Concentrate",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "You can reroll any concentration check you have just made with a +4 bonus. You must use this ability after the roll is made, but before the roll's outcome is determined. You must take the second roll, even if it is worse. You can use this ability once per day.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

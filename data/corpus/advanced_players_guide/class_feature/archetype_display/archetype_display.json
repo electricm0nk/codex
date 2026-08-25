@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Archetype Display",
+    "name": "Archetype Display",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Archetype|AUTOMATIC|Archetype Alchemist|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Alchemist Archetype|AUTOMATIC|Archetype Alchemist|PRECLASS:1,Alchemist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Antipaladin Archetype|AUTOMATIC|Archetype Antipaladin|PRECLASS:1,Antipaladin=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Archetype|AUTOMATIC|Archetype Cavalier|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Inquisitor Archetype|AUTOMATIC|Archetype Inquisitor|PRECLASS:1,Inquisitor=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Oracle Archetype|AUTOMATIC|Archetype Oracle|PRECLASS:1,Oracle=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Witch Archetype|AUTOMATIC|Archetype Witch|PRECLASS:1,Witch=1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 52,
+    "record_key": "Archetype Display"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

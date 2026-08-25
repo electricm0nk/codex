@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Psychic Adept",
+    "category": "General",
+    "name": "Psychic Adept",
+    "description": "You have honed your mind to harness psychic power. You gain the ability to cast a 0-level knack from the psychic class's spell list. You can cast this spell three times per day as a spell-like ability. The caster level for this ability is equal to your character level, and the save DC is equal to 10 + your Intelligence modifier. Special: You can choose this feat multiple times, choosing a different knack each time.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Psychic Sensitivity",
+      "PRESTAT:1,INT=11"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 52,
+    "record_key": "Psychic Adept"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Ki Blocker",
+    "name": "Ki Blocker",
+    "class": "Unchained Ki Power",
+    "description": "A monk with this ability can spend 1 ki point as a free action before making an unarmed strike against a foe. If the attack hits, the monk can interrupt the target's flow of ki. If the monk successfully damages the target of his attack, that opponent's cost to activate abilities with ki increases by 1 ki point for 1 hour. If the monk spends 2 points from his ki pool, he can use this ability to affect the target's arcane pool, arcane reservoir, grit points, inspiration, or panache points instead of its ki pool. The effects of this ability do not stack, but multiple hits increase the duration by 1 hour for each hit. A monk must be at least 10th level before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Ki Blocker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Ki Blocker"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,10"
+      },
+      {
+        "key": "DESC",
+        "value": "A monk with this ability can spend 1 ki point as a free action before making an unarmed strike against a foe. If the attack hits, the monk can interrupt the target's flow of ki. If the monk successfully damages the target of his attack, that opponent's cost to activate abilities with ki increases by 1 ki point for 1 hour. If the monk spends 2 points from his ki pool, he can use this ability to affect the target's arcane pool, arcane reservoir, grit points, inspiration, or panache points instead of its ki pool. The effects of this ability do not stack, but multiple hits increase the duration by 1 hour for each hit. A monk must be at least 10th level before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 542,
+    "record_key": "Unchained Ki Power ~ Ki Blocker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

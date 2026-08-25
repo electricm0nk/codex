@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Tear Apart",
+    "name": "Tear Apart",
+    "description": "You can attempt to rend the armor of your opponent, reducing its effectiveness. Using this ability is a standard action that requires you to attempt a sunder combat maneuver check against your foe. If the check is successful, reduce the target's armor bonus, natural armor bonus, or shield bonus (your choice) by %1. If the creature has an enhancement bonus to the bonus you chose, reduce the normal bonus first, then apply any leftover reduction to the enhancement bonus. You can't reduce the bonus below 0. Armor and shields damaged in this way can be repaired as if they had the broken condition. Natural armor regains the lost bonus at the rate of 1 point per day. Lesser restoration restores 1d4 points of natural armor bonus, and restoration restores all of it.|HalfMythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Tear Apart"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt to rend the armor of your opponent, reducing its effectiveness. Using this ability is a standard action that requires you to attempt a sunder combat maneuver check against your foe. If the check is successful, reduce the target's armor bonus, natural armor bonus, or shield bonus (your choice) by %1. If the creature has an enhancement bonus to the bonus you chose, reduce the normal bonus first, then apply any leftover reduction to the enhancement bonus. You can't reduce the bonus below 0. Armor and shields damaged in this way can be repaired as if they had the broken condition. Natural armor regains the lost bonus at the rate of 1 point per day. Lesser restoration restores 1d4 points of natural armor bonus, and restoration restores all of it.|HalfMythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 268,
+    "record_key": "Mythic Path Ability ~ Tear Apart"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,108 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Fast Healing",
+    "delivery": "Extraordinary",
+    "description": "A creature with the fast healing special quality regains hit points at an exceptional rate, usually 1 or more hit points per round, as given in the creature's entry. Except where noted here, fast healing is just like natural healing. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts. Unless otherwise stated, it does not allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:universal_monster_rule_fast_healing",
+    "name": "Fast Healing",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|UMR_FastHealing_Rate"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_FastHealing_Rate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_FastHealing_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with the fast healing special quality regains hit points at an exceptional rate, usually 1 or more hit points per round, as given in the creature's entry. Except where noted here, fast healing is just like natural healing. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts. Unless otherwise stated, it does not allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.|PREVAREQ:UMR_FastHealing_SpecificDesc,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only in areas below freezing.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Ice)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only in arid environments.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Salt)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only in boiling water or steam.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Steam)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only in contact with magma or lava.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Magma)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only in dusty environments.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Dust)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only in gusty and windy areas.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Air)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only in wet or muddy environments.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Ooze)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only while in contact with fire.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Fire)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only while the mephit is underwater.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Water)]"
+      },
+      {
+        "key": "DESC",
+        "value": "Works only while underground.|PREMULT:2,[PREVAREQ:UMR_FastHealing_SpecificDesc,1],[PRERACE:1,Mephit (Earth)]"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Fast Healing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.300"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialQuality.Extraordinary.ModifyHP"
+      }
+    ],
+    "source_page": "p.300",
+    "traits": [
+      "Universal Monster Rule",
+      "ModifyHP"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2371,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Fast Healing",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

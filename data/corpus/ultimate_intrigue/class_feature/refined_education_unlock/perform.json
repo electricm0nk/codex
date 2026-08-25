@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:53:24Z",
+  "data": {
+    "key": "Refined Education Unlock ~ Perform",
+    "name": "Perform",
+    "class": "Refined Education Unlock",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Refined Education Unlock ~ Perform"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RefinedEducationUnlock"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=CLASS,Rogue ~ Unchained Class"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PerformRefinedEducationUnlock,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PerformRefinedEducationUnlockLVL|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ perform 05 Ranks|PREVARGTEQ:PerformRefinedEducationUnlockLVL,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ perform 10 Ranks|PREVARGTEQ:PerformRefinedEducationUnlockLVL,10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ perform 15 Ranks|PREVARGTEQ:PerformRefinedEducationUnlockLVL,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Skill unlock ~ perform 20 Ranks|PREVARGTEQ:PerformRefinedEducationUnlockLVL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PerformRefinedEducationUnlockLVL|RogueLVL/2+HighestPerformRank"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HighestPerformRank|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HighestPerformRank|max(skillinfo(\"RANK\", \"Perform (Act)\"),skillinfo(\"RANK\", \"Perform (Comedy)\"),skillinfo(\"RANK\", \"Perform (Dance)\"),skillinfo(\"RANK\", \"Perform (Keyboard Instruments)\"),skillinfo(\"RANK\", \"Perform (Oratory)\"),skillinfo(\"RANK\", \"Perform (Percussion Instruments)\"),skillinfo(\"RANK\", \"Perform (Sing)\"),skillinfo(\"RANK\", \"Perform (String Instruments)\"),skillinfo(\"RANK\", \"Perform (Wind Instruments)\"))"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 52,
+    "record_key": "Refined Education Unlock ~ Perform"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

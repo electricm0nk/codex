@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Legion Archon ~ Second Skin",
+    "delivery": "Extraordinary",
+    "description": "A legion archon is proficient in all forms of armor. It takes no reduction to its speed or any armor check penalties from wearing any sort of armor. Most legion archons wear full plate armor.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:legion_archon_second_skin",
+    "name": "Second Skin",
+    "owners": [
+      "bestiary_3:monster:archon_legion"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Strength,TYPE=Dexterity|-ACCHECK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A legion archon is proficient in all forms of armor. It takes no reduction to its speed or any armor check penalties from wearing any sort of armor. Most legion archons wear full plate armor."
+      },
+      {
+        "key": "KEY",
+        "value": "Legion Archon ~ Second Skin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "UNENCUMBEREDMOVE",
+        "value": "HeavyArmor"
+      }
+    ],
+    "source_page": "p.19",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 381,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Legion Archon ~ Second Skin",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

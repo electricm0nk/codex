@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Arcane Bloodrager Bloodline ~ Caster's Bane",
     "name": "Caster's Bane",
-    "class": "Arcane Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Spellcasters with a caster level lower than your bloodrager level always provoke attacks of opportunity within your threatened area, even when they're casting defensively. You have this ability constantly, even while not bloodraging.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

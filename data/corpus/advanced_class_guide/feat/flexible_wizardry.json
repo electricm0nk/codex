@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Flexible Wizardry",
+    "category": "General",
+    "name": "Flexible Wizardry",
+    "description": "You have learned a trick that makes your spellcasting more flexible.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Spell Mastery",
+      "PREVARGTEQ:FeatQualifier_WizardLVL,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 73,
+    "record_key": "Flexible Wizardry"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

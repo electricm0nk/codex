@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Flexible School ~ Illusion",
+    "name": "Illusion School",
+    "description": "Illusionists use magic to weave confounding images, figments, and phantoms to baff le and vex their foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flexible School ~ Illusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClassFeatures.WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool.Flexible School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Illusion School"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Illusion Opposition School"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_FlexibleSchool_IllusionLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Illusionists use magic to weave confounding images, figments, and phantoms to baff le and vex their foes."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flexible School Power ~ Illusion ~ Extended Illusion"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_FlexibleSchool_IllusionLVL|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 450,
+    "record_key": "Flexible School ~ Illusion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

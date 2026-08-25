@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Infernal Bloodrager Bloodline ~ Hellfire Charge",
     "name": "Hellfire Charge",
-    "class": "Infernal Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "When you charge, the attack you make at the end of the charge gains the benefit of your hellfire strike without needing to expend a use of it. If you already have hellfire strike active, the fire damage ignores fire resistance of 10 or lower.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

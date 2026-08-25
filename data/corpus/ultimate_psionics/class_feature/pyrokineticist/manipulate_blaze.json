@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pyrokineticist ~ Manipulate Blaze",
+    "name": "Manipulate Blaze",
+    "class": "Pyrokineticist",
+    "description": "Manipulate fires within %1 ft. 3/day.|ManipulateBlazeRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pyrokineticist ~ Manipulate Blaze"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PyrokineticistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ManipulateBlazeRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Manipulate fires within %1 ft. 3/day.|ManipulateBlazeRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ManipulateBlazeRange|(25+5*floor(PyrokineticistLVL/2))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.375"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|3"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1458,
+    "record_key": "Pyrokineticist ~ Manipulate Blaze"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

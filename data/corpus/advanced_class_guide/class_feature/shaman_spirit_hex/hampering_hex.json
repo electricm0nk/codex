@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Hampering Hex",
     "name": "Hampering Hex",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman causes a creature within 30 feet to take a %1 penalty to AC and CMD for %2 rounds. A successful Will saving throw (DC %3) reduces this to just 1 round. Whether or not the save is successful, a creature affected by a hampering hex cannot be the target of this hex again for 24 hours.|ShamanHamperingHexPenalty|ShamanHamperingHexDuration|ShamanHamperingHexDC",
     "raw_tokens": [
       {
@@ -80,5 +80,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

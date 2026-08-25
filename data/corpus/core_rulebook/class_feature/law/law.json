@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Law Domain",
     "name": "Law",
-    "class": null,
+    "class": "Cleric",
     "description": "You follow a strict and ordered code of laws, and in so doing, achieve enlightenment.",
     "raw_tokens": [
       {
@@ -75,6 +75,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Law=1|Protection from Chaos|Law=2|Align Weapon (Law Only)|Law=3|Magic Circle against Chaos|Law=4|Order's Wrath|Law=5|Dispel Chaos|Law=6|Hold Monster|Law=7|Dictum|Law=8|Shield of Law|Law=9|Summon Monster IX (Law Spell Only)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Law],[PREVARLT:LawDomain,1]"
       }
     ]
   },
@@ -92,5 +96,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

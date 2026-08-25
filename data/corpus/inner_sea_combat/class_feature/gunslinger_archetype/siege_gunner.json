@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Gunslinger Archetype ~ Siege Gunner",
     "name": "Siege Gunner",
-    "class": "Gunslinger Archetype",
+    "class": "Gunslinger",
     "description": "The Grand Duchy of Alkenstar has spawned all manner of firearm specialists, wielding small and large firearms alike. Siege gunners specialize in the very largestcannons, bombards, and firedrakes. These specialists are rarely seen outside of Alkenstar, however, in part because the duchy keeps close tabs on its most powerful guns and few are found elsewhere in the Inner Sea. A few siege gunners outside of Alkenstar make a living renting out their services and the use of their personal collection of siege weaponry to causes in which they believe or to the highest bidder.",
     "raw_tokens": [
       {
@@ -63,6 +63,50 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.45"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Gunslinger Archetype ~ Siege Gunner],[!PREFACT:1,ABILITIES,Gunslinger_Archetype_Nimble=True,Gunslinger_Archetype_Deeds=True,Gunslinger_Archetype_Deeds=True,Gunslinger_Archetype_BonusFeats=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_DeadeyeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_GunslingerInitiativeDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_CF_BonusFeats|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Nimble|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gunslinger_Archetype_BonusFeats|true"
       }
     ]
   },
@@ -79,5 +123,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

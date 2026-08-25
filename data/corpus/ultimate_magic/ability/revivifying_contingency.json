@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Revivifying Contingency",
+    "name": "Revivifying Contingency",
+    "description": "You do not spend this boon with an action. When you are affected by this boon, the first time you are reduced to 0 or fewer hit points, you immediately regain 2d6 hit points. If this is enough for you to reach 0 hit points or higher, you do not fall unconscious.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Revivifying Contingency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "You do not spend this boon with an action. When you are affected by this boon, the first time you are reduced to 0 or fewer hit points, you immediately regain 2d6 hit points. If this is enough for you to reach 0 hit points or higher, you do not fall unconscious."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 45,
+    "record_key": "Preparation Ritual ~ Revivifying Contingency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

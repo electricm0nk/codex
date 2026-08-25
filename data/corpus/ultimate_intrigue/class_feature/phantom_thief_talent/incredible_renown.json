@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Incredible Renown",
     "name": "Incredible Renown",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief is incredibly famous. He can gain renown in a single community of up to 25,000 individuals (a large city) or up to two smaller cities of no more than 10,000 individuals each (two small cities). The bonus remains unchanged",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

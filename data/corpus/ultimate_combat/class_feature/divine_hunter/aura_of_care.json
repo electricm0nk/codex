@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Divine Hunter ~ Aura Of Care",
     "name": "Aura of Care",
-    "class": "Divine Hunter",
+    "class": "Hunter",
     "description": "At 8th level, a divine hunter and her allies gain a preternatural awareness of each other's position in battle. She and any allies within 10 feet of her no longer provide cover against each other's ranged attacks unless they wish to. Allies who cannot move or otherwise take actions still provide cover, as do flat-footed allies. The divine hunter and her allies must be able to see or hear each other to use this ability. This ability replaces aura of resolve.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

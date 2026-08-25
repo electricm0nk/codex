@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Diabolical Negotiator",
+    "category": "General",
+    "name": "Diabolical Negotiator",
+    "description": "You treat the art of negotiation as devilish science. You can add your Intelligence or Wisdom modifier (whichever is higher) on Diplomacy checks in place of your Charisma modifier. You can shift a creature's attitude more than two steps with Diplomacy, and a creature's attitude is only decreased by one step if you roll a natural 1 and fail the check by 5 or more.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Skill Focus (Diplomacy)",
+      "PREDEITY:[redacted PI]",
+      "PRETEXT:[redacted PI]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 35,
+    "record_key": "Diabolical Negotiator"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

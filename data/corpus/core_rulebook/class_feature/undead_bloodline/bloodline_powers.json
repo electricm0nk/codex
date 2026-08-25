@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Undead Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Undead Bloodline",
+    "class": "Sorcerer",
     "description": "You can call upon the foul powers of the afterlife. Unfortunately, the more you draw upon them, the closer you come to joining them.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

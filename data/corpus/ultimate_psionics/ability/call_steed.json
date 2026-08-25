@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Forgesteed Rider ~ Call Steed",
+    "name": "Call Steed",
+    "description": "As a move action, you can summon your steed to your side as long as the steed is on the same plane as you.  You can use this ability %1/day.|CallSteedTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Forgesteed Rider ~ Call Steed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CavalierClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CallSteedTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can summon your steed to your side as long as the steed is on the same plane as you.  You can use this ability %1/day.|CallSteedTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CallSteedTimes|1+INT"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.325"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|CallSteedTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 45,
+    "record_key": "Forgesteed Rider ~ Call Steed"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

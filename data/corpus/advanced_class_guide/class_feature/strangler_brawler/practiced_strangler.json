@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Strangler Brawler ~ Practiced Strangler",
     "name": "Practiced Strangler",
@@ -35,6 +35,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.88"
+      },
+      {
+        "key": "DESC",
+        "value": "A grappling or grappled strangler still threatens an area and is still able to make attacks of opportunity while grappling or grappled; when pinned, she is not denied her Dexterity bonus and does not take a -4 penalty to Armor Class.|PREVARGTEQ:PracticedStranglerProgression,2"
       }
     ]
   },
@@ -51,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

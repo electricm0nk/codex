@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Animated Object ~ Additional Attack",
+    "delivery": null,
+    "description": "Gains an additional slam attack.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:animated_object_additional_attack",
+    "name": "Additional Attack (1 CP)",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "COMBAT|ATTACKS|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstructionPointsSpent|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Gains an additional slam attack."
+      },
+      {
+        "key": "KEY",
+        "value": "Animated Object ~ Additional Attack"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AnimatedObjectAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
+    "source_page": "p.14",
+    "traits": [
+      "AnimatedObjectAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Animated Object ~ Additional Attack",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

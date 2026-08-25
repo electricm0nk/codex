@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Student of Perfection ~ Furious Defense",
+    "name": "Furious Defense",
+    "description": "By spending 1 point from his ki pool as an immediate action, a student of perfection with this ki power can grant himself a +4 dodge bonus to AC until the end of his next turn.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Student of Perfection ~ Furious Defense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.StudentOfPerfectionKiPower"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "UnblinkingFlameStudent,1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Pathfinder Unchained"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "PU"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending 1 point from his ki pool as an immediate action, a student of perfection with this ki power can grant himself a +4 dodge bonus to AC until the end of his next turn."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 19,
+    "record_key": "Student of Perfection ~ Furious Defense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

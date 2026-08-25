@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Revolution Subdomain",
+    "name": "Revolution Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Revolution Subdomain],[PREVARLT:LiberationDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Revolution Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.96"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Revolution Subdomain=1|Remove Fear|Revolution Subdomain=2|Enthrall|Revolution Subdomain=3|Remove Curse|Revolution Subdomain=4|Freedom of Movement|Revolution Subdomain=5|Break Enchantment|Revolution Subdomain=6|Symbol of Persuasion|Revolution Subdomain=7|Refuge|Revolution Subdomain=8|Mind Blank|Revolution Subdomain=9|Freedom"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 64,
+    "record_key": "Revolution Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

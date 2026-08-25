@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Evil",
+    "name": "Evil",
+    "raw_tokens": [
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainEvil,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Evil Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.EvilDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainEvilAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "DESC",
+        "value": "You are sinister and cruel, and have wholly pledged your soul to the cause of evil."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Evil=1|Protection from Good|Evil=2|Align Weapon (Evil Only)|Evil=3|Magic Circle against Good|Evil=4|Unholy Blight|Evil=5|Dispel Good|Evil=6|Create Undead|Evil=7|Blasphemy|Evil=8|Unholy Aura|Evil=9|Summon Monster IX (Evil Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 22,
+    "record_key": "Evil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

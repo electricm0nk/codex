@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ability Penalized Output Text",
+    "name": "Ability Penalized",
+    "description": "You have accumulated points of ability Penalty: %1 STR, %2 DEX, %3 CON, %4 INT, %5 WIS, %6 CHA|AbilityPenaltySTR|AbilityPenaltyDEX|AbilityPenaltyCON|AbilityPenaltyINT|AbilityPenaltyWIS|AbilityPenaltyCHA",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ability Penalized Output Text"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Condition"
+      },
+      {
+        "key": "TYPE",
+        "value": "Condition.Afflictions"
+      },
+      {
+        "key": "DESC",
+        "value": "You have accumulated points of ability Penalty: %1 STR, %2 DEX, %3 CON, %4 INT, %5 WIS, %6 CHA|AbilityPenaltySTR|AbilityPenaltyDEX|AbilityPenaltyCON|AbilityPenaltyINT|AbilityPenaltyWIS|AbilityPenaltyCHA"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 967,
+    "record_key": "Ability Penalized Output Text"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

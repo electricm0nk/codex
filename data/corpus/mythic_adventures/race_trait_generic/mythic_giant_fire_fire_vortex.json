@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Giant (Fire) ~ Fire Vortex",
+    "name": "Fire Vortex",
+    "description": "A mythic fire giant can expend one use of mythic power to create a vortex of fire within 30 feet. The vortex is 5 feet wide at its base, 15 feet wide at the top, and 30 feet tall. Any creature starting its turn adjacent to the vortex takes 6d6 points of fire damage, and any creature passing through it takes 15d6 fire damage. A successful DC 23 Reflex saving throw halves this damage. The fire giant can move the vortex up to 20 feet as a move action. If the vortex moves through a creature, that creature must succeed at a saving throw against the vortex to avoid taking damage. The vortex lasts for 5 rounds. The save DC is Constitution-based.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Giant (Fire) ~ Fire Vortex"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Giant (Fire) Trait.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic fire giant can expend one use of mythic power to create a vortex of fire within 30 feet. The vortex is 5 feet wide at its base, 15 feet wide at the top, and 30 feet tall. Any creature starting its turn adjacent to the vortex takes 6d6 points of fire damage, and any creature passing through it takes 15d6 fire damage. A successful DC 23 Reflex saving throw halves this damage. The fire giant can move the vortex up to 20 feet as a move action. If the vortex moves through a creature, that creature must succeed at a saving throw against the vortex to avoid taking damage. The vortex lasts for 5 rounds. The save DC is Constitution-based."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 168,
+    "record_key": "Mythic Giant (Fire) ~ Fire Vortex"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

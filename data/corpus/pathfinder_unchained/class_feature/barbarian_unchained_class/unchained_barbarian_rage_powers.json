@@ -1,26 +1,128 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Barbarian ~ Rage Powers",
-    "name": "Rage Powers",
-    "class_key": "Barbarian ~ Unchained Class",
     "base_class_key": "Barbarian",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Barbarian Class Feature",
-      "ClassFeatures",
-      "Internal",
-      "ClassFeatures",
-      "Rage Powers"
-    ],
-    "min_level": 2,
-    "is_granted": true,
-    "visible": "NO",
+    "class_key": "Barbarian ~ Unchained Class",
     "class_skills": [],
     "description": null,
-    "source_page": null,
+    "is_granted": true,
+    "key": "Unchained Barbarian ~ Rage Powers",
+    "min_level": 2,
+    "name": "Rage Powers",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "RagePowersLVL/2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RagePowersPrereqLVL",
+          "RagePowersLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RagePowersLVL",
+          "BarbarianLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,2",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,4",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,6",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower6"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,8",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower8"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,10",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,12",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower12"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,14",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower14"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,16",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower16"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,18",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower18"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Unchained Rage Power",
+          "-1",
+          "PREVARGTEQ:RagePowersLVL,20",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower20"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -51,40 +153,28 @@
         "value": "RagePowersPrereqLVL|0"
       }
     ],
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "ABILITYPOOL",
-          "Unchained Rage Power",
-          "RagePowersLVL/2"
-        ]
-      },
-      {
-        "qualifiers": [
-          "VAR",
-          "RagePowersPrereqLVL",
-          "RagePowersLVL"
-        ]
-      },
-      {
-        "qualifiers": [
-          "VAR",
-          "RagePowersLVL",
-          "BarbarianLVL"
-        ]
-      }
-    ]
+    "source_page": null,
+    "type_tokens": [
+      "Unchained Barbarian Class Feature",
+      "ClassFeatures",
+      "Internal",
+      "ClassFeatures",
+      "Rage Powers"
+    ],
+    "visible": "NO"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 291,
-    "record_key": "Unchained Barbarian ~ Rage Powers"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 291,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Barbarian ~ Rage Powers",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

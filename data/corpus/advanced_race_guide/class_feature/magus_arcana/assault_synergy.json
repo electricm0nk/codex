@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Assault Synergy",
     "name": "Assault Synergy",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "As a swift action, the elemental knight can expend %1 rounds of duration from elemental assault to add +%1d6 points of energy damage to an offensive spell he casts that round. The spell must have the acid, cold, electricity or fire descriptor. This extra energy damage matches the energy damage of the spell.|1+MagusLVL/10",
     "raw_tokens": [
       {
@@ -48,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

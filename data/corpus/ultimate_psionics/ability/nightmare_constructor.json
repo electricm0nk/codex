@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dread Archetype ~ Nightmare Constructor",
+    "name": "Nightmare Constructor",
+    "description": "You turn fears into reality.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dread Archetype ~ Nightmare Constructor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.DreadArchetype.DreadTalents.DreadDevastatingTouch.DreadPower2.DreadAuraOfFear.DreadTerror6.DreadBonusFeat9.DreadShadowTwin.DreadTwinFear"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Dread=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Dread Archetype ~ Nightmare Constructor],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DreadTalents,TYPE.DreadDevastatingTouch,TYPE.DreadPower2,TYPE.DreadAuraOfFear,TYPE.DreadTerror6,TYPE.DreadBonusFeat9,TYPE.DreadShadowTwin,TYPE.DreadTwinFear]"
+      },
+      {
+        "key": "DESC",
+        "value": "You turn fears into reality."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Nightmare Constructor ~ Horror|PRECLASS:1,Dread=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Nightmare Constructor ~ Devastating Touch|PRECLASS:1,Dread=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Nightmare Constructor ~ Fear Surge|PRECLASS:1,Dread=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Nightmare Constructor ~ Improved Fear Surge|PRECLASS:1,Dread=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Nightmare Constructor ~ Greater Fear Surge|PRECLASS:1,Dread=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Nightmare Constructor ~ Horrific Infusion|PRECLASS:1,Dread=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dread Class Feature|AUTOMATIC|Nightmare Constructor ~ Empowered in Fear|PRECLASS:1,Dread=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Terror|-1|PRECLASS:1,Dread=6"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Dread;LEVEL=0|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLKNOWN|CLASS=Dread;LEVEL=1|-1|PRECLASS:1,Dread=2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.269"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Dread=0|Telepathic Lash"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 10,
+    "record_key": "Dread Archetype ~ Nightmare Constructor"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

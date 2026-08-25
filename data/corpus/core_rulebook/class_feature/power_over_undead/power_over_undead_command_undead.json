@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Power Over Undead ~ Command Undead",
     "name": "Power Over Undead ~ Command Undead",
-    "class": "Power Over Undead",
+    "class": "Undead",
     "description": "You can channel energy %1 times per day to command undead. You can command up to %2 hit dice of undead. The will save DC of your command undead attempts is %3.|PowerOverUndeadTimes|PowerOverUndeadCommandHD|PowerOverUndeadCommandDC",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

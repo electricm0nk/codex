@@ -1,0 +1,133 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Power Points",
+    "name": "Psion Power Points",
+    "class": "Psion",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionPPStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PsionPPL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionPPStat|PsionPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PsionPPL|PsionML"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|4|PREVARGTEQ:PsionPPL,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|5|PREVARGTEQ:PsionPPL,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|6|PREVARGTEQ:PsionPPL,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|8|PREVARGTEQ:PsionPPL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|10|PREVARGTEQ:PsionPPL,6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|11|PREVARGTEQ:PsionPPL,7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|12|PREVARGTEQ:PsionPPL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|14|PREVARGTEQ:PsionPPL,9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|16|PREVARGTEQ:PsionPPL,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|18|PREVARGTEQ:PsionPPL,11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|20|PREVARGTEQ:PsionPPL,12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|21|PREVARGTEQ:PsionPPL,13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|23|PREVARGTEQ:PsionPPL,14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|25|PREVARGTEQ:PsionPPL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|26|PREVARGTEQ:PsionPPL,16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|29|PREVARGTEQ:PsionPPL,17"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|30|PREVARGTEQ:PsionPPL,18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|31|PREVARGTEQ:PsionPPL,19"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BasePowerPoints|32|PREVARGTEQ:PsionPPL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BonusPowerPoints|(PsionPPStat*PsionPPL)/2|TYPE=PsionBonusPP"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 391,
+    "record_key": "Psion Power Points"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

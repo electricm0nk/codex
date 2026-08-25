@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Chuspiki ~ Basic Aerokinesis",
+    "delivery": "SpellLike",
+    "description": "A chuspiki can use basic aerokinesis, as the kineticist wild talent of the same name (Occult Adventures 23).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:chuspiki_basic_aerokinesis",
+    "name": "Basic Aerokinesis",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A chuspiki can use basic aerokinesis, as the kineticist wild talent of the same name (Occult Adventures 23)."
+      },
+      {
+        "key": "KEY",
+        "value": "Chuspiki ~ Basic Aerokinesis"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.SpellLike.ChuspikiRacialTrait"
+      }
+    ],
+    "source_page": "p.56",
+    "traits": [
+      "ChuspikiRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/support/b5_abilities_race_oa.lst",
+    "record_key": "Chuspiki ~ Basic Aerokinesis",
+    "sha256": "15f9a4abfa03080f40ce11e5d4b72bb8cc91dbc3842745dcb37a90f996336142"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

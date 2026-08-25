@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Abyssal Bloodrager Bloodline ~ Demonic Aura",
     "name": "Demonic Aura",
-    "class": "Abyssal Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "When you enter a bloodrage, you can choose to exude an aura of fire. The aura is a 5 foot burst center on you, and deals 2d6+%1 points of fire damage to creatures who end their turn within it.|CON",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

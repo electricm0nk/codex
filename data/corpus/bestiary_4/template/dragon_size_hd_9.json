@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Dragon Size HD (9)",
+    "name": "Dragon Size HD (9)",
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "9-10:TEMPLATE:Dragon (Small)"
+      },
+      {
+        "key": "HD",
+        "value": "11-12:TEMPLATE:Dragon (Medium)"
+      },
+      {
+        "key": "HD",
+        "value": "13-16:TEMPLATE:Dragon (Large)"
+      },
+      {
+        "key": "HD",
+        "value": "17-22:TEMPLATE:Dragon (Huge)"
+      },
+      {
+        "key": "HD",
+        "value": "23-30:TEMPLATE:Dragon (Gargantuan)"
+      },
+      {
+        "key": "HD",
+        "value": "31+:TEMPLATE:Dragon (Colossal)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_templates.lst",
+    "sha256": "7ac19f16f02f3502d126cd73603db09f0a12a7e9715093023d0b5777382f3d4a",
+    "line": 185,
+    "record_key": "Dragon Size HD (9)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

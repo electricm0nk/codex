@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Warping Surge Bond",
+    "name": "Warping Surge Bond",
+    "class": null,
+    "description": "After you have invoked a wild surge, all creatures within a %1 ft. radius are affected by a warping effect.  Your allies can choose to treat their manifester level as %2 higher for all powers manifested while in the warped area.  This does not supply any additional power points to augment the power, but does allow the manifester to spend more power points if he so chooses.  Your enemies treat their manifester level as %2 lower for all powers manifested while in the warped area.  If this would reduce the manifester level lower than that required to manifest the power, the effect fails and the enemy wastes the action used, but no power points are spent.  Spellcasters are affected in a similar fashion. All affected creatures, both allies who choose the manifester level boost and all enemies, suffer a 30%% risk of psychic enervation when manifesting powers or casting spells and suffer the same psychic enervation effects as you would.  This warping effect lasts for one round per point of wild surge that invoked the warping effect and does not stack with effects such as Overchannel or wild surge.|WarpingSurgeBondRadius|WarpingSurgeBondModifier",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpingSurgeBondRadius|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WarpingSurgeBondModifier|0"
+      },
+      {
+        "key": "DESC",
+        "value": "After you have invoked a wild surge, all creatures within a %1 ft. radius are affected by a warping effect.  Your allies can choose to treat their manifester level as %2 higher for all powers manifested while in the warped area.  This does not supply any additional power points to augment the power, but does allow the manifester to spend more power points if he so chooses.  Your enemies treat their manifester level as %2 lower for all powers manifested while in the warped area.  If this would reduce the manifester level lower than that required to manifest the power, the effect fails and the enemy wastes the action used, but no power points are spent.  Spellcasters are affected in a similar fashion. All affected creatures, both allies who choose the manifester level boost and all enemies, suffer a 30%% risk of psychic enervation when manifesting powers or casting spells and suffer the same psychic enervation effects as you would.  This warping effect lasts for one round per point of wild surge that invoked the warping effect and does not stack with effects such as Overchannel or wild surge.|WarpingSurgeBondRadius|WarpingSurgeBondModifier"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpingSurgeBondRadius|5*(1+ImpSurgeBond)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WarpingSurgeBondModifier|1+ImpSurgeBond"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1074,
+    "record_key": "Warping Surge Bond"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

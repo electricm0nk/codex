@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_387)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_387)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Death,Evil,Law,Trickery|PREALIGN:LN,LE,NE"
+      },
+      {
+        "key": "DESC",
+        "value": "Whore queen of death, fate, vanity"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|Dowager of Illusions"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Bejeweled skeletal hand"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Dragonfly"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Gold|Ivory"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Whore Queens"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Net"
+      },
+      {
+        "key": "ALIGN",
+        "value": "LE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 387,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_387)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:387"
+  }
+}

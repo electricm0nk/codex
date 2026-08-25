@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Construct Subdomain ~ Animate Servant",
     "name": "Animate Servant",
-    "class": "Construct Subdomain",
+    "class": "Construct",
     "description": "At 8th level, as a standard action, you can give life to inanimate objects. This ability functions as animate objects using your cleric level as the caster level. You can use this ability %1 times per day.|DomainArtificeLVL/4-1",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_219)",
+    "name": "Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_219)",
+    "class": null,
+    "description": "You gain a +1 bonus on Fortitude saves and a +2 bonus on Perception checks.",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.TotemSpirit"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 bonus on Fortitude saves and a +2 bonus on Perception checks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Fortitude|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_class.lst",
+    "sha256": "5fc5db9e0bcd8ad3313f696cf1b0dd95e58f41d4f8ef141c5562c9b773c7c811",
+    "line": 219,
+    "record_key": "Codex-Named Unit (class_feature_inner_sea_world_guide_iswg_abilities_class_lst_219)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_world_guide:iswg_abilities_class.lst:219"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Water Yai ~ Liquid Form",
+    "delivery": "SpellLike",
+    "description": "As a standard action, a water yai can turn into a mobile pool of water. This functions like gaseous form, except that the yai cannot fly in this form. It retains its own base speed, and its swim speed doubles to 120 feet. The water yai can end this ability as a standard action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:water_yai_liquid_form",
+    "name": "Liquid Form",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a water yai can turn into a mobile pool of water. This functions like gaseous form, except that the yai cannot fly in this form. It retains its own base speed, and its swim speed doubles to 120 feet. The water yai can end this ability as a standard action."
+      },
+      {
+        "key": "KEY",
+        "value": "Water Yai ~ Liquid Form"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "TYPE",
+        "value": "WaterYaiRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.212",
+    "traits": [
+      "WaterYaiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1371,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Water Yai ~ Liquid Form",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

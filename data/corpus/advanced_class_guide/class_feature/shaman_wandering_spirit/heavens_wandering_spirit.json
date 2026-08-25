@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Wandering Spirit ~ Heavens",
     "name": "Heavens (Wandering Spirit)",
-    "class": "Shaman Wandering Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: color spray (1st), hypnotic pattern (2nd), daylight (3rd), rainbow pattern (4th), overland flight (5th), chain lightning (6th), prismatic spray (7th), sunburst (8th), meteor swarm (9th)",
     "raw_tokens": [
       {
@@ -43,6 +43,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.40"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=1|color spray"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=2|hypnotic pattern"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=3|daylight"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=4|rainbow pattern"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=5|overland flight"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=6|chain lightning"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=7|prismatic spray"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=8|sunburst"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=9|meteor swarm"
       }
     ]
   },
@@ -59,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

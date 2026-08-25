@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Channeling Scourge",
+    "name": "Channeling Scourge",
+    "description": "Your zeal for hunting your faith's enemies empowers your ability to channel divine energy, as long as you channel that energy for harm.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,TYPE.Channel Energy"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Inquisitor=1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your zeal for hunting your faith's enemies empowers your ability to channel divine energy, as long as you channel that energy for harm."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClericChannelEnergyLVL|classlevel(\"Inquisitor\")|PREVARGTEQ:ClericChannelEnergyLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PrestigeClassChannelEnergyLVL|classlevel(\"Inquisitor\")|PREVARGTEQ:PrestigeClassChannelEnergyLVL,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinChannelLVL|classlevel(\"Inquisitor\")|PREVARGTEQ:PaladinChannelLVL,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "When you use channel energy to deal damage, your inquisitor levels count as cleric levels for determining the number of damage dice and the saving throw DC."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 41,
+    "record_key": "Channeling Scourge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

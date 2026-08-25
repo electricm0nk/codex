@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Demon Lord ~ Grant Spells",
+    "delivery": null,
+    "description": "A demon lord can grant spells to its worshipers as if it were a deity. A demon lord's domains are Chaos, Evil, and two other domains relevant to its theme and interests. Like a deity, a demon lord has a favored weapon.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:demon_lord_grant_spells",
+    "name": "Grant Spells",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A demon lord can grant spells to its worshipers as if it were a deity. A demon lord's domains are Chaos, Evil, and two other domains relevant to its theme and interests. Like a deity, a demon lord has a favored weapon."
+      },
+      {
+        "key": "KEY",
+        "value": "Demon Lord ~ Grant Spells"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 117,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Demon Lord ~ Grant Spells",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

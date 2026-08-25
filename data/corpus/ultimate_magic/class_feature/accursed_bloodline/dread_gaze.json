@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Accursed Bloodline ~ Dread Gaze",
     "name": "Dread Gaze",
-    "class": "Accursed Bloodline",
+    "class": "Sorcerer",
     "description": "You gain a form of the green hag's evil eye power. As a standard action, you may fix your gaze on any one creature within 60 feet. The target must make a Will save (DC %1) or be staggered for %2 rounds.|Sorcerer_AccursedDreadGaze_DC|Sorcerer_AccursedDreadGaze_Duration",
     "raw_tokens": [
       {
@@ -112,5 +112,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

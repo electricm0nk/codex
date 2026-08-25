@@ -10,6 +10,17 @@ date: 2026-08-22
 All fully-merged branches and worktrees were deleted. **Ten branches carry unmerged commits and were
 kept.** Three categories, and they need different decisions.
 
+**Where they live (verified 2026-08-22, launch-readiness remediation).** Nine of the ten exist
+**only in the operator's local checkout** (`git branch`); only `sd31/racetrait4-SD31-E6-F4-005` is
+on origin (`git ls-remote --heads origin`). Consequence for card 2 (`boundary-branch-review`): it
+**must run in the primary checkout** — a fresh worktree cut from origin cannot see nine of these
+branches. Re-derive before acting: `git branch --list 'worktree-wf_*' review-merge-test site-deploy
+'fix/*' 'sd31/*'` and `git ls-remote --heads origin`.
+
+Origin additionally carries branches this capture did not list: `worktree-wf_0628906e-65b-{1,3,4,6}`,
+`worktree-wf_1ad13e3b-085-{4,5,6}`, `test`, `update-index`. Card 2 dispositions those too (merged →
+delete; unmerged → name it here with a reason), and the §13 closure sweep re-checks.
+
 ## 1. Deliberately rejected — the GAMED lanes
 
 Do **not** merge. Their rejections are recorded in `SD-31/artifacts/OPEN-ISSUES.md`; the branches are
@@ -49,7 +60,7 @@ means a corpus-wide count exists for it — worth confirming it reached `todo/sw
 
 | Branch | Disposition |
 |---|---|
-| `site-deploy`, `fix/site-deploy-page-workflow` | Site publishing work, unrelated to the corpus grind. Operator's call. |
+| `site-deploy`, `fix/site-deploy-page-workflow` | Site publishing work, unrelated to the corpus grind. **Queued on card 2** (`kanban.md` #2): check each against `origin/develop` and `origin/main` by content; if already landed via the site-publish PRs (#366-#373), delete; if not, file a one-line disposition here for the operator. These are also the stale local "site" branches HANDOFF footgun 1 refers to — no `site-publish/*` branch exists locally. |
 | `sd31/racetrait4-SD31-E6-F4-005` | **RESCUE branch. Never gated, never PI-screened, never merged on trust.** Standing instruction across the whole package — carry it forward untouched. |
 
 ---

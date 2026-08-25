@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Trick ~ Aid",
+    "name": "Aid",
+    "description": "The animal can use the aid another action to aid a specific ally in combat by attacking a specific foe the ally is fighting. The normal creature type restrictions governing the attack trick still apply.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Aid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Animal Trick ~ Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "The animal can use the aid another action to aid a specific ally in combat by attacking a specific foe the ally is fighting. The normal creature type restrictions governing the attack trick still apply."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 80,
+    "record_key": "Animal Trick ~ Aid"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

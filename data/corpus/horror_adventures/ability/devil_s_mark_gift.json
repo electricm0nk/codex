@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hellbound Corruption ~ Devil's Mark Gift",
+    "name": "Devil's Mark Gift",
+    "description": "You gain a 1st-level sorcerer/wizard or witch spell of your choice as a spell-like ability usable a number of times per day equal to your manifestation level. It must not have a casting time longer than 1 standard action or a material or focus component costing more than 1 gp.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Devil's Mark Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HellboundDevilsMarkGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a 1st-level sorcerer/wizard or witch spell of your choice as a spell-like ability usable a number of times per day equal to your manifestation level. It must not have a casting time longer than 1 standard action or a material or focus component costing more than 1 gp."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Hellbound Devil's Mark Spell|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 312,
+    "record_key": "Hellbound Corruption ~ Devil's Mark Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Seduction Domain ~ Inspire Devotion",
     "name": "Inspire Devotion",
-    "class": "Seduction Domain",
+    "class": "Cleric",
     "description": "By spending at least 1 hour engaged in acts of physical pleasure with a willing partner, you can attempt a Diplomacy check to improve that partner's attitude or increase your influence with that partner (or reduce a rival's influence with that partner) with no maximum on the number of steps by which you can change that partner's attitude or disposition.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

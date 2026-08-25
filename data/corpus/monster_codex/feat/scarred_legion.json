@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Scarred Legion",
+    "category": "Teamwork",
+    "name": "Scarred Legion",
+    "description": "Your ritual scars make you more fearsome, and allies with similar scars grow bolder when they're near you. You gain a +2 bonus on Intimidate checks. You also gain a +2 morale bonus on Will saving throws while adjacent to an ally with this feat. When you charge, if you started the charge adjacent to an ally with this feat, you retain the bonus on Will saves until the start of your next turn.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst",
+    "sha256": "c4261bd4df0271759c3cf8949dcdfd7112b51560c14cf91a3b3937bdf0db98e7",
+    "line": 24,
+    "record_key": "Scarred Legion"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

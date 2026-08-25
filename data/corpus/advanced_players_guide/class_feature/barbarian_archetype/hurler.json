@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Barbarian Archetype ~ Hurler",
     "name": "Hurler",
-    "class": "Barbarian Archetype",
+    "class": "Barbarian",
     "description": "A raging barbarian is frightening enough in melee, but some become skilled at throwing objects at their foes before closing in for the kill.",
     "raw_tokens": [
       {
@@ -55,6 +55,18 @@
       {
         "key": "FACT",
         "value": "Barbarian_CF_FastMovement|true"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Hurler],[!PREFACT:1,ABILITIES,Barbarian_Archetype_FastMovement=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_Archetype_FastMovement|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Barbarian_CF_FastMovement|true"
       }
     ]
   },
@@ -71,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

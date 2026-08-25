@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Deceiver Spirit",
+    "name": "Deceiver Spirit",
+    "class": "Medium",
+    "description": "The Deceiver is the prince of prevarication.&nl;",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Deceiver Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "DESC",
+        "value": "The Deceiver is the prince of prevarication.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Gaining Favor: To gain the Deceiver's favor, you must successfully lie to 100 different sentient creatures, convincing each one of a different lie that somehow leads to its death or other great misfortune. You must then vow to never make a truthful statement, except to answer a question whose answer is clearly already known to the asker (such as the color of the sky), and succeed at a Charisma check (DC %1).&nl;|10+MediumLVL/2"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored Locations: Bordellos, courtrooms, gambling dens, taverns.&nl; |PREVARLT:SpiritHideLocation,1"
+      },
+      {
+        "key": "DESC",
+        "value": "DESC:Influence Penalty: The trickster within you is a protean manipulator, and you begin to see the possibility that everyone around you might have ulterior motives as well. You never count as an ally for the purpose of gaining benefits from another creature's abilities, nor do you count as a willing target for spells. Anyone attempting to target you with a touch range spell, even a beneficial spell, must succeed at a melee touch attack, though you need not attempt saving throws against harmless spells. You gain no benefit from another creature's aid another attempts, as you are too busy making sure they aren't secretly tricking or sabotaging you.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Taboos: Choose one: you can't abide revealing your true identity, and you break this taboo when anyone pierces your disguise, even your own allies; you can never tell the truth; you can never pass up a more lucrative offer, even if it causes you to switch sides."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Deceiver Spirit Bonus|!PREFACT:1,ABILITIES,Medium_CF_SpiritBonus=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Trickster's Edge"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Trickster Seance Boon|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Deceiver ~ Skilled Deceiver"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Surprise Strike|PREVARGTEQ:MediumLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Deceiver ~ Shift Blame|PREVARGTEQ:MediumLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Legendary Trickster|PREVARGTEQ:MediumLVL,17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 96,
+    "record_key": "Medium ~ Deceiver Spirit"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

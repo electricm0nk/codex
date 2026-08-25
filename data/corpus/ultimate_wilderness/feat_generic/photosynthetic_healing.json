@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Photosynthetic Healing",
+    "name": "Photosynthetic Healing",
+    "description": "You can heal yourself using sunlight.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Vine Leshy ~ Change Shape,Leshy ~ Change Shape"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,RACESUBTYPE=Leshy"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_CON,15"
+      },
+      {
+        "key": "DESC",
+        "value": "You can heal yourself using sunlight."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You can temporarily draw energy from the sun to heal your wounds. Once per day while you are using change shape to assume a plant form, you can activate this ability as a free action to gain fast healing 1 for %1 rounds, as long as you are in an area of bright, natural sunlight. When you rest in plant form in bright, natural sunlight, you are healed of twice the normal amount of hit point damage and ability score damage.|TL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 145,
+    "record_key": "Photosynthetic Healing"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

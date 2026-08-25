@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Fire's Fury",
     "name": "Fire's Fury",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element fire; Type utility (Su); Level 1; Burn - When using fire blasts or composite blasts that include fire, add your elemental overflow bonus to the damage dealt. If the kinetic blast normally adds double your elemental overflow bonus to damage, these effects stack.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

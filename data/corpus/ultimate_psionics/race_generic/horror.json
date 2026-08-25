@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T13:40:37Z",
+  "data": {
+    "key": "Horror",
+    "name": "Horror",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "STARTFEATS",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "RACE|Eidolon"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|2|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidHeads|1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Horror"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "7"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EidHeads|0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Horror:1"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Horror"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races_apg.lst",
+    "sha256": "f8336aeb3c0bf10cb7f8fb443bdfb7af5636073a0b6427aecdbed5c88f6def93",
+    "line": 10,
+    "record_key": "Horror"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

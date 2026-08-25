@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Solid Ground",
     "name": "Solid Ground*",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "The alchemist launches an explosive paste bomb that bonds with any earthen surface. Each application of this paste deals no damage and affects a 5-foot-cube of dirt, loose soil, or stone, transmuting the earth for %1 minutes. Creatures cannot use burrow, earthmeld, or similar abilities (such as the meld into stone spell) while the ground remains transmuted in this way.|AlchemistDiscoveryLVL",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

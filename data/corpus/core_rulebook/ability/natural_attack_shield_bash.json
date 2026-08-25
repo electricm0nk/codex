@@ -1,0 +1,128 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Natural Attack ~ Shield Bash",
+    "name": "Natural Attack ~ Shield Bash",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Natural Attack"
+      },
+      {
+        "key": "TYPE",
+        "value": "NaturalAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldBashingDieSizeStep|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalShieldReach|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldBashAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldDamageSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldBashDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldThreatRange|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldBashAttackTotal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "InterativeAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShieldCritMult|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Bash Stats"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalShieldReach|REACH.VAL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShieldBashAttackTotal|BAB+STR+ShieldBashAttackBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterativeAttack|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShieldCritMult|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShieldThreatRange|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShieldBashAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Weapon Focus (Shieldbash)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShieldBashAttackBonus|1|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Focus (Shieldbash)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShieldBashDamageBonus|2|PREABILITY:1,CATEGORY=FEAT,Weapon Specialization (Shieldbash)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShieldBashDamageBonus|2|PREABILITY:1,CATEGORY=FEAT,Greater Weapon Specialization (Shieldbash)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterativeAttack|1|PRETOTALAB:6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterativeAttack|1|PRETOTALAB:11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InterativeAttack|1|PRETOTALAB:16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 350,
+    "record_key": "Natural Attack ~ Shield Bash"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

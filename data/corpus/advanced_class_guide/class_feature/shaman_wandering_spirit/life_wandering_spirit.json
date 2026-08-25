@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Wandering Spirit ~ Life",
     "name": "Life (Wandering Spirit)",
-    "class": "Shaman Wandering Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: detect undead (1st), lesser restoration (2nd), neutralize poison (3rd), restoration (4th), breath of life (5th), heal (6th), greater restoration (7th), mass heal (8th), true resurrection (9th)",
     "raw_tokens": [
       {
@@ -43,6 +43,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.41"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=1|detect undead"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=2|restoration (lesser)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=3|neutralize poison"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=4|restoration"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=5|breath of life"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=6|heal"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=7|restoration (greater)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=8|heal (mass)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=9|true resurrection"
       }
     ]
   },
@@ -59,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

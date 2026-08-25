@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Metal Mystery ~ Rusting Grasp",
     "name": "Rusting Grasp",
-    "class": "Metal Mystery",
+    "class": "Oracle",
     "description": "As a standard action, %1/day, you can perform a melee touch attack that rusts iron, as the rusting grasp spell.|RustingGraspTimes",
     "raw_tokens": [
       {
@@ -43,6 +43,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.56"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "MetalSchool"
       }
     ]
   },
@@ -60,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

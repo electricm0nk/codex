@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Mesmerizing Feint",
+    "category": "General",
+    "name": "Mesmerizing Feint",
+    "description": "You're adept at feinting against even the least imaginative of creatures. You take only a -2 penalty when feinting against a non-humanoid and a -4 penalty when feinting against creatures with animal intelligence, as long as the target is a subject of your hypnotic stare. If you have at least 10 ranks in Bluff, you instead take no penalty when feinting against non-humanoids and creatures of animal intelligence under your hypnotic stare. Normal: When feinting against a non-humanoid, you take a -4 penalty. Against a creature of animal intelligence, you take a -8 penalty.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Mesmerist ~ Hypnotic Stare"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst",
+    "sha256": "eff885715102905735a080776def2406d112a05b5c00c518dd7d5a11964f2889",
+    "line": 48,
+    "record_key": "Mesmerizing Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

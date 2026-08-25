@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Fungal Crawler ~ Plant Defenses",
+    "delivery": "Extraordinary",
+    "description": "A fungal crawler is part plant and shares many of the immunities that plant creatures possess.  A fungal crawler is immune to mind-affecting effects, paralysis, poison, polymorph, sleep, and stunning.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:fungal_crawler_plant_defenses",
+    "name": "Plant Defenses",
+    "owners": [
+      "bestiary_2:monster:fungal_crawler"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Mind-Affecting Effects|Immunity to Paralysis|Immunity to Poison|Immunity to Polymorph|Immunity to Sleep|Immunity to Stunning"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A fungal crawler is part plant and shares many of the immunities that plant creatures possess.  A fungal crawler is immune to mind-affecting effects, paralysis, poison, polymorph, sleep, and stunning."
+      },
+      {
+        "key": "KEY",
+        "value": "Fungal Crawler ~ Plant Defenses"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      }
+    ],
+    "source_page": "p.127",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 562,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Fungal Crawler ~ Plant Defenses",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

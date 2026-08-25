@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Fear Subdomain",
+    "name": "Fear Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Fear Subdomain],[PREVARLT:EvilDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Touch of Evil|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Evil)|PREVARGTEQ:DomainEvilAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Feed on Fear|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Evil"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.225"
+      },
+      {
+        "key": "DESC",
+        "value": "You relish the feeling of power that rises in you when your enemies quake before you in fear."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=1|Cause Fear"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=2|Align Weapon (Evil Only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=3|Scare"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=4|Fear"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=5|Dispel Good"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=6|Create Undead"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=7|Blasphemy"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=8|Unholy Aura"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Fear Subdomain=9|Summon Monster IX (Evil Spell Only)"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Evil"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 11,
+    "record_key": "Fear Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

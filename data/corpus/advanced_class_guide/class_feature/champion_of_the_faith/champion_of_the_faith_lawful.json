@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Champion of the Faith ~ Chosen Alignment ~ Law",
     "name": "Champion of the Faith (Lawful)",
-    "class": "Champion of the Faith",
+    "class": "Warpriest",
     "description": "You can call upon the power of your blessings %1 times per day. The DC for these blessings is %2|WarpriestBlessingUses|WarpriestBlessingDC",
     "raw_tokens": [
       {
@@ -88,5 +88,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

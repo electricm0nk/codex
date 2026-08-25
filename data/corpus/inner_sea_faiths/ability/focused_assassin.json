@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted Boon ~ Achaekek ~ Focused Assassin",
+    "name": "Focused Assassin",
+    "description": "If you have performed your daily obedience, when you perform your obedience for the day, if you are not contracted to kill a target, you can name a single target. You need not know the exact name of your target, but you must know a suitably detailed and correct description, such as \"the thieves' guild's second in command.\" Against that target, you gain a +2 profane bonus on attack rolls and weapon damage rolls, and you deal an additional 2d6 points of damage. The save DCs of any spells you cast on the target increase by 2. If you are contracted to kill a target, these bonuses apply against that target; if you are contracted to kill multiple targets, you must choose one target against whom these bonuses apply when you perform your obedience.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted Boon ~ Achaekek ~ Focused Assassin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, when you perform your obedience for the day, if you are not contracted to kill a target, you can name a single target. You need not know the exact name of your target, but you must know a suitably detailed and correct description, such as \"the thieves' guild's second in command.\" Against that target, you gain a +2 profane bonus on attack rolls and weapon damage rolls, and you deal an additional 2d6 points of damage. The save DCs of any spells you cast on the target increase by 2. If you are contracted to kill a target, these bonuses apply against that target; if you are contracted to kill multiple targets, you must choose one target against whom these bonuses apply when you perform your obedience."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.5"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 24,
+    "record_key": "Exalted Boon ~ Achaekek ~ Focused Assassin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

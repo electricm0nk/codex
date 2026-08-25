@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Tiefling",
+    "name": "Tiefling",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Race"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Tiefling Subrace|1|TYPE=Base"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Tiefling_RacialCastingStat|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Tiefling_RacialCastingMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Tiefling_RacialCasterlevel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Tiefling_RacialConcentration|0"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Race ~ Tiefling"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Tiefling_RacialCastingStat|CHASCORE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Tiefling_RacialCastingMod|CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Tiefling_RacialCasterlevel|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Tiefling_RacialConcentration|Tiefling_RacialCasterlevel+Tiefling_RacialCastingMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race.lst",
+    "sha256": "00e5df2aea67ee05c75a64f8116a0da2aacf03252d8dae24073ea196365c1960",
+    "line": 9,
+    "record_key": "Tiefling"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

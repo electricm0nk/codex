@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Halfling",
+    "name": "Racial Traits ~ Halfling",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Halfling_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Halfling Racial Trait|AUTOMATIC|Halfling ~ Ability Scores|PREVAREQ:Halfling_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/halfling/halfling_abilities_globalvar.lst",
+    "sha256": "6f17e2f92b916a9f4ab14107b4a7396c01a06f25ea4f820f4d5a60d60dd29a12",
+    "line": 10,
+    "record_key": "Racial Traits ~ Halfling"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

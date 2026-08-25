@@ -776,8 +776,8 @@ mod tests {
         let keys = already_ingested_keys(&dir);
         assert_eq!(
             keys.len(),
-            414,
-            "ARG's 414 ingested race-trait keys (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
+            421,
+            "ARG's 421 ingested race-trait keys (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
              201 -> 259 by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by \
              SD-31-E6-F4-003's own 24-record alternate-trait batch for those same 6 races, \
              both 2026-08-16; 283 -> 321 by SD31-E6-F4-004's own 4-race chassis batch \
@@ -786,7 +786,13 @@ mod tests {
              332 -> 350 by SD31-E6-F4-007's own 2-race chassis batch (Changeling/Samsaran), \
              2026-08-17, closing arg_races.lst's full 37-row playable-race roster -- every \
              one of those 149 new keys is `<NewRace> ~ ...` and shares no key with any of \
-             APG's 7 CRB-race rows, so this discriminator's own behavior is unaffected)"
+             APG's 7 CRB-race rows, so this discriminator's own behavior is unaffected; \
+             350 -> 414 by the Core Essentials removal, 2026-08-18; 414 -> 421 by SD-32 \
+             card-11 T2b lane, 2026-08-23, decisions.md §16 item 2: the 7 `Human ~ Adoptive \
+             Parentage` CHOOSE-pool members (bare keys `Drow`/`Dwarf`/`Elf`/`Gnome`/`Grippli`/ \
+             `Halfling`/`Orc`) -- verified against the pinned oracle to share none of those \
+             keys with any `apg_abilities_race.lst` row, so this discriminator is unaffected \
+             here too)"
         );
         assert!(keys.contains("Dwarf ~ Ancient Enmity"), "the exact collision this fix exists for");
         assert!(!keys.contains("Half-Orc ~ Plagueborn"), "APG's one genuinely unique key must not be in ARG's set");

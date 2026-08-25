@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Cavalier Order ~ Order of the Green",
     "name": "Order of the Green",
-    "class": "Cavalier Order",
+    "class": "Cavalier",
     "description": "Cavaliers of the order of the Green are dedicated to protecting wild places and creatures, embracing the Green Faith in all its glory and natural wonder.",
     "raw_tokens": [
       {
@@ -71,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

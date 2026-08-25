@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psion Archetype ~ Ascendant Psion",
+    "name": "Ascendant Psion",
+    "class": "Psion",
+    "description": "You use the power of your mind to interact with the world without the need for a physical form.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psion Archetype ~ Ascendant Psion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PsionArchetype.PsionDiscipline"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Psion=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Psion Archetype ~ Ascendant Psion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PsionDiscipline]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Elan"
+      },
+      {
+        "key": "DESC",
+        "value": "You use the power of your mind to interact with the world without the need for a physical form."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Ascendant Psion ~ Hide Mind|PRECLASS:1,Psion=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Ascendant Psion ~ Assume Likeness|PRECLASS:1,Psion=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Ascendant Psion ~ Telekinetic Force|PREMULT:2,[PRECLASS:1,Psion=14],[PREVARLT:PsionLVL,20]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Psion Class Feature|AUTOMATIC|Ascendant Psion ~ Ascension|PRECLASS:1,Psion=20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ascendant Psion ~ Talents"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Ascendant Psion ~ Ascendant Powers"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.321"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1942,
+    "record_key": "Psion Archetype ~ Ascendant Psion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

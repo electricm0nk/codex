@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metamorph ~ Alter Metamorphosis",
+    "name": "Alter Metamorphosis",
+    "class": "Metamorph",
+    "description": "Modify one metamorphosis menu choice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metamorph ~ Alter Metamorphosis"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MetamorphClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlterMetamorphosisLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Modify one metamorphosis menu choice"
+      },
+      {
+        "key": "DESC",
+        "value": " as a move action.|PREVARLT:AlterMetamorphosisLVL,6"
+      },
+      {
+        "key": "DESC",
+        "value": " as a swift action.|PREMULT:2,[PREVARGT:AlterMetamorphosisLVL,5],[PREVARLT:AlterMetamorphosisLVL,9]"
+      },
+      {
+        "key": "DESC",
+        "value": " as a swift action, and all choices as a move action.|PREVARGT:AlterMetamorphosisLVL,8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlterMetamorphosisLVL|MetamorphLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.364"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1293,
+    "record_key": "Metamorph ~ Alter Metamorphosis"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Climbing Stunt",
     "name": "Climbing Stunt",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent can take a -10 penalty on a Climb check to move at full speed while climbing. A rogue must be trained in Climb to select this talent.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

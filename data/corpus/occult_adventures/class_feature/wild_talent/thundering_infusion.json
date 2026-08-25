@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Thundering Infusion",
     "name": "Thundering Infusion",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element air; Type substance infusion; Level 1; Burn 1 Associated Blasts electric, thunderstorm Saving Throw Fortitude negates Your lightning brings with it a peal of thunder. Whenever your infused blast hits a foe and penetrates spell resistance, that foe becomes deafened, even if the blast doesn't deal damage.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

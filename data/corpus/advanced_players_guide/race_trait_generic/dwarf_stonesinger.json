@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dwarf ~ Stonesinger",
+    "name": "Stonesinger",
+    "description": "Some dwarves' affinity with the earth grants them greater powers. Dwarves with this racial trait are treated as 1 level higher when casting spells with the earth descriptor or using granted powers of the Earth domain, the bloodline powers of the earth elemental bloodline, and revelations of the oracle's stone mystery. This ability does not give the dwarf early access to level-based powers; it only affects powers the dwarf could use without this ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Stonesinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Stonesinger],[!PREFACT:1,ABILITIES,Dwarf_ReplaceStonecunning=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some dwarves' affinity with the earth grants them greater powers. Dwarves with this racial trait are treated as 1 level higher when casting spells with the earth descriptor or using granted powers of the Earth domain, the bloodline powers of the earth elemental bloodline, and revelations of the oracle's stone mystery. This ability does not give the dwarf early access to level-based powers; it only affects powers the dwarf could use without this ability."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the stonecunning racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Stonesinger"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|DESCRIPTOR.Earth|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Sorcerer_Elemental_BloodlineLVL|1|PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Earth)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OracleMysteryLevel|1|PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Stone Mystery"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceStonecunning|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 22,
+    "record_key": "Dwarf ~ Stonesinger"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

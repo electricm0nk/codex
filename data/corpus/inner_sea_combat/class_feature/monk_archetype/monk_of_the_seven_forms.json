@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Monk Archetype ~ Monk of the Seven Forms",
     "name": "Monk of the Seven Forms",
-    "class": "Monk Archetype",
+    "class": "Monk",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -55,6 +55,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.40"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Seven Forms],[!PREFACT:1,ABILITIES,Monk_Archetype_StunningFist=True,Monk_Archetype_ManeuverTraining=True,Monk_Archetype_AbundantStep=True,Monk_Archetype_QuiveringPalm=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_CF_QuiveringPalm|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_StunningFist|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_ManeuverTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_AbundantStep|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Monk_Archetype_QuiveringPalm|true"
       }
     ]
   },
@@ -71,5 +107,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wood Mystery ~ Speak with Wood",
     "name": "Speak with Wood",
-    "class": "Wood Mystery",
+    "class": "Oracle",
     "description": "You can talk to wood and learn what it knows. You must spend 1 minute meditating on and communing with the wood. At the end of this time, you can speak with the wood. This functions as the stone tell spell, except with wood instead of stones. You can use this ability for %1 minutes. This duration does not need to be consecutive, but it must be used in 1-minute increments. You can speak with natural or worked wood.|SpeakWithWoodDuration",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Energy Attack Fire",
+    "name": "Energy Attacks ~ Fire",
+    "description": "All of your natural attacks deal 1d6 points of fire damage on a successful hit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Energy Attack Fire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.EvolutionChoice.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,5"
+      },
+      {
+        "key": "DESC",
+        "value": "All of your natural attacks deal 1d6 points of fire damage on a successful hit."
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 125,
+    "record_key": "Evolution ~ Energy Attack Fire"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

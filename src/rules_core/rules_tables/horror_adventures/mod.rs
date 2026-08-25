@@ -27,6 +27,10 @@
 
 mod companion_data;
 mod monster_data;
+/// SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): this book's
+/// third family, ingested by the shared config-driven `ingest_spells.rs`
+/// pass (`decisions.md §17`) rather than a dedicated per-book binary.
+pub mod spell_list;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
@@ -131,7 +135,25 @@ mod tests {
     #[test]
     fn the_book_defines_three_monsters_and_six_owned_abilities() {
         assert_eq!(monsters().len(), 3);
-        assert_eq!(monster_abilities().len(), 6);
+        // 6 owned + 56 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 62. The 65 orphans this book's own doc comment
+        // names above did not all ship 1:1 as owner-less records: 9 of them
+        // are ALSO unparseable multi-DESC: rows, excluded by the same
+        // pre-existing screen that already applies to owned rows (see
+        // `scripts/transcribe_monster_tables.py horror_adventures`'s own
+        // stderr). The owner-less count is pinned separately below
+        // (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        // 6/62 -> 6/71 (`decisions.md §27b` round 9, +9 total, all
+        // owner-less): the 9 previously-unparseable multi-DESC: rows this
+        // comment names above now resolve via `parse_desc`'s new
+        // generalised sixth branch -- `owned` is UNCHANGED, all 9 land in
+        // the owner-less pin below.
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 6);
+        assert_eq!(monster_abilities().len(), 71);
     }
 
     /// The `ABILITY:Internal|AUTOMATIC|` bundle token, read for its ATTACK
@@ -164,18 +186,19 @@ mod tests {
         assert_eq!(queen.natural_attacks[2].damage_dice, None);
     }
 
-    /// Every ability row this book ships reaches a monster row of this book, and
-    /// every monster row's `ability_keys` resolves. An unreachable record is the
-    /// stub class `decisions.md §44.2` was written about, and this book's 65
-    /// orphans are exactly the rows that would have produced it.
+    /// Every OWNED ability row this book ships reaches a monster row of this
+    /// book, and every monster row's `ability_keys` resolves.
+    ///
+    /// **Superseded `decisions.md §20` for the owner-less half.** This used
+    /// to also forbid an empty `owners` list; that forbids what the 56
+    /// owner-less rows below are now correctly allowed to be — an
+    /// un-ingested row's shape cannot be measured, so they SHIP with
+    /// `owners: &[]` for shape measurement rather than being dropped.
+    /// Reachability is not claimed for them; each is pinned by exact key in
+    /// `reach_gate.rs::UNREACHED_RECORD_FINDINGS`.
     #[test]
     fn every_shipped_ability_is_owned_by_a_shipped_monster() {
         for ability in monster_abilities() {
-            assert!(
-                !ability.owners.is_empty(),
-                "{} ships with no owner",
-                ability.key
-            );
             for owner in ability.owners {
                 assert!(
                     monsters().iter().any(|m| m.key == *owner),
@@ -198,6 +221,54 @@ mod tests {
                 monster.key
             );
         }
+    }
+
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// The 56 rows no monster row of this book claims now SHIP with
+    /// `owners: &[]`, and this test pins the EXACT set of records that carry
+    /// one — a silent new arrival OR a silent disappearance both fail here,
+    /// by name. `list_monster_catalog` never walks these directly (only a
+    /// monster's own `ability_keys`), so shipping them does not surface a
+    /// stub; each key is pinned separately, by name, in `reach_gate.rs::
+    /// UNREACHED_RECORD_FINDINGS` under
+    /// `("horror_adventures", "monster_abilities")` as a proven non-reach,
+    /// not a silent claim of reachability.
+    #[test]
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        // 56 -> 65 (`decisions.md §27b` round 9, +9): the 9 previously-
+        // unparseable multi-DESC: rows close, all owner-less, see the test
+        // above.
+        assert_eq!(
+            unowned.len(),
+            65,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py horror_adventures` run, and update the \
+             matching `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0x941a_2132_e655_2505,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly. \
+             0x4db7998b_4652eb60 -> 0x941a2132_e6552505 (`decisions.md §27b` round 9): the \
+             set gains 9 new members (the 9 previously-unparseable multi-DESC: rows), \
+             re-derived live from this test's own failing run, never guessed, per \
+             `decisions.md §17a`."
+        );
     }
 
     /// The two `DESC:` formula shapes, both present in this book's six rows.

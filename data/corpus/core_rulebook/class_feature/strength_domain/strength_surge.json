@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Strength Domain ~ Strength Surge",
     "name": "Strength Surge",
-    "class": "Strength Domain",
+    "class": "Cleric",
     "description": "As a standard action, you can touch a creature to give it great strength. For 1 round, the target gains a +%1 enhancement bonus to melee attacks. combat maneuver checks that rely on Strength, Stregth-based skills, and Strength checks. You can use this ability %2 times per day.|max(DomainStrengthLVL/2,1)|StrengthSurgeTimes",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

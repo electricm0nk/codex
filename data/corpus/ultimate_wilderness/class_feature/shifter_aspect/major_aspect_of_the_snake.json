@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Snake ~ Major",
     "name": "Major Aspect of the Snake",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of an emperor cobra (Bestiary 2 p252). While in this form, you gain a climb speed of 30 feet, a swim speed of 30 feet, low-light vision, scent (30 feet), a bite attack (2d6 damage), and the Combat Reflexes feat. If you already have Combat Reflexes or your Dexterity score is not high enough to gain more attacks of opportunity from Combat Reflexes, you can instead make one additional attack of opportunity each round.",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

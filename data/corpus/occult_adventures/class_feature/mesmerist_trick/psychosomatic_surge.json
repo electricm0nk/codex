@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Psychosomatic Surge",
     "name": "Psychosomatic Surge",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "Psychic magic soothes the subject, alleviating her wounds temporarily. The mesmerist can trigger this trick when the subject takes damage. The subject gains 1d8",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

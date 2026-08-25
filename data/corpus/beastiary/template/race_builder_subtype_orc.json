@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:15Z",
+  "data": {
+    "key": "Race Builder Subtype ~ Orc",
+    "name": "Orc",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Race Builder Subtype ~ Orc"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Orc|Racial Heritage ~ Orc"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Orc"
+      },
+      {
+        "key": "TYPE",
+        "value": "Race Builder Subtype"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_templates.lst",
+    "sha256": "7ed5d1eed22a914437791845b84312b7a7e48a22e3c8ec0fcfe0ff4f4f1a81fb",
+    "line": 18,
+    "record_key": "Race Builder Subtype ~ Orc"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

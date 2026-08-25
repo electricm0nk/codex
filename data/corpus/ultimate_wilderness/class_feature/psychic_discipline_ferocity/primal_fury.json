@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Discipline Ferocity ~ Primal Fury",
+    "name": "Primal Fury",
+    "class": "Psychic",
+    "description": "You can unleash a more primal version of yourself as a free action. This functions as transformation, with the following exceptions. You can use this ability for %1 rounds per day. These rounds do not need to be consecutive. You can end the effect as a free action. After using this ability, you are fatigued for a number of rounds equal to twice the number of rounds spent in primal fury. You cannot enter a new primal fury while fatigued or exhausted. If you fall unconscious, your primal fury immediately ends.|PsychicLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Ferocity ~ Primal Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can unleash a more primal version of yourself as a free action. This functions as transformation, with the following exceptions. You can use this ability for %1 rounds per day. These rounds do not need to be consecutive. You can end the effect as a free action. After using this ability, you are fatigued for a number of rounds equal to twice the number of rounds spent in primal fury. You cannot enter a new primal fury while fatigued or exhausted. If you fall unconscious, your primal fury immediately ends.|PsychicLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 162,
+    "record_key": "Psychic Discipline Ferocity ~ Primal Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

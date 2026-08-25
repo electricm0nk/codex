@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Banshee ~ Sonic Insight",
+    "name": "Sonic Insight",
+    "class": "Banshee",
+    "description": "Any time you take either the Expanded Knowledge or Extra Power Known feat and choose a power with the sonic descriptor, you can choose a second power with the sonic descriptor to learn at the same time.  Powers like energy ray that can have the sonic descriptor cound for this benefit, but if the second power chosen allows multiple energy types, that power can only be manifested with the sonic option selected.  You gain the following augment option for any power with the sonic descriptor.  Augment: By spending 2 power points, the target of this power must make a Fortitude save or be dazed for 1 round.  If the power does not normally allow a save, calculate the save DC based upon the level of the power. [Bonus power known not implemented.]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Banshee ~ Sonic Insight"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "WilderClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Any time you take either the Expanded Knowledge or Extra Power Known feat and choose a power with the sonic descriptor, you can choose a second power with the sonic descriptor to learn at the same time.  Powers like energy ray that can have the sonic descriptor cound for this benefit, but if the second power chosen allows multiple energy types, that power can only be manifested with the sonic option selected.  You gain the following augment option for any power with the sonic descriptor.  Augment: By spending 2 power points, the target of this power must make a Fortitude save or be dazed for 1 round.  If the power does not normally allow a save, calculate the save DC based upon the level of the power. [Bonus power known not implemented.]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.331"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2396,
+    "record_key": "Banshee ~ Sonic Insight"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

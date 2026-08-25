@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Demonic Obedience ~ Mazmezz",
+    "name": "Demonic Obedience",
+    "description": "Bind a living creature so only a few key portions of anatomy (such as the belly, mouth, or eyes) remain exposed, allowing you to torment these exposed areas with needles, tiny knives, or poisonous vermin. Gain a +4 profane bonus on grapple checks and to CMD.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demonic Obedience ~ Mazmezz"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DemonicObedience"
+      },
+      {
+        "key": "PREDEITY",
+        "value": "1,Mazmezz"
+      },
+      {
+        "key": "DESC",
+        "value": "Bind a living creature so only a few key portions of anatomy (such as the belly, mouth, or eyes) remain exposed, allowing you to torment these exposed areas with needles, tiny knives, or poisonous vermin. Gain a +4 profane bonus on grapple checks and to CMD."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Mazmezz's Embrace ~ Mazmezz|PREVARGTEQ:DemonicBoon,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Spider's Blessing ~ Mazmezz|PREVARGTEQ:DemonicBoon,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Temporal Web ~ Mazmezz|PREVARGTEQ:DemonicBoon,3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_Grapple,CMD|4|TYPE=Profane"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_classes.lst",
+    "sha256": "09cd233b89851298cc71c63a55df93b22d8efcbe7adabbe2408b0236272f5b5d",
+    "line": 56,
+    "record_key": "Demonic Obedience ~ Mazmezz"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

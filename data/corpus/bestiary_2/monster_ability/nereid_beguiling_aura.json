@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Nereid ~ Beguiling Aura",
+    "delivery": "Supernatural",
+    "description": "Any creature sexually attracted to women runs the risk of being beguiled by a nereid if it looks upon her beauty from a distance of 30 feet or less.  If the creature fails a DC %1 Will save, it is immediately fascinated.  A nereid may use her suggestion spell-like ability at will against creatures that are fascinated by her beguiling aura.  This is a mind-affecting compulsion effect.",
+    "description_variables": [
+      "NereidBeguilingAuraDC"
+    ],
+    "facet": "Aura",
+    "key": "bestiary_2:monster_ability:nereid_beguiling_aura",
+    "name": "Beguiling Aura",
+    "owners": [
+      "bestiary_2:monster:nereid"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Beguiling Aura"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NereidBeguilingAuraDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NereidBeguilingAuraDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Beguiling Aura)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NereidBeguilingAuraDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature sexually attracted to women runs the risk of being beguiled by a nereid if it looks upon her beauty from a distance of 30 feet or less.  If the creature fails a DC %1 Will save, it is immediately fascinated.  A nereid may use her suggestion spell-like ability at will against creatures that are fascinated by her beguiling aura.  This is a mind-affecting compulsion effect.|NereidBeguilingAuraDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Nereid ~ Beguiling Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.Supernatural"
+      }
+    ],
+    "source_page": "p.198",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 872,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Nereid ~ Beguiling Aura",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

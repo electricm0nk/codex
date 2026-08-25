@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mystic Archer ~ Ranged Sneak Attack",
+    "name": "Ranged Sneak Attack",
+    "class": "Mystic Archer",
+    "description": "Get +%1d%2 sneak attack damage on ranged attacks within %3 ft.|RangedSneakAttack|RangedSneakAttackDieSize|RangedSneakAttackRange",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mystic Archer ~ Ranged Sneak Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MysticArcherClassFeatures.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangedSneakAttack|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangedSneakAttackDieSize|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RangedSneakAttackRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Get +%1d%2 sneak attack damage on ranged attacks within %3 ft.|RangedSneakAttack|RangedSneakAttackDieSize|RangedSneakAttackRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangedSneakAttackDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangedSneakAttackRange|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangedSneakAttackRange|HeightenedSensesRange"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RangedSneakAttack|floor((MysticArcherLVL+1)/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.364"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1317,
+    "record_key": "Mystic Archer ~ Ranged Sneak Attack"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

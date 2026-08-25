@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Remove Cavalier Expert Trainer",
+    "name": "Remove Cavalier Expert Trainer",
+    "description": "Instead of the Expert Trainer class feature, Pathfinder Society cavaliers receive Skill Focus (Handle Animal) as a bonus feat.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Homebrew.ClassAbilityRemoval"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of the Expert Trainer class feature, Pathfinder Society cavaliers receive Skill Focus (Handle Animal) as a bonus feat."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.7"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/_pfs/pfs_cr_abilities.lst",
+    "sha256": "12176a5cd49409c4d2423d869f78c80409c09dfcc2399bf5d39ee6c8c29818f3",
+    "line": 6,
+    "record_key": "Remove Cavalier Expert Trainer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

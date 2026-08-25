@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "WILD STALKER No Low Light Vision",
+    "name": "WILD STALKER No Low Light Vision",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "!PREVISION",
+        "value": "1,Low-Light Vision=ANY,Low Light=ANY"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Low-Light Vision"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_templates.lst",
+    "sha256": "007e24879101d7dae55cfe9e1f941456576542a452b10924768a87cef8534dff",
+    "line": 7,
+    "record_key": "WILD STALKER No Low Light Vision"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,152 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Bard Archetype ~ Words of Power",
+    "name": "Words of Power Bard",
+    "description": "A words of power using bard; %1 meta words/day.|BardMetaWordsPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bard Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.BardArchetype.BardSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Bard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BardMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using bard; %1 meta words/day.|BardMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 1|PRECLASS:1,Bard=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 2|PRECLASS:1,Bard=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 3|PRECLASS:1,Bard=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 4|PRECLASS:1,Bard=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 5|PRECLASS:1,Bard=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 6|PRECLASS:1,Bard=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 7|PRECLASS:1,Bard=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 8|PRECLASS:1,Bard=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 9|PRECLASS:1,Bard=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 10|PRECLASS:1,Bard=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 11|PRECLASS:1,Bard=11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 12|PRECLASS:1,Bard=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 13|PRECLASS:1,Bard=13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 14|PRECLASS:1,Bard=14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 15|PRECLASS:1,Bard=15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 16|PRECLASS:1,Bard=16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 17|PRECLASS:1,Bard=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 18|PRECLASS:1,Bard=18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 19|PRECLASS:1,Bard=19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|WOP Bard 20|PRECLASS:1,Bard=20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BardMetaWordsPerDay|max(1,classlevel(\"Bard\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 21,
+    "record_key": "Bard Archetype ~ Words of Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

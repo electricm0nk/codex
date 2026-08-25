@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Keen Scent",
+    "name": "Keen Scent",
+    "description": "The creature can notice other creatures by scent in a 180-foot radius underwater and can detect blood in the water at ranges of up to a mile.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sense.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature can notice other creatures by scent in a 180-foot radius underwater and can detect blood in the water at ranges of up to a mile."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|180 ft."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1920,
+    "record_key": "Keen Scent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

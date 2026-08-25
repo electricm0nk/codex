@@ -1,0 +1,32 @@
+{
+  "codex_generated_name": true,
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 15000.0,
+    "description": "[redacted PI]",
+    "key": "Codex-Named Unit (equipment_book_of_the_damned_volume_2_botd2_equip_lst_15)",
+    "name": "Codex-Named Unit (equipment_book_of_the_damned_volume_2_botd2_equip_lst_15)",
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "license": "PI-REDACTED",
+  "pi_field": "name,description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "book_of_the_damned_volume_2:botd2_equip.lst:15",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_equip.lst",
+    "record_key": "Codex-Named Unit (equipment_book_of_the_damned_volume_2_botd2_equip_lst_15)",
+    "sha256": "a3abe7c104eb200a65f98f952c4f997ca6e275a5f06362bdd081ee9791c12010"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

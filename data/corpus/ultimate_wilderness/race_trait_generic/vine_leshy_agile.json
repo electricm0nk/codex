@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Vine Leshy ~ Agile",
+    "name": "Agile",
+    "description": "Agile vine leshys are quicker but less tough than a typical vine leshy. Replace the leshy's +2 racial bonus to Constitution with a +2 racial bonus to Dexterity.&nl;This alters the vine leshy's ability scores.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vine Leshy ~ Agile"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Vine Leshy Racial Trait.Vine Leshy Alternate Racial Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Vine Leshy ~ Agile],[PREVAREQ:VineLeshy_ReplaceAbilityScores,0]"
+      },
+      {
+        "key": "DESC",
+        "value": "Agile vine leshys are quicker but less tough than a typical vine leshy. Replace the leshy's +2 racial bonus to Constitution with a +2 racial bonus to Dexterity.&nl;This alters the vine leshy's ability scores."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vine Leshy Racial Trait|AUTOMATIC|Vine Leshy ~ Agile Ability Scores"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VineLeshy_ReplaceAbilityScores|1|TYPE=Boolean"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 130,
+    "record_key": "Vine Leshy ~ Agile"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

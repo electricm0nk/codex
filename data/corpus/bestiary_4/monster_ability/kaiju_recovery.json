@@ -1,0 +1,49 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kaiju ~ Recovery",
+    "delivery": "Extraordinary",
+    "description": "Whenever a kaiju fails a saving throw against any mind-affecting, paralysis, petrification, polymorph, or immobilizing effect (including binding and temporal stasis but not including imprisonment), it can attempt a new saving throw at the end of its turn to remove the effect. Doing so takes no action. A kaiju can attempt a new save to end the effect as often as it wishes, but can attempt to remove only one such effect per round. Once per year, if a kaiju takes an amount of damage that would normally kill it by reducing its hit points to a negative amount equal to its Constitution score, the damage instead heals the kaiju of twice the amount of damage-but this healing leaves the kaiju disoriented and demoralized. At this point, the creature becomes nauseated and seeks only to return to its lair. Any amount of damage dealt to it by an external source before it reaches its lair, though, immediately negates the nauseated effect and allows the kaiju to end its retreat and attack.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:kaiju_recovery",
+    "name": "Recovery",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a kaiju fails a saving throw against any mind-affecting, paralysis, petrification, polymorph, or immobilizing effect (including binding and temporal stasis but not including imprisonment), it can attempt a new saving throw at the end of its turn to remove the effect. Doing so takes no action. A kaiju can attempt a new save to end the effect as often as it wishes, but can attempt to remove only one such effect per round. Once per year, if a kaiju takes an amount of damage that would normally kill it by reducing its hit points to a negative amount equal to its Constitution score, the damage instead heals the kaiju of twice the amount of damage-but this healing leaves the kaiju disoriented and demoralized. At this point, the creature becomes nauseated and seeks only to return to its lair. Any amount of damage dealt to it by an external source before it reaches its lair, though, immediately negates the nauseated effect and allows the kaiju to end its retreat and attack."
+      },
+      {
+        "key": "KEY",
+        "value": "Kaiju ~ Recovery"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 140,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Kaiju ~ Recovery",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

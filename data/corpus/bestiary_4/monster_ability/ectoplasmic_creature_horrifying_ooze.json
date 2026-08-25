@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ectoplasmic Creature ~ Horrifying Ooze",
+    "delivery": "Supernatural",
+    "description": "Any creature struck by an ectoplasmic creature's slam attack must succeed at a Will save (DC %1) or be shaken for 1d4 rounds.",
+    "description_variables": [
+      "10+HD/2+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:ectoplasmic_creature_horrifying_ooze",
+    "name": "Horrifying Ooze",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Any creature struck by an ectoplasmic creature's slam attack must succeed at a Will save (DC %1) or be shaken for 1d4 rounds.|10+HD/2+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Ectoplasmic Creature ~ Horrifying Ooze"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 597,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Ectoplasmic Creature ~ Horrifying Ooze",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

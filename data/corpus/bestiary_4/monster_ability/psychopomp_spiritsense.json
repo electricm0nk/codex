@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Psychopomp ~ Spiritsense",
+    "delivery": "Supernatural",
+    "description": "A psychopomp notices, locates, and can distinguish between living and undead creatures within 60 feet, just as if it had the blindsight ability. This sense does not allow it to detect objects, but it does allow it to notice living things that are not creatures (such as normal trees).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:psychopomp_spiritsense",
+    "name": "Spiritsense",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A psychopomp notices, locates, and can distinguish between living and undead creatures within 60 feet, just as if it had the blindsight ability. This sense does not allow it to detect objects, but it does allow it to notice living things that are not creatures (such as normal trees)."
+      },
+      {
+        "key": "KEY",
+        "value": "Psychopomp ~ Spiritsense"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Senses"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "Senses"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 142,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_races_ce.lst",
+    "record_key": "Psychopomp ~ Spiritsense",
+    "sha256": "a9af292735dbd8cbd424d6dabeb2ecbef7180374304194180b8bc4b0f66a7b8b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

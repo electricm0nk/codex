@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ranger Trap ~ Freezing Trap",
     "name": "Freezing Trap",
-    "class": "Ranger Trap",
+    "class": "Ranger",
     "description": "The trap creates a burst of ice that damages and encases the triggering creature. The creature takes 1d3+%1 points of cold damage and is entangled and stuck to the ground, similar to the effect of a tanglefoot bag. A successful Reflex save halves the damage and means the creature is not stuck to the floor by the ice. The ice is %2 inches thick, has hardness 0 and %3 hit points, and melts in 2d4 rounds.|FreezingTrapBonusDamage|FreezingTrapThickness|FreezingTrapHP",
     "raw_tokens": [
       {
@@ -71,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

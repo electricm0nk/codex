@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Sanctuary",
+    "name": "Sanctuary",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Sanctuary"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Sanctuary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Sanctuary_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Sanctuary_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Sanctuary_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Sanctuary_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Sanctuary_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Sanctuary_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_Sanctuary_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_Sanctuary_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Sanctuary_LVL|Sanctuary,RacialSLA_Sanctuary_DC|PREVAREQ:RacialSLA_Sanctuary_AtWill,0|PREVAREQ:RacialSLA_Sanctuary_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_Sanctuary_LVL|Sanctuary,RacialSLA_Sanctuary_DC|PREVAREQ:RacialSLA_Sanctuary_AtWill,1|PREVAREQ:RacialSLA_Sanctuary_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_Sanctuary_LVL|Sanctuary,RacialSLA_Sanctuary_DC|PREVAREQ:RacialSLA_Sanctuary_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Sanctuary_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Sanctuary_SpellLVL|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Sanctuary_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Sanctuary_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_Sanctuary_DC|10+RacialSLA_Sanctuary_SpellLVL+RacialSLA_Sanctuary_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 233,
+    "record_key": "Racial SLA ~ Sanctuary"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Destined",
     "name": "Destined Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Your bloodline is destined for great things. And when you bloodrage, you exude a greatness that makes all but mythic creatures seem lesser.|PREVAREQ:Bloodrager_Destined_Description,0",
     "raw_tokens": [
       {
@@ -196,5 +196,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

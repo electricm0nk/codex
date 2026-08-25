@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Judgment ~ Healing",
     "name": "Judgment / Healing",
-    "class": "Judgment",
+    "class": "Inquisitor",
     "description": "The inquisitor is surrounded by a healing light, gaining fast healing %1. This causes the inquisitor to heal %1 point of damage each round as long as the inquisitor is alive and the judgment lasts.|1+InqJudgeHealingLVL/3",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

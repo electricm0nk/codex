@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Skinwalker ~ Weretiger-Kin",
+    "name": "Weretiger-Kin (Fanglord)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Weretiger-Kin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skinwalker Subrace"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Skinwalker ~ Weretiger-Kin],[!PREFACT:1,ABILITIES,Skinwalker_ReplaceAbilityScores=True,Skinwalker_ReplaceAnimalMinded=True,Skinwalker_ReplaceChangeShape=True,Skinwalker_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Skinwalker ~ Weretiger-Kin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skinwalker Racial Trait|AUTOMATIC|Weretiger-Kin ~ Ability Scores|Weretiger-Kin ~ Animal-Minded|Weretiger-Kin ~ Change Shape|Weretiger-Kin ~ Spell-Like Ability"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Weretiger"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Typical Alignment|NE"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Dexterity, -2 Wisdom (+2 Charisma while shapechanged)."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Acrobatics, Perception."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Jump 1/day."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Bestial Features|Bite attack that deals 1d6 points of damage, 2 claw attacks that each deal 1d4 points of damage, +10 foot racial bonus to base speed, see in darkness (Pathfinder RPG Bestiary 2)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 159,
+    "record_key": "Skinwalker ~ Weretiger-Kin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

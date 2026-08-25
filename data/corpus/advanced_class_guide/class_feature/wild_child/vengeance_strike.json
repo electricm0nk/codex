@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Child ~ Vengeance Strike",
     "name": "Vengeance Strike",
-    "class": "Wild Child",
+    "class": "Brawler",
     "description": "The wild child can use this trick as an immediate action when an enemy adjacent to him hits an ally with a melee or ranged attack. The wild child can make a single melee attack at his highest base attack bonus against the creature who attacked his ally.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

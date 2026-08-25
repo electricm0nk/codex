@@ -55,6 +55,7 @@ use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan
 use codex::rules_core::pilot_compute::{
     build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
     ComputationExplanation, PilotBaseChassisComputation, SelectedSkillModifiers,
+    COMPANION_SPECIES_CHOICE_ID,
 };
 #[cfg(test)]
 use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
@@ -1041,6 +1042,30 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
     // Feats tab renders, verbatim (`CharacterSheet.tsx`'s `selectedFeats`
     // prop): a Dwarf Fighter level 1 has two feat slots, and the seed was
     // showing the player three feats.
+    // SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 7:
+    // the real character-creation-time companion-species choice cycle 6
+    // named as missing. Only the three companion/mount-bearing classes
+    // (Druid, Hunter, Cavalier) read `COMPANION_SPECIES_CHOICE_ID`
+    // (`pilot_compute::ground_selected_companion_or_default`); pushing it
+    // for any other class would be a dead, never-read choice, matching how
+    // every other class-conditional seed in this function is scoped. An
+    // omitted `request.companion_species` (every pre-existing caller, and
+    // every non-companion class) leaves this a no-op -- the engine's own
+    // fallback to that class's prior fixed default (Wolf/Horse) applies
+    // unchanged, so this is additive-only, never a regression to any of
+    // the 61 classes' already-`Computed` status.
+    if let Some(species_slug) = &request.companion_species {
+        if request.class_id == DRUID_CLASS_ID
+            || request.class_id == "class:hunter"
+            || request.class_id == CAVALIER_CLASS_ID
+        {
+            selected_choices.push(SelectedChoice {
+                choice_set_id: COMPANION_SPECIES_CHOICE_ID.to_owned(),
+                selection_id: species_slug.clone(),
+            });
+        }
+    }
+
     let dodge_is_granted_by_a_seeded_slot = selected_choices.iter().any(|choice| {
         choice.selection_id == DODGE_FEAT_SELECTION
             && (choice.choice_set_id == HUMAN_BONUS_FEAT_CHOICE_ID
@@ -1858,6 +1883,7 @@ mod tests {
             },
             ability_bonus_target: "strength".to_owned(),
             selected_alternate_trait_keys: Vec::new(),
+            companion_species: None,
             saved_at: TEST_SAVED_AT.to_owned(),
         }
     }

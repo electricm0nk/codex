@@ -112,10 +112,15 @@ use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
-    acg, adventurers_guide as ag, advanced_race_guide as arg, apg, beastiary1, crb,
-    inner_sea_gods as isg, occult_adventures as oa, pathfinder_unchained as pu,
+    acg, adventurers_guide as ag, advanced_race_guide as arg, apg, beastiary1, bestiary,
+    bestiary_4 as b4, book_of_the_damned_volume_1 as botd1, book_of_the_damned_volume_2 as botd2,
+    crb, horror_adventures as ha, inner_sea_faiths as isf, inner_sea_gods as isg,
+    inner_sea_intrigue as isi, inner_sea_magic as ism, inner_sea_races as isr,
+    inner_sea_temples as istem, inner_sea_world_guide as iswg, monster_codex as mc,
+    mythic_adventures as mythic, occult_adventures as oa, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
-    ultimate_magic as um, ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
+    ultimate_magic as um, ultimate_magic_wordsofpower as umwp, ultimate_psionics as upsi,
+    ultimate_wilderness as uw, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -688,6 +693,27 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // same-name pairing, matching every other book above with no
     // diagnostic entry.
     ("mythic_adventures", "mythic_adventures"),
+    // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): four books the
+    // T12 census/class-feature lanes wrote `data/corpus/` directories for
+    // without ever registering here. Same-name pairing, matching every
+    // other book above; `corpus_ingest_diagnostic.rs` already spells all
+    // four this way (`ultimate_campaign`/`inner_sea_faiths`/
+    // `inner_sea_temples` each appear as literal book ids there;
+    // `core_essentials` has no diagnostic entry, so it gets the no-entry
+    // same-name pairing the comments above use for that case).
+    ("ultimate_campaign", "ultimate_campaign"),
+    ("inner_sea_faiths", "inner_sea_faiths"),
+    ("inner_sea_temples", "inner_sea_temples"),
+    ("core_essentials", "core_essentials"),
+    // SD-32 desktop count re-sweep (2026-08-24): `beginner_box` was
+    // ingested (`decisions.md §27b`, the `EXCLUDED_BOOKS` carve-out that
+    // had been concealing 14 un-ingested equipment units removed) but
+    // never registered here -- this workspace is a SEPARATE cargo
+    // workspace from the root-level sweep that did the ingest, so the
+    // gap went uncaught until this bin's own suite ran. Same-name
+    // pairing, matching every other book above; `equipment_catalog.rs`'s
+    // `BOOK_*` short code for this book is `"BB"`.
+    ("beginner_box", "beginner_box"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -710,17 +736,69 @@ const CORPUS_KIND_NAMES: &[(&str, &str)] = &[
     // `RECORD_TYPE_FAMILIES` for why.
     ("companion", "companions"),
     ("spell", "spells"),
+    // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24). Twelve more
+    // content-kind directories the census/class-feature lanes populated
+    // with no classifier entry at all -- `corpus_inventory` panicked
+    // before any reach test could even collect its family list.
+    // Verified by direct inspection (not assumed): each holds real,
+    // named, described records distinct from the primary kind sharing
+    // its book (e.g. `beastiary/race_generic/hydra_pyrohydra.json` is a
+    // genuine Pyrohydra variant, not a duplicate of `beastiary/race/`'s
+    // rows; `ultimate_psionics/ability/deafening_static.json` carries the
+    // real key `Dissonance ~ Deafening Static` with its own mechanical
+    // description, not an internal grant). None of the twelve has a
+    // `reach_of` arm yet -- each surfaces in
+    // `every_ingested_family_is_accounted_for` per book below, which is
+    // this bundle's forward-scope register entry for the new-catalog
+    // work each one needs (`decisions.md §16`: naming a kind is not the
+    // same disposition as closing its reach).
+    ("ability", "abilities"),
+    ("class_generic", "class_variants"),
+    ("deity", "deities"),
+    ("domain", "domains"),
+    ("feat_generic", "generic_feats"),
+    ("language", "languages"),
+    ("monster_generic", "monster_variants"),
+    ("power", "powers"),
+    ("race_generic", "race_variants"),
+    ("skill", "skills"),
+    ("template", "templates"),
+    ("trait_generic", "named_traits"),
 ];
 
 /// Directories under a corpus book that hold no player-facing records. Listed
 /// with the reason, for the same reason [`SUPPORTING_RECORD_TYPES`] is: an
 /// unexplained exclusion is how a gate quietly stops covering something.
-const NON_CONTENT_CORPUS_DIRS: &[(&str, &str)] = &[(
-    "_parity",
-    "an ingest-verification artifact (a book's parity report against its \
-     upstream LST), not game content: nothing in it describes a rule, and a \
-     player is not meant to read it",
-)];
+const NON_CONTENT_CORPUS_DIRS: &[(&str, &str)] = &[
+    (
+        "_parity",
+        "an ingest-verification artifact (a book's parity report against its \
+         upstream LST), not game content: nothing in it describes a rule, and a \
+         player is not meant to read it",
+    ),
+    (
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24). Verified
+        // across every book that writes this directory (core_rulebook,
+        // beastiary, bestiary_2/3/4/5/6, and every other monster-bearing
+        // book): every sampled record carries `VISIBLE:NO` and a
+        // `CATEGORY:Special Ability` grant whose sole job is composing a
+        // creature TYPE's universal traits (`Chaotic Traits`, `Fire
+        // Traits`, `Aquatic Traits`) into the monster chassis compute --
+        // e.g. `core_rulebook/race_trait_generic/chaotic_traits.json`
+        // grants `Aligned (Chaotic)` with `VISIBLE:NO`, the PCGen idiom
+        // for "never render this row directly." A player never picks or
+        // reads one of these; they reach the sheet already folded into
+        // the monster's stat block by the chassis compute this record
+        // feeds. Distinct from `ability`/`trait_generic` above, both of
+        // which carry real named, player-legible records under the same
+        // `_generic` naming convention -- this directory's contents were
+        // checked and are not.
+        "race_trait_generic",
+        "hidden (VISIBLE:NO) universal-monster-type trait grants that feed \
+         the monster chassis compute directly; not a player-legible record \
+         and never rendered on its own",
+    ),
+];
 
 /// Every `(book, kind)` with at least one Shape B v1 record on disk, plus any
 /// directory this module cannot name.
@@ -901,6 +979,50 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // non-empty category, so `feats_reach`'s own check is
         // satisfied for all 221.
         ("ultimate_psionics", "feats") => Some(feats_reach(RuleSetId::Upsi, "Upsi")),
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): Inner Sea Taverns'
+        // first reach claim of any kind, and its first compiled
+        // `RuleSetId`. Unlike the other three SD-32 Gate 0 books, this
+        // one has no `*_spells.lst` at all -- its first family is `feat`
+        // via `gen_feat_gap_tables`'s `BOOK_INPUTS` (`istav_feats.lst`'s
+        // 9 base declarations, same mechanism `RuleSetId::Mythic` uses),
+        // joined into `feats_all::all_feat_tables()` and served by
+        // `list_feat_catalog` under `source: "InnerSeaTaverns"` (the
+        // `RuleSetId`'s own `{:?}` name -- `feat_catalog::
+        // build_feat_catalog_for` derives `source` generically for every
+        // book, so this claim is a real reach test rather than new wiring
+        // of its own). Every one of the 9 records carries a non-empty
+        // `category`, so `feats_reach`'s own check is satisfied for all 9.
+        ("inner_sea_taverns", "feats") => {
+            Some(feats_reach(RuleSetId::InnerSeaTaverns, "InnerSeaTaverns"))
+        }
+        // SD-32 row 20 (`decisions.md §17`/`§27b`): the 43-family reach gap
+        // row 19 cycle 4 discovered but did not close. Every one of these
+        // eleven books was ALREADY registered in
+        // `feats_all::hand_authored_feat_tables()` with an empty
+        // hand-authored slice specifically so `feat_gap_tables::
+        // feat_gap_rows_for(RuleSetId::X)`'s corpus rows join on via
+        // `all_feat_tables()` -- the identical `Ce`/`Ha`/`Isr`/`Oa`/`Iswg`/
+        // `MonsterCodex`/`Mythic`/`Isi`/`Botd2`/`Isc`/`Isg` shape
+        // `hand_authored_feat_tables()`'s own doc comments already
+        // document. The gap was purely this match arm never having been
+        // added, exactly as `("inner_sea_taverns", "feats")` above already
+        // proves for a book with the same "gap rows only" shape.
+        ("core_essentials", "feats") => Some(feats_reach(RuleSetId::Ce, "Ce")),
+        ("horror_adventures", "feats") => Some(feats_reach(RuleSetId::Ha, "Ha")),
+        ("inner_sea_races", "feats") => Some(feats_reach(RuleSetId::Isr, "Isr")),
+        ("occult_adventures", "feats") => Some(feats_reach(RuleSetId::Oa, "Oa")),
+        ("inner_sea_world_guide", "feats") => Some(feats_reach(RuleSetId::Iswg, "Iswg")),
+        ("monster_codex", "feats") => {
+            Some(feats_reach(RuleSetId::MonsterCodex, "MonsterCodex"))
+        }
+        ("mythic_adventures", "feats") => Some(feats_reach(RuleSetId::Mythic, "Mythic")),
+        ("inner_sea_intrigue", "feats") => Some(feats_reach(RuleSetId::Isi, "Isi")),
+        ("book_of_the_damned_volume_2", "feats") => {
+            Some(feats_reach(RuleSetId::Botd2, "Botd2"))
+        }
+        ("inner_sea_combat", "feats") => Some(feats_reach(RuleSetId::Isc, "Isc")),
+        ("inner_sea_gods", "feats") => Some(feats_reach(RuleSetId::Isg, "Isg")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell
@@ -1058,6 +1180,212 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): Inner Sea Faiths joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 13th
+        // book, the same `build_spell_catalog`/"All books" render path
+        // AG/UW/ISG use -- this book's FIRST reach claim of any kind, and
+        // its first compiled `RuleSetId`. All 3 base declarations carry no
+        // `CLASSES:`/`DOMAINS:` level (a real corpus gap -- this book's
+        // `isf_spells.lst` names no class list at all), but every shipped
+        // record still carries a real `SCHOOL:` and/or `DESC:`, so
+        // `has_payload` is satisfied (`src/bin/
+        // ingest_inner_sea_setting_spells.rs`).
+        ("inner_sea_faiths", "spells") => Some(spells_reach(
+            "ISF",
+            isf::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): Inner Sea Magic joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 14th
+        // book, the same "All books" render path -- this book's FIRST
+        // reach claim of any kind and its first compiled `RuleSetId`
+        // (its 218 `class_feature` units were already ingested corpus-wide
+        // but were unreachable through the book-level gate before this
+        // variant existed -- see `RuleSetId::InnerSeaMagic`'s own doc
+        // comment). Every shipped record carries a real `SCHOOL:`,
+        // `CLASSES:` level and/or `DESC:`, so `has_payload` is satisfied
+        // (`src/bin/ingest_inner_sea_setting_spells.rs`).
+        ("inner_sea_magic", "spells") => Some(spells_reach(
+            "ISM",
+            ism::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003): Inner Sea Temples
+        // joins `spell_resolver::spell_catalog_rows()` as the catalog's
+        // 15th book, the same "All books" render path -- this book's
+        // FIRST reach claim of any kind, and its first compiled
+        // `RuleSetId`. Every one of the 21 base declarations carries a
+        // real `SCHOOL:`, `CLASSES:` level and `DESC:`, so `has_payload`
+        // is satisfied for all 21 (`src/bin/
+        // ingest_inner_sea_setting_spells.rs`).
+        ("inner_sea_temples", "spells") => Some(spells_reach(
+            "ISTEM",
+            istem::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off):
+        // Horror Adventures joins `spell_resolver::spell_catalog_rows()`
+        // as the catalog's 16th book, this book's SECOND reach claim
+        // (`companion`/`monster`/`monster_ability` already reach). 70 of
+        // its 72 base declarations carry a real `SCHOOL:`, `CLASSES:`
+        // level and `DESC:`, so `has_payload` is satisfied for those 70
+        // (`src/bin/ingest_spells.rs`). The other 2 ("Green Caress",
+        // "Verminous Transformation") are verbatim reprints of spells
+        // Ultimate Wilderness already ships (earlier in the chain) -- the
+        // resolver's cross-book dedup keeps only UW's copy, so they never
+        // carry `book=="HA"` in the served catalog (the exact
+        // `bestiary_6`/`ultimate_wilderness` shape above, at 2-of-72
+        // instead of 2-of-2 -- see the matching `OPEN_FINDINGS` entry
+        // below rather than claiming these 2 here).
+        ("horror_adventures", "spells") => Some(spells_reach(
+            "HA",
+            ha::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .filter(|k| k != "Green Caress" && k != "Verminous Transformation")
+                .collect(),
+        )),
+        // SD-32 row 20 (`decisions.md §17`/`§27b`): the 43-family reach gap
+        // row 19 cycle 4 discovered but did not close. Every table below
+        // was ALREADY generated by `src/bin/ingest_spells.rs`'s
+        // config-driven `BOOKS` list at the time this cycle started -- the
+        // gap was pure chaining into `spell_catalog_rows()` and this match
+        // arm, never new ingest work. `beastiary1`'s spell content lives in
+        // the `bestiary` module: this book's `spell` corpus records are
+        // custom spell-like-ability variants transcribed from
+        // `core_essentials/ce_spells.lst` (confirmed real: every one of
+        // `data/corpus/bestiary/spell/*.json`'s 111 records carries
+        // `source.path == "pathfinder/paizo/roleplaying_game/
+        // core_essentials/ce_spells.lst"`), the same shared-library-host
+        // shape `decisions.md §9`/`cache_gen::equipment_gap::book_routing`
+        // already document for this book's equipment rows.
+        ("beastiary1", "spells") => Some(spells_reach(
+            "B1",
+            bestiary::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // "Quickened Lightning Bolt" is a genuine cross-book verbatim
+        // reprint: `bestiary`/`beastiary1`'s own custom-spell table (chained
+        // earlier) already carries byte-identical text, so
+        // `spell_catalog_rows()`'s cross-book dedup (first-chained wins)
+        // keeps only that copy -- the same shape `horror_adventures`'s own
+        // dispatch arm above excludes 2 keys for.
+        ("bestiary_4", "spells") => Some(spells_reach(
+            "B4",
+            b4::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .filter(|k| k != "Quickened Lightning Bolt")
+                .collect(),
+        )),
+        // "Agonize"/"Vision of Hell" are verbatim reprints already served
+        // under `ultimate_magic` (chained earlier) -- same dedup shape.
+        ("book_of_the_damned_volume_1", "spells") => Some(spells_reach(
+            "BOTD1",
+            botd1::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .filter(|k| k != "Agonize" && k != "Vision of Hell")
+                .collect(),
+        )),
+        // "Disfiguring Touch"/"Vermin Shape I"/"Vermin Shape II" are
+        // verbatim reprints already served under `ultimate_magic` (chained
+        // earlier) -- same dedup shape.
+        ("book_of_the_damned_volume_2", "spells") => Some(spells_reach(
+            "BOTD2",
+            botd2::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .filter(|k| {
+                    k != "Disfiguring Touch" && k != "Vermin Shape I" && k != "Vermin Shape II"
+                })
+                .collect(),
+        )),
+        // "Brightest Light" is a verbatim reprint already served under
+        // `adventurers_guide` (chained earlier) -- same dedup shape.
+        ("inner_sea_intrigue", "spells") => Some(spells_reach(
+            "ISI",
+            isi::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .filter(|k| k != "Brightest Light")
+                .collect(),
+        )),
+        ("inner_sea_races", "spells") => Some(spells_reach(
+            "ISR",
+            isr::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // 8 of Inner Sea World Guide's 22 records are verbatim reprints
+        // already served under an earlier-chained book: "Animal Growth
+        // (Reptiles Only)"/"Animal Shapes (Reptiles Only)" under
+        // `ultimate_wilderness`; "Interplanetary Teleport"/"Vermin Shape
+        // I"/"Vermin Shape II" under `ultimate_magic`; "Dirge of the
+        // Victorious Knights"/"Summon Mantis" under `adventurers_guide`;
+        // "Quickened Dispel Magic (Greater)" under `bestiary_4` -- same
+        // dedup shape as every entry above, re-derived per key (not
+        // assumed) against each earlier book's own table.
+        ("inner_sea_world_guide", "spells") => Some(spells_reach(
+            "ISWG",
+            iswg::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .filter(|k| {
+                    ![
+                        "Animal Growth (Reptiles Only)",
+                        "Animal Shapes (Reptiles Only)",
+                        "Interplanetary Teleport",
+                        "Vermin Shape I",
+                        "Vermin Shape II",
+                        "Dirge of the Victorious Knights",
+                        "Summon Mantis",
+                        "Quickened Dispel Magic (Greater)",
+                    ]
+                    .contains(&k.as_str())
+                })
+                .collect(),
+        )),
+        ("monster_codex", "spells") => Some(spells_reach(
+            "MC",
+            mc::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        ("mythic_adventures", "spells") => Some(spells_reach(
+            "MYTHIC",
+            mythic::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        ("ultimate_equipment", "spells") => Some(spells_reach(
+            "UE",
+            ue::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        ("ultimate_magic_wordsofpower", "spells") => Some(spells_reach(
+            "UMWP",
+            umwp::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Equipment: `list_equipment_catalog` / `list_equipment` serve every
         // ingested book's table since the SD-27 widening of
@@ -1195,6 +1523,24 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("book_of_the_damned_volume_2", "equipment") => {
             Some(equipment_reach("BOTD2", BTreeSet::new()))
         }
+        // SD-32 row 20 (`decisions.md §17`/`§27b`): these three books were
+        // already registered in `gen_equipment_gap_tables.rs`'s
+        // `BOOK_INPUTS` (`EQUIPMENT_BOOK_AG`/`_ISM`/`_ISTEM`) and their rows
+        // already live in `equipment_gap_tables.rs` -- the gap was purely
+        // this match arm never having been added, the identical shape
+        // `("ultimate_wilderness", "equipment")` above already proves for a
+        // book with no hand-authored table at all.
+        ("adventurers_guide", "equipment") => Some(equipment_reach("AG", BTreeSet::new())),
+        ("inner_sea_magic", "equipment") => Some(equipment_reach("ISM", BTreeSet::new())),
+        ("inner_sea_temples", "equipment") => Some(equipment_reach("ISTEM", BTreeSet::new())),
+        // SD-32 desktop count re-sweep (2026-08-24): `beginner_box` was
+        // ingested (`decisions.md §27b`) and its 19 `equipment` rows are
+        // already routed through the corpus gap lane under book code `BB`
+        // (`equipment_catalog.rs`'s `count_by_book(&response, "BB")`) --
+        // the identical no-hand-authored-table shape as `UW`/`AG`/`ISM`
+        // above. The gap was purely this match arm never having been
+        // added, same as those.
+        ("beginner_box", "equipment") => Some(equipment_reach("BB", BTreeSet::new())),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
@@ -1296,6 +1642,13 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // pinned oracle (confirmed: no `*_subrace.lst` file), so there is no
         // separate alternate-trait claim to add here.
         ("bestiary_6", "race_traits") => Some(race_traits_reach("B6", "bestiary_6")),
+        // SD-32 `decisions.md §25` cycle 2 (2026-08-23). Bestiary 3's 5
+        // "Adopted Race" selector records, filed under `bestiary_3` by
+        // `ingest_race_traits.rs`'s new `selector_only` `BookSource` -- the
+        // book contributes no standard-tier trait content of its own (its
+        // five races' chassis are ARG-native), so unlike `bestiary_2/5/6`
+        // this claim's whole `ingested` set is these 5 selector records.
+        ("bestiary_3", "race_traits") => Some(race_traits_reach("B3", "bestiary_3")),
         ("advanced_race_guide", "race_traits") => {
             Some(race_traits_reach("ARG", "advanced_race_guide"))
         }
@@ -1538,6 +1891,63 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("horror_adventures", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("horror_adventures", "HA"))
         }
+        // `decisions.md §20` no_record-to-zero, round 3. Five previously-
+        // unregistered ZERO-monster books (`scripts/classify_monster_ability_
+        // rows.py`'s "ZERO-monster books" line): no `("book", "monsters")`
+        // claim exists because none has a `data/corpus/<book>/monster/`
+        // directory at all (`monster_chassis::MONSTER_BOOKS`'s
+        // `races_lsts: &[]` for each -- `monster_chassis.rs`), only
+        // `monster_ability`. Each wire code is the one this app already
+        // serves the book's OTHER families under (`monster_catalog::BOOK_UW`/
+        // `BOOK_UI`/`BOOK_UM`/`BOOK_B6`/`BOOK_B5`).
+        ("ultimate_wilderness", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("ultimate_wilderness", "UW"))
+        }
+        ("ultimate_intrigue", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("ultimate_intrigue", "UI"))
+        }
+        ("ultimate_magic", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("ultimate_magic", "UM"))
+        }
+        ("bestiary_6", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_6", "B6"))
+        }
+        ("bestiary_5", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_5", "B5"))
+        }
+        // `decisions.md §20` no_record-to-zero, round 4. The last two of the
+        // original 8 ZERO-monster books -- same shape as round 3 immediately
+        // above: no `("book", "monsters")` claim, only `monster_abilities`,
+        // under the wire code each book already serves its OTHER families
+        // with (`monster_catalog::BOOK_PU`/`BOOK_ARG`).
+        ("pathfinder_unchained", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("pathfinder_unchained", "PU"))
+        }
+        ("advanced_race_guide", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("advanced_race_guide", "ARG"))
+        }
+        // `decisions.md §20` no_record-to-zero, round 5. The last of the
+        // original 8 ZERO-monster books -- same shape as round 4 immediately
+        // above: no `("book", "monsters")` claim, only `monster_abilities`,
+        // under the wire code this book already serves its OTHER families
+        // with (`monster_catalog::BOOK_MYTHIC`, this book's existing
+        // `("mythic_adventures", "equipment")` arm above).
+        ("mythic_adventures", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("mythic_adventures", "MYTHIC"))
+        }
+        // `decisions.md §27b` — EVERYTHING: overturns the repeatedly-
+        // reconfirmed "correctly out of scope" disposition for this book's 5
+        // `monster_ability` units AND its 1 `monster` row (Kami (Shikigami)).
+        // Unlike `mythic_adventures` above, this book DOES carry a real
+        // `("book", "monsters")` claim -- its chassis registration includes
+        // one real `MonsterStatBlock` -- so both kinds get a claim here,
+        // under the wire code this book already serves its OTHER families
+        // with (`monster_catalog::BOOK_OA`, this book's existing
+        // `("occult_adventures", "equipment")` arm above).
+        ("occult_adventures", "monsters") => Some(chassis_monsters_reach("occult_adventures", "OA")),
+        ("occult_adventures", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("occult_adventures", "OA"))
+        }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
         // one is served by `list_companion_catalog` and rendered by
@@ -1753,8 +2163,95 @@ fn reach_of(family: &Family) -> Option<Reach> {
             uw::archetype_tables::archetype_swap_tables(),
         )),
 
+        // Row 19 cycle 4: the twelve corpus content-kind directories cycle 3
+        // named as having no reach mechanism at all (`CORPUS_KIND_NAMES`'s
+        // own comment above) -- ONE generic dispatch arm covering every book
+        // for all twelve, per `decisions.md §17` ("generic pass ... not
+        // per-book work"), not twelve/many separate match arms.
+        // `reference_library_catalog.rs` serves every record under
+        // `data/corpus/<book>/<kind_dir>/` with real content wherever the
+        // corpus carries any (authored prose, a `DESC` raw token, or a
+        // rendered mechanical-token summary) and identity-only for the rare
+        // record that has none.
+        (book, kind) if REFERENCE_LIBRARY_KINDS.iter().any(|(k, _)| *k == kind) => {
+            Some(reference_library_reach(book, kind))
+        }
+
         _ => None,
     }
+}
+
+/// `(plural kind name, singular corpus directory name)` for the twelve
+/// kinds `reference_library_catalog.rs` serves generically. Deliberately a
+/// second small table rather than importing `reference_library_catalog`'s
+/// own `REFERENCE_LIBRARY_KIND_DIRS` list directly into the match guard
+/// above — the plural name is this module's own vocabulary
+/// (`CORPUS_KIND_NAMES` already carries the same pairing; kept local so the
+/// match guard needs no runtime lookup through that larger table).
+const REFERENCE_LIBRARY_KINDS: &[(&str, &str)] = &[
+    ("abilities", "ability"),
+    ("class_variants", "class_generic"),
+    ("deities", "deity"),
+    ("domains", "domain"),
+    ("generic_feats", "feat_generic"),
+    ("languages", "language"),
+    ("monster_variants", "monster_generic"),
+    ("powers", "power"),
+    ("race_variants", "race_generic"),
+    ("skills", "skill"),
+    ("templates", "template"),
+    ("named_traits", "trait_generic"),
+];
+
+/// Executes `reference_library_catalog::load_reference_library_entries_prod`
+/// for one `(book, kind)` family and judges it against `corpus_record_keys`'
+/// own denominator via the shared `assess()` core -- the same pattern every
+/// other `*_reach` function in this file uses. A record with ANY resolved
+/// `description` (tier 1/2 real prose, or tier 3's rendered mechanical-token
+/// summary — both are real fields the render path reads, neither is empty)
+/// counts as `with_payload`; only a record reaching none of the three tiers
+/// (`description: None` — the 18-record residual `reference_library_
+/// catalog.rs`'s own doc comment names) counts as `identity_only`.
+/// `assess()` then reports `Surfaced` when every record in the family
+/// resolved, `BareRecords` when a genuinely-empty record remains, and would
+/// report `NotSurfaced` if any record were altogether absent from the
+/// catalog's response (structurally impossible here: the catalog walks the
+/// exact same directory `corpus_record_keys` reads, proven by
+/// `reference_library_catalog.rs`'s own
+/// `every_record_under_a_directory_becomes_exactly_one_entry` test).
+fn reference_library_reach(book: &str, kind: &str) -> Reach {
+    let Some((_, kind_dir)) = REFERENCE_LIBRARY_KINDS.iter().find(|(k, _)| *k == kind) else {
+        return Reach::NotSurfaced {
+            why: format!("'{kind}' is not a registered reference-library kind"),
+            missing: BTreeSet::new(),
+        };
+    };
+    // `family.book` is the book id `CORPUS_BOOK_IDS` maps TO, not the
+    // on-disk directory name — they differ for several books (`apg`'s
+    // directory is `advanced_players_guide`, `beastiary1`'s is `beastiary`
+    // AND `bestiary`, two directories sharing one id). Union every matching
+    // directory rather than assuming book id == directory name, the same
+    // many-to-one shape `corpus_inventory()` itself resolves through this
+    // table.
+    let mut ingested = BTreeSet::new();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for (book_dir, book_id) in CORPUS_BOOK_IDS {
+        if *book_id != book {
+            continue;
+        }
+        ingested.extend(corpus_record_keys(book_dir, kind_dir));
+        let entries =
+            crate::reference_library_catalog::load_reference_library_entries_prod(book_dir, kind_dir);
+        for entry in &entries {
+            if entry.description.is_some() {
+                with_payload.insert(entry.key.clone());
+            } else {
+                identity_only.insert(entry.key.clone());
+            }
+        }
+    }
+    assess("list_reference_library_catalog", &ingested, &with_payload, &identity_only)
 }
 
 /// The shared, honest verdict for every book's archetype-swap table -- see
@@ -2002,6 +2499,43 @@ fn race_traits_reach(wire_book: &'static str, book_dir: &str) -> Reach {
         }
     }
 
+    // `Human ~ Adoptive Parentage`'s CHOOSE pool (`decisions.md §16` item 2,
+    // SD-32 card-11 T2b lane) — surfaced by the same command, in its own
+    // top-level field rather than nested under a race, because picking one
+    // is not a trait *of* the race it names (see
+    // `AdoptiveParentageOptionDto`'s doc comment). A row with a real target
+    // race and a resolved grant is payload; nothing in this cycle's batch
+    // ever resolves to zero grants, but an empty `grants` list would count as
+    // identity-only rather than silently as payload, the same rule every
+    // other family in this function applies.
+    for option in menu.adoptive_parentage_options.iter().filter(|option| option.book == wire_book) {
+        if option.grants.is_empty() {
+            identity_only.insert(option.key.clone());
+        } else {
+            with_payload.insert(option.key.clone());
+        }
+    }
+
+    // SD-32 `decisions.md §25` cycle 2's "Adopted Race" selector rows -- the
+    // same top-level-field shape the Adoptive Parentage block above uses, for
+    // the identical reason (picking one is not a trait *of* the race it
+    // names). **13 of 14 resolve `with_payload` today**:
+    // `trait_pool::load_trait_pool`'s `ability/`-fallback (that module's own
+    // doc comment) finds real, already-shipped `inner_sea_races` content for
+    // every target race except Rougarou, whose pool is genuinely, corpus-
+    // wide empty (`epic-6-kind-trait_cycle-1_cycle_receipt.md §1`'s own
+    // finding, re-confirmed here) -- see `BARE_RECORD_FINDINGS`'s single
+    // remaining entry and `race_trait_picker.rs`'s own
+    // `the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_
+    // with_real_grants`.
+    for option in menu.adopted_race_options.iter().filter(|option| option.book == wire_book) {
+        if option.grants.is_empty() {
+            identity_only.insert(option.key.clone());
+        } else {
+            with_payload.insert(option.key.clone());
+        }
+    }
+
     assess(
         "list_alternate_racial_traits + resolve_race_alternate_selection",
         &ingested,
@@ -2194,6 +2728,24 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
         }
     }
 
+    // SD-32 row 19 cycle 3: the book's reference-pool ability groups
+    // (`" ~ "`-qualified, `owners: []` records no creature row of this book
+    // claims — `companion_pool_catalog.rs`'s own module doc names the
+    // shape). Every entry that reaches `pool_groups` at all already carries a
+    // real rendered `description` -- the render-and-refuse gate refused
+    // anything without one before it was ever added to the response -- so
+    // every row here is `with_payload` by construction. Inserted by
+    // `corpus_key` (the RAW `data.key` this ingest path wrote), not the
+    // slugged wire `key` -- `ingested` above is built from `corpus_record_
+    // keys`, which reads `data.key` verbatim, and this shape's raw key was
+    // never slugged in the first place (`CompanionPoolAbilityDto::corpus_key`'s
+    // own doc comment).
+    for group in response.pool_groups.iter().filter(|g| g.book == wire_code) {
+        for ability in &group.abilities {
+            with_payload.insert(ability.corpus_key.clone());
+        }
+    }
+
     assess("list_companion_catalog", &ingested, &with_payload, &identity_only)
 }
 
@@ -2232,6 +2784,36 @@ fn chassis_monster_abilities_reach(corpus_book: &str, wire_code: &str) -> Reach 
     assess("list_monster_catalog", &ingested, &with_payload, &identity_only)
 }
 
+/// The exact `class_feature` keys the compiled Unchained class tables own —
+/// the four per-class modules `pu_class_feature_count()`
+/// (`corpus_ingest_diagnostic.rs`) already sums, read here by key rather than
+/// by count.
+///
+/// **Deliberately NOT `corpus_record_keys("pathfinder_unchained",
+/// "class_feature")`** (SD-32 row 19 cycle 2). That walks every JSON file
+/// under the directory, and the directory holds 604 files, not 64 — the
+/// other 540 are `class_feature`-kind corpus content for classes this engine
+/// does not model at all (Automatic Bonus Progression toggles, the Unchained
+/// skill-system variant rules, Background Skills, Combat Trick/Skill Unlock
+/// pool entries), landed corpus-only by `decisions.md §13`'s T12 population
+/// and subsequent `§20` no_record-to-zero closure — the same shape as
+/// `ability`/`skill`/`race_trait_generic`/`template`, none of which this
+/// diagnostic's `rules_tables` half compiles either
+/// (`corpus_ingest_diagnostic.rs`'s own `pathfinder_unchained_counts` comment
+/// names it). A record ingested for shape-closure purposes is not the same
+/// claim as a record this engine's four real class tables own and can grant
+/// — using the disk count as the reach denominator conflated the two and
+/// made every one of the 540 read as an unreached class feature, which they
+/// never were.
+fn pu_class_owned_feature_keys() -> BTreeSet<String> {
+    let mut keys: BTreeSet<String> = BTreeSet::new();
+    keys.extend(pu::barbarian_features::features().iter().map(|f| f.key.to_owned()));
+    keys.extend(pu::monk_features::features().iter().map(|f| f.key.to_owned()));
+    keys.extend(pu::rogue_features::UnchainedRogueFeature::ALL.iter().map(|f| f.key().to_owned()));
+    keys.extend(pu::summoner_features::UnchainedSummonerFeature::ALL.iter().map(|f| f.key().to_owned()));
+    keys
+}
+
 /// Pathfinder Unchained's ingested `class_feature` records, judged per record
 /// against the real explanation channel the character sheet reads.
 ///
@@ -2258,7 +2840,7 @@ fn pu_class_features_reach() -> Reach {
     use codex::rules_core::pilot_compute::pu_class_feature_cited_key;
     use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 
-    let ingested = corpus_record_keys("pathfinder_unchained", "class_feature");
+    let ingested = pu_class_owned_feature_keys();
 
     let fixture_path = repo_root()
         .join("tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
@@ -2487,11 +3069,11 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "inner_sea_races",
         "race_traits",
-        "70 of Inner Sea Races' 71 ingested race-trait records reach a player through \
-         `list_alternate_racial_traits` and `resolve_race_alternate_selection`. ONE does not: \
-         `Human ~ Tribalistic Languages` (`isr_abilities_race.lst:216`). Derived, not assumed: \
-         the row carries no `FACT:<flag>|True`, no positive `PREFACT`, no `PREABILITY` and no \
-         `!PREFACT`, and no other row in the book names it -- \
+        "88 of Inner Sea Races' 94 ingested race-trait records reach a player through \
+         `list_alternate_racial_traits` and `resolve_race_alternate_selection`. SIX do not. \
+         `Human ~ Tribalistic Languages` (`isr_abilities_race.lst:216`): the row carries no \
+         `FACT:<flag>|True`, no positive `PREFACT`, no `PREABILITY` and no `!PREFACT`, and no \
+         other row in the book names it -- \
          `grep -o 'ABILITY:[^\\t]*Tribalistic Languages' isr_abilities_race.lst` returns nothing, \
          where the same grep for `Junk Tinker ~ Skilled` returns its granter and that row is \
          therefore `TraitRole::FlagGranted`. So `race_resolver::classify` leaves it \
@@ -2509,7 +3091,26 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          model human ethnicities as the `PREABILITY:1,CATEGORY=Background,TYPE.HumanEthnicity` \
          gate on `:210` implies. Both are new mechanisms, not missing wires. \
          Do NOT close this by deleting the record: it is real corpus content for a modelled \
-         race, and the same rule the `Oversized Goblin` entry above states applies here.",
+         race, and the same rule the `Oversized Goblin` entry above states applies here. \
+         \
+         Four more added 2026-08-22 (SD-32 card 11 T2b lane, re-running the book against the \
+         pinned oracle after `IN_SCOPE_RACES` grew past 82 with no regen -- see the \
+         count-pinning test's comment): `Mostly Human ~ Ifrit ~ Languages`, \
+         `~ Sylph ~ Languages`, `~ Undine ~ Languages` (already-open, unchanged by this lane) \
+         plus the newly-ingested `~ Suli ~ Languages` -- all four share one root cause, an \
+         unmodelled Geneiekin heritage: their common granter, \
+         `Geneiekin ~ Mostly Human.MOD` (`isr_abilities_race.lst:650-654`), carries a `TYPE:<Race> \
+         Racial Trait` component this project's `is_mod_row` guard correctly excludes from \
+         ingestion, so no selection can ever fire the `<Race>_ReplaceLanguages` flag these four \
+         rows are gated on. And `Suli ~ Trusted Mediator` (`:1266`, also newly ingested): unlike \
+         its structurally identical siblings `Ifrit ~ Brazen Flame`/`Oread ~ Isolated`/ \
+         `Sylph ~ Secretive` (each of which sets its own `FACT:<Race>_Replace...|True` pair), this \
+         row sets none at all -- a genuine upstream PCGen omission for Suli specifically, the \
+         same shape as `Human ~ Tribalistic Languages` above. \
+         REMEDY for the Geneiekin four: model the Geneiekin heritage the way Aasimar/Tiefling \
+         already are (`OPEN-ISSUES.md` row 18) -- a new mechanism, not a missing wire. REMEDY for \
+         `Suli ~ Trusted Mediator`: none available project-side; the upstream data itself omits \
+         the flag. Do NOT close any of the six by deleting the record.",
     ),
     // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 406 records (403 + 3 Slayer archetypes, SD31-E4-F1-001)
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
@@ -2627,6 +3228,241 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("inner_sea_magic", "class_features", "Gap: 198 Inner Sea Magic class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("inner_sea_taverns", "class_features", "Gap: 11 Inner Sea Taverns class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("bestiary_6", "spells", "Gap: Bestiary 6's own `rules_tables::bestiary_6::spell_list` table is real (2 records, transcribed from `b6_spells.lst`, byte-verified) and IS chained into `spell_resolver::spell_catalog_rows()` (SD-31 wave 24), but both of its rows are verbatim reprints of spells Ultimate Wilderness already ships (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`). The resolver's cross-book dedup pass (added this same cycle to protect the pre-existing `no_key_is_served_twice_so_a_selection_resolves_unambiguously` product invariant in `apps/desktop/src-tauri/src/spell_catalog.rs`) keeps only the first-chained book's copy -- Ultimate Wilderness, registered in wave 19 -- so no row ever carries `book==\"B6\"` in the SERVED catalog, even though the content reaches a player under UW's own book label. Remedy: a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still claim its own reach without double-serving the catalog. See docs/release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md."),
+    ("beastiary1", "monster_abilities", "Gap: 180 of Bestiary 1's 709 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2) ship with `owners: &[]` -- no monster row of this book claims them, because they are the corpus's own shared reference-library vocabulary (`Universal Monster Rule ~ X`, `Vampire ~ X`, `Lich ~ X`, `Regeneration ~ X`, `Immunity to X`, and similar generic special-ability text `scripts/transcribe_monster_tables.py`'s ownership pass finds no in-book stat block naming). They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set (a Universal Monster Rule applies to every creature of a stated type, not to one specific stat block), which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("bestiary_2", "monster_abilities", "Gap: 85 of Bestiary 2's 656 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("bestiary_3", "monster_abilities", "Gap: 276 of Bestiary 3's 686 `monster_ability` records (10 added `decisions.md §27`/round 8, the `TYPE:`-facet-vocabulary-gap group's provisional-default closure) (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("bestiary_4", "monster_abilities", "Gap: 187 of Bestiary 4's 806 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("horror_adventures", "monster_abilities", "Gap: 56 of Horror Adventures's 62 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("inner_sea_bestiary", "monster_abilities", "Gap: 35 of Inner Sea Bestiary's 187 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("inner_sea_gods", "monster_abilities", "Gap: 5 of Inner Sea Gods's 163 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("inner_sea_world_guide", "monster_abilities", "Gap: 16 of Inner Sea World Guide's 30 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("ultimate_psionics", "monster_abilities", "Gap: 64 of Ultimate Psionics's 191 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("ultimate_wilderness", "monster_abilities", "Gap: all 2 of Ultimate Wilderness's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("ultimate_intrigue", "monster_abilities", "Gap: all 6 of Ultimate Intrigue's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("ultimate_magic", "monster_abilities", "Gap: all 13 of Ultimate Magic's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("bestiary_6", "monster_abilities", "Gap: all 16 of Bestiary 6's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("bestiary_5", "monster_abilities", "Gap: all 40 of Bestiary 5's `monster_ability` records (39 `decisions.md §20` no_record-to-zero round 3, +1 `decisions.md §27b` round 9 -- `Traits Output ~ Sahkil`, closed via `parse_desc`'s new generalised sixth branch) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("pathfinder_unchained", "monster_abilities", "Gap: all 72 of Pathfinder Unchained's `monster_ability` records (69 `decisions.md §20` no_record-to-zero round 4, +3 `decisions.md §27b` round 9 -- `Elemental ~ Unchained Eidolon LVL01/08/20`, the multi-DESC: shape `parse_desc` used to refuse, closed via its new generalised sixth branch) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_pathfinder_unchained()` generator function extended to also call `gen_monster_book`. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("advanced_race_guide", "monster_abilities", "Gap: the 1 `monster_ability` record Advanced Race Guide's `arg_abilities_race.lst` contributes (`decisions.md §20` no_record-to-zero, round 4) ships with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own it, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_advanced_race_guide()` generator function extended to also call `gen_monster_book`. It is shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("mythic_adventures", "monster_abilities", "Gap: all 21 of Mythic Adventures's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 5) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm -- this book carries no hand-rolled generator function, unlike round 4's `pathfinder_unchained`/`advanced_race_guide`. All 21 of the book's orphan candidates shipped -- 0 refused, unlike round 4's `pathfinder_unchained` multi-DESC: residual. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("occult_adventures", "monster_abilities", "Gap: all 5 of Occult Adventures's `monster_ability` records (`decisions.md §27b` — EVERYTHING, overturning four cycles' worth of \"correctly out of scope\" for a negated `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` gate this repo's campaign set fails, a REACHABILITY finding, not an ingest exemption) ship with `owners: &[]` -- no monster row in this generator's ownership pass claims any of the 5 by name (the two owning race rows reference them only via a CATEGORY:Internal umbrella row this generator does not resolve into per-record ownership: `Race Traits ~ Homunculus Companion` names 2 of the 3 Homunculus rows, `Poison` is not named at all; `Racial Traits ~ Kami (Shikigami)` grants by TYPE=, not by name), the identical shape every other zero-record-owner book in this registry already ships. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`/`§27b`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: a per-record trace of each umbrella row's own grant logic (named references plus TYPE= auto-grants) to determine real ownership, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    // SD-32 row 19 cycle 3: `companion_pool_catalog.rs` (the generic
+    // "referenced pool" mechanism `decisions.md §17` asked for) closed 434
+    // of the ~470 companion records across 8 books that reached no surface
+    // at all, but each book's residual is real, not an instrument gap --
+    // structurally excluded by ONE of three verified reasons, never
+    // hand-listed per record: (1) an unresolvable `%N` formula scaling on a
+    // value this catalog has no character to compute (`MasterLevel`,
+    // `DraconicCompanionResistanceBonus`, eidolon-evolution CL-scaled dice);
+    // (2) `origin != "declared"` -- a PCGen `.MOD`/`.COPY=` delta row
+    // (confirmed real: `beastiary/companion/universal_monster_rule_fast_
+    // healing.json`, `origin: "mod_only"`) or an internal `VISIBLE:NO`
+    // engine-only row with `description: null` (confirmed real: `book_of_
+    // the_damned_volume_1/companion/imp_companion.json`); (3) no `" ~ "`
+    // group qualifier at all -- a bare category-header row (`Companion`,
+    // `Black Blade`, `Archetype Companion`) PCGen never intends as
+    // standalone player-facing content. Exact per-record keys pinned in
+    // `UNREACHED_RECORD_FINDINGS` below.
+    //
+    // **SD-32 row 20 correction (`decisions.md §24`/`§20 (SD-31)`, per the
+    // brief's own `deferral-revisit-doctrine.md`):** shape (1)'s citation
+    // below of "a real formula interpreter, out of scope per `decisions.md
+    // §24`" is STALE and was known-incorrect at row 19 cycle 4's own exit --
+    // `§24` is the PI-neutral-name ruling, not an interpreter ban; the ban
+    // was SD-31 Decision 20 and the operator overturned it 2026-08-21
+    // ("I choose thousands ... for now we need to get something in front of
+    // the user community"), and `src/rules_core/pilot_compute/
+    // formula_interpreter.rs` (1,345 lines) is real, wired, and Gate-2-
+    // proven against corpus fixtures for all nine in-scope shape families.
+    // **Re-derived against the now-real interpreter, per record, not
+    // assumed:** every one of the sampled formula-scaled companion records
+    // below (APG's 14 `%N`-carrying Eidolon Evolution rows checked directly
+    // against their `raw_tokens`, representative of the shape every book's
+    // finding below names) resolves its `%N` argument through a PCGen
+    // variable the interpreter's own grammar handles fine in isolation
+    // (`BreathWeaponDice|HD`, `BreathWeaponDC|10+(HD/2)+CON`, `PoisonSaveDC`
+    // gated on `PREABILITY:...Ability Focus`) but whose INPUT is scoped to a
+    // live character (`HD`, `CON`, `MasterLevel`, feat possession) or to a
+    // player's own `CHOOSE` selection (`%LIST`) -- values `list_companion_
+    // catalog` structurally has none of, being a browse-only catalog with no
+    // character in hand (the same "no character to resolve against" gate
+    // `companion_pool_catalog.rs`'s own render-and-refuse discipline already
+    // states). **The interpreter is not the blocker any more; the absence of
+    // a character-scoped consumer is.** That is a different, real remaining
+    // gap -- a per-character companion-ability resolution surface (the shape
+    // `derived_evaluator_fixture_check`'s existing character-scoped
+    // consumers already use, e.g. `kind=spell` DURATION/RANGE) that does not
+    // exist for `companion` yet -- sized below, not built this cycle (no
+    // consumer to wire, so nothing to fixture-check per `decisions.md §3`).
+    // Remedy: none of the three shapes is this mechanism's to close further
+    // -- (1) needs a character-scoped companion-ability consumer surface
+    // (the interpreter itself is ready; the surface to hand it a character
+    // is not), (2) needs a delta-application engine (`beastiary1`'s
+    // pre-existing finding above names the same gap for its 28), (3) is not
+    // player-facing content by PCGen's own authoring convention.
+    // SD-32 row 20 (`decisions.md §17`/`§27b`): row 19 cycle 1's "needs a
+    // creature-template application engine" sizing is withdrawn -- re-
+    // derived per record (not assumed), all 25 real `.COPY=` companion
+    // records corpus-wide carry `description: null` and a real, self-
+    // contained mechanical token (`TEMPLATE`/`KIT` for a template header
+    // like `Cat (Fiendish)`, `ASPECT` for an ability variant like `Pooka ~
+    // Change Shape`), never a dangling fragment of another record's prose --
+    // the exact tier-3 shape `reference_library_catalog.rs` already solved
+    // generically, reused here (`companion_pool_catalog.rs`'s new `origin ==
+    // "copy"` admission) rather than a bespoke template-derivation engine.
+    // `bestiary_4`'s companions family is now fully closed (both of its
+    // records reach) and its entry is deleted, per this table's own
+    // discipline ("delete their OPEN_FINDINGS entries" once closed).
+    (
+        "beastiary1",
+        "companions",
+        "6 of Bestiary 1's 154 companion records never appear on `list_companion_catalog` (down from \
+         28 -- the 22 `.COPY=` Celestial/Fiendish rows now reach via the tier-3 mechanical-summary \
+         admission above): `Mephit ~ Summon`/`Pseudodragon ~ Tail` (owned-ability rows this pool \
+         mechanism was never meant to serve) and 4 `Universal Monster Rule ~ ...` rows, genuinely \
+         `origin: \"mod_only\"` dangling-conditional-clause fragments (confirmed real: `Universal \
+         Monster Rule ~ Fast Healing`'s description is \"Works only in gusty and windy areas.\" -- a \
+         clause with no antecedent outside its base row) that `companion_pool_catalog.rs`'s `origin` \
+         gate correctly refuses. Remedy: a real base-record delta-merge mechanism for `.MOD` rows \
+         (a different, smaller-scoped engine than a creature-template applicator) -- unbuilt, sized \
+         here.",
+    ),
+    (
+        "advanced_race_guide",
+        "companions",
+        "9 of Advanced Race Guide's 32 companion records never appear on `list_companion_catalog` -- \
+         7 `Evolution ~ Major/Ultimate ...` rows carry an unresolvable `%N` formula \
+         (`companion_pool_catalog.rs`'s render-and-refuse gate correctly refuses rather than dropping \
+         the digit), plus `Shaitan Binder Eidolon ~ Noble Eidolon` and `WCEvolution ~ Skilled` (both \
+         also formula-scaled). Remedy: a character-scoped companion-ability consumer surface -- the \
+         interpreter that would evaluate these formulas (`formula_interpreter.rs`) exists and is \
+         Gate-2-proven; what is missing is a live character for it to resolve `MasterLevel`/HD/etc \
+         against, which `list_companion_catalog`'s browse-only surface has none of \
+         (`decisions.md §20 (SD-31)` overturned, corrected 2026-08-23 -- see the block comment above).",
+    ),
+    (
+        // `Family.book` for this book is `"apg"`, not `"advanced_players_guide"`
+        // (`reach_of`'s own dispatch arm below carries the comment explaining
+        // the historical rename) -- this entry must match it exactly or
+        // `unsurfaced_families_are_exactly_the_recorded_findings` cannot find it.
+        "apg",
+        "companions",
+        "137 of Advanced Players Guide's 220 companion records never appear on `list_companion_catalog` \
+         -- the book's full Eidolon `Evolution ~ ...`/`Temp Evolution ~ ...` roster, every one scaling \
+         on a `%N` formula (`DR`/resistance/breath-weapon magnitudes computed from eidolon level) this \
+         catalog has no character to resolve, correctly refused by the render-and-refuse gate rather \
+         than served with a dropped digit -- `Companion Bonus Skill`/`Eidolon Bonus Skill`, the book's \
+         only ungrouped clean-rendering records, ARE served (`companion_pool_catalog.rs` admits a \
+         `\" ~ \"`-free key as its own singleton pool, not excluded on a syntax technicality). Remedy: \
+         a character-scoped companion-ability consumer surface (the interpreter itself is ready and \
+         Gate-2-proven; the browse-only catalog simply has no character to hand it -- \
+         `decisions.md §20 (SD-31)` overturned, corrected 2026-08-23).",
+    ),
+    (
+        "crb",
+        "companions",
+        "31 of Core Rulebook's 184 companion records never appear on `list_companion_catalog` -- \
+         verified per record, not by shape guess: most (`Companion`, `Companion Advancement`, \
+         `Companion Skills`, `Companion Stat ~ <ability>`, 5 `.MOD` bonus-delta rows) carry an \
+         EMPTY `description` (confirmed: `data/corpus/core_rulebook/companion/companion.json`'s \
+         `data.description == \"\"`) -- PCGen's own umbrella/category-header convention, no prose \
+         to serve at all; the rest (`Animal Companion Feat ~ Combat Reflexes`/`Power Attack`/etc.) \
+         carry an unresolvable `%N` formula this catalog has no character to compute. Remedy: none \
+         for the empty-description rows (no content exists to serve); a character-scoped companion- \
+         ability consumer surface for the rest (the interpreter is ready and Gate-2-proven; only a \
+         live character to resolve against is missing -- `decisions.md §20 (SD-31)` overturned, \
+         corrected 2026-08-23).",
+    ),
+    (
+        "ultimate_magic",
+        "companions",
+        "106 of Ultimate Magic's 198 companion records never appear on `list_companion_catalog` -- the \
+         Black Blade (Magus arcane pool weapon) and Eidolon `Evolution ~ ...`/basic-spell-like-ability \
+         roster, every one scaling on a `%N` formula (caster level, arcane pool points, `MasterLevel`) \
+         this catalog has no character to resolve, correctly refused by the render-and-refuse gate. \
+         Remedy: a character-scoped companion-ability consumer surface -- the interpreter is ready \
+         and Gate-2-proven; only a live character to resolve `caster level`/`MasterLevel` against is \
+         missing (`decisions.md §20 (SD-31)` overturned, corrected 2026-08-23).",
+    ),
+    (
+        "book_of_the_damned_volume_1",
+        "companions",
+        "4 of Book of the Damned Volume 1's 31 companion records never appear on `list_companion_catalog` \
+         -- confirmed real: `imp_companion.json`'s `description: null` (`VISIBLE:NO` internal chassis \
+         row, `origin: \"declared\"` but no prose to render at all), `1.json`'s `description: null` \
+         (a bare `ABILITY:FEAT|AUTOMATIC|CMB Output` internal token, not player content), and the \
+         Imp Companion's 2 `Bonus Tricks`/`Starting Shape Change` rows, both scaling on an unresolved \
+         `%N` (`ImpCompBonusTricks`/`ImpCompStartTricks`). Remedy: a character-scoped companion- \
+         ability consumer surface for the latter two (the interpreter is ready and Gate-2-proven; \
+         only a live character to resolve against is missing -- `decisions.md §20 (SD-31)` \
+         overturned, corrected 2026-08-23); the former two carry no content to serve at all.",
+    ),
+    (
+        "ultimate_wilderness",
+        "companions",
+        "42 of Ultimate Wilderness's 575 companion records never appear on `list_companion_catalog` -- \
+         down from 43 (SD-32 row 20: `Margay ~ Sound Mimicry`, a `.COPY=` ability-variant row, now \
+         reaches via `companion_pool_catalog.rs`'s new `origin == \"copy\"` tier-3 admission) and from \
+         248 before `companion_pool_catalog.rs` first landed. Verified per record: most \
+         (`Archetype Companion`, `Archetype Familiar`, `Plant Base Form ~ <element>`, `Unchained \
+         Eidolon Base Form ~ <element>`) carry an EMPTY `description` (confirmed: `data/corpus/\
+         ultimate_wilderness/companion/cactus.json`'s `data.description == \"\"`) -- umbrella \
+         category rows with no prose to serve; the rest (`Draconic Companion ~ <Resistance>`, \
+         `Animal Trick ~ Sneak`/`Spin Silk`, `Prankster ~ Glib Comedy`, eidolon-progression rows) \
+         carry an unresolvable `%N` formula (`MasterLevel`/`DraconicCompanionResistanceBonus`/CON-\
+         score-derived). Remedy: none for the empty-description rows; a character-scoped companion- \
+         ability consumer surface for the rest (the interpreter is ready and Gate-2-proven; only a \
+         live character to resolve `MasterLevel`/CON against is missing -- `decisions.md §20 (SD-31)` \
+         overturned, corrected 2026-08-23).",
+    ),
+    // SD-32 row 19 cycle 4: an independent gap this cycle discovered while
+    // re-deriving `every_ingested_family_is_accounted_for`'s own population
+    // per `decisions.md §17a` -- 43 `(book, kind)` families across `classes`
+    // (17), `spells` (11), `feats` (11), `equipment` (3) and
+    // `class_features` (1, `ultimate_psionics`) that were ALREADY red at
+    // this cycle's own starting commit (`bdf29f8196`, cycle 3's own exit),
+    // unrelated to the twelve reference-library kinds above and unrelated to
+    // `companion`. Cycle 3's receipt characterized the residual as "the same
+    // ~170 ... none of these families is companion" without naming this
+    // second population; re-running the two RED tests against `bdf29f8196`
+    // unmodified (before this cycle's own edits) shows the identical 43
+    // families already failing: this cycle's own diff against `bdf29f8196`
+    // (`git diff --stat`) is purely additive (0 deletions) and its new
+    // match arm only intercepts the twelve reference-library kinds above --
+    // none of `classes`/`spells`/`feats`/`equipment`/`class_features` -- so
+    // this population could not have been created by this cycle's own
+    // edits; it is a real, pre-existing gap this cycle is the first to
+    // name, not a regression this cycle introduced.
+    // Every count below is `glob.glob("data/corpus/<dir>/<kind_dir>/**/*.json")`
+    // over the book's own corpus directory (re-derivable, not assumed).
+    // Each is real, ingested, un-wired content requiring its own mechanism
+    // (a class chassis, a feat/spell/equipment table joining its kind's
+    // existing generic union) -- sized here, not built this cycle; see the
+    // receipt's next-cycle plan.
+    // SD-32 row 20: 25 of the original 43 families (11 spells, 11 feats, 3
+    // equipment) closed this cycle by chaining/registering already-generated
+    // tables -- see `spells_reach`/`feats_reach`/`equipment_reach`'s new
+    // match arms above. Only the 18-family class-chassis / class_features
+    // residual remains, unchanged in kind from cycle 4's own sizing (re-
+    // derived counts, `glob.glob("data/corpus/<dir>/<kind_dir>/**/*.json")`).
+    ("adventurers_guide", "classes", "Gap: 9 Adventurer's Guide `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("beastiary1", "classes", "Gap: 28 Bestiary 1 `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("bonus_bestiary", "classes", "Gap: 3 Bonus Bestiary `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("book_of_the_damned_volume_1", "classes", "Gap: 1 Book of the Damned Vol. 1 `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("book_of_the_damned_volume_2", "classes", "Gap: 1 Book of the Damned Vol. 2 `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("horror_adventures", "classes", "Gap: 1 Horror Adventures `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_combat", "classes", "Gap: 2 Inner Sea Combat `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_gods", "classes", "Gap: 3 Inner Sea Gods `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_intrigue", "classes", "Gap: 2 Inner Sea Intrigue `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_magic", "classes", "Gap: 2 Inner Sea Magic `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("inner_sea_world_guide", "classes", "Gap: 1 Inner Sea World Guide `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("occult_adventures", "classes", "Gap: 9 Occult Adventures `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_combat", "classes", "Gap: 3 Ultimate Combat `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_intrigue", "classes", "Gap: 3 Ultimate Intrigue `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_magic", "classes", "Gap: 1 Ultimate Magic `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_psionics", "class_features", "Gap: 1573 Ultimate Psionics `class_feature` records are ingested corpus-wide; no per-class mechanism wiring (epic-4-mechanism) has landed for this book's classes yet, the same gap already recorded for ACG/ARG/APG/CRB/etc. above. Remedy: same as ACG above."),
+    ("ultimate_psionics", "classes", "Gap: 37 Ultimate Psionics `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
+    ("ultimate_wilderness", "classes", "Gap: 1 Ultimate Wilderness `class` records are ingested; no class-chassis mechanism (a `ClassId`-shaped enum plus character-creation/level-up picker wiring, the same shape `ClassId`/`ApgClassId`/`AcgClassId`/`PuClassId` already use) exists for this book's classes yet, so `classes_reach` has no id set to check them against. Remedy: build the class chassis for this book's classes, then wire a `classes_reach` claim the same way CRB/APG/ACG/PU already are."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -2645,7 +3481,93 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
 /// preserved verbatim; only the content is filled), so the entry was deleted
 /// rather than relaxed. See
 /// `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
-const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[];
+const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
+    // SD-32 `decisions.md §25` cycle 2/3 (2026-08-23): `Adopted Race ~
+    // Rougarou`, the one target race of the 14 whose Trait pool is
+    // genuinely, corpus-wide empty. `trait_pool::load_trait_pool` finds real
+    // `kind: trait` content (`data/corpus/*/trait_generic/`, no fallback --
+    // that module's own doc comment) for the other 13, so this is the only
+    // entry: re-confirms `epic-6-kind-trait_cycle-1_cycle_receipt.md §1`'s own
+    // "Rougarou has zero hits corpus-wide" finding at the reach-gate layer,
+    // and the pinned oracle itself types Rougarou's own `AdoptiveRace` row
+    // `TYPE:Rougarou Race Trait|CATEGORY=Special Ability|No Race Trait
+    // Available.MOD` (`rougarou_abilities_race.lst:30`) -- a hard
+    // impossibility of source data (`decisions.md §27b`), not a gap. See
+    // `race_trait_picker.rs`'s own
+    // `the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_
+    // with_real_grants`.
+    ("bestiary_6", "race_traits", &["Adopted Race ~ Rougarou"]),
+    // SD-32 row 20: 2 of `bestiary`/`beastiary1`'s 111 custom spell-like-
+    // ability variants (transcribed from `core_essentials/ce_spells.lst`,
+    // see the matching `("beastiary1", "spells")` dispatch arm's own doc
+    // comment) carry no `SCHOOL:`/`CLASSES:`/`DESC:` token at all --
+    // confirmed real: `data/corpus/bestiary/spell/keketar_spell_reshape_
+    // reality.json` and its Mothman sibling both carry `description: null`
+    // and no level/school token. They reach the catalog under their real
+    // key (`spells_reach`'s `ingested` set includes them, per `§27b` --
+    // ingest, don't drop) but with no payload beyond the name, the same
+    // bare-record shape every other entry in this table already covers.
+    (
+        "beastiary1",
+        "spells",
+        &["Keketar Spell ~ Reshape Reality", "Mothman Spell ~ Agent of Fate"],
+    ),
+    // SD-32 row 19 cycle 4: `reference_library_catalog.rs`'s three-tier
+    // resolution (authored `description`, a `DESC` raw token, then a
+    // rendered mechanical-token summary) closes 9,679 of the 9,697 records
+    // across these twelve kinds to a real served field. These 6 are the
+    // genuine residual for `beastiary/race_generic` — real corpus records
+    // (`Hydra (Cryohydra)` etc., PCGen alternate-energy-type Hydra variants)
+    // with `description: null` and `raw_tokens: []`, verified by direct
+    // inspection: nothing beyond the bare `key`/`name` exists anywhere in
+    // the corpus record for any of the three tiers to resolve.
+    (
+        "beastiary1",
+        "race_variants",
+        &[
+            "Hydra (Cryohydra)",
+            "Hydra (Pyrohydra)",
+            "Iron Cobra (Adamantine Cobra)",
+            "Iron Cobra (Cold Iron Cobra)",
+            "Iron Cobra (Darkwood Cobra)",
+            "Iron Cobra (Mithral Cobra)",
+        ],
+    ),
+    // Same shape as `beastiary/race_generic` above — 7 of Bestiary 4's 183
+    // `template` records carry only a `SOURCEPAGE` (administrative, excluded
+    // from the tier-3 summary) or nothing at all.
+    (
+        "bestiary_4",
+        "templates",
+        &[
+            "Colour-Blighted Simple Template",
+            "Demon Lord Away from Home Realm",
+            "Empyreal Lord Away from Home Realm",
+            "Standard Clockwork Steed",
+            "Standard Death Dog",
+            "Standard Gholdako",
+            "Standard-Type Clockwork Dragon",
+        ],
+    ),
+    // Same shape — 5 of Mythic Adventures' 15 `template` records carry only
+    // their own `KEY:` raw token (excluded from the tier-3 summary as
+    // duplicate identity, not content) and no `description`/`DESC`. Each
+    // record's own `name` field already carries "(Not Implemented)" as a
+    // literal suffix — upstream PCGen's own admission these rows are
+    // placeholders with nothing to describe, not a gap this mechanism
+    // failed to close.
+    (
+        "mythic_adventures",
+        "templates",
+        &[
+            "Mythic Simple Template ~ Agile",
+            "Mythic Simple Template ~ Arcane",
+            "Mythic Simple Template ~ Divine",
+            "Mythic Simple Template ~ Invincible",
+            "Mythic Simple Template ~ Savage",
+        ],
+    ),
+];
 
 /// Ingested records that appear in **no** response at all, for a family whose
 /// other records do reach a player.
@@ -2757,16 +3679,37 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // exact same mechanism reaches Oread's row and only Oread's.
         // [This inference is backwards -- see the correction above.]
         //
-        // 79 of the book's 82 records reach a player; these three plus
-        // `Human ~ Tribalistic Languages` are the four that do not. The
-        // numeric pin itself is correct and needs no change -- the three
-        // records genuinely do not reach today, only the root-cause
-        // rationale was wrong.
+        // 79 of the book's 94 records reach a player; these five plus
+        // `Human ~ Tribalistic Languages` are the six that do not.
+        //
+        // `Mostly Human ~ Suli ~ Languages` added 2026-08-22 (SD-32 card 11
+        // T2b lane): its own row (`isr_abilities_race.lst:662`) was never
+        // ingested before this lane re-ran the book (the same stale-regen
+        // gap the count-pinning test above documents), and once ingested it
+        // is unreached for the identical reason as its Ifrit/Sylph/Undine
+        // siblings -- `isr_abilities_race.lst:654`'s `Geneiekin ~ Mostly
+        // Human.MOD` granter for Suli is the same unmodelled-Geneiekin-
+        // heritage shape, confirmed against the pinned oracle.
+        //
+        // `Suli ~ Trusted Mediator` added the same lane: its own row
+        // (`isr_abilities_race.lst:1266`) carries a self-exclusion
+        // `PREMULT` gate naming `Suli_ReplaceEnergyResistance`/
+        // `Suli_ReplaceVision`, and its DESC prose states "This racial
+        // trait replaces energy resistance and low-light vision" -- but
+        // unlike every structurally identical sibling row (`Ifrit ~ Brazen
+        // Flame`:823, `Oread ~ Isolated`:1010, `Sylph ~ Secretive`:1320,
+        // each of which sets its own matching `FACT:<Race>_Replace...
+        // |True` pair), this row sets **no** `FACT:` token at all. Verified
+        // against the pinned oracle: a genuine upstream PCGen data
+        // omission for Suli specifically, not a project-side parsing gap --
+        // the same shape as `Human ~ Tribalistic Languages` above.
         &[
             "Human ~ Tribalistic Languages",
             "Mostly Human ~ Ifrit ~ Languages",
+            "Mostly Human ~ Suli ~ Languages",
             "Mostly Human ~ Sylph ~ Languages",
             "Mostly Human ~ Undine ~ Languages",
+            "Suli ~ Trusted Mediator",
         ],
     ),
     // SD28-C4.8/§60/§63: all 406 archetype-swap records across 7 books (403 + 3 Slayer archetypes, SD31-E4-F1-001) --
@@ -3239,6 +4182,1905 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Familiar Archetype ~ Valet",
         ],
     ),
+    (
+        "beastiary1",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2): 180 `monster_ability`
+        // rows no monster row of `bestiary` claims (a shared reference-library
+        // entry -- `Universal Monster Rule ~ X`, `Vampire ~ X`, `Lich ~ X`,
+        // `Regeneration ~ X`, `Immunity to X`, and similar generic special-
+        // ability text no single stat block in this book owns) now SHIP with
+        // `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`
+        // (`apps/desktop/src-tauri/src/monster_catalog.rs`), so an owner-less
+        // record here reaches no screen at all -- not the stub class
+        // `decisions.md §44.2` was written about, because a stub is a record
+        // a player's screen SHOWS empty, and these reach no screen. Pinned by
+        // exact key rather than by count so a NEW silent non-reach still
+        // fails here; `bestiary::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` pins the
+        // identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py bestiary 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        //
+        // **Correction, same cycle**: an EARLIER version of this entry was
+        // pulled after empirically appearing to "already reach a player" --
+        // that read was wrong. It compared against `corpus_record_keys`
+        // BEFORE `gen_book_cache beastiary` had ever written these 180
+        // records to `data/corpus/`, so the denominator simply did not
+        // contain them yet; every one of the 180 looked "fixed" (recorded
+        // but not live) only because none was live at all. Re-checked AFTER
+        // the real regen (`reach_gate::tests::
+        // bestiary_1_monsters_reach_the_monster_catalog_record_by_record`,
+        // which panicked `NotSurfaced` naming all 180): they do not reach.
+        &[
+            "beastiary:monster_ability:ability_damage_ex",
+            "beastiary:monster_ability:ability_damage_su",
+            "beastiary:monster_ability:ability_drain_ex",
+            "beastiary:monster_ability:ability_drain_su",
+            "beastiary:monster_ability:afflicted_lycanthrope",
+            "beastiary:monster_ability:air_mephit_breath_weapon",
+            "beastiary:monster_ability:air_mephit_fast_healing",
+            "beastiary:monster_ability:aligned",
+            "beastiary:monster_ability:angel_protective_aura",
+            "beastiary:monster_ability:angel_save_vs_poison",
+            "beastiary:monster_ability:angel_truespeech",
+            "beastiary:monster_ability:animated_object_additional_attack",
+            "beastiary:monster_ability:animated_object_burrow_movement",
+            "beastiary:monster_ability:animated_object_climb_movement",
+            "beastiary:monster_ability:animated_object_constrict",
+            "beastiary:monster_ability:animated_object_faster_burrow",
+            "beastiary:monster_ability:animated_object_faster_climb",
+            "beastiary:monster_ability:animated_object_faster_fly",
+            "beastiary:monster_ability:animated_object_faster_swim",
+            "beastiary:monster_ability:animated_object_faster_walk",
+            "beastiary:monster_ability:animated_object_fly_movement",
+            "beastiary:monster_ability:animated_object_grab",
+            "beastiary:monster_ability:animated_object_metal_adamantine",
+            "beastiary:monster_ability:animated_object_metal_common",
+            "beastiary:monster_ability:animated_object_metal_mithral",
+            "beastiary:monster_ability:animated_object_stone",
+            "beastiary:monster_ability:animated_object_swim_movement",
+            "beastiary:monster_ability:animated_object_trample",
+            "beastiary:monster_ability:archon_aura_of_menace",
+            "beastiary:monster_ability:archon_save_vs_poison",
+            "beastiary:monster_ability:archon_teleport",
+            "beastiary:monster_ability:archon_truespeech",
+            "beastiary:monster_ability:azata_truespeech",
+            "beastiary:monster_ability:bleed",
+            "beastiary:monster_ability:bloody_skeleton_deathless",
+            "beastiary:monster_ability:breath_weapon_cone_of_force",
+            "beastiary:monster_ability:breath_weapon_cone_of_lightning",
+            "beastiary:monster_ability:breath_weapon_cone_of_piercing",
+            "beastiary:monster_ability:breath_weapon_cone_of_repulsion_gas",
+            "beastiary:monster_ability:breath_weapon_cone_of_sleep",
+            "beastiary:monster_ability:breath_weapon_cone_of_sonic",
+            "beastiary:monster_ability:breath_weapon_prismatic_spray",
+            "beastiary:monster_ability:burning_skeleton_fiery_aura",
+            "beastiary:monster_ability:burning_skeleton_fiery_death",
+            "beastiary:monster_ability:burning_skeleton_fire_damage",
+            "beastiary:monster_ability:can_t_be_disarmed",
+            "beastiary:monster_ability:celestial_creature_smite_evil",
+            "beastiary:monster_ability:cold_iron_cobra_attacks",
+            "beastiary:monster_ability:construct_traits_output",
+            "beastiary:monster_ability:corrupting_gaze",
+            "beastiary:monster_ability:corrupting_touch",
+            "beastiary:monster_ability:curse",
+            "beastiary:monster_ability:curse_of_lycanthropy",
+            "beastiary:monster_ability:disease_ex",
+            "beastiary:monster_ability:disease_su",
+            "beastiary:monster_ability:distraction",
+            "beastiary:monster_ability:dragon_traits_output",
+            "beastiary:monster_ability:draining_touch",
+            "beastiary:monster_ability:dust_mephit_breath_weapon",
+            "beastiary:monster_ability:dust_mephit_fast_healing",
+            "beastiary:monster_ability:earth_mephit_breath_weapon",
+            "beastiary:monster_ability:earth_mephit_change_size",
+            "beastiary:monster_ability:earth_mephit_fast_healing",
+            "beastiary:monster_ability:elemental_traits_output",
+            "beastiary:monster_ability:fey_traits_output",
+            "beastiary:monster_ability:fiendish_creature_smite_good",
+            "beastiary:monster_ability:fire_mephit_breath_weapon",
+            "beastiary:monster_ability:fire_mephit_fast_healing",
+            "beastiary:monster_ability:flight_ex",
+            "beastiary:monster_ability:frightful_moan",
+            "beastiary:monster_ability:gaze",
+            "beastiary:monster_ability:guardian_naga_spells",
+            "beastiary:monster_ability:gynosphinx_symbol_of_fear",
+            "beastiary:monster_ability:gynosphinx_symbol_of_pain",
+            "beastiary:monster_ability:gynosphinx_symbol_of_persuasion",
+            "beastiary:monster_ability:gynosphinx_symbol_of_sleep",
+            "beastiary:monster_ability:gynosphinx_symbol_of_stunning",
+            "beastiary:monster_ability:half_celestial_smite_evil",
+            "beastiary:monster_ability:half_fiend_smite_good",
+            "beastiary:monster_ability:humanoid_traits_output",
+            "beastiary:monster_ability:ice_mephit_breath_weapon",
+            "beastiary:monster_ability:ice_mephit_fast_healing",
+            "beastiary:monster_ability:immunity_to_ability_drain",
+            "beastiary:monster_ability:immunity_to_bleed",
+            "beastiary:monster_ability:immunity_to_bludgeoning_damage",
+            "beastiary:monster_ability:immunity_to_death_from_massive_damage",
+            "beastiary:monster_ability:immunity_to_emotion_effects",
+            "beastiary:monster_ability:immunity_to_exhaustion",
+            "beastiary:monster_ability:immunity_to_fatigue",
+            "beastiary:monster_ability:immunity_to_language_dependent_spells",
+            "beastiary:monster_ability:immunity_to_magic",
+            "beastiary:monster_ability:immunity_to_magic_missile",
+            "beastiary:monster_ability:immunity_to_magical_sleep",
+            "beastiary:monster_ability:immunity_to_necromancy",
+            "beastiary:monster_ability:immunity_to_negative_levels",
+            "beastiary:monster_ability:immunity_to_nonlethal_damage",
+            "beastiary:monster_ability:immunity_to_permanent_wounds",
+            "beastiary:monster_ability:immunity_to_phantasms",
+            "beastiary:monster_ability:immunity_to_piercing_damage",
+            "beastiary:monster_ability:immunity_to_slashing_damage",
+            "beastiary:monster_ability:immunity_to_strength_drain",
+            "beastiary:monster_ability:immunity_to_weapon_damage",
+            "beastiary:monster_ability:immunity_to_wind_effects",
+            "beastiary:monster_ability:incorporeal",
+            "beastiary:monster_ability:incorporeal_traits_output",
+            "beastiary:monster_ability:lich_fear_aura",
+            "beastiary:monster_ability:lich_paralyzing_touch",
+            "beastiary:monster_ability:lich_rejuvenation",
+            "beastiary:monster_ability:lycanthrope_change_shape",
+            "beastiary:monster_ability:lycanthropic_empathy",
+            "beastiary:monster_ability:magma_mephit_breath_weapon",
+            "beastiary:monster_ability:magma_mephit_fast_healing",
+            "beastiary:monster_ability:magma_mephit_magma_form",
+            "beastiary:monster_ability:malevolence",
+            "beastiary:monster_ability:mephit_summon",
+            "beastiary:monster_ability:monstrous_humanoid_traits_output",
+            "beastiary:monster_ability:natural_lycanthrope",
+            "beastiary:monster_ability:ooze_mephit_breath_weapon",
+            "beastiary:monster_ability:ooze_mephit_fast_healing",
+            "beastiary:monster_ability:outsider_traits_output",
+            "beastiary:monster_ability:paralysis_ex",
+            "beastiary:monster_ability:paralysis_su",
+            "beastiary:monster_ability:permanency_spell_arcane_sight",
+            "beastiary:monster_ability:permanency_spell_comprehend_languages",
+            "beastiary:monster_ability:permanency_spell_darkvision",
+            "beastiary:monster_ability:permanency_spell_detect_magic",
+            "beastiary:monster_ability:permanency_spell_enlarge_person",
+            "beastiary:monster_ability:permanency_spell_greater_magic_fang",
+            "beastiary:monster_ability:permanency_spell_magic_fang",
+            "beastiary:monster_ability:permanency_spell_read_magic",
+            "beastiary:monster_ability:permanency_spell_reduce_person",
+            "beastiary:monster_ability:permanency_spell_resistance",
+            "beastiary:monster_ability:permanency_spell_see_invisibility",
+            "beastiary:monster_ability:permanency_spell_telepathic_bond",
+            "beastiary:monster_ability:permanency_spell_tongues",
+            "beastiary:monster_ability:plague_zombie_disease",
+            "beastiary:monster_ability:poison_ex",
+            "beastiary:monster_ability:poison_su",
+            "beastiary:monster_ability:pseudodragon_poison",
+            "beastiary:monster_ability:push",
+            "beastiary:monster_ability:regeneration_acid",
+            "beastiary:monster_ability:regeneration_acid_cold",
+            "beastiary:monster_ability:regeneration_acid_cold_fire",
+            "beastiary:monster_ability:regeneration_choose",
+            "beastiary:monster_ability:regeneration_epic",
+            "beastiary:monster_ability:regeneration_fire_or_good_spells",
+            "beastiary:monster_ability:rejuvenation",
+            "beastiary:monster_ability:resistance_to_acid_output",
+            "beastiary:monster_ability:resistance_to_cold_output",
+            "beastiary:monster_ability:resistance_to_electricity_output",
+            "beastiary:monster_ability:resistance_to_fire_output",
+            "beastiary:monster_ability:resistance_to_sonic_output",
+            "beastiary:monster_ability:salt_mephit_breath_weapon",
+            "beastiary:monster_ability:salt_mephit_dehydrate",
+            "beastiary:monster_ability:salt_mephit_fast_healing",
+            "beastiary:monster_ability:spirit_naga_spells",
+            "beastiary:monster_ability:steam_mephit_boiling_rain",
+            "beastiary:monster_ability:steam_mephit_breath_weapon",
+            "beastiary:monster_ability:steam_mephit_fast_healing",
+            "beastiary:monster_ability:svirfneblin_hatred",
+            "beastiary:monster_ability:swarm_traits_output",
+            "beastiary:monster_ability:telekinesis",
+            "beastiary:monster_ability:undead_traits_output",
+            "beastiary:monster_ability:universal_monster_rule_breath_weapon",
+            "beastiary:monster_ability:universal_monster_rule_burn",
+            "beastiary:monster_ability:universal_monster_rule_change_shape",
+            "beastiary:monster_ability:universal_monster_rule_disease_extraordinary",
+            "beastiary:monster_ability:universal_monster_rule_disease_supernatural",
+            "beastiary:monster_ability:universal_monster_rule_fast_healing",
+            "beastiary:monster_ability:universal_monster_rule_grab",
+            "beastiary:monster_ability:universal_monster_rule_light_blindness",
+            "beastiary:monster_ability:universal_monster_rule_light_sensitivity",
+            "beastiary:monster_ability:universal_monster_rule_paralysis_extraordinary",
+            "beastiary:monster_ability:universal_monster_rule_paralysis_supernatural",
+            "beastiary:monster_ability:universal_monster_rule_poison_extraordinary",
+            "beastiary:monster_ability:universal_monster_rule_poison_supernatural",
+            "beastiary:monster_ability:universal_monster_rule_stench",
+            "beastiary:monster_ability:universal_monster_rule_telepathy",
+            "beastiary:monster_ability:universal_monster_rule_trip",
+            "beastiary:monster_ability:universal_monster_rule_whirlwind",
+            "beastiary:monster_ability:vampire_change_shape",
+            "beastiary:monster_ability:vampire_children_of_the_night",
+            "beastiary:monster_ability:vampire_create_spawn",
+            "beastiary:monster_ability:vampire_energy_drain",
+            "beastiary:monster_ability:vulnerability_to_acid",
+            "beastiary:monster_ability:vulnerability_to_electricity",
+            "beastiary:monster_ability:vulnerability_to_protection_from_evil",
+            "beastiary:monster_ability:vulnerability_to_sonic",
+            "beastiary:monster_ability:vulnerability_to_sunlight",
+            "beastiary:monster_ability:water_dependency",
+            "beastiary:monster_ability:water_mephit_breath_weapon",
+            "beastiary:monster_ability:water_mephit_fast_healing",
+            "beastiary:monster_ability:wererat",
+            "beastiary:monster_ability:werewolf",
+            "beastiary:monster_ability:zombie_death_burst",
+            "beastiary:monster_ability:zombie_quick_strikes",
+            "beastiary:monster_ability:zombie_staggered",
+        ],
+    ),
+    (
+        "bestiary_2",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 85
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `bestiary_2::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0xfb07_0eb2_4302_5d02) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py bestiary_2 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "bestiary_2:monster_ability:acid_draconal_breath_weapon",
+            "bestiary_2:monster_ability:aeon_envisaging",
+            "bestiary_2:monster_ability:aeon_extension_of_all",
+            "bestiary_2:monster_ability:aeon_void_form",
+            "bestiary_2:monster_ability:black_scorpion_poison",
+            "bestiary_2:monster_ability:black_scorpion_rapid_stinging",
+            "bestiary_2:monster_ability:cave_scorpion_poison",
+            "bestiary_2:monster_ability:cold_draconal_breath_weapon",
+            "bestiary_2:monster_ability:companion_favored_terrain",
+            "bestiary_2:monster_ability:crab_companion_water_dependency",
+            "bestiary_2:monster_ability:detect_poison_constant",
+            "bestiary_2:monster_ability:detect_snares_and_pits_constant",
+            "bestiary_2:monster_ability:detect_thoughts_constant",
+            "bestiary_2:monster_ability:discern_lies_constant",
+            "bestiary_2:monster_ability:draconal_acid",
+            "bestiary_2:monster_ability:draconal_cold",
+            "bestiary_2:monster_ability:draconal_fire",
+            "bestiary_2:monster_ability:emotion_aura_courage_fear",
+            "bestiary_2:monster_ability:emotion_aura_empathy_apathy",
+            "bestiary_2:monster_ability:emotion_aura_hope_despair",
+            "bestiary_2:monster_ability:entrap_su",
+            "bestiary_2:monster_ability:entropic_creature_smite_law",
+            "bestiary_2:monster_ability:fire_draconal_breath_weapon",
+            "bestiary_2:monster_ability:giant_centipede_companion_poison",
+            "bestiary_2:monster_ability:giant_spider_companion_poison",
+            "bestiary_2:monster_ability:giant_tarantula_poison",
+            "bestiary_2:monster_ability:giant_whiptail_centipede_poison",
+            "bestiary_2:monster_ability:giant_whiptail_centipede_tail_slap",
+            "bestiary_2:monster_ability:greensting_scorpion_companion_poison",
+            "bestiary_2:monster_ability:greensting_scorpion_poison",
+            "bestiary_2:monster_ability:inevitable_constructed",
+            "bestiary_2:monster_ability:inevitable_truespeech",
+            "bestiary_2:monster_ability:juju_zombie_immunity_to_magic_missile",
+            "bestiary_2:monster_ability:nightshade_channel_energy",
+            "bestiary_2:monster_ability:octopus_companion_ink_cloud",
+            "bestiary_2:monster_ability:octopus_companion_jet",
+            "bestiary_2:monster_ability:octopus_companion_poison",
+            "bestiary_2:monster_ability:ogrekin_deformed_hand",
+            "bestiary_2:monster_ability:ogrekin_fragile",
+            "bestiary_2:monster_ability:ogrekin_light_sensitive",
+            "bestiary_2:monster_ability:ogrekin_obese",
+            "bestiary_2:monster_ability:ogrekin_oversized_limb",
+            "bestiary_2:monster_ability:ogrekin_oversized_maw",
+            "bestiary_2:monster_ability:ogrekin_quick_metabolism",
+            "bestiary_2:monster_ability:ogrekin_stunted_legs",
+            "bestiary_2:monster_ability:ogrekin_thick_skin",
+            "bestiary_2:monster_ability:ogrekin_vestigal_limb",
+            "bestiary_2:monster_ability:ogrekin_vestigal_twin",
+            "bestiary_2:monster_ability:ogrekin_weak_mind",
+            "bestiary_2:monster_ability:oni_change_shape",
+            "bestiary_2:monster_ability:petitioner_larva",
+            "bestiary_2:monster_ability:petitioner_the_chosen",
+            "bestiary_2:monster_ability:petitioner_the_cleansed",
+            "bestiary_2:monster_ability:petitioner_the_damned",
+            "bestiary_2:monster_ability:petitioner_the_dead",
+            "bestiary_2:monster_ability:petitioner_the_elect",
+            "bestiary_2:monster_ability:petitioner_the_hunted",
+            "bestiary_2:monster_ability:petitioner_the_remade",
+            "bestiary_2:monster_ability:petitioner_the_shapeless",
+            "bestiary_2:monster_ability:poison_fiendish_bile",
+            "bestiary_2:monster_ability:poison_mysterious_blood",
+            "bestiary_2:monster_ability:poison_vile_disjunction",
+            "bestiary_2:monster_ability:poisonous_magma_ooze_poison",
+            "bestiary_2:monster_ability:protean_change_shape",
+            "bestiary_2:monster_ability:ravener_breath_weapon",
+            "bestiary_2:monster_ability:ravener_critical_hits",
+            "bestiary_2:monster_ability:ravener_soul_consumption",
+            "bestiary_2:monster_ability:ravener_soul_magic",
+            "bestiary_2:monster_ability:regeneration_chaotic",
+            "bestiary_2:monster_ability:resolute_creature_smite_chaos",
+            "bestiary_2:monster_ability:sound_mimicry",
+            "bestiary_2:monster_ability:speak_with_plants_constant",
+            "bestiary_2:monster_ability:titan_centipede_poison",
+            "bestiary_2:monster_ability:trip_tail_slap",
+            "bestiary_2:monster_ability:universal_monster_rule_all_around_vision",
+            "bestiary_2:monster_ability:universal_monster_rule_amphibious",
+            "bestiary_2:monster_ability:universal_monster_rule_earth_glide",
+            "bestiary_2:monster_ability:universal_monster_rule_see_in_darkness",
+            "bestiary_2:monster_ability:void_zombie_blood_drain",
+            "bestiary_2:monster_ability:werebear",
+            "bestiary_2:monster_ability:wereboar",
+            "bestiary_2:monster_ability:weretiger",
+            "bestiary_2:monster_ability:worm_that_walks_discorporate",
+            "bestiary_2:monster_ability:worm_that_walks_squirming_embrace",
+            "bestiary_2:monster_ability:worm_that_walks_tenacious",
+        ],
+    ),
+    (
+        "bestiary_3",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 266
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `bestiary_3::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x01b4_2774_3381_b829, updated `decisions.md §27`/round 8 — 10 new
+        // owner-less keys from the `TYPE:`-facet-vocabulary-gap group's
+        // provisional-default closure) pins the identical set from the
+        // corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py bestiary_3 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "bestiary_3:monster_ability:adlet_shaman",
+            "bestiary_3:monster_ability:aghash_cursed_gaze",
+            "bestiary_3:monster_ability:aghash_sandstorm",
+            "bestiary_3:monster_ability:aghash_spell_like_abilities",
+            "bestiary_3:monster_ability:aghasura_spell_like_abilities",
+            "bestiary_3:monster_ability:akvan_armor_training",
+            "bestiary_3:monster_ability:akvan_aura_of_hopelessness",
+            "bestiary_3:monster_ability:akvan_create_ghul",
+            "bestiary_3:monster_ability:akvan_prince_crumbling_earth",
+            "bestiary_3:monster_ability:akvan_prince_dying_ember",
+            "bestiary_3:monster_ability:akvan_prince_gasping_wind",
+            "bestiary_3:monster_ability:akvan_prince_thirsty_sea",
+            "bestiary_3:monster_ability:akvan_prince_unbalanced_soul",
+            "bestiary_3:monster_ability:akvan_shake_faith",
+            "bestiary_3:monster_ability:akvan_spell_like_abilities",
+            "bestiary_3:monster_ability:akvan_torturous_gullet",
+            "bestiary_3:monster_ability:androsphinx_roar",
+            "bestiary_3:monster_ability:androsphinx_spells",
+            "bestiary_3:monster_ability:ash_giant_disease",
+            "bestiary_3:monster_ability:ash_giant_oversized_weapon",
+            "bestiary_3:monster_ability:ash_giant_vermin_empathy",
+            "bestiary_3:monster_ability:asura_save_bonus",
+            "bestiary_3:monster_ability:asurendra_create_asura",
+            "bestiary_3:monster_ability:asurendra_death",
+            "bestiary_3:monster_ability:asurendra_none",
+            "bestiary_3:monster_ability:asurendra_sacrilege",
+            "bestiary_3:monster_ability:asurendra_shaping",
+            "bestiary_3:monster_ability:asurendra_spell_like_abilities",
+            "bestiary_3:monster_ability:behemoth_ruinous",
+            "bestiary_3:monster_ability:behemoth_unstoppable",
+            "bestiary_3:monster_ability:behemoth_vulnerable_to_miracles_and_wishes",
+            "bestiary_3:monster_ability:bone_golem_bone_prison",
+            "bestiary_3:monster_ability:bone_golem_immunity_to_magic",
+            "bestiary_3:monster_ability:brass_golem_brass_falchion",
+            "bestiary_3:monster_ability:brass_golem_breath_weapon",
+            "bestiary_3:monster_ability:brass_golem_death_throes",
+            "bestiary_3:monster_ability:brass_golem_immunity_to_magic",
+            "bestiary_3:monster_ability:brass_golem_spell_like_abilities",
+            "bestiary_3:monster_ability:cairn_linnorm_breath_weapon",
+            "bestiary_3:monster_ability:cairn_linnorm_death_curse",
+            "bestiary_3:monster_ability:cairn_linnorm_poison",
+            "bestiary_3:monster_ability:cannon_golem_alloyed",
+            "bestiary_3:monster_ability:cannon_golem_blasting_critical",
+            "bestiary_3:monster_ability:cannon_golem_cannon",
+            "bestiary_3:monster_ability:cannon_golem_gun_training",
+            "bestiary_3:monster_ability:cannon_golem_immunity_to_magic",
+            "bestiary_3:monster_ability:cave_giant_axe_wielder",
+            "bestiary_3:monster_ability:clockwork_difficult_to_create",
+            "bestiary_3:monster_ability:clockwork_goliath_cannon",
+            "bestiary_3:monster_ability:clockwork_goliath_self_destruction",
+            "bestiary_3:monster_ability:clockwork_leviathan_breath_weapon",
+            "bestiary_3:monster_ability:clockwork_leviathan_grind",
+            "bestiary_3:monster_ability:clockwork_leviathan_swallow_whole",
+            "bestiary_3:monster_ability:clockwork_servant_net",
+            "bestiary_3:monster_ability:clockwork_servant_repair_clockwork",
+            "bestiary_3:monster_ability:clockwork_soldier_efficient_winding",
+            "bestiary_3:monster_ability:clockwork_soldier_latch",
+            "bestiary_3:monster_ability:clockwork_soldier_proficient",
+            "bestiary_3:monster_ability:clockwork_soldier_standby",
+            "bestiary_3:monster_ability:clockwork_spy_record_audio",
+            "bestiary_3:monster_ability:clockwork_spy_self_destruct",
+            "bestiary_3:monster_ability:clockwork_swift_reactions",
+            "bestiary_3:monster_ability:clockwork_winding",
+            "bestiary_3:monster_ability:coloxus_droning_wings",
+            "bestiary_3:monster_ability:coloxus_siphon",
+            "bestiary_3:monster_ability:coloxus_spell_like_abilities",
+            "bestiary_3:monster_ability:contract_devil_binding_contract",
+            "bestiary_3:monster_ability:contract_devil_impale",
+            "bestiary_3:monster_ability:contract_devil_infernal_contract",
+            "bestiary_3:monster_ability:contract_devil_infernal_investment",
+            "bestiary_3:monster_ability:contract_devil_spell_like_abilities",
+            "bestiary_3:monster_ability:criosphinx_spell_like_abilities",
+            "bestiary_3:monster_ability:criosphinx_swooping_charge",
+            "bestiary_3:monster_ability:crucidaemon_chained_daggers",
+            "bestiary_3:monster_ability:crucidaemon_spell_like_abilities",
+            "bestiary_3:monster_ability:crucidaemon_trap_making",
+            "bestiary_3:monster_ability:dandasuka_spell_like_abilities",
+            "bestiary_3:monster_ability:dandasuka_spells",
+            "bestiary_3:monster_ability:deadfall_scorpion_poison",
+            "bestiary_3:monster_ability:deadfall_scorpion_sudden_strike",
+            "bestiary_3:monster_ability:deep_sea_serpent_elusive",
+            "bestiary_3:monster_ability:deep_sea_serpent_powerful_tail",
+            "bestiary_3:monster_ability:deep_sea_serpent_surge",
+            "bestiary_3:monster_ability:demodand_faith_stealing_strike",
+            "bestiary_3:monster_ability:demodand_heretical_soul",
+            "bestiary_3:monster_ability:desert_drake_dazzling_emergence",
+            "bestiary_3:monster_ability:desert_drake_sandstorm_breath",
+            "bestiary_3:monster_ability:desert_drake_savage_bite",
+            "bestiary_3:monster_ability:desert_drake_speed_surge",
+            "bestiary_3:monster_ability:desert_giant_sandwalking",
+            "bestiary_3:monster_ability:desert_giant_scimitar_training",
+            "bestiary_3:monster_ability:div_see_in_darkness",
+            "bestiary_3:monster_ability:emperor_kirin",
+            "bestiary_3:monster_ability:eremite_evisceration",
+            "bestiary_3:monster_ability:eremite_graft_flesh",
+            "bestiary_3:monster_ability:eremite_immune_to_pain",
+            "bestiary_3:monster_ability:eremite_pain",
+            "bestiary_3:monster_ability:eremite_shadow_traveler",
+            "bestiary_3:monster_ability:eremite_spell_like_abilities",
+            "bestiary_3:monster_ability:eremite_unnerving_gaze",
+            "bestiary_3:monster_ability:fire_yai_fiery_missile",
+            "bestiary_3:monster_ability:fire_yai_smoke_form",
+            "bestiary_3:monster_ability:fire_yai_spell_like_abilities",
+            "bestiary_3:monster_ability:fjord_linnorm_breath_weapon",
+            "bestiary_3:monster_ability:fjord_linnorm_death_curse",
+            "bestiary_3:monster_ability:fjord_linnorm_poison",
+            "bestiary_3:monster_ability:fuath_congeal_water",
+            "bestiary_3:monster_ability:fuath_spell_like_abilities",
+            "bestiary_3:monster_ability:fuath_vulnerable_to_sunlight",
+            "bestiary_3:monster_ability:fungus_leshy_puffball",
+            "bestiary_3:monster_ability:fungus_leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:fungus_leshy_spores",
+            "bestiary_3:monster_ability:ghawwas_boiling_sea",
+            "bestiary_3:monster_ability:ghawwas_poison",
+            "bestiary_3:monster_ability:ghawwas_rough_hide",
+            "bestiary_3:monster_ability:ghawwas_spell_like_abilities",
+            "bestiary_3:monster_ability:ghost_scorpion_poison",
+            "bestiary_3:monster_ability:giant_crab_spider_poison",
+            "bestiary_3:monster_ability:giant_owl_animal_telepathy",
+            "bestiary_3:monster_ability:giant_owl_insightful_senses",
+            "bestiary_3:monster_ability:giant_owl_piercing_stare",
+            "bestiary_3:monster_ability:giant_porcupine_quills",
+            "bestiary_3:monster_ability:giant_rot_grub_gnaw",
+            "bestiary_3:monster_ability:giant_rot_grub_poison",
+            "bestiary_3:monster_ability:giant_sea_anemone_anchored",
+            "bestiary_3:monster_ability:giant_sea_anemone_poison",
+            "bestiary_3:monster_ability:giant_sea_anemone_sightless",
+            "bestiary_3:monster_ability:giant_skunk_musk",
+            "bestiary_3:monster_ability:giant_vulture_diseased",
+            "bestiary_3:monster_ability:gourd_leshy_ensnare",
+            "bestiary_3:monster_ability:gourd_leshy_keepsake",
+            "bestiary_3:monster_ability:gourd_leshy_seed",
+            "bestiary_3:monster_ability:gourd_leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:hekatonkheires_hands_of_war",
+            "bestiary_3:monster_ability:hekatonkheires_hundred_handed_whirlwind",
+            "bestiary_3:monster_ability:hekatonkheires_planar_leap",
+            "bestiary_3:monster_ability:hekatonkheires_spell_like_abilities",
+            "bestiary_3:monster_ability:hekatonkheires_stunning_slam",
+            "bestiary_3:monster_ability:hieracosphinx_shriek",
+            "bestiary_3:monster_ability:ice_yai_icy_missile",
+            "bestiary_3:monster_ability:ice_yai_spell_like_abilities",
+            "bestiary_3:monster_ability:ice_yai_staggering_strikes",
+            "bestiary_3:monster_ability:incubus_pain_redoubled",
+            "bestiary_3:monster_ability:incubus_spell_like_abilities",
+            "bestiary_3:monster_ability:interlocutor_spell_like_abilities",
+            "bestiary_3:monster_ability:interlocutor_surgical_strikes",
+            "bestiary_3:monster_ability:interlocutor_unnerving_gaze",
+            "bestiary_3:monster_ability:jiang_shi_vampire",
+            "bestiary_3:monster_ability:jinushigami_infused_quarterstaff",
+            "bestiary_3:monster_ability:jinushigami_manipulate_terrain",
+            "bestiary_3:monster_ability:jinushigami_spell_like_abilities",
+            "bestiary_3:monster_ability:jinushigami_ward",
+            "bestiary_3:monster_ability:jotund_troll_all_seeing_attacks",
+            "bestiary_3:monster_ability:jotund_troll_cacophonous_roar",
+            "bestiary_3:monster_ability:jotund_troll_multiple_minds",
+            "bestiary_3:monster_ability:jungle_giant_archery_expert",
+            "bestiary_3:monster_ability:jungle_giant_spell_storing",
+            "bestiary_3:monster_ability:jungle_giant_warding_tattoos",
+            "bestiary_3:monster_ability:kami_fast_healing",
+            "bestiary_3:monster_ability:kami_merge_with_ward",
+            "bestiary_3:monster_ability:kami_ward",
+            "bestiary_3:monster_ability:kodama_distracting_gaze",
+            "bestiary_3:monster_ability:kodama_spell_like_abilities",
+            "bestiary_3:monster_ability:kuwa_spell_like_abilities",
+            "bestiary_3:monster_ability:kyton_regeneration",
+            "bestiary_3:monster_ability:kyton_unnerving_gaze",
+            "bestiary_3:monster_ability:leaf_leshy_glide",
+            "bestiary_3:monster_ability:leaf_leshy_seedpods",
+            "bestiary_3:monster_ability:leaf_leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:leshy_change_shape",
+            "bestiary_3:monster_ability:leshy_plantspeech",
+            "bestiary_3:monster_ability:leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:leshy_verdant_burst",
+            "bestiary_3:monster_ability:lunar_naga_hypnosis",
+            "bestiary_3:monster_ability:lunar_naga_poison",
+            "bestiary_3:monster_ability:lunar_naga_spells",
+            "bestiary_3:monster_ability:maharaja_extra_initiative",
+            "bestiary_3:monster_ability:maharaja_spells",
+            "bestiary_3:monster_ability:marai_confusion",
+            "bestiary_3:monster_ability:marai_energy_bolts",
+            "bestiary_3:monster_ability:marai_spells",
+            "bestiary_3:monster_ability:moss_troll_fear_of_fire",
+            "bestiary_3:monster_ability:moss_troll_tree_climber",
+            "bestiary_3:monster_ability:ogre_spider_poison",
+            "bestiary_3:monster_ability:pairaka_disease",
+            "bestiary_3:monster_ability:pairaka_lustful_dreams",
+            "bestiary_3:monster_ability:pairaka_spell_like_abilities",
+            "bestiary_3:monster_ability:rajadhiraja",
+            "bestiary_3:monster_ability:rakshasa_change_shape",
+            "bestiary_3:monster_ability:rakshasa_detect_thoughts",
+            "bestiary_3:monster_ability:rift_drake_clinging_corrosion",
+            "bestiary_3:monster_ability:rift_drake_savage_bite",
+            "bestiary_3:monster_ability:rift_drake_speed_surge",
+            "bestiary_3:monster_ability:river_drake_caustic_mucus",
+            "bestiary_3:monster_ability:river_drake_speed_surge",
+            "bestiary_3:monster_ability:rot_grub_swarm_infestation",
+            "bestiary_3:monster_ability:royal_naga_change_shape",
+            "bestiary_3:monster_ability:royal_naga_dual_gaze",
+            "bestiary_3:monster_ability:royal_naga_spell_like_abilities",
+            "bestiary_3:monster_ability:royal_naga_spells",
+            "bestiary_3:monster_ability:schir_disease",
+            "bestiary_3:monster_ability:schir_spell_like_abilities",
+            "bestiary_3:monster_ability:seaweed_leshy_air_cyst",
+            "bestiary_3:monster_ability:seaweed_leshy_spell_like_abilities",
+            "bestiary_3:monster_ability:seaweed_leshy_water_jet",
+            "bestiary_3:monster_ability:sepid_deflect_rays",
+            "bestiary_3:monster_ability:sepid_rain_of_debris",
+            "bestiary_3:monster_ability:sepid_spell_like_abilities",
+            "bestiary_3:monster_ability:shikigami_improvised_weapon_mastery",
+            "bestiary_3:monster_ability:shikigami_spell_like_abilities",
+            "bestiary_3:monster_ability:shipwrecker_crab_powerful_claws",
+            "bestiary_3:monster_ability:shira_consume_essence",
+            "bestiary_3:monster_ability:shira_dusty_pelt",
+            "bestiary_3:monster_ability:shira_spell_like_abilities",
+            "bestiary_3:monster_ability:taiga_linnorm_breath_weapon",
+            "bestiary_3:monster_ability:taiga_linnorm_death_curse",
+            "bestiary_3:monster_ability:taiga_linnorm_poison",
+            "bestiary_3:monster_ability:taiga_linnorm_spines",
+            "bestiary_3:monster_ability:tataka_martial_artist",
+            "bestiary_3:monster_ability:tataka_spell_like_abilities",
+            "bestiary_3:monster_ability:tataka_spells",
+            "bestiary_3:monster_ability:tempest_behemoth_gale",
+            "bestiary_3:monster_ability:tempest_behemoth_scales",
+            "bestiary_3:monster_ability:tempest_behemoth_spell_like_abilities",
+            "bestiary_3:monster_ability:tempest_behemoth_thunderbolt",
+            "bestiary_3:monster_ability:thalassic_behemoth_spell_like_abilities",
+            "bestiary_3:monster_ability:thalassic_behemoth_water_jet",
+            "bestiary_3:monster_ability:thriae_queen_launch_merope",
+            "bestiary_3:monster_ability:thriae_queen_merope_coat",
+            "bestiary_3:monster_ability:thriae_queen_poison",
+            "bestiary_3:monster_ability:thriae_queen_spawn_soldiers",
+            "bestiary_3:monster_ability:thriae_queen_spell_like_abilities",
+            "bestiary_3:monster_ability:thriae_seer_merope_consumption",
+            "bestiary_3:monster_ability:thriae_seer_mind_sting",
+            "bestiary_3:monster_ability:thriae_seer_spell_like_abilities",
+            "bestiary_3:monster_ability:thriae_soldier_merope_consumption",
+            "bestiary_3:monster_ability:thriae_soldier_poison",
+            "bestiary_3:monster_ability:thunder_behemoth_mighty_roar",
+            "bestiary_3:monster_ability:thunder_behemoth_rock_spitting",
+            "bestiary_3:monster_ability:thunder_behemoth_spell_like_abilities",
+            "bestiary_3:monster_ability:thunder_behemoth_swallow_whole",
+            "bestiary_3:monster_ability:tor_linnorm_breath_weapon",
+            "bestiary_3:monster_ability:tor_linnorm_death_curse",
+            "bestiary_3:monster_ability:tor_linnorm_lava_affinity",
+            "bestiary_3:monster_ability:tor_linnorm_poison",
+            "bestiary_3:monster_ability:toshigami_spell_like_abilities",
+            "bestiary_3:monster_ability:toshigami_touch_of_ages",
+            "bestiary_3:monster_ability:traits_output_asura",
+            "bestiary_3:monster_ability:traits_output_behemoth",
+            "bestiary_3:monster_ability:traits_output_clockwork",
+            "bestiary_3:monster_ability:traits_output_demodand",
+            "bestiary_3:monster_ability:traits_output_div",
+            "bestiary_3:monster_ability:traits_output_kami",
+            "bestiary_3:monster_ability:traits_output_kyton",
+            "bestiary_3:monster_ability:traits_output_leshy",
+            "bestiary_3:monster_ability:traits_output_rakshasa",
+            "bestiary_3:monster_ability:tripurasura_change_shape",
+            "bestiary_3:monster_ability:tripurasura_elusive",
+            "bestiary_3:monster_ability:tripurasura_poison",
+            "bestiary_3:monster_ability:tripurasura_spell_like_abilities",
+            "bestiary_3:monster_ability:unfettered_eidolon_cha",
+            "bestiary_3:monster_ability:unfettered_eidolon_con",
+            "bestiary_3:monster_ability:unfettered_eidolon_dex",
+            "bestiary_3:monster_ability:unfettered_eidolon_int",
+            "bestiary_3:monster_ability:unfettered_eidolon_str",
+            "bestiary_3:monster_ability:unfettered_eidolon_wis",
+            "bestiary_3:monster_ability:upasunda_infused_weapons",
+            "bestiary_3:monster_ability:upasunda_multiweapon_mastery",
+            "bestiary_3:monster_ability:upasunda_spell_like_abilities",
+            "bestiary_3:monster_ability:vishkanya_toxic_vishkanya_venom",
+            "bestiary_3:monster_ability:void_yai_commanding_voice",
+            "bestiary_3:monster_ability:void_yai_spell_like_abilities",
+            "bestiary_3:monster_ability:void_yai_void_form",
+            "bestiary_3:monster_ability:void_yai_void_missile",
+            "bestiary_3:monster_ability:void_yai_void_trap",
+            "bestiary_3:monster_ability:vulnudaemon_aura_of_doom",
+            "bestiary_3:monster_ability:vulnudaemon_spell_like_abilities",
+            "bestiary_3:monster_ability:water_naga_poison",
+            "bestiary_3:monster_ability:water_naga_spells",
+            "bestiary_3:monster_ability:water_yai_acidic_missile",
+            "bestiary_3:monster_ability:water_yai_flowing_robes",
+            "bestiary_3:monster_ability:water_yai_liquid_form",
+            "bestiary_3:monster_ability:water_yai_spell_like_abilities",
+            "bestiary_3:monster_ability:zuishin_healing_arrow",
+            "bestiary_3:monster_ability:zuishin_holy_weapons",
+            "bestiary_3:monster_ability:zuishin_spell_like_abilities",
+        ],
+    ),
+    (
+        "bestiary_4",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 187
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `bestiary_4::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x87ed_3d78_0aa9_ca92) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py bestiary_4 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "bestiary_4:monster_ability:broken_soul_agonized_wail",
+            "bestiary_4:monster_ability:broken_soul_baleful_gaze",
+            "bestiary_4:monster_ability:broken_soul_stat_bonuses",
+            "bestiary_4:monster_ability:broken_soul_torturous_touch",
+            "bestiary_4:monster_ability:colossus_alternate_form",
+            "bestiary_4:monster_ability:colossus_mythic_creation",
+            "bestiary_4:monster_ability:colossus_mythic_quickening",
+            "bestiary_4:monster_ability:colossus_mythic_resilience",
+            "bestiary_4:monster_ability:colossus_pinning_stomp",
+            "bestiary_4:monster_ability:colossus_selective_antimagic_aura",
+            "bestiary_4:monster_ability:demon_lord_abyssal_resurrection",
+            "bestiary_4:monster_ability:demon_lord_dagon_breath_weapon",
+            "bestiary_4:monster_ability:demon_lord_dagon_command_aquatic_creature",
+            "bestiary_4:monster_ability:demon_lord_dagon_poison",
+            "bestiary_4:monster_ability:demon_lord_dagon_transformation",
+            "bestiary_4:monster_ability:demon_lord_frightful_presence",
+            "bestiary_4:monster_ability:demon_lord_grant_spells",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_clutch_foe",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_crushing_blow",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_favored_enemy",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_powerful_slam",
+            "bestiary_4:monster_ability:demon_lord_kostchtchie_vengeful_strike",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_aura_of_locusts",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_avian_mastery",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_hear_name",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_poison",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_possession",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_profane_wishcraft",
+            "bestiary_4:monster_ability:demon_lord_pazuzu_swarm_master",
+            "bestiary_4:monster_ability:demon_lord_powerful_weaponry",
+            "bestiary_4:monster_ability:demon_lord_regeneration",
+            "bestiary_4:monster_ability:demon_lord_summon_demons",
+            "bestiary_4:monster_ability:devilbound_creature_contract_bound",
+            "bestiary_4:monster_ability:devilbound_creature_evil_aura",
+            "bestiary_4:monster_ability:devilbound_creature_signatory_devil",
+            "bestiary_4:monster_ability:devilbound_creature_summon_devil",
+            "bestiary_4:monster_ability:divine_guardian_ability_healing",
+            "bestiary_4:monster_ability:divine_guardian_aura",
+            "bestiary_4:monster_ability:divine_guardian_blessed_life",
+            "bestiary_4:monster_ability:divine_guardian_divine_swiftness",
+            "bestiary_4:monster_ability:divine_guardian_sacred_site",
+            "bestiary_4:monster_ability:drakainia_spawn_chameleon_scales",
+            "bestiary_4:monster_ability:drakainia_spawn_covered_in_eyes",
+            "bestiary_4:monster_ability:drakainia_spawn_favored_spawn",
+            "bestiary_4:monster_ability:drakainia_spawn_impenetrable_skin",
+            "bestiary_4:monster_ability:drakainia_spawn_multiple_heads",
+            "bestiary_4:monster_ability:drakainia_spawn_poison_glands",
+            "bestiary_4:monster_ability:drakainia_spawn_serpent_headed_tail",
+            "bestiary_4:monster_ability:drakainia_spawn_sticky",
+            "bestiary_4:monster_ability:drakainia_spawn_tentacles",
+            "bestiary_4:monster_ability:drakainia_spawn_vestigial_companion",
+            "bestiary_4:monster_ability:dread_gholdako_paralysis",
+            "bestiary_4:monster_ability:ectoplasmic_creature_alterations",
+            "bestiary_4:monster_ability:ectoplasmic_creature_horrifying_ooze",
+            "bestiary_4:monster_ability:ectoplasmic_creature_phase_lurch",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_greater_slaying_arrow",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_horned_lord_s_charge",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_lightning_rod",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_perfect_archer",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_primal_aura",
+            "bestiary_4:monster_ability:empyreal_lord_cernunnos_unbound",
+            "bestiary_4:monster_ability:empyreal_lord_grant_spells",
+            "bestiary_4:monster_ability:empyreal_lord_improved_resistance",
+            "bestiary_4:monster_ability:empyreal_lord_korada_combat_style_master",
+            "bestiary_4:monster_ability:empyreal_lord_korada_never_flat_footed",
+            "bestiary_4:monster_ability:empyreal_lord_korada_primal_aura",
+            "bestiary_4:monster_ability:empyreal_lord_korada_shatter_spells",
+            "bestiary_4:monster_ability:empyreal_lord_korada_tranquil_master",
+            "bestiary_4:monster_ability:empyreal_lord_powerful_weaponry",
+            "bestiary_4:monster_ability:empyreal_lord_primal_aura",
+            "bestiary_4:monster_ability:empyreal_lord_seed_of_life",
+            "bestiary_4:monster_ability:empyreal_lord_vildeis_primal_aura",
+            "bestiary_4:monster_ability:empyreal_lord_vildeis_smite_evil",
+            "bestiary_4:monster_ability:empyreal_lord_vildeis_zealous_vision",
+            "bestiary_4:monster_ability:formian_hive_mind",
+            "bestiary_4:monster_ability:formian_telepathic_caster",
+            "bestiary_4:monster_ability:fungal_creature_create_spawn",
+            "bestiary_4:monster_ability:fungal_creature_fungal_blood_or_flesh",
+            "bestiary_4:monster_ability:fungal_creature_fungal_metabolism",
+            "bestiary_4:monster_ability:fungal_creature_fungal_spores",
+            "bestiary_4:monster_ability:fungal_creature_poison_spore_cloud",
+            "bestiary_4:monster_ability:fungal_creature_poisonous_blood",
+            "bestiary_4:monster_ability:fungal_creature_rejuvenation",
+            "bestiary_4:monster_ability:grab_medium",
+            "bestiary_4:monster_ability:great_old_one_bokrug_critical_poisoning",
+            "bestiary_4:monster_ability:great_old_one_bokrug_immortality",
+            "bestiary_4:monster_ability:great_old_one_bokrug_poison",
+            "bestiary_4:monster_ability:great_old_one_bokrug_spines",
+            "bestiary_4:monster_ability:great_old_one_bokrug_toxic_breath",
+            "bestiary_4:monster_ability:great_old_one_bokrug_unspeakable_presence",
+            "bestiary_4:monster_ability:great_old_one_bokrug_vengeful_dreams",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_cleaving_claws",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_dreams_of_madness",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_greater_starflight",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_immortality",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_non_euclidean",
+            "bestiary_4:monster_ability:great_old_one_cthulhu_unspeakable_presence",
+            "bestiary_4:monster_ability:great_old_one_hastur_fulvous_dreams",
+            "bestiary_4:monster_ability:great_old_one_hastur_immortality",
+            "bestiary_4:monster_ability:great_old_one_hastur_reveal_visage",
+            "bestiary_4:monster_ability:great_old_one_hastur_tattered_lash",
+            "bestiary_4:monster_ability:great_old_one_hastur_unspeakable_presence",
+            "bestiary_4:monster_ability:great_old_one_hastur_wish",
+            "bestiary_4:monster_ability:great_old_one_hastur_yellow_sign",
+            "bestiary_4:monster_ability:great_old_one_immortality",
+            "bestiary_4:monster_ability:great_old_one_immunities",
+            "bestiary_4:monster_ability:great_old_one_insanity",
+            "bestiary_4:monster_ability:great_old_one_mythic",
+            "bestiary_4:monster_ability:great_old_one_otherworldly_insight",
+            "bestiary_4:monster_ability:great_old_one_overcome_damage_reduction",
+            "bestiary_4:monster_ability:great_old_one_unspeakable_presence",
+            "bestiary_4:monster_ability:hide_in_plain_sight",
+            "bestiary_4:monster_ability:immunity_to_dismissal",
+            "bestiary_4:monster_ability:kaiju_agyra_blinding_flash",
+            "bestiary_4:monster_ability:kaiju_agyra_breath_weapon",
+            "bestiary_4:monster_ability:kaiju_agyra_electrified_corpse",
+            "bestiary_4:monster_ability:kaiju_agyra_hurricane",
+            "bestiary_4:monster_ability:kaiju_agyra_rebirth",
+            "bestiary_4:monster_ability:kaiju_agyra_storm_flier",
+            "bestiary_4:monster_ability:kaiju_agyra_swift_flight",
+            "bestiary_4:monster_ability:kaiju_agyra_thunderous_blast",
+            "bestiary_4:monster_ability:kaiju_bezravnis_burrowing_charge",
+            "bestiary_4:monster_ability:kaiju_bezravnis_heat_beam",
+            "bestiary_4:monster_ability:kaiju_bezravnis_poison",
+            "bestiary_4:monster_ability:kaiju_bezravnis_web",
+            "bestiary_4:monster_ability:kaiju_hurl_foe",
+            "bestiary_4:monster_ability:kaiju_massive",
+            "bestiary_4:monster_ability:kaiju_mogaru_absorb_energy",
+            "bestiary_4:monster_ability:kaiju_mogaru_breath_weapon",
+            "bestiary_4:monster_ability:kaiju_mogaru_firebolts",
+            "bestiary_4:monster_ability:kaiju_mogaru_reflexive_breath",
+            "bestiary_4:monster_ability:kaiju_mogaru_sense_kaiju",
+            "bestiary_4:monster_ability:kaiju_mogaru_susceptible_to_song",
+            "bestiary_4:monster_ability:kaiju_overcome_damage_reduction",
+            "bestiary_4:monster_ability:kaiju_recovery",
+            "bestiary_4:monster_ability:mummified_creature_burst_of_vengeance",
+            "bestiary_4:monster_ability:mummified_creature_dust_stroke",
+            "bestiary_4:monster_ability:mummified_creature_fail_safe",
+            "bestiary_4:monster_ability:mummified_creature_frightful_presence",
+            "bestiary_4:monster_ability:mummified_creature_powerful_attacks",
+            "bestiary_4:monster_ability:nightmare_creature_fear_aura",
+            "bestiary_4:monster_ability:nightmare_creature_feign_death",
+            "bestiary_4:monster_ability:nightmare_creature_frightful_presence",
+            "bestiary_4:monster_ability:nightmare_creature_illusion_resistance",
+            "bestiary_4:monster_ability:nightmare_creature_night_terrors",
+            "bestiary_4:monster_ability:nightmare_creature_regeneration",
+            "bestiary_4:monster_ability:nightmare_lord_dream_slave",
+            "bestiary_4:monster_ability:nightmare_lord_nightmare_magic",
+            "bestiary_4:monster_ability:pod_spawned_loss_of_magic",
+            "bestiary_4:monster_ability:pod_spawned_mimic",
+            "bestiary_4:monster_ability:powerful_blows_claw",
+            "bestiary_4:monster_ability:powerful_blows_sting",
+            "bestiary_4:monster_ability:powerful_blows_tentacle",
+            "bestiary_4:monster_ability:protection_from_good_constant",
+            "bestiary_4:monster_ability:psychopomp_spirit_touch",
+            "bestiary_4:monster_ability:psychopomp_spiritsense",
+            "bestiary_4:monster_ability:regeneration_deific_or_mythic",
+            "bestiary_4:monster_ability:regeneration_epic_and_evil_energy",
+            "bestiary_4:monster_ability:resistance_to_negative_energy_output",
+            "bestiary_4:monster_ability:sanctuary_constant",
+            "bestiary_4:monster_ability:shadow_creature_shadow_blend",
+            "bestiary_4:monster_ability:shadow_lord_cloying_gloom_blast",
+            "bestiary_4:monster_ability:shadow_lord_incorporeal_step",
+            "bestiary_4:monster_ability:shadow_lord_planar_thinning",
+            "bestiary_4:monster_ability:shadow_lord_shadow_summoning",
+            "bestiary_4:monster_ability:shadow_lord_touch_attack",
+            "bestiary_4:monster_ability:spawn_of_yog_sothoth_devastation",
+            "bestiary_4:monster_ability:spawn_of_yog_sothoth_invisibility",
+            "bestiary_4:monster_ability:star_spawn_of_cthulhu_immortality",
+            "bestiary_4:monster_ability:star_spawn_of_cthulhu_limited_starflight",
+            "bestiary_4:monster_ability:star_spawn_of_cthulhu_overwhelming_mind",
+            "bestiary_4:monster_ability:traits_output_colossus",
+            "bestiary_4:monster_ability:traits_output_demon_lord",
+            "bestiary_4:monster_ability:traits_output_empyreal_lord",
+            "bestiary_4:monster_ability:traits_output_formian",
+            "bestiary_4:monster_ability:traits_output_great_old_one",
+            "bestiary_4:monster_ability:traits_output_kaiju",
+            "bestiary_4:monster_ability:traits_output_psychopomp",
+            "bestiary_4:monster_ability:universal_monster_rule_darkvision_extraordinary",
+            "bestiary_4:monster_ability:universal_monster_rule_darkvision_supernatural",
+            "bestiary_4:monster_ability:vampire_nosferatu_blood_drain",
+            "bestiary_4:monster_ability:vampire_nosferatu_dominate",
+            "bestiary_4:monster_ability:vampire_nosferatu_escape",
+            "bestiary_4:monster_ability:vampire_nosferatu_spider_climb",
+            "bestiary_4:monster_ability:vampire_nosferatu_swarm_form",
+            "bestiary_4:monster_ability:vampire_nosferatu_telekinesis",
+            "bestiary_4:monster_ability:vampire_nosferatu_telepathy",
+            "bestiary_4:monster_ability:vampire_nosferatu_weaknesses",
+            "bestiary_4:monster_ability:werebat",
+            "bestiary_4:monster_ability:werecrocodile",
+            "bestiary_4:monster_ability:werecrocodile_death_roll",
+            "bestiary_4:monster_ability:werecrocodile_sprint",
+            "bestiary_4:monster_ability:wereshark",
+            "bestiary_4:monster_ability:wyrwood_construct_traits",
+        ],
+    ),
+    (
+        "horror_adventures",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 56
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `horror_adventures::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x4db7_998b_4652_eb60) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py horror_adventures 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "horror_adventures:monster_ability:accursed_creature_cursed",
+            "horror_adventures:monster_ability:bestial_werewolf_change_shape",
+            "horror_adventures:monster_ability:bestial_werewolf_feral_counter",
+            "horror_adventures:monster_ability:cursed_lord_immortal_curse",
+            "horror_adventures:monster_ability:cursed_lord_trapped",
+            "horror_adventures:monster_ability:dread_lord_all_seeing",
+            "horror_adventures:monster_ability:dread_lord_dream_dominion",
+            "horror_adventures:monster_ability:dread_lord_fear_aura",
+            "horror_adventures:monster_ability:dread_lord_landlocked",
+            "horror_adventures:monster_ability:dread_lord_magical_mastery",
+            "horror_adventures:monster_ability:dread_lord_master_of_the_four_winds",
+            "horror_adventures:monster_ability:dread_lord_one_with_the_land",
+            "horror_adventures:monster_ability:dread_lord_physical_mastery",
+            "horror_adventures:monster_ability:dread_lord_plant_affinity",
+            "horror_adventures:monster_ability:dread_lord_unquestioned_ruler",
+            "horror_adventures:monster_ability:familial_lich_familial_possession",
+            "horror_adventures:monster_ability:hellbound_creature_contract_bound",
+            "horror_adventures:monster_ability:hellbound_creature_hellbound_summon",
+            "horror_adventures:monster_ability:hive_blind",
+            "horror_adventures:monster_ability:hive_corrosive_blood",
+            "horror_adventures:monster_ability:hive_death_throes",
+            "horror_adventures:monster_ability:hive_heat_adaptability",
+            "horror_adventures:monster_ability:hive_hive_mind",
+            "horror_adventures:monster_ability:implacable_stalker_fear_aura",
+            "horror_adventures:monster_ability:implacable_stalker_gory_display",
+            "horror_adventures:monster_ability:implacable_stalker_nightmare_resurrection",
+            "horror_adventures:monster_ability:implacable_stalker_right_behind_you",
+            "horror_adventures:monster_ability:implacable_stalker_sense_fear",
+            "horror_adventures:monster_ability:implacable_stalker_terrifying_inevitability",
+            "horror_adventures:monster_ability:kyton_apostle_agonizing_prayer",
+            "horror_adventures:monster_ability:kyton_apostle_bleeding_touch",
+            "horror_adventures:monster_ability:kyton_apostle_seductive_oration",
+            "horror_adventures:monster_ability:kyton_apostle_shadow_traveler",
+            "horror_adventures:monster_ability:kyton_apostle_spell_like_abilities",
+            "horror_adventures:monster_ability:kyton_apostle_unnerving_gaze",
+            "horror_adventures:monster_ability:lich_creature_touch_attack",
+            "horror_adventures:monster_ability:lycanthropic_creature_change_shape",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound_full_moon",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound_near_full_moon",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound_new_moon",
+            "horror_adventures:monster_ability:moonbound_werewolf_moonbound_other_moon",
+            "horror_adventures:monster_ability:possessed_creature_two_minds",
+            "horror_adventures:monster_ability:promethean_creature_promethean_metabolism",
+            "horror_adventures:monster_ability:shadowbound_creature_refuge_in_pain",
+            "horror_adventures:monster_ability:shadowbound_creature_regretful_gaze",
+            "horror_adventures:monster_ability:shadowbound_creature_weaver_of_lies",
+            "horror_adventures:monster_ability:traits_output_deep_one",
+            "horror_adventures:monster_ability:traits_output_hive",
+            "horror_adventures:monster_ability:trompe_l_oeil_armor_class",
+            "horror_adventures:monster_ability:trompe_l_oeil_attacks",
+            "horror_adventures:monster_ability:trompe_l_oeil_autotelic",
+            "horror_adventures:monster_ability:trompe_l_oeil_enter_painting",
+            "horror_adventures:monster_ability:trompe_l_oeil_rejuvenation",
+            "horror_adventures:monster_ability:trompe_l_oeil_skills",
+            "horror_adventures:monster_ability:undead_phantom_channel_resistance",
+            "horror_adventures:monster_ability:undead_phantom_cling_of_the_grave",
+            "horror_adventures:monster_ability:undead_phantom_lifedrinker",
+            "horror_adventures:monster_ability:undead_phantom_unnatural_aura",
+            "horror_adventures:monster_ability:unknown_assume_likeness",
+            "horror_adventures:monster_ability:unknown_dream_movements",
+            "horror_adventures:monster_ability:unknown_hallucinatory_camouflage",
+            "horror_adventures:monster_ability:unknown_psyche_erosion",
+            "horror_adventures:monster_ability:unknown_spell_like_abilities",
+            "horror_adventures:monster_ability:unknown_victimize",
+        ],
+    ),
+    (
+        "ultimate_wilderness",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 2 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- ultimate_wilderness has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py ultimate_wilderness 2>&1 >/dev/null`.
+        &[
+            "ultimate_wilderness:monster_ability:plant_traits_output_pc",
+            "ultimate_wilderness:monster_ability:traits_output_leshy_pc",
+        ],
+    ),
+    (
+        "ultimate_intrigue",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 6 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- ultimate_intrigue has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py ultimate_intrigue 2>&1 >/dev/null`.
+        &[
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl01",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl04",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl08",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl12",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl16",
+            "ultimate_intrigue:monster_ability:fey_unchained_eidolon_lvl20",
+        ],
+    ),
+    (
+        "ultimate_magic",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 13 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- ultimate_magic has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py ultimate_magic 2>&1 >/dev/null`.
+        &[
+            "ultimate_magic:monster_ability:animated_object_augmented_critical_multiplier",
+            "ultimate_magic:monster_ability:animated_object_augmented_critical_range",
+            "ultimate_magic:monster_ability:animated_object_exceptional_reach",
+            "ultimate_magic:monster_ability:animated_object_exceptional_reach_all",
+            "ultimate_magic:monster_ability:animated_object_improved_attack_melee",
+            "ultimate_magic:monster_ability:animated_object_improved_attack_ranged",
+            "ultimate_magic:monster_ability:animated_object_piercing_attack",
+            "ultimate_magic:monster_ability:animated_object_piercing_attack_all",
+            "ultimate_magic:monster_ability:animated_object_ranged_attack",
+            "ultimate_magic:monster_ability:animated_object_ranged_attack_all",
+            "ultimate_magic:monster_ability:animated_object_slashing_attack",
+            "ultimate_magic:monster_ability:animated_object_slashing_attack_all",
+            "ultimate_magic:monster_ability:animated_object_trip",
+        ],
+    ),
+    (
+        "bestiary_6",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 16 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- bestiary_6 has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py bestiary_6 2>&1 >/dev/null`.
+        &[
+            "bestiary_6:monster_ability:coral_capuchin_cursed_bite",
+            "bestiary_6:monster_ability:coral_capuchin_moisture_dependency",
+            "bestiary_6:monster_ability:deinotherium_sweep",
+            "bestiary_6:monster_ability:devil_monkey_puncture_armor",
+            "bestiary_6:monster_ability:dunkleosteus_gulp",
+            "bestiary_6:monster_ability:elasmotherium_impaling_horn",
+            "bestiary_6:monster_ability:giant_raven_scavenger",
+            "bestiary_6:monster_ability:kentrosaurus_defensive_spikes",
+            "bestiary_6:monster_ability:kentrosaurus_impaling_strike",
+            "bestiary_6:monster_ability:mockingfey_mock",
+            "bestiary_6:monster_ability:mockingfey_sla",
+            "bestiary_6:monster_ability:mokele_mbembe_whip_tail",
+            "bestiary_6:monster_ability:quetzalcoatlus_razor_sharp_beak",
+            "bestiary_6:monster_ability:universal_monster_rule_ferocity",
+            "bestiary_6:monster_ability:universal_monster_rule_negative_energy_affinity",
+            "bestiary_6:monster_ability:universal_monster_rule_scent",
+        ],
+    ),
+    (
+        "bestiary_5",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 3: all 39 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- bestiary_5 has ZERO
+        // monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py bestiary_5 2>&1 >/dev/null`.
+        &[
+            "bestiary_5:monster_ability:aether_wysp_lesser_telekinesis",
+            "bestiary_5:monster_ability:blue_whale_hold_breath",
+            "bestiary_5:monster_ability:brain_mole_brain_drain",
+            "bestiary_5:monster_ability:brain_mole_second_sight",
+            "bestiary_5:monster_ability:brain_mole_shrouded_mind",
+            "bestiary_5:monster_ability:brain_mole_sla",
+            "bestiary_5:monster_ability:cameroceras_pressure_adaptation",
+            "bestiary_5:monster_ability:chuspiki_air_blast",
+            "bestiary_5:monster_ability:chuspiki_basic_aerokinesis",
+            "bestiary_5:monster_ability:chuspiki_sla",
+            "bestiary_5:monster_ability:chuspiki_wind_blessed",
+            "bestiary_5:monster_ability:chuspiki_wind_form",
+            "bestiary_5:monster_ability:digmaul_ball_tail",
+            "bestiary_5:monster_ability:esipil_bewildering_assault",
+            "bestiary_5:monster_ability:esipil_look_of_fear",
+            "bestiary_5:monster_ability:esipil_sla",
+            "bestiary_5:monster_ability:feather_fall_constant",
+            "bestiary_5:monster_ability:kaprosuchus_ramming_snout",
+            "bestiary_5:monster_ability:liminal_sprite_repartee",
+            "bestiary_5:monster_ability:liminal_sprite_sla",
+            "bestiary_5:monster_ability:liminal_sprite_versatile_performance",
+            "bestiary_5:monster_ability:narwhal_hold_breath",
+            "bestiary_5:monster_ability:narwhal_tusk",
+            "bestiary_5:monster_ability:plesiosaurus_ambush_attack",
+            "bestiary_5:monster_ability:sahkil_easy_to_call",
+            "bestiary_5:monster_ability:sahkil_emotional_focus",
+            "bestiary_5:monster_ability:sahkil_look_of_fear",
+            "bestiary_5:monster_ability:sahkil_skip_between",
+            "bestiary_5:monster_ability:sahkil_spirit_touch",
+            "bestiary_5:monster_ability:therizinosaurus_sprint",
+            "bestiary_5:monster_ability:therizinosaurus_sweeping_strike",
+            "bestiary_5:monster_ability:traits_output_sahkil",
+            "bestiary_5:monster_ability:troodon_easily_trained",
+            "bestiary_5:monster_ability:universal_monster_rule_unnatural_aura",
+            "bestiary_5:monster_ability:water_wysp_drench",
+            "bestiary_5:monster_ability:wolliped_spit",
+            "bestiary_5:monster_ability:wysp_living_battery",
+            "bestiary_5:monster_ability:wysp_resonance",
+            "bestiary_5:monster_ability:wysp_servitor",
+            "bestiary_5:monster_ability:xiao_sla",
+        ],
+    ),
+    (
+        "pathfinder_unchained",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 4: 69 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- pathfinder_unchained has
+        // ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s
+        // "ZERO-monster books" line), so nothing in this book can ever own an
+        // ability row, and every one is shipped anyway per `decisions.md §20`:
+        // an un-ingested row's shape cannot be measured, and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks a
+        // monster's own `ability_keys`, so an owner-less record here reaches no
+        // screen at all -- not the stub class `decisions.md §44.2` was written
+        // about. Pinned by exact key rather than by count so a NEW silent
+        // non-reach still fails here. A further 3 of the book's 72 orphan
+        // candidates (`Elemental ~ Unchained Eidolon LVL01/08/20`) are a
+        // multi-DESC: shape `parse_desc` refuses rather than mistranscribes --
+        // real per-record work, not shipped this round, NOT in this list.
+        // Re-derive: `python3 scripts/transcribe_monster_tables.py pathfinder_unchained 2>&1 >/dev/null`.
+        &[
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:angel_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:archon_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:daemon_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:demon_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:devil_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:div_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:elemental_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:inevitable_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:protean_unchained_eidolon_lvl20",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl01",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl04",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl08",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl12",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl16",
+            "pathfinder_unchained:monster_ability:psychopomp_unchained_eidolon_lvl20",
+        ],
+    ),
+    (
+        "advanced_race_guide",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 4: the 1 `monster_ability`
+        // record this book contributes SHIPS with `owners: &[]` --
+        // advanced_race_guide has ZERO monster rows of its own
+        // (`scripts/classify_monster_ability_rows.py`'s "ZERO-monster books"
+        // line), so nothing in this book can ever own it, and it is shipped
+        // anyway per `decisions.md §20`: an un-ingested row's shape cannot be
+        // measured, and Gate 1's DoD needs every unit's shape measured.
+        // Pinned by exact key rather than by count so a NEW silent non-reach
+        // still fails here. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py advanced_race_guide 2>&1 >/dev/null`.
+        &[
+            "advanced_race_guide:monster_ability:grippli_toxic_skin_grippli_poison",
+        ],
+    ),
+    (
+        "mythic_adventures",
+        "monster_abilities",
+        // `decisions.md §20` no_record-to-zero, round 5: all 21 of this
+        // book's `monster_ability` records SHIP with `owners: &[]` --
+        // mythic_adventures has ZERO monster rows of its own
+        // (`scripts/classify_monster_ability_rows.py`'s "ZERO-monster books"
+        // line), so nothing in this book can ever own an ability row, and
+        // every one is shipped anyway per `decisions.md §20`: an
+        // un-ingested row's shape cannot be measured, and Gate 1's DoD
+        // needs every unit's shape measured. Pinned by exact key rather
+        // than by count so a NEW silent non-reach still fails here.
+        // Re-derive: `python3 scripts/transcribe_monster_tables.py
+        // mythic_adventures 2>&1 >/dev/null`.
+        &[
+            "mythic_adventures:monster_ability:block_attacks",
+            "mythic_adventures:monster_ability:dragon_blood",
+            "mythic_adventures:monster_ability:dragon_cantrips",
+            "mythic_adventures:monster_ability:dragon_fury",
+            "mythic_adventures:monster_ability:dual_initiative",
+            "mythic_adventures:monster_ability:feral_savagery",
+            "mythic_adventures:monster_ability:fortification",
+            "mythic_adventures:monster_ability:greensight",
+            "mythic_adventures:monster_ability:lingering_breath",
+            "mythic_adventures:monster_ability:mistsight",
+            "mythic_adventures:monster_ability:mythic_magic",
+            "mythic_adventures:monster_ability:mythic_power",
+            "mythic_adventures:monster_ability:poisonous_blood",
+            "mythic_adventures:monster_ability:powerful_blows",
+            "mythic_adventures:monster_ability:second_save",
+            "mythic_adventures:monster_ability:simple_arcane_spellcasting",
+            "mythic_adventures:monster_ability:simple_divine_spellcasting",
+            "mythic_adventures:monster_ability:smother",
+            "mythic_adventures:monster_ability:steal",
+            "mythic_adventures:monster_ability:surge",
+            "mythic_adventures:monster_ability:x_ray_vision",
+        ],
+    ),
+    (
+        "occult_adventures",
+        "monster_abilities",
+        // `decisions.md §27b` — EVERYTHING: all 5 of this book's
+        // `monster_ability` records SHIP with `owners: &[]` -- no monster
+        // row's ownership pass claims any of them by name (both owning race
+        // rows reference their sub-abilities only via a CATEGORY:Internal
+        // umbrella row this generator does not resolve into per-record
+        // ownership; see this book's own `monster_data.rs` header). Shipped
+        // anyway per `decisions.md §20`/`§27b`: an un-ingested row's shape
+        // cannot be measured, and Gate 1's DoD needs every unit's shape
+        // measured; the "correctly out of scope" disposition this book
+        // carried across four prior cycles was a REACHABILITY finding (a
+        // negated `PRECAMPAIGN` gate), never an ingest exemption. Pinned by
+        // exact key rather than by count so a NEW silent non-reach still
+        // fails here. Re-derive: `python3 scripts/transcribe_monster_tables.py
+        // occult_adventures 2>&1 >/dev/null`.
+        &[
+            "occult_adventures:monster_ability:homunculus_companion_poison",
+            "occult_adventures:monster_ability:homunculus_companion_sympathetic_alchemy",
+            "occult_adventures:monster_ability:homunculus_companion_telepathic_link",
+            "occult_adventures:monster_ability:shikigami_improvised_weapon_mastery",
+            "occult_adventures:monster_ability:shikigami_spell_like_abilities",
+        ],
+    ),
+    (
+        "inner_sea_bestiary",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 28
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `inner_sea_bestiary::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x0a4e_0e1f_6775_49cd) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py inner_sea_bestiary 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        //
+        // `decisions.md §24`/round 7 (+7): the 7 name-PI ability rows at
+        // `isb_abilities_race.lst:312-318` this group closes are all
+        // orphans -- their namespace shares no monster-kind unit in this
+        // book at all, so they join this set under their Codex-generated
+        // neutral key.
+        &[
+            "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_312",
+            "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_313",
+            "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_314",
+            "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_315",
+            "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_316",
+            "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_317",
+            "inner_sea_bestiary:monster_ability:codex_named_unit_monster_ability_inner_sea_bestiary_isb_abilities_race_lst_318",
+            "inner_sea_bestiary:monster_ability:blighted_fey_cyth_v_sug_s_unity",
+            "inner_sea_bestiary:monster_ability:blighted_fey_daughters_of_arlantia",
+            "inner_sea_bestiary:monster_ability:blighted_fey_fungal_rejuvenation",
+            "inner_sea_bestiary:monster_ability:blighted_fey_parasitic_bond",
+            "inner_sea_bestiary:monster_ability:blighted_fey_tainted_blood",
+            "inner_sea_bestiary:monster_ability:blighted_fey_thorn_throw",
+            "inner_sea_bestiary:monster_ability:chemnosit_hungry_gaze",
+            "inner_sea_bestiary:monster_ability:chemnosit_spines",
+            "inner_sea_bestiary:monster_ability:immunity_to_bleed_effects",
+            "inner_sea_bestiary:monster_ability:immunity_to_permanent_wounds",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_acid_resistance",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_acidic_pustules",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_breath_weapon",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_deformed_arm",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_deformed_leg",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_disease",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_increased_speed",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_shattered_hide",
+            "inner_sea_bestiary:monster_ability:mana_wastes_mutant_warped_mind",
+            "inner_sea_bestiary:monster_ability:noqual_golem_powerful_blows",
+            "inner_sea_bestiary:monster_ability:psychopomp_spirit_sense",
+            "inner_sea_bestiary:monster_ability:psychopomp_spirit_touch",
+            "inner_sea_bestiary:monster_ability:resistance_to_mind_affecting_output",
+            "inner_sea_bestiary:monster_ability:vetala_drain_prana",
+            "inner_sea_bestiary:monster_ability:vetala_fast_healing",
+            "inner_sea_bestiary:monster_ability:vetala_malevolence",
+            "inner_sea_bestiary:monster_ability:vetala_possess_corpse",
+            "inner_sea_bestiary:monster_ability:vetala_weakness_to_prayer",
+            "inner_sea_bestiary:monster_ability:volnagur_blood_rage",
+            "inner_sea_bestiary:monster_ability:volnagur_eye_rays",
+            "inner_sea_bestiary:monster_ability:volnagur_shatter_silence",
+        ],
+    ),
+    (
+        "inner_sea_gods",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 2
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `inner_sea_gods::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x137d_2d8a_116e_9f2b) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py inner_sea_gods 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        //
+        // `decisions.md §24`/round 7 (+3): the 3 name-PI ability rows at
+        // `isg_abilities_races.lst:43/44/45` this group closes are all
+        // orphans -- their namespace claims no monster-kind unit of this
+        // book. The group's other 2 units (description-only PI,
+        // `Grim White Stag ~ Bugle`/`Thyrlien ~ Starlight Blast` -- clean
+        // names) are OWNED, so they do not join this set.
+        &[
+            "inner_sea_gods:monster_ability:codex_named_unit_monster_ability_inner_sea_gods_isg_abilities_races_lst_43",
+            "inner_sea_gods:monster_ability:codex_named_unit_monster_ability_inner_sea_gods_isg_abilities_races_lst_44",
+            "inner_sea_gods:monster_ability:codex_named_unit_monster_ability_inner_sea_gods_isg_abilities_races_lst_45",
+            "inner_sea_gods:monster_ability:herald_always_armed",
+            "inner_sea_gods:monster_ability:herald_emissary",
+        ],
+    ),
+    (
+        "inner_sea_world_guide",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 13
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `inner_sea_world_guide::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0xc6a5_c8bd_fa9c_bb39) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py inner_sea_world_guide 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        //
+        // `decisions.md §24`/round 7 (+3): the 3 name-PI ability rows at
+        // `iswg_abilities_race.lst:24/25/27` this group closes are all
+        // orphans -- their owning monster row (`iswg_races.lst:13`) is
+        // itself `NAMEISPI:YES`-declared and still dropped (`monster`-kind,
+        // outside `§24`'s ability-only scope this cycle), so nothing owns
+        // them.
+        &[
+            "inner_sea_world_guide:monster_ability:codex_named_unit_monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24",
+            "inner_sea_world_guide:monster_ability:codex_named_unit_monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25",
+            "inner_sea_world_guide:monster_ability:codex_named_unit_monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27",
+            "inner_sea_world_guide:monster_ability:clockwork_difficult_to_create",
+            "inner_sea_world_guide:monster_ability:clockwork_swift_reactions",
+            "inner_sea_world_guide:monster_ability:clockwork_winding",
+            "inner_sea_world_guide:monster_ability:constant_desecrate",
+            "inner_sea_world_guide:monster_ability:constant_water_breathing",
+            "inner_sea_world_guide:monster_ability:nascent_demon_lord_aligned_strike",
+            "inner_sea_world_guide:monster_ability:nascent_demon_lord_grant_spells",
+            "inner_sea_world_guide:monster_ability:sandpoint_devil_bay",
+            "inner_sea_world_guide:monster_ability:sandpoint_devil_hellfire_breath",
+            "inner_sea_world_guide:monster_ability:sandpoint_devil_kick",
+            "inner_sea_world_guide:monster_ability:treerazer_aura_of_corruption",
+            "inner_sea_world_guide:monster_ability:treerazer_defoliation",
+            "inner_sea_world_guide:monster_ability:treerazer_regeneration",
+        ],
+    ),
+    (
+        "ultimate_psionics",
+        "monster_abilities",
+        // `decisions.md §20` (no_record-to-zero wave 2 follow-on): 64
+        // `monster_ability` rows no monster row of this book claims now SHIP
+        // with `owners: &[]` instead of being dropped by
+        // `scripts/transcribe_monster_tables.py`'s orphan pass, because an
+        // un-ingested row's shape cannot be measured and Gate 1's DoD needs
+        // every unit's shape measured. `list_monster_catalog` only ever walks
+        // a monster's own `ability_keys`, so an owner-less record here reaches
+        // no screen at all -- not the stub class `decisions.md §44.2` was
+        // written about. Pinned by exact key rather than by count so a NEW
+        // silent non-reach still fails here; `ultimate_psionics::tests::
+        // every_owner_less_ability_is_a_named_and_pinned_non_reach` (digest
+        // 0x20e3_944a_3d90_ea44) pins the identical set from the corpus side. Re-derive:
+        // `python3 scripts/transcribe_monster_tables.py ultimate_psionics 2>&1 >/dev/null
+        // | grep 'orphan ability row'`.
+        &[
+            "ultimate_psionics:monster_ability:astral_armor_spikes",
+            "ultimate_psionics:monster_ability:astral_blindsight",
+            "ultimate_psionics:monster_ability:astral_buff",
+            "ultimate_psionics:monster_ability:astral_celerity",
+            "ultimate_psionics:monster_ability:astral_cleave",
+            "ultimate_psionics:monster_ability:astral_compact_form",
+            "ultimate_psionics:monster_ability:astral_concussion",
+            "ultimate_psionics:monster_ability:astral_constrict",
+            "ultimate_psionics:monster_ability:astral_deflection",
+            "ultimate_psionics:monster_ability:astral_dimension_slide",
+            "ultimate_psionics:monster_ability:astral_dodge",
+            "ultimate_psionics:monster_ability:astral_energy_bolt",
+            "ultimate_psionics:monster_ability:astral_extra_attack",
+            "ultimate_psionics:monster_ability:astral_extra_buff",
+            "ultimate_psionics:monster_ability:astral_extreme_damage_reduction",
+            "ultimate_psionics:monster_ability:astral_extreme_deflection",
+            "ultimate_psionics:monster_ability:astral_fast_healing",
+            "ultimate_psionics:monster_ability:astral_fly",
+            "ultimate_psionics:monster_ability:astral_grab",
+            "ultimate_psionics:monster_ability:astral_great_cleave",
+            "ultimate_psionics:monster_ability:astral_greater_might",
+            "ultimate_psionics:monster_ability:astral_heavy_deflection",
+            "ultimate_psionics:monster_ability:astral_improved_buff",
+            "ultimate_psionics:monster_ability:astral_improved_bull_rush",
+            "ultimate_psionics:monster_ability:astral_improved_critical",
+            "ultimate_psionics:monster_ability:astral_improved_damage_reduction",
+            "ultimate_psionics:monster_ability:astral_improved_fly",
+            "ultimate_psionics:monster_ability:astral_improved_might",
+            "ultimate_psionics:monster_ability:astral_improved_slam_attack",
+            "ultimate_psionics:monster_ability:astral_improved_swim",
+            "ultimate_psionics:monster_ability:astral_might",
+            "ultimate_psionics:monster_ability:astral_mobility",
+            "ultimate_psionics:monster_ability:astral_muscle",
+            "ultimate_psionics:monster_ability:astral_natural_invisibility",
+            "ultimate_psionics:monster_ability:astral_poison_touch",
+            "ultimate_psionics:monster_ability:astral_pounce",
+            "ultimate_psionics:monster_ability:astral_power_attack",
+            "ultimate_psionics:monster_ability:astral_power_resistance",
+            "ultimate_psionics:monster_ability:astral_reach",
+            "ultimate_psionics:monster_ability:astral_rend",
+            "ultimate_psionics:monster_ability:astral_resistance_to_acid",
+            "ultimate_psionics:monster_ability:astral_resistance_to_cold",
+            "ultimate_psionics:monster_ability:astral_resistance_to_electricity",
+            "ultimate_psionics:monster_ability:astral_resistance_to_fire",
+            "ultimate_psionics:monster_ability:astral_resistance_to_sonic",
+            "ultimate_psionics:monster_ability:astral_smite",
+            "ultimate_psionics:monster_ability:astral_spring_attack",
+            "ultimate_psionics:monster_ability:astral_stunning_fist",
+            "ultimate_psionics:monster_ability:astral_swim",
+            "ultimate_psionics:monster_ability:astral_tail_slap",
+            "ultimate_psionics:monster_ability:astral_talons",
+            "ultimate_psionics:monster_ability:astral_trample",
+            "ultimate_psionics:monster_ability:astral_trip",
+            "ultimate_psionics:monster_ability:astral_two_menu_a_abilities",
+            "ultimate_psionics:monster_ability:astral_two_menu_b_abilities",
+            "ultimate_psionics:monster_ability:astral_utility",
+            "ultimate_psionics:monster_ability:astral_warrior_link",
+            "ultimate_psionics:monster_ability:astral_whirlwind_attack",
+            "ultimate_psionics:monster_ability:energy_touch_acid",
+            "ultimate_psionics:monster_ability:energy_touch_cold",
+            "ultimate_psionics:monster_ability:energy_touch_electricity",
+            "ultimate_psionics:monster_ability:energy_touch_fire",
+            "ultimate_psionics:monster_ability:horror_devastating_touch",
+            "ultimate_psionics:monster_ability:horror_link",
+        ],
+    ),
+    // SD-32 row 19 cycle 3: `companion` records `companion_pool_catalog.rs`
+    // structurally declines to serve (empty description, a non-`"declared"`
+    // `origin`, or an unresolved `%N`) -- see the matching `OPEN_FINDINGS`
+    // entries above for the per-book breakdown. Pinned by the corpus's own
+    // RAW `data.key` (this ingest path, unlike every other kind's ingest,
+    // never slugs it into a `<book>:companion:<slug>` wire identity --
+    // `CompanionPoolAbilityDto::corpus_key`'s own doc comment), verbatim
+    // from a live `corpus_record_keys` run, never retyped by hand.
+    // SD-32 row 20: 22 of the 28 pinned below (every `.COPY=` Celestial/
+    // Fiendish creature-template row) now reach via `companion_pool_
+    // catalog.rs`'s new `origin == "copy"` admission (a mechanical summary
+    // of the record's own `TEMPLATE`/`KIT` tokens, the same tier-3 shape
+    // `reference_library_catalog.rs` already built) -- deleted from this
+    // list. The remaining 6 are a genuinely different shape: `Mephit ~
+    // Summon`/`Pseudodragon ~ Tail` are owned-ability rows this catalog's
+    // pool mechanism was never meant to serve (a different gap, unchanged),
+    // and the 4 `Universal Monster Rule ~ ...` rows are `origin: "mod_only"`
+    // dangling-conditional-clause fragments (this cycle re-confirmed
+    // `Change Shape`'s own `mod_only` row carries no description at all,
+    // genuinely different from `.COPY=`'s self-contained template header --
+    // see `companion_pool_catalog.rs`'s own doc comment) that still need a
+    // real base-record merge, not this cycle's tier-3 admission.
+    (
+        "beastiary1",
+        "companions",
+        &[
+            "Mephit ~ Summon",
+            "Pseudodragon ~ Tail",
+            "Universal Monster Rule ~ Change Shape",
+            "Universal Monster Rule ~ Disease (Extraordinary)",
+            "Universal Monster Rule ~ Fast Healing",
+            "Universal Monster Rule ~ Poison (Extraordinary)",
+        ],
+    ),
+    (
+        "advanced_race_guide",
+        "companions",
+        &[
+            "Evolution ~ Major Glitterdust 1",
+            "Evolution ~ Major Glitterdust 3",
+            "Evolution ~ Major Soften Earth and Stone 1",
+            "Evolution ~ Major Soften Earth and Stone 3",
+            "Evolution ~ Stone Curse",
+            "Evolution ~ Ultimate Meld Into Stone 1",
+            "Evolution ~ Ultimate Stone Shape 1",
+            "Shaitan Binder Eidolon ~ Noble Eidolon",
+            "WCEvolution ~ Skilled",
+        ],
+    ),
+    (
+        "apg",
+        "companions",
+        &[
+            "Evolution ~ Ability Increase Cha",
+            "Evolution ~ Ability Increase Con LH",
+            "Evolution ~ Ability Increase Con SM",
+            "Evolution ~ Ability Increase Dex",
+            "Evolution ~ Ability Increase Int",
+            "Evolution ~ Ability Increase Str LH",
+            "Evolution ~ Ability Increase Str SM",
+            "Evolution ~ Ability Increase Wis",
+            "Evolution ~ Arms",
+            "Evolution ~ Blindsense",
+            "Evolution ~ Blindsight",
+            "Evolution ~ Breath Weapon (Cone of Acid)",
+            "Evolution ~ Breath Weapon (Cone of Cold)",
+            "Evolution ~ Breath Weapon (Cone of Electricity)",
+            "Evolution ~ Breath Weapon (Cone of Fire)",
+            "Evolution ~ Breath Weapon (Line of Acid)",
+            "Evolution ~ Breath Weapon (Line of Cold)",
+            "Evolution ~ Breath Weapon (Line of Electricity)",
+            "Evolution ~ Breath Weapon (Line of Fire)",
+            "Evolution ~ Burrow",
+            "Evolution ~ DR Chaotic",
+            "Evolution ~ DR Evil",
+            "Evolution ~ DR Good",
+            "Evolution ~ DR Lawful",
+            "Evolution ~ Extra Breath Weapon Cone Acid",
+            "Evolution ~ Extra Breath Weapon Cone Cold",
+            "Evolution ~ Extra Breath Weapon Cone Electricity",
+            "Evolution ~ Extra Breath Weapon Cone Fire",
+            "Evolution ~ Extra Breath Weapon Line Acid",
+            "Evolution ~ Extra Breath Weapon Line Cold",
+            "Evolution ~ Extra Breath Weapon Line Electricity",
+            "Evolution ~ Extra Breath Weapon Line Fire",
+            "Evolution ~ Fast Healing",
+            "Evolution ~ Flight Magic",
+            "Evolution ~ Flight Winged",
+            "Evolution ~ Frightful Presence",
+            "Evolution ~ Huge",
+            "Evolution ~ Immune Acid",
+            "Evolution ~ Immune Cold",
+            "Evolution ~ Immune Electricity",
+            "Evolution ~ Immune Fire",
+            "Evolution ~ Immune Sonic",
+            "Evolution ~ Improved DR Chaotic",
+            "Evolution ~ Improved DR Evil",
+            "Evolution ~ Improved DR Good",
+            "Evolution ~ Improved DR Lawful",
+            "Evolution ~ Improved Fast Healing",
+            "Evolution ~ Improved Flight",
+            "Evolution ~ Large",
+            "Evolution ~ Legs",
+            "Evolution ~ Poison Con",
+            "Evolution ~ Poison Str",
+            "Evolution ~ Rake",
+            "Evolution ~ Reach",
+            "Evolution ~ Remove Claws",
+            "Evolution ~ Rend",
+            "Evolution ~ Resist Acid",
+            "Evolution ~ Resist Cold",
+            "Evolution ~ Resist Electricity",
+            "Evolution ~ Resist Fire",
+            "Evolution ~ Resist Sonic",
+            "Evolution ~ SR",
+            "Evolution ~ Small",
+            "Evolution ~ Trample",
+            "Evolution ~ Tremorsense",
+            "Evolution ~ Trip",
+            "Evolution ~ Weapon Martial",
+            "Evolution ~ Weapon Simple",
+            "Evolution ~ Web",
+            "Temp Evolution ~ Ability Increase Cha",
+            "Temp Evolution ~ Ability Increase Con LH",
+            "Temp Evolution ~ Ability Increase Con SM",
+            "Temp Evolution ~ Ability Increase Dex",
+            "Temp Evolution ~ Ability Increase Int",
+            "Temp Evolution ~ Ability Increase Str LH",
+            "Temp Evolution ~ Ability Increase Str SM",
+            "Temp Evolution ~ Ability Increase Wis",
+            "Temp Evolution ~ Arms",
+            "Temp Evolution ~ Blindsense",
+            "Temp Evolution ~ Blindsight",
+            "Temp Evolution ~ Breath Weapon (Cone of Acid)",
+            "Temp Evolution ~ Breath Weapon (Cone of Cold)",
+            "Temp Evolution ~ Breath Weapon (Cone of Electricity)",
+            "Temp Evolution ~ Breath Weapon (Cone of Fire)",
+            "Temp Evolution ~ Breath Weapon (Line of Acid)",
+            "Temp Evolution ~ Breath Weapon (Line of Cold)",
+            "Temp Evolution ~ Breath Weapon (Line of Electricity)",
+            "Temp Evolution ~ Breath Weapon (Line of Fire)",
+            "Temp Evolution ~ Burrow",
+            "Temp Evolution ~ DR Chaotic",
+            "Temp Evolution ~ DR Evil",
+            "Temp Evolution ~ DR Good",
+            "Temp Evolution ~ DR Lawful",
+            "Temp Evolution ~ Extra Breath Weapon Cone Acid",
+            "Temp Evolution ~ Extra Breath Weapon Cone Cold",
+            "Temp Evolution ~ Extra Breath Weapon Cone Electricity",
+            "Temp Evolution ~ Extra Breath Weapon Cone Fire",
+            "Temp Evolution ~ Extra Breath Weapon Line Acid",
+            "Temp Evolution ~ Extra Breath Weapon Line Cold",
+            "Temp Evolution ~ Extra Breath Weapon Line Electricity",
+            "Temp Evolution ~ Extra Breath Weapon Line Fire",
+            "Temp Evolution ~ Fast Healing",
+            "Temp Evolution ~ Flight Magic",
+            "Temp Evolution ~ Flight Winged",
+            "Temp Evolution ~ Frightful Presence",
+            "Temp Evolution ~ Huge",
+            "Temp Evolution ~ Immune Acid",
+            "Temp Evolution ~ Immune Cold",
+            "Temp Evolution ~ Immune Electricity",
+            "Temp Evolution ~ Immune Fire",
+            "Temp Evolution ~ Immune Sonic",
+            "Temp Evolution ~ Improved Bite",
+            "Temp Evolution ~ Improved DR Chaotic",
+            "Temp Evolution ~ Improved DR Evil",
+            "Temp Evolution ~ Improved DR Good",
+            "Temp Evolution ~ Improved DR Lawful",
+            "Temp Evolution ~ Improved Fast Healing",
+            "Temp Evolution ~ Improved Flight",
+            "Temp Evolution ~ Large",
+            "Temp Evolution ~ Legs",
+            "Temp Evolution ~ Poison Con",
+            "Temp Evolution ~ Poison Str",
+            "Temp Evolution ~ Rake",
+            "Temp Evolution ~ Reach",
+            "Temp Evolution ~ Rend",
+            "Temp Evolution ~ Resist Acid",
+            "Temp Evolution ~ Resist Cold",
+            "Temp Evolution ~ Resist Electricity",
+            "Temp Evolution ~ Resist Fire",
+            "Temp Evolution ~ Resist Sonic",
+            "Temp Evolution ~ SR",
+            "Temp Evolution ~ Trample",
+            "Temp Evolution ~ Tremorsense",
+            "Temp Evolution ~ Trip",
+            "Temp Evolution ~ Weapon Martial",
+            "Temp Evolution ~ Weapon Simple",
+            "Temp Evolution ~ Web",
+        ],
+    ),
+    (
+        "book_of_the_damned_volume_1",
+        "companions",
+        &["1", "Imp Companion", "Imp Companion ~ Bonus Tricks", "Imp Companion ~ Starting Shape Change"],
+    ),
+    (
+        "crb",
+        "companions",
+        &[
+            "+2 to Dexterity and Constitution",
+            "Animal Companion Feat ~ Combat Reflexes",
+            "Animal Companion Feat ~ Power Attack",
+            "Animal Companion Feat ~ Toughness",
+            "Animal Companion Feat ~ Weapon Focus",
+            "Animal Companion ~ AC Bonus",
+            "Animal Companion ~ Bonus Tricks",
+            "Animal Companion ~ Spell Resistance",
+            "Animal Companion ~ Stat Bonus",
+            "Base Companion ~ Animal Companion",
+            "Base Companion ~ Special Mount",
+            "Companion",
+            "Companion Advancement",
+            "Companion Skills",
+            "Companion Stat ~ CHA",
+            "Companion Stat ~ CON",
+            "Companion Stat ~ DEX",
+            "Companion Stat ~ INT",
+            "Companion Stat ~ STR",
+            "Companion Stat ~ WIS",
+            "Companion ~ Ability Score Increase",
+            "Companion ~ Bonus Tricks",
+            "Companion ~ Devotion",
+            "Companion ~ Evasion",
+            "Companion ~ Improved Evasion",
+            "Companion ~ Link",
+            "Companion ~ Multiattack",
+            "Companion ~ Share Spells",
+            "Companion ~ Spell Resistance (AC)",
+            "Companion ~ Spell Resistance (SM)",
+            "Shadow Companion",
+        ],
+    ),
+    (
+        "ultimate_magic",
+        "companions",
+        &[
+            "1",
+            "Black Blade",
+            "Black Blade Arcane Pool",
+            "Black Blade ~ Ego",
+            "Black Blade ~ Enhancement Bonus",
+            "Black Blade ~ Life Drinker",
+            "Black Blade ~ Spell Defense",
+            "Black Blade ~ Transfer Arcana",
+            "Companion Stat ~ Mindless to 1 INT",
+            "Evolution ~ BM Acid Splash 1",
+            "Evolution ~ BM Acid Splash 3",
+            "Evolution ~ BM Dancing Lights 1",
+            "Evolution ~ BM Dancing Lights 3",
+            "Evolution ~ BM Daze 1",
+            "Evolution ~ BM Daze 3",
+            "Evolution ~ BM Detect Magic 1",
+            "Evolution ~ BM Detect Magic 3",
+            "Evolution ~ BM Flare 1",
+            "Evolution ~ BM Flare 3",
+            "Evolution ~ BM Ghost Sound 1",
+            "Evolution ~ BM Ghost Sound 3",
+            "Evolution ~ BM Light 1",
+            "Evolution ~ BM Light 3",
+            "Evolution ~ BM Mage Hand 1",
+            "Evolution ~ BM Mage Hand 3",
+            "Evolution ~ BM Ray of Frost 1",
+            "Evolution ~ BM Ray of Frost 3",
+            "Evolution ~ BM Stabilize 1",
+            "Evolution ~ BM Stabilize 3",
+            "Evolution ~ BM Touch of Fatigue 1",
+            "Evolution ~ BM Touch of Fatigue 3",
+            "Evolution ~ Channel Resistance",
+            "Evolution ~ Dimension Door",
+            "Evolution ~ Hooved Feet",
+            "Evolution ~ Hooved Hands",
+            "Evolution ~ Improved Channel Resistance",
+            "Evolution ~ Incorporeal Form",
+            "Evolution ~ Major Acid Arrow 1",
+            "Evolution ~ Major Acid Arrow 3",
+            "Evolution ~ Major Cure Moderate Wounds 1",
+            "Evolution ~ Major Cure Moderate Wounds 3",
+            "Evolution ~ Major Darkness 1",
+            "Evolution ~ Major Darkness 3",
+            "Evolution ~ Major Daze Monster 1",
+            "Evolution ~ Major Daze Monster 3",
+            "Evolution ~ Major Glide 1",
+            "Evolution ~ Major Glide 3",
+            "Evolution ~ Major Invisibility 1",
+            "Evolution ~ Major Invisibility 3",
+            "Evolution ~ Major Lesser Restoration 1",
+            "Evolution ~ Major Lesser Restoration 3",
+            "Evolution ~ Major Levitate 1",
+            "Evolution ~ Major Levitate 3",
+            "Evolution ~ Major Minor Image 1",
+            "Evolution ~ Major Minor Image 3",
+            "Evolution ~ Major Scorching Ray 1",
+            "Evolution ~ Major Scorching Ray 3",
+            "Evolution ~ Major See Invisibility 1",
+            "Evolution ~ Major See Invisibility 3",
+            "Evolution ~ Major Spider Climb 1",
+            "Evolution ~ Major Spider Climb 3",
+            "Evolution ~ Minor Burning Hands 1",
+            "Evolution ~ Minor Burning Hands 3",
+            "Evolution ~ Minor Comprehend Languages 1",
+            "Evolution ~ Minor Comprehend Languages 3",
+            "Evolution ~ Minor Cure Light Wounds 1",
+            "Evolution ~ Minor Cure Light Wounds 3",
+            "Evolution ~ Minor Detect Chaos 1",
+            "Evolution ~ Minor Detect Chaos 3",
+            "Evolution ~ Minor Detect Evil 1",
+            "Evolution ~ Minor Detect Evil 3",
+            "Evolution ~ Minor Detect Good 1",
+            "Evolution ~ Minor Detect Good 3",
+            "Evolution ~ Minor Detect Law 1",
+            "Evolution ~ Minor Detect Law 3",
+            "Evolution ~ Minor Magic Missile 1",
+            "Evolution ~ Minor Magic Missile 3",
+            "Evolution ~ Minor Obscuring Mist 1",
+            "Evolution ~ Minor Obscuring Mist 3",
+            "Evolution ~ Minor Silent Image 1",
+            "Evolution ~ Minor Silent Image 3",
+            "Evolution ~ Minor Vanish 1",
+            "Evolution ~ Minor Vanish 3",
+            "Evolution ~ Minor Ventriloquism 1",
+            "Evolution ~ Minor Ventriloquism 3",
+            "Evolution ~ Ultimate Arcane Sight 1",
+            "Evolution ~ Ultimate Create Food and Water 1",
+            "Evolution ~ Ultimate Cure Serious Wounds 1",
+            "Evolution ~ Ultimate Daylight 1",
+            "Evolution ~ Ultimate Fireball 1",
+            "Evolution ~ Ultimate Fly 1",
+            "Evolution ~ Ultimate Gaseous Form 1",
+            "Evolution ~ Ultimate Lightning Bolt 1",
+            "Evolution ~ Ultimate Major Image 1",
+            "Evolution ~ Ultimate Stinking Cloud 1",
+            "Evolution ~ Ultimate Tongues 1",
+            "Evolution ~ Ultimate Water Breathing 1",
+            "Giant Spider Vermin Companion ~ Poison",
+            "Greensting Scorpion ~ Poison",
+            "Temp Evolution ~ Channel Resistance",
+            "Temp Evolution ~ Dimension Door",
+            "Temp Evolution ~ Hooved Feet",
+            "Temp Evolution ~ Hooved Hands",
+            "Temp Evolution ~ Improved Channel Resistance",
+            "Temp Evolution ~ Incorporeal Form",
+            "Vermin Companion",
+        ],
+    ),
+    (
+        "ultimate_wilderness",
+        "companions",
+        &[
+            "Aberrant Companion ~ Aberrant Sight",
+            "Aberrant Companion ~ Aberrant Skills",
+            "Animal Trick ~ Cocoon",
+            "Animal Trick ~ Spin Silk",
+            "Archetype Companion",
+            "Archetype Familiar",
+            "Augmented Companion ~ Augmented Sight",
+            "Deathtouched Companion ~ Dead Sight",
+            "Deathtouched Companion ~ Deathtouched Skills",
+            "Draconic Companion ~ Acid Resistance",
+            "Draconic Companion ~ Breath Weapon Choice",
+            "Draconic Companion ~ Breath Weapon ~ Cone",
+            "Draconic Companion ~ Breath Weapon ~ Line",
+            "Draconic Companion ~ Cold Resistance",
+            "Draconic Companion ~ Draconic Sight",
+            "Draconic Companion ~ Draconic Skills",
+            "Draconic Companion ~ Electricity Resistance",
+            "Draconic Companion ~ Fire Resistance",
+            "Feytouched Companion Advancement",
+            "Feytouched Companion ~ Feytouched Skills",
+            "Feytouched Companion ~ Iron Bane",
+            "Figment ~ Manifest Dreams",
+            "Hunter's Bond ~ Animal Companion",
+            "Infiltrator ~ Scry on Familiar",
+            "Infiltrator ~ Uncanny Dodge Tracker",
+            "Pilferer ~ Nondetection",
+            "Pilferer ~ Sneak",
+            "Plant Base Form ~ Cactus",
+            "Plant Base Form ~ Conifer",
+            "Plant Base Form ~ Fungus",
+            "Plant Base Form ~ Leaf",
+            "Plant Base Form ~ Seaweed",
+            "Plant ~ Unchained Eidolon LVL08",
+            "Prankster ~ Glib Comedy",
+            "Precocious Companion Advancement",
+            "Tracker ~ Tracker Skills",
+            "Unchained Eidolon Base Form ~ Cactus",
+            "Unchained Eidolon Base Form ~ Conifer",
+            "Unchained Eidolon Base Form ~ Fungus",
+            "Unchained Eidolon Base Form ~ Leaf",
+            "Unchained Eidolon Base Form ~ Seaweed",
+            "Verdant Companion ~ Verdant Resistance",
+        ],
+    ),
 ];
 
 fn recorded_unreached(family: &Family) -> BTreeSet<String> {
@@ -3506,8 +6348,8 @@ mod tests {
         let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
         assert_eq!(
             ingested.len(),
-            414,
-            "ARG's 414 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
+            421,
+            "ARG's 421 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
              1-F2, 2026-08-15, Bestiary 2's 6-race batch; 201 -> 259 by SD-31-E6-F4-002, \
              2026-08-16, ingest_races.rs's own 6-race batch of 58 standard-tier records for \
              Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, sharing this book directory with this \
@@ -3525,10 +6367,15 @@ mod tests {
              350 -> 414 by the Core Essentials removal, 2026-08-18, which re-filed Aasimar's \
              and Tiefling's 64 heritage records here -- 16 selectable heritages (6 Aasimar + \
              10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows they grant, \
-             previously read out of data/corpus/core_essentials/race_trait/)"
+             previously read out of data/corpus/core_essentials/race_trait/; 414 -> 421 by \
+             SD-32 card-11 T2b lane, 2026-08-23, decisions.md §16 item 2: the 7 `Human ~ \
+             Adoptive Parentage` CHOOSE-pool members (Drow, Dwarf, Elf, Gnome, Grippli, \
+             Halfling, Orc), previously silently dropped by `parse_row` because they carry no \
+             `TYPE:` at all -- see `race_resolver::adoptive_parentage_options` and \
+             `AdoptiveParentageOptionDto`)"
         );
         match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 414),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 421),
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
@@ -3592,20 +6439,25 @@ mod tests {
         let ingested = corpus_record_keys("inner_sea_races", "race_trait");
         assert_eq!(
             ingested.len(),
-            82,
-            "ISR's 82 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
+            94,
+            "ISR's 94 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
              (SD-29 `decisions.md` 53): `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's \
              own declaration that the record NAME is Product Identity. A name cannot be \
              redacted, so the row is dropped at ingest rather than screened -- the same \
              ruling the monster lane reached for Inner Sea World Guide's five NAMEISPI rows. \
-             71 -> 82 by SD-31 Epic 1-F2 (2026-08-15), Bestiary 2's 6-race batch."
+             71 -> 82 by SD-31 Epic 1-F2 (2026-08-15), Bestiary 2's 6-race batch. \
+             82 -> 94 by SD-32 card 11 T2b lane (2026-08-22): `IN_SCOPE_RACES` in \
+             `ingest_race_traits.rs` had grown to 34 races across three SD-31 waves but the \
+             book was never re-run after, so 10 already-in-scope races' real alternate-trait \
+             rows (Catfolk, Gillman, Kitsune, Nagaji, Ratfolk, Strix, Suli x2, Vanara, \
+             Vishkanya x2, Wayang = 12) sat un-transcribed on disk -- a stale regen, not new \
+             content or a new mechanism."
         );
 
-        // 79 of 82 reach. The shortfall is `Human ~ Tribalistic Languages`
-        // plus the three `Mostly Human ~ <Race> ~ Languages` rows
-        // `UNREACHED_RECORD_FINDINGS` names, pinned by key, both ways, so a
-        // FIFTH unreached record fails here and so does any of these four
-        // silently starting to reach.
+        // 79 of 94 reach. The shortfall is `Human ~ Tribalistic Languages`
+        // plus the five records `UNREACHED_RECORD_FINDINGS` names, pinned by
+        // key, both ways, so a SEVENTH unreached record fails here and so
+        // does any of these six silently starting to reach.
         match reach_of(&isr_traits).expect("ISR race traits have a declared claim") {
             Reach::NotSurfaced { missing, .. } => {
                 let mut missing: Vec<&str> = missing.iter().map(String::as_str).collect();
@@ -3615,10 +6467,14 @@ mod tests {
                     vec![
                         "Human ~ Tribalistic Languages",
                         "Mostly Human ~ Ifrit ~ Languages",
+                        "Mostly Human ~ Suli ~ Languages",
                         "Mostly Human ~ Sylph ~ Languages",
                         "Mostly Human ~ Undine ~ Languages",
+                        "Suli ~ Trusted Mediator",
                     ],
-                    "exactly four ISR records are unreached, and they are the ones OPEN_FINDINGS names"
+                    "exactly six ISR records are unreached, and they are the ones OPEN_FINDINGS names \
+                     (`Mostly Human ~ Suli ~ Languages` and `Suli ~ Trusted Mediator` added \
+                     2026-08-22, SD-32 card 11)"
                 );
             }
             other => panic!("ISR's race-trait shortfall must be reported exactly, got {other:?}"),
@@ -3832,6 +6688,104 @@ mod tests {
              stop.",
             undeclared.join(", ")
         );
+    }
+
+    /// The Monk shape ("a complete hand-authored table with a string->id
+    /// dispatch link silently missing one entry") closure for the `races`
+    /// and `monsters` kinds, corpus-wide -- not scoped to the hand-modelled
+    /// subsets `RaceId::ALL` (7 CRB races) / `beastiary1::MonsterId::ALL`
+    /// (46 Bestiary-1 stat blocks) that a prior wave's own unit tests
+    /// covered (`SD-31-corpus-closure-grind/todo/sweeps.md` S1/S2,
+    /// `artifacts/MEASURE-TWICE.md` T1: "Race/monster: partial only ...
+    /// the other 280 chassis-served monster entries and 31 non-CRB races
+    /// were never checked for this shape").
+    ///
+    /// Two things this test proves, mechanically, that the prior wave's
+    /// narrower enum-scoped tests did not:
+    ///
+    /// 1. Every book with a `race/` or `monster/` directory in the real
+    ///    corpus has a `reach_of` dispatch arm -- so no book can be
+    ///    silently absent from the check itself (the book-level form of the
+    ///    Monk shape).
+    /// 2. The non-hand-modelled remainder of each kind (a race book beyond
+    ///    CRB, or a monster book beyond Bestiary 1's 46) is served through
+    ///    a corpus-derived id set (`race_catalog::ingested_race_ids_for_book`
+    ///    reads `corpus.race_keys()`; the monster chassis modules generate
+    ///    their roster from the same corpus rows) rather than a second,
+    ///    separately hand-authored id table -- so there is no distinct
+    ///    string->id dispatch layer for a variant to be missing *from*.
+    ///    `every_ingested_family_is_accounted_for` (above) already proves
+    ///    every such family reaches or is a written finding; this test
+    ///    names races/monsters specifically so a future regression that
+    ///    narrows either kind back to its hand-modelled subset fails here,
+    ///    by name, rather than silently.
+    #[test]
+    fn dispatch_gap_race_and_monster_families_all_have_book_level_reach_arms() {
+        let (families, unknown) = corpus_inventory();
+        assert!(
+            unknown.is_empty(),
+            "corpus_inventory found directories this gate cannot name: {unknown:?}"
+        );
+
+        let mut race_books = Vec::new();
+        let mut monster_books = Vec::new();
+        for family in &families {
+            if family.kind == "races" {
+                race_books.push(family.book.clone());
+            } else if family.kind == "monsters" {
+                monster_books.push(family.book.clone());
+            }
+        }
+
+        assert!(
+            race_books.len() >= 6,
+            "expected at least the 6 registered race books (crb, beastiary1, bestiary_2, \
+             bestiary_5, bestiary_6, advanced_race_guide); corpus_inventory found {}: {:?}",
+            race_books.len(),
+            race_books
+        );
+        assert!(
+            monster_books.len() >= 13,
+            "expected at least the 13 registered monster books (beastiary1 plus the 12 \
+             chassis-served books); corpus_inventory found {}: {:?}",
+            monster_books.len(),
+            monster_books
+        );
+
+        let mut missing_arms = Vec::new();
+        for book in race_books.iter().chain(monster_books.iter()) {
+            let kind = if race_books.contains(book) { "races" } else { "monsters" };
+            let family = Family::new(book, kind);
+            if reach_of(&family).is_none() {
+                missing_arms.push(family.label());
+            }
+        }
+        assert!(
+            missing_arms.is_empty(),
+            "book-level Monk-shape dispatch gap: these race/monster families exist in the \
+             corpus but have no reach_of arm at all, so their records cannot even be checked \
+             for reachability: {}",
+            missing_arms.join(", ")
+        );
+
+        // The non-CRB / non-Bestiary-1 remainder must actually be present in
+        // the population `races_reach`/the monster chassis check against --
+        // i.e. this is a corpus-wide claim, not one that quietly stops at
+        // the 7-race / 46-monster hand-modelled subset. `ingested_race_ids_
+        // for_book` is corpus-derived (reads `corpus.race_keys()`, filtered
+        // by book_id) so a non-empty result for a non-CRB book is itself
+        // proof there is no separate hand-authored id table gating it.
+        for book_id in ["bestiary_2", "bestiary_5", "bestiary_6", "advanced_race_guide"] {
+            let ids = crate::race_catalog::ingested_race_ids_for_book(book_id);
+            assert!(
+                !ids.is_empty(),
+                "{book_id}'s races are corpus-derived (ingested_race_ids_for_book), but the \
+                 derived set came back empty -- either the book has no races (contradicts \
+                 corpus_inventory finding it above) or the corpus-derivation path itself \
+                 silently dropped every row, which is exactly the Monk-shape failure mode \
+                 this test exists to catch"
+            );
+        }
     }
 
     /// Claims are executed, not trusted. A surface that stops carrying a
@@ -4133,14 +7087,18 @@ mod tests {
     /// `for b in inner_sea_combat monster_codex inner_sea_intrigue horror_adventures
     /// bestiary_5 bestiary_6 bestiary_2; do echo -n "$b ";
     /// ls data/corpus/$b/companion/*.json | wc -l; done`
-    /// -> 10, 15, 11, 2, 55, 26, 16 — which reproduce `docs/work-inventory.json`'s
-    /// own companion-unit counts for the same books exactly, with ONE stated
-    /// exception: Bestiary 5's inventory count is 57, and the two extra units
-    /// (`Familiar (Brain Mole)`, `Familiar (Chuspiki)`) live in
-    /// `support/b5_races_companion_oa.lst`, which the book's pcc loads only
-    /// under `PRECAMPAIGN:1,Occult Adventures`. Out of this rule set's scope by
-    /// construction, not by omission — `decisions.md §47.2`, and
-    /// `rules_tables::bestiary_5` pins their absence by name.
+    /// -> 10, 15, 11, 2, 57, 26, 16 — which reproduce `docs/work-inventory.json`'s
+    /// own companion-unit counts for the same books exactly.
+    ///
+    /// Bestiary 5's two `support/b5_races_companion_oa.lst` units
+    /// (`Familiar (Brain Mole)`, `Familiar (Chuspiki)`) were excluded
+    /// through 2026-08-23 on the premise that their `PRECAMPAIGN:1,Occult
+    /// Adventures` gate named an uningested book (`decisions.md §47.2`).
+    /// Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): that premise
+    /// is now false (`CORPUS_BOOK_IDS` carries `occult_adventures`) and
+    /// `decisions.md §27b` separately overturned this exact exclusion
+    /// shape; both rows are now transcribed
+    /// (`rules_tables::bestiary_5::companion_data`) and reach the wire.
     #[test]
     fn every_ingested_companion_book_reaches_the_catalog_record_by_record() {
         let expected: &[(&str, &str, usize)] = &[
@@ -4148,7 +7106,7 @@ mod tests {
             ("monster_codex", "MC", 15),
             ("inner_sea_intrigue", "ISI", 11),
             ("horror_adventures", "HA", 2),
-            ("bestiary_5", "B5", 55),
+            ("bestiary_5", "B5", 57),
             ("bestiary_6", "B6", 26),
             ("bestiary_2", "B2", 16),
         ];
@@ -4345,10 +7303,26 @@ mod tests {
             9,
             "the 9 shippable rows; the book's other 5 carry NAMEISPI:YES"
         );
+        // 14 -> 27 (`decisions.md §20`, no_record-to-zero wave 2 follow-on,
+        // +13 owner-less rows -- shape measurable, reachability NOT
+        // claimed, pinned by exact key in `UNREACHED_RECORD_FINDINGS` under
+        // this same key).
+        // 27 -> 30 (`decisions.md §24`/round 7, +3): the 3 name-PI ability
+        // rows this group closes now ship under a Codex-generated neutral
+        // key instead of being dropped -- the corpus total (30, this
+        // module doc's own classifier table above) and the shipped total
+        // now agree, because nothing is PI-dropped at the ability level for
+        // this book any more (only its 5 monster rows still are).
+        assert_eq!(abilities.len(), 30, "every non-PI row on disk for this book/kind");
+        let owner_less =
+            recorded_unreached(&Family::new("inner_sea_world_guide", "monster_abilities"));
+        assert_eq!(owner_less.len(), 16, "the owner-less rows this cycle's mechanism shipped");
+        let owned_abilities: BTreeSet<String> =
+            abilities.difference(&owner_less).cloned().collect();
         assert_eq!(
-            abilities.len(),
+            owned_abilities.len(),
             14,
-            "the 14 owned, non-PI rows; the book's other 16 are PI or orphaned"
+            "the 14 owned, non-PI, non-orphan rows; the book's other 16 are orphaned"
         );
 
         let response = crate::monster_catalog::build_monster_catalog();
@@ -4365,7 +7339,7 @@ mod tests {
             .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
             .collect();
         assert_eq!(served_monsters, monsters, "served monsters");
-        assert_eq!(served_abilities, abilities, "served abilities");
+        assert_eq!(served_abilities, owned_abilities, "served abilities");
 
         // Not a count and not a name list: the property is checked against the
         // LIVE blacklist, so a term added to `PI_BLACKLIST_TERMS` later fails
@@ -4399,14 +7373,24 @@ mod tests {
             }
             other => panic!("expected every monster to reach, got {other:?}"),
         }
+        // **Superseded `decisions.md §20` (no_record-to-zero wave 2
+        // follow-on).** 13 owner-less rows now ship for shape measurement;
+        // reach itself does not move for them (`list_monster_catalog` only
+        // ever walks a monster's own `ability_keys`), so the claim is
+        // `NotSurfaced` naming exactly the 13 -- pinned by exact key in
+        // `UNREACHED_RECORD_FINDINGS` under this same key.
+        // 13 -> 16 (`decisions.md §24`/round 7, +3): see this test's own
+        // earlier comment on the identical delta.
         match reach_of(&Family::new("inner_sea_world_guide", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, surface } => {
-                assert_eq!(records, 14);
-                assert_eq!(surface, "list_monster_catalog");
-            }
-            other => panic!("expected every linked ability to reach, got {other:?}"),
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing.len(),
+                16,
+                "expected exactly the 16 owner-less records to be the whole shortfall (the \
+                 other 14 all reach)"
+            ),
+            other => panic!("expected 16 named non-reaches (14 of 30 still reach), got {other:?}"),
         }
     }
 
@@ -4461,7 +7445,37 @@ mod tests {
         // raw-candidate population this test does not itself assert on and
         // this cycle did not re-derive -- not restated here to avoid
         // quoting a number nobody has re-checked against the new total.
-        assert_eq!(abilities.len(), 493, "the owned rows on disk for this book/kind");
+        // T9 `MonsterAbilityFacet` widening cycle: 493 -> 571 (+78 on disk,
+        // via `gen_book_cache -- bestiary_2` catching disk up to the
+        // widened Rust table -- 60 of the 78 are genuinely new records this
+        // cycle's `transcribe_monster_tables.py` run shipped; the other 18
+        // were the pre-existing `CATEGORY:Internal` bundle-owned rows this
+        // very test's own `BUNDLE_OWNED_NO_JSON_TWIN_YET` list already named
+        // as served-but-not-yet-on-disk -- `gen_book_cache` wrote their JSON
+        // twin for the first time, closing that gap incidentally).
+        // 571 -> 656 (`decisions.md §20`, no_record-to-zero wave 2
+        // follow-on, +85 owner-less rows -- shape measurable, reachability
+        // NOT claimed, pinned by exact key in `UNREACHED_RECORD_FINDINGS`
+        // under this same key).
+        // 656 -> 657 (`decisions.md §22`/round 6, +1): `Tick Swarm ~ Cling`
+        // now ingests (a misspelled `TYPE:SpecialAttck` facet segment this
+        // book's own parser previously refused). It is OWNED (by
+        // `Tick Swarm`), so it joins `owned_abilities`, not `owner_less`.
+        // 657 -> 665 (`decisions.md §27`/round 8, +8): the `TYPE:`-facet-
+        // vocabulary-gap group closes via the provisional `SpecialQuality`
+        // default -- all 8 are namespaced `<Monster> ~ <Ability>` keys whose
+        // owner resolves through the existing prefix pass, so all 8 join
+        // `owned_abilities`, none `owner_less`.
+        // 665 -> 667 (`decisions.md §27b` round 9, +2): `Telepathy ~ Miles`/
+        // `Voidworm ~ Change Shape` close via `parse_desc`'s new
+        // generalised sixth branch -- both resolve a real owner, so both
+        // join `owned_abilities`, none `owner_less`.
+        assert_eq!(abilities.len(), 667, "every row on disk for this book/kind");
+        let owner_less = recorded_unreached(&Family::new("bestiary_2", "monster_abilities"));
+        assert_eq!(owner_less.len(), 85, "the owner-less rows this cycle's mechanism shipped");
+        let owned_abilities: BTreeSet<String> =
+            abilities.difference(&owner_less).cloned().collect();
+        assert_eq!(owned_abilities.len(), 582, "the owned (reachable) rows on disk");
 
         let response = crate::monster_catalog::build_monster_catalog();
         let served_monsters: BTreeSet<String> = response
@@ -4507,7 +7521,7 @@ mod tests {
             "bestiary_2:monster_ability:umbral_dragon_umbral_scion",
             "bestiary_2:monster_ability:water_breathing",
         ];
-        let expected_served: BTreeSet<String> = abilities
+        let expected_served: BTreeSet<String> = owned_abilities
             .iter()
             .cloned()
             .chain(BUNDLE_OWNED_NO_JSON_TWIN_YET.iter().map(|s| s.to_string()))
@@ -4537,15 +7551,26 @@ mod tests {
             }
             other => panic!("expected every monster to reach, got {other:?}"),
         }
+        // **Superseded `decisions.md §20` (no_record-to-zero wave 2
+        // follow-on).** 85 owner-less rows now ship for shape measurement
+        // (SD31-E6-F9-005: 401 -> 493; T9 `MonsterAbilityFacet` widening:
+        // 493 -> 571 owned; this cycle: +85 owner-less = 656 total). Reach
+        // itself does not move for the 85 (`list_monster_catalog` only ever
+        // walks a monster's own `ability_keys`), so the claim is
+        // `NotSurfaced` naming exactly the 85 -- pinned by exact key in
+        // `UNREACHED_RECORD_FINDINGS` under this same key.
         match reach_of(&Family::new("bestiary_2", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, surface } => {
-                // SD31-E6-F9-005 (transcription lane, wave 12): 401 -> 493.
-                assert_eq!(records, 493);
-                assert_eq!(surface, "list_monster_catalog");
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing.len(),
+                85,
+                "expected exactly the 85 owner-less records to be the whole shortfall (the \
+                 other 571 all reach)"
+            ),
+            other => {
+                panic!("expected 85 named non-reaches (571 of 656 still reach), got {other:?}")
             }
-            other => panic!("expected every linked ability to reach, got {other:?}"),
         }
     }
 
@@ -4582,10 +7607,35 @@ mod tests {
             261,
             "every one of this book's corpus monster rows ships; no PI row, no `.COPY=` delta"
         );
+        // T9 `MonsterAbilityFacet` widening cycle: 27 -> 409. The widened
+        // facet vocabulary and the multi-`TYPE:`-token parsing fix together
+        // unlocked most of this book's population — `rules_tables::
+        // bestiary_3::mod.rs`'s own comment carries the full derivation, and
+        // `gen_book_cache -- bestiary_3` wrote all 409 to disk, closing the
+        // `BUNDLE_OWNED_NO_JSON_TWIN_YET` gap below for every key it names.
+        // 409 -> 675 (`decisions.md §20`, no_record-to-zero wave 2
+        // follow-on, +266 owner-less rows -- shape measurable, reachability
+        // NOT claimed, pinned by exact key in `UNREACHED_RECORD_FINDINGS`
+        // under this same key).
+        // 675 -> 686 (`decisions.md §27`/round 8, +11): the `TYPE:`-facet-
+        // vocabulary-gap group closes via the provisional `SpecialQuality`
+        // default. +1 owned (`Adlet ~ Spell-Like Abilities`); +10
+        // owner-less (`Asurendra ~ None`, `Lunar/Royal/Water Naga ~
+        // Spells`, `Unfettered Eidolon ~ Str/Dex/Con/Int/Wis/Cha`), added to
+        // `UNREACHED_RECORD_FINDINGS` above.
+        // 686 -> 696 (`decisions.md §27b` round 9, +10, all owner-less):
+        // the multi-DESC: parse-refusal group closes -- Jiang-Shi Vampire
+        // plus the 9 `Traits Output ~ <Kind>` rows, added to
+        // `UNREACHED_RECORD_FINDINGS` above.
+        assert_eq!(abilities.len(), 696, "every row on disk for this book/kind");
+        let owner_less = recorded_unreached(&Family::new("bestiary_3", "monster_abilities"));
+        assert_eq!(owner_less.len(), 286, "the owner-less rows this cycle's mechanism shipped");
+        let owned_abilities: BTreeSet<String> =
+            abilities.difference(&owner_less).cloned().collect();
         assert_eq!(
-            abilities.len(),
-            27,
-            "the 27 owned rows; the book's other 13 are orphans owned by no monster row here"
+            owned_abilities.len(),
+            410,
+            "the 410 owned, reachable rows on disk after the T9 widening cycle plus round 8's +1"
         );
 
         let response = crate::monster_catalog::build_monster_catalog();
@@ -4620,7 +7670,7 @@ mod tests {
             "bestiary_3:monster_ability:legion_archon_flames_of_faith",
             "bestiary_3:monster_ability:legion_archon_second_skin",
         ];
-        let expected_served: BTreeSet<String> = abilities
+        let expected_served: BTreeSet<String> = owned_abilities
             .iter()
             .cloned()
             .chain(BUNDLE_OWNED_NO_JSON_TWIN_YET.iter().map(|s| s.to_string()))
@@ -4649,14 +7699,30 @@ mod tests {
             }
             other => panic!("expected every monster to reach, got {other:?}"),
         }
+        // **Superseded `decisions.md §20` (no_record-to-zero wave 2
+        // follow-on).** 266 owner-less rows now ship for shape measurement
+        // (T9 `MonsterAbilityFacet` widening: 27 -> 409 owned; this cycle:
+        // +266 owner-less = 675 total). Reach itself does not move for the
+        // 266 (`list_monster_catalog` only ever walks a monster's own
+        // `ability_keys`), so the claim is `NotSurfaced` naming exactly the
+        // 266 -- pinned by exact key in `UNREACHED_RECORD_FINDINGS` under
+        // this same key.
+        // 266 -> 276 (`decisions.md §27`/round 8, +10; see this test's own
+        // comment above).
+        // 276 -> 286 (`decisions.md §27b` round 9, +10, all owner-less; see
+        // this test's own comment above).
         match reach_of(&Family::new("bestiary_3", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, surface } => {
-                assert_eq!(records, 27);
-                assert_eq!(surface, "list_monster_catalog");
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing.len(),
+                286,
+                "expected exactly the 286 owner-less records to be the whole shortfall (the \
+                 other 410 all reach)"
+            ),
+            other => {
+                panic!("expected 276 named non-reaches (410 of 686 still reach), got {other:?}")
             }
-            other => panic!("expected every linked ability to reach, got {other:?}"),
         }
     }
 
@@ -4718,13 +7784,57 @@ mod tests {
         // book_cache` run wrote -- 68 of those were wave 21's own +399->467
         // Rust-table delta, never previously cache-generated to JSON, plus
         // this cycle's own +55 cross-table-owner rows, `decisions.md §58.3`).
+        // T9 `MonsterAbilityFacet` widening cycle: 522 -> 529 (+7 more owned,
+        // reachable abilities shipped once the widened facet vocabulary and
+        // the multi-`TYPE:`-token parsing fix landed;
+        // `rules_tables::bestiary::mod.rs`'s own comment carries the full
+        // derivation).
+        // `decisions.md §20` (no_record-to-zero wave 2): 529 -> 709 on disk
+        // (+180 owner-less records, no monster row of this book claims them,
+        // now shipped for shape measurement rather than dropped as orphans --
+        // `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_
+        // non_reach`). Reach itself does NOT move: `list_monster_catalog`
+        // only ever walks a monster's own `ability_keys`
+        // (`monster_catalog.rs`), so an owner-less record surfaces nowhere.
+        // The 180 are named, individually, in `UNREACHED_RECORD_FINDINGS`
+        // under this same `("beastiary1", "monster_abilities")` key.
+        //
+        // (A same-cycle instrument note: an earlier draft of this comment
+        // claimed the 180 already reached `Surfaced` — that reading came
+        // from checking `unreached_records_are_exactly_the_recorded_findings`
+        // BEFORE `gen_book_cache beastiary` had ever written these 180
+        // records to `data/corpus/`, so the live `ingested` denominator did
+        // not contain them yet and every one looked "fixed" for having
+        // nothing to be un-fixed from. Re-checked after the real regen, via
+        // this very test failing `NotSurfaced` naming all 180: they do not
+        // reach. `decisions.md §17a`'s own lesson, paid twice in one cycle.)
+        // 709 -> 710 (`decisions.md §22`/round 6, +1): `Spectre ~ Create Spawn`
+        // now ingests (a comma-delimiter `TYPE:` row this book's own parser
+        // previously refused). It is OWNED (by `Spectre`), so it joins the
+        // 529-strong reaching set, not the 180 named non-reaches below —
+        // `missing.len()` is unchanged.
+        // 710 -> 711 (`decisions.md §27`/round 8, +1): `Morlock ~ Sneak
+        // Attack` (`TYPE:Internal`, no facet/delivery) now ships with a
+        // provisional `SpecialQuality` facet default. It is OWNED (by
+        // `Morlock`), so it joins the reaching set too — `missing.len()` is
+        // unchanged.
+        // 711 -> 733 (`decisions.md §27b` round 9, +22): the multi-DESC:
+        // parse-refusal group closes via `parse_desc`'s new generalised
+        // sixth branch -- 5 land OWNED (join the reaching set, `missing.len()`
+        // unchanged) and 17 land owner-less (join the shortfall below).
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 522, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 733, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 522),
-            other => panic!("expected all 522 abilities to reach, got {other:?}"),
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing.len(),
+                197,
+                "expected exactly the 197 owner-less records to be the whole shortfall \
+                 (the other 536 all reach — `assess` reports the family NotSurfaced as a \
+                 whole the instant ANY record is missing, never a partial Surfaced)"
+            ),
+            other => panic!("expected 197 named non-reaches (536 of 733 still reach), got {other:?}"),
         }
     }
 
@@ -4734,18 +7844,54 @@ mod tests {
     /// The premise is checked rather than assumed: the corpus keys and the
     /// receipt ids really are different vocabularies, so this passing means the
     /// engine is carrying the key across, not that the two happened to match.
+    ///
+    /// **Partial-credit branch (SD-32 row 19 cycle 2), matching this family's
+    /// sibling tests' shape** (e.g. the `733`-record ARG/ISF test two cases
+    /// above, which separates a family's REACHING subset from its still-open
+    /// remainder rather than collapsing the whole family to `NotSurfaced` the
+    /// instant one record does not reach). PU's `class_feature` corpus
+    /// directory holds 604 on-disk records; only 64 of them are owned by one
+    /// of the four Unchained class tables this engine models
+    /// (`pu_class_owned_feature_keys`). The other 540 are re-derived and
+    /// reported here too, by kind of gap rather than assumed away, so this
+    /// test still fails the moment either subset's shape changes without
+    /// anyone updating it.
     #[test]
     fn pathfinder_unchaineds_class_features_are_claimed_per_corpus_record() {
         let family = Family::new("pathfinder_unchained", "class_features");
-        let ingested = corpus_record_keys("pathfinder_unchained", "class_feature");
+
+        let on_disk = corpus_record_keys("pathfinder_unchained", "class_feature");
         assert_eq!(
-            ingested.len(),
+            on_disk.len(),
+            604,
+            "PU's full class_feature corpus population, counted on disk -- re-derive with \
+             `find data/corpus/pathfinder_unchained/class_feature -name '*.json' | wc -l`"
+        );
+
+        let class_owned = pu_class_owned_feature_keys();
+        assert_eq!(
+            class_owned.len(),
             64,
-            "PU's 64 ingested class_feature records, counted on disk"
+            "PU's class-owned class_feature records -- the union of the four Unchained class \
+             tables' own keys, not a directory walk"
         );
         assert!(
-            ingested.contains("Unchained Rogue ~ Sneak Attack"),
+            class_owned.contains("Unchained Rogue ~ Sneak Attack"),
             "the finding's own worked example must still be one of the records"
+        );
+        assert!(
+            class_owned.is_subset(&on_disk),
+            "every class-owned key must still resolve to a real corpus record on disk"
+        );
+
+        let non_class_owned = on_disk.difference(&class_owned).count();
+        assert_eq!(
+            non_class_owned,
+            540,
+            "the residual is real, named forward scope (Automatic Bonus Progression toggles, the \
+             Unchained skill-system variant rules, Background Skills, Combat Trick/Skill Unlock \
+             pool entries -- `class_feature`-kind corpus content for classes this engine does not \
+             model at all), not silently absorbed into the class-owned count"
         );
 
         match reach_of(&family).expect("PU class features have a declared claim") {
@@ -4753,7 +7899,7 @@ mod tests {
                 assert_eq!(surface, "load_saved_character -> explanations (class_feature.pu.*)");
                 assert_eq!(records, 64);
             }
-            other => panic!("expected all 64 to reach, got {other:?}"),
+            other => panic!("expected all 64 class-owned records to reach, got {other:?}"),
         }
     }
 

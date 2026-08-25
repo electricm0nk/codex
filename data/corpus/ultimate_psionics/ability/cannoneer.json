@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Marksman Archetype ~ Cannoneer",
+    "name": "Cannoneer",
+    "description": "You prefer the use of big firearms capable of unleashing massive damage.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Marksman Archetype ~ Cannoneer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.MarksmanArchetype.MarksmanCombatStyle.MarksmanPointBlankShot.MarksmanWindReader.MarksmanFavoredWeapon.MarksmanEvadeArrows.MarksmanStyleSkill.MarksmanStyle4.MarksmanStyle8.MarksmanStyle12.MarksmanStyle16"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Marksman=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Marksman Archetype ~ Cannoneer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MarksmanCombatStyle,TYPE.MarksmanPointBlankShot,TYPE.MarksmanWindReader,TYPE.MarksmanFavoredWeapon,TYPE.MarksmanEvadeArrows,TYPE.MarksmanStyleSkill,TYPE.MarksmanStyle4,TYPE.MarksmanStyle8,TYPE.MarksmanStyle12,TYPE.MarksmanStyle16]"
+      },
+      {
+        "key": "DESC",
+        "value": "You prefer the use of big firearms capable of unleashing massive damage."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Gunsmithing"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Handcannon|PRECLASS:1,Marksman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Strong Lifter|PRECLASS:1,Marksman=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Favored Cannon|PRECLASS:1,Marksman=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Burned Skin|PRECLASS:1,Marksman=2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Gun Crafter|PRECLASS:1,Marksman=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Cover Fire|PRECLASS:1,Marksman=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Fiery Attacks|PRECLASS:1,Marksman=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Fiery Burst|PRECLASS:1,Marksman=8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Charged Blast|PRECLASS:1,Marksman=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Marksman Class Feature|AUTOMATIC|Cannoneer ~ Bouncing Shot|PRECLASS:1,Marksman=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Amateur Gunslinger Feat|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Rapid Reload Feat|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_uc.lst",
+    "sha256": "2c97bc0e551c9846872c03df149c4ecd081e231a9e6753a35271d5f9708f5f80",
+    "line": 20,
+    "record_key": "Marksman Archetype ~ Cannoneer"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Spines and Brambles",
     "name": "Spines and Brambles",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "With a beckoning gesture, the shaman conjures spiny shrubs in %1 squares within 30 feet. The squares become filled with light undergrowth. The shaman can pass through the affected squares without impediment. When the shaman uses this hex again, any previously conjured undergrowth withers away.|max(1,CHA)",
     "raw_tokens": [
       {
@@ -53,5 +53,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

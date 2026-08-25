@@ -1,0 +1,116 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Wizard Archetype ~ Words of Power",
+    "name": "Words of Power Wizard",
+    "description": "A words of power using wizard; %1 meta words/day.|WizardMetaWordsPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wizard Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.WizardArchetype.WizardSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Wizard=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WizardMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using wizard; %1 meta words/day.|WizardMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|Barrier|Boost|Burst|Cone|Line|Personal|Selected"
+      },
+      {
+        "key": "ABILITY",
+        "value": "0-Level Wizard Word|AUTOMATIC|Wizard Starter Word 0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "1st-Level Wizard Word|AUTOMATIC|Wizard Starter Word 1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "2nd-Level Wizard Word|AUTOMATIC|Wizard Starter Word 2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "3rd-Level Wizard Word|AUTOMATIC|Wizard Starter Word 3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "4th-Level Wizard Word|AUTOMATIC|Wizard Starter Word 4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "5th-Level Wizard Word|AUTOMATIC|Wizard Starter Word 5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "6th-Level Wizard Word|AUTOMATIC|Wizard Starter Word 6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "7th-Level Wizard Word|AUTOMATIC|Wizard Starter Word 7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "8th-Level Wizard Word|AUTOMATIC|Wizard Starter Word 8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "9th-Level Wizard Word|AUTOMATIC|Wizard Starter Word 9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WizardMetaWordsPerDay|max(1,classlevel(\"Wizard\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 32,
+    "record_key": "Wizard Archetype ~ Words of Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

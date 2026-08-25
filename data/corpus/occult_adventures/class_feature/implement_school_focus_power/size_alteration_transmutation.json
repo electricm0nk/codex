@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Size Alteration",
     "name": "Size Alteration [Transmutation]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus and touch a creature to alter its size. You can increase or decrease the creature's size by one step, as enlarge person or reduce person but not limited by the creature's type. If the creature is hostile toward you, using this ability requires a successful melee touch attack, and the creature can attempt a Fortitude save to negate the effect. This effect lasts for %1 rounds. You can't use this ability on a creature that is already subject to an effect that alters its size.|OccultistLVL",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

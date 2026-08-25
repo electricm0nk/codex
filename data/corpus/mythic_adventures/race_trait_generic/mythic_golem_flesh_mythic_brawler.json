@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Golem (Flesh) ~ Mythic Brawler",
+    "name": "Mythic Brawler",
+    "description": "The mythic flesh golem can spend a use of its mythic power to attempt a combat maneuver as a swift action with no attack of opportunity for the attempt.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Golem (Flesh) ~ Mythic Brawler"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Golem (Flesh) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The mythic flesh golem can spend a use of its mythic power to attempt a combat maneuver as a swift action with no attack of opportunity for the attempt."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 179,
+    "record_key": "Mythic Golem (Flesh) ~ Mythic Brawler"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

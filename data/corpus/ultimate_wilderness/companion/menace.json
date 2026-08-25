@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Trick ~ Menace",
+    "name": "Menace",
+    "description": "A menacing animal attempts to keep a creature you indicate from moving. It does its best to dissuade the target, but it attacks only if the target attempts to move from its present location or take any significant action (particularly a hostile-seeming action). As soon as the target stops moving, the animal ceases attacking but it continues to menace.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Menace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Animal Trick ~ Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "A menacing animal attempts to keep a creature you indicate from moving. It does its best to dissuade the target, but it attacks only if the target attempts to move from its present location or take any significant action (particularly a hostile-seeming action). As soon as the target stops moving, the animal ceases attacking but it continues to menace."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 108,
+    "record_key": "Animal Trick ~ Menace"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

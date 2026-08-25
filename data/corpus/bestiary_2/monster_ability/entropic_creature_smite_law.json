@@ -1,0 +1,81 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Entropic Creature ~ Smite Law",
+    "delivery": "Supernatural",
+    "description": "%1/day as a swift action. Add +%2 to attack rolls and +%3 damage bonus against lawful foes; smite persists until target is dead or the entropic creature rests.",
+    "description_variables": [
+      "SmiteLawTimes",
+      "SmiteLawAttackBonus",
+      "SmiteLawDamageBonus"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:entropic_creature_smite_law",
+    "name": "Smite Law",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteLawAttackBonus|max(CHA,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteLawDamageBonus|TL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteLawTimes|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteLawAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteLawDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteLawTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day as a swift action. Add +%2 to attack rolls and +%3 damage bonus against lawful foes; smite persists until target is dead or the entropic creature rests.|SmiteLawTimes|SmiteLawAttackBonus|SmiteLawDamageBonus"
+      },
+      {
+        "key": "KEY",
+        "value": "Entropic Creature ~ Smite Law"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.292",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1967,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Entropic Creature ~ Smite Law",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

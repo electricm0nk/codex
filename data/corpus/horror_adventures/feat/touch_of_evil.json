@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Touch of Evil",
+    "category": "General",
+    "name": "Touch of Evil",
+    "description": "You instill unbidden thoughts and desires into another with your touch. As a standard action, you can expend three uses of your channel negative energy and make a melee touch attack against a target. You can attempt an opposed Sleight of Hand check against the target's Perception to make this attack without the target noticing. If the attack hits, the target gets a Will save (DC ). On a failed save, you implant a suggestion into the creature's mind. This works similar to the suggestion spell, however, you can suggest to the creature to commit a harmful or destructive act against another creature or object. If you choose the latter, the creature attempts to carry out the suggestion in 1d6+1 days as it thinks over the suggestion and plans it out. The creature can attempt another Will save at the original DC to resist the suggestion right before it carries it out. If it fails the save, it gains a +4 circumstance bonus on one die roll used in carrying out the suggestion. This relentless planning causes the creature",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,TYPE.Channel Negative Energy",
+      "PREALIGN:LE,NE,CE",
+      "PRETEXT:Channel negative energy 6d6"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 56,
+    "record_key": "Touch of Evil"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

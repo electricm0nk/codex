@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Arcane Potency",
+    "name": "Arcane Potency",
+    "description": "Choose one of your arcane spellcasting classes. You gain four bonus 1st-level arcane spell slots for that class (like the bonus spells gained from a high ability score). This ability doesn't change your number of spells known. You can select this ability more than once. If you choose the same arcane spellcasting class a second time, you gain four bonus 2nd-level spell slots; if you choose it again, you gain 3rdlevel slots for choosing it a third time, and so on. This ability can't grant you bonus spells for a spell level that you don't have the ability to cast.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Arcane Potency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Archmage"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Choose one of your arcane spellcasting classes. You gain four bonus 1st-level arcane spell slots for that class (like the bonus spells gained from a high ability score). This ability doesn't change your number of spells known. You can select this ability more than once. If you choose the same arcane spellcasting class a second time, you gain four bonus 2nd-level spell slots; if you choose it again, you gain 3rdlevel slots for choosing it a third time, and so on. This ability can't grant you bonus spells for a spell level that you don't have the ability to cast."
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|MythicArcanePotency|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 291,
+    "record_key": "Mythic Path Ability ~ Arcane Potency"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

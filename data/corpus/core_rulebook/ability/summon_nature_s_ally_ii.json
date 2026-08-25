@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Summon Nature's Ally II",
+    "name": "Summon Nature's Ally II",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SummonNaturesAlly2_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SummonNaturesAlly2_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SummonNaturesAlly2_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SummonNaturesAlly2_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SummonNaturesAlly2_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SummonNaturesAlly2_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_SummonNaturesAlly2_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_SummonNaturesAlly2_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_SummonNaturesAlly2_LVL|Summon Nature's Ally II,SLA_SummonNaturesAlly2_DC|PREVAREQ:SLA_SummonNaturesAlly2_AtWill,0|PREVAREQ:SLA_SummonNaturesAlly2_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_SummonNaturesAlly2_LVL|Summon Nature's Ally II,SLA_SummonNaturesAlly2_DC|PREVAREQ:SLA_SummonNaturesAlly2_AtWill,1|PREVAREQ:SLA_SummonNaturesAlly2_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_SummonNaturesAlly2_LVL|Summon Nature's Ally II,SLA_SummonNaturesAlly2_DC|PREVAREQ:SLA_SummonNaturesAlly2_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SummonNaturesAlly2_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SummonNaturesAlly2_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SummonNaturesAlly2_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SummonNaturesAlly2_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_SummonNaturesAlly2_DC|10+SLA_SummonNaturesAlly2_SpellLVL+SLA_SummonNaturesAlly2_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
+    "line": 799,
+    "record_key": "Summon Nature's Ally II"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

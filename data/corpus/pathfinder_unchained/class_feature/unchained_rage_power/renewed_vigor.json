@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Renewed Vigor",
+    "name": "Renewed Vigor",
+    "class": "Unchained Barbarian",
+    "description": "As a standard action, you heal %1d8+%2 points of damage. This ability can be used only once per day.|RenewedVigorDice|RenewedVigorBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Renewed Vigor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,4"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Renewed Vigor"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RenewedVigorDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RenewedVigorBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, you heal %1d8+%2 points of damage. This ability can be used only once per day.|RenewedVigorDice|RenewedVigorBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RenewedVigorDice|min(5,max(1,RagePowersLVL/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RenewedVigorBonus|CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 379,
+    "record_key": "Unchained Rage Power ~ Renewed Vigor"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

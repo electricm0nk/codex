@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Wild Talent ~ Wood Soldiers",
+    "name": "Wood Soldiers",
+    "class": "Kineticist",
+    "description": "Element wood; Type utility (Su); Level 8; Burn 1",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wild Talent ~ Wood Soldiers"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Wood"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KineticistLVL_Wood,8"
+      },
+      {
+        "key": "DESC",
+        "value": "Element wood; Type utility (Su); Level 8; Burn 1"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Your presence animates surrounding plant life and causes it to fight by your side. Each time you recover burn, you automatically use this ability once and ignore the burn cost. This functions as wooden phalanx (UM), except you always animate four golems, and the duration lasts until the next time you recover burn. If you have spring blast, one of your golems gains a 30-foot fly speed (average maneuverability). If you have summer blast, one of your golems is healed by fire damage, is vulnerable to cold, and deals 1d6 extra points of fire damage on slam attacks and when splintering. If you have autumn blast, one of your golems gains a 20-foot burrow speed. If you have winter blast, one of your golems deals 1d6 extra points of cold damage on its slam attacks and when splintering. Each of the above modifications must apply to a different golem."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 88,
+    "record_key": "Wild Talent ~ Wood Soldiers"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

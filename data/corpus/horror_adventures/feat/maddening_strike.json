@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Maddening Strike",
+    "category": "Combat",
+    "name": "Maddening Strike",
+    "description": "Your fists are weapons of mind-devouring madness. As a swift action, you can spend 1 point from your ki pool to imbue the next unarmed strike you make on this turn with the maddening power of the spaces between the stars. If that attack doesn't hit, you take",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Maddening Style",
+      "PRESKILL:1,Knowledge (arcana)=8",
+      "PREVARGTEQ:PreStatScore_WIS,17,PreStatScore_CHA,13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 40,
+    "record_key": "Maddening Strike"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Shadow Hunter ~ Hunter's Grace",
+    "name": "Hunter's Grace",
+    "description": "You can manifest mindlink",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadow Hunter ~ Hunter's Grace"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InquisitorClassFeatures.SpecialQuality.PsiLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HuntersGraceMindlinkTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HuntersGraceCloudMindTimes|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=HuntersGraceMindlinkTimes|Mindlink"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=HuntersGraceCloudMindTimes|Cloud Mind|PREVARGT:HuntersGraceCloudMindTimes,0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can manifest mindlink"
+      },
+      {
+        "key": "DESC",
+        "value": " and cloud mind|PRECLASS:1,Inquisitor=8"
+      },
+      {
+        "key": "DESC",
+        "value": " as a psilike ability."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HuntersGraceMindlinkTimes|3+WIS"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HuntersGraceCloudMindTimes|floor((InquisitorLVL-5)/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.335"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 58,
+    "record_key": "Shadow Hunter ~ Hunter's Grace"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

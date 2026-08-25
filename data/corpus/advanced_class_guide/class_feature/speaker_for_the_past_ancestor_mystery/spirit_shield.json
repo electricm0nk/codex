@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Speaker for the Past Ancestor Mystery ~ Spirit Shield",
     "name": "Spirit Shield",
-    "class": "Speaker for the Past Ancestor Mystery",
+    "class": "Oracle",
     "description": "You can call upon the spirits of your ancestors to form a shield around you that blocks incoming attacks and grants you a +%1 armor bonus. You can use this shield for %2 hours per day. This duration does not need to be consecutive, but it must be spent in 1-hour increments.|SpiritShieldBonus|SpiritShieldDuration|!PRECLASS:1,Shaman=13",
     "raw_tokens": [
       {
@@ -69,5 +69,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

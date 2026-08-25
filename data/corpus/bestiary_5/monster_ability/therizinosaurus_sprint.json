@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Therizinosaurus ~ Sprint",
+    "delivery": "Extraordinary",
+    "description": "Once per hour, a therizinosaurus can move at 10 times its normal speed (400 feet) when it makes a charge.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:therizinosaurus_sprint",
+    "name": "Sprint",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per hour, a therizinosaurus can move at 10 times its normal speed (400 feet) when it makes a charge."
+      },
+      {
+        "key": "KEY",
+        "value": "Therizinosaurus ~ Sprint"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.TherizinosaurusRacialTrait"
+      }
+    ],
+    "source_page": "p.84",
+    "traits": [
+      "TherizinosaurusRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Therizinosaurus ~ Sprint",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

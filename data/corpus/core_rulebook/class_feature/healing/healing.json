@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Healing Domain",
     "name": "Healing",
-    "class": null,
+    "class": "Cleric",
     "description": "Your touch staves off pain and death, and your healing magic is particularly vital and potent.",
     "raw_tokens": [
       {
@@ -71,6 +71,10 @@
       {
         "key": "SPELLLEVEL",
         "value": "DOMAIN|Healing=1|Cure Light Wounds|Healing=2|Cure Moderate Wounds|Healing=3|Cure Serious Wounds|Healing=4|Cure Critical Wounds|Healing=5|Breath of Life|Healing=6|Heal|Healing=7|Regenerate|Healing=8|Cure Critical Wounds (Mass)|Healing=9|Heal (Mass)"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Healing],[PREVARLT:HealingDomain,1]"
       }
     ]
   },
@@ -88,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

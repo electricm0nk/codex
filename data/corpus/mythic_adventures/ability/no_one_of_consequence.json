@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ No One of Consequence",
+    "name": "No One of Consequence",
+    "description": "Your mythic nature is a cloak that can shield you from the minds and memories of others. Creatures struggle to recognize you, recall your appearance, remember the nature of conversations they had with you, and recount the actions you took when you were in their presence. If a creature makes a deliberate attempt to recall details about time spent with you, it must succeed at a Will save (DC %1) to recall anything beyond vague details. In addition, you're under a permanent nondetection effect with a caster level of %2. You can end this effect at any time, and can resume it as a swift action.|Ability_NoOneofConsequence_DC|Ability_NoOneofConsequence_CL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ No One of Consequence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_NoOneofConsequence_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Ability_NoOneofConsequence_CL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mythic nature is a cloak that can shield you from the minds and memories of others. Creatures struggle to recognize you, recall your appearance, remember the nature of conversations they had with you, and recount the actions you took when you were in their presence. If a creature makes a deliberate attempt to recall details about time spent with you, it must succeed at a Will save (DC %1) to recall anything beyond vague details. In addition, you're under a permanent nondetection effect with a caster level of %2. You can end this effect at any time, and can resume it as a swift action.|Ability_NoOneofConsequence_DC|Ability_NoOneofConsequence_CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_NoOneofConsequence_DC|10+MythicLevel+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ability_NoOneofConsequence_CL|TL+MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 226,
+    "record_key": "Mythic Path Ability ~ No One of Consequence"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

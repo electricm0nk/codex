@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Missionary ~ Divine Spells",
+    "name": "Missionary Divine Spells",
+    "description": "You gain +1 Caster Level to the following spells: %1 as well as +1 DC to these spells where applicable|%LIST",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Missionary ~ Divine Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.SampleCampaignTrait.MissionaryDivineSpells"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Outlander ~ Missionary]"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=3|SPELLS|SPELLTYPE=Divine[LEVELMAX=9]"
+      },
+      {
+        "key": "SELECT",
+        "value": "3"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|SPELL.%LIST|1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain +1 Caster Level to the following spells: %1 as well as +1 DC to these spells where applicable|%LIST"
+      },
+      {
+        "key": "ADDSPELLLEVEL",
+        "value": "-1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 175,
+    "record_key": "Trait ~ Missionary ~ Divine Spells"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

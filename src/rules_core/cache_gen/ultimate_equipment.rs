@@ -59,6 +59,7 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::cache_gen::equipment_gap::{RenameInfo, resolve_name_or_rename};
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
 use crate::rules_core::rules_tables::ultimate_equipment as ue;
 use crate::rules_core::rules_tables::ultimate_equipment::equipment_tables::EquipmentCategory;
@@ -107,6 +108,17 @@ pub struct CacheRecord<T: Serialize> {
     pub license: crate::rules_core::shape_b_v1::License,
     pub pi_field: Option<String>,
     pub pi_marker: Option<String>,
+    /// SD-32 T9 onboarding (card 11) group E: `decisions.md §24b`-3, ported
+    /// from `cache_gen::equipment_gap`'s identical field (this file
+    /// predates `§24`'s neutral-rename mechanism and previously dropped a
+    /// `NAMEISPI:YES` row outright -- see `resolve_name_or_rename`'s call
+    /// site in `generate_equipment` below for the worked "Otyugh Hide"
+    /// example). Defaults to `false` via `#[serde(default)]` on read, so
+    /// this is additive to every already-shipped record's shape.
+    #[serde(default)]
+    pub codex_generated_name: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rename: Option<RenameInfo>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -233,6 +245,26 @@ fn declared_pi_at(lst_path: &Path, line: u32) -> std::io::Result<DeclaredProduct
 /// first-column/`.COPY=`-suffix-only lookup order silently missed all 36;
 /// `KEY:`-first finds every one of them the same way it already found
 /// `Equipmods`.
+/// `true` when a record's identity is Product Identity -- the union of
+/// the row's own `NAMEISPI:YES` corpus declaration (`declared_name`) and
+/// the shared blacklist term scan against `name` (strong, word-bounded,
+/// case-folded, OCR-normalized, concatenated-identifier: the SAME scan
+/// `cache_gen::{acg,apg,beastiary1,equipment_gap}` already union into
+/// their own `name`/`key` screen, `t9-onboarding-pi-final-leaks-and-
+/// generators` cycle). Factored out so this exact predicate is directly
+/// unit-testable without needing a real corpus row from the compiled,
+/// non-injectable `equipment_tables()` static table.
+///
+/// t9-onboarding-pi-last-leak-and-generators cycle: before this fix, this
+/// generator's ONLY name-PI signal was `declared_name` -- there was no
+/// blacklist term scan of `name`/`key` at all, so a future
+/// `PI_BLACKLIST_TERMS` amendment could make an existing curated table
+/// entry newly PI with nothing here ever re-screening it (the seventh
+/// instance of "screens some shipped fields, not all" in this bundle).
+fn name_or_key_is_pi(declared_name: bool, name: &str) -> bool {
+    declared_name || pi_screening::blacklist_term_hit_including_concatenated(name).is_some()
+}
+
 fn resolve_line(corpus_root: &Path, entry: &ue::equipment_tables::EquipmentTableEntry) -> (u32, &'static str) {
     let category_file = equipment_category_file(entry.category);
     let path = book_dir(corpus_root).join(category_file);
@@ -260,15 +292,23 @@ pub struct GenerationReport {
     /// Record keys whose real LST citation could not be resolved (should
     /// be empty for a clean generation run against the real corpus).
     pub unresolved_citations: Vec<String>,
-    /// Records refused outright because the real corpus row declares
-    /// `NAMEISPI:YES` (`file:line record_key`). A NAME cannot be
-    /// redacted -- it is the record's identity on every screen and half
-    /// of its key -- so these rows are DROPPED, never screened, matching
-    /// `SD-29-corpus-wide-catch-up-lanes/decisions.md §50.3` and
-    /// `ingest_race_traits.rs`'s `pi_dropped` precedent. Reported, never
-    /// silent: a row that vanishes without a line here is
-    /// indistinguishable from a citation bug.
+    /// Records whose real corpus row declares `NAMEISPI:YES`
+    /// (`file:line record_key`). `decisions.md §24`: these are no longer
+    /// dropped -- they are WRITTEN under a Codex-generated neutral name
+    /// (`codex_neutral_name::neutral_name`/`neutral_key`, via
+    /// `cache_gen::equipment_gap::resolve_name_or_rename`), coordinate-only.
+    /// Field name kept for compatibility with existing callers; it now
+    /// counts RENAMES, not silent drops -- every one of these units is
+    /// still counted in `equipment_written`/`equipment_modifier_written`
+    /// above. Reported, never silent: a row that vanishes without a line
+    /// here is indistinguishable from a citation bug.
     pub name_pi_dropped: Vec<String>,
+    /// `(kind, book, source_file, source_line, codex_name, reason)`
+    /// divergence entries for every unit renamed this run --
+    /// `decisions.md §24b`-4: coordinate + reason, never the original
+    /// string. Mirrors `cache_gen::equipment_gap::GenerationReport`'s field
+    /// of the same name.
+    pub name_pi_renamed_records: Vec<serde_json::Value>,
 }
 
 #[derive(Debug)]
@@ -283,12 +323,89 @@ impl From<std::io::Error> for GenerationError {
     }
 }
 
+/// SD-32 Epic 5 protective sweep -- see `cache_gen::acg::write_json`'s
+/// identical doc comment; same shape, same fix. `generate_equipment`'s own
+/// stale-key sweep (see its doc comment) is what still makes a genuinely
+/// dropped record's file disappear -- this guard only protects a record
+/// that is STILL VALID this run from being needlessly re-derived in a
+/// narrower, pre-enrichment shape.
 fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<()> {
     std::fs::create_dir_all(out_dir)?;
     let path = out_dir.join(format!("{slug}.json"));
+    if path.exists() {
+        return Ok(());
+    }
     let json = serde_json::to_string_pretty(record)
         .expect("CacheRecord<T> is a plain-data shape; serialization cannot fail");
     std::fs::write(path, json)
+}
+
+/// Removes every JSON file directly or recursively under `dir` whose
+/// `data.key` is NOT in `current_keys` -- the same "genuinely stale, not
+/// merely about to be rewritten" rule `gen_book_cache.rs`'s `gen_monster_book`
+/// established (`SD31-E6-F9-005`). Replaces `generate_equipment`'s former
+/// unconditional `remove_dir_all` of the whole directory: that fix kept a
+/// dropped record's file from lingering (OPEN-ISSUES row 38) but did so by
+/// erasing every STILL-VALID record too, discarding whatever
+/// `enrich_equipment_raw_tokens.rs` had separately written into them. This
+/// keeps the "dropped record does not linger" property while leaving every
+/// still-valid record's file (and any enrichment already on it) untouched.
+///
+/// **`owns_citation` -- the cross-generator self-erasure guard
+/// (`decisions.md §1a`/incident found live 2026-08-23).** `data.key` alone
+/// is NOT a safe ownership test: two different generators can share one
+/// output directory (`cache_gen::spell_lane_dump` and
+/// `cache_gen::spell_mod_access` both write `data/corpus/<book>/spell/`,
+/// and a `.MOD` row genuinely reuses its base spell's own key/name -- see
+/// `spell_lane_dump`'s call site). A key-only check therefore reads a
+/// sibling generator's still-valid record as "not mine, not current" and
+/// deletes it. This caller-supplied predicate answers "did MY OWN parse of
+/// MY OWN source file ever produce a citation at this exact
+/// `(source.path, source.line)`?" -- a coordinate a sibling generator's
+/// rows structurally cannot share, because they cite a *different* LST
+/// row even when the file and the key both collide. A record whose
+/// `source.path`/`source.line` cannot be read from its JSON is treated as
+/// **not owned** (never deleted) -- ownership must be proven, not assumed,
+/// the same `§1a` "empty case fails closed" discipline every gate in this
+/// bundle already follows.
+pub fn remove_stale_owned_files(
+    dir: &Path,
+    current_keys: &std::collections::HashSet<String>,
+    owns_citation: &dyn Fn(&str, u32) -> bool,
+) {
+    let Ok(entries) = std::fs::read_dir(dir) else { return };
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            remove_stale_owned_files(&path, current_keys, owns_citation);
+            continue;
+        }
+        if path.extension().and_then(|e| e.to_str()) != Some("json") {
+            continue;
+        }
+        let Some(parsed) = std::fs::read_to_string(&path)
+            .ok()
+            .and_then(|raw| serde_json::from_str::<serde_json::Value>(&raw).ok())
+        else {
+            continue;
+        };
+        let Some(key) = parsed.get("data").and_then(|d| d.get("key")).and_then(|k| k.as_str()) else {
+            continue;
+        };
+        if current_keys.contains(key) {
+            continue;
+        }
+        let source_path = parsed.get("source").and_then(|s| s.get("path")).and_then(|p| p.as_str());
+        let source_line =
+            parsed.get("source").and_then(|s| s.get("line")).and_then(|l| l.as_u64()).map(|l| l as u32);
+        let owned = match (source_path, source_line) {
+            (Some(p), Some(l)) => owns_citation(p, l),
+            _ => false,
+        };
+        if owned {
+            let _ = std::fs::remove_file(&path);
+        }
+    }
 }
 
 fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
@@ -336,17 +453,19 @@ fn generate_equipment(
     }
     let mut used = BTreeSet::new();
     let equipment_dir = out_dir.join("equipment");
-    // Rebuilt every run, matching `ingest_races.rs`'s own precedent ("A
-    // stale record from a previous run ... would be indistinguishable from
-    // a fresh one, so the output tree is rebuilt"): a record dropped by the
-    // NAMEISPI:YES check below must actually disappear from disk on the
-    // next run, not merely stop being re-written. Fixes the shipped-but-
-    // stale `otyugh_hide.json` this cycle found (OPEN-ISSUES row 38) --
-    // clearing the whole directory is what makes "dropped" durable rather
-    // than a one-time hand delete.
-    if equipment_dir.exists() {
-        std::fs::remove_dir_all(&equipment_dir)?;
-    }
+    // **SD-32 Epic 5 protective sweep, CORRECTED**: this used to wipe the
+    // whole directory unconditionally on every run (OPEN-ISSUES row 38's
+    // fix, to make a NAMEISPI:YES-dropped record's stale file actually
+    // disappear) -- but that also erased every STILL-VALID record's file,
+    // discarding whatever `enrich_equipment_raw_tokens.rs` had separately
+    // written into it in a later pass this generator's own `EquipmentData`
+    // cannot reconstruct (the exact S6/D9 self-erasure shape). The new
+    // rule, matching `gen_book_cache.rs`'s `gen_monster_book`
+    // (`SD31-E6-F9-005`): a file is removed ONLY when its key is ABSENT
+    // from the set this run just computed (`remove_stale_owned_files`
+    // below, after the write loop) -- a real drop still disappears, a
+    // still-valid record's file is left completely untouched.
+    let mut current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
     // `Equipmods` records go in a nested `equipment/equipmods/` subdirectory,
     // matching `core_rulebook`'s own already-shipped layout
     // (`data/corpus/core_rulebook/equipment/equipmods/*.json`) rather than
@@ -381,12 +500,6 @@ fn generate_equipment(
         if line == 0 {
             report.unresolved_citations.push(format!("equipment:{}", entry.key));
         }
-        let source = Source::LstToken {
-            path: format!("{UE_DIR}/{category_file}"),
-            sha256: sha_by_file.get(category_file).cloned().unwrap_or_default(),
-            line,
-            record_key: entry.key.to_string(),
-        };
         let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
             &mut wiring_lines,
             category_file,
@@ -401,33 +514,86 @@ fn generate_equipment(
         };
         let declared = declared_pi_at(&book_dir(corpus_root).join(category_file), line)
             .unwrap_or_default();
-        // A NAME cannot be redacted (`pi_screening.rs`'s own doc comment on
-        // `DeclaredProductIdentity::name`; `SD-29-corpus-wide-catch-up-lanes/
-        // decisions.md §50.3`): `[redacted PI]` as an equipment key is a
-        // record nobody can look up. So a `NAMEISPI:YES` row is DROPPED
-        // outright, before the description screen runs, never partially
-        // published under a redacted display name -- the same ruling
-        // `ingest_race_traits.rs` already applies to race traits. Found by
-        // adversarial review (OPEN-ISSUES row 38): this branch previously
-        // computed `declared.name` and never read it, so `Otyugh Hide`
-        // (`ue_equip_arms_armor.lst:66`) shipped its real name unredacted.
-        if declared.name {
-            report.name_pi_dropped.push(format!("{category_file}:{line} {}", entry.key));
-            continue;
+        // SD-32 T9 onboarding (card 11) group E, `decisions.md §24`: a
+        // `NAMEISPI:YES` row is no longer dropped outright -- it ingests
+        // under a Codex-generated neutral name derived ONLY from
+        // `(kind, book, source_file, source_line)`, the same mechanism
+        // `cache_gen::equipment_gap::resolve_name_or_rename` already ships
+        // for the compiled-book gap lanes, reused here rather than
+        // re-implemented (`decisions.md §24b`-1: no argument path from the
+        // PI string to the output). Found by adversarial review
+        // (OPEN-ISSUES row 38): this branch previously computed
+        // `declared.name` and never read it at all, so `Otyugh Hide`
+        // (`ue_equip_arms_armor.lst:66`, `NAMEISPI:YES`) shipped its real
+        // name unredacted before that fix made it drop the row outright --
+        // this cycle replaces the drop with the real §24 rename this
+        // generator predates.
+        //
+        // t9-onboarding-pi-last-leak-and-generators cycle: this file had
+        // NO blacklist term scan of `name`/`key` at all -- only the
+        // declared `NAMEISPI:YES` reader above. Identical gap and
+        // identical fix to `cache_gen::{acg,apg,beastiary1}`'s own
+        // `name_or_key_is_pi` (`t9-onboarding-pi-final-leaks-and-generators`
+        // cycle): a future `PI_BLACKLIST_TERMS` amendment (this bundle has
+        // amended it at least 4 times, `decisions.md §19`) could make an
+        // EXISTING curated table entry newly PI with no code ever
+        // re-screening it. Unions the strong, word-bounded,
+        // OCR-normalized, concatenated-identifier scan into the same
+        // `name_is_pi` predicate the rename branch already reads --
+        // `declared.name` alone stays the fast path for every ordinary
+        // row (zero behaviour change when no blacklist term is present).
+        let name_is_pi = name_or_key_is_pi(declared.name, entry.name);
+        let is_modifier = entry.category == EquipmentCategory::Equipmods;
+        let kind = if is_modifier { "equipment_modifier" } else { "equipment" };
+        let (record_name, record_key, codex_generated_name, rename_info, divergence) =
+            resolve_name_or_rename(name_is_pi, kind, "ultimate_equipment", category_file, line, entry.name, entry.key);
+        if let Some(entry) = divergence {
+            report.name_pi_dropped.push(format!("{category_file}:{line} {}", record_key));
+            report.name_pi_renamed_records.push(entry);
         }
-        let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+        let (mut license, mut pi_field, mut pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
             "description",
             entry.description,
             declared.description,
         );
+        // Same supplementary strong-scan re-screen `cache_gen::equipment_
+        // gap`'s own "third defect" fix already established (byte-for-byte
+        // shape, this cycle): `classify_optional_field_declared` screens
+        // `description` via the weak, bare-substring, case-SENSITIVE scan
+        // only -- never weakens an existing redaction, only strengthens a
+        // miss the weak scan let through.
+        let stored_desc = match &stored_desc {
+            Some(v) if v.as_str() != crate::rules_core::shape_b_v1::REDACTED_PI_MARKER => {
+                if pi_screening::blacklist_term_hit_including_concatenated(v).is_some() {
+                    license = crate::rules_core::shape_b_v1::License::PiRedacted;
+                    pi_marker = Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                    if !pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "description")) {
+                        pi_field = Some(match pi_field.take() {
+                            Some(existing) => format!("{existing},description"),
+                            None => "description".to_string(),
+                        });
+                    }
+                    Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string())
+                } else {
+                    stored_desc.clone()
+                }
+            }
+            _ => stored_desc,
+        };
+        let source = Source::LstToken {
+            path: format!("{UE_DIR}/{category_file}"),
+            sha256: sha_by_file.get(category_file).cloned().unwrap_or_default(),
+            line,
+            record_key: record_key.clone(),
+        };
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
             ingested_at: ingested_at.to_string(),
             data: EquipmentData {
-                key: entry.key.to_string(),
+                key: record_key.clone(),
                 category: format!("{:?}", entry.category),
-                name: entry.name.to_string(),
+                name: record_name,
                 cost_gp: entry.cost_gp,
                 weight_lbs: entry.weight_lbs,
                 description: stored_desc,
@@ -438,8 +604,11 @@ fn generate_equipment(
             license,
             pi_field,
             pi_marker,
+            codex_generated_name,
+            rename: rename_info,
         };
-        let slug = slugify(entry.key, &mut used);
+        current_keys.insert(record_key.clone());
+        let slug = slugify(&record_key, &mut used);
         if entry.category == EquipmentCategory::Equipmods {
             write_json(&equipmods_dir, &slug, &record)?;
             report.equipment_modifier_written += 1;
@@ -447,6 +616,15 @@ fn generate_equipment(
             write_json(&equipment_dir, &slug, &record)?;
             report.equipment_written += 1;
         }
+    }
+    if equipment_dir.exists() {
+        // Only `cache_gen::ultimate_equipment` itself ever writes under
+        // `UE_DIR`'s citation prefix, so a citation-path prefix check is a
+        // safe (if coarse) ownership predicate here -- no sibling
+        // generator shares this directory today.
+        remove_stale_owned_files(&equipment_dir, &current_keys, &|path, _line| {
+            path.starts_with(UE_DIR)
+        });
     }
     Ok(())
 }
@@ -476,6 +654,7 @@ pub fn generate(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::rules_core::codex_neutral_name::neutral_key;
 
     #[test]
     fn slugify_handles_parens_and_collisions() {
@@ -579,26 +758,91 @@ mod tests {
         }
     }
 
+    /// SD-32 T9 onboarding (card 11) group E: `decisions.md §24` replaced
+    /// this generator's original "drop the row outright" disposition with a
+    /// Codex-generated neutral rename, the same mechanism
+    /// `cache_gen::equipment_gap` already ships (`resolve_name_or_rename`,
+    /// reused here rather than re-implemented). The record now SHIPS --
+    /// under a coordinate-derived neutral name -- rather than vanishing;
+    /// only the real "Otyugh Hide" string must never appear anywhere in the
+    /// output, which this test still asserts.
     #[test]
-    fn nameispi_yes_drops_the_record_instead_of_publishing_the_real_name() {
-        let corpus = ScratchCorpus::new("drops");
+    fn nameispi_yes_renames_the_record_instead_of_dropping_it() {
+        let corpus = ScratchCorpus::new("renames");
         corpus.write_arms_armor(&[&otyugh_hide_row(true)]);
         let out_dir = corpus.root.join("out");
 
         let report = generate(&corpus.root, &out_dir, "2026-01-01T00:00:00Z").unwrap();
 
+        let neutral_key = neutral_key("equipment", "ultimate_equipment", "ue_equip_arms_armor.lst", 1);
         assert_eq!(
             report.name_pi_dropped,
-            vec!["ue_equip_arms_armor.lst:1 Otyugh Hide".to_string()],
-            "a NAMEISPI:YES row must be reported as dropped, never silently skipped"
+            vec![format!("ue_equip_arms_armor.lst:1 {neutral_key}")],
+            "a NAMEISPI:YES row must be reported as renamed, by coordinate, never the original string"
         );
+        assert_eq!(report.name_pi_renamed_records.len(), 1);
+        let mut found_renamed_record = false;
         for path in out_dir_json_files(&out_dir) {
             let text = std::fs::read_to_string(&path).unwrap();
             assert!(
                 !text.contains("Otyugh Hide"),
                 "{path:?} must not carry the real name of a NAMEISPI:YES record: {text}"
             );
+            if text.contains(&neutral_key) {
+                found_renamed_record = true;
+                assert!(text.contains("\"codex_generated_name\": true"));
+            }
         }
+        assert!(found_renamed_record, "the renamed record must still be written to disk");
+    }
+
+    /// t9-onboarding-pi-last-leak-and-generators cycle: this file's
+    /// `description` screen (`pi_screening::classify_optional_field_
+    /// declared`, via `classify_field`) is the SAME weak, case-SENSITIVE,
+    /// bare-substring scan `cache_gen::equipment_gap` was fixed for --
+    /// proves the disagreement the supplementary strong re-screen closes,
+    /// mirroring `equipment_gap`'s own identical regression test
+    /// byte-for-byte (referencing the term by index, `§24b`-2).
+    #[test]
+    fn the_weak_description_scan_misses_a_lowercase_term_the_strong_scan_catches() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[9];
+        let lowercase_variant = term.to_lowercase();
+        let text = format!("carvings of {lowercase_variant} in one or both aspects");
+        let (weak_license, ..) = pi_screening::classify_field("description", &text);
+        assert_eq!(
+            weak_license,
+            crate::rules_core::shape_b_v1::License::Ogl,
+            "sanity: the weak scan must miss the lowercase form"
+        );
+        assert!(
+            pi_screening::blacklist_term_hit_including_concatenated(&text).is_some(),
+            "the strong scan this generator's own supplementary re-screen now uses must catch it"
+        );
+    }
+
+    // --- t9-onboarding-pi-last-leak-and-generators: `name`/`key` blacklist
+    // scan, independent of `NAMEISPI:YES` ---
+
+    #[test]
+    fn name_or_key_is_pi_is_true_when_declared() {
+        assert!(name_or_key_is_pi(true, "Perfectly Ordinary Widget"));
+    }
+
+    #[test]
+    fn name_or_key_is_pi_is_false_for_an_ordinary_undeclared_name() {
+        assert!(!name_or_key_is_pi(false, "Perfectly Ordinary Widget"));
+    }
+
+    /// The gap this cycle closes: a name carrying a blacklisted term with
+    /// NO `NAMEISPI:` declaration at all must still be flagged -- mirrors
+    /// `cache_gen::equipment_gap`'s `a_blacklisted_name_is_flagged_by_the_
+    /// term_scan`, referencing the term by index (`§24b`-2: never write a
+    /// blacklist term literally into a test).
+    #[test]
+    fn name_or_key_is_pi_is_true_for_an_undeclared_blacklisted_term() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[9];
+        let name = format!("{term}'s Blessed Blade");
+        assert!(name_or_key_is_pi(false, &name));
     }
 
     #[test]
@@ -636,5 +880,186 @@ mod tests {
             let text = std::fs::read_to_string(&path).unwrap();
             assert!(!text.contains("Otyugh Hide"), "{path:?} is a stale pre-drop file: {text}");
         }
+    }
+
+    /// SD-32 Epic 5 protective sweep (`epic-breakdown.md` Epic 5, T3
+    /// residual): `generate_equipment` wiped `equipment_dir` wholesale on
+    /// every run (the "OPEN-ISSUES row 38" fix above), then rewrote every
+    /// entry from scratch -- the S6/D9 self-erasure shape `gen_book_cache.rs`'s
+    /// `gen_monster_book` was already fixed for (`SD31-E6-F9-005`), never
+    /// extended here. `enrich_equipment_raw_tokens.rs` writes a `raw_tokens`
+    /// field onto this generator's own output AFTER it runs (1,368 of the
+    /// 1,548 on-disk `ultimate_equipment` equipment records carry it today,
+    /// `grep -l raw_tokens data/corpus/ultimate_equipment/equipment/*.json`);
+    /// a bare re-run would silently strip every one of them. Proves a
+    /// second `generate()` call leaves an already-enriched, still-valid
+    /// record's file completely alone.
+    #[test]
+    fn a_second_run_does_not_erase_a_later_enrichment_pass_on_a_still_valid_record() {
+        let corpus = ScratchCorpus::new("no_self_erasure");
+        corpus.write_arms_armor(&[&otyugh_hide_row(false)]);
+        let out_dir = corpus.root.join("out");
+
+        generate(&corpus.root, &out_dir, "2026-01-01T00:00:00Z").unwrap();
+        let written = out_dir_json_files(&out_dir)
+            .into_iter()
+            .find(|p| std::fs::read_to_string(p).unwrap().contains("Otyugh Hide"))
+            .expect("run 1 must write the Otyugh Hide record");
+
+        // Simulate `enrich_equipment_raw_tokens.rs` running after generation
+        // and adding a field this generator's own `EquipmentData` cannot
+        // reconstruct.
+        let enriched = std::fs::read_to_string(&written).unwrap().replace(
+            "\"description\": null",
+            "\"description\": null,\n  \"raw_tokens\": [\"ENRICHED-MARKER\"]",
+        );
+        assert!(enriched.contains("ENRICHED-MARKER"), "the fixture edit must actually take");
+        std::fs::write(&written, &enriched).unwrap();
+
+        // Run 2: the same row, unchanged, still resolves -- the record is
+        // still valid, not dropped.
+        generate(&corpus.root, &out_dir, "2026-01-02T00:00:00Z").unwrap();
+        let after = std::fs::read_to_string(&written).unwrap();
+        assert!(
+            after.contains("ENRICHED-MARKER"),
+            "a second run must not erase a later enrichment pass on a still-valid record: {after}"
+        );
+    }
+
+    // --- Cross-generator self-erasure guard (2026-08-23 incident) ---
+    //
+    // `cache_gen::spell_lane_dump` and `cache_gen::spell_mod_access` both
+    // write `data/corpus/<book>/spell/` from the SAME literal `.lst` file,
+    // and a `.MOD` row genuinely reuses its base spell's own key/name. A
+    // `remove_stale_owned_files` predicate that only checks `data.key` (as
+    // this function did before this fix) therefore deletes a sibling
+    // generator's still-valid records the moment its keys are absent from
+    // the caller's own `current_keys` set -- confirmed live: an unscoped
+    // run deleted 1,580 real `spell_mod_access` `.MOD` records this way.
+    // These tests exercise `remove_stale_owned_files` directly (the
+    // reusable guard both generators call), independent of either
+    // generator's own book-parsing pipeline.
+
+    /// Writes a minimal on-disk record whose `data.key`/`source.path`/
+    /// `source.line` match what either generator's real `CacheRecord`
+    /// shape serializes -- deliberately NOT importing `spell_lane_dump` or
+    /// `spell_mod_access`'s own record types, so this test proves the
+    /// guard's *on-disk JSON contract*, the same contract a third future
+    /// sibling generator would also have to satisfy.
+    fn write_stub_record(dir: &Path, slug: &str, key: &str, source_path: &str, source_line: u32) {
+        std::fs::create_dir_all(dir).unwrap();
+        let json = serde_json::json!({
+            "data": {"key": key},
+            "source": {"path": source_path, "line": source_line},
+        });
+        std::fs::write(dir.join(format!("{slug}.json")), json.to_string()).unwrap();
+    }
+
+    /// The exact incident shape: a sibling generator's record shares this
+    /// generator's key ("ablative barrier" is both the base spell name
+    /// AND the `.MOD` row's stripped key) and its source file
+    /// (`oa_spells.lst`), but NOT its source line -- the base declaration
+    /// lives on one line, the `.MOD` row widening class access on another.
+    /// A citation-aware ownership predicate must leave the sibling's file
+    /// alone even though `current_keys` (this run's own live spell set)
+    /// does not contain the key, because that key belongs to a DIFFERENT
+    /// record at a DIFFERENT line the caller never wrote.
+    #[test]
+    fn a_sibling_generators_record_sharing_the_same_key_and_file_survives() {
+        let root = std::env::temp_dir()
+            .join(format!("codex_cross_gen_guard_survives_{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        let dir = root.join("spell");
+        // The sibling (`spell_mod_access`-shaped) record: same key, same
+        // file, a DIFFERENT line (the `.MOD` row's own line, 4021, never a
+        // base declaration line).
+        write_stub_record(
+            &dir,
+            "ablative_barrier_mod",
+            "ablative barrier",
+            "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+            4021,
+        );
+
+        // This run's own `current_keys` does NOT contain "ablative
+        // barrier" (simulating the key being absent from the compiled
+        // table this particular run, or simply not this record's owner).
+        let current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+        // This run's own citation index: it only ever cites line 1618 for
+        // this file (the base declaration), never 4021.
+        let owned_lines: std::collections::HashSet<u32> = [1618u32].into_iter().collect();
+        let owned_path = "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst";
+        remove_stale_owned_files(&dir, &current_keys, &|path, line| {
+            path == owned_path && owned_lines.contains(&line)
+        });
+
+        assert!(
+            dir.join("ablative_barrier_mod.json").exists(),
+            "a sibling generator's record must survive even when its key is absent from this \
+             run's current_keys, because its citation line was never this generator's own"
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The mirror case: THIS generator's own record, genuinely stale (its
+    /// key is absent from `current_keys` AND its citation line IS one this
+    /// run's own parse produced), must still be removed -- the guard must
+    /// not become so conservative it stops cleaning up real drops.
+    #[test]
+    fn this_generators_own_stale_record_is_still_removed() {
+        let root =
+            std::env::temp_dir().join(format!("codex_cross_gen_guard_removes_{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        let dir = root.join("spell");
+        let owned_path = "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst";
+        write_stub_record(&dir, "now_pi_blocked", "now pi blocked", owned_path, 1618);
+
+        let current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+        let owned_lines: std::collections::HashSet<u32> = [1618u32].into_iter().collect();
+        remove_stale_owned_files(&dir, &current_keys, &|path, line| {
+            path == owned_path && owned_lines.contains(&line)
+        });
+
+        assert!(
+            !dir.join("now_pi_blocked.json").exists(),
+            "a genuinely stale record this generator itself owns (matching citation, absent key) \
+             must still be removed"
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Mutation proof for the two tests above: widening the ownership
+    /// predicate back to "any file in this directory" (the pre-fix shape,
+    /// `|_path, _line| true`) must turn
+    /// `a_sibling_generators_record_sharing_the_same_key_and_file_survives`
+    /// red. This test pins that the SURVIVAL assertion is actually load-
+    /// bearing rather than vacuously true, by re-running the identical
+    /// scenario with the unscoped predicate and asserting the sibling
+    /// record is (wrongly) deleted -- proving the guard, not the test
+    /// setup, is what protects the sibling above.
+    #[test]
+    fn an_unscoped_key_only_predicate_reproduces_the_incident() {
+        let root =
+            std::env::temp_dir().join(format!("codex_cross_gen_guard_mutation_{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        let dir = root.join("spell");
+        write_stub_record(
+            &dir,
+            "ablative_barrier_mod",
+            "ablative barrier",
+            "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+            4021,
+        );
+        let current_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+        // The pre-fix shape: any file physically in the directory is
+        // treated as owned, regardless of citation.
+        remove_stale_owned_files(&dir, &current_keys, &|_path, _line| true);
+
+        assert!(
+            !dir.join("ablative_barrier_mod.json").exists(),
+            "sanity check: the unscoped predicate must reproduce the incident (deletion) so the \
+             citation-aware guard's protection is proven non-vacuous"
+        );
+        std::fs::remove_dir_all(&root).ok();
     }
 }

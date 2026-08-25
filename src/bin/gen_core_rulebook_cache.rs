@@ -27,6 +27,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::rules_core::cache_gen::equipment_gap::resolve_name_or_rename;
 use codex::rules_core::pi_screening;
 use codex::rules_core::rules_tables::crb::class_tables::{self, ClassId, ClassTableRow};
 use codex::rules_core::rules_tables::crb::equipment_tables::{self, EquipmentCategory, EquipmentTableEntry};
@@ -240,6 +241,23 @@ fn web_second_source_for(name: &str, key: &str) -> Option<(String, String)> {
     None
 }
 
+/// `(source_file, source_line)` for `resolve_name_or_rename`'s neutral-name
+/// derivation (`decisions.md §24b`-1: coordinates only, never the PI
+/// string) -- extracted generically across `equipment_source`'s four
+/// possible `CorpusSource` variants. `WebSecondSource` carries no LST line
+/// at all; its `url` (unique per record) stands in for `source_file` with
+/// `source_line == 0` so the derivation stays deterministic even for that
+/// variant.
+fn source_coordinate(source: &CorpusSource) -> (String, u32) {
+    match source {
+        CorpusSource::LstToken { path, line, .. }
+        | CorpusSource::LstInheritedCopy { path, line, .. }
+        | CorpusSource::LstCorrectedIngest { path, line, .. } => (path.clone(), *line),
+        CorpusSource::WebSecondSource { url, .. } => (url.clone(), 0),
+        CorpusSource::SameBookFallback { fallback_basis } => (fallback_basis.clone(), 0),
+    }
+}
+
 fn equipment_source(file: &CorpusFile, index: &LineIndex<'_>, entry: &EquipmentTableEntry) -> Option<CorpusSource> {
     let (line_no, line_text) = index
         .by_key
@@ -377,18 +395,25 @@ fn main() {
     let root = corpus_root();
     let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/core_rulebook");
 
-    // Fresh regenerate: clear prior generated output (keep .gitkeep only if
-    // the dir is empty afterward -- re-created below if needed).
-    if out_root.exists() {
-        for entry in fs::read_dir(&out_root).expect("read output root") {
-            let entry = entry.expect("dir entry");
-            let path = entry.path();
-            if path.is_dir() {
-                fs::remove_dir_all(&path).expect("clear stale generated subdir");
-            }
-        }
-    }
-
+    // **SD-32 Epic 5 protective sweep (`epic-breakdown.md` Epic 5, T3
+    // residual / `defects.md` D9), live-reproduced**: this used to wipe
+    // EVERY subdirectory of `out_root` on every run -- not just the three
+    // kinds (`class`/`spell`/`equipment`) this binary itself owns.
+    // Live-reproduced against this repo's real committed corpus in an
+    // isolated worktree (git status clean before, `git checkout -- ` +
+    // `git clean -fd` after): one run deleted 959 `class_feature`, 84
+    // `companion`, 330 `equipment`, 7 `race` and 67 `race_trait` records --
+    // every one of them owned by a DIFFERENT generator
+    // (`cache_gen::class_feature`, companion books that cite
+    // `core_rulebook`, `ingest_races.rs`/`ingest_race_traits.rs`,
+    // `cache_gen::equipment_gap`) that also writes into this same book's
+    // `out_root`, none of which this binary's own class/spell/equipment
+    // loops below ever touch -- and stripped `raw_tokens` from all 664 of
+    // this book's own spell records (`enrich_spell_raw_tokens.rs` writes
+    // that field in a later pass this generator's own `SpellCacheData`
+    // cannot reconstruct). Fixed at the root: this binary now touches
+    // ONLY the three kind directories it actually writes, each with its
+    // own guard (see the write loops below and their doc comments).
     let ingested_at = ingested_at_now();
     let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &root);
     let mut wiring_lines = wiring_index.lines();
@@ -417,9 +442,16 @@ fn main() {
                     license: Some(license),
                     pi_field,
                     pi_marker,
+                    codex_generated_name: false,
+                    rename: None,
                 };
+                // Exists-guard only -- `ClassId::ALL` has no `key` field to
+                // key a stale-sweep on (see this fn's own doc comment), and
+                // the 11-class population is effectively fixed.
                 let path = out_root.join("class").join(format!("{}.json", slugify(&class_name)));
-                write_record(&path, &record);
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 class_written += 1;
             }
             None => class_unattributed.push(class_name),
@@ -431,6 +463,7 @@ fn main() {
     let mut spell_written = 0u32;
     let mut spell_unattributed: Vec<String> = Vec::new();
     let mut spell_slugs_used: HashMap<u8, HashSet<String>> = HashMap::new();
+    let mut current_spell_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
     for entry in spell_list::SPELL_LIST {
         let mod_identity = format!("{}.MOD", entry.key);
         let mut found: Option<(u32, String)> = None;
@@ -484,10 +517,53 @@ fn main() {
 
         match found {
             Some((line_no, record_key)) => {
-                let (license, pi_field, pi_marker, stored_desc) =
+                let (mut license, mut pi_field, mut pi_marker, mut stored_desc) =
                     pi_screening::classify_field("description", entry.description);
+                // t9-onboarding-pi-last-leak-and-generators cycle: the SAME
+                // supplementary strong-scan re-screen `cache_gen::
+                // equipment_gap`/`cache_gen::ultimate_equipment`'s own
+                // "third defect" fix already established -- `classify_field`
+                // screens via the weak, bare-substring, case-SENSITIVE scan
+                // only. Never weakens an existing redaction, only
+                // strengthens a miss.
+                if stored_desc != codex::rules_core::shape_b_v1::REDACTED_PI_MARKER
+                    && pi_screening::blacklist_term_hit_including_concatenated(&stored_desc).is_some()
+                {
+                    license = codex::rules_core::shape_b_v1::License::PiRedacted;
+                    pi_marker = Some(codex::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                    pi_field = Some(match pi_field.take() {
+                        Some(existing) if existing.split(',').any(|p| p == "description") => existing,
+                        Some(existing) => format!("{existing},description"),
+                        None => "description".to_string(),
+                    });
+                    stored_desc = codex::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string();
+                }
+                // t9-onboarding-pi-last-leak-and-generators cycle: this
+                // generator never screened `key` at all -- only
+                // `description`. Same shape `cache_gen::{acg,apg,
+                // beastiary1,equipment_gap,ultimate_equipment}` were already
+                // fixed for; the eighth instance in this bundle. `SpellCacheData`
+                // carries no separate display-name field (`key` doubles as
+                // both identity and the player-facing string), so only
+                // `key` needs the union scan -- there is no declared-PI
+                // (`NAMEISPI:`) reader wired into this generator at all
+                // (a separate, pre-existing gap, not this fix's scope);
+                // this union is the blacklist-term half only, matching the
+                // dispatch's own named shape.
+                let key_is_pi = pi_screening::blacklist_term_hit_including_concatenated(entry.key).is_some();
+                let (_unused_name, renamed_key, codex_generated_name, rename_info, divergence) =
+                    resolve_name_or_rename(key_is_pi, "spell", "core_rulebook", &spells_file.relative_path, line_no, entry.key, entry.key);
+                if divergence.is_some() {
+                    license = codex::rules_core::shape_b_v1::License::PiRedacted;
+                    pi_marker = Some(codex::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                    pi_field = Some(match pi_field.take() {
+                        Some(existing) if existing.split(',').any(|p| p == "key") => existing,
+                        Some(existing) => format!("{existing},key"),
+                        None => "key".to_string(),
+                    });
+                }
                 let data = SpellCacheData {
-                    key: entry.key.to_string(),
+                    key: renamed_key.clone(),
                     school: format!("{:?}", entry.school),
                     level: entry.level,
                     description: stored_desc,
@@ -496,7 +572,7 @@ fn main() {
                     path: spells_file.relative_path.clone(),
                     sha256: spells_file.sha256.clone(),
                     line: line_no,
-                    record_key,
+                    record_key: if codex_generated_name { renamed_key.clone() } else { record_key },
                 };
                 let (wiring_class, wiring_class_signals) =
                     wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
@@ -511,18 +587,42 @@ fn main() {
                     license: Some(license),
                     pi_field,
                     pi_marker,
+                    codex_generated_name,
+                    rename: rename_info,
                 };
+                current_spell_keys.insert(renamed_key.clone());
                 let used = spell_slugs_used.entry(entry.level).or_default();
-                let slug = unique_slug(used, &slugify(entry.key));
+                // `§24b`-2's directory/filename guard (`cache_gen::
+                // equipment_gap`/`class_feature`'s identical precedent): the
+                // on-disk slug is derived from the (possibly-renamed)
+                // OUTPUT key, never the original `entry.key`, so a
+                // blacklisted key cannot leak into the file path either.
+                let slug = unique_slug(used, &slugify(&renamed_key));
                 let path = out_root
                     .join("spell")
                     .join(format!("level_{}", entry.level))
                     .join(format!("{slug}.json"));
-                write_record(&path, &record);
+                // `SD31-E6-F9-005`-shaped guard: a file already on disk
+                // (including one `enrich_spell_raw_tokens.rs` has since
+                // written `raw_tokens` into) is left completely untouched.
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 spell_written += 1;
             }
             None => spell_unattributed.push(entry.key.to_string()),
         }
+    }
+    if out_root.join("spell").exists() {
+        // Single writer of `core_rulebook/spell/` (verified: `core_rulebook`
+        // is in neither `cache_gen::spell_lane_dump`'s nor
+        // `cache_gen::spell_mod_access`'s book lists -- SD-32 cross-generator
+        // sweep, 2026-08-23).
+        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+            &out_root.join("spell"),
+            &current_spell_keys,
+            &|_path, _line| true,
+        );
     }
 
     // ---- Equipment ----
@@ -601,12 +701,57 @@ fn main() {
                 } else {
                     Completeness::ChassisOnly
                 };
-                let (license, pi_field, pi_marker, stored_desc) =
+                let (mut license, mut pi_field, mut pi_marker, mut stored_desc) =
                     pi_screening::classify_optional_field("description", entry.description);
+                // t9-onboarding-pi-last-leak-and-generators cycle: the SAME
+                // supplementary strong-scan re-screen `cache_gen::
+                // equipment_gap`/`cache_gen::ultimate_equipment`'s own
+                // "third defect" fix already established -- never weakens
+                // an existing redaction, only strengthens a miss the weak
+                // `classify_optional_field` scan let through.
+                if let Some(v) = &stored_desc {
+                    if v.as_str() != codex::rules_core::shape_b_v1::REDACTED_PI_MARKER
+                        && pi_screening::blacklist_term_hit_including_concatenated(v).is_some()
+                    {
+                        license = codex::rules_core::shape_b_v1::License::PiRedacted;
+                        pi_marker = Some(codex::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                        pi_field = Some(match pi_field.take() {
+                            Some(existing) if existing.split(',').any(|p| p == "description") => existing,
+                            Some(existing) => format!("{existing},description"),
+                            None => "description".to_string(),
+                        });
+                        stored_desc = Some(codex::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string());
+                    }
+                }
+                // t9-onboarding-pi-last-leak-and-generators cycle: `name`/
+                // `key` were NEVER screened at all -- only `description`.
+                // Same shape `cache_gen::{acg,apg,beastiary1,equipment_gap,
+                // ultimate_equipment}` were already fixed for; the eighth
+                // instance in this bundle.
+                let name_is_pi = pi_screening::blacklist_term_hit_including_concatenated(entry.name).is_some()
+                    || pi_screening::blacklist_term_hit_including_concatenated(entry.key).is_some();
+                let (source_file, source_line) = source_coordinate(&source);
+                let kind = if entry.category == EquipmentCategory::Equipmods {
+                    "equipment_modifier"
+                } else {
+                    "equipment"
+                };
+                let (renamed_name, renamed_key, codex_generated_name, rename_info, divergence) =
+                    resolve_name_or_rename(name_is_pi, kind, "core_rulebook", &source_file, source_line, entry.name, entry.key);
+                if divergence.is_some() {
+                    license = codex::rules_core::shape_b_v1::License::PiRedacted;
+                    pi_marker = Some(codex::rules_core::shape_b_v1::PI_MARKER_REDACTED.to_string());
+                    let mut fields: Vec<&str> = Vec::new();
+                    if pi_field.as_deref().is_some_and(|f| f.split(',').any(|p| p == "description")) {
+                        fields.push("description");
+                    }
+                    fields.push("name");
+                    pi_field = Some(fields.join(","));
+                }
                 let data = EquipmentCacheData {
-                    key: entry.key.to_string(),
+                    key: renamed_key.clone(),
                     category: equipment_category_slug(entry.category).to_string(),
-                    name: entry.name.to_string(),
+                    name: renamed_name,
                     cost_gp: entry.cost_gp,
                     weight_lbs: entry.weight_lbs,
                     description: stored_desc,
@@ -624,12 +769,22 @@ fn main() {
                     license: Some(license),
                     pi_field,
                     pi_marker,
+                    codex_generated_name,
+                    rename: rename_info,
                 };
                 let category_slug = equipment_category_slug(entry.category);
                 let used = equipment_slugs_used.entry(category_slug).or_default();
-                let slug = unique_slug(used, &slugify(entry.key));
+                // `§24b`-2's directory/filename guard: derive the slug from
+                // the (possibly-renamed) OUTPUT key, never `entry.key`.
+                let slug = unique_slug(used, &slugify(&renamed_key));
                 let path = out_root.join("equipment").join(category_slug).join(format!("{slug}.json"));
-                write_record(&path, &record);
+                // Exists-guard only, deliberately NO stale-key sweep here --
+                // `cache_gen::equipment_gap` ("CRB" routing) also writes
+                // real records into this same `equipment` directory; a
+                // sweep keyed on this loop's own entries would delete them.
+                if !path.exists() {
+                    write_record(&path, &record);
+                }
                 equipment_written += 1;
             }
             None => equipment_unattributed.push(format!("{:?}:{}", entry.category, entry.key)),
@@ -665,5 +820,110 @@ fn main() {
             equipment_unattributed.len(),
             equipment_unattributed.iter().take(20).collect::<Vec<_>>()
         );
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // --- t9-onboarding-pi-last-leak-and-generators: `name`/`key`
+    // blacklist screening (`decisions.md §17`: the SAME shape
+    // `cache_gen::{acg,apg,beastiary1,equipment_gap,ultimate_equipment}`
+    // already established, reused here rather than reinvented). This
+    // binary's own record-construction loops are not factored into
+    // injectable functions (unlike `cache_gen::ultimate_equipment`'s
+    // `generate_equipment`), so `source_coordinate` -- the one new pure
+    // helper this fix introduced -- is what's directly testable without a
+    // real `PCGEN_CORPUS_ROOT` checkout; the underlying scan/rename
+    // primitives (`resolve_name_or_rename`,
+    // `blacklist_term_hit_including_concatenated`) are already
+    // exhaustively tested in `cache_gen::equipment_gap`'s own test module.
+
+    #[test]
+    fn source_coordinate_reads_path_and_line_for_every_lst_backed_variant() {
+        let lst_token = CorpusSource::LstToken {
+            path: "book/file.lst".to_string(),
+            sha256: "x".to_string(),
+            line: 42,
+            record_key: "k".to_string(),
+        };
+        assert_eq!(source_coordinate(&lst_token), ("book/file.lst".to_string(), 42));
+
+        let inherited = CorpusSource::LstInheritedCopy {
+            path: "book/file2.lst".to_string(),
+            sha256: "x".to_string(),
+            line: 7,
+            record_key: "k".to_string(),
+            inherited_from_record_key: "base".to_string(),
+        };
+        assert_eq!(source_coordinate(&inherited), ("book/file2.lst".to_string(), 7));
+
+        let corrected = CorpusSource::LstCorrectedIngest {
+            path: "book/file3.lst".to_string(),
+            sha256: "x".to_string(),
+            line: 9,
+            record_key: "k".to_string(),
+            original_ingest_defect: "d".to_string(),
+        };
+        assert_eq!(source_coordinate(&corrected), ("book/file3.lst".to_string(), 9));
+    }
+
+    /// A `WebSecondSource` citation carries no LST line at all -- proves
+    /// the fallback still produces a stable, deterministic
+    /// `(source_file, source_line)` pair (`url`, `0`) rather than
+    /// panicking or fabricating a line number.
+    #[test]
+    fn source_coordinate_falls_back_to_the_url_for_web_second_source() {
+        let web = CorpusSource::WebSecondSource {
+            url: "https://example.invalid/item".to_string(),
+            fetched_at: "2026-01-01".to_string(),
+            identity_match_basis: "name".to_string(),
+        };
+        assert_eq!(
+            source_coordinate(&web),
+            ("https://example.invalid/item".to_string(), 0)
+        );
+    }
+
+    /// End-to-end proof against the real `resolve_name_or_rename` this
+    /// binary now calls (imported, not reimplemented, `§24b`-1): an
+    /// undeclared blacklisted key still renames -- referencing the term by
+    /// index (`§24b`-2: never write a blacklist term literally into a
+    /// test).
+    #[test]
+    fn an_undeclared_blacklisted_key_renames_via_the_shared_helper() {
+        let term = pi_screening::PI_BLACKLIST_TERMS[9];
+        let name = format!("{term}'s Blessed Blade");
+        let hit = pi_screening::blacklist_term_hit_including_concatenated(&name).is_some();
+        assert!(hit, "sanity: the strong scan must catch the blacklisted term");
+        let (renamed_name, renamed_key, codex_generated_name, rename_info, divergence) =
+            resolve_name_or_rename(hit, "equipment", "core_rulebook", "cr_equip_general.lst", 12, &name, &name);
+        assert!(codex_generated_name);
+        assert!(!renamed_name.contains(term));
+        assert!(!renamed_key.contains(term));
+        assert!(rename_info.is_some());
+        assert!(divergence.is_some());
+    }
+
+    /// The negative case: an ordinary undeclared name with no blacklist
+    /// hit passes through unchanged -- zero behaviour change for every
+    /// already-shipped CRB record.
+    #[test]
+    fn an_ordinary_key_passes_through_the_shared_helper_unchanged() {
+        let (renamed_name, renamed_key, codex_generated_name, rename_info, divergence) = resolve_name_or_rename(
+            false,
+            "equipment",
+            "core_rulebook",
+            "cr_equip_general.lst",
+            12,
+            "Masterwork Backpack",
+            "Masterwork Backpack",
+        );
+        assert!(!codex_generated_name);
+        assert_eq!(renamed_name, "Masterwork Backpack");
+        assert_eq!(renamed_key, "Masterwork Backpack");
+        assert!(rename_info.is_none());
+        assert!(divergence.is_none());
     }
 }

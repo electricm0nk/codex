@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Duelist",
     "name": "Duelist",
-    "class": null,
+    "class": "Duelist",
     "description": null,
     "raw_tokens": [
       {
@@ -19,6 +19,46 @@
       {
         "key": "BONUS",
         "value": "VAR|Duelist_CFP_Level|DuelistLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Weapon and Armor Proficiency|PREVARGTEQ:Duelist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Canny Defense|Duelist ~ Precise Strike|PREVARGTEQ:Duelist_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Improved Reaction|Duelist ~ Parry|PREVARGTEQ:Duelist_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Enhanced Mobility|PREVARGTEQ:Duelist_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Combat Reflexes|Duelist ~ Grace|PREVARGTEQ:Duelist_CFP_Level,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Riposte|PREVARGTEQ:Duelist_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Acrobatic Charge|PREVARGTEQ:Duelist_CFP_Level,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Elaborate Defense|PREVARGTEQ:Duelist_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Deflect Arrows|Duelist ~ No Retreat|PREVARGTEQ:Duelist_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Duelist Class Feature|AUTOMATIC|Duelist ~ Crippling Critical|PREVARGTEQ:Duelist_CFP_Level,10"
       }
     ]
   },
@@ -35,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

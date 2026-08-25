@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:11:35Z",
+  "data": {
+    "key": "Perform (Thoughtsong)",
+    "name": "Perform (Thoughtsong)",
+    "raw_tokens": [
+      {
+        "key": "KEYSTAT",
+        "value": "CHA"
+      },
+      {
+        "key": "USEUNTRAINED",
+        "value": "NO"
+      },
+      {
+        "key": "TYPE",
+        "value": "Charisma.Perform.Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perform (Thoughtsong)|3|TYPE=ClassSkill|PRECSKILL:1,Perform (Thoughtsong)|PRESKILL:1,Perform (Thoughtsong)=1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_skills.lst",
+    "sha256": "0f4493199e7e13bab58c63551160be3ef872e131fba5999d3996db197af5bd49",
+    "line": 11,
+    "record_key": "Perform (Thoughtsong)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

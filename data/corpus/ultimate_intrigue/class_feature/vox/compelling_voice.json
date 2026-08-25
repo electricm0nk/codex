@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vox ~ Compelling Voice",
+    "name": "Compelling Voice",
+    "class": "Mesmerist",
+    "description": "A vox can focus the sound of his voice on one creature within 30 feet as a swift action, sapping that target's willpower and rendering her more vulnerable to mind-affecting powers, rather than using a stare like other mesmerists. A vox can use his compelling voice even while deafened, but it has a 20%% chance to fail, just like casting a spell with a verbal component. The target does not need to be able to understand what the vox is saying, but does need to be able to hear the sound of the vox's voice (for instance, this ability cannot be used if either the vox or his target is in an area of magical silence). Otherwise, the vox's compelling voice has the effects of the standard mesmerist's hypnotic stare, and it gains further benefits as normal from abilities like the painful stare and bold stare class features.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vox ~ Compelling Voice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.VoxClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A vox can focus the sound of his voice on one creature within 30 feet as a swift action, sapping that target's willpower and rendering her more vulnerable to mind-affecting powers, rather than using a stare like other mesmerists. A vox can use his compelling voice even while deafened, but it has a 20%% chance to fail, just like casting a spell with a verbal component. The target does not need to be able to understand what the vox is saying, but does need to be able to hear the sound of the vox's voice (for instance, this ability cannot be used if either the vox or his target is in an area of magical silence). Otherwise, the vox's compelling voice has the effects of the standard mesmerist's hypnotic stare, and it gains further benefits as normal from abilities like the painful stare and bold stare class features."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 89,
+    "record_key": "Vox ~ Compelling Voice"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

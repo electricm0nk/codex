@@ -119,12 +119,50 @@ pub struct MonsterSpellLikeAbility {
     pub save_dc_token: Option<&'static str>,
 }
 
-/// Which of `monster_ability`'s facets a record is, read from the first segment
-/// of its corpus `TYPE:` token.
+/// Which of `monster_ability`'s facets a record is, read from its corpus
+/// `TYPE:` token(s) — the FIRST segment, across every book's row, that names a
+/// facet the chassis models (`transcribe_monster_tables.py::parse_type`).
+///
+/// The five variants below `SpecialQuality` were added by the T9
+/// `bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/`inner_sea_gods`
+/// widening cycle (`decisions.md §16`'s own caution against a naive widening
+/// applied here): each is a **distinct, repeated, corpus-native** facet label
+/// PCGen itself uses in `TYPE:` — never a semantic remapping onto
+/// `SpecialAttack`/`SpecialQuality`. `Weakness` (a monster's own
+/// vulnerability line), `Defensive` (a passive defensive trait), `Aura` (an
+/// area effect centred on the monster), `Sense` (a perception trait) and
+/// `Communicate` (a communication-only trait, e.g. `Communicate.Supernatural`
+/// — telepathy/truespeech) each occur multiple times across the five books'
+/// 876 PI-cleared units, verbatim, the same way `SpecialAttack`/
+/// `SpecialQuality` already do. A **bare** delivery-only `TYPE:` (no facet
+/// segment at all, e.g. a lone `TYPE:SpellLike`), the `CATEGORY:Internal`
+/// shape (this bundle's own finding: 2,371 real / 243 not — a single sample
+/// cannot settle which), one-off non-facet strings
+/// (`Unfettered Eidolon Stat Selection`, `AsurendraAdditional`, …), and two
+/// corpus typos (`Spelllike`, `SpecialAttck`) are deliberately **not**
+/// modelled here — each needs its own per-record read, not a vocabulary
+/// entry guessed from one sample (`t9-onboarding` cycle receipt, "What
+/// remains").
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MonsterAbilityFacet {
     SpecialAttack,
     SpecialQuality,
+    /// `TYPE:Weakness.Extraordinary` etc — a stated vulnerability or
+    /// drawback line (`Akata ~ Deaf`, `Bodak ~ Vulnerability to Sunlight`).
+    Weakness,
+    /// `TYPE:Defensive.Extraordinary` etc — a passive defensive trait that
+    /// PCGen's own vocabulary distinguishes from `SpecialQuality`
+    /// (`Chaos Beast ~ Resistant to Transformation`).
+    Defensive,
+    /// `TYPE:Aura.Supernatural` etc — an area effect centred on the monster
+    /// (`Quickwood ~ Fear Aura`, `Winterwight ~ Aura of Cold`).
+    Aura,
+    /// `TYPE:Sense.Supernatural` etc — a perception trait
+    /// (`Dragon Horse ~ Know Alignment`, `Banshee ~ Hear Heartbeat`).
+    Sense,
+    /// `TYPE:Communicate.Supernatural` etc — a communication-only trait
+    /// (`Orsheval ~ Truespeech`).
+    Communicate,
 }
 
 impl MonsterAbilityFacet {
@@ -133,6 +171,11 @@ impl MonsterAbilityFacet {
         match self {
             MonsterAbilityFacet::SpecialAttack => "SpecialAttack",
             MonsterAbilityFacet::SpecialQuality => "SpecialQuality",
+            MonsterAbilityFacet::Weakness => "Weakness",
+            MonsterAbilityFacet::Defensive => "Defensive",
+            MonsterAbilityFacet::Aura => "Aura",
+            MonsterAbilityFacet::Sense => "Sense",
+            MonsterAbilityFacet::Communicate => "Communicate",
         }
     }
 }
@@ -196,6 +239,20 @@ pub struct MonsterAbilityRecord {
     pub source_file: &'static str,
     /// The 1-based line of [`Self::source_file`] this record was read from.
     pub source_line: u32,
+    /// `true` when [`Self::key`]/[`Self::name`] are a Codex-generated
+    /// neutral identity rather than the printed name (`decisions.md §24`):
+    /// the row's own name matched a Product Identity term, so it ships
+    /// de-identified instead of being dropped. `false` for every
+    /// ordinarily-named record.
+    pub codex_generated_name: bool,
+    /// `Some("name_pi_blocked")` exactly when [`Self::codex_generated_name`]
+    /// is `true`. `§24b`-4: the divergence record stops at the coordinate
+    /// (`Self::source_file`/`Self::source_line`) -- never the original
+    /// string, which is why there is no field here that could carry it.
+    pub rename_reason: Option<&'static str>,
+    /// `Some("<book>:<file>:<line>")` alongside [`Self::rename_reason`] --
+    /// the exact citation the rename applies to.
+    pub rename_coordinate: Option<&'static str>,
 }
 
 /// One monster stat block.
@@ -543,6 +600,84 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monster_abilities: super::horror_adventures::monster_abilities_static(),
         cross_table_owner_names: &[],
     },
+    // `decisions.md §20` no_record-to-zero, round 3. Five of the eight
+    // zero-monster books `decisions.md §17a`'s re-derive found unregistered
+    // (`scripts/classify_monster_ability_rows.py`'s own "ZERO-monster books"
+    // line): every ability row in each ships owner-less by construction,
+    // since no monster row of the book exists to own it. `mythic_adventures`
+    // (21 rows) is still deferred -- its `rules_tables/` module directory
+    // does not exist yet.
+    MonsterBook {
+        corpus_book: "ultimate_wilderness",
+        monsters: super::ultimate_wilderness::monsters_static(),
+        monster_abilities: super::ultimate_wilderness::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "ultimate_intrigue",
+        monsters: super::ultimate_intrigue::monsters_static(),
+        monster_abilities: super::ultimate_intrigue::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "ultimate_magic",
+        monsters: super::ultimate_magic::monsters_static(),
+        monster_abilities: super::ultimate_magic::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "bestiary_6",
+        monsters: super::bestiary_6::monsters_static(),
+        monster_abilities: super::bestiary_6::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "bestiary_5",
+        monsters: super::bestiary_5::monsters_static(),
+        monster_abilities: super::bestiary_5::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    // `decisions.md §20` no_record-to-zero, round 4: the last two of the
+    // original 8 zero-monster books, now registered. Both already have a
+    // dedicated `gen_book_cache.rs` generator function for their OTHER
+    // families (`gen_pathfinder_unchained`/`gen_advanced_race_guide`),
+    // extended this round to also call `gen_monster_book` after its existing
+    // writes.
+    MonsterBook {
+        corpus_book: "pathfinder_unchained",
+        monsters: super::pathfinder_unchained::monsters_static(),
+        monster_abilities: super::pathfinder_unchained::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    MonsterBook {
+        corpus_book: "advanced_race_guide",
+        monsters: super::advanced_race_guide::monsters_static(),
+        monster_abilities: super::advanced_race_guide::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    // `decisions.md §20` no_record-to-zero, round 5: the last of the original
+    // 8 zero-monster books, deferred by round 4 pending its `rules_tables/`
+    // module (created since by a sibling `spell` lane); the mechanism itself
+    // is unchanged.
+    MonsterBook {
+        corpus_book: "mythic_adventures",
+        monsters: super::mythic_adventures::monsters_static(),
+        monster_abilities: super::mythic_adventures::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
+    // `decisions.md §27b` — EVERYTHING: overturns four cycles' worth of
+    // "correctly out of scope" for this book's 5 `monster_ability` units,
+    // reasoning that a reachability finding (negated `PRECAMPAIGN` gate) is
+    // not an ingest exemption. All 5 ship owner-less, same honest shape
+    // `mythic_adventures` above ships; see `occult_adventures/monster_data.rs`
+    // for the keys and `reach_gate.rs::UNREACHED_RECORD_FINDINGS` for the
+    // pinned non-reach.
+    MonsterBook {
+        corpus_book: "occult_adventures",
+        monsters: super::occult_adventures::monsters_static(),
+        monster_abilities: super::occult_adventures::monster_abilities_static(),
+        cross_table_owner_names: &[],
+    },
 ];
 
 /// The registered book with this corpus directory id.
@@ -594,14 +729,28 @@ mod tests {
 
     /// The chassis link, held closed in both directions for every book: an
     /// ability a monster names is defined here, an ability listed as external is
-    /// not, and every defined ability has at least one owner. An orphan means
-    /// the link was transcribed wrong in one direction and the catalog would
-    /// serve a record no monster row reaches. A CROSS-TABLE-OWNER ability
+    /// not, and every NAMED owner on a defined ability resolves back to a
+    /// monster that names it (or is a known cross-table exception). An orphan
+    /// means the link was transcribed wrong in one direction and the catalog
+    /// would serve a record no monster row reaches. A CROSS-TABLE-OWNER ability
     /// (`SD31-W23-MONSTER-001`, `decisions.md §58.3`) is the one owner shape
     /// that legitimately has no `ability_keys` back-reference in THIS book --
     /// its `MonsterStatBlock` ships from a different one -- and the book's own
     /// `cross_table_owner_names` is what tells this test apart a real
     /// dangling owner from that known, cited exception.
+    ///
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2)**: this no
+    /// longer requires every ability to carry an owner at all. An
+    /// intentionally owner-less record (no monster row of its book claims
+    /// it) now SHIPS with `owners: &[]` rather than being dropped, because an
+    /// un-ingested row's shape cannot be measured and Gate 1's DoD needs
+    /// every unit's shape measured; `list_monster_catalog` only ever walks a
+    /// monster's own `ability_keys`, so it never surfaces one. Each book that
+    /// ships owner-less records pins the EXACT set in its own module (e.g.
+    /// `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_non_reach`)
+    /// — that is where a silent new arrival or disappearance is caught; this
+    /// test's remaining job is that every NON-empty owner list still
+    /// resolves correctly both ways.
     #[test]
     fn the_chassis_link_resolves_in_both_directions_for_every_book() {
         for book in MONSTER_BOOKS {
@@ -624,13 +773,6 @@ mod tests {
                 }
             }
             for ability in book.monster_abilities {
-                assert!(
-                    !ability.owners.is_empty(),
-                    "{}: {} ({}) is owned by no monster row",
-                    book.corpus_book,
-                    ability.name,
-                    ability.key
-                );
                 for owner in ability.owners {
                     match book.monster_resolve(owner) {
                         Some(monster) => assert!(
@@ -806,6 +948,240 @@ mod tests {
             !animated_object.has_spell_like_abilities,
             "Animated Object (Medium)'s row (b1_races.lst:13) carries no SLA_CL token — it \
              has no spell-like abilities"
+        );
+    }
+
+    /// **Pinning test for the T9 `MonsterAbilityFacet` widening
+    /// (`decisions.md §16`'s caution, applied).** Hashes every currently-
+    /// shipped `(corpus_book, ability_key, facet)` triple across every
+    /// registered book and pins the digest. Adding `Weakness`/`Defensive`/
+    /// `Aura`/`Sense`/`Communicate` to the enum must not change ONE existing
+    /// record's facet — those variants are reached only by
+    /// `scripts/transcribe_monster_tables.py` re-running against rows that
+    /// were previously unparseable (`facet is None` → `SystemExit`), never by
+    /// reinterpreting a row that already resolved to `SpecialAttack`/
+    /// `SpecialQuality`.
+    ///
+    /// **This test was proven to actually fail, not just pass by
+    /// construction**, by temporarily widening `parse_type` to a naive
+    /// first-non-facet-segment-wins rule (mirroring the `refine_kind`
+    /// unsafe-widening shape `decisions.md §16` names) and re-running
+    /// `transcribe_monster_tables.py` for `bestiary_2` — the run reclassified
+    /// `Denizen of Leng ~ Planar Fast Healing` from an unmodelled row into a
+    /// wrong `SpecialQuality` (its true first TYPE segment is `ModifyHP`, not
+    /// a real facet), and THIS test caught it (digest mismatch) before the
+    /// change reached this file. The naive widening was reverted; the
+    /// deliberate, per-shape widening actually shipped here does not trigger
+    /// it. The failure branch is real for ANY book in [`MONSTER_BOOKS`], not
+    /// only the one used to prove it: the assertion iterates the whole
+    /// registry, and a naive widening's failure mode (misreading whichever
+    /// row happens first in `TYPE:` order) is not specific to `bestiary_2`.
+    ///
+    /// **Pin history.** `2214` (this test's original pin, immediately after
+    /// the enum widened but before any of the five books were re-transcribed)
+    /// -> `2656` (+442, after re-running `transcribe_monster_tables.py` for
+    /// `bestiary`/`bestiary_2`/`bestiary_3`/`inner_sea_bestiary`/
+    /// `inner_sea_gods`). The 442 new records were verified additions-only —
+    /// every one of the original 2214 `(book, key)` pairs still carries the
+    /// SAME facet in the regenerated files, checked by diffing each touched
+    /// book's `monster_data.rs` against its pre-regen `git show HEAD:` content
+    /// (0 removed, 0 changed, 442 added, exactly matching this test's own
+    /// count delta) — this test's own before/after count is one more
+    /// independent confirmation of the same fact.
+    #[test]
+    fn widening_the_facet_vocabulary_does_not_reclassify_any_existing_record() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut triples: Vec<(&str, &str, &str)> = Vec::new();
+        for book in MONSTER_BOOKS {
+            for ability in book.monster_abilities {
+                triples.push((book.corpus_book, ability.key, ability.facet.corpus_token()));
+            }
+        }
+        triples.sort_unstable();
+
+        let mut hasher = DefaultHasher::new();
+        triples.hash(&mut hasher);
+        let digest = hasher.finish();
+
+        assert_eq!(
+            triples.len(),
+            3806,
+            // 3706 -> 3711 (`decisions.md §27b`, +5): `occult_adventures`
+            // registered for the first time, all 5 rows owner-less.
+            // 3711 -> 3726 (`decisions.md §24`/round 7, +15): the T9
+            // name-PI/desc-PI `monster_ability` group closes. 13 rows whose
+            // own name/key matched the blacklist now ship under a
+            // Codex-generated neutral name/key (`decisions.md §24`) rather
+            // than being dropped; 2 rows whose CLEAN name/key had an
+            // undeclared blacklist hit confined to `DESC:` now ship with
+            // the description redacted, the same path `DESCISPI:YES`
+            // already used. Both are strictly additive: no PREVIOUSLY-
+            // SHIPPED triple's facet/delivery moved, only 15 rows that were
+            // previously DROPPED now ship — confirmed by `git diff
+            // --stat`'s 21-book regeneration showing only new
+            // `MonsterAbilityRecord` blocks appended, zero removed, across
+            // the 3 books (`inner_sea_bestiary`, `inner_sea_gods`,
+            // `inner_sea_world_guide`) this group's population lives in.
+            // 3726 -> 3749 (`decisions.md §27`/round 8, +23): the
+            // `TYPE:`-facet-vocabulary-gap group closes via the operator's
+            // provisional-default ruling — a row whose `TYPE:` segments name
+            // no modeled facet now ships with `facet:
+            // MonsterAbilityFacet::SpecialQuality` (a PROVISIONAL default,
+            // not a measured shape; marked via `data.shape_provisional_
+            // default`/`data.shape_provisional_reason` on the shipped JSON
+            // record, `workflow-instruction.md §6a`) instead of being
+            // dropped. 22 of the 23 are the T9 round 6/7-named 22-unit
+            // remaining population (`bestiary` +1, `bestiary_2` +7,
+            // `bestiary_3` +11, `inner_sea_bestiary` +2, `inner_sea_gods`
+            // +1); the 23rd (`bestiary_2`'s `Bunyip ~ Blood Rage`) is a
+            // `.COPY=`-shaped row `docs/work-inventory.json` already counted
+            // `text-complete` by evidence alone with no backing corpus
+            // record — this cycle's regen incidentally backs that claim
+            // with a real record for the first time, same mechanism, same
+            // provisional marker. Strictly additive: every one of the 23
+            // was previously ABSENT from the set entirely (raised
+            // `UnmodelledFacet` and was dropped, never shipped under a
+            // different facet), so no existing triple's facet/delivery
+            // value changed — confirmed by `git diff --stat`'s 5-book
+            // regeneration showing only new `MonsterAbilityRecord` blocks
+            // appended, zero removed (`bestiary`, `bestiary_2`,
+            // `bestiary_3`, `inner_sea_bestiary`, `inner_sea_gods`), and by
+            // this test's own digest re-derivation below from the live
+            // failing run, never guessed, per `decisions.md §17a`.
+            "the number of currently-shipped monster_ability records changed — re-derive \
+             this pin (and the digest below) only from a real corpus regen, never to make a \
+             facet-widening change pass. 2656 -> 2836 (`decisions.md §20`, no_record-to-zero \
+             wave 2): +180 owner-less `bestiary` records now ship for shape measurement \
+             rather than being dropped as orphans — see \
+             `bestiary::tests::every_owner_less_ability_is_a_named_and_pinned_non_reach`. \
+             2836 -> 3537 (`decisions.md §20`, no_record-to-zero wave 2 FOLLOW-ON, +701): the \
+             identical owner-less-ship mechanism applied to the 8 remaining registered books \
+             (`bestiary_2` +85, `bestiary_3` +266, `bestiary_4` +187, `horror_adventures` +56, \
+             `inner_sea_bestiary` +28, `inner_sea_gods` +2, `inner_sea_world_guide` +13, \
+             `ultimate_psionics` +64) — each book's own module pins its exact owner-less set, \
+             see `every_owner_less_ability_is_a_named_and_pinned_non_reach` in each. \
+             3537 -> 3613 (`decisions.md §20` round 3, +76): 5 PREVIOUSLY-UNREGISTERED \
+             zero-monster books added to `MONSTER_BOOKS` for the first time \
+             (`ultimate_wilderness` +2, `ultimate_intrigue` +6, `ultimate_magic` +13, \
+             `bestiary_6` +16, `bestiary_5` +39) — structurally cannot reclassify an existing \
+             record's facet, since no pre-existing `MonsterBook` entry was modified, only new \
+             ones added. 3613 -> 3683 (`decisions.md §20` round 4, +70): the last 2 of the \
+             original 8 unregistered zero-monster books, `pathfinder_unchained` (+69, 3 of the \
+             72 orphan candidates refused during transcription as an unscreenable multi-DESC: \
+             shape — see `pathfinder_unchained/monster_data.rs`'s own header) and \
+             `advanced_race_guide` (+1) — again structurally additive only, reached via each \
+             book's own `gen_book_cache.rs` generator function extended to also call \
+             `gen_monster_book`. 3683 -> 3704 (`decisions.md §20` round 5, +21): the last of \
+             the original 8 unregistered zero-monster books, `mythic_adventures` (+21, all 21 \
+             orphan candidates shipped, 0 refused) — structurally additive only, reached \
+             entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm, \
+             no new generator code. 3704 -> 3706 (`decisions.md §22`/round 6, +2): two \
+             `type_segments` upstream-data corrections -- a comma-delimiter row \
+             (`bestiary`'s `Spectre ~ Create Spawn`, `TYPE:SpecialAttack,Supernatural`) and a \
+             misspelled facet segment (`bestiary_2`'s `Tick Swarm ~ Cling`, \
+             `TYPE:SpecialAttck.Extraordinary`) each now resolve a real, already-modelled \
+             facet (`SpecialAttack`) instead of raising `UnmodelledFacet` -- structurally \
+             additive only: no existing `MonsterBook` entry's other rows changed, confirmed by \
+             `git status --porcelain` showing exactly the 2 new `??` corpus files plus the 2 \
+             regenerated `monster_data.rs` files, zero deletions. 3706 -> 3711 \
+             (`decisions.md §27b`, +5): `occult_adventures` registered for the first time -- \
+             `decisions.md §27b` overturns the repeatedly-reconfirmed \"correctly out of scope\" \
+             disposition for this book's 5 `monster_ability` units (a reachability finding \
+             about a negated `PRECAMPAIGN` gate, not an ingest exemption). Structurally \
+             additive only: no pre-existing `MonsterBook` entry was modified, only one new one \
+             (`occult_adventures`) appended, all 5 rows ship owner-less. 3749 -> 3806 \
+             (`decisions.md §27b` round 9, +57): the last `monster_ability` `no_record` group \
+             closes -- the multi-`DESC:` `PRERULE`/`PREVAREQ`/`PREVARGT`/`PRESIZE*`/`PREHD`/ \
+             `PRERACE`/`PRETEMPLATE`/`PREABILITY`-gated parse-refusal shape, via `parse_desc`'s \
+             new generalised sixth branch (`_concat_desc_variants`), which concatenates every \
+             `DESC:` token's own verbatim text instead of guessing which one wins. 56 real \
+             `no_record` units plus 1 bonus (`bestiary`'s `Lycanthrope ~ Change Shape`, already \
+             counted `text-complete` by inventory evidence alone with no backing corpus record \
+             -- same shape as round 8's `Bunyip ~ Blood Rage`). Structurally additive only: \
+             every one of the 57 was previously ABSENT from the set entirely (raised \
+             `UnmodelledDesc` and was dropped, never shipped under a different facet), so no \
+             existing triple's facet/delivery value changed -- confirmed by `git diff --stat`'s \
+             8-book regeneration (`bestiary`, `bestiary_2`, `bestiary_3`, `bestiary_4`, \
+             `bestiary_5`, `horror_adventures`, `inner_sea_bestiary`, `pathfinder_unchained`) \
+             showing only new `MonsterAbilityRecord` blocks appended, zero removed, and by this \
+             test's own digest re-derivation below from the live failing run, never guessed, \
+             per `decisions.md §17a`."
+        );
+        assert_eq!(
+            digest, 0x874e_04c1_47ee_bb76,
+            "an EXISTING record's facet moved. `Weakness`/`Defensive`/`Aura`/`Sense`/\
+             `Communicate` may only be reached by rows that previously raised \
+             `parse_type`'s SystemExit — if this fires, some already-shipped \
+             SpecialAttack/SpecialQuality row was reclassified, which is exactly the \
+             defect this test exists to catch (decisions.md §16). 0x7f1fd137006b6cbd -> \
+             0xada455b5de6bafc7 (`decisions.md §20`): the digest moves whenever the SORTED \
+             triple set gains members, even with zero reclassification — independently \
+             confirmed zero-reclassification here via `gen_book_cache beastiary`'s own report \
+             (`0 new monsters ... 529 already on disk, left untouched, 180 new monster \
+             abilities`) and a `git diff` of `bestiary/monster_data.rs` showing every \
+             pre-existing record's fields byte-identical (only file-position reordering, from \
+             orphans keeping their real `source_line` instead of being dropped). \
+             0xada455b5de6bafc7 -> 0x5c2ee6087da263c9 (`decisions.md §20` round 3): the digest \
+             moves because the sorted triple set gains 76 new members from 5 newly-registered \
+             books — zero reclassification, since every pre-existing `MonsterBook` entry (and \
+             every triple it contributes) is byte-unchanged; only new `MonsterBook` rows were \
+             appended to `MONSTER_BOOKS`. 0x5c2ee6087da263c9 -> 0x2fa5c4578c0267bb \
+             (`decisions.md §20` round 4): the sorted triple set gains 70 new members from 2 \
+             newly-registered books (`pathfinder_unchained`/`advanced_race_guide`) — zero \
+             reclassification, same reasoning as round 3, only new `MonsterBook` rows appended. \
+             0x2fa5c4578c0267bb -> 0xd732c20ec4c2a946 (`decisions.md §20` round 5): the sorted \
+             triple set gains 21 new members from the last newly-registered book \
+             (`mythic_adventures`) — zero reclassification, same reasoning as rounds 3-4, only \
+             one new `MonsterBook` row appended. 0xd732c20ec4c2a946 -> 0x38f4aedd6de1caf3 \
+             (`decisions.md §22` round 6): two `type_segments` upstream-data corrections, zero \
+             reclassification, same additive reasoning as rounds 3-5. 0x38f4aedd6de1caf3 -> \
+             0xc4c144e1483d297d (`decisions.md §27b`): the sorted triple set gains 5 new \
+             members from the newly-registered `occult_adventures` — zero reclassification, \
+             same reasoning as rounds 3-5, only one new `MonsterBook` row appended. \
+             0xc4c144e1483d297d -> 0xc7f55369ed187098 (`decisions.md §24`/round 7): the digest moves \
+             because the sorted triple set gains 15 more members (the name-PI/desc-PI group \
+             closing) — zero reclassification: every one of the 15 was previously ABSENT from \
+             the set entirely (dropped, not shipped under a different facet), so no existing \
+             triple's facet/delivery value changed; re-derived live from this test's own \
+             failing run after merging both concurrent lanes' changes, never guessed, per \
+             `decisions.md §17a`. 0xc7f55369ed187098 -> 0xfc5121106900558e (`decisions.md §27`/ \
+             round 8): the digest moves because the sorted triple set gains 23 more members (the \
+             `TYPE:`-facet-gap group closing via the provisional `SpecialQuality` default) — zero \
+             reclassification: every one of the 23 was previously ABSENT from the set entirely \
+             (raised `UnmodelledFacet` and was dropped, never shipped under a different facet), \
+             so no existing triple's facet/delivery value changed; re-derived live from this \
+             test's own failing run, never guessed, per `decisions.md §17a`. \
+             0xfc5121106900558e -> 0x8b2ca909f9675cd5 (`decisions.md §27b` round 9): the digest \
+             moves because the sorted triple set gains 57 more members (the multi-`DESC:` \
+             `PREVAREQ`/`PREVARGT`-gated group closing via `parse_desc`'s new generalised sixth \
+             branch) — zero reclassification: every one of the 57 was previously ABSENT from \
+             the set entirely (raised `UnmodelledDesc` and was dropped, never shipped under a \
+             different facet), so no existing triple's facet/delivery value changed; re-derived \
+             live from this test's own failing run, never guessed, per `decisions.md §17a`. \
+             0x8b2ca909f9675cd5 -> 0x874e04c147eebb76 (t9-onboarding, \
+             corpus-literal-sweep-remainder cycle, round 10): the FIRST round where the triple \
+             COUNT above does not move (3806 -> 3806) yet the digest does — because this round is \
+             a genuine, DELIBERATE reclassification of 4 already-shipped triples, not an \
+             addition. `f76242cc69` (row 17's own closure cycle, `decisions.md §27`/`§27a`/ \
+             `§27b`) individually re-derived each of the 23 `§27`-provisional-default \
+             `monster_ability` units against corpus/oracle evidence and found 4 of them \
+             genuinely `SpecialAttack`, not the provisional `SpecialQuality` default they had \
+             shipped under: `bestiary_2 ~ Aurumvorax ~ Rake`, `bestiary_2 ~ Bunyip ~ Blood \
+             Rage`, `bestiary_2 ~ Yrthak ~ Sonic Lance`, `bestiary_2 ~ Howler ~ Abyssal Strike` \
+             — each corroborated by a genuinely-declared sibling record per that commit's own \
+             message, applied through the newly-sanctioned `_MONSTER_ABILITY_FACET_OVERRIDES` \
+             mechanism in `transcribe_monster_tables.py`, not by hand-editing `monster_data.rs`, \
+             and mutation-proved live (`§1a`) in that same cycle. This is exactly the class of \
+             change this test's own doc comment (`decisions.md §16`) exists to CATCH when it is \
+             an ACCIDENT of careless vocabulary widening — it is not that here: it is the \
+             intended, evidence-backed output of the row 17 categorization epic itself, verified \
+             per-record against the pinned oracle rather than asserted, and it is the reason the \
+             count assert above stays fixed at 3806 while this digest alone moves. Re-derived \
+             live from this test's own failing run at HEAD (`f76242cc69`, already merged to \
+             `origin/tranche/12` — this cycle only updates the stale ratchet pin left behind), \
+             never guessed, per `decisions.md §17a`."
         );
     }
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Celestial",
     "name": "Celestial Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "By way of either a celestial ancestor or due to divine intervention, the blood of angels runs though the veins of you and your kin. It grants majestic powers when you bloodrage.|PREVAREQ:Bloodrager_Celestial_Description,0",
     "raw_tokens": [
       {
@@ -196,5 +196,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

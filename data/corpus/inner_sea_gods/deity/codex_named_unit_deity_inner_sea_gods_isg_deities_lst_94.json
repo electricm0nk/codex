@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_94)",
+    "name": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_94)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Evil,Knowledge,Magic|PREALIGN:TN,LE,NE,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Harbinger of lechery, love potions, obsession darkness,"
+      },
+      {
+        "key": "FACT",
+        "value": "Title|The Watcher in the Walls"
+      },
+      {
+        "key": "FACT",
+        "value": "Symbol|Smoking pink potion"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Animal|Goat"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Colors|Brown|Pink"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Daemon Harbingers"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Shortbow"
+      },
+      {
+        "key": "ALIGN",
+        "value": "NE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_deities.lst",
+    "sha256": "dd9f008ef3f68cb4859b655e89ee526302624f53bfe113dee7d1d50b36330d7d",
+    "line": 94,
+    "record_key": "Codex-Named Unit (deity_inner_sea_gods_isg_deities_lst_94)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_deities.lst:94"
+  }
+}

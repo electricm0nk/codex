@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Verdant Bloodrager Bloodline ~ Feat Tracker",
+    "name": "Verdant Bloodrager Bloodline ~ Feat Tracker",
+    "class": "Bloodrager",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_BolsteredResilience|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_BolsteredResilience|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_Diehard|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_Endurance|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_GreatFortitude|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_PowerAttack|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_RagingVitality|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Bloodrager_BloodlineFeat_Toughness|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_class.lst",
+    "sha256": "b2258b510245160f9c14100c1891288cf441fe17d5a07a7c1b3816ede987e0c3",
+    "line": 295,
+    "record_key": "Verdant Bloodrager Bloodline ~ Feat Tracker"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

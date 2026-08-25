@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Dark Tapestry Subdomain",
+    "name": "Dark Tapestry Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Dark Tapestry Subdomain],[PREVARLT:VoidDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ It Came from Beyond|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Void)|PREVARGTEQ:DomainVoidAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Part the Veil|PREVARGTEQ:DomainVoidAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Void"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.316"
+      },
+      {
+        "key": "DESC",
+        "value": "You worship not only the vast emptiness of space, but the sinister and alien powers that reside therein."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=1|Feather Fall"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=2|Summon Monster II"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=3|Fly"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=4|Planar Binding (Lesser)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=5|Summon Monster V"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=6|Planar Binding"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=7|Insanity"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=8|Planar Binding (Greater)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Dark Tapestry Subdomain=9|Interplanetary Teleport"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Void"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_domains.lst",
+    "sha256": "8bd9c25d265755949bbf401885e4e1e17621d4d5aed66544a8680dd442f85ed8",
+    "line": 6,
+    "record_key": "Dark Tapestry Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -779,7 +779,13 @@ mod tests {
                 checked += 1;
             }
         }
-        assert_eq!(checked, 169, "expected all 169 intelligent/legendary item records to be checked");
+        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): +2 from
+        // the T12 census/class-feature lanes' corpus growth. Re-derived by
+        // running this exact walk-and-assert loop, which panics per file if
+        // either PI field is declared, so reaching `checked == 171` without
+        // a panic is itself the proof all 171 are already clean -- not a
+        // loosened check.
+        assert_eq!(checked, 171, "expected all 171 intelligent/legendary item records to be checked");
     }
 
     /// Live PI-blacklist sweep over every emitted name/description, the

@@ -1,0 +1,56 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Juggernaut ~ Absorb Thoughts",
+    "delivery": "Supernatural",
+    "description": "When the juggernaut confirms a critical hit with its slam, the target must succeed at a Will save (DC %1) or take 1d8 points of Intelligence damage.",
+    "description_variables": [
+      "10+TL/2+WIS"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:juggernaut_absorb_thoughts",
+    "name": "Knowledge Domain - Absorb Thoughts",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When the juggernaut confirms a critical hit with its slam, the target must succeed at a Will save (DC %1) or take 1d8 points of Intelligence damage.|10+TL/2+WIS"
+      },
+      {
+        "key": "KEY",
+        "value": "Juggernaut ~ Absorb Thoughts"
+      },
+      {
+        "key": "TYPE",
+        "value": "JuggernautDomain.SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "JuggernautDomain"
+    ]
+  },
+  "ingested_at": "2026-08-23T09:31:46Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 933,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Juggernaut ~ Absorb Thoughts",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

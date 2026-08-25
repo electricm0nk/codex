@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Abyssal Bloodline ~ Demonic Might",
     "name": "Demonic Might",
-    "class": "Abyssal Bloodline",
+    "class": "Sorcerer",
     "description": "The power of the Abyss flows through you. You gain immunity to electricity and poison. You also gain resistance to acid %1, cold %1, and fire %1, and gain telepathy with a range of 60 feet (allowing you to communicate with any creature that can speak a language).|Sorcerer_AbyssalDemonicMight_ResistanceBonus",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

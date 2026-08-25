@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Dark Tapestry Mystery ~ Gift of Madness",
     "name": "Gift of Madness",
-    "class": "Dark Tapestry Mystery",
+    "class": "Oracle",
     "description": "You tap into the unthinkable void between the stars and cause a single living creature within 30 feet to become confused for %1 rounds. A successful Will save (DC %2) negates the effect. This is a mind-affecting compulsion effect. You can use this ability %3/day.|GiftOfMadnessDuration|GiftOfMadnessDC|GiftOfMadnessTimes",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ Fate's Favored",
+    "name": "Fate's Favored",
+    "description": "The fates watch over you. Whenever you are under the effect of a luck bonus of any kind, that bonus increases by 1.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Fate's Favored"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.FaithTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Fate's Favored],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.FaithTrait]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Global_LuckBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The fates watch over you. Whenever you are under the effect of a luck bonus of any kind, that bonus increases by 1."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Global_LuckBonus|1|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
+    "line": 76,
+    "record_key": "Trait ~ Fate's Favored"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Terror ~ Soul-Chilling Fear",
+    "name": "Soul-Chilling Fear",
+    "class": "Terror",
+    "description": "Your attack causes the target to gain %2 negative level, plus %2 more per %3 power points spent (Will DC %1 negates).|SoulChillingFearDC|SoulChillingFearNegLevels|SoulChillingFearPPCost",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Terror ~ Soul-Chilling Fear"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.DreadTerror"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TerrorsPrereqLVL,12"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulChillingFearDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulChillingFearNegLevels|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SoulChillingFearPPCost|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your attack causes the target to gain %2 negative level, plus %2 more per %3 power points spent (Will DC %1 negates).|SoulChillingFearDC|SoulChillingFearNegLevels|SoulChillingFearPPCost"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulChillingFearDC|TerrorDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulChillingFearNegLevels|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulChillingFearPPCost|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SoulChillingFearDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Soul-chilling Fear)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 310,
+    "record_key": "Terror ~ Soul-Chilling Fear"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

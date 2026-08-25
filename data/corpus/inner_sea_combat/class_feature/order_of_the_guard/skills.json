@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Guard ~ Skills",
     "name": "Skills",
-    "class": "Order of the Guard",
+    "class": "Cavalier",
     "description": "An order of the guard cavalier adds Knowledge (geography) and Perception to his list of class skills. Additionally, an order of the guard cavalier receives a bonus on Knowledge (nobility) checks equal to 1/2 his cavalier level (minimum +1).",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

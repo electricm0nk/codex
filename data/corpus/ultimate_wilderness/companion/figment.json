@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Familiar Archetype ~ Figment",
+    "name": "Figment",
+    "description": "Figments are born from their masters' imaginations rather than being ordinary creatures that are awakened.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Familiar Archetype ~ Figment"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.FamiliarArchetype.CF_FamiliarImprovedEvasion.CF_FamiliarDeliverTouchSpells.CF_FamiliarSpeakwithAnimalsofItsKind.CF_FamiliarScryonFamiliar.CF_FamiliarHalfMastHP"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Figment],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarScryonFamiliar,TYPE.CF_FamiliarHalfMastHP]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[!PREVARGTEQ:mastervar(WitchLVL),1],[!PREVARGTEQ:mastervar(ShamanLVL),1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Figments are born from their masters' imaginations rather than being ordinary creatures that are awakened."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Figment ~ Recurring Dream|PREVARGTEQ:MasterLevel,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Familiar Class Feature|AUTOMATIC|Figment ~ Manifest Dreams|PREVARGTEQ:MasterLevel,3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Archetype Base Class|Familiar"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 537,
+    "record_key": "Familiar Archetype ~ Figment"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

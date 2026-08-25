@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Antipaladin Archetype ~ Seal-Breaker",
     "name": "Seal-Breaker",
-    "class": "Antipaladin Archetype",
+    "class": "Antipaladin",
     "description": "Seal-breakers are dedicated to the Whispering Tyrant and have tasked themselves with finding and destroying the seals that bind him within Gallowspire. Their ties to the Whispering Tyrant give them power over undead creatures and other dark forces.",
     "raw_tokens": [
       {
@@ -59,6 +59,54 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.43"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Antipaladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Antipaladin Archetype ~ Seal-Breaker],[!PREFACT:1,ABILITIES,Antipaladin_Archetype_AuraOfCowardice=True,Antipaladin_Archetype_FiendishBoon=True,Antipaladin_Archetype_AuraOfDespair=True,Antipaladin_Archetype_AuraOfVengeance=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfCowardice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_FiendishBoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfDespair|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_CF_AuraOfVengeance|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfCowardice|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_FiendishBoon|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfDespair|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Antipaladin_Archetype_AuraOfVengeance|true"
       }
     ]
   },
@@ -75,5 +123,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

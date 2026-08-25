@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Archetype ~ Magic Warrior",
     "name": "Magic Warrior",
-    "class": "Magus Archetype",
+    "class": "Magus",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -62,7 +62,7 @@
       },
       {
         "key": "ABILITY",
-        "value": "Special Ability|AUTOMATIC|Magic Warrior ~ Magaambya Spell Access|PRECLASS:1,Magus=19"
+        "value": "[redacted PI]"
       },
       {
         "key": "FACT",
@@ -122,6 +122,7 @@
     "computed:pre_guard"
   ],
   "license": "PI-REDACTED",
-  "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_field": "description,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

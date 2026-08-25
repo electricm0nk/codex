@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blood Alchemist ~ Lifeblood",
+    "name": "Lifeblood",
+    "class": "Alchemist",
+    "description": "When a blood alchemist performs a coup de grace that kills an intelligent humanoid creature (though, not a summoned intelligent humanoid creature), he can gather its lifeblood into a vial; this is a death effect. He can use this lifeblood any time within the next 24 hours to create an extract of a spell level he can cast that is no higher than 1/2 the creature's CR, without spending a daily extract slot. He can use this ability once for each spell level each day (for example, a 13th-level blood alchemist can use lifeblood to gain additional 1st-, 2nd-, 3rd-, 4th-, and 5th-level extracts).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Alchemist ~ Lifeblood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.BloodAlchemistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "DESC",
+        "value": "When a blood alchemist performs a coup de grace that kills an intelligent humanoid creature (though, not a summoned intelligent humanoid creature), he can gather its lifeblood into a vial; this is a death effect. He can use this lifeblood any time within the next 24 hours to create an extract of a spell level he can cast that is no higher than 1/2 the creature's CR, without spending a daily extract slot. He can use this ability once for each spell level each day (for example, a 13th-level blood alchemist can use lifeblood to gain additional 1st-, 2nd-, 3rd-, 4th-, and 5th-level extracts)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 9,
+    "record_key": "Blood Alchemist ~ Lifeblood"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Cage Enemy",
+    "name": "Cage Enemy",
+    "description": "You can pin enemies foolish enough to face you. As an immediate action, you can expend one use of mythic power to hinder opponents until the end of your next turn. When this ability is active, any creature moving out of one of your threatened squares, even when making a 5-foot step or using a form of movement that doesn't usually provoke attacks of opportunity, provokes an attack of opportunity from you. If your attack of opportunity hits and deals damage, the creature remains in its current space and its movement ends. Alternatively, you can expend one use of mythic power as part of a charge. If the charge attack hits, the target can't move itself from its space until the beginning of your next turn (though others can move the creature).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Cage Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can pin enemies foolish enough to face you. As an immediate action, you can expend one use of mythic power to hinder opponents until the end of your next turn. When this ability is active, any creature moving out of one of your threatened squares, even when making a 5-foot step or using a form of movement that doesn't usually provoke attacks of opportunity, provokes an attack of opportunity from you. If your attack of opportunity hits and deals damage, the creature remains in its current space and its movement ends. Alternatively, you can expend one use of mythic power as part of a charge. If the charge attack hits, the target can't move itself from its space until the beginning of your next turn (though others can move the creature)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 297,
+    "record_key": "Mythic Path Ability ~ Cage Enemy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

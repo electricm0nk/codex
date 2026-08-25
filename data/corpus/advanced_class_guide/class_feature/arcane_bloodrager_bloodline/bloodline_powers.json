@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Arcane Bloodrager Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Arcane Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "When you bloodrage, arcane power transforms you into an arcane juggernaut who can cut down even the most careful caster.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

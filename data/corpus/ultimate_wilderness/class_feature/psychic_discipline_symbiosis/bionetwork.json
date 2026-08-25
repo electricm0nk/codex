@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Discipline Symbiosis ~ Bionetwork",
+    "name": "Bionetwork",
+    "class": "Psychic",
+    "description": "Your mental influence over nature increases. %1 times per day, you can spend 10 minutes to mentally connect with living fungi, leaves, moss, roots, and similar plants or plantlike things. You form a temporary network that functions as an extension of your senses. The network allows you to use one of the following two effects: you can remotely view any familiar or obvious location within a range of %2 feet, as per clairaudience/clairvoyance; or you can attempt to locate a creature within the area, as per scrying. You don't need a focus to use this effect, and you can't cast spells through the sensor. This ability doesn't function in areas of sparse vegetation, such as arid deserts, barren caverns, or frozen tundras. Buildings and urban areas are generally excluded from your network, but ruins reclaimed by nature are connected. While you're underground, roots and fungi function as your network, but the radius of the network is only %3 feet.|(PsychicLVL-1)/4|250*PsychicLVL|100*PsychicLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Symbiosis ~ Bionetwork"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mental influence over nature increases. %1 times per day, you can spend 10 minutes to mentally connect with living fungi, leaves, moss, roots, and similar plants or plantlike things. You form a temporary network that functions as an extension of your senses. The network allows you to use one of the following two effects: you can remotely view any familiar or obvious location within a range of %2 feet, as per clairaudience/clairvoyance; or you can attempt to locate a creature within the area, as per scrying. You don't need a focus to use this effect, and you can't cast spells through the sensor. This ability doesn't function in areas of sparse vegetation, such as arid deserts, barren caverns, or frozen tundras. Buildings and urban areas are generally excluded from your network, but ruins reclaimed by nature are connected. While you're underground, roots and fungi function as your network, but the radius of the network is only %3 feet.|(PsychicLVL-1)/4|250*PsychicLVL|100*PsychicLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.93"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 168,
+    "record_key": "Psychic Discipline Symbiosis ~ Bionetwork"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

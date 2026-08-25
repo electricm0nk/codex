@@ -50,7 +50,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use crate::rules_core::pi_screening::classify_field;
+use crate::rules_core::pi_screening::{blacklist_term_hit_including_concatenated, classify_field};
 
 use crate::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 
@@ -107,6 +107,21 @@ pub struct ShippedRecord {
     /// doc comment for why this is a narrow, declared exemption and not a
     /// loosened rule.
     pub pi_redacted_description: bool,
+    /// `data.codex_generated_name` (`SD-32 decisions.md §24`): `true` when
+    /// this record's own name IS Product Identity and it was therefore
+    /// ingested under a Codex-generated neutral name
+    /// (`rules_core::codex_neutral_name`), per `§24b`-3's binding condition
+    /// that the record carry a visible marker rather than look native.
+    /// `ingest_ability.py`'s docstring records the companion fact this field
+    /// exists to gate: on such a record, ANY `raw_tokens` entry whose VALUE
+    /// restates the original PI name/key (not only `DESC`) is redacted to
+    /// [`REDACTED_PI_MARKER`] -- `KEY:`, `TYPE:`, `PREMULT:`, `BONUS:` and
+    /// others, not a fixed set of keys. Read directly off the record's own
+    /// top-level JSON field, never inferred from the filename or directory
+    /// (`codex_named_unit_*` is a naming convention some writers use, not
+    /// proof) -- see [`compare_tokens`]'s doc comment for the exemption this
+    /// gates.
+    pub codex_generated_name: bool,
     /// `data.cost_gp`, when the record's typed schema carries one. Read
     /// independently of `raw_tokens` -- see [`compare_tokens`]'s doc
     /// comment for why this field is checked against the corpus closure
@@ -211,6 +226,19 @@ pub struct SweepTally {
     /// check cannot be misread as one that exercised it and found nothing
     /// (`OPEN-ISSUES.md` row 91's own fix).
     pub typed_fields_compared: usize,
+    /// `raw_tokens` entries excused from the byte-match check because they
+    /// belong to a `codex_generated_name: true` record (`decisions.md §24`)
+    /// and carry EXACTLY [`REDACTED_PI_MARKER`] -- the `§24b`-2 redaction
+    /// itself, not a transcription defect. Counted (not just skipped)
+    /// because `§22`'s divergence-must-be-visible condition and `§24b`-4
+    /// both require the exemption be reported, never silent: a sweep that
+    /// waves tokens through without saying how many is indistinguishable
+    /// from one that stopped checking them.
+    pub codex_generated_name_tokens_exempted: usize,
+    /// Distinct records that had at least one token excused this way, so a
+    /// reader can see how widely the exemption reached, not only how many
+    /// tokens it touched.
+    pub codex_generated_name_records_exempted: BTreeSet<String>,
 }
 
 /// The tab-separated fields of a `.lst` row that can carry tokens: field 0 is
@@ -332,17 +360,31 @@ fn compare_typed_numeric_field(
 /// NOT `license: "PI-REDACTED"`) is still checked normally, and every OTHER
 /// token on a redacted record still must byte-match.
 ///
-/// **A second, narrower exemption for non-`DESC` tokens (`SD31-E6-F10-001`).**
-/// `enrich_spell_raw_tokens.rs`'s `enrich_one` redacts ANY token (not only
-/// `DESC`) whose value hits the shared blacklist term scan, one field at a
-/// time -- so a `FACTSET:`-shaped token naming a deity on an Inner Sea Gods
-/// spell legitimately stores [`REDACTED_PI_MARKER`], the identical shape a
-/// redacted `DESC` uses, but the record-level `pi_redacted_description` flag
-/// only ever describes `DESC`. Rather than trust the marker string alone
-/// (which would let an accidental literal `"[redacted PI]"` value hide a
-/// real transcription defect), this token is exempt ONLY when the real
-/// corpus closure's own same-key value RE-SCREENS as blacklisted through the
-/// identical scan the write path used (`pi_screening::classify_field`) --
+/// **A second, narrower exemption for non-`DESC` tokens (`SD31-E6-F10-001`,
+/// widened t9-onboarding cycle 2026-08-23 for `class_feature`'s
+/// concatenated-blacklist redaction path).** `enrich_spell_raw_tokens.rs`'s
+/// `enrich_one` redacts ANY token (not only `DESC`) whose value hits the
+/// shared blacklist term scan, one field at a time -- so a `FACTSET:`-shaped
+/// token naming a deity on an Inner Sea Gods spell legitimately stores
+/// [`REDACTED_PI_MARKER`], the identical shape a redacted `DESC` uses, but
+/// the record-level `pi_redacted_description` flag only ever describes
+/// `DESC`. Rather than trust the marker string alone (which would let an
+/// accidental literal `"[redacted PI]"` value hide a real transcription
+/// defect), this token is exempt ONLY when the real corpus closure's own
+/// same-key value RE-SCREENS as blacklisted through EITHER of the two scans
+/// a write path in this repo actually uses: `pi_screening::classify_field`
+/// (the older, bare-substring scan `enrich_spell_raw_tokens.rs` uses), OR
+/// `pi_screening::blacklist_term_hit_including_concatenated` (the
+/// word-bounded, OCR-normalized, concatenation-aware scan
+/// `cache_gen::class_feature::redact_concatenated_blacklist_tokens` uses,
+/// added when re-deriving `corpus_literal_sweep` against the pinned oracle
+/// found `class_feature`'s KEY/PREDEITY tokens legitimately redacted for a
+/// misspelled deity name -- `"Cayden Callean"`, an OCR-fold-equivalent typo
+/// of the blacklisted `"Cayden Cailean"` -- that `classify_field`'s
+/// unbounded literal substring check alone cannot see). Purely additive: a
+/// token that neither scan's re-derivation backs is still reported exactly
+/// as before, so this widening cannot hide a real transcription defect,
+/// only recognise a second write path's own legitimate redaction shape --
 /// so the exemption is re-derived against the oracle every sweep run, never
 /// merely asserted by the shipped record.
 ///
@@ -360,6 +402,79 @@ fn compare_typed_numeric_field(
 /// byte-derivable from a `COST:`/`WT:` entry in the SAME closure `raw_tokens`
 /// is checked against — closing the gap without touching the `raw_tokens`
 /// check itself.
+///
+/// **A third, still-narrower exemption for `decisions.md §24`-renamed
+/// records.** A unit whose own name IS Product Identity ships under a
+/// Codex-generated neutral name (`codex_neutral_name`), and `§24b`-2 requires
+/// the PI original appear nowhere that ships — not only in `DESC`, and not
+/// only in tokens that independently re-screen as blacklisted, but in ANY
+/// `raw_tokens` entry whose value restates the original name/key
+/// (`ingest_ability.py`'s own docstring: a `KEY:` field can carry the row's
+/// PI name a second time, and its value need not itself be a blacklisted
+/// term — `KEY:Trait ~ Guardian of the Forge` redacts because it restates
+/// the record's own original name, not because "Guardian of the Forge" is on
+/// the blacklist scan). Neither exemption above covers that shape: the first
+/// requires `pi_redacted_description` (declared only for a bare
+/// `pi_field == "description"`, false for `§24`'s
+/// `pi_field: "description,name,raw_tokens"`); the second requires the real
+/// corpus row's own same-key value to independently re-screen as
+/// blacklisted, which a non-PI phrase like "Guardian of the Forge" never
+/// will. So: when `record.codex_generated_name` is `true` (read off the
+/// record's own `data.codex_generated_name` field — never inferred from a
+/// filename convention), a token whose value is EXACTLY
+/// [`REDACTED_PI_MARKER`] is exempt, on ANY key, because `§24b`-2's
+/// redaction is not confined to one field the way SD-30/31's precedents
+/// were.
+///
+/// This is deliberately as narrow as the ruling that created it and no
+/// narrower is safe, no broader is sound:
+/// - **Only** a record carrying the record's own `codex_generated_name: true`
+///   marker gets the exemption at all — an ordinary record that happens to
+///   ship the literal string `"[redacted PI]"` in some field is NOT exempt
+///   (see `the_redaction_exemption_does_not_cover_other_tokens_or_undeclared_records`
+///   above, which already proves this for the general marker string).
+/// - **Only** a token whose value is the exact sentinel is exempt — every
+///   OTHER token on a `§24`-renamed record, including one that merely
+///   happens to drift from the real corpus row without reading the marker,
+///   still must byte-match exactly as before. A `§24` record is not exempt
+///   from the sweep; one token in it is.
+/// - The exemption is **counted**, never silent
+///   ([`SweepTally::codex_generated_name_tokens_exempted`]/
+///   [`SweepTally::codex_generated_name_records_exempted`]), so the gate log
+///   states how many tokens it excused and in how many records
+///   (`§22`'s divergence-must-be-visible condition, `§24b`-4).
+///
+/// **A fourth, sibling exemption for the same `§24` shape (t9-onboarding,
+/// corpus-literal-sweep-remainder cycle): a self-referential token whose
+/// redaction is the NEUTRAL NAME, not the bare marker.** `KEY`/`TYPE`/`DESC`
+/// redact to the literal [`REDACTED_PI_MARKER`] sentinel (the third
+/// exemption above), but a token whose semantic content IS the record's own
+/// name used mechanically -- `BONUS:ABILITYPOOL|<name>|1|TYPE=Base` (the
+/// ability's own pool, conventionally named after the ability),
+/// `PREMULT:1,[PREABILITY:1,CATEGORY=...,<name>],...` (a prerequisite
+/// referencing this same ability by name), `ABILITY:...|<parent name> ~
+/// <child name>|...` (a namespaced child ability under this record's own
+/// renamed parent key) -- cannot redact to the bare marker without shipping
+/// a value the compute engine cannot read as a pool/ability name at all.
+/// These generators correctly substitute the record's own neutral name in
+/// place of the original, which by construction still differs from the real
+/// corpus row's same-key value (the real row still carries the original PI
+/// name there) -- reproduced live re-deriving this sweep against the pinned
+/// oracle: 15 findings across 6 records
+/// (`adventurers_guide`/`inner_sea_gods`/`inner_sea_magic`/
+/// `inner_sea_world_guide`, `class_feature`/`trait_generic`/`feat_generic`),
+/// every one a `codex_generated_name: true` record whose flagged token's
+/// value contains that same record's own neutral name as a substring.
+/// Exempt ONLY when the token's value contains one of the record's own
+/// `identities` (`data.key`/`data.name`/`source.record_key`, all equal to
+/// the neutral name on a `§24` record) as a substring -- narrower than the
+/// third exemption in scope (a substring match, not exact) but identically
+/// narrow in gating (only `codex_generated_name` records, only a
+/// self-referential token, counted the same way, never silent). A token
+/// that drifts for an unrelated reason and does not reference the record's
+/// own renamed identity anywhere in its value is still compared and still
+/// reported
+/// (`a_codex_generated_name_record_still_catches_a_non_self_referential_drifted_token`).
 pub fn compare_tokens(
     record: &ShippedRecord,
     closure: &BTreeSet<String>,
@@ -376,10 +491,55 @@ pub fn compare_tokens(
             && token.value == REDACTED_PI_MARKER
             && closure.iter().any(|field| {
                 field.split_once(':').is_some_and(|(key, raw_value)| {
-                    key == token.key && classify_field(key, raw_value).0 != License::Ogl
+                    key == token.key
+                        && (classify_field(key, raw_value).0 != License::Ogl
+                            || blacklist_term_hit_including_concatenated(raw_value).is_some())
                 })
             })
         {
+            continue;
+        }
+        // decisions.md §24 (see this function's doc comment): a
+        // Codex-generated-neutral-name record's own redaction is not
+        // confined to DESC or to tokens that independently re-screen as
+        // blacklisted -- `§24b`-2 redacts ANY token restating the original
+        // name/key. Exempt ONLY the exact sentinel, ONLY on a record
+        // carrying the record's own `codex_generated_name: true` marker,
+        // and count it -- the divergence stays visible, never silent.
+        if record.codex_generated_name && token.value == REDACTED_PI_MARKER {
+            tally.codex_generated_name_tokens_exempted += 1;
+            tally.codex_generated_name_records_exempted.insert(record.record_path.clone());
+            continue;
+        }
+        // A second §24 shape (t9-onboarding, corpus-literal-sweep-remainder
+        // cycle): a self-referential token that names the record's OWN
+        // ability/pool/prerequisite by its own key is not redacted to the
+        // bare marker at all -- it is redacted the way `§24b` actually
+        // requires content to ship usably: the neutral name is substituted
+        // IN PLACE of the original name, embedded inside an otherwise
+        // ordinary, mechanically-real token (`BONUS:ABILITYPOOL|<neutral
+        // name>|1|TYPE=Base`, `PREMULT:1,[PREABILITY:1,CATEGORY=...,<neutral
+        // name>],...`, `ABILITY:...|<neutral name> ~ Costume
+        // Proficiency|...` for a child ability namespaced under the
+        // renamed parent). Stamping the bare marker into `BONUS:`/`ABILITY:`
+        // would ship a value the compute engine cannot read as a pool/ability
+        // name at all -- substituting the neutral name is the correct
+        // shape, not a defect, and the real corpus closure's same-key row
+        // necessarily differs by exactly the name substring (the real row
+        // still carries the original PI name there). Exempt ONLY when the
+        // token's value contains one of the record's OWN identities
+        // (`data.key`/`data.name`/`source.record_key`, all equal to the
+        // neutral name on a codex_generated_name record) as a substring --
+        // narrow by construction: a token that merely happens to drift for
+        // an unrelated reason, with no self-reference to the record's own
+        // renamed identity anywhere in its value, is still compared and
+        // still reported (see
+        // `a_codex_generated_name_record_still_catches_a_non_self_referential_drifted_token`).
+        if record.codex_generated_name
+            && record.identities.iter().any(|identity| !identity.is_empty() && token.value.contains(identity.as_str()))
+        {
+            tally.codex_generated_name_tokens_exempted += 1;
+            tally.codex_generated_name_records_exempted.insert(record.record_path.clone());
             continue;
         }
         let joined = token.joined();
@@ -545,8 +705,30 @@ fn parse_transcription(
             identities.insert(name.to_string());
         }
     }
+    // `pi_field` is a comma-separated LIST of redacted fields once more than
+    // one field was redacted on the same record (`declared_pi_shipping_
+    // audit.rs` established this same `split(',').any(...)` reading for the
+    // identical reason: SD-32's newer ingest paths stamp
+    // `pi_field: "description,raw_tokens"`-shaped values, not a bare
+    // `"description"`, the moment a record's DESC redaction is accompanied
+    // by another redacted raw_tokens entry). The prior exact-equality check
+    // silently stopped recognising this record's real, declared DESC
+    // redaction as the DECLARED exemption it is -- caught live re-deriving
+    // this sweep against the pinned oracle: `inner_sea_magic/ability/
+    // diplomatic_student.json` (`pi_field: "description,raw_tokens"`,
+    // `DESCISPI:YES` on the real corpus row) went MISMATCH on its own DESC
+    // token though the redaction is genuine.
     let pi_redacted_description = value.get("license").and_then(serde_json::Value::as_str) == Some("PI-REDACTED")
-        && value.get("pi_field").and_then(serde_json::Value::as_str) == Some("description");
+        && value
+            .get("pi_field")
+            .and_then(serde_json::Value::as_str)
+            .is_some_and(|f| f.split(',').any(|part| part == "description"));
+    // `§24b`-3's own visible marker -- read off the record's own top-level
+    // JSON field, never inferred from `record_path`/filename (a
+    // `codex_named_unit_*` filename convention is not proof; see
+    // `compare_tokens`'s doc comment).
+    let codex_generated_name =
+        value.get("codex_generated_name").and_then(serde_json::Value::as_bool).unwrap_or(false);
     let cost_gp = data.get("cost_gp").and_then(serde_json::Value::as_f64);
     let weight_lbs = data.get("weight_lbs").and_then(serde_json::Value::as_f64);
     Ok(Some(ShippedRecord {
@@ -560,6 +742,7 @@ fn parse_transcription(
         identities,
         tokens,
         pi_redacted_description,
+        codex_generated_name,
         cost_gp,
         weight_lbs,
     }))
@@ -581,6 +764,7 @@ mod tests {
                 .map(|(k, v)| ShippedToken { key: k.to_string(), value: v.to_string() })
                 .collect(),
             pi_redacted_description: false,
+            codex_generated_name: false,
             cost_gp: None,
             weight_lbs: None,
         }
@@ -709,6 +893,60 @@ mod tests {
         );
     }
 
+    /// t9-onboarding cycle (2026-08-23), `corpus_literal_sweep` unblock: the
+    /// widened re-screen must recognise a legitimate `class_feature`
+    /// redaction that `classify_field`'s bare-substring scan alone cannot
+    /// see -- the real, live shape: `inner_sea_combat/class_feature/
+    /// ranger_combat_style/cayden_callean.json`'s KEY/PREDEITY tokens are
+    /// genuinely redacted for "Cayden Callean", a misspelled (double-L)
+    /// variant of the blacklisted "Cayden Cailean" that only the
+    /// word-bounded, OCR-normalized scan catches (both spellings fold to
+    /// the same canonical form under the l/1/!->i table).
+    #[test]
+    fn a_non_desc_token_whose_value_only_the_concatenated_scan_reconfirms_is_exempt() {
+        let rec = record(&[("KEY", "[redacted PI]")]);
+        let rows = ["Cayden Callean\tKEY:Ranger Combat Style ~ Cayden Callean"];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(
+            findings,
+            vec![],
+            "a KEY token legitimately redacted for a misspelled-deity-name \
+             concatenated-scan hit must not be flagged"
+        );
+    }
+
+    /// The widening is purely additive: it must not also cause a genuinely
+    /// wrong token (real corpus value clean under BOTH scans) to be waved
+    /// through -- proving `§1a` directly for the new disjunct, mirroring the
+    /// sibling proof above for the pre-existing `classify_field` disjunct.
+    #[test]
+    fn the_concatenated_scan_disjunct_does_not_wave_through_a_genuinely_clean_value() {
+        let rec = record(&[("KEY", "[redacted PI]")]);
+        let rows = ["Thing\tKEY:Some Ordinary Non PI Value"];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure {
+                record: rec.record_path.clone(),
+                token: "KEY:[redacted PI]".to_string(),
+            }],
+            "a token reading the marker string with no independently-reconfirmed hit under \
+             EITHER re-screen must still be reported"
+        );
+    }
+
     /// The exemption is narrow: it does not extend to any OTHER drifted
     /// token on a redacted record, and it does not fire at all unless the
     /// record's own metadata declares the redaction.
@@ -741,6 +979,163 @@ mod tests {
             }],
             "the marker string on an UNDECLARED record must still be checked normally"
         );
+    }
+
+    /// `decisions.md §24`: a `codex_generated_name: true` record's own
+    /// redaction is not confined to `DESC`, and does not require the real
+    /// corpus row's same-key value to independently re-screen as
+    /// blacklisted (`KEY:Trait ~ Guardian of the Forge` -- neither term is
+    /// on the blacklist scan, yet the value legitimately restates the
+    /// record's original name and is redacted per `§24b`-2). Every such
+    /// token, on ANY key, must be exempt -- and the exemption must be
+    /// counted, not silent.
+    #[test]
+    fn a_codex_generated_name_records_multi_field_redaction_is_exempt_and_counted() {
+        let mut rec = record(&[
+            ("KEY", "[redacted PI]"),
+            ("CATEGORY", "Special Ability"),
+            ("TYPE", "[redacted PI]"),
+            ("DESC", "[redacted PI]"),
+        ]);
+        rec.codex_generated_name = true;
+        let rows = ["Thing\tKEY:Trait ~ Guardian of the Forge\tCATEGORY:Special Ability\tTYPE:Trait.ReligionTrait\tDESC:Torag's sacred duties..."];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![],
+            "every §24-redacted token, on any key, must be exempt from the byte-match"
+        );
+        assert_eq!(
+            tally.codex_generated_name_tokens_exempted, 3,
+            "KEY, TYPE, and DESC were exempted; CATEGORY was a real byte-match, not an exemption"
+        );
+        assert_eq!(tally.codex_generated_name_records_exempted.len(), 1);
+    }
+
+    /// The `§24` exemption is exactly as narrow as the ruling: a token on a
+    /// `codex_generated_name: true` record that does NOT read the exact
+    /// sentinel is still checked normally, and still fails when it drifts.
+    /// A record cannot smuggle an unrelated defect through by merely
+    /// claiming to be §24-renamed.
+    #[test]
+    fn a_codex_generated_name_record_still_catches_a_non_redacted_drifted_token() {
+        let mut rec = record(&[("KEY", "[redacted PI]"), ("COST", "50")]);
+        rec.codex_generated_name = true;
+        let rows = ["Thing\tKEY:Some PI Name\tCOST:5"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure {
+                record: rec.record_path.clone(),
+                token: "COST:50".to_string(),
+            }],
+            "a non-redacted drifted token on a §24-renamed record must still be reported"
+        );
+        assert_eq!(tally.codex_generated_name_tokens_exempted, 1, "only KEY was exempted");
+    }
+
+    /// An UNMARKED record (`codex_generated_name: false`, the default) gets
+    /// no §24 exemption even if some token happens to read the sentinel and
+    /// even if other tokens on the same record are legitimate --
+    /// confirming the marker, not the value alone, gates the exemption.
+    #[test]
+    fn an_unmarked_record_gets_no_24_exemption_for_the_sentinel_value() {
+        let rec = record(&[("KEY", "[redacted PI]"), ("COST", "5")]);
+        assert!(!rec.codex_generated_name);
+        let rows = ["Thing\tKEY:Some Real Value\tCOST:5"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure {
+                record: rec.record_path.clone(),
+                token: "KEY:[redacted PI]".to_string(),
+            }],
+            "the sentinel value alone, on a record NOT marked codex_generated_name, must still be a finding"
+        );
+        assert_eq!(tally.codex_generated_name_tokens_exempted, 0);
+    }
+
+    /// The fourth `§24` exemption (t9-onboarding, corpus-literal-sweep-
+    /// remainder cycle): a self-referential token whose redaction is the
+    /// record's own NEUTRAL NAME embedded inside an otherwise-mechanical
+    /// value, not the bare marker -- `BONUS:ABILITYPOOL|<name>|1|TYPE=Base`,
+    /// a `PREMULT:` prerequisite naming this same ability, and an `ABILITY:`
+    /// child namespaced under this record's own renamed parent key. All
+    /// three reproduce the live shape found re-deriving this sweep against
+    /// the pinned oracle (15 findings / 6 records before this fix).
+    #[test]
+    fn a_self_referential_token_containing_the_records_own_neutral_name_is_exempt() {
+        let mut rec = record(&[
+            ("KEY", "Codex-Named Unit (class_feature_x_1)"),
+            ("BONUS", "ABILITYPOOL|Codex-Named Unit (class_feature_x_1)|1|TYPE=Base"),
+            (
+                "PREMULT",
+                "1,[PREABILITY:1,CATEGORY=Special Ability,Codex-Named Unit (class_feature_x_1)]",
+            ),
+            (
+                "ABILITY",
+                "Special Ability|AUTOMATIC|Codex-Named Unit (class_feature_x_1) ~ Costume Proficiency|PRECLASS:1,Bard=5",
+            ),
+            ("COST", "5"),
+        ]);
+        rec.codex_generated_name = true;
+        rec.identities = ["Codex-Named Unit (class_feature_x_1)".to_string()].into_iter().collect();
+        let rows = [
+            "Thing\tKEY:The Real PI Name\tBONUS:ABILITYPOOL|The Real PI Name|1|TYPE=Base\
+             \tPREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,The Real PI Name]\
+             \tABILITY:Special Ability|AUTOMATIC|The Real PI Name ~ Costume Proficiency|PRECLASS:1,Bard=5\
+             \tCOST:5",
+        ];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![],
+            "every token that merely restates the record's own renamed identity must be exempt"
+        );
+        assert_eq!(
+            tally.codex_generated_name_tokens_exempted, 4,
+            "KEY, BONUS, PREMULT, and ABILITY all self-reference the renamed identity; COST is a \
+             real byte-match, not an exemption"
+        );
+        assert_eq!(tally.codex_generated_name_records_exempted.len(), 1);
+    }
+
+    /// Narrowness proof for the fourth exemption: a token on a
+    /// `codex_generated_name: true` record that drifts for a reason
+    /// UNRELATED to the record's own renamed identity -- it neither reads
+    /// the bare marker nor contains the identity substring anywhere -- must
+    /// still be reported. A `§24` record cannot smuggle an unrelated defect
+    /// through by merely containing some OTHER self-reference elsewhere.
+    #[test]
+    fn a_codex_generated_name_record_still_catches_a_non_self_referential_drifted_token() {
+        let mut rec = record(&[
+            ("KEY", "Codex-Named Unit (class_feature_x_1)"),
+            ("COST", "50"),
+        ]);
+        rec.codex_generated_name = true;
+        rec.identities = ["Codex-Named Unit (class_feature_x_1)".to_string()].into_iter().collect();
+        let rows = ["Thing\tKEY:The Real PI Name\tCOST:5"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure {
+                record: rec.record_path.clone(),
+                token: "COST:50".to_string(),
+            }],
+            "a drifted COST token with no self-reference to the renamed identity must still be \
+             reported, even though the record is §24-renamed"
+        );
+        assert_eq!(tally.codex_generated_name_tokens_exempted, 1, "only KEY self-referenced");
     }
 
     #[test]
@@ -1104,6 +1499,37 @@ mod tests {
             rec.identities,
             ["K".to_string(), "N".to_string(), "RK".to_string()].into_iter().collect()
         );
+    }
+
+    /// `pi_field` is a comma-separated LIST once more than one field on a
+    /// record is redacted -- `pi_field: "description,raw_tokens"` must still
+    /// clear the DESC-redaction check, matching
+    /// `declared_pi_shipping_audit.rs`'s identical `split(',').any(...)`
+    /// reading of the same field.
+    #[test]
+    fn a_multi_field_pi_field_list_including_description_still_exempts_desc() {
+        let text = r#"{"source":{"kind":"lst_token","path":"a.lst","line":1},
+                      "data":{"key":"K","raw_tokens":[{"key":"DESC","value":"[redacted PI]"}]},
+                      "license":"PI-REDACTED","pi_field":"description,raw_tokens"}"#;
+        let rec = parse_record("r.json", text).unwrap().expect("in population");
+        assert!(rec.pi_redacted_description, "a comma-list pi_field containing \"description\" must still count");
+    }
+
+    /// `§24b`-3: the marker is read off the record's own top-level
+    /// `data.codex_generated_name` field, not inferred from anything else.
+    /// Absent (the vast majority of records) parses as `false`.
+    #[test]
+    fn codex_generated_name_is_parsed_from_the_records_own_top_level_field() {
+        let text = r#"{"source":{"kind":"lst_token","path":"a.lst","line":1},
+                      "data":{"key":"K","raw_tokens":[{"key":"COST","value":"1"}]},
+                      "codex_generated_name":true}"#;
+        let rec = parse_record("r.json", text).unwrap().expect("in population");
+        assert!(rec.codex_generated_name);
+
+        let absent = r#"{"source":{"kind":"lst_token","path":"a.lst","line":1},
+                      "data":{"key":"K","raw_tokens":[{"key":"COST","value":"1"}]}}"#;
+        let rec2 = parse_record("r.json", absent).unwrap().expect("in population");
+        assert!(!rec2.codex_generated_name, "absent field must default false, not be assumed true");
     }
 
     #[test]

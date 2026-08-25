@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Waves Mystery ~ Blizzard",
     "name": "Blizzard",
-    "class": "Waves Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can create a blizzard of snow and ice. You can create %1 10-foot-cube(s) of storm. These cubes can be arranged in any pattern you desire, but each cube must be adjacent to another and one must be adjacent to you. Any creature caught in the blizzard takes %2d4 points of cold damage (Reflex; DC %3; half damage). The storm lasts for %4 rounds; the ground remains icy (+5 to Acrobatics DCs) as long as local conditions permit. The blizzard obscures sight beyond 5 feet, providing total concealment. A creature within 5 feet has concealment. You can use this ability once per day.|OracleBlizzardAreaofEffect|OracleBlizzardDamageDice|OracleRevelationDC|OracleBlizzardDuration",
     "raw_tokens": [
       {
@@ -72,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

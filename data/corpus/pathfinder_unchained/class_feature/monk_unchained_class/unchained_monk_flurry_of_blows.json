@@ -1,25 +1,101 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Monk ~ Flurry of Blows",
-    "name": "Flurry of Blows",
-    "class_key": "Monk ~ Unchained Class",
     "base_class_key": "Monk",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Monk Class Feature",
-      "SpecialQuality",
-      "Extraordinary",
-      "Flurry of Blows"
-    ],
-    "min_level": 1,
-    "is_granted": true,
-    "visible": null,
+    "class_key": "Monk ~ Unchained Class",
     "class_skills": [],
     "description": "At 1st level, a monk can make a flurry of blows as a full-attack action. When making a flurry of blows, the monk can make one additional attack at his highest base attack bonus. This additional attack stacks with the bonus attacks from haste and other similar effects. When using this ability, the monk can make these attacks with any combination of his unarmed strikes and weapons that have the monk special weapon quality. He takes no penalty for using multiple weapons when making a flurry of blows, but he does not gain any additional attacks beyond what's already granted by the flurry for doing so. (He can still gain additional attacks from a high base attack bonus, from this ability, and from haste and similar effects). At 11th level, a monk can make an additional attack at his highest base attack bonus whenever he makes a flurry of blows. This stacks with the first attack from this ability and additional attacks from haste and similar effects.",
-    "source_page": "p.14",
+    "is_granted": true,
+    "key": "Unchained Monk ~ Flurry of Blows",
+    "min_level": 1,
+    "name": "Flurry of Blows",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "FlurryExtraAttacks",
+          "2+(Total_BAB>=11)+(Total_BAB>=6)+(Total_BAB>=11)+(Total_BAB>=16)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FlurryLVL",
+          "TL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Total_BAB",
+          "BAB"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FlurryAttacks",
+          "2+(Total_BAB>=6)+if(Total_BAB>=11,2,0)+(Total_BAB>=16)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FAB",
+          "0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FAB_1",
+          "FAB"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FAB_2",
+          "FAB"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FAB_3",
+          "FAB+if(FlurryAttacks==3,-5,0)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FAB_4",
+          "FAB-5"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FAB_5",
+          "FAB-10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FAB_6",
+          "FAB-15"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FAB_7",
+          "FAB"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -44,20 +120,81 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.14"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryExtraAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Total_BAB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryAttacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_1|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_2|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_3|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_4|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_5|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_6|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FAB_7|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FlurryAttackBonus|0"
       }
     ],
-    "raw_bonus_chains": []
+    "source_page": "p.14",
+    "type_tokens": [
+      "Unchained Monk Class Feature",
+      "SpecialQuality",
+      "Extraordinary",
+      "Flurry of Blows"
+    ],
+    "visible": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 462,
-    "record_key": "Unchained Monk ~ Flurry of Blows"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 462,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Monk ~ Flurry of Blows",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

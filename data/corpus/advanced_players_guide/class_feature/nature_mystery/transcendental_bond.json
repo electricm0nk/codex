@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Nature Mystery ~ Transcendental Bond",
     "name": "Transcendental Bond",
-    "class": "Nature Mystery",
+    "class": "Oracle",
     "description": "You may communicate with your allies for %1 round(s) per day as if using telepathic bond. You may designate %2 creatures as your ally. Designating a creature is a standard action that requires a touch.|OracleTransendentalBondDuration|OracleTransendentalBondTimes",
     "raw_tokens": [
       {
@@ -56,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Wrecker ~ Destructive Wrecker",
+    "name": "Destructive Wrecker",
+    "description": "A wrecker's natural attacks ignore an inanimate object's first 5 points of hardness.|PREVARLT:MasterLevel,9",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wrecker ~ Destructive Wrecker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A wrecker's natural attacks ignore an inanimate object's first 5 points of hardness.|PREVARLT:MasterLevel,9"
+      },
+      {
+        "key": "DESC",
+        "value": "A wrecker's natural attacks count as if they were adamantine for the purpose of overcoming a construct's damage reduction.|PREVARGTEQ:MasterLevel,9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.189"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 527,
+    "record_key": "Wrecker ~ Destructive Wrecker"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

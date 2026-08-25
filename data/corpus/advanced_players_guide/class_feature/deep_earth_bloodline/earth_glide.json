@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Deep Earth Bloodline ~ Earth Glide",
     "name": "Earth Glide",
-    "class": "Deep Earth Bloodline",
+    "class": "Sorcerer",
     "description": "You can glide through any sort of natural earth or stone as easily as a fish swims through water, with a burrow speed of %1 feet. You do not leave a tunnel or trace of your passage. You can use this ability for %2 minutes each day. The duration need not be continuous, but it must be used in 1-minute increments.|Sorcerer_DeepEarthEarthGlide_MoveBurrow|Sorcerer_DeepEarthEarthGlide_Duration",
     "raw_tokens": [
       {
@@ -92,5 +92,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

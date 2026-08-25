@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Ceratioidi ~ Primitive Amphibian",
+    "delivery": "Extraordinary",
+    "description": "Ceratioidi have rudimentary lungs capable of breathing air indefinitely, but their skin must be bathed in salt water regularly or it begins drying out painfully. They can go for a number of hours equal to twice their Constitution score (30 hours for most ceratioidi) before they need to be bathed in salt water-if they don't, they take 1 point of Constitution damage per hour. Any Constitution damage accrued is reversed after they spend at least 10 minutes immersed in salt water.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:ceratioidi_primitive_amphibian",
+    "name": "Primitive Amphibian",
+    "owners": [
+      "bestiary_3:monster:ceratioidi"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Ceratioidi have rudimentary lungs capable of breathing air indefinitely, but their skin must be bathed in salt water regularly or it begins drying out painfully. They can go for a number of hours equal to twice their Constitution score (30 hours for most ceratioidi) before they need to be bathed in salt water-if they don't, they take 1 point of Constitution damage per hour. Any Constitution damage accrued is reversed after they spend at least 10 minutes immersed in salt water."
+      },
+      {
+        "key": "KEY",
+        "value": "Ceratioidi ~ Primitive Amphibian"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TYPE",
+        "value": "CeratioidiRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.50",
+    "traits": [
+      "CeratioidiRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 552,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Ceratioidi ~ Primitive Amphibian",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,7 +1,12 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: 2026-08-21 against tranche/11 (SD-31 wave 26 — formula interpreter wired to its first production consumers)
+> Last verified: 2026-08-21 against tranche/11 (SD-31 wave 26 — formula interpreter wired to its
+> first production consumers). **Path correction 2026-08-22** (SD-32 closure epilogue): all 12
+> src/rules_core/pilot_compute.rs cites updated to `src/rules_core/pilot_compute/mod.rs` — the
+> module (still the deterministic chassis engine's own entry point) became a directory of 10 files
+> during SD-31 (`bonus_stack_reader.rs`, `formula_interpreter.rs`, and others alongside `mod.rs`);
+> no other content in this doc re-verified.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -62,7 +67,7 @@ was chosen over `unsafe` lifetime transmutes to keep the borrow auditable.
 `ComposedCharacterInput<'a>` (the `Some` case of `composed`) is the actual input the rest of the
 spine consumes: it owns the `CharacterInput` and holds the borrowed `SourcePackageContent`.
 
-### 3. `src/rules_core/pilot_compute.rs` — the deterministic chassis engine
+### 3. `src/rules_core/pilot_compute/mod.rs` — the deterministic chassis engine
 
 This is the core engine, and at roughly 17,800 lines it is by a wide margin the largest file in
 `rules_core`. Its structure is not a grab-bag: it is one long orchestrator function,
@@ -291,7 +296,7 @@ net-new base-class tables, structurally-non-PC-class records, unstarted books).
 
 `compute_pilot_with_corpus(input: &CharacterInput, corpus: &SourcePackageContent) ->
 CorpusPilotReceipt` in `src/rules_core/pilot_compute_corpus.rs` wraps `compute_pilot_base_chassis`
-with corpus-derived contributions **without modifying `src/rules_core/pilot_compute.rs` itself** — the module doc
+with corpus-derived contributions **without modifying `src/rules_core/pilot_compute/mod.rs` itself** — the module doc
 comment states this explicitly as a design constraint, so that every caller of the unwrapped chassis
 function keeps working unchanged. `CorpusPilotReceipt { base: PilotBaseChassisComputation,
 corpus_derived: CorpusDerivedSection }` is the result: `base` is the unchanged chassis computation,
@@ -310,7 +315,7 @@ grounding-reference pattern (see [support-state-matrix.md](./support-state-matri
 ### 5. `src/rules_core/contract.rs` — the boundary contract and the only sanctioned exit surface
 
 `src/rules_core/contract.rs` is the GUI-facing boundary: everything the desktop app is allowed to
-render comes through this module's types, never by reaching into `src/rules_core/pilot_compute.rs` or any
+render comes through this module's types, never by reaching into `src/rules_core/pilot_compute/mod.rs` or any
 per-domain engine directly. Its own header doc comment names it the contract's "code-level home."
 
 - `CharacterInputPermutation` (`BrandNew` | `MidBuild` | `Multiclass`) and `classify_character_input(input: &CharacterInput) -> CharacterInputPermutation` classify an input into one of three canonical shapes the contract documents: multiclass takes precedence over mid-build, mid-build over brand-new (see the function body for the exact precedence and thresholds).
@@ -322,7 +327,7 @@ per-domain engine directly. Its own header doc comment names it the contract's "
 ## The fail-honest pattern
 
 This is the single most important convention for anyone touching the engine, and it holds at every
-layer described above, not just inside `src/rules_core/pilot_compute.rs`.
+layer described above, not just inside `src/rules_core/pilot_compute/mod.rs`.
 
 **The rule**: every computed value carries an explanation record proving how it was derived; every
 diagnostic carries a `claim_blocking: bool`; a computation is blocked if and only if at least one
@@ -332,7 +337,7 @@ and returns an explicit blocked posture, never a zero or a guess presented as da
 
 **Where to see the mechanism directly**:
 
-- `PilotBaseChassisComputation`'s numeric fields (`base_attack_bonus`, `base_saves`, `total_saves`, `baseline_melee_attack_bonus`, `baseline_armor_class`, `selected_skill_modifiers`) are computed to their real value on the supported path, or explicitly zeroed while a claim-blocking diagnostic is pushed on the unsupported path. `compute_total_saves` (`src/rules_core/pilot_compute.rs`) is a clean, short example: if `!has_supported_class_chassis(input)`, it pushes `defense.total_save.unsupported` with `claim_blocking: true` and returns `BaseSaves::default()` — it does not attempt a partial computation.
+- `PilotBaseChassisComputation`'s numeric fields (`base_attack_bonus`, `base_saves`, `total_saves`, `baseline_melee_attack_bonus`, `baseline_armor_class`, `selected_skill_modifiers`) are computed to their real value on the supported path, or explicitly zeroed while a claim-blocking diagnostic is pushed on the unsupported path. `compute_total_saves` (`src/rules_core/pilot_compute/mod.rs`) is a clean, short example: if `!has_supported_class_chassis(input)`, it pushes `defense.total_save.unsupported` with `claim_blocking: true` and returns `BaseSaves::default()` — it does not attempt a partial computation.
 - `build_pilot_headless_receipt` derives `HeadlessReceiptStatus` purely from whether `computation.diagnostics.iter().any(|d| d.claim_blocking)` — this is the status-derivation logic in one line, and it is the canonical place to see "blocked iff any claim-blocking diagnostic exists" implemented.
 - `src/rules_core/contract.rs`'s `printed_sheet_cell_map` reads the same pattern one layer up: it checks specific diagnostic ids (`CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID`, `TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID`, `COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID`, via the local `diagnostic_blocking` helper) to decide, cell by cell, whether to render `PrintedSheetCellValue::Blocked` instead of the chassis's zeroed number. The module doc comment is explicit that these diagnostic ids are additive/OR'd per cell, not a single blanket check — a fully-supported chassis can still have its combat-baseline cells blocked by a more specific posture failure, and vice versa.
 - Not every diagnostic is claim-blocking. `src/rules_core/skill_allocation.rs`'s cross-class max-rank-cap diagnostic (`CROSS_CLASS_MAX_RANK_EXCEEDED_ID`) is always `claim_blocking: false`, because the corresponding `SkillTotal.ranks` already carries the real, legal, capped number — the diagnostic is informational, not a block. This is the pattern's other half: a diagnostic without `claim_blocking: true` is a note, not a withheld claim.
@@ -358,9 +363,9 @@ a blocked receipt.
 
 ## Per-domain engine catalog
 
-Each of the following operates independently of `src/rules_core/pilot_compute.rs`'s internals; they are called
+Each of the following operates independently of `src/rules_core/pilot_compute/mod.rs`'s internals; they are called
 either directly by `contract.rs::to_pilot_receipt` or by each other, and none of them edits
-`src/rules_core/pilot_compute.rs`.
+`src/rules_core/pilot_compute/mod.rs`.
 
 **`src/rules_core/spellbook.rs`** (Epic 2) — `compute_spellbook_coverage(input, corpus) -> SpellbookCoverage`.
 Fills a gap `src/rules_core/pilot_compute_corpus.rs`'s own doc comment names explicitly: the corpus-aware seam
@@ -501,8 +506,8 @@ See [testing.md](./testing.md) for the full test-organization convention.
 
 | If you're changing... | Start here |
 |---|---|
-| A new class's level-1 chassis or an existing class's level ceiling | `src/rules_core/pilot_compute.rs`: find the class's `supported_<class>_level` and `explain_<class>_level1_chassis` (or equivalent) functions; add the gate condition and explanation records following the existing pattern |
-| A new race's trait recognition | `src/rules_core/pilot_compute.rs`: the `explain_<race>_race_seam` function family |
+| A new class's level-1 chassis or an existing class's level ceiling | `src/rules_core/pilot_compute/mod.rs`: find the class's `supported_<class>_level` and `explain_<class>_level1_chassis` (or equivalent) functions; add the gate condition and explanation records following the existing pattern |
+| A new race's trait recognition | `src/rules_core/pilot_compute/mod.rs`: the `explain_<race>_race_seam` function family |
 | Spell slot/prepared/known math for a school | `src/rules_core/spellbook.rs` + the specific `spellbook/<school>.rs` submodule |
 | Skill rank totals, cross-class penalties, untrained use | `src/rules_core/skill_allocation.rs` |
 | Feat prerequisites or feat-granted effects | `src/rules_core/feat_prereqs.rs` + the category submodule under `feat_prereqs/` matching the feat's `FeatCategory` |

@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Arson Subdomain",
+    "name": "Arson Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Arson Subdomain],[PREVARLT:FireDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Call Fire|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Fire)|PREVARGTEQ:DomainFireAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Fire Resistance|PREVARGTEQ:DomainFireAbilityTriggerLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Fire"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "DESC",
+        "value": "You express your devotion by setting the world ablaze."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=1|Burning Hands"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=2|Flaming Sphere"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=3|Fireball"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=4|Wall of Fire"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=5|Flame Strike"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=6|Fire Seeds"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=7|Delayed Blast Fireball"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=8|Incendiary Cloud"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Arson Subdomain=9|Elemental Swarm (Fire Spell Only)"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Fire"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_domains.lst",
+    "sha256": "42e61eed86e7445c5e90d7f66ada60d709f22ecd83bf594caa0d49fbb11bd71b",
+    "line": 6,
+    "record_key": "Arson Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Persuasive Bribery",
+    "name": "Persuasive Bribery",
+    "description": "You know how to get the most out of bribes.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Persuasive"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Persuasive."
+      },
+      {
+        "key": "DESC",
+        "value": "You know how to get the most out of bribes."
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Diplomacy=Bargain with a conjured creature,Diplomacy=Bribery attempts|+2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "You gain a +2 bonus on Diplomacy checks when attempting to bribe someone and on Diplomacy or Charisma checks to bargain with a conjured creature (such as with planar ally or planar binding), in addition to any bonus granted by the bribe itself. The first time someone refuses a bribe you offer, that person's attitude toward you doesn't worsen, even if the offer would normally offend the person."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst",
+    "sha256": "9b81d9543d65df46fda47743bc2bc94e3f86c93285b8f81371b046c1e514edce",
+    "line": 77,
+    "record_key": "Persuasive Bribery"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

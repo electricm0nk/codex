@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Enduring Earth",
     "name": "Enduring Earth",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element earth; Type utility (Su); Level 4; Burn - When using earth blasts, earth wild talents, or composite blasts that include earth, double the duration if it's longer than 1 round.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

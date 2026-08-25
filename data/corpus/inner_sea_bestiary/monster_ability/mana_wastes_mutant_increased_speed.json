@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mana Wastes Mutant ~ Increased Speed",
+    "delivery": "Extraordinary",
+    "description": "Some Mana Wastes mutants are transformed in such a way that their base speed increases",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:mana_wastes_mutant_increased_speed",
+    "name": "Increased Speed",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.All|10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Some Mana Wastes mutants are transformed in such a way that their base speed increases"
+      },
+      {
+        "key": "KEY",
+        "value": "Mana Wastes Mutant ~ Increased Speed"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mana Wastes Mutant ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.MutantSpecialAbility"
+      }
+    ],
+    "source_page": "p.29",
+    "traits": [
+      "MutantSpecialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 207,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Mana Wastes Mutant ~ Increased Speed",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

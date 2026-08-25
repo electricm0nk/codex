@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcanist Archetype ~ Eldritch Font",
     "name": "Eldritch Font",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "For some arcanists, the power bubbling up from within is nearly too much to contain. They become adept at shaping this magical energy without needing to bind it up in spells.",
     "raw_tokens": [
       {
@@ -63,6 +63,46 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Arcanist"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Eldritch Font],[!PREFACT:1,ABILITIES,Arcanist_Archetype_ArcanistExploit3=True,Arcanist_Archetype_ArcanistExploit7=True,Arcanist_Archetype_ArcanistExploit13=True,Arcanist_Archetype_MagicalSupremacy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_MagicalSupremacy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_MagicalSupremacy|true"
       }
     ]
   },
@@ -79,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

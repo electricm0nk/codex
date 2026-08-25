@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Stormborn Bloodline ~ Thunderbolt",
     "name": "Thunderbolt",
-    "class": "Stormborn Bloodline",
+    "class": "Sorcerer",
     "description": "You can command a stroke of lightning to strike from above in a 5-foot-radius cylinder 60 feet high. The thunderbolt inflicts %1d6 points of damage; half of this damage is electricity and half is sonic. A Reflex save (DC %2) halves this damage. Creatures failing their saves are deafened for 1 round.|Sorcerer_StormbornThunderbolt_Dice|Sorcerer_StormbornThunderbolt_DC",
     "raw_tokens": [
       {
@@ -116,5 +116,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

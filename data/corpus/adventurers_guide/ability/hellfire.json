@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Infernal Affinity ~ Hellfire",
+    "name": "Hellfire",
+    "description": "You can call down a column of hellfire. This 10-foot-radius burst does %1d6 points of fire damage. Those caught in the area of your blast receive a Reflex save for half damage. Good creatures that fail their saves are shaken for %2 rounds. The DC of this save is %3.|DevilBinderHellfireDice|SummonerLVL|DevilBinderHellfireDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Infernal Affinity ~ Hellfire"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevilBinderHellfireDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevilBinderHellfireDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DevilBinderHellfireTimes|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevilBinderHellfireDice|SummonerLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevilBinderHellfireDC|10+(SummonerLVL/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DevilBinderHellfireTimes|1+(SummonerLVL>=17)+(SummonerLVL>=20)"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call down a column of hellfire. This 10-foot-radius burst does %1d6 points of fire damage. Those caught in the area of your blast receive a Reflex save for half damage. Good creatures that fail their saves are shaken for %2 rounds. The DC of this save is %3.|DevilBinderHellfireDice|SummonerLVL|DevilBinderHellfireDC"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability once per day.|PREVAREQ:DevilBinderHellfireTimes,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use this ability %1 times per day.|DevilBinderHellfireTimes|PREVARGT:DevilBinderHellfireTimes,1"
+      },
+      {
+        "key": "DESC",
+        "value": "This power has a range of 60 feet."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%3/day (%1d6 fire, DC %2)|DevilBinderHellfireDice|DevilBinderHellfireDC|DevilBinderHellfireTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DevilBinderHellfireTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 68,
+    "record_key": "Infernal Affinity ~ Hellfire"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

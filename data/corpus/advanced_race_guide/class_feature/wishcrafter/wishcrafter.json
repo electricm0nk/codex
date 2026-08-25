@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wishcrafter ~ Sorcerer Archetype",
     "name": "Wishcrafter",
@@ -99,6 +99,50 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Sorcerer"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Wishcrafter ~ Sorcerer Archetype],[!PREFACT:1,ABILITIES,Sorcerer_Archetype_BloodlineArcana=True,Sorcerer_Archetype_BloodlineSpells=True,Sorcerer_Archetype_BloodlineBonusFeat7=True,Sorcerer_Archetype_BloodlineBonusFeat13=True,Sorcerer_Archetype_BloodlineBonusFeat19=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineArcana|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineBonusFeat7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineBonusFeat13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_CF_BloodlineBonusFeat19|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineArcana|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineSpells|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineBonusFeat7|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineBonusFeat13|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Sorcerer_Archetype_BloodlineBonusFeat19|true"
       }
     ]
   },
@@ -115,5 +159,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

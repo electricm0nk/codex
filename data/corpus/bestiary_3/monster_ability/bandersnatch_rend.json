@@ -1,0 +1,53 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Bandersnatch ~ Rend",
+    "delivery": null,
+    "description": "(2 claws, 2d6+str*1.5)",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_3:monster_ability:bandersnatch_rend",
+    "name": "Rend",
+    "owners": [
+      "bestiary_3:monster:bandersnatch"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(2 claws, 2d6+str*1.5)"
+      },
+      {
+        "key": "KEY",
+        "value": "Bandersnatch ~ Rend"
+      },
+      {
+        "key": "TYPE",
+        "value": "BandersnatchRacialAbility.SpecialAttack"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "BandersnatchRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 456,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Bandersnatch ~ Rend",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

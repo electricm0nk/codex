@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Elemental Bloodrager Bloodline ~ Elemental Movement",
     "name": "Elemental Movement",
-    "class": "Elemental Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "You gain a fly speed of 60 ft. with average maneuverability.|PREVAREQ:BloodragerElementalBloodline_Air,1",
     "raw_tokens": [
       {
@@ -91,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

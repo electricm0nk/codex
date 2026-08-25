@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Throw Athame",
     "name": "Throw Athame",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "As a standard action, you can throw your athame up to 60 feet as a ranged attack (no range penalty). If the athame misses, it returns automatically to your hand just before your next turn. If the athame hits, it deals damage and its duration ends; you can choose to spend up to 2 points from your arcane pool to increase the thrown athame's damage by +1d6 for each point spent.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

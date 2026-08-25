@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Mana Wastes Mutant",
+    "name": "Mana Wastes Mutant",
+    "raw_tokens": [
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "DR",
+        "value": "5/Cold Iron"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "NG,TN,NE,CG,CN,CE"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Construct,RACETYPE=Undead,RACESUBTYPE=Incorporeal"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mutant Special Ability|1+(max((TL-4),0)/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mutant Deformity|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "DR|Cold Iron|10|PREVARGTEQ:var(\"HD\"),11"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MindAffectingResistanceBonus|4"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Climb|Intimidate|Stealth|Survival"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Disease|Immunity to Poison|Resistance to Mind-Affecting"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "SR",
+        "value": "11+CR"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Mutant"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_templates.lst",
+    "sha256": "fe601a343aaca6afdad281ce318825abf7f59f9a593ae84bf9356b7d9cb98967",
+    "line": 10,
+    "record_key": "Mana Wastes Mutant"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

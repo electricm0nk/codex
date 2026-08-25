@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Eclipsing Rage (Greater)",
     "name": "Eclipsing Rage, Greater",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "Whenever the barbarian rages, the light level within 20 feet of her lowers by two steps instead of one. She still can't decrease the light level below normal darkness with this ability.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

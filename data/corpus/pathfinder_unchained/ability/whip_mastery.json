@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Whip Mastery",
+    "name": "Whip Mastery",
+    "description": "When using a whip to deal nonlethal damage, as long as you have at least 1 stamina point in your stamina pool, the whip deals 1d8 points of nonlethal damage (1d6 for a Small whip). At the start of your turn, you can spend 2 stamina points to increase the damage die of the whip as if it were one size category larger for your next attack, regardless of whether you are dealing lethal or nonlethal damage. For nonlethal attacks, these two increases stack. This effect doesn't stack with other effects that treat the weapon as a larger size category unless they increase the actual size.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Whip Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When using a whip to deal nonlethal damage, as long as you have at least 1 stamina point in your stamina pool, the whip deals 1d8 points of nonlethal damage (1d6 for a Small whip). At the start of your turn, you can spend 2 stamina points to increase the damage die of the whip as if it were one size category larger for your next attack, regardless of whether you are dealing lethal or nonlethal damage. For nonlethal attacks, these two increases stack. This effect doesn't stack with other effects that treat the weapon as a larger size category unless they increase the actual size."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "135"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 184,
+    "record_key": "Combat Trick ~ Whip Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

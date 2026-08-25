@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Drinking Buddy",
+    "category": "Teamwork",
+    "name": "Drinking Buddy",
+    "description": "You and your allies have almost preternatural luck when you've all had a few drinks. Once per day, if you are drunk (or worse) within 10 feet of an ally who has this feat and is also drunk (or worse), you can reroll one d20 roll as a free action. You must take the result of the second roll, even if it is worse.",
+    "prerequisites": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst",
+    "sha256": "7906f2a2b36a01031788d3270949a8f4e83b1eed239a50ba2a6790be72898e63",
+    "line": 3,
+    "record_key": "Drinking Buddy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Magical Child ~ Staunch Ally",
+    "name": "Staunch Ally",
+    "class": "Vigilante",
+    "description": "A magical child's familiar counts as the magical child for purposes of the startling appearance, frightening appearance, and stunning appearance abilities, and it can calculate its DCs using either its own Charisma modifier or the magical child's, whichever is better. At 20th level, the familiar can make vengeance strikes as if it were the magical child. This ability alters startling appearance, frightening appearance, stunning appearance, and vengeance strike.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magical Child ~ Staunch Ally"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A magical child's familiar counts as the magical child for purposes of the startling appearance, frightening appearance, and stunning appearance abilities, and it can calculate its DCs using either its own Charisma modifier or the magical child's, whichever is better. At 20th level, the familiar can make vengeance strikes as if it were the magical child. This ability alters startling appearance, frightening appearance, stunning appearance, and vengeance strike."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_pu.lst",
+    "sha256": "31facfcea3534d72c26bfbfeebc7af50e80e79157eda459e9afb16f184a93aaf",
+    "line": 100,
+    "record_key": "Magical Child ~ Staunch Ally"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

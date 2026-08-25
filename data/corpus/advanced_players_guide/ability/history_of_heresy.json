@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Trait ~ History of Heresy",
+    "name": "History of Heresy",
+    "description": "You were raised with heretical views that have made it not only difficult for you to accept most religious beliefs, but you also have had to live with the fact that you or those you love were often treated as pariahs. As long as you do not possess any levels in a class that grants divine spellcasting power, you gain a +1 trait bonus on all saving throws made against divine spells.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ History of Heresy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.BasicTrait.FaithTrait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Trait ~ History of Heresy],[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.FaithTrait]"
+      },
+      {
+        "key": "DESC",
+        "value": "You were raised with heretical views that have made it not only difficult for you to accept most religious beliefs, but you also have had to live with the fact that you or those you love were often treated as pariahs. As long as you do not possess any levels in a class that grants divine spellcasting power, you gain a +1 trait bonus on all saving throws made against divine spells."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.328"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+1 trait bonus on all saving throws made against divine spells."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 32,
+    "record_key": "Trait ~ History of Heresy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

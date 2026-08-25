@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Elemental Fury",
+    "name": "Elemental Fury",
+    "description": "You can cause your body to erupt with elemental power. As a move action, you can expend one use of mythic power and pick one of the following energy types: acid, cold, electricity, or fire. For a number of rounds equal to your tier, you are immune to this energy type and all of your melee and ranged attacks deal an extra 1d6 points of damage of this energy type. On acritical hit, this extra energy damage increases to 3d6.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Elemental Fury"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "You can cause your body to erupt with elemental power. As a move action, you can expend one use of mythic power and pick one of the following energy types: acid, cold, electricity, or fire. For a number of rounds equal to your tier, you are immune to this energy type and all of your melee and ranged attacks deal an extra 1d6 points of damage of this energy type. On acritical hit, this extra energy damage increases to 3d6."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 316,
+    "record_key": "Mythic Path Ability ~ Elemental Fury"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

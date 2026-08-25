@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Discern Lies",
     "name": "Discern Lies",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The zealot can use discern lies as a spell-like ability for %1 rounds per day equal to his vigilante level. The rounds need not be consecutive. Activating this ability is an immediate action.|VigilanteLVL",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

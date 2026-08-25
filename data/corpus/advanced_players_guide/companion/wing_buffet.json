@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Evolution ~ Wing Buffet",
+    "name": "Wing Buffet",
+    "description": "The eidolon learns to use its wings to batter foes, granting it two wing buffet attacks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Evolution ~ Wing Buffet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "EvolutionChoice.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Flight Winged"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidMaxAttacks,EidUsedAttacks+2"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon learns to use its wings to batter foes, granting it two wing buffet attacks."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Wing"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EidUsedAttacks|2"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
+    "line": 107,
+    "record_key": "Evolution ~ Wing Buffet"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

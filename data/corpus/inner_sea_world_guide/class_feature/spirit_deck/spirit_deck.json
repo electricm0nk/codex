@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Spirit Deck",
     "name": "Spirit Deck",
@@ -43,6 +43,10 @@
       {
         "key": "ASPECT",
         "value": "Ability Benefit|(%1/day)|SpiritDeckTimes"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
       }
     ]
   },
@@ -59,5 +63,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

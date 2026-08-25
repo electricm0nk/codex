@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Shadowbound Corruption Stages",
+    "name": "Shadowbound Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Shadowbound Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShadowboundCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|ShadowboundCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-The first time you fail the saving throw, you destroy a reliable source of light, joy, or beauty, such as a piece of art or bit of natural beauty."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-The second time you fail the saving throw, you terrorize innocent people or destroy an important object of beauty, light, or joy."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-The third time you fail the saving throw, you destroy one of the pillars that has helped you retain yourself in the face of the corruption, either by killing someone whose support has been essential or destroying an object of vital personal importance. You lose your identity entirely, becoming an NPC under the GM's control."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Shadowbound Corruption Stage %1|ShadowboundCorruptionStage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 796,
+    "record_key": "Shadowbound Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Healing Domain ~ Healer's Blessing",
     "name": "Healer's Blessing",
-    "class": "Healing Domain",
+    "class": "Cleric",
     "description": "All of your cure spells are treated as if they were empowered, increasing the amount of damage healed by half (+50%%). This does not apply to damage dealt to undead with a cure spell. This does not stack with the Empower Spell metamagic feat.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

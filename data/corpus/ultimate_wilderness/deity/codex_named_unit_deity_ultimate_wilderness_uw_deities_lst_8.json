@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:41Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_8)",
+    "name": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_8)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Charm,Chaos,Madness,Trickery,Deception Subdomain,Love Subdomain,Lust Subdomain,Thievery Subdomain|PREALIGN:CG,TN,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Eldest of laughter, mischief, transformation"
+      },
+      {
+        "key": "FACT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACT",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Dagger"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CN"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InquisitorDomainCharm,InquisitorDomainChaos,InquisitorDomainMadness,InquisitorDomainTrickery,InquisitorDomainDeceptionSubdomain,InquisitorDomainLoveSubdomain,InquisitorDomainLustSubdomain,InquisitorDomainThieverySubdomain|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
+    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f",
+    "line": 8,
+    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_8)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "ultimate_wilderness:uw_deities.lst:8"
+  }
+}

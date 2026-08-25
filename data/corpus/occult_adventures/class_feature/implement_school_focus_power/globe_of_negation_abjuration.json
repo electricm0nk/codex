@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Globe of Negation",
     "name": "Globe of Negation [Abjuration]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 3 points of mental focus to create a stationary globe of negation. This globe is 10 feet in diameter and cancels any spell effect that is cast into or through its area. This functions as globe of invulnerability, but it affects spells of any level. The globe can negate a total number of spell levels equal to %1, after which the globe collapses. Spells that exceed the number of remaining levels remove all remaining levels, but are weakened; any creatures targeted by such spells receive a +4 circumstance bonus on any saving throws against the spells' effects. The globe lasts for %1 rounds. It has no effect on spells originating within the globe - only on those that enter its area as or after they are cast. You must be at least 11th level to select this focus power.|OccultistLVL",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

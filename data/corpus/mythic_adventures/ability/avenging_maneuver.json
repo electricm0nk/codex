@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Avenging Maneuver",
+    "name": "Avenging Maneuver",
+    "description": "Taking grievous wounds only empowers you. Any creature that confirms a critical hit with a melee attack against you provokes an attack of opportunity from you. You can use this attack of opportunity only to attempt a bull rush, disarm, sunder, or trip combat maneuver check. You don't provoke attacks of opportunity for attempting this combat maneuver check.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Avenging Maneuver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Taking grievous wounds only empowers you. Any creature that confirms a critical hit with a melee attack against you provokes an attack of opportunity from you. You can use this attack of opportunity only to attempt a bull rush, disarm, sunder, or trip combat maneuver check. You don't provoke attacks of opportunity for attempting this combat maneuver check."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 122,
+    "record_key": "Mythic Path Ability ~ Avenging Maneuver"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

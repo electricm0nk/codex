@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soul Forger ~ Reforge",
+    "name": "Reforge",
+    "class": "Soul Forger",
+    "description": "At 11th level, as a standard action, a soul forger can restore a number of hit points equal to his magus level to a damaged object by touching it and spending 1 point from his arcane pool. Repairing a destroyed object takes 1 minute and materials equal to 1/4 the item's sale value, and restores the object to 1 hit point. Restoring the enchantments of a destroyed magical item requires additional points from the soul forger's arcane pool equal to the item's caster level. The soul forger gains one temporary negative level if the item's caster level is lower than his own, two negative levels if equal or greater (or none if the item is his bonded weapon); the save DC to remove these negative levels is equal to 10 + the item's caster level. This ability replaces improved spell recall.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soul Forger ~ Reforge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "At 11th level, as a standard action, a soul forger can restore a number of hit points equal to his magus level to a damaged object by touching it and spending 1 point from his arcane pool. Repairing a destroyed object takes 1 minute and materials equal to 1/4 the item's sale value, and restores the object to 1 hit point. Restoring the enchantments of a destroyed magical item requires additional points from the soul forger's arcane pool equal to the item's caster level. The soul forger gains one temporary negative level if the item's caster level is lower than his own, two negative levels if equal or greater (or none if the item is his bonded weapon); the save DC to remove these negative levels is equal to 10 + the item's caster level. This ability replaces improved spell recall."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_um.lst",
+    "sha256": "b8cff28b7be84f4f3c6b650c3e375a3027ff13bf4226233a514d34385bdfb67a",
+    "line": 66,
+    "record_key": "Soul Forger ~ Reforge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

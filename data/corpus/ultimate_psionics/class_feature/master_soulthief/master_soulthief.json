@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Master Soulthief",
+    "name": "Master Soulthief",
+    "class": null,
+    "description": "Drain 12d6 damage (DC %1) and gain that amount as healing to collective; hit points above full healing grant temporary hit points.|MasterSoulthiefDC",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterSoulthiefDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Drain 12d6 damage (DC %1) and gain that amount as healing to collective; hit points above full healing grant temporary hit points.|MasterSoulthiefDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterSoulthiefDC|20+VitalistPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.74"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1019,
+    "record_key": "Master Soulthief"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

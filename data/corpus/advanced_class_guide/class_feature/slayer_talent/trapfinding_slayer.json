@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Slayer Talent ~ Trapfinding",
     "name": "Trapfinding - Slayer",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "The slayer gains Disable Device as a class skill. The slayer also gains the trapfinding and trap sense Rogue abilities, using his slayer level as his effective Rogue level.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Azata ~ Unchained Eidolon LVL20",
+    "delivery": null,
+    "description": "At 20th level, an azata eidolon gains the ability to switch between its normal form and an energy form as a standard action. In its energy form, an azata eidolon is incorporeal and doubles its fly speed, but it can't make natural or manufactured weapon attacks; it can, however, activate any spell-like ability evolutions it possesses.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:azata_unchained_eidolon_lvl20",
+    "name": "Eidolon Progession Lv.20",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "At 20th level, an azata eidolon gains the ability to switch between its normal form and an energy form as a standard action. In its energy form, an azata eidolon is incorporeal and doubles its fly speed, but it can't make natural or manufactured weapon attacks; it can, however, activate any spell-like ability evolutions it possesses."
+      },
+      {
+        "key": "KEY",
+        "value": "Azata ~ Unchained Eidolon LVL20"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AzataLVL20"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "AzataLVL20"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 124,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Azata ~ Unchained Eidolon LVL20",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

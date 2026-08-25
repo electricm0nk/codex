@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ghoul Bloodline ~ Ravenous Frenzy",
     "name": "Ravenous Frenzy",
-    "class": "Ghoul Bloodline",
+    "class": "Sorcerer",
     "description": "You gain the benefits of haste for %1 rounds per day. These rounds don't need to be consecutive. Each time you hit a creature with two or more claw attacks during a full attack while affected by this ability, that creature takes 1d4 points of bleed damage.|Sorcerer_GhoulRavenousFrenzy_Duration",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

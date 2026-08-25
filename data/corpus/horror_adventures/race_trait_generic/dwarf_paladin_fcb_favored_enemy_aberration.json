@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Dwarf Paladin FCB ~ Favored Enemy ~ Aberration",
+    "name": "Aberration",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf Paladin FCB ~ Favored Enemy ~ Aberration"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DwarfPaladinFCB_HA"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DwarfPalFCB_FE_Aberration|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=6|NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DwarfPalFCB_FE_Aberration|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+%1 bonus on Knowledge checks to identify aberrations.|DwarfPalFCB_FE_Aberration/2|PREVARGTEQ:DwarfPalFCB_FE_Aberration,2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 point of damage when smiting aberrations.|PREVARGTEQ:DwarfPalFCB_FE_Aberration,6"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 152,
+    "record_key": "Dwarf Paladin FCB ~ Favored Enemy ~ Aberration"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

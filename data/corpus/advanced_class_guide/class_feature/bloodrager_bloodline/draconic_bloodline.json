@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Bloodrager Bloodline ~ Draconic",
     "name": "Draconic Bloodline",
-    "class": "Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "At some point in your family's history, a dragon interbred with your bloodline. Now, its ancient power fuels your bloodrage.|PREVAREQ:Bloodrager_Draconic_Description,0",
     "raw_tokens": [
       {
@@ -207,6 +207,50 @@
       {
         "key": "ASPECT",
         "value": "ChildAbility|Bloodrager Bloodline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Black)|PREVAREQ:BloodragerDraconicBloodline_Black,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Blue)|PREVAREQ:BloodragerDraconicBloodline_Blue,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Green)|PREVAREQ:BloodragerDraconicBloodline_Green,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Red)|PREVAREQ:BloodragerDraconicBloodline_Red,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (White)|PREVAREQ:BloodragerDraconicBloodline_White,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Brass)|PREVAREQ:BloodragerDraconicBloodline_Brass,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Bronze)|PREVAREQ:BloodragerDraconicBloodline_Bronze,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Copper)|PREVAREQ:BloodragerDraconicBloodline_Copper,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Gold)|PREVAREQ:BloodragerDraconicBloodline_Gold,1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "NAME|Draconic Bloodline (Silver)|PREVAREQ:BloodragerDraconicBloodline_Silver,1"
       }
     ]
   },
@@ -224,5 +268,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

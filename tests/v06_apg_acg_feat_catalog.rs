@@ -296,7 +296,7 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
 #[test]
 fn the_aggregate_catalog_spans_every_ingested_book() {
     let books = all_feat_tables();
-    assert_eq!(books.len(), 20);
+    assert_eq!(books.len(), 23);
 
     let entries_for = |rule_set: RuleSetId| {
         books
@@ -349,9 +349,20 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     // that had no feat table at all; every served entry is a gap row.
     assert_eq!(entries_for(RuleSetId::Isi), 6); // 0 + 6
     assert_eq!(entries_for(RuleSetId::Botd2), 1); // 0 + 1
+    // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-onboarding-
+    // precondition`, AT-32-G0-003) -- Inner Sea Taverns' first compiled
+    // rule set of any kind; every served entry is a gap row
+    // (`istav_feats.lst`'s 9 non-`.MOD` declarations).
+    assert_eq!(entries_for(RuleSetId::InnerSeaTaverns), 9); // 0 + 9
+    // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off --
+    // `Isc`/`Isg` already compiled for equipment/monster content, each
+    // served entry a gap row (`isc_abilities_feat.lst`'s 23 non-`.MOD`,
+    // non-`NAMEISPI:YES` declarations; `isg_abilities_feat.lst`'s 86).
+    assert_eq!(entries_for(RuleSetId::Isc), 23); // 0 + 23
+    assert_eq!(entries_for(RuleSetId::Isg), 86); // 0 + 86
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 2109, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce + 61 Ha + 50 Isr + 68 Oa + 31 Iswg + 32 MonsterCodex + 199 Mythic + 6 Isi + 1 Botd2 = 1578 hand-authored + 531 corpus gap rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 199, after SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT twins from the raw 358 + SD31-E6-F8-003's 7)");
+    assert_eq!(total, 2227, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce + 61 Ha + 50 Isr + 68 Oa + 31 Iswg + 32 MonsterCodex + 199 Mythic + 6 Isi + 1 Botd2 + 9 InnerSeaTaverns + 23 Isc + 86 Isg = 1578 hand-authored + 649 corpus gap rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 199, after SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT twins from the raw 358 + SD31-E6-F8-003's 7 + SD-32 Gate 0 book-onboarding precondition's 9 + SD-32 T9 onboarding's (card 11) 109)");
 }
 
 #[test]

@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "ABP Armor Attunement",
+    "name": "Armor Attunement",
+    "class": null,
+    "description": "You can attune yourself to one suit of armor or one shield in your possession; you can change that attunement once per day. If you select a normal set of clothing as your armor, it counts as having a starting enhancement bonus of +0.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "ABP Armor Attunement"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Defensive.Automatic Bonus Progression.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attune yourself to one suit of armor or one shield in your possession; you can change that attunement once per day. If you select a normal set of clothing as your armor, it counts as having a starting enhancement bonus of +0."
+      },
+      {
+        "key": "DESC",
+        "value": "The attuned suit of armor gain a +1 enhancement bonus.|PREVARGTEQ:ABP_ArmorLVL,4|PREVARLT:ABP_ArmorLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "You can split your attunement between a suit of armor and a shield, granting each a +1 enhancement bonus.|PREVARGTEQ:ABP_ArmorLVL,8|PREVARLT:ABP_ArmorLVL,9"
+      },
+      {
+        "key": "DESC",
+        "value": "You can either grant a suit of armor or a shield a +2 enhancement bonus or grant each a +1 enhancement bonus.|PREVARGTEQ:ABP_ArmorLVL,9|PREVARLT:ABP_ArmorLVL,14"
+      },
+      {
+        "key": "DESC",
+        "value": "You can either grant a suit of armor or a shield a +3 enhancement bonus or grant each a +2 enhancement bonus.|PREVARGTEQ:ABP_ArmorLVL,14|PREVARLT:ABP_ArmorLVL,15"
+      },
+      {
+        "key": "DESC",
+        "value": "You can either grant a suit of armor or a shield a +4 enhancement bonus or grant both a +3 enhancement bonus.|PREVARGTEQ:ABP_ArmorLVL,15|PREVARLT:ABP_ArmorLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "You can either grant a suit of armor or a shield a +5 enhancement bonus or grant one a +4 enhancement bonus and the other a +3 enhancement bonus.|PREVARGTEQ:ABP_ArmorLVL,17"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Automatic Progression Bonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Max Bonus +%1|ABP_ArmorBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+1|PREVARGTEQ:ABP_ArmorLVL,4|PREVARLT:ABP_ArmorLVL,8"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+1/+1|PREVARGTEQ:ABP_ArmorLVL,8|PREVARLT:ABP_ArmorLVL,9"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+1/+1 or +2|PREVARGTEQ:ABP_ArmorLVL,9|PREVARLT:ABP_ArmorLVL,14"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+2/+2 or +3|PREVARGTEQ:ABP_ArmorLVL,14|PREVARLT:ABP_ArmorLVL,15"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+3/+3 or +4|PREVARGTEQ:ABP_ArmorLVL,15|PREVARLT:ABP_ArmorLVL,17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+4/+3 or +5|PREVARGTEQ:ABP_ArmorLVL,17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 45,
+    "record_key": "ABP Armor Attunement"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dreams Subdomain ~ Lucid Dream",
+    "name": "Lucid Dream",
+    "description": "You can make a slight alteration to reality changing the world around you.  This ability works like the stone shape spell (CL %1).  It works on any unworked non-living solid material.  The material reverts back to its previous shape after %2 minutes.  You may use this ability %3/day.|LucidDreamCL|LucidDreamDuration|LucidDreamTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreams Subdomain ~ Lucid Dream"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LucidDreamCL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LucidDreamDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LucidDreamTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can make a slight alteration to reality changing the world around you.  This ability works like the stone shape spell (CL %1).  It works on any unworked non-living solid material.  The material reverts back to its previous shape after %2 minutes.  You may use this ability %3/day.|LucidDreamCL|LucidDreamDuration|LucidDreamTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LucidDreamCL,LucidDreamDuration|DomainPsionicsLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LucidDreamTimes|floor((DomainPsionicsLVL-4)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|LucidDreamTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 120,
+    "record_key": "Dreams Subdomain ~ Lucid Dream"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

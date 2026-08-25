@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Transfer Magic",
+    "name": "Transfer Magic",
+    "description": "Your mythic nature allows you to take magic from others as easily as you could take their gold. By expending one use of mythic power as a standard action, you can make a melee touch attack to transfer an active magical effect from a target creature to you. If you succeed, the highest-level effect on the target transfers to you (determine randomly if the target has multiple effects with the same level), ending the effect for the target and continuing it on you with the remaining duration as if you were the original target. You may end the effect on yourself as a standard action; this doesn't cause it to revert to the original target. If the transferred magic can't affect you (for example, if it doesn't affect creatures of your type), it ends immediately as if dispelled. You can't use this ability to transfer continuous bonuses from magic items, such as an armor bonus from bracers of armor.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Transfer Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your mythic nature allows you to take magic from others as easily as you could take their gold. By expending one use of mythic power as a standard action, you can make a melee touch attack to transfer an active magical effect from a target creature to you. If you succeed, the highest-level effect on the target transfers to you (determine randomly if the target has multiple effects with the same level), ending the effect for the target and continuing it on you with the remaining duration as if you were the original target. You may end the effect on yourself as a standard action; this doesn't cause it to revert to the original target. If the transferred magic can't affect you (for example, if it doesn't affect creatures of your type), it ends immediately as if dispelled. You can't use this ability to transfer continuous bonuses from magic items, such as an armor bonus from bracers of armor."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 275,
+    "record_key": "Mythic Path Ability ~ Transfer Magic"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption ~ Swimmer in the Deep Gift",
+    "name": "Swimmer in the Deep Gift",
+    "description": "You gain a +4 racial bonus on Swim checks (which doesn't stack with the +8 racial bonus from having a swim speed) and can take a 10 on Swim checks even while threatened.|!PRERACE:1,Deep One Hybrid",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep One Corruption ~ Swimmer in the Deep Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.DeepOneSwimmerInTheDeepGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +4 racial bonus on Swim checks (which doesn't stack with the +8 racial bonus from having a swim speed) and can take a 10 on Swim checks even while threatened.|!PRERACE:1,Deep One Hybrid"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a swim speed equal to half your land speed.|PREMULT:3,[PREVARGTEQ:DeepOneManifestationLevel,3],[PREVARLT:DeepOneManifestationLevel,5],[!PRERACE:1,Deep One Hybrid]"
+      },
+      {
+        "key": "DESC",
+        "value": "Your swim speed is equal to your land speed.|PREMULT:2,[PREVARGTEQ:DeepOneManifestationLevel,5],[!PRERACE:1,Deep One Hybrid]"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +10-foot enhancement bonus to your swim speed.|PREMULT:2,[PREVARLT:DeepOneManifestationLevel,3],[PRERACE:1,Deep One Hybrid]"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +20-foot enhancement bonus to your swim speed.|PREMULT:3,[PREVARGTEQ:DeepOneManifestationLevel,3],[PREVARLT:DeepOneManifestationLevel,5],[PRERACE:1,Deep One Hybrid]"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +30-foot enhancement bonus to your swim speed.|PREMULT:2,[PREVARGTEQ:DeepOneManifestationLevel,5],[PRERACE:1,Deep One Hybrid]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|RacialBonus_Swim|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialBonus_Swim|-4|!PREMOVE:1,Swim=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Deep One Corruption ~ Swim Speed (Half Land Speed)|PREMULT:3,[PREVARGTEQ:DeepOneManifestationLevel,3],[PREVARLT:DeepOneManifestationLevel,5],[!PRERACE:1,Deep One Hybrid]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Deep One Corruption ~ Swim Speed (Full Land Speed)|PREMULT:2,[PREVARGTEQ:DeepOneManifestationLevel,5],[!PRERACE:1,Deep One Hybrid]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|10|PRERACE:1,Deep One Hybrid"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|10|PREMULT:2,[PREVARGTEQ:DeepOneManifestationLevel,3],[PRERACE:1,Deep One Hybrid]"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Swim|10|PREMULT:2,[PREVARGTEQ:DeepOneManifestationLevel,5],[PRERACE:1,Deep One Hybrid]"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 189,
+    "record_key": "Deep One Corruption ~ Swimmer in the Deep Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

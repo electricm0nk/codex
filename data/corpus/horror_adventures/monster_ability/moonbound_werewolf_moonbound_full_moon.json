@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Moonbound Werewolf ~ Moonbound (Full Moon)",
+    "delivery": null,
+    "description": "Regardless of whether it is a natural or afflicted lycanthrope, a moonbound werewolf in animal or hybrid form gains DR 10/silver and magic when the moon is full. When the moon is full, the moonbound werewolf also gains +4 Strength and +4 Constitution in human form, and the bonuses he gains in hybrid and animal forms increase to +6. These changes increase its CR by 1.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:moonbound_werewolf_moonbound_full_moon",
+    "name": "Moonbound (Full Moon)",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Regardless of whether it is a natural or afflicted lycanthrope, a moonbound werewolf in animal or hybrid form gains DR 10/silver and magic when the moon is full. When the moon is full, the moonbound werewolf also gains +4 Strength and +4 Constitution in human form, and the bonuses he gains in hybrid and animal forms increase to +6. These changes increase its CR by 1."
+      },
+      {
+        "key": "KEY",
+        "value": "Moonbound Werewolf ~ Moonbound (Full Moon)"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.MoonboundWerewolf"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "MoonboundWerewolf"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 312,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Moonbound Werewolf ~ Moonbound (Full Moon)",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

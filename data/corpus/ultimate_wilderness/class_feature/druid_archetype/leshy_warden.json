@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Druid Archetype ~ Leshy Warden",
     "name": "Leshy Warden",
-    "class": "Druid Archetype",
+    "class": "Druid",
     "description": "The natural world is full of bodiless nature spirits connected to the forces of springs, glades, and individual plants. Some druids hear their call keenly and are able to effortlessly incarnate them as the miniature creatures known as leshys (Bestiary 3 176). The leshy warden serves as these spirits' voice, defender, and ally.",
     "raw_tokens": [
       {
@@ -119,5 +119,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

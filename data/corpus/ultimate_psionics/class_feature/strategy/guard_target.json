@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Strategy ~ Guard Target",
+    "name": "Guard Target",
+    "class": "Strategy",
+    "description": "Direct collective member to guard another member; directed member gains a +%1 competence bonus on attacks for %2 rounds.  Directed member may spend an attack of opportunity use to redirect attack on guarded member to himself.  You gain a cumulative +1 bonus to your next attack against the source of the redirected attack for each attack redirected.|GuardTargetBonus|GuardTargetDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strategy ~ Guard Target"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.TacticianStrategy"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GuardTargetDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GuardTargetBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Direct collective member to guard another member; directed member gains a +%1 competence bonus on attacks for %2 rounds.  Directed member may spend an attack of opportunity use to redirect attack on guarded member to himself.  You gain a cumulative +1 bonus to your next attack against the source of the redirected attack for each attack redirected.|GuardTargetBonus|GuardTargetDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GuardTargetDuration|TacticianSecondaryStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GuardTargetBonus|1+max(0,(StrategyLVL-4)/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 935,
+    "record_key": "Strategy ~ Guard Target"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

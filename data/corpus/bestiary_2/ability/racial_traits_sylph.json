@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Sylph",
+    "name": "Racial Traits ~ Sylph",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Sylph_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Sylph Racial Trait|AUTOMATIC|Sylph ~ Ability Scores|PREVAREQ:Sylph_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/sylph/sylph_abilities_globalvar.lst",
+    "sha256": "4b0f060a4898e71f50da035d9e95551c6cb6ff12351c305fb16ed1967544b1b1",
+    "line": 10,
+    "record_key": "Racial Traits ~ Sylph"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

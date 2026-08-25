@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Investigator Archetype ~ Sleuth",
     "name": "Sleuth",
-    "class": "Investigator Archetype",
+    "class": "Investigator",
     "description": "A sleuth is an investigator who relies on good fortune and guile rather than alchemy. Having no mystical energy intrinsic to her, she must forgo the more magical aspects of alchemy to solve her mysteries with wits, gumption, and the fickle consideration of luck.",
     "raw_tokens": [
       {
@@ -75,6 +75,30 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Investigator"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Investigator Archetype ~ Sleuth],[!PREFACT:1,ABILITIES,Investigator_Archetype_Alchemy=True,Investigator_Archetype_SwiftAlchemy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_CF_SwiftAlchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_Alchemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Investigator_Archetype_SwiftAlchemy|true"
       }
     ]
   },
@@ -91,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

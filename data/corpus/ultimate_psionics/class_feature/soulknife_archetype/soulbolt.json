@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Soulknife Archetype ~ Soulbolt",
+    "name": "Soulbolt",
+    "class": "Soulknife",
+    "description": "Some soulknives choose to focus on ranged attacks, launching a mind bolt at their enemies instead of wielding a blade of energy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Soulknife Archetype ~ Soulbolt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SoulknifeArchetype.SoulknifeBonusFeat.SoulknifeFormMindBlade.SoulknifeShapeMindBlade.SoulknifeThrowMindBlade.SoulknifeEnhancedMindBlade"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Soulknife=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Soulbolt],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeBonusFeat,TYPE.SoulknifeFormMindBlade,TYPE.SoulknifeShapeMindBlade,TYPE.SoulknifeThrowMindBlade.SoulknifeEnhancedMindBlade]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some soulknives choose to focus on ranged attacks, launching a mind bolt at their enemies instead of wielding a blade of energy."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Soulbolt ~ Soulbolt Bonus Feat|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Soulbolt ~ Form Mind Bolt|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Soulbolt ~ Shape Mind Bolt|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Soulbolt ~ Launch Mind Bolt|PRECLASS:1,Soulknife=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Soulknife Class Feature|AUTOMATIC|Soulbolt ~ Enhanced Mind Bolt|PREMULT:2,[PRECLASS:1,Soulknife=1],[PREVARGTEQ:MndBladeLVL,3]"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2140,
+    "record_key": "Soulknife Archetype ~ Soulbolt"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Charming Smile",
     "name": "Charming Smile",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You can cast Charm Person as a swift action with a DC of %1. You can only have one creature charmed in this way at a time. The total duration of this effect is %2 round per day. These rounds do not need to be consecutive, and you can dismiss the charm anytime as a free action. Each attempt to use this ability consumes 1 round of its duration, whether or not the creature succeeds on its save to resist the effect.|DomainCharmDC|CharmCharmingSmileRounds",
     "raw_tokens": [
       {
@@ -59,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

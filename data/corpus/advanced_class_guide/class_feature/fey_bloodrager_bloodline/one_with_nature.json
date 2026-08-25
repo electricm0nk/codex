@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Fey Bloodrager Bloodline ~ One With Nature",
     "name": "One With Nature",
-    "class": "Fey Bloodrager Bloodline",
+    "class": "Bloodrager",
     "description": "Creatures of the animal type don't attack you unless compelled to do so by magic or you attack them first. Three times per day, you can transport yourself from one tree to another tree, as Tree stride with half the transport range. Moving from one tree to another in this manner is a move action.  You gain these abilities even when you are not bloodraging.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

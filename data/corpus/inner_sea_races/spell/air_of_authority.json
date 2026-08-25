@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Air of Authority",
+    "school": "Illusion",
+    "level": 3,
+    "description": "You gain an unmistakable air of authority, which clouds creatures' minds and causes them to believe that you are their direct superior. Each creature with whom you attempt to leverage your newfound authority receives a Will save to disbelieve the illusion. Otherwise, it treats you as it would its direct superior. Creatures with different direct superiors see you in different ways, which can potentially lead to conflicts that allow additional saving throws (for instance, if a cook sees you as the head chef, he might be quite perplexed to see the vizier treating you as if you were the king)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
+    "sha256": "03a2e5e296f66a797d40d633aee1e6f08144e807e49c9923f72def8a78bab996",
+    "line": 12,
+    "record_key": "Air of Authority"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

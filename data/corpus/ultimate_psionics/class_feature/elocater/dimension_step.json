@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Elocater ~ Dimension Step",
+    "name": "Dimension Step",
+    "class": "Elocater",
+    "description": "Can use fold space %1/day; can bring no other creatures along.|DimensionStepTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elocater ~ Dimension Step"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ElocaterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DimensionStepTimes|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=DimensionStepTimes|CASTERLEVEL=ElocaterLVL|Fold Space"
+      },
+      {
+        "key": "DESC",
+        "value": "Can use fold space %1/day; can bring no other creatures along.|DimensionStepTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DimensionStepTimes|floor(ElocaterLVL/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.358"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|DimensionStepTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1223,
+    "record_key": "Elocater ~ Dimension Step"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

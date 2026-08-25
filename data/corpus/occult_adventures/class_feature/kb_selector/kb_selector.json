@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "KB Selector",
+    "name": "KB Selector",
+    "class": null,
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 01d6|PREVAREQ:KB_Tier,01"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 02d6|PREVAREQ:KB_Tier,02"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 03d6|PREVAREQ:KB_Tier,03"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 04d6|PREVAREQ:KB_Tier,04"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 05d6|PREVAREQ:KB_Tier,05"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 06d6|PREVAREQ:KB_Tier,06"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 07d6|PREVAREQ:KB_Tier,07"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 08d6|PREVAREQ:KB_Tier,08"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 09d6|PREVAREQ:KB_Tier,09"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|KB ~ 10d6|PREVAREQ:KB_Tier,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KB_Tier|max(1,floor((KineticistLVL+1)/2))"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kinectic Blast|DAMAGE|KB_Tier"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kinectic Blast|TOHIT|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kinectic Blast|DAMAGE|-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kinectic Blast|DAMAGE|CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Kinectic Blast|REACH|25"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kineticist Blast Type|AUTOMATIC|Physical|Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+    "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+    "line": 607,
+    "record_key": "KB Selector"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

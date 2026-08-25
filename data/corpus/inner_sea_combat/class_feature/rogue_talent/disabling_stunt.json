@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Disabling Stunt",
     "name": "Disabling Stunt",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent can attempt a Disable Device check against a construct's CMD as a standard action that does not provoke attacks of opportunity. If the check is successful, the rogue can ignore the construct's damage reduction when dealing sneak attack damage for 1 minute. The normal penalties apply to this check if the rogue attempts it without using thieves' tools. A rogue must be trained in Disable Device to select this talent.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

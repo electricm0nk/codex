@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Paladin Archetype ~ Words of Power",
+    "name": "Words of Power Paladin",
+    "description": "A words of power using paladin; %1 meta words/day.|PaladinMetaWordsPerDay",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Paladin Archetype ~ Words of Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.PaladinArchetype.PaladinSpells.WordsOfPower"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Paladin=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Words of Power],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSpells]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PaladinMetaWordsPerDay|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A words of power using paladin; %1 meta words/day.|PaladinMetaWordsPerDay"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Words of Power Tracker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|Barrier|Burst|Cone|Line|Personal|Selected"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=MetaLevel0|TYPE=MetaLevel1|TYPE=Paladin1|PRECLASS:1,Paladin=4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=MetaLevel2|TYPE=Paladin2|PRECLASS:1,Paladin=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=MetaLevel3|TYPE=Paladin3|PRECLASS:1,Paladin=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Words of Power|AUTOMATIC|TYPE=MetaLevel4|TYPE=Paladin4|PRECLASS:1,Paladin=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PaladinMetaWordsPerDay|max(1,classlevel(\"Paladin\")/2)+BonusMetaWordsPerDay"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 27,
+    "record_key": "Paladin Archetype ~ Words of Power"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

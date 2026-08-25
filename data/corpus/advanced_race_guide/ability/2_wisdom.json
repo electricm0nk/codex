@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "AbilityScoreBoost +2 ~ Wisdom",
+    "name": "+2 Wisdom",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "AbilityScoreBoost +2 ~ Wisdom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Builder"
+      },
+      {
+        "key": "TYPE",
+        "value": "AbilityScoreBoost2.AbilityScoreBoostMental2.Wisdom"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Builder,TYPE.Wisdom],[PREABILITY:1,CATEGORY=Builder,AbilityScoreBoost +2 ~ Wisdom]"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2|TYPE=Racial"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 140,
+    "record_key": "AbilityScoreBoost +2 ~ Wisdom"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

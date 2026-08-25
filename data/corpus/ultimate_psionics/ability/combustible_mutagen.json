@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Discovery ~ Combustible Mutagen",
+    "name": "Combustible Mutagen",
+    "description": "This discovery allows you to fuel your mutagen with psionic power in order to become combustible.  Anyone striking you with a melee weapon while under the effects of this discovery takes %1d6 points fire damage.  Creatures making melee attacks from more than 5 ft. away with reach weapons do not suffer this damage.  If you die from the attack, all creatures within 10 feet of the mutator take %2d6 fire damage as your body bursts in a fiery explosion.|CombustibleMutagenDice|CombustibleMutagenExplosionDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Discovery ~ Combustible Mutagen"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AlchemistDiscovery"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Discovery ~ Combustible Mutagen"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombustibleMutagenDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CombustibleMutagenExplosionDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This discovery allows you to fuel your mutagen with psionic power in order to become combustible.  Anyone striking you with a melee weapon while under the effects of this discovery takes %1d6 points fire damage.  Creatures making melee attacks from more than 5 ft. away with reach weapons do not suffer this damage.  If you die from the attack, all creatures within 10 feet of the mutator take %2d6 fire damage as your body bursts in a fiery explosion.|CombustibleMutagenDice|CombustibleMutagenExplosionDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombustibleMutagenExplosionDice|floor(TL/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CombustibleMutagenDice|floor(AlchemistDiscoveryLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.312"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_apg.lst",
+    "sha256": "d4ac8a9a33149811222e6affeba9ba1553ced3ba7f6beb6be722e89ddfc9a51f",
+    "line": 32,
+    "record_key": "Discovery ~ Combustible Mutagen"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,69 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dreamstalker ~ Dreamwalker",
+    "name": "Dreamwalker",
+    "class": "Mesmerist",
+    "description": "A dreamstalker treats dreamscapes as a favored terrain, as per the ranger ability, gaining a +%1 bonus. While in a dreamscape, she also treats any creature from the Dimension of Dreams (including dreamed figments) as her favored enemy, with a +%2 bonus.|DreamwalkerEnemyBonus*2|DreamwalkerEnemyBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dreamstalker ~ Dreamwalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DreamwalkerEnemyBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      },
+      {
+        "key": "DESC",
+        "value": "A dreamstalker treats dreamscapes as a favored terrain, as per the ranger ability, gaining a +%1 bonus. While in a dreamscape, she also treats any creature from the Dimension of Dreams (including dreamed figments) as her favored enemy, with a +%2 bonus.|DreamwalkerEnemyBonus*2|DreamwalkerEnemyBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DreamwalkerEnemyBonus|(MesmeristLVL-1)/4"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked in dreamscapes|DreamwalkerEnemyBonus*2"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against creature from the Dimension of Dreams|DreamwalkerEnemyBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You gain a +%1 bonus on Attack rolls and Damage rolls against creature from the Dimension of Dreams|DreamwalkerEnemyBonus"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 144,
+    "record_key": "Dreamstalker ~ Dreamwalker"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

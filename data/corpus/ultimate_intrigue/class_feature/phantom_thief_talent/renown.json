@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Phantom Thief Talent ~ Renown",
     "name": "Renown",
-    "class": "Phantom Thief Talent",
+    "class": "Phantom",
     "description": "The phantom thief becomes known for deeds and abilities. This renown grants him favorable treatment in civilized company and lends him an air of menace while facing down his enemies. A phantom thief can spend 1 week gaining renown among the locals of any community of no more than about 200 individuals (a village). This could be the entire community or a smaller neighborhood in a larger settlement. He must spend at least 4 hours each day socializing and making contacts. After spending 1 week doing this, all NPCs in the community have a starting attitude toward him that is one category better, as long as each person's initial attitude would have at least been indifferent. This bonus applies only while he is near the community in which he has gained renown; he must be within %1 miles. A phantom thief can hold renown in a limited number of communities (normally one, with other social talents allowing two). If he gains renown in a new community, he must decide which one of his previous communities to lose. These effects are subject to GM approval. For example, the GM might rule that an NPC or monster has not heard any tales about the phantom thief. Or, a foe may have a starting attitude toward him that's one category worse, rather than one category better.|VigilanteTalentLVL",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

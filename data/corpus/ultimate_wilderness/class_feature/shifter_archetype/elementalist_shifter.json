@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Archetype ~ Elementalist Shifter",
     "name": "Elementalist Shifter",
-    "class": "Shifter Archetype",
+    "class": "Shifter",
     "description": "Rather than drawing power from bestial aspects, elementalist shifters channel power from the Inner Sphere and can take on powerful elemental forms at the cost of the greater diversity available to traditional shifters. Although the elementalist shifter's powers seem more outlandish and supernatural than those of others of their kind, they remain equally immersed in the druidic traditions; their focus is simply rooted in expressions of nature found in extraplanar regions: the planes of Air, Earth, Fire, and Water.",
     "raw_tokens": [
       {
@@ -127,5 +127,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

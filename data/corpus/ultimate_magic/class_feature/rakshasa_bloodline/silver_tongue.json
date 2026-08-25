@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rakshasa Bloodline ~ Silver Tongue",
     "name": "Silver Tongue",
-    "class": "Rakshasa Bloodline",
+    "class": "Sorcerer",
     "description": "You can draw upon your outsider heritage to spin amazingly convincing lies. Activating this ability is a swift action. You gain a +5 bonus on one Bluff check made to convince another of the truth of your words (similar to using glibness). If a magical effect is used against you that would detect your lies or force you to speak the truth, the user of the effect must succeed on a caster level check (DC %1) to succeed. Failure means the effect does not detect your lies or force you to speak only the truth. You can use this ability %2 times per day.|Sorcerer_RakshasaSilverTongue_DC|Sorcerer_Rakshasa_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -84,5 +84,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

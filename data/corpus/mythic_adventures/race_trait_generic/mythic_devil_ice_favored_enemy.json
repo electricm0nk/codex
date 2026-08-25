@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Mythic Devil (Ice) ~ Favored Enemy",
+    "name": "Favored Enemy",
+    "description": "A mythic ice devil can expend one use of mythic power to gain a +6 favored enemy bonus against one type of creature for 1 hour, as if it were a 14thlevel ranger.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Devil (Ice) ~ Favored Enemy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Devil (Ice) Trait.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A mythic ice devil can expend one use of mythic power to gain a +6 favored enemy bonus against one type of creature for 1 hour, as if it were a 14thlevel ranger."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities_race.lst",
+    "sha256": "9dc17c2fc1ba84d040fb04d6175b48b6ff52cc30ad113933d5dff3d75ea2652a",
+    "line": 112,
+    "record_key": "Mythic Devil (Ice) ~ Favored Enemy"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

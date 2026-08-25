@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Skinwalker ~ Wereboar-Kin",
+    "name": "Wereboar-Kin (Ragebred)",
+    "description": "[redacted PI]",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Wereboar-Kin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skinwalker Subrace"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Skinwalker ~ Wereboar-Kin],[!PREFACT:1,ABILITIES,Skinwalker_ReplaceAbilityScores=True,Skinwalker_ReplaceAnimalMinded=True,Skinwalker_ReplaceChangeShape=True,Skinwalker_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Skinwalker ~ Wereboar-Kin"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Skinwalker Racial Trait|AUTOMATIC|Wereboar-Kin ~ Ability Scores|Wereboar-Kin ~ Animal-Minded|Wereboar-Kin ~ Change Shape|Wereboar-Kin ~ Spell-Like Ability"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Wereboar"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Typical Alignment|CN"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Strength, -2 Charisma (+2 Constitution while shapechanged)."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Handle Animal, Perception."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Speak with animals (pigs and boars only) 3/day."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Bestial Features|+10-foot racial bonus to base speed, gore attack that deals 1d6 points of damage, 2 hoof attacks that each deal 1d4 points of damage, scent to a range of 30 feet."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 63,
+    "record_key": "Skinwalker ~ Wereboar-Kin"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
+}

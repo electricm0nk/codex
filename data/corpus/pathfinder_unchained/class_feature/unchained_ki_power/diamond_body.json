@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Ki Power ~ Diamond Body",
+    "name": "Diamond Body",
+    "class": "Unchained Ki Power",
+    "description": "By spending 1 point from his ki pool, a monk with this power can remove one toxin from his body as if using neutralize poison, using his monk level as his caster level. He can remove only one poison in this way per use of this ability. A monk must be at least 8th level before selecting this ki power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Ki Power ~ Diamond Body"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Ki Power.SpecialQuality.Supernatural.Diamond Body"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "KiPowerLVL,8"
+      },
+      {
+        "key": "DESC",
+        "value": "By spending 1 point from his ki pool, a monk with this power can remove one toxin from his body as if using neutralize poison, using his monk level as his caster level. He can remove only one poison in this way per use of this ability. A monk must be at least 8th level before selecting this ki power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 530,
+    "record_key": "Unchained Ki Power ~ Diamond Body"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Hasten the End",
     "name": "Hasten the End",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, as an immediate action upon successfully hitting an opponent with a melee attack, you reduce the remaining duration of all beneficial magical effects currently affecting the target by I round, minute, hour, or day-whichever measurement is used to determine the duration of each particular magical effect. You can use this ability %1 times per day.|DomainChaosLVL/4-1",
     "raw_tokens": [
       {
@@ -52,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

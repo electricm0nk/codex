@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hangman ~ Suffocation",
+    "name": "Suffocation",
+    "class": "Vigilante",
+    "description": "The first time the hangman succeeds at a check to maintain a grapple (on his next turn after establishing the grapple), in place of the other options, he can suffocate the target and cause her to fall unconscious. A successful Fortitude save (DC %1) negates the suffocation. On subsequent rounds, the hangman can maintain the grapple to suffocate the target again. On the next failed save, the target drops to -1 hit points and starts dying. On the third failed save, she dies. Even if the hangman has the ability to maintain a grapple with less than a standard action, he can attempt to maintain a grapple to suffocate only once per round.|15+STR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hangman ~ Suffocation"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.71"
+      },
+      {
+        "key": "DESC",
+        "value": "The first time the hangman succeeds at a check to maintain a grapple (on his next turn after establishing the grapple), in place of the other options, he can suffocate the target and cause her to fall unconscious. A successful Fortitude save (DC %1) negates the suffocation. On subsequent rounds, the hangman can maintain the grapple to suffocate the target again. On the next failed save, the target drops to -1 hit points and starts dying. On the third failed save, she dies. Even if the hangman has the ability to maintain a grapple with less than a standard action, he can attempt to maintain a grapple to suffocate only once per round.|15+STR"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_ui.lst",
+    "sha256": "ef4d4c665ec9e9551c7b5e968fae9f10ad358ac8fdcf2addf3b9bb647cb3801b",
+    "line": 31,
+    "record_key": "Hangman ~ Suffocation"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

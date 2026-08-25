@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Greater Cure ~ Prepared",
+    "name": "Greater Cure",
+    "description": "Cure 3d6+1/caster level damage, max 15.  Boost: 3d8 base curing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Greater Cure ~ Prepared"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Words of Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "WordsOfPowerOutput.Effect.Healing.Alchemist3.Cleric3.Druid4.Paladin4.Ranger4.Witch4"
+      },
+      {
+        "key": "DESC",
+        "value": "Cure 3d6+1/caster level damage, max 15.  Boost: 3d8 base curing."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.179"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 549,
+    "record_key": "Greater Cure ~ Prepared"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

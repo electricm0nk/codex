@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Charm",
+    "name": "Charm",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainCharm,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Charm Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.CharmDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCharmLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCharmDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCharmTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainCharmAbilityTriggerLVL|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "DESC",
+        "value": "You can baffle and befuddle foes with a touch or a smile, and your beauty and grace are divine."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Charm=1|Charm Person|Charm=2|Calm Emotions|Charm=3|Suggestion|Charm=4|Heroism|Charm=5|Charm Monster|Charm=6|Geas/Quest|Charm=7|Insanity|Charm=8|Demand|Charm=9|Dominate Monster"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst",
+    "sha256": "1b6a671beb757f213bf73a7cab0b977521794f44db731c3f3e33e9df94662999",
+    "line": 16,
+    "record_key": "Charm"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

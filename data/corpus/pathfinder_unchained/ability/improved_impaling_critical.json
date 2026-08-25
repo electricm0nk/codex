@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Combat Trick ~ Improved Impaling Critical",
+    "name": "Improved Impaling Critical",
+    "description": "When using this feat to impale a foe, you can spend 5 stamina points to immobilize the foe in its current space (instead of halving its movement) for as long as you maintain your grip and the foe is impaled. If you let go of the weapon, the foe can move, but its movement is still halved.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Combat Trick ~ Improved Impaling Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Combat Trick"
+      },
+      {
+        "key": "DESC",
+        "value": "When using this feat to impale a foe, you can spend 5 stamina points to immobilize the foe in its current space (instead of halving its movement) for as long as you maintain your grip and the foe is impaled. If you let go of the weapon, the foe can move, but its movement is still halved."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "123"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SourceBook|UC"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
+    "line": 84,
+    "record_key": "Combat Trick ~ Improved Impaling Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

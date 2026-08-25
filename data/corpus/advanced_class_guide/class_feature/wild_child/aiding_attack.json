@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Child ~ Aiding Attack",
     "name": "Aiding Attack",
-    "class": "Wild Child",
+    "class": "Brawler",
     "description": "The wild child can use this trick as a free action when he hits a creature with an attack. The next ally who makes an attack against the target creature before the start of the wild child's next turn gains a +2 circumstance bonus on that attack roll.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

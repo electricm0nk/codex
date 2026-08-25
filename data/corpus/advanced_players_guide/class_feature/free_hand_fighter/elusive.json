@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Free Hand Fighter ~ Elusive",
     "name": "Elusive",
@@ -39,6 +39,14 @@
       {
         "key": "ASPECT",
         "value": "CombatBonus|+%1 dodge bonus to AC. This bonus does not apply when wearing medium or heavy armor or carrying a medium or heavier load.|ElusiveBonus"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "+1 dodge bonus to AC, increasing by +1 for every four levels after 2nd. This bonus does not apply when wearing medium or heavy armor or carrying a medium or heavier load"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|ElusiveBonus|TYPE=Dodge"
       }
     ]
   },
@@ -56,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

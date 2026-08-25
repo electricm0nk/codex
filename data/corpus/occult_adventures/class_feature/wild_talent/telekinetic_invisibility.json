@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Telekinetic Invisibility",
     "name": "Telekinetic Invisibility",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element aether; Type utility (Sp); Level 3; Burn 0 You weave strands of aether, bending light and dampening sound; this works as invisibility except that the aetheric bending is easier to notice than normal invisibility, so your bonus on Stealth checks is halved (+10 while moving and +20 while perfectly still). However, the dampened sound allows you to avoid automatic detection via sound-based blindsense and blindsight, but you do not receive the bonus on Stealth checks from this wild talent against a creature with such abilities.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

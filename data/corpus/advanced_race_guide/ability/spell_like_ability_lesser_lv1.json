@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Builder Racial Trait ~ Spell-Like Ability (Lesser Lvl1)",
+    "name": "Spell-Like Ability (Lesser Lv1)",
+    "description": "Lesser ,SLAs: 1/day - 2nd or lower level spell that doesn't attack or deal damage. CL = Character Level.  Cost = spell level (min 1).  Can be taken 3 times.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Builder Racial Trait ~ Spell-Like Ability (Lesser Lvl1)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.RacialTrait.BuilderMagicalTrait.Standard"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "SLALesserCount,3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLALesserCount|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Lesser ,SLAs: 1/day - 2nd or lower level spell that doesn't attack or deal damage. CL = Character Level.  Cost = spell level (min 1).  Can be taken 3 times."
+      },
+      {
+        "key": "DESC",
+        "value": "[Cost: %1]|1"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "USERINPUT|TITLE=1st Level Spell"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLALesserCount|1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
+    "line": 363,
+    "record_key": "Builder Racial Trait ~ Spell-Like Ability (Lesser Lvl1)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Paladin Archetype ~ Holy Gun",
     "name": "Holy Gun",
-    "class": "Paladin Archetype",
+    "class": "Paladin",
     "description": "Not all paladins are knights in shining armor. Holy guns roam the world searching for evil. And where they find it, they put it down.",
     "raw_tokens": [
       {
@@ -71,6 +71,54 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Paladin"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "!PRECHARACTERTYPE",
+        "value": "1,PC"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ HOLY GUN],[!PREFACT:1,ABILITIES,Paladin_Archetype_DetectEvil=True,Paladin_Archetype_SmiteEvil=True,Paladin_Archetype_DivineBond=True,Paladin_Archetype_Proficiencies=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DetectEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_ArmorProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DetectEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_SmiteEvil|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_DivineBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Paladin_Archetype_Proficiencies|true"
       }
     ]
   },
@@ -87,5 +135,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

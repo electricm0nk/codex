@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Perfect Strike",
+    "name": "Perfect Strike",
+    "description": "You can expend one use of mythic power as a standard action to deliver a perfect strike. A perfect strike attack is made using your full base attack bonus. If the attack hits, it deals double the normal amount of damage, and this damage bypasses all damage reduction and hardness. If the perfect strike is a critical hit, increase the critical multiplier for the attack by 1 (so a x2 weapon deals x3 damage). Damage that isn't multiplied on a critical hit isn't multiplied on a perfect strike. Perfect strike can be used in conjunction with any champion's strike if you expend uses of mythic power for each ability separately.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Perfect Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend one use of mythic power as a standard action to deliver a perfect strike. A perfect strike attack is made using your full base attack bonus. If the attack hits, it deals double the normal amount of damage, and this damage bypasses all damage reduction and hardness. If the perfect strike is a critical hit, increase the critical multiplier for the attack by 1 (so a x2 weapon deals x3 damage). Damage that isn't multiplied on a critical hit isn't multiplied on a perfect strike. Perfect strike can be used in conjunction with any champion's strike if you expend uses of mythic power for each ability separately."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 395,
+    "record_key": "Mythic Path Ability ~ Perfect Strike"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

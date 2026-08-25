@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Fighter Archetype ~ Mutation Warrior",
     "name": "Mutation Warrior",
-    "class": "Fighter Archetype",
+    "class": "Fighter",
     "description": "While most fighters rely on physical fitness and rigorous training to achieve martial superiority, a few prefer to create and imbibe dangerous concoctions that mutate them into fearsome creatures.",
     "raw_tokens": [
       {
@@ -51,6 +51,38 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Fighter"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Mutation Warrior],[!PREFACT:1,ABILITIES,Fighter_Archetype_ArmorTraining=True,Fighter_Archetype_ArmorMastery=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining1|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorTraining4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_CF_ArmorMastery|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Fighter_Archetype_ArmorMastery|true"
       }
     ]
   },
@@ -67,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

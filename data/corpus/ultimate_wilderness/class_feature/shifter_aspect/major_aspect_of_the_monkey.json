@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Monkey ~ Major",
     "name": "Major Aspect of the Monkey",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a Large monkey (as per the dire ape; Bestiary p17). While in this form, you gain a climb speed of %1 feet, low-light vision, and scent (30 feet), two claw attacks (1d6 damage), a bite attack (1d6 damage), and you can still use your hands to wield weapons, hold objects, and manipulate objects normally.|MonkeyAspectClimbSpeed",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

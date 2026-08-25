@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Magus Arcana ~ Pool-Sourced Athame",
     "name": "Pool-Sourced Athame",
-    "class": "Magus Arcana",
+    "class": "Magus",
     "description": "Instead of sacrificing a prepared spell to create the force athame, you can spend points from your arcane pool to do so. An athame created this way has an enhancement bonus equal to the number of arcane pool points spent.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

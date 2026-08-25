@@ -1,0 +1,73 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ See in Darkness",
+    "delivery": "Supernatural",
+    "description": "The creature can see perfectly in darkness of any kind, including that created by deeper darkness.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:universal_monster_rule_see_in_darkness",
+    "name": "See in Darkness",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_SeeInDarkness_Range|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_SeeInDarkness_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature can see perfectly in darkness of any kind, including that created by deeper darkness.|PREVAREQ:UMR_SeeInDarkness_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ See in Darkness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialQuality.Supernatural.Sense.Vision"
+      },
+      {
+        "key": "VISION",
+        "value": "See in Darkness (UMR_SeeInDarkness_Range)|PREVARGTEQ:UMR_SeeInDarkness_Range,0"
+      },
+      {
+        "key": "VISION",
+        "value": "See in Darkness|PREVAREQ:UMR_SeeInDarkness_Range,0"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Universal Monster Rule",
+      "Sense",
+      "Vision"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2417,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ See in Darkness",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

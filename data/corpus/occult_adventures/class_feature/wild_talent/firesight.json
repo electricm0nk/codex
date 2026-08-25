@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Firesight",
     "name": "Firesight",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element fire; Type utility (Su); Level 3; Burn - You can see through flames and smoke as if they were transparent. Creatures that are on fire or have the fire subtype never benefit from concealment or total concealment against you.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

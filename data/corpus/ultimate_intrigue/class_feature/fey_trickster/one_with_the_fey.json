@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Fey Trickster ~ One with the Fey",
+    "name": "One with the Fey",
+    "class": "Fey",
+    "description": "A fey trickster fully transforms into a fey, though she can still choose to count as her original creature type as well whenever it would be advantageous to her (such as if she is a humanoid and wishes to be affected by reduce person). She gains low-light vision as well as an additional ability depending on which type of fey she chooses to most closely associate with. Some examples follow. [Erlking] The fey trickster is constantly under the effects of haste. [Nymph] The fey trickster gains the nymph's unearthly grace ability (Pathfinder RPG Bestiary 217) [Quickling] The fey trickster gains the quickling's supernatural speed ability (Pathfinder RPG Bestiary 2 227). [Rusalka] The fey trickster gains the rusalka's tresses ability and four tress primary natural attacks similar to those of a rusalka (Pathfinder RPG Bestiary 3 232).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Trickster ~ One with the Fey"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A fey trickster fully transforms into a fey, though she can still choose to count as her original creature type as well whenever it would be advantageous to her (such as if she is a humanoid and wishes to be affected by reduce person). She gains low-light vision as well as an additional ability depending on which type of fey she chooses to most closely associate with. Some examples follow. [Erlking] The fey trickster is constantly under the effects of haste. [Nymph] The fey trickster gains the nymph's unearthly grace ability (Pathfinder RPG Bestiary 217) [Quickling] The fey trickster gains the quickling's supernatural speed ability (Pathfinder RPG Bestiary 2 227). [Rusalka] The fey trickster gains the rusalka's tresses ability and four tress primary natural attacks similar to those of a rusalka (Pathfinder RPG Bestiary 3 232)."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 75,
+    "record_key": "Fey Trickster ~ One with the Fey"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

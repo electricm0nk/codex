@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Enlightened Monk ~ Augmented Stunning Fist",
+    "name": "Augmented Stunning Fist",
+    "class": "Monk",
+    "description": "You can channel power points into your Stunning Fist attacks to make them more devastating.  When you use your Stunning Fist attack, you may choose to spend up to %1 power points on the attack.  If you do, you gain an insight bonus to the damage if the attack is successful equal to the number of power points spent.  For every two power points spent adding damage, the save DC of the Stunning Fist attack increases by 1.|AugmentedStunningFistPP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Enlightened Monk ~ Augmented Stunning Fist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MonkClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AugmentedStunningFistPP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can channel power points into your Stunning Fist attacks to make them more devastating.  When you use your Stunning Fist attack, you may choose to spend up to %1 power points on the attack.  If you do, you gain an insight bonus to the damage if the attack is successful equal to the number of power points spent.  For every two power points spent adding damage, the save DC of the Stunning Fist attack increases by 1.|AugmentedStunningFistPP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AugmentedStunningFistPP|MonkLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2524,
+    "record_key": "Enlightened Monk ~ Augmented Stunning Fist"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

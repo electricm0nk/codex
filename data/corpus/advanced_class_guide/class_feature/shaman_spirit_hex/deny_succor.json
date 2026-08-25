@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shaman Spirit Hex ~ Deny Succor",
     "name": "Deny Succor",
-    "class": "Shaman Spirit Hex",
+    "class": "Shaman",
     "description": "The shaman can place this hex on a single creature within 30 feet. The target does not heal damage from cure spells and does not benefit from any spells or effects that remove conditions. This effect lasts for %1 rounds. A successful Will saving throw (DC %2) negates this effect. Whether or not the saving throw is successful, the creature cannot be the target of this hex again for 24 hours.|ShamanDenySuccorDuration|ShamanDenySuccorDC",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

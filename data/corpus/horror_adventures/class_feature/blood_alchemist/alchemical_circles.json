@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Blood Alchemist ~ Alchemical Circles",
+    "name": "Alchemical Circles",
+    "class": "Alchemist",
+    "description": "A blood alchemist gains a blood pool with %1 points. He can spend 1 point from his blood pool to draw a complex alchemical circle in blood on the ground or on another permanent fixture in a process that takes 1 minute. The alchemical circle can have one of several effects.|BloodAlchemistBloodPool",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blood Alchemist ~ Alchemical Circles"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemist Class Feature.BloodAlchemistClassFeatures.SpecialQuality.Supernatural.SpellLike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodAlchemistBloodPool|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      },
+      {
+        "key": "DESC",
+        "value": "A blood alchemist gains a blood pool with %1 points. He can spend 1 point from his blood pool to draw a complex alchemical circle in blood on the ground or on another permanent fixture in a process that takes 1 minute. The alchemical circle can have one of several effects.|BloodAlchemistBloodPool"
+      },
+      {
+        "key": "DESC",
+        "value": "The blood alchemist can spend an unused extract slot to charge the circle with alchemical energy. He chooses one of the following spells of equal or lower level to the extract slot he spent, and until he refreshes his extract slots, as long as his body is in physical contact with the circle, he can produce the effect of the spell he chose as a spell-like ability. If the spell normally has an expensive material component, he must still provide it, either grinding it up and mixing it with the blood used for the circle or placing it in the circle (if the component is also the target). The chosen effect can target or affect only something contained within the circle, or the surface on which the blood alchemist drew the circle. To learn one of these effects, he must write it into his formula book, with the same cost as usual for a formula (he can also use his free formula from leveling up to learn the chosen effect instead of a normal formula). &nl; The blood alchemist can choose from the following spells for this ability: 1st-expeditious excavation (APG), fabricate bullets (UC), jury-rig (U), magic weapon, reinforce armaments (UC); 2nd-knock, make whole, masterwork transformation (UM), silk to steel (UM), soften earth and stone, warp wood; 3rd-keen edge, magic vestment, greater magic weapon, obsidian flow (UC), spike stones, stone shape; 4th-fabricate, passwall, transmute mud to rock, transmute rock to mud; 5th-flesh to stone, move earth, stone to flesh, tar pool (UC), transmute metal to wood; 6th-polymorph any object, transmute blood to acid (UM). &nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "The blood alchemist can also create a magic circle, as per the magic circles occultist class ability (Occult Adventures p49), though it costs 1 point from his blood pool instead of 1 point of mental focus. &nl;|PRECLASS:1,Alchemist=8"
+      },
+      {
+        "key": "DESC",
+        "value": "He can also create a binding circle, as per the occultist class ability of the same name (Occult Adventures p49), though it costs 2 points from his blood pool instead of 2 points of mental focus. &nl;|PRECLASS:1,Alchemist=12"
+      },
+      {
+        "key": "DESC",
+        "value": "The blood alchemist can draw magic circles and binding circles more quickly but with a shorter duration, as per the occultist fast circles ability (Occult Adventures p49).|PRECLASS:1,Alchemist=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodAlchemistBloodPool|AlchemistLVL+INT"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|BloodAlchemistBloodPool"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1/day)|BloodAlchemistBloodPool"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 10,
+    "record_key": "Blood Alchemist ~ Alchemical Circles"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

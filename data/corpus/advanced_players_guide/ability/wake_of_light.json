@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Wake of Light",
+    "name": "Wake of Light",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Innate Spell-Like Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WakeOfLight_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WakeOfLight_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WakeOfLight_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WakeOfLight_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WakeOfLight_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WakeOfLight_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SLA_WakeOfLight_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=SLA_WakeOfLight_Times|TIMEUNIT=Day|CASTERLEVEL=SLA_WakeOfLight_LVL|Wake of Light,SLA_WakeOfLight_DC|PREVAREQ:SLA_WakeOfLight_AtWill,0|PREVAREQ:SLA_WakeOfLight_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=SLA_WakeOfLight_LVL|Wake of Light,SLA_WakeOfLight_DC|PREVAREQ:SLA_WakeOfLight_AtWill,1|PREVAREQ:SLA_WakeOfLight_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=SLA_WakeOfLight_LVL|Wake of Light,SLA_WakeOfLight_DC|PREVAREQ:SLA_WakeOfLight_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WakeOfLight_LVL|SLA_Base_LVL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WakeOfLight_SpellLVL|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WakeOfLight_Times|SLA_Base_Times|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WakeOfLight_DCMod|SLA_DC_STAT|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_WakeOfLight_DC|10+SLA_WakeOfLight_SpellLVL+SLA_WakeOfLight_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
+    "line": 399,
+    "record_key": "Wake of Light"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

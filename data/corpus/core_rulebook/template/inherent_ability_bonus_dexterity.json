@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:17Z",
+  "data": {
+    "key": "Inherent Ability Bonus (Dexterity)",
+    "name": "Inherent Ability Bonus (Dexterity)",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Inherent Dexterity Bonus +1|Inherent Dexterity Bonus +2|Inherent Dexterity Bonus +3|Inherent Dexterity Bonus +4|Inherent Dexterity Bonus +5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.370"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_templates.lst",
+    "sha256": "5de512bab3d46192a6bd1342579c61ca8376d2e6e8f25a8bb8a47665c657a11b",
+    "line": 56,
+    "record_key": "Inherent Ability Bonus (Dexterity)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

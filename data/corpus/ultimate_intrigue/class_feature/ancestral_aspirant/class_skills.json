@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Ancestral Aspirant ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Occultist",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ancestral Aspirant ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.AncestralAspirantClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Appraise|Bluff|TYPE=Craft|Diplomacy|Disable Device|Disguise|Fly|Knowledge (arcana)|Knowledge (engineering)|Knowledge (history)|Knowledge (nobility)|Knowledge (religion)|Linguistics|Perception|Sense Motive|Sleight of Hand|Spellcraft|Use Magic Device"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.67"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 100,
+    "record_key": "Ancestral Aspirant ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

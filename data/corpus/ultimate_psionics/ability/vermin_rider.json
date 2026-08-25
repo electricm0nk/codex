@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Cavalier Archetype ~ Vermin Rider",
+    "name": "Vermin Rider",
+    "description": "You have a natural connection to insects and spiders.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cavalier Archetype ~ Vermin Rider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.CavalierArchetype.CavalierTactician.CavalierGreaterTactician"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Cavalier=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Vermin Rider],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CavalierMount,TYPE.CavalierTactician,TYPE.CavalierGreaterTactician]"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Dromite"
+      },
+      {
+        "key": "DESC",
+        "value": "You have a natural connection to insects and spiders."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Vermin Rider ~ Mount|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Vermin Rider ~ Bound Vermin|PRECLASS:1,Cavalier=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Vermin Rider ~ Energized Mount|PRECLASS:1,Cavalier=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Cavalier Class Feature|AUTOMATIC|Vermin Rider ~ Eternal Bond|PRECLASS:1,Cavalier=17"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_um.lst",
+    "sha256": "dbd6f422e0e3106db6759299ddad5770b0038d66d7c34ed615f7838b632fdad3",
+    "line": 10,
+    "record_key": "Cavalier Archetype ~ Vermin Rider"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

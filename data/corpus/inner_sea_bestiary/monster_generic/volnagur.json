@@ -1,0 +1,156 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:57:29Z",
+  "data": {
+    "key": "Volnagur",
+    "name": "Volnagur",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,100"
+      },
+      {
+        "key": "REACH",
+        "value": "50"
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsense (300')|Darkvision (60')|Low-Light Vision"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|30|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BleedDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Razor Tongue|CRITRANGE|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Razor Tongue|CRITMULT|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Eye Ray|CRITRANGE|2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Perception"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Maneuverability (Perfect)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Piercing.Finesseable,*1,4d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Razor Tongue,Weapon.Natural.Weapon Group Natural.Melee.Slashing.Finesseable,*3,2d6|Wing,Weapon.Natural.Weapon Group Natural.Melee.Bludgeoning.Finesseable,*6,2d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Eye Ray,Weapon.Natural.Weapon Group Natural.Ranged.Sonic,*4,4d6"
+      },
+      {
+        "key": "HITDIE",
+        "value": "10"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:25"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "CR",
+        "value": "22"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=25|Acid Fog|Invisibility (Greater)|Song of Discord,20"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=25|Winds of Vengeance"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 79,
+    "record_key": "Volnagur"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vengeance Domain ~ Final Vengeance",
     "name": "Final Vengeance",
-    "class": "Vengeance Domain",
+    "class": "Cleric",
     "description": "Once per day, you can make one melee attack against an opponent within reach in response to an attack that would reduce you to negative hit points. Once your attack is resolved, you suffer the normal effect of the attack that provoked this ability. Effects that kill you or do not reduce you to negative hit points (such as ability damage or drain, negative levels, and disintegrate) do not trigger this ability.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

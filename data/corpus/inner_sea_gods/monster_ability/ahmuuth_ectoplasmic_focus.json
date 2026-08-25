@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T10:26:11Z",
+  "data": {
+    "corpus_key": "Ahmuuth ~ Ectoplasmic Focus",
+    "delivery": "Supernatural",
+    "description": "An ahmuuth's spells and spell- like abilities have their full effect against incorporeal or ethereal creatures.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:ahmuuth_ectoplasmic_focus",
+    "name": "Ectoplasmic Focus",
+    "owners": [
+      "inner_sea_gods:monster:psychopomp_ahmuuth"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_abilities_races_b4.lst",
+    "sha256": "f66eccddcddfe51b19ba3723366fc2458ce67888f4c501f8088f6d4101e8bd50",
+    "line": 34,
+    "record_key": "Ahmuuth ~ Ectoplasmic Focus"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

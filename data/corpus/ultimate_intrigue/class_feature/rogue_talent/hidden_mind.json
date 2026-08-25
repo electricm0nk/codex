@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Rogue Talent ~ Hidden Mind",
     "name": "Hidden Mind",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "A rogue with this talent uses various devious techniques, including mental exercises and dusting her clothing with a small amount of lead, to protect herself from divinations, with the same benefits as if she cast nondetection on herself with a caster level equal to her rogue level.",
     "raw_tokens": [
       {
@@ -31,6 +31,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.44"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rogue Talent"
       }
     ]
   },
@@ -47,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

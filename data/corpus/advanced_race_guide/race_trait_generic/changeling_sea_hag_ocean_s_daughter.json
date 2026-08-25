@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Changeling ~ Sea Hag Ocean's Daughter",
+    "name": "Ocean's Daughter (Sea Hag)",
+    "description": "The changeling gains a +1 trait bonus on Swim checks. She automatically succeeds at Swim checks made to avoid nonlethal damage from swimming.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Changeling ~ Sea Hag Ocean's Daughter"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Ocean's Daughter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "The changeling gains a +1 trait bonus on Swim checks. She automatically succeeds at Swim checks made to avoid nonlethal damage from swimming."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sea lungs.|!PREABILITY:1,CATEGORY=Special Ability,Changeling ~ Sea Hag Ocean's Daughter"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Swim|1|TYPE=Racial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+1 Swim"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|You automatically succeed at Swim checks made to avoid nonlethal damage from swimming."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 821,
+    "record_key": "Changeling ~ Sea Hag Ocean's Daughter"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

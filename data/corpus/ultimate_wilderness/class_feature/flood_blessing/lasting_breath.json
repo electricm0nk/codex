@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Flood Blessing ~ Lasting Breath",
     "name": "Lasting Breath",
-    "class": "Flood Blessing",
+    "class": "Warpriest",
     "description": "You can touch an ally to bless it with an extra reserve of breath. For 1 minute, while the ally holds its breath, standard and full-round actions don't decrease the number of rounds the ally can hold its breath (see page 445 of Pathfinder RPG Core Rulebook).",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

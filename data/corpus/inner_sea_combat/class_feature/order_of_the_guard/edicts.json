@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Guard ~ Edicts",
     "name": "Edicts",
-    "class": "Order of the Guard",
+    "class": "Cavalier",
     "description": "An order of the guard cavalier must strive to protect his ward to the best of his ability, even if doing so costs the cavalier his life. The cavalier must always receive some compensation for his services, be it money, a favor, or other payment. A member of the order of the guard must carry out the orders stipulated in his contract or dictated by his employer as long as doing so does not violate other elements of the order's code or a previously agreed upon contract.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

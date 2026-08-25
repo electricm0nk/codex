@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Half-Orc",
+    "name": "Racial Traits ~ Half-Orc",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "HalfOrc_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Half-Orc Racial Trait|AUTOMATIC|Half-Orc ~ Ability Scores|PREVAREQ:HalfOrc_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_globalvar.lst",
+    "sha256": "55b03f58936ffb5f52ed18abc606749f50d8cd5de364f3ac0f0c2bc129cc36d9",
+    "line": 10,
+    "record_key": "Racial Traits ~ Half-Orc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Dread Lord ~ Magical Mastery",
+    "delivery": "Supernatural",
+    "description": "The dread lord draws magical power from its domain. It treats its caster level as 2 higher for the purposes of spells and spell- like abilities it casts, and the saving throw DCs of such spells and spell-like abilities increase by 1.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "horror_adventures:monster_ability:dread_lord_magical_mastery",
+    "name": "Magical Mastery",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|ALLSPELLS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "DC|ALLSPELLS|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The dread lord draws magical power from its domain. It treats its caster level as 2 higher for the purposes of spells and spell- like abilities it casts, and the saving throw DCs of such spells and spell-like abilities increase by 1."
+      },
+      {
+        "key": "KEY",
+        "value": "Dread Lord ~ Magical Mastery"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.DreadLordSpecialPower"
+      }
+    ],
+    "source_page": "p.235",
+    "traits": [
+      "DreadLordSpecialPower"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:27Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 259,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Dread Lord ~ Magical Mastery",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

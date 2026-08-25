@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Devil Sense",
+    "name": "Devil Sense",
+    "description": "You instinctively sense the presence of fiends.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "PreStatScore_WIS,13"
+      },
+      {
+        "key": "PRESPELL",
+        "value": "1,Detect Evil"
+      },
+      {
+        "key": "DESC",
+        "value": "You instinctively sense the presence of fiends."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "At the beginning of your turn each round, if you are within 60 feet of an outsider with the evil subtype, you instinctively sense that something unholy is near. You may experience this sense as an unpleasant smell or taste (such as sulfur), as gooseflesh on your arms or neck, or as an ineffable sense of dread. This sense does not alert you to the direction of the outsider. Anything that can thwart or mislead detect evil can likewise block this sense."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 24,
+    "record_key": "Devil Sense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

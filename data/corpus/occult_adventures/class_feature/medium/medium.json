@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Medium",
     "name": "Medium",
-    "class": null,
+    "class": "Medium",
     "description": null,
     "raw_tokens": [
       {
@@ -31,6 +31,238 @@
       {
         "key": "BONUS",
         "value": "ABILITYPOOL|Favored Class Bonus|MediumLVL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Class Skills|PREVAREQ:Medium_CF_ClassSkills,0|PREVARGTEQ:Medium_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Weapon and Armor Proficiency|PREVAREQ:Medium_CF_Proficiencies,0|PREVARGTEQ:Medium_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Knacks|PREVAREQ:Medium_CF_Knacks,0|PREVARGTEQ:Medium_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Spirit|PREVAREQ:Medium_CF_Spirit,0|PREVARGTEQ:Medium_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Spirit Surge|PREVAREQ:Medium_CF_SpiritSurge,0|PREVARGTEQ:Medium_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Shared Seance|PREVAREQ:Medium_CF_SharedSeance,0|PREVARGTEQ:Medium_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Taboo|PREVAREQ:Medium_CF_Taboo,0|PREVARGTEQ:Medium_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Haunt Channeler|PREVAREQ:Medium_CF_HauntChanneler,0|PREVARGTEQ:Medium_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Location Channel|PREVAREQ:Medium_CF_LocationChannel,0|PREVARGTEQ:Medium_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Connection Channel|PREVAREQ:Medium_CF_ConnectionChannel,0|PREVARGTEQ:Medium_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Propitiation|PREVAREQ:Medium_CF_Propitiation,0|PREVARGTEQ:Medium_CFP_Level,9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Ask the Spirits|PREVAREQ:Medium_CF_AskTheSpirits,0|PREVARGTEQ:Medium_CFP_Level,13"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Astral Journey|PREVAREQ:Medium_CF_AstralJourney,0|PREVARGTEQ:Medium_CFP_Level,14"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Trance of Three|PREVAREQ:Medium_CF_TranceOfThree,0|PREVARGTEQ:Medium_CFP_Level,15"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Spacious Soul|PREVAREQ:Medium_CF_SpaciousSoul,0|PREVARGTEQ:Medium_CFP_Level,18"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Spirit Mastery|PREVAREQ:Medium_CF_SpiritMastery,0|PREVARGTEQ:Medium_CFP_Level,19"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Medium Class Feature|AUTOMATIC|Medium ~ Astral Beacon|PREVAREQ:Medium_CF_AstralBeacon,0|PREVARGTEQ:Medium_CFP_Level,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Medium;LEVEL=0|-2|PREMULT:2,[PREVAREQ:Medium_CF_Knacks,1],[PRECLASS:1,Medium=1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Medium;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Medium_CF_Knacks,1],[PRECLASS:1,Medium=2]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Medium;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Medium_CF_Knacks,1],[PRECLASS:1,Medium=3]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Medium;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Medium_CF_Knacks,1],[PRECLASS:1,Medium=5]"
+      },
+      {
+        "key": "BONUS",
+        "value": "SPELLCAST|CLASS=Medium;LEVEL=0|-1|PREMULT:2,[PREVAREQ:Medium_CF_Knacks,1],[PRECLASS:1,Medium=7]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_ClassSkills|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_Proficiencies|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_Knacks|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_Spirit|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_SpiritBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_SpiritSurge|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_SharedSeance|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_Taboo|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_HauntChanneler|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_LocationChannel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_ConnectionChannel|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_Propitiation|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_AskTheSpirits|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_AstralJourney|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_TranceOfThree|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_SpaciousSoul|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_SpiritMastery|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Medium_CF_AstralBeacon|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_ClassSkills|1|PREFACT:1,ABILITIES,Medium_CF_ClassSkills=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_Proficiencies|1|PREFACT:1,ABILITIES,Medium_CF_Proficiencies=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_Knacks|1|PREFACT:1,ABILITIES,Medium_CF_Knacks=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_Spirit|1|PREFACT:1,ABILITIES,Medium_CF_Spirit=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_SpiritBonus|1|PREFACT:1,ABILITIES,Medium_CF_SpiritSurge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_SpiritSurge|1|PREFACT:1,ABILITIES,Medium_CF_SpiritSurge=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_SharedSeance|1|PREFACT:1,ABILITIES,Medium_CF_SharedSeance=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_Taboo|1|PREFACT:1,ABILITIES,Medium_CF_Taboo=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_HauntChanneler|1|PREFACT:1,ABILITIES,Medium_CF_HauntChanneler=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_LocationChannel|1|PREFACT:1,ABILITIES,Medium_CF_LocationChannel=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_ConnectionChannel|1|PREFACT:1,ABILITIES,Medium_CF_ConnectionChannel=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_Propitiation|1|PREFACT:1,ABILITIES,Medium_CF_Propitiation=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_AskTheSpirits|1|PREFACT:1,ABILITIES,Medium_CF_AskTheSpirits=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_AstralJourney|1|PREFACT:1,ABILITIES,Medium_CF_AstralJourney=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_TranceOfThree|1|PREFACT:1,ABILITIES,Medium_CF_TranceOfThree=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_SpaciousSoul|1|PREFACT:1,ABILITIES,Medium_CF_SpaciousSoul=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_SpiritMastery|1|PREFACT:1,ABILITIES,Medium_CF_SpiritMastery=True"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Medium_CF_AstralBeacon|1|PREFACT:1,ABILITIES,Medium_CF_AstralBeacon=True"
       }
     ]
   },
@@ -48,5 +280,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

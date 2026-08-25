@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Domain Power ~ Command",
     "name": "Command",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "As a standard action, you can give a creature an emotionless yet undeniable order, as per the spell command. A Will save negates this effect. You cannot target a creature more than once per day with this ability. You can use this ability %1 times per day.|DomainLawTimes",
     "raw_tokens": [
       {
@@ -35,6 +39,30 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=1"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Witch=1"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Toil Subdomain=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Devil Subdomain (Evil)=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Devil Subdomain (Law)=1"
       }
     ]
   },
@@ -51,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

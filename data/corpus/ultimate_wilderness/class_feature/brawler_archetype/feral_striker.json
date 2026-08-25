@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Brawler Archetype ~ Feral Striker",
     "name": "Feral Striker",
-    "class": "Brawler Archetype",
+    "class": "Brawler",
     "description": "A feral striker taps into a reservoir of druidic power hidden inside herself, allowing her to take animalistic characteristics.",
     "raw_tokens": [
       {
@@ -67,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

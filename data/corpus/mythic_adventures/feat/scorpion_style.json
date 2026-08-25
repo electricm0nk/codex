@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Scorpion Style",
+    "category": "Mythic",
+    "name": "Scorpion Style (Mythic)",
+    "description": "Your unarmed strikes can induce a near-crippling lethargy in your enemies. Whenever you are using Scorpion Style, you add to the number of rounds the target's base land speed is reduced. You can expend one use of mythic power when making your attack to slow your target, as the spell slow, unless it succeeds at a Fortitude save (DC ). The slowing effect supersedes the normal speed penalty of your Scorpion Strike, but lasts for an equal number of rounds.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Scorpion Style",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 150,
+    "record_key": "Scorpion Style"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

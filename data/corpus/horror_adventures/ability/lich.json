@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Corruption ~ Lich",
+    "name": "Lich",
+    "description": "This corruption originates from an unsuccessful attempt at lichdom. You might have lacked sufficient power or used a flawed phylactery. If you're not a spellcaster, you could have been an innocent bystander or become corrupted upon destroying a particularly powerful lich's phylactery. Lich corruptions are rarely stable, and cause incredible mental and physical strain. Whenever you fail a saving throw against a necromancy effect, learn how to cast a new spell or spells, or are exposed to 25 points of negative energy damage or more from a single source (whether it heals or harms you), you must succeed at a Fortitude save (DC %1) or become spiritually disjoined. You also need to make a saving throw whenever anyone successfully casts the death ward spell on you. After a failed save, your spirit and body disconnect, leaving your corporeal form helpless and your mind trapped within the Negative Energy Plane. This state lasts for %2 hours; if you are killed during this time, you rise 24 hours later as a wraith under the GM's control.|15+LichManifestationLevel|LichManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Corruption ~ Lich"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CorruptionType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LichCorruptionResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "DESC",
+        "value": "This corruption originates from an unsuccessful attempt at lichdom. You might have lacked sufficient power or used a flawed phylactery. If you're not a spellcaster, you could have been an innocent bystander or become corrupted upon destroying a particularly powerful lich's phylactery. Lich corruptions are rarely stable, and cause incredible mental and physical strain. Whenever you fail a saving throw against a necromancy effect, learn how to cast a new spell or spells, or are exposed to 25 points of negative energy damage or more from a single source (whether it heals or harms you), you must succeed at a Fortitude save (DC %1) or become spiritually disjoined. You also need to make a saving throw whenever anyone successfully casts the death ward spell on you. After a failed save, your spirit and body disconnect, leaving your corporeal form helpless and your mind trapped within the Negative Energy Plane. This state lasts for %2 hours; if you are killed during this time, you rise 24 hours later as a wraith under the GM's control.|15+LichManifestationLevel|LichManifestationLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 circumstance bonus on saving throws related to the corruption progressing.|LichCorruptionResistance|PREVARGTEQ:LichCorruptionResistance,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lich Corruption Counter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 459,
+    "record_key": "Corruption ~ Lich"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mammoth Spirit ~ Manifestation",
     "name": "Manifestation",
-    "class": "Mammoth Spirit",
+    "class": "Shaman",
     "description": "The shaman can transform into any animal listed under the megafauna or elephant heading. This ability works as beast shape IV, but the shaman can activate and dismiss the ability as often as she likes and the duration is permanent.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

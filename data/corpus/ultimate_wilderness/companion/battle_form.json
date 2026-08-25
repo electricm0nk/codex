@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Mauler ~ Battle Form",
+    "name": "Battle Form",
+    "description": "A mauler gains the ability to transform into a larger, more ferocious form and back as a standard action three times per day. In battle form, the mauler's size becomes Medium and it gains a +2 size bonus to its Strength score. Since many familiars are Tiny or Diminutive, be sure to check for any additional Strength and Dexterity adjustments for increasing in size from Tiny or Diminutive to Medium (Pathfinder RPG Core Rulebook 212). This is a polymorph effect.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mauler ~ Battle Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "A mauler gains the ability to transform into a larger, more ferocious form and back as a standard action three times per day. In battle form, the mauler's size becomes Medium and it gains a +2 size bonus to its Strength score. Since many familiars are Tiny or Diminutive, be sure to check for any additional Strength and Dexterity adjustments for increasing in size from Tiny or Diminutive to Medium (Pathfinder RPG Core Rulebook 212). This is a polymorph effect."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 596,
+    "record_key": "Mauler ~ Battle Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

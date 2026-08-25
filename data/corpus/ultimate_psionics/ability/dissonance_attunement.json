@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dissonance Attunement",
+    "name": "Dissonance Attunement",
+    "description": "Attuned to Dissonance, Wind of the Mind",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Attuned to Dissonance, Wind of the Mind"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dissonance ~ Psychic Static|PREVARGTEQ:TL,4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dissonance ~ Psychic Cacophony|PREVARGTEQ:TL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dissonance ~ Deafening Static|PREVARGTEQ:TL,12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dissonance ~ Psychic Whirlwind|PREVARGTEQ:TL,16"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dissonance ~ Psychic Maelstrom|PREVARGTEQ:TL,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DissonanceEnhancementBonusMain|max(0,floor((TL-10)/4))"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DissonanceEnhancementBonusAlt|min(2,max(0,floor((TL-6)/4)))"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.435"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities.lst",
+    "sha256": "ecfd0b8c0786d65416067452f4b648e30acff9d0e8c9c70fb4e4fc6dc0f9723d",
+    "line": 193,
+    "record_key": "Dissonance Attunement"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

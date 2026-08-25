@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Staff Magus ~ Quarterstaff Master",
     "name": "Quarterstaff Master",
-    "class": "Staff Magus",
+    "class": "Magus",
     "description": "You gain the Quarterstaff Master feat as a bonus feat, even if you do not meet the normal prerequisites. You only gain the benefit of this feat when wearing no armor or light armor.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Greater Surge",
+    "name": "Greater Surge",
+    "description": "Your surge is more powerful than most. Treat your tier as if it were 3 higher for the purpose of determining your mythic surge die (maximum 10th tier). When you gain your 10th tier, your surge die becomes 2d8.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Greater Surge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Your surge is more powerful than most. Treat your tier as if it were 3 higher for the purpose of determining your mythic surge die (maximum 10th tier). When you gain your 10th tier, your surge die becomes 2d8."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicSurgeDieSize|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicSurgeDieCount|1|PREVARGTEQ:MythicTierLevel,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MythicSurgeDieSize|-6|PREVARGTEQ:MythicTierLevel,10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 179,
+    "record_key": "Mythic Path Ability ~ Greater Surge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

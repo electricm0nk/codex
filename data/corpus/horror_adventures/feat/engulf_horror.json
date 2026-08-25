@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Engulf Horror",
+    "category": "Combat",
+    "name": "Engulf Horror",
+    "description": "The repulsive horror of your smothering attack nearly incapacitates most foes. When you successfully engulf or smother an opponent, successfully maintain a grapple combat maneuver on a smothered opponent, the opponent must succeed at a Will save (DC ) or become staggered for 1 round. This is a mindaffecting fear effect.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Engulf Revulsion",
+      "PREABILITY:1,CATEGORY=Special Ability,Engulf,Smother"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst",
+    "sha256": "b8183ddca5eece895bf40f7765744bb470970418a8baca58aee907487f0140e6",
+    "line": 22,
+    "record_key": "Engulf Horror"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

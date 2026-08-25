@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Verdant Bloodline ~ Tanglevine",
     "name": "Tanglevine",
-    "class": "Verdant Bloodline",
+    "class": "Sorcerer",
     "description": "As a standard action, you can create a 15-foot-long, animated vine that springs from your hand. This vine lasts for 1 round and can be used to make a single disarm, steal, or trip combat maneuver, using +%1 in place of your normal CMB. You can use this power %2 times per day.|Sorcerer_VerdantTanglevine_CMB|Sorcerer_Verdant_BloodlinePower1Times",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

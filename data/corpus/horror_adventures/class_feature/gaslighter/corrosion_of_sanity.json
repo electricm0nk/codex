@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gaslighter ~ Corrosion of Sanity",
+    "name": "Corrosion of Sanity",
+    "class": "Mesmerist",
+    "description": "Whenever a creature fails its initial saving throw against a gaslighter's single-target mind-affecting effect, the target also takes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gaslighter ~ Corrosion of Sanity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mesmerist Class Feature.GaslighterClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a creature fails its initial saving throw against a gaslighter's single-target mind-affecting effect, the target also takes"
+      },
+      {
+        "key": "DESC",
+        "value": "1 point of Wisdom damage.|!PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "2 points of sanity damage.|PREABILITY:1,CATEGORY=Internal,Rules ~ Use Sanity"
+      },
+      {
+        "key": "DESC",
+        "value": "This has no effect on abilities that don't allow a saving throw or affect multiple targets or an area."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 177,
+    "record_key": "Gaslighter ~ Corrosion of Sanity"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

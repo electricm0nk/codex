@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Venom Subdomain",
+    "name": "Venom Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Venom Subdomain],[PREVARLT:ScalykindDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Venomous Saliva|!PREABILITY:1,CATEGORY=Internal,DisableDomainLVL1 (Scalykind)|PREVARGTEQ:DomainScalykindAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Domain Power ~ Serpent Companion|PREVARGTEQ:DomainCommunityAbilityTriggerLVL,8"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Domain Base ~ Scalykind"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.319"
+      },
+      {
+        "key": "DESC",
+        "value": "Poison may not course through your veins, but it's ever on your mind and plays a vital part in your faith and your daily worship."
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=1|Magic Fang"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=2|Pernicious Poison"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=3|Magic Fang (Greater)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=4|Poison"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=5|Animal Growth (Reptiles Only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=6|Cloudkill"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=7|Creeping Doom"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=8|Animal Shapes (Reptiles Only)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Venom Subdomain=9|Shapechange"
+      },
+      {
+        "key": "FACT",
+        "value": "Domain|Scalykind"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_domains.lst",
+    "sha256": "8bd9c25d265755949bbf401885e4e1e17621d4d5aed66544a8680dd442f85ed8",
+    "line": 14,
+    "record_key": "Venom Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

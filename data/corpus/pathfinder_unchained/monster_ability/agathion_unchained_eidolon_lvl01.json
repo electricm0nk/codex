@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Agathion ~ Unchained Eidolon LVL01",
+    "delivery": null,
+    "description": "Starting at 1st level, agathion eidolons gain the resistance (electricity) evolution. They also gain a +4 bonus on saving throws against poison and petrification.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl01",
+    "name": "Eidolon Progession Lv.1",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Evolution|AUTOMATIC|Unchained Evolution ~ Resistance|PREVAREQ:RemoveEidolonResistanceForImmunity,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Eidolon Resistance|AUTOMATIC|Eidolon Resistance to electricity|PREVAREQ:RemoveEidolonResistanceForImmunity,0"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 bonus on saving throws against poison and petrification."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_EidolonResistance|-1|PREVARGTEQ:RemoveEidolonResistanceForImmunity,0"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Starting at 1st level, agathion eidolons gain the resistance (electricity) evolution. They also gain a +4 bonus on saving throws against poison and petrification."
+      },
+      {
+        "key": "KEY",
+        "value": "Agathion ~ Unchained Eidolon LVL01"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AgathionLVL1"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "AgathionLVL1"
+    ]
+  },
+  "ingested_at": "2026-08-23T16:17:34Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 98,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Agathion ~ Unchained Eidolon LVL01",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

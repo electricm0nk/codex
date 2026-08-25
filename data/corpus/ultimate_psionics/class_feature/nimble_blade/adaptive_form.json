@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Nimble Blade ~ Adaptive Form",
+    "name": "Adaptive Form",
+    "class": "Nimble Blade",
+    "description": "You have learned how to rapidly alter your use of the mind blade to adapt to any particular situation.  As an immediate action and by expending psionic focus, you can select any one blade skill whose requirements you meet and be treated as having that blade skill.  The effect of the blade skill selected lasts until you expend your psionic focus as an immedate action to change it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nimble Blade ~ Adaptive Form"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SoulknifeClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You have learned how to rapidly alter your use of the mind blade to adapt to any particular situation.  As an immediate action and by expending psionic focus, you can select any one blade skill whose requirements you meet and be treated as having that blade skill.  The effect of the blade skill selected lasts until you expend your psionic focus as an immedate action to change it."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.283"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2193,
+    "record_key": "Nimble Blade ~ Adaptive Form"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

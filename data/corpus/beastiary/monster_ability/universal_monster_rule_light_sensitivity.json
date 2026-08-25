@@ -1,0 +1,64 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Universal Monster Rule ~ Light Sensitivity",
+    "delivery": "Extraordinary",
+    "description": "Creatures with light sensitivity are dazzled in areas of bright sunlight or within the radius of a daylight spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:universal_monster_rule_light_sensitivity",
+    "name": "Light Sensitivity",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_LightSensitivity_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures with light sensitivity are dazzled in areas of bright sunlight or within the radius of a daylight spell.|PREVAREQ:UMR_LightSensitivity_SpecificDesc,0"
+      },
+      {
+        "key": "DESC",
+        "value": "Dhampirs are dazzled in areas of bright sunlight or within the radius of a daylight spell.|PREABILITY:1,CATEGORY=Special Ability,Dhampir ~ Weakness"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Light Sensitivity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialQuality.Extraordinary.Weakness"
+      }
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Universal Monster Rule",
+      "Weakness"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2375,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Light Sensitivity",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

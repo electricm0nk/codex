@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Chain",
     "name": "Chain",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element air; Type form infusion; Level 5; Burn 3 Associated Blasts electric Saving Throw none Your electric blast leaps from target to target. When you hit a target with your infused blast, you can attempt a ranged touch attack against an additional target that is within 30 feet of the first. Each additional attack originates from the previous target, which could alter cover and other conditions. Each additional target takes 1d6 fewer points of damage than the last (for example, 3d6 becomes 2d6), and you can't chain the blast back to a previous target. You can continue chaining your blasts until a blast misses or fails to deal damage, or until your blast is reduced to a single damage die.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Ash Subdomain",
+    "name": "Ash Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Ash Subdomain],[PREVARLT:FireDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Ash Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Ash Subdomain=1|Burning Hands|Ash Subdomain=2|Produce Flame|Ash Subdomain=3|Fireball|Ash Subdomain=4|Wall of Fire|Ash Subdomain=5|Fire Shield|Ash Subdomain=6|Fire Seeds|Ash Subdomain=7|Disintegrate|Ash Subdomain=8|Incendiary Cloud|Ash Subdomain=9|Fiery Body"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 12,
+    "record_key": "Ash Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

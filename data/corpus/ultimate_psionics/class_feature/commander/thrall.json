@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Commander ~ Thrall",
+    "name": "Thrall",
+    "class": "Commander",
+    "description": "You can treat one member of your collective as if a thrall and that member will follow any instruction given by you.  Like a thrall, if this member dies while under this effect, you suffer one negative level for one day.  This thrall effect can be ended by the commander as a free action, but otherwise is treated as a permanent effect.  The targeted collective member may make a Will save (DC %1) if you give any commands that would cause the thrall to harm itself or obviously suicidal orders.|UnwillingParticipantDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Commander ~ Thrall"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "TacticianClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You can treat one member of your collective as if a thrall and that member will follow any instruction given by you.  Like a thrall, if this member dies while under this effect, you suffer one negative level for one day.  This thrall effect can be ended by the commander as a free action, but otherwise is treated as a permanent effect.  The targeted collective member may make a Will save (DC %1) if you give any commands that would cause the thrall to harm itself or obviously suicidal orders.|UnwillingParticipantDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2273,
+    "record_key": "Commander ~ Thrall"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

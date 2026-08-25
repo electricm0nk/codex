@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Compel Alacrity",
     "name": "Compel Alacrity",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "A dash of mental speed lets the subject push past her physical limits to avoid an enemy. The mesmerist can trigger this trick when the subject begins her turn within an enemy's reach. The subject can move %1 feet as a free action without provoking attacks of opportunity. The subject can't move farther than her speed in this way. The movement from this trick doesn't count against the subject's movement speed for that round.|10+5*floor(MesmeristLVL/5)",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

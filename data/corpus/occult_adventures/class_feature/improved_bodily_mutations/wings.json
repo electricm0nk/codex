@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Improved Bodily Mutations ~ Wings",
     "name": "Wings",
-    "class": "Improved Bodily Mutations",
+    "class": "Psychic",
     "description": "The mutation mind sprouts a pair of fleshy, batlike wings, giving her a fly speed of 60 feet with average maneuverability. This ability alters major amplifications.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

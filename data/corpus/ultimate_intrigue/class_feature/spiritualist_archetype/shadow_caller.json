@@ -1,0 +1,172 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Spiritualist Archetype ~ Shadow Caller",
+    "name": "Shadow Caller",
+    "class": "Spiritualist",
+    "description": "While most spiritualists form a bond with the remnants of a creature's soul, some explore ways to bind ephemeral shadows to their own souls in exchange for power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spiritualist Archetype ~ Shadow Caller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.SpiritualistArchetype"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Spiritualist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Spiritualist Archetype ~ Shadow Caller],[!PREFACT:1,ABILITIES,Spiritualist_Archetype_Spellcasting=True,Spiritualist_Archetype_Phantom=True,Spiritualist_Archetype_SharedConsciousness=True,Spiritualist_Archetype_EthericTether=True,Spiritualist_Archetype_PhantomRecall=True,Spiritualist_Archetype_SeeInvisibility=True,Spiritualist_Archetype_FusedConsciousness=True,Spiritualist_Archetype_EmpoweredConsciousness=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "While most spiritualists form a bond with the remnants of a creature's soul, some explore ways to bind ephemeral shadows to their own souls in exchange for power."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Shadowcaster|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Shade|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Emotionless|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Weakening Touch|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Umbral Shroud|PRECLASS:1,Spiritualist=7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Shadow Caster|PRECLASS:1,Spiritualist=12"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Midnight Shroud|PRECLASS:1,Spiritualist=17"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Inhabit Shadow|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Shadow Bound|PRECLASS:1,Spiritualist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Shadow Jump|PRECLASS:1,Spiritualist=6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ See in Darkness|PRECLASS:1,Spiritualist=9"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Umbral Aura|PRECLASS:1,Spiritualist=10"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Shadow Caller ~ Living Darkness|PRECLASS:1,Spiritualist=20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Spellcasting|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_Phantom|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SharedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_EthericTether|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_PhantomRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_SeeInvisibility|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_FusedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_Archetype_EmpoweredConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_Phantom|false"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SharedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_EthericTether|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_PhantomRecall|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_SeeInvisibility|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_FusedConsciousness|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Spiritualist_CF_EmpoweredConsciousness|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 120,
+    "record_key": "Spiritualist Archetype ~ Shadow Caller"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

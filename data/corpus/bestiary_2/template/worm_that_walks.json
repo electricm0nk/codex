@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Worm that Walks",
+    "name": "Worm that Walks",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DR",
+        "value": "15/-"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Worm that Walks Slam"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "PREALIGN",
+        "value": "LE,NE,CE"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|max(2,WIS)|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception,Sense Motive,Stealth|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|CR"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fast Healing|Grab|Immunity to Disease|Immunity to Paralysis|Immunity to Poison|Immunity to Sleep|Worm that Walks ~ Discorporate|Worm that Walks ~ Squirming Embrace|Worm that Walks ~ Tenacious|Worm that Walks Traits"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Diehard"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsight (30')|Darkvision (60')"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
+    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520",
+    "line": 102,
+    "record_key": "Worm that Walks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

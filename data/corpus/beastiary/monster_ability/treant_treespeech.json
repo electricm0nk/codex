@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Treant ~ Treespeech",
+    "delivery": "Extraordinary",
+    "description": "A treant has the ability to converse with plants as if subject to a continual speak with plants spell, and most plants greet them with an attitude of friendly or helpful.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:treant_treespeech",
+    "name": "Treespeech",
+    "owners": [
+      "beastiary:monster:treant"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A treant has the ability to converse with plants as if subject to a continual speak with plants spell, and most plants greet them with an attitude of friendly or helpful."
+      },
+      {
+        "key": "KEY",
+        "value": "Treant ~ Treespeech"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      },
+      {
+        "key": "TYPE",
+        "value": "TreantRacialTrait.SpecialQuality.Extraordinary.Communicate"
+      }
+    ],
+    "source_page": "p.266",
+    "traits": [
+      "TreantRacialTrait",
+      "Communicate"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:25:51Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1194,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Treant ~ Treespeech",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

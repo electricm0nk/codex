@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Fierce Fortitude",
     "name": "Fierce Fortitude",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "The character gains a +4 bonus on saving throws against diseases and poison. A skald must be trained in Intimidate to select this rage power.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

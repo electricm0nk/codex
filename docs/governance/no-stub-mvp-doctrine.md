@@ -16,7 +16,7 @@ upstream_targets:
   - ~/workspace/repos/codex/AGENTS.md
   - ~/workspace/repos/codex/CLAUDE.md
   - programs/codex/requirements/SD-N-.../epic-breakdown.md (every existing and future bundle)
-  - programs/codex/requirements/SD-N-.../loop-instruction files at ~/workspace/
+  - programs/codex/requirements/SD-N-.../workflow-instruction files at ~/workspace/
 related_artifacts:
   - ./wired-integration-stubs-registry.md (operator-granted exceptions; sibling, in-repo)
   - ~/workspace/governance/identifier-discipline.md (sibling doctrine — names must not bundle-tag)

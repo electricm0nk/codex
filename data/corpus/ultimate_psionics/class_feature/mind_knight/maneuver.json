@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Mind Knight ~ Maneuver",
+    "name": "Maneuver",
+    "class": "Mind Knight",
+    "description": "Expend focus to make a melee attack against %1 adjacent creatures as a standard action.|MndKnightManeuverTargets",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mind Knight ~ Maneuver"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialAttack"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MndKnightManeuverTargets|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Expend focus to make a melee attack against %1 adjacent creatures as a standard action.|MndKnightManeuverTargets"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MndKnightManeuverTargets|(MndKnightPathLVL+7)/5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.57"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 707,
+    "record_key": "Mind Knight ~ Maneuver"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

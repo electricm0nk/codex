@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Spear Dancer",
+    "category": "Combat",
+    "name": "Spear Dancer",
+    "description": "You incorporate your two-handed reach weapon into a dizzying martial dance. Each time you hit a creature with a twohanded reach weapon that you have Weapon Focus in, the creature is dazzled for 1 round.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Weapon Focus",
+      "PRESKILL:1,Perform (Dance)=4",
+      "PRETEXT:Prerequisites: Weapon Focus (any two-handed reach weapon), Perform (dance) 4 ranks."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 81,
+    "record_key": "Spear Dancer"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

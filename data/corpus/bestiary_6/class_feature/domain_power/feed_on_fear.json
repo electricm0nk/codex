@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Feed on Fear",
     "name": "Feed on Fear",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, as an immediate action upon successfully hitting a creature with a melee attack that's already suffering from a fear effect, you deal 2d6 extra points of damage and gain that amount in temporary hit points. These temporary hit points last for 24 hours or until lost. You can use this ability %1 times per day.|DomainEvilLVL/4-1",
     "raw_tokens": [
       {
@@ -52,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

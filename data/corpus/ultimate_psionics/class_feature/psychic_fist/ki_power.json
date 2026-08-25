@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Fist ~ Ki Power",
+    "name": "Ki Power",
+    "class": "Psychic Fist",
+    "description": "Add %1 to monk level to determine ki pool and ki strike.|KiPower",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Fist ~ Ki Power"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicFistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KiPower|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Add %1 to monk level to determine ki pool and ki strike.|KiPower"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KiPower|PsychicFistLVL/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.373"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1435,
+    "record_key": "Psychic Fist ~ Ki Power"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

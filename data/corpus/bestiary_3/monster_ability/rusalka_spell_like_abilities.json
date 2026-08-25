@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Rusalka ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 20th; concentration +27) Constant-blur, water walk At will-entangle (DC 18), fog cloud, invisibility 3/day-quickened charm monster (DC 21), control water 1/day-summon nature's ally VI (water elementals only)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:rusalka_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:rusalka"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 20th; concentration +27) Constant-blur, water walk At will-entangle (DC 18), fog cloud, invisibility 3/day-quickened charm monster (DC 21), control water 1/day-summon nature's ally VI (water elementals only)"
+      },
+      {
+        "key": "KEY",
+        "value": "Rusalka ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "RusalkaRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "RusalkaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1472,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Rusalka ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

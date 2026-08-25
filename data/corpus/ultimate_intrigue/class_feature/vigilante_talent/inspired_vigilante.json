@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Inspired Vigilante",
     "name": "Inspired Vigilante",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The vigilante's powers of deduction are far beyond the norm. This ability functions similarly to the investigator's inspiration ability, but the vigilante's inspiration pool is %1, the vigilante can never use this ability without expending a use of inspiration, and it doesn't count as inspiration for any effects that interact with or require the inspiration class feature.|VigilanteTalentLVL",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

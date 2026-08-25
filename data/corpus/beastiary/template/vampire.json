@@ -1,0 +1,127 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:16Z",
+  "data": {
+    "key": "Vampire",
+    "name": "Vampire",
+    "raw_tokens": [
+      {
+        "key": "HITDIE",
+        "value": "8|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DR",
+        "value": "10/Silver"
+      },
+      {
+        "key": "DR",
+        "value": "10/Magic"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "CHOOSE:Vampire ~ Aberration|Vampire ~ Animal|Vampire ~ Dragon|Vampire ~ Fey|Vampire ~ Humanoid|Vampire ~ Magical Beast|Vampire ~ Monstrous Humanoid|Vampire ~ Ooze|Vampire ~ Outsider|Vampire ~ Plant|Vampire ~ Vermin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.270"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACETYPE=Undead,RACETYPE=Construct"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "TL,5"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Perception,Sense Motive,Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|6|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,ElectricityResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Vampire"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Fast Healing|Resistance to Cold|Resistance to Electricity|Undead Traits|Vampire ~ Blood Drain|Vampire ~ Change Shape|Vampire ~ Children of the Night|Vampire ~ Create Spawn|Vampire ~ Dominate|Vampire ~ Energy Drain|Vampire ~ Gaseous Form|Vampire ~ Shadowless|Vampire ~ Spider Climb|Vampire Weaknesses"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Alertness|Combat Reflexes|Dodge|Improved Initiative|Lightning Reflexes|Toughness"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE|LE|NE"
+      },
+      {
+        "key": "SUBRACE",
+        "value": "Vampire"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_templates.lst",
+    "sha256": "7c27e01584c43c548e0c2c3ed900332d774628c6a8c56a5be4992cba036085d1",
+    "line": 114,
+    "record_key": "Vampire"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Liberation Domain ~ Liberation",
     "name": "Liberation",
-    "class": "Liberation Domain",
+    "class": "Cleric",
     "description": "You have the ability to ignore impediments to your mobility. For %1 rounds per day, you can move normally regardless of magical effects that impede movement, as if you were affected by Freedom of Movement. This effect  occurs automatically as soon as it applies. These rounds do not need to be consecutive.|LiberationRounds",
     "raw_tokens": [
       {
@@ -47,6 +47,10 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Liberation],[PREVARLT:LiberationDomain,1]"
       }
     ]
   },
@@ -63,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

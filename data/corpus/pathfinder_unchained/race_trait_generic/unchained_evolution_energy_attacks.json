@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Energy Attacks",
+    "name": "Energy Attacks",
+    "description": "The eidolon's attacks become charged with energy. Select one energy type: acid, cold, electricity, or fire. All of the eidolon's natural attacks deal 1d6 points of energy damage of the chosen type on a successful hit.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Energy Attacks"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PRETEXT",
+        "value": "Requirements: Summoner level 5th."
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MasterLevel,5"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon's attacks become charged with energy. Select one energy type: acid, cold, electricity, or fire. All of the eidolon's natural attacks deal 1d6 points of energy damage of the chosen type on a successful hit."
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|acid|cold|electricity|fire"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|All of the eidolon's natural attacks deal 1d6 points of %1 damage of the chosen type on a successful hit.|%LIST"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 223,
+    "record_key": "Unchained Evolution ~ Energy Attacks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

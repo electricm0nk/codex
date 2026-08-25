@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Xeph ~ Burst",
+    "delivery": "Supernatural",
+    "description": "%2/day as a swift action, burst of speed for 3 rounds, +%1 competence bonus to speed.",
+    "description_variables": [
+      "BurstBonus",
+      "XephBurstTimes"
+    ],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:xeph_burst",
+    "name": "Burst",
+    "owners": [
+      "ultimate_psionics:monster:xeph"
+    ],
+    "source_page": "p.23",
+    "traits": [
+      "RacialTraits",
+      "XephRacialTrait",
+      "XephRacialDefault"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 337,
+    "record_key": "Xeph ~ Burst"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
+}

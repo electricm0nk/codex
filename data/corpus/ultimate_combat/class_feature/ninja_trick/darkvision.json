@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ninja Trick ~ Darkvision",
     "name": "Darkvision",
-    "class": "Ninja Trick",
+    "class": "Ninja",
     "description": "This trick allows the ninja to use her ki to enhance her sight, granting darkvision out to a range of 60 feet. Using this trick is a standard action that costs 1 ki point. The enhanced senses last for 1 hour.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

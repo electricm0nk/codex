@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Telepathy ~ Last Respite",
+    "name": "Last Respite",
+    "class": "Telepathy",
+    "description": "If you are about to die, you can mind switch into a body within 30 ft (Will DC %1) for %2 rounds.|(10+TelepathyDisciplineLVL/2+INT)|TelepathyDisciplineLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Telepathy ~ Last Respite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Extraordinary.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "If you are about to die, you can mind switch into a body within 30 ft (Will DC %1) for %2 rounds.|(10+TelepathyDisciplineLVL/2+INT)|TelepathyDisciplineLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 453,
+    "record_key": "Telepathy ~ Last Respite"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

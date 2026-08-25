@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hellbound Corruption ~ Fiendish Tutelage Gift",
+    "name": "Fiendish Tutelage Gift",
+    "description": "You gain Infernal as a bonus language and a +%1 bonus on Bluff and Diplomacy checks to interact with devils. When you acquire this gift, choose two Knowledge skills. You can attempt checks with them untrained.|FiendishTutelageBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellbound Corruption ~ Fiendish Tutelage Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HellboundFiendishTutelageGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FiendishTutelageBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Infernal as a bonus language and a +%1 bonus on Bluff and Diplomacy checks to interact with devils. When you acquire this gift, choose two Knowledge skills. You can attempt checks with them untrained.|FiendishTutelageBonus"
+      },
+      {
+        "key": "ADD",
+        "value": "LANGUAGE|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Bluff=Against devils,Diplomacy=Against devils|FiendishTutelageBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendishTutelageBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FiendishTutelageBonus|2|PREVARGTEQ:HellboundManifestationLevel,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 331,
+    "record_key": "Hellbound Corruption ~ Fiendish Tutelage Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

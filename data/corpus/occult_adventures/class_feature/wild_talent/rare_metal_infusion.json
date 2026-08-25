@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Rare-Metal Infusion",
     "name": "Rare-Metal Infusion",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element earth; Type substance infusion; Level 3; Burn 2 Associated Blasts metal Saving Throw none You can control the properties of metal, allowing your metal blast to bypass damage reduction as if it were adamantine, cold iron, or silver (your choice). If your target has an unusual type of damage reduction that could be overcome with the correct type of metal (such as DR/gold), you can also select that metal for this purpose. The metal you create with this infusion crumbles away shortly thereafter and has no gp value.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

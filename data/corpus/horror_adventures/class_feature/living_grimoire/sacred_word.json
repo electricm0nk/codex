@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Living Grimoire ~ Sacred Word",
     "name": "Sacred Word",
@@ -75,6 +75,70 @@
       {
         "key": "ASPECT",
         "value": "CheckCount|%1|LivingGrimoireSacredWordEnhancementUses"
+      },
+      {
+        "key": "DESC",
+        "value": "A living grimoire can enhance his holy book with divine power as a swift action, granting a +%1 enhancement bonus for %2 rounds per day. These rounds don't need to be consecutive. He determines the enhancement bonus and special abilities the first time he uses the ability each day, and they cannot be changed until the next day. These bonuses stack with any existing bonuses the holy book might have, to a maximum of +5. The holy book must have at least a +1 enhancement bonus before any other special abilities can be added. Special abilities replace an amount of bonus equal to the special ability's base cost. The living grimoire can enhance a holy book with any of the following weapon special abilities: Bane, Defending, Flaming, Frost, Keen, Shock,|LivingGrimoireSacredWordEnhancement|LivingGrimoireSacredWordEnhancementUses|PRECLASS:1,Inquisitor=4"
+      },
+      {
+        "key": "DESC",
+        "value": "Vicious,|PREMULT:2,[PREALIGN:CG,CN,CE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Merciful,|PREMULT:2,[PREALIGN:LG,LN,LE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghost touch,|PREMULT:2,[PREALIGN:LG,NG,CG],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Mighty cleaving,|PREMULT:2,[PREALIGN:LE,NE,CE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Spell storing, Thundering,|PREMULT:2,[PREALIGN:TN],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "Disruption,|PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2"
+      },
+      {
+        "key": "DESC",
+        "value": "Anarchic,|PREMULT:2,[PREALIGN:CG,CN,CE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Axiomatic,|PREMULT:2,[PREALIGN:LG,LN,LE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Holy,|PREMULT:2,[PREALIGN:LG,NG,CG],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Unholy,|PREMULT:2,[PREALIGN:LE,NE,CE],[PREVARGTEQ:LivingGrimoireSacredWordEnhancement,2]"
+      },
+      {
+        "key": "DESC",
+        "value": "Brilliant energy|PREVARGTEQ:LivingGrimoireSacredWordEnhancement,4"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LivingGrimoireSacredWordEnhancement|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LivingGrimoireSacredWordEnhancementUses|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordEnhancement|min(5,InquisitorLVL/4)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LivingGrimoireSacredWordEnhancementUses|InquisitorLVL"
       }
     ]
   },
@@ -92,5 +156,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

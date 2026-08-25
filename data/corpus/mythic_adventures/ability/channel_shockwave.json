@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Channel Shockwave",
+    "name": "Channel Shockwave",
+    "description": "You can expend one use of channel energy whenever you score a critical hit against a creature that has an element of alignment opposite to your own (chaotic and lawful are opposite, as are evil and good, so if you were lawful good, you could use this ability against a chaotic creature or evil creature). If you do, add your channel energy damage to the damage from the critical hit. This damage is the same type as your channeled energy (positive or negative) but damages the target regardless of whether it's living or undead. The target can attempt a Will save against your channel energy DC to halve this bonus damage. All other effects of your critical hit still apply.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Channel Shockwave"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You can expend one use of channel energy whenever you score a critical hit against a creature that has an element of alignment opposite to your own (chaotic and lawful are opposite, as are evil and good, so if you were lawful good, you could use this ability against a chaotic creature or evil creature). If you do, add your channel energy damage to the damage from the critical hit. This damage is the same type as your channeled energy (positive or negative) but damages the target regardless of whether it's living or undead. The target can attempt a Will save against your channel energy DC to halve this bonus damage. All other effects of your critical hit still apply."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Channel Energy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 129,
+    "record_key": "Mythic Path Ability ~ Channel Shockwave"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

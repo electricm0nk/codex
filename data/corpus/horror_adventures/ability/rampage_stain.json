@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Promethean Corruption ~ Rampage Stain",
+    "name": "Rampage Stain",
+    "description": "Returning from the heights of fury takes a toll on your body. You are staggered for 1 minute after ending a rage of any kind (including berserk fury, barbarian rage, and the rage spell). Nothing can remove this condition, nor does immunity to being staggered prevent it.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Promethean Corruption ~ Rampage Stain"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PrometheanRampageStain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "DESC",
+        "value": "Returning from the heights of fury takes a toll on your body. You are staggered for 1 minute after ending a rage of any kind (including berserk fury, barbarian rage, and the rage spell). Nothing can remove this condition, nor does immunity to being staggered prevent it."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 762,
+    "record_key": "Promethean Corruption ~ Rampage Stain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

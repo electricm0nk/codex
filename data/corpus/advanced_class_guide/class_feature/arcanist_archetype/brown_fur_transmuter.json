@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Arcanist Archetype ~ Brown-Fur Transmuter",
     "name": "Brown-Fur Transmuter",
-    "class": "Arcanist Archetype",
+    "class": "Arcanist",
     "description": "Frequently called \"brown-furs,\" these transmutationfocused arcanists are known for transforming themselves into animals. What few realize is that these specialized arcanists excel at turning themselves-and others-into all kinds of creatures.",
     "raw_tokens": [
       {
@@ -55,6 +55,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Arcanist"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Arcanist Archetype ~ Brown-Fur Transmuter],[!PREFACT:1,ABILITIES,Arcanist_Archetype_ArcanistExploit3=True,Arcanist_Archetype_ArcanistExploit9=True,Arcanist_Archetype_MagicalSupremacy=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_ArcanistExploit9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_CF_MagicalSupremacy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit3|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_ArcanistExploit9|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Arcanist_Archetype_MagicalSupremacy|true"
       }
     ]
   },
@@ -71,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

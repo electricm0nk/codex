@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Final Embrace Master",
+    "name": "Final Embrace Master",
+    "description": "Few creatures can survive the crushing horror of your Final Embrace.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "Combat"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "2,CATEGORY=FEAT,Final Embrace,Final Embrace Horror"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRERACE:1,Naga,Serpentfolk],[PREABILITY:1,CATEGORY=Special Ability,Constrict]"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "2,STR=17,INT=3"
+      },
+      {
+        "key": "PRETOTALAB",
+        "value": "9"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FEMConstrictBaseDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Few creatures can survive the crushing horror of your Final Embrace."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FEMConstrictBaseDice|ConstrictDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|FEMConstrictBaseDice"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "Double the number of damage dice for your constrict special attack."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst",
+    "sha256": "220f72d5a7e8a60077c981fcf7e0bfc086ddc05f3fd460f37a619eb6795ee58f",
+    "line": 152,
+    "record_key": "Final Embrace Master"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

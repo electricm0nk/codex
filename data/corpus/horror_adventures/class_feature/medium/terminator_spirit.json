@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Medium ~ Terminator Spirit",
+    "name": "Terminator Spirit",
+    "class": "Medium",
+    "description": "The Terminator is a stoic spirit of relentless death.&nl;",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Medium ~ Terminator Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "DESC",
+        "value": "The Terminator is a stoic spirit of relentless death.&nl;"
+      },
+      {
+        "key": "DESC",
+        "value": "Gaining Favor: To gain the Terminator's favor, you must engage in over 1 hour (600 combat rounds) of actual life-or-death battle in the same day, refusing to cease because of either fatigue or mercy. In addition to the battles themselves, this requires a Constitution check (DC %1). If you succeed, you must swear an oath to never retreat from combat and to eschew all mercy, always killing unconscious, captured, or surrendered foes, regardless of extenuating circumstances.&nl;|10+MediumLVL/2"
+      },
+      {
+        "key": "DESC",
+        "value": "Favored Locations: Arenas, fortifications under siege, places of violence.&nl; |PREVARLT:SpiritHideLocation,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Influence Penalty: You are incredibly cautious and guarded in all things, and your caution sometimes gets in the way. When attacking, you always fight defensively, and when casting a spell, you always cast defensively. Because of your focus on defense, you take a -%1 penalty on damage rolls.&nl;|SpiritBonus"
+      },
+      {
+        "key": "DESC",
+        "value": "Taboos: Choose one: you must always protect others from danger when you can (including defeated enemies, but not enemies that are an active threat to you and others); you must keep your body in fit physical condition, and you break this taboo every time you drop below half your maximum hit points; you must speak no words and use no abilities with the sonic descriptor, and you break this taboo if you become enraged, frightened, or panicked."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Guardian Spirit Bonus|!PREFACT:1,ABILITIES,Medium_CF_SpiritBonus=True"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Guardian Seance Boon|Medium ~ Terminator ~ Bloodless"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Terminator ~ Emotionless Killer|PREVARGTEQ:MediumLVL,6"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Sudden Block|PREVARGTEQ:MediumLVL,11"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Medium ~ Legendary Guardian|PREVARGTEQ:MediumLVL,17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 119,
+    "record_key": "Medium ~ Terminator Spirit"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

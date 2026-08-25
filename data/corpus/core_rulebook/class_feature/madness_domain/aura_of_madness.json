@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Madness Domain ~ Aura of Madness",
     "name": "Aura of Madness",
-    "class": "Madness Domain",
+    "class": "Cleric",
     "description": "You can emit a 30-foot aura of madness for %1 rounds per day. Enemies within this aura are affected by Confusion unless they make a Will save (DC %2). The Confusion effect ends immediately when the creature leaves the area or the aura expires. Creatures that succeed on their saving throw are immune to this aura for 24 hours. These rounds do not need to be consecutive.|AuraOfMadnessRounds|DomainMadnessDC",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

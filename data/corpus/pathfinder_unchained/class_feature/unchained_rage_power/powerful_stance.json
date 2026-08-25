@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Powerful Stance",
+    "name": "Powerful Stance",
+    "class": "Unchained Barbarian",
+    "description": "You can focus your ferocity. You gain a +%1 bonus on melee damage rolls and thrown weapon damage rolls. This is a stance rage power.|PowerfulStanceBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Powerful Stance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerfulStanceBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can focus your ferocity. You gain a +%1 bonus on melee damage rolls and thrown weapon damage rolls. This is a stance rage power.|PowerfulStanceBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulStanceBonus|1+floor(RagePowersLVL/4)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 371,
+    "record_key": "Unchained Rage Power ~ Powerful Stance"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

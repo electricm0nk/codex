@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Telepathy ~ Mental Intrusion",
+    "name": "Mental Intrusion",
+    "class": "Telepathy",
+    "description": "Increase the save DC of any mind-affecting power you manifest by 1 for every 2 pp spent augmenting the power.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Telepathy ~ Mental Intrusion"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Extraordinary.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DESC",
+        "value": "Increase the save DC of any mind-affecting power you manifest by 1 for every 2 pp spent augmenting the power."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 451,
+    "record_key": "Telepathy ~ Mental Intrusion"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

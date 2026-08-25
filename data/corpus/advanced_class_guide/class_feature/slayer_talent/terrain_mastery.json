@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Slayer Talent ~ Terrain Mastery",
     "name": "Terrain Mastery",
-    "class": "Slayer Talent",
+    "class": "Slayer",
     "description": "A slayer with this talent gains a favored terrain as the ranger ability of the same name, though the favored terrain ability does not increase with her level as the ranger's ability does. A slayer can take this ability multiple times, each time applying it to a new terrain, and granting all other favored terrains a +2 increase to the favored terrain bonus.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

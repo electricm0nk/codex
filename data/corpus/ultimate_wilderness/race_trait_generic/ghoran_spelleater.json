@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Ghoran ~ Spelleater",
+    "name": "Spelleater",
+    "description": "Ghorans were originally created to survive and thrive in a magic-blasted wasteland, and over the centuries some ghorans have adapted greater abilities to overcome magic in general. Once per day, the ghoran can cast dispel magic as a spell-like ability, with a caster level equal to the ghoran's character level. If the ghoran's favored class is a spellcasting class, the ghoran gains a +2 racial bonus on dispel checks.&nl;This replaces past-life knowledge and nature magic.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoran ~ Spelleater"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Ghoran Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Ghoran ~ Spelleater],[PREFACT:1,ABILITIES,Ghoran_ReplaceNaturalMagic=True,Ghoran_ReplacePastLifeKnowledge=True]"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Dispel Magic"
+      },
+      {
+        "key": "DESC",
+        "value": "Ghorans were originally created to survive and thrive in a magic-blasted wasteland, and over the centuries some ghorans have adapted greater abilities to overcome magic in general. Once per day, the ghoran can cast dispel magic as a spell-like ability, with a caster level equal to the ghoran's character level. If the ghoran's favored class is a spellcasting class, the ghoran gains a +2 racial bonus on dispel checks.&nl;This replaces past-life knowledge and nature magic."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Ghoran_ReplaceNaturalMagic,Ghoran_ReplacePastLifeKnowledge|1|TYPE=Boolean"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.16"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 racial bonus on dispel checks if your favored class is a spellcasting class"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
+    "line": 87,
+    "record_key": "Ghoran ~ Spelleater"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

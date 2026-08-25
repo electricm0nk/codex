@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Magus Spellblend ~ Calcific Touch",
+    "name": "Calcific Touch",
+    "class": "Magus",
+    "description": "Your touch progressively transmutes the substance of creatures you touch into stone. Once per round, you may deliver a touch attack that inflicts 1d4 points of Dexterity damage and slows the target (as the spell) for 1 round. A successful Fortitude save negates the slow effect but not the ability damage. A target reduced to 0 Dexterity is petrified permanently. Break enchantment, restoration, or stone to flesh can reverse the effects of calcific touch.|PRERULE:1,DisplayFullSpell",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Magus Spellblend ~ Calcific Touch"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "MagusSpellblend.MagusSpellBlendLVL4"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Magus=4|Calcific Touch"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "EarthSchool"
+      },
+      {
+        "key": "DESC",
+        "value": "Your touch progressively transmutes the substance of creatures you touch into stone. Once per round, you may deliver a touch attack that inflicts 1d4 points of Dexterity damage and slows the target (as the spell) for 1 round. A successful Fortitude save negates the slow effect but not the ability damage. A target reduced to 0 Dexterity is petrified permanently. Break enchantment, restoration, or stone to flesh can reverse the effects of calcific touch.|PRERULE:1,DisplayFullSpell"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+    "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+    "line": 3555,
+    "record_key": "Magus Spellblend ~ Calcific Touch"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

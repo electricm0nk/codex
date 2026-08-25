@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Bestial Form ~ Prepared",
+    "name": "Bestial Form",
+    "description": "+4 size bonus to Str and 3 other abilities.  Boost(1): 4 abilities.  Boost(1): Can use selected target word.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bestial Form ~ Prepared"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Words of Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "WordsOfPowerOutput.Effect.Change.Alchemist4.Druid4.Magus4.Wizard4"
+      },
+      {
+        "key": "DESC",
+        "value": "+4 size bonus to Str and 3 other abilities.  Boost(1): 4 abilities.  Boost(1): Can use selected target word."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 463,
+    "record_key": "Bestial Form ~ Prepared"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

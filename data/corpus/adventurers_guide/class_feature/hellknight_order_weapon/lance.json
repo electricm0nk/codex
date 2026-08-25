@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-24T03:51:47Z",
+  "data": {
+    "key": "Hellknight Order Weapon ~ Lance",
+    "name": "Lance",
+    "class": "Hellknight",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hellknight Order Weapon ~ Lance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "HKOotNailWeapon"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Lance"
+      },
+      {
+        "key": "TYPE",
+        "value": "HKOotNail"
+      },
+      {
+        "key": "TYPE",
+        "value": "HKOotNail"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+    "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+    "line": 264,
+    "record_key": "Hellknight Order Weapon ~ Lance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

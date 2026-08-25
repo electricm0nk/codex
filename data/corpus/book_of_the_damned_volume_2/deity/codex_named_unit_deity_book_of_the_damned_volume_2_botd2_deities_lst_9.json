@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:24:40Z",
+  "data": {
+    "key": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_9)",
+    "name": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_9)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Chaos,Destruction,Evil,Madness|PREALIGN:NE,CN,CE"
+      },
+      {
+        "key": "DESC",
+        "value": "Goddess of exortion, hatred, spite"
+      },
+      {
+        "key": "FACTSET",
+        "value": "Pantheon|Pathfinder Chronicles"
+      },
+      {
+        "key": "DEITYWEAP",
+        "value": "Dagger"
+      },
+      {
+        "key": "ALIGN",
+        "value": "CE"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "Rear Cover"
+      },
+      {
+        "key": "!PRECAMPAIGN",
+        "value": "1,Inner Sea World Guide"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_deities.lst",
+    "sha256": "2ebb6b7a58be0b8a166ea336cf71dc61e6261faed7a36c37a233d026ab44c603",
+    "line": 9,
+    "record_key": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_9)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "book_of_the_damned_volume_2:botd2_deities.lst:9"
+  }
+}

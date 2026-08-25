@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Witch Archetype ~ Beast-Bonded",
     "name": "Beast-Bonded",
-    "class": "Witch Archetype",
+    "class": "Witch",
     "description": "While all witches are intimately tied to their familiars, a beast-bonded witch's craft focuses specifically on her familiar bond and developing the relationship with her patron through her familiar.",
     "raw_tokens": [
       {
@@ -59,6 +59,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Witch"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Beast-Bonded],[!PREFACT:1,ABILITIES,Witch_Archetype_Hex4=True,Witch_Archetype_Hex8=True,Witch_Archetype_Hex10=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_CF_Hex10|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex8|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Witch_Archetype_Hex10|true"
       }
     ]
   },
@@ -75,5 +103,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order of the Dragon ~ Strategy",
     "name": "Strategy",
-    "class": "Order of the Dragon",
+    "class": "Dragon",
     "description": "At 8th level, the cavalier can spend a standard action to grant one of a number of bonuses to all allies within 30 feet (including himself ). The allies must be able to see or hear the cavalier to receive this bonus. The cavalier can grant a +2 dodge bonus to AC for 1 round, a +2 morale bonus on all attack rolls for 1 round, or the ability to move up to their speed as an immediate action once. The cavalier can grant a different bonus to each ally within range, but allies can only benefit from this ability once per combat.",
     "raw_tokens": [
       {
@@ -39,5 +39,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

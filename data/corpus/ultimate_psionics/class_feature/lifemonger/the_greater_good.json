@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Lifemonger ~ The Greater Good",
+    "name": "The Greater Good",
+    "class": "Lifemonger",
+    "description": "%1/day, you can touch a member of your collective as a melee touch attack; you deal %2d6 points of nonlethal damage, and heal yourself that amount.  This cannot be redirected to the creature touched.|GreaterGoodTimes|GreaterGoodDice",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lifemonger ~ The Greater Good"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreaterGoodTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreaterGoodDice|0"
+      },
+      {
+        "key": "DESC",
+        "value": "%1/day, you can touch a member of your collective as a melee touch attack; you deal %2d6 points of nonlethal damage, and heal yourself that amount.  This cannot be redirected to the creature touched.|GreaterGoodTimes|GreaterGoodDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreaterGoodTimes|3+VitalistPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreaterGoodDice|floor((VitalistLVL+2)/3)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.317"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|GreaterGoodTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2335,
+    "record_key": "Lifemonger ~ The Greater Good"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

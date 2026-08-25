@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Protector ~ Dual Effect",
+    "name": "Dual Effect",
+    "class": "Protector",
+    "description": "Your resilience ability has become almost second nature.  Any time you use Swap Places",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Protector ~ Dual Effect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Your resilience ability has become almost second nature.  Any time you use Swap Places"
+      },
+      {
+        "key": "DESC",
+        "value": " or In Harm's Way,|PREABILITY:1,CATEGORY=Special Ability,In Harm's Way ~ Protector"
+      },
+      {
+        "key": "DESC",
+        "value": " you can also use Resilience in the same action."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.277"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2102,
+    "record_key": "Protector ~ Dual Effect"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,2887 @@
+{
+  "note": "SD-32 decisions.md \u00a724b-2: this list is reduced to coordinates only. It previously named 576 ability records by their Product-Identity name/key (the population decisions.md \u00a715 stopped on); decisions.md \u00a724 ingests them under a Codex-generated neutral name derived from these same coordinates (scripts/codex_neutral_name.py; scripts/ingest_ability.py). The original name/key strings are removed -- they never ship.",
+  "population": 4824,
+  "name_pi_renamed": 576,
+  "renamed_records": [
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 222
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 223
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 224
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 225
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 226
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 227
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 228
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 229
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 230
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 231
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 232
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 233
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 234
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 235
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 237
+    },
+    {
+      "book": "advanced_players_guide",
+      "source_file": "apg_abilities.lst",
+      "source_line": 236
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 25
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 26
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 27
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 31
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 32
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 33
+    },
+    {
+      "book": "adventurers_guide",
+      "source_file": "ag_abilities.lst",
+      "source_line": 35
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 13
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 36
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 59
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 82
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 105
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 128
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 152
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 175
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 198
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 221
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 244
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 267
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 290
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 313
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 336
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 270
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 68
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 347
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 75
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 143
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 19
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 42
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 88
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 111
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 181
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 204
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 250
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 273
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 296
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 319
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 25
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 48
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 94
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 117
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 187
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 210
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 256
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 279
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 302
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 325
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 348
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 31
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 54
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 77
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 100
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 123
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 170
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 193
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 216
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 262
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 285
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 308
+    },
+    {
+      "book": "inner_sea_faiths",
+      "source_file": "isf_abilities_faith.lst",
+      "source_line": 331
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 543
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 19
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 42
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 65
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 88
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 111
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 134
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 157
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 180
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 203
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 226
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 249
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 273
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 296
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 319
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 342
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 366
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 389
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 413
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 436
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 459
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 23
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 22
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 24
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 45
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 47
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 46
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 69
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 70
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 68
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 92
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 93
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 91
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 115
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 116
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 114
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 139
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 137
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 138
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 162
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 161
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 160
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 185
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 184
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 183
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 206
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 207
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 208
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 229
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 230
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 231
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 252
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 254
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 253
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 276
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 277
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 278
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 300
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 301
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 299
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 323
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 322
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 324
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 345
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 346
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 347
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 370
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 369
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 371
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 392
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 394
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 393
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 418
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 417
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 416
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 441
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 440
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 439
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 464
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 463
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 462
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 29
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 28
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 30
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 51
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 52
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 53
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 74
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 76
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 75
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 98
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 97
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 99
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 122
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 120
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 121
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 143
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 145
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 144
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 166
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 168
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 167
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 189
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 190
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 191
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 212
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 214
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 213
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 235
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 236
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 237
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 258
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 259
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 260
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 282
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 284
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 283
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 306
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 305
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 307
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 330
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 328
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 329
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 353
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 352
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 351
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 377
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 375
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 376
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 398
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 399
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 400
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 422
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 424
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 423
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 447
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 446
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 445
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 470
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 468
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 469
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 544
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 545
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 547
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 541
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 546
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 36
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 34
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 35
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 58
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 59
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 57
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 80
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 82
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 81
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 105
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 103
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 104
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 126
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 127
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 128
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 151
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 149
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 150
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 174
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 172
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 173
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 196
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 197
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 195
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 220
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 218
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 219
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 241
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 243
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 242
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 265
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 264
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 266
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 289
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 288
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 290
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 313
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 312
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 311
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 335
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 336
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 334
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 359
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 357
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 358
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 382
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 381
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 383
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 406
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 405
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 404
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 428
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 430
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 429
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 453
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 451
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 452
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 474
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 475
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 476
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 25
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 48
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 94
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 117
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 140
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 163
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 186
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 209
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 232
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 255
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 279
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 302
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 325
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 348
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 372
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 395
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 419
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 465
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 31
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 54
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 77
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 100
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 123
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 146
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 169
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 192
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 215
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 238
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 261
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 285
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 308
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 331
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 354
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 378
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 401
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 425
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 471
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 37
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 60
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 106
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 129
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 152
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 175
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 198
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 221
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 244
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 267
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 291
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 314
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 337
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 360
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 384
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 407
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 431
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 454
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 477
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities_faith.lst",
+      "source_line": 408
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 229
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 140
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 141
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 143
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 144
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 145
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 146
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 147
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 148
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 149
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 150
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 151
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 152
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 153
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 154
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 155
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 157
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 158
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 159
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 160
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 161
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 162
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 164
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 165
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 166
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 167
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 168
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 169
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 172
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 174
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 175
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 176
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 177
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 178
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 179
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 180
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 181
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 182
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 183
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 184
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 187
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 188
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 189
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 190
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 191
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 192
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 193
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 194
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 195
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 196
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 197
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 198
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 199
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 200
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 201
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 202
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 203
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 205
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 204
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 206
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 207
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 208
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 209
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 210
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 211
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 212
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 213
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 214
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 215
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 216
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 218
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 219
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 220
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 221
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 222
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 223
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 224
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 225
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 226
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 228
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 230
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 231
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 232
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 233
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 234
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 235
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 236
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 237
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 238
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 239
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 240
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 241
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 242
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 186
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 243
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 244
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 245
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 246
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 247
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 248
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 249
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 250
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 251
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 252
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 253
+    },
+    {
+      "book": "inner_sea_gods",
+      "source_file": "isg_abilities.lst",
+      "source_line": 254
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 26
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 97
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 27
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 161
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 34
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 36
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 131
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 132
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 135
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 134
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 133
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 136
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 137
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 138
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 139
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 140
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 141
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 142
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 144
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 143
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 145
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 146
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 147
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 148
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 149
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 150
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 151
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 152
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 153
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 154
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 29
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 28
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 33
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 30
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 160
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 31
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 175
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 159
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 35
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 167
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 168
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 169
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 170
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 171
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 172
+    },
+    {
+      "book": "inner_sea_magic",
+      "source_file": "ism_abilities_other.lst",
+      "source_line": 32
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 13
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 14
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 15
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 16
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 17
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 18
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 12
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 37
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 38
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 45
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 80
+    },
+    {
+      "book": "inner_sea_races",
+      "source_file": "isr_abilities.lst",
+      "source_line": 19
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 29
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 30
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 10
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 11
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 16
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 31
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 17
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 32
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 12
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 33
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 34
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 35
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 36
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 37
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 13
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 38
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 39
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 40
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 41
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 42
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 14
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 15
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 43
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 44
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 45
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 73
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 46
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 47
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 18
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 48
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 49
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 50
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 51
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 52
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 53
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 54
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 55
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 56
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 57
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 58
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 59
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 60
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 61
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 62
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 74
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 20
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 75
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 76
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 77
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 78
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 63
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 64
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 21
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 65
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 79
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 66
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 22
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 23
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 67
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 68
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 24
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 25
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 69
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "source_file": "iswg_abilities.lst",
+      "source_line": 19
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 280
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 281
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 282
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 283
+    },
+    {
+      "book": "ultimate_campaign",
+      "source_file": "uca_abilities_traits.lst",
+      "source_line": 284
+    },
+    {
+      "book": "ultimate_magic",
+      "source_file": "um_abilities.lst",
+      "source_line": 37
+    },
+    {
+      "book": "ultimate_magic",
+      "source_file": "um_abilities.lst",
+      "source_line": 44
+    },
+    {
+      "book": "ultimate_psionics",
+      "source_file": "up_abilities.lst",
+      "source_line": 178
+    },
+    {
+      "book": "ultimate_psionics",
+      "source_file": "up_abilities.lst",
+      "source_line": 202
+    }
+  ]
+}

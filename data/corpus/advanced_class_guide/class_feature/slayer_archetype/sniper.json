@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Slayer Archetype ~ Sniper",
     "name": "Sniper",
-    "class": "Slayer Archetype",
+    "class": "Slayer",
     "description": "Whether it's with a bullet from a sling, a quarrel from a crossbow, or even an expertly thrown dagger, the sniper ensures that a single shot disables his targets.",
     "raw_tokens": [
       {
@@ -55,6 +55,26 @@
       {
         "key": "FACT",
         "value": "Slayer_Archetype_Track|true"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSLegal"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Sniper],[!PREFACT:1,ABILITIES,Slayer_Archetype_Track=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_CF_Talent2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Slayer_Archetype_Track|true"
       }
     ]
   },
@@ -71,5 +91,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

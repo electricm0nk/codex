@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Liminal Sprite ~ Versatile Performance",
+    "delivery": "Extraordinary",
+    "description": "A liminal sprite can use its bonus for Perform (comedy) in place of its bonus for Bluff and Intimidate. When substituting in this way, the liminal sprite uses its total bonus for Perform (comedy), including any class skill bonus, in place of the associated skill's total bonus, whether or not it has ranks in Perform (comedy) or Perform (comedy) is a class skill for the sprite.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:monster_ability:liminal_sprite_versatile_performance",
+    "name": "Versatile Performance",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A liminal sprite can use its bonus for Perform (comedy) in place of its bonus for Bluff and Intimidate. When substituting in this way, the liminal sprite uses its total bonus for Perform (comedy), including any class skill bonus, in place of the associated skill's total bonus, whether or not it has ranks in Perform (comedy) or Perform (comedy) is a class skill for the sprite."
+      },
+      {
+        "key": "KEY",
+        "value": "Liminal Sprite ~ Versatile Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.LiminalSpriteRacialTrait"
+      }
+    ],
+    "source_page": "p.158",
+    "traits": [
+      "LiminalSpriteRacialTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 50,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Liminal Sprite ~ Versatile Performance",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

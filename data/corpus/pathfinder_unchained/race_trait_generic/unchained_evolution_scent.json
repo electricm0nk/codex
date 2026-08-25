@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Unchained Evolution ~ Scent",
+    "name": "Scent",
+    "description": "The eidolon's sense of smell becomes quite acute. The eidolon gains the scent special quality, allowing it to detect opponents within 30 feet by sense of smell. If the opponent is upwind, the range increases to 60 feet; if the opponent is downwind, the range drops to 15 feet. Strong scents can be detected at twice the normal range. Scent does not allow the eidolon to precisely locate the creature, only to detect its presence. It can detect the direction as a move action. The eidolon can pinpoint the creature's location if it is within 5 feet. The eidolon can use scent to track creatures.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Evolution ~ Scent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Evolution.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon's sense of smell becomes quite acute. The eidolon gains the scent special quality, allowing it to detect opponents within 30 feet by sense of smell. If the opponent is upwind, the range increases to 60 feet; if the opponent is downwind, the range drops to 15 feet. Strong scents can be detected at twice the normal range. Scent does not allow the eidolon to precisely locate the creature, only to detect its presence. It can detect the direction as a move action. The eidolon can pinpoint the creature's location if it is within 5 feet. The eidolon can use scent to track creatures."
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
+    "line": 209,
+    "record_key": "Unchained Evolution ~ Scent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

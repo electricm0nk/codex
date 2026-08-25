@@ -1,0 +1,51 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Sahkil ~ Look of Fear",
+    "delivery": "Supernatural",
+    "description": "All sahkils have a gaze attack that instills dread in those they look upon. This gaze attack has a range of 30 feet (though when a sahkil is on the Ethereal Plane, it functions against creatures on the Material Plane that can see ethereal creatures), and can be negated by a Will save-the exact effects caused by a particular sahkil's look of fear depend on the type of sahkil. All sahkils are immune to their own look of fear and that of other sahkils. This is a mind-affecting fear effect. The save DC is Charisma-based and includes the +2 bonus from the sahkil's emotional focus ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_5:monster_ability:sahkil_look_of_fear",
+    "name": "Look of Fear",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "All sahkils have a gaze attack that instills dread in those they look upon. This gaze attack has a range of 30 feet (though when a sahkil is on the Ethereal Plane, it functions against creatures on the Material Plane that can see ethereal creatures), and can be negated by a Will save-the exact effects caused by a particular sahkil's look of fear depend on the type of sahkil. All sahkils are immune to their own look of fear and that of other sahkils. This is a mind-affecting fear effect. The save DC is Charisma-based and includes the +2 bonus from the sahkil's emotional focus ability."
+      },
+      {
+        "key": "KEY",
+        "value": "Sahkil ~ Look of Fear"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.SahkilSubtypeTrait"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "SahkilSubtypeTrait"
+    ]
+  },
+  "ingested_at": "2026-08-23T15:23:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 100,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race.lst",
+    "record_key": "Sahkil ~ Look of Fear",
+    "sha256": "da3b63848f2dea0a3cc2088f288e93a85921513ab30d601d05330ceac6db664c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

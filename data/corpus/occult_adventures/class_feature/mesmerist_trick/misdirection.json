@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Mesmerist Trick ~ Misdirection",
     "name": "Misdirection",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "An enemy's perception of an attack by the subject shifts, making the foe unprepared to defend against the attack. The mesmerist can trigger this trick when the subject makes an attack or uses a spell that requires an attack roll. The mesmerist attempts a Bluff check to feint against a single target of the subject's attack. Unlike a normal feint, this ability can be used on non-melee attacks. If the feint succeeds, the target of the attack is denied its Dex bonus to AC against the triggering attack. The target doesn't suffer any additional effects that the mesmerist or the subject would cause on a normal feint or Bluff check. This is an illusion (glamer) effect.",
     "raw_tokens": [
       {
@@ -27,6 +27,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.41"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium,Mesmerist,Spiritualist=2"
       }
     ]
   },
@@ -43,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Archetype ~ Honor Guard",
     "name": "Honor Guard",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "Certain cavaliers are trained not as advance combatants, but as loyal guards, standing as firm defenders in the face of threats to their chosen charge. These honor guards are sometimes merely ornamental, performing their functions on a ceremonial basis, but a surprising number are capable, deadly opponents, able to take down a threat long before their liege knows of the danger. To be an honor guard is to constantly place one's self in harm's way, and to always be willing to lay down one's life at a moment's notice.",
     "raw_tokens": [
       {
@@ -55,6 +55,34 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Cavalier"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ HONOR GUARD],[!PREFACT:1,ABILITIES,Cavalier_Archetype_CavaliersCharge=True,Cavalier_Archetype_DemandingChallenge=True,Cavalier_Archetype_MightyCharge=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_CavaliersCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_DemandingChallenge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_MightyCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_CavaliersCharge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_DemandingChallenge|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_MightyCharge|true"
       }
     ]
   },
@@ -71,5 +99,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

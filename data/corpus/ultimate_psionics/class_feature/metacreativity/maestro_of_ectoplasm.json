@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Metacreativity ~ Maestro of Ectoplasm",
+    "name": "Maestro of Ectoplasm",
+    "class": "Metacreativity",
+    "description": "Coat up to 50 square feet in ectoplasmic sheen (DC %1), or 7 levels of astral constructs, or major ectoplasmic creation, or repair damaged astral construct for %2 hp; 1/day|MaestroOfEctoplasmDC|MaestroOfEctoplasmHP",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Metacreativity ~ Maestro of Ectoplasm"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural.PsionicDisciplineTalent"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaestroOfEctoplasmDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MaestroOfEctoplasmHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Coat up to 50 square feet in ectoplasmic sheen (DC %1), or 7 levels of astral constructs, or major ectoplasmic creation, or repair damaged astral construct for %2 hp; 1/day|MaestroOfEctoplasmDC|MaestroOfEctoplasmHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaestroOfEctoplasmDC|(10+MetacreativityDisciplineLVL/2+PsionPrimeStat)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MaestroOfEctoplasmHP|30+MetacreativityDisciplineLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|1|Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 425,
+    "record_key": "Metacreativity ~ Maestro of Ectoplasm"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

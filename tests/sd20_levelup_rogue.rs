@@ -207,7 +207,10 @@ fn rogue_level_19_to_20_crosses_the_capstone_threshold_and_grants_master_strike(
                 plan.automatic_features
             )
         });
-    assert_eq!(master_strike_grant.effects[0].value, 0);
+    // SD-32 Epic 1 (compute-library wiring): `human_rogue_input`'s Intelligence 13
+    // (modifier +1) now resolves through the corpus's own
+    // `BONUS:VAR|MasterStrikeDC|10+(MasterStrikeLVL/2)+INT` formula: 10 + 20/2 + 1 = 21.
+    assert_eq!(master_strike_grant.effects[0].value, 21);
 
     let tenth_talent_grant = grant("talent 10 choice").unwrap_or_else(|| {
         panic!(

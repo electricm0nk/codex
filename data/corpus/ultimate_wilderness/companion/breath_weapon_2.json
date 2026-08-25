@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Draconic Companion ~ Breath Weapon ~ Line",
+    "name": "Breath Weapon",
+    "description": "A draconic companion gains a breath weapon that deals %1d6 points of|HD",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Draconic Companion ~ Breath Weapon ~ Line"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "DraconicCompanionBreathWeaponShape.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A draconic companion gains a breath weapon that deals %1d6 points of|HD"
+      },
+      {
+        "key": "DESC",
+        "value": "acid|PREVARGTEQ:DraconicCompanionAcidAffinity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "cold|PREVARGTEQ:DraconicCompanionColdAffinity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "electricity|PREVARGTEQ:DraconicCompanionElectricityAffinity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "fire|PREVARGTEQ:DraconicCompanionFireAffinity,1"
+      },
+      {
+        "key": "DESC",
+        "value": "damage in a 60-foot line. This is usable"
+      },
+      {
+        "key": "DESC",
+        "value": "once per day.|PREVARLT:MasterLevel,15"
+      },
+      {
+        "key": "DESC",
+        "value": "three times per day, but it must wait 1d4 rounds between uses.|PREVARGTEQ:MasterLevel,15"
+      },
+      {
+        "key": "DESC",
+        "value": "Targets of this breath weapon can attempt a Reflex save (DC %1) for half damage.|10+HD/2+CON"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 490,
+    "record_key": "Draconic Companion ~ Breath Weapon ~ Line"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

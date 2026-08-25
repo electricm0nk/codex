@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Wind Mystery ~ Invisibility",
     "name": "Invisibility",
-    "class": "Wind Mystery",
+    "class": "Oracle",
     "description": "As a standard action, you can become invisible (as per the invisibility spell). You can remain invisible for %1 minute per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. Starting at 9th level, each time you activate this ability you can treat it as greater invisibility, though each round spent this way counts as 1 minute of your normal invisibility duration.|OracleInvisibilityDuration",
     "raw_tokens": [
       {
@@ -39,6 +39,22 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.53"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=2"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist=2"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=2"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Thievery Subdomain=2"
       }
     ]
   },
@@ -56,5 +72,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skill unlock ~ appraise 05 Ranks",
+    "name": "Skill unlock appraise 5 Ranks",
+    "class": "Skill unlock",
+    "description": "A successful DC 20 Appraise check reveals whether an item is magical, and a second check (DC = 25 + the item's caster level) unveils its properties. You can use Appraise to detect non-written forgeries and counterfeits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skill unlock ~ appraise 05 Ranks"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rogue's Edge appraise 05"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Signature Skill 05"
+      },
+      {
+        "key": "PRESKILL",
+        "value": "1,appraise=5"
+      },
+      {
+        "key": "DESC",
+        "value": "A successful DC 20 Appraise check reveals whether an item is magical, and a second check (DC = 25 + the item's caster level) unveils its properties. You can use Appraise to detect non-written forgeries and counterfeits."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 1005,
+    "record_key": "Skill unlock ~ appraise 05 Ranks"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

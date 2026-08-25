@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Lore Mystery ~ Lore Keeper",
     "name": "Lore Keeper",
-    "class": "Lore Mystery",
+    "class": "Oracle",
     "description": "Instead of encyclopedic knowledge, you learn most of your information through tales, songs, and poems. You may use your Charisma modifier instead of your Intelligence modifier on all Knowledge checks.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

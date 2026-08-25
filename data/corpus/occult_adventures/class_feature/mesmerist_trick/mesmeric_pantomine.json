@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Mesmerist Trick ~ Mesmeric Pantomine",
     "name": "Mesmeric Pantomine",
-    "class": "Mesmerist Trick",
+    "class": "Mesmerist",
     "description": "By orchestrating the movement of his ally's body, the mesmerist imparts to that ally his own skill at a physical task. The mesmerist can trigger this trick when the subject attempts a Strength- or Dexterity-based skill check. The subject either uses the mesmerist's bonus on the skill check in place of her own or gains a +%1 morale bonus on the check, whichever results in a higher modifier. The mesmerist can't implant this trick on himself.|CHA",
     "raw_tokens": [
       {
@@ -44,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

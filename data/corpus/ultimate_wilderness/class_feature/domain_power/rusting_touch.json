@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Rusting Touch",
     "name": "Rusting Touch",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "You can cause an opponent's metal armor or weapon to become dry and brittle as it magically corrodes and rusts. You make a melee touch attack against a creature wearing metal armor or wielding a metal weapon. If you hit, choose a metal weapon, suit of metal armor, or metal shield carried or worn by that creature. The object takes 1d6+%1 hit points of damage. If the item is not magical, or if your caster level is greater than the item's caster level, this damage bypasses the item's hardness. You can use this ability %2 times per day.|DomainErosionLVL/2|DomainErosionTimes",
     "raw_tokens": [
       {
@@ -44,5 +48,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

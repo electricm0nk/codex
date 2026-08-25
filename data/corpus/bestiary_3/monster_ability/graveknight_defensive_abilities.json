@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Graveknight ~ Defensive Abilities",
+    "delivery": null,
+    "description": "A graveknight gains channel resistance +4; DR 10/magic; and immunity to cold, electricity, and any additional energy type noted by its ruinous revivification special quality. A graveknight also gains spell resistance equal to its augmented CR + 11. The graveknight also gains the following ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:graveknight_defensive_abilities",
+    "name": "Defensive Abilities",
+    "owners": [
+      "bestiary_3:monster:graveknight"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Channel Resistance|Immunity to Cold|Immunity to Electricity"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Acid|PREABILITY:1,CATEGORY=Special Ability,Graveknight ~ Ruinous Revivification (Acid)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Fire|PREABILITY:1,CATEGORY=Special Ability,Graveknight ~ Ruinous Revivification (Fire)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A graveknight gains channel resistance +4; DR 10/magic; and immunity to cold, electricity, and any additional energy type noted by its ruinous revivification special quality. A graveknight also gains spell resistance equal to its augmented CR + 11. The graveknight also gains the following ability."
+      },
+      {
+        "key": "DR",
+        "value": "10/magic"
+      },
+      {
+        "key": "KEY",
+        "value": "Graveknight ~ Defensive Abilities"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "SR",
+        "value": "CR+11"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialQuality.GraveknightRacialAbility"
+      }
+    ],
+    "source_page": "p.139",
+    "traits": [
+      "RaceAbility",
+      "GraveknightRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 969,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Graveknight ~ Defensive Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

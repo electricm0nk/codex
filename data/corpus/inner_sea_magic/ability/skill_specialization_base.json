@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Skill Specialization Base",
+    "name": "Skill Specialization Base",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Internal"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SSDiplomacy|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SSHeal|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SSIntimidate|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SSKnowArcana|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SSKnowPlanes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SSLinguistics|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SSSpellcraft|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SSUMD|0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
+    "line": 48,
+    "record_key": "Skill Specialization Base"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

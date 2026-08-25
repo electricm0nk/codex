@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Reptoid ~ Languages",
+    "name": "Languages",
+    "description": "All reptoids begin play speaking Common and Reptoid. Reptoids with high Intelligence scores can choose any languages they want (except for secret languages, such as Druidic).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reptoid ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Racial Language"
+      },
+      {
+        "key": "DESC",
+        "value": "All reptoids begin play speaking Common and Reptoid. Reptoids with high Intelligence scores can choose any languages they want (except for secret languages, such as Druidic)."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Any Spoken"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Reptoid"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
+    "line": 181,
+    "record_key": "Reptoid ~ Languages"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

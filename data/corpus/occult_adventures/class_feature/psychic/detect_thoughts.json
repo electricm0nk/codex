@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Psychic ~ Detect Thoughts",
     "name": "Detect Thoughts",
@@ -27,6 +27,14 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.63"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Medium,Mesmerist,Spiritualist=2"
       }
     ]
   },
@@ -43,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

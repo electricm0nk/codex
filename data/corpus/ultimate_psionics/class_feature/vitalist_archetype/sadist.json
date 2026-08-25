@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Vitalist Archetype ~ Sadist",
+    "name": "Sadist",
+    "class": "Vitalist",
+    "description": "You are able to empower your abilities when others feel pain, making you less predictable in how you will handle the wounds of your allies.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vitalist Archetype ~ Sadist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Archetype.VitalistArchetype.VitalistKnacks.VitalistPower3.VitalistRequestAid"
+      },
+      {
+        "key": "PRECLASS",
+        "value": "1,Vitalist=1"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Vitalist Archetype ~ Sadist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.VitalistKnacks,TYPE.VitalistPower3,TYPE.VitalistRequestAid]"
+      },
+      {
+        "key": "DESC",
+        "value": "You are able to empower your abilities when others feel pain, making you less predictable in how you will handle the wounds of your allies."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Sadist ~ Exquisite Agony|PRECLASS:1,Vitalist=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Sadist ~ Lingering Pain|PRECLASS:1,Vitalist=3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vitalist Class Feature|AUTOMATIC|Sadist ~ Empowered in Pain|PRECLASS:1,Vitalist=5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VitalistPowersKnown|-1|PRECLASS:1,Vitalist=3"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.289"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2308,
+    "record_key": "Vitalist Archetype ~ Sadist"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

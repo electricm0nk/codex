@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Steal Pattern",
+    "name": "Steal Pattern",
+    "class": "Insight",
+    "description": "You can attempt to steal a pattern from a creature by making a touch attack.  If the attack is successful, you can choose one psionic tattoo or one spell-like, psi-like, or supernatural ability the target has and make a manifester level check against the target (DC 11 + the target's manifester level or hit die, whichever is higher).  If you succeed on the manifester level check, the target loses the tattoo permanently or the ability for 1 minute and a daily use of the ability and the cryptic gains the tattoo or one use of the ability stolen.  Powerful abilities like a creature with a spell-like ability of wish cannot be stolen in this fashion.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Steal Pattern"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.CrypticInsight"
+      },
+      {
+        "key": "DESC",
+        "value": "You can attempt to steal a pattern from a creature by making a touch attack.  If the attack is successful, you can choose one psionic tattoo or one spell-like, psi-like, or supernatural ability the target has and make a manifester level check against the target (DC 11 + the target's manifester level or hit die, whichever is higher).  If you succeed on the manifester level check, the target loses the tattoo permanently or the ability for 1 minute and a daily use of the ability and the cryptic gains the tattoo or one use of the ability stolen.  Powerful abilities like a creature with a spell-like ability of wish cannot be stolen in this fashion."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 221,
+    "record_key": "Insight ~ Steal Pattern"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

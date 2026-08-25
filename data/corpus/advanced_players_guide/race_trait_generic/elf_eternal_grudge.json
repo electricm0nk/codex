@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf ~ Eternal Grudge",
+    "name": "Eternal Grudge",
+    "description": "Elves with this racial trait grew up in secluded, isolationist communities where generations-old slights and quarrels linger as eternal blood feuds. They receive a +1 bonus on attack rolls against humanoids of the dwarf and orc subtypes due to special training against these hated foes.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Eternal Grudge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialAttack.Special Attack.Elven Magic"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Eternal Grudge],[!PREFACT:1,ABILITIES,Elf_ReplaceElvenMagic=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Elves with this racial trait grew up in secluded, isolationist communities where generations-old slights and quarrels linger as eternal blood feuds. They receive a +1 bonus on attack rolls against humanoids of the dwarf and orc subtypes due to special training against these hated foes."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the elven magic racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Eternal Grudge"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+1 on attack rolls against dwarf and orc humanoids"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceElvenMagic|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 33,
+    "record_key": "Elf ~ Eternal Grudge"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

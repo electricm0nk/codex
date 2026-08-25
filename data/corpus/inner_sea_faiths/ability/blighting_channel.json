@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted Boon ~ Ghlaunder ~ Blighting Channel",
+    "name": "Blighting Channel",
+    "description": "If you have performed your daily obedience, three times per day when you channel negative energy, you can choose to cause damage to plants and plant creatures instead of healing undead. Creatures with the plant type within range take %1d6 points of damage, and can attempt a Fortitude saving throw (same DC as your regular uses of channel negative energy) for half damage. All normal plants in range immediately wither and die (no saving throw).|1+min(9,(ClericLVL+ExaltedBoonLVL-1)/2)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted Boon ~ Ghlaunder ~ Blighting Channel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, three times per day when you channel negative energy, you can choose to cause damage to plants and plant creatures instead of healing undead. Creatures with the plant type within range take %1d6 points of damage, and can attempt a Fortitude saving throw (same DC as your regular uses of channel negative energy) for half damage. All normal plants in range immediately wither and die (no saving throw).|1+min(9,(ClericLVL+ExaltedBoonLVL-1)/2)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 162,
+    "record_key": "Exalted Boon ~ Ghlaunder ~ Blighting Channel"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

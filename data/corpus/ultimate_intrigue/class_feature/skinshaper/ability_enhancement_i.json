@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Skinshaper ~ Ability Enhancement I",
+    "name": "Ability Enhancement I",
+    "class": "Druid",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinshaper ~ Ability Enhancement I"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Druid Class Features.FeyspeakerClassFeatures"
+      },
+      {
+        "key": "PREVAREQ",
+        "value": "SkinshapingActiveActive,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkinshaperEnhancementSTR|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkinshaperEnhancementDEX|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkinshaperEnhancementCON|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkinshaperEnhancementINT|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkinshaperEnhancementWIS|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SkinshaperEnhancementCHA|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Skinshaper Ability Enhancement I|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+    "line": 343,
+    "record_key": "Skinshaper ~ Ability Enhancement I"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

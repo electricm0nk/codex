@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Loyalty",
+    "name": "Loyalty",
+    "description": "You gain Leadership as a bonus feat. If you already have the Leadership feat (or if you take it at a later level), add +%1 to your Leadership score. Whenever you use your marshal's order ability and your cohort is within 100 feet, you can include your cohort as an additional ally affected by your order.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Loyalty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Marshal"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain Leadership as a bonus feat. If you already have the Leadership feat (or if you take it at a later level), add +%1 to your Leadership score. Whenever you use your marshal's order ability and your cohort is within 100 feet, you can include your cohort as an additional ally affected by your order.|MythicLevel"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Leadership"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LeadershipScore|MythicLevel|!PREVARGTEQ:count(\"ABILITIES\",\"CATEGORY=FEAT\",\"KEY=Leadership\",\"NATURE=VIRTUAL\"),1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 202,
+    "record_key": "Mythic Path Ability ~ Loyalty"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

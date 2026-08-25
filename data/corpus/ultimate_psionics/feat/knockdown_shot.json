@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Knockdown Shot",
+    "category": "Psionic",
+    "name": "Knockdown Shot",
+    "description": "Expend focus to damage and knock prone opponent with ranged attack.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Psionic Shot",
+      "PRESTAT:1,DEX=15"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 189,
+    "record_key": "Knockdown Shot"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Metal Subdomain",
+    "name": "Metal Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Metal Subdomain],[PREVARLT:EarthDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Metal Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.43"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Metal Subdomain=1|Magic Stone|Metal Subdomain=2|Heat Metal|Metal Subdomain=3|Stone Shape|Metal Subdomain=4|Spike Stones|Metal Subdomain=5|Wall of Stone|Metal Subdomain=6|Wall of Iron|Metal Subdomain=7|Elemental Body IV (Earth Only)|Metal Subdomain=8|Iron Body|Metal Subdomain=9|Elemental Swarm (Earth Spell Only)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 53,
+    "record_key": "Metal Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

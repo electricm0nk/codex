@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Renewed Vitality",
+    "name": "Renewed Vitality",
+    "class": "Unchained Barbarian",
+    "description": "You ignore the effect of %1 point of ability penalty or ability damage.|min(floor(RagePowersLVL/2),10)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Renewed Vitality"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Renewed Vitality"
+      },
+      {
+        "key": "DESC",
+        "value": "You ignore the effect of %1 point of ability penalty or ability damage.|min(floor(RagePowersLVL/2),10)"
+      },
+      {
+        "key": "DESC",
+        "value": "You can also ignore %1 negative levels.|floor(RagePowersLVL/4)"
+      },
+      {
+        "key": "DESC",
+        "value": "You take the full effects of the ability penalties, ability damage, or negative levels once your rage ends."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 380,
+    "record_key": "Unchained Rage Power ~ Renewed Vitality"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

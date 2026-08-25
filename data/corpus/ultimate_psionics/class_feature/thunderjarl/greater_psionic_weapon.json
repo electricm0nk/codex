@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Thunderjarl ~ Greater Psionic Weapon",
+    "name": "Greater Psionic Weapon",
+    "class": "Thunderjarl",
+    "description": "If you are wielding a weapon with two hands, the bonus damage dealt when expending psionic focus for Psionic Weapon is increased by an additional 1d6 points of damage.  This damage stacks with the bonus damage from your Psionic Weapon ability.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Thunderjarl ~ Greater Psionic Weapon"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsychicWarriorClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you are wielding a weapon with two hands, the bonus damage dealt when expending psionic focus for Psionic Weapon is increased by an additional 1d6 points of damage.  This damage stacks with the bonus damage from your Psionic Weapon ability."
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Greater Psionic Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.329"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2119,
+    "record_key": "Thunderjarl ~ Greater Psionic Weapon"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

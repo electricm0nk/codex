@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Dream Reality",
+    "school": "Illusion",
+    "level": 5,
+    "description": "You cause the target to perceive the world as if in a dream. When the spell ends, the target forgets all identifying details of events that transpired while the spell lasted. The memories were not taken from it; rather, its mind never recorded the memories as real in the first place. If modify memory is cast upon it before the spell ends, the target remembers these events. A target under the effect of lullaby before this spell is cast applies its penalty to the saving throw against this spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 16,
+    "record_key": "Dream Reality"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

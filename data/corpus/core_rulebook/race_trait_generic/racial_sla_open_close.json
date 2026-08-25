@@ -1,0 +1,102 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Racial SLA ~ Open/Close",
+    "name": "Open/Close",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Racial SLA ~ Open/Close"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Spell-Like Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Racial Spell-Like Ability"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Spell-Like Ability|Open/Close"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_OpenClose_LVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_OpenClose_SpellLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_OpenClose_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_OpenClose_DCMod|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_OpenClose_DC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_OpenClose_AtWill|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialSLA_OpenClose_Constant|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=RacialSLA_OpenClose_Times|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_OpenClose_LVL|Open/Close,RacialSLA_OpenClose_DC|PREVAREQ:RacialSLA_OpenClose_AtWill,0|PREVAREQ:RacialSLA_OpenClose_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Day|CASTERLEVEL=RacialSLA_OpenClose_LVL|Open/Close,RacialSLA_OpenClose_DC|PREVAREQ:RacialSLA_OpenClose_AtWill,1|PREVAREQ:RacialSLA_OpenClose_Constant,0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Racial|TIMES=ATWILL|TIMEUNIT=Constant|CASTERLEVEL=RacialSLA_OpenClose_LVL|Open/Close,RacialSLA_OpenClose_DC|PREVAREQ:RacialSLA_OpenClose_Constant,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_OpenClose_LVL|TL|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_OpenClose_SpellLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_OpenClose_Times|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_OpenClose_DCMod|CHA|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RacialSLA_OpenClose_DC|10+RacialSLA_OpenClose_SpellLVL+RacialSLA_OpenClose_DCMod"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+    "sha256": "d4fdfc9ccdff7f16e47a2adde8bb99a10958677886c09caad92d89112930b933",
+    "line": 192,
+    "record_key": "Racial SLA ~ Open/Close"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

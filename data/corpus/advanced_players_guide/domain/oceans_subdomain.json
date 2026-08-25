@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:05Z",
+  "data": {
+    "key": "Oceans Subdomain",
+    "name": "Oceans Subdomain",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Oceans Subdomain],[PREVARLT:WaterDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Oceans Subdomain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Oceans Subdomain=1|Obscuring Mist|Oceans Subdomain=2|Slipstream|Oceans Subdomain=3|Water Walk|Oceans Subdomain=4|Control Water|Oceans Subdomain=5|Ice Storm|Oceans Subdomain=6|Cone of Cold|Oceans Subdomain=7|Elemental Body IV (Water Only)|Oceans Subdomain=8|Horrid Wilting|Oceans Subdomain=9|Tsunami"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_domains.lst",
+    "sha256": "a5c270c30b0caee73d7ae2b9b45bfa4e26da0d52f99c6d1a8787f3d7cc73098e",
+    "line": 57,
+    "record_key": "Oceans Subdomain"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

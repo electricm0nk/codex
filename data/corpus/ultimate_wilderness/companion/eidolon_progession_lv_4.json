@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Plant ~ Unchained Eidolon LVL04",
+    "name": "Eidolon Progession Lv.4",
+    "description": "At 4th level, plant eidolons gain constant pass without trace and they can change shape into plants of the size category corresponding to their base form with results similar to tree shape.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Plant ~ Unchained Eidolon LVL04"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.PlantLVL4"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, plant eidolons gain constant pass without trace and they can change shape into plants of the size category corresponding to their base form with results similar to tree shape."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Pass without Trace ~ Constant"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
+    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b",
+    "line": 24,
+    "record_key": "Plant ~ Unchained Eidolon LVL04"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

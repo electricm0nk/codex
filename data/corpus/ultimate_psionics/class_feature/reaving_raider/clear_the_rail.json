@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Reaving Raider ~ Clear the Rail",
+    "name": "Clear the Rail",
+    "class": "Reaving Raider",
+    "description": "When you activate your racial outburst ability, you can choose to forego the benefit of the ability (although you still suffer all appropriate penalties) and direct the energy from the outburst into a sonic blast at a single enemy within a 30 ft. range.  You make a ranged bull rush attempt at the target, using your Charisma modifier instead of your Strength modifier and using your character level in place of your base attack bonus. This ability does not provoke an attack of opportunity and you do not move with the targeted enemy.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Reaving Raider ~ Clear the Rail"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RogueClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "When you activate your racial outburst ability, you can choose to forego the benefit of the ability (although you still suffer all appropriate penalties) and direct the energy from the outburst into a sonic blast at a single enemy within a 30 ft. range.  You make a ranged bull rush attempt at the target, using your Charisma modifier instead of your Strength modifier and using your character level in place of your base attack bonus. This ability does not provoke an attack of opportunity and you do not move with the targeted enemy."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.332"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2616,
+    "record_key": "Reaving Raider ~ Clear the Rail"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

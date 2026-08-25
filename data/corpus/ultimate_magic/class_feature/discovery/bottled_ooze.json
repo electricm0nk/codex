@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Discovery ~ Bottled Ooze",
     "name": "Bottled Ooze",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You have learned how to preserve a sample of oozes in a sealed bottle, which you can prepare for use as an extract.  When you activate the extract, you actually throw the bottle at a square within 30 feet, releasing the ooze, which reconstitutes and attacks the closest creature.  The ooze is not under your control, but is otherwise treated as a summoned creature.  The ooze remains for %1 rounds, and decays into powder when the duration expires.  If you have the infusion discovery, another character can use the infused specimen.  Creating a bottled ooze requires an extract with a level equal to the ooze's CR.|BottledOozeDuration",
     "raw_tokens": [
       {
@@ -63,6 +63,10 @@
       {
         "key": "SPELLKNOWN",
         "value": "CLASS|Alchemist=6|Bottled Ooze (6)|!PRESPELL:1,Bottled Ooze (6)|PREVARGTEQ:AlchemistDiscoveryLVL,17"
+      },
+      {
+        "key": "DESC",
+        "value": "Bottled ooze discovery may only be used to bottle oozes which appear in the Pathfinder RPG Bestiary."
       }
     ]
   },
@@ -79,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

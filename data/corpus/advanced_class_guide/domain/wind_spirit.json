@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:04Z",
+  "data": {
+    "key": "Wind (Spirit)",
+    "name": "Wind (Spirit)",
+    "raw_tokens": [
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Wind (Spirit)=1|alter winds|Wind (Spirit)=2|gust of wind|Wind (Spirit)=3|cloak of winds|Wind (Spirit)=4|river of wind|Wind (Spirit)=5|control winds|Wind (Spirit)=6|sirocco|Wind (Spirit)=7|control weather|Wind (Spirit)=8|whirlwind|Wind (Spirit)=9|winds of vengeance"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
+    "sha256": "80e1bd9e91ad02c2653b6faf0a94bc92b528c0e89b6bfeb60c379ec40d4e64fd",
+    "line": 14,
+    "record_key": "Wind (Spirit)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

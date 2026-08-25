@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Racial Traits ~ Undine",
+    "name": "Racial Traits ~ Undine",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "DEFINE",
+        "value": "Undine_ReplaceAbilityScores|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Undine Racial Trait|AUTOMATIC|Undine ~ Ability Scores|PREVAREQ:Undine_ReplaceAbilityScores,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/undine/undine_abilities_globalvar.lst",
+    "sha256": "84b0c009e990fb3510a2224e24e58028a51e4eb931b4f5fe71e5435a6e12f4d4",
+    "line": 10,
+    "record_key": "Racial Traits ~ Undine"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

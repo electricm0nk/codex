@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Glorious Heat",
+    "category": "General",
+    "name": "Glorious Heat",
+    "description": "When you cast divine fire spells, their heat empowers nearby allies. Whenever you cast a divine spell with the fire descriptor, choose a single ally within 30 feet that you can see. That ally heals a number of hit points equal to half your level and gains a +1 morale bonus on attack rolls until the end of its next turn.",
+    "prerequisites": [
+      "PREDEITY:[redacted PI]",
+      "PRESPELLTYPE:1,Divine=1",
+      "PRETEXT:[redacted PI]",
+      "PREVARGTEQ:Caster_Level_Highest,5"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst",
+    "sha256": "91f53f0051455ec8e7daca4e0286799e397009fe7fdae555ebe342f40085256e",
+    "line": 50,
+    "record_key": "Glorious Heat"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

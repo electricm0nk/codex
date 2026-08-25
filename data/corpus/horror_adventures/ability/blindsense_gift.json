@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Hive Corruption ~ Blindsense Gift",
+    "name": "Blindsense Gift",
+    "description": "As a move action, you can force the hive mind to use its senses to assist you. You gain blindsense with a range of %1 feet until the beginning of your next turn; during that time, you negate the penalty on Perception checks from the stain and instead gain a +%2 bonus on Perception check.|HiveCorruptionBlindsense|HiveManifestationLevel/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hive Corruption ~ Blindsense Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.HiveBlindsenseGift"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HiveCorruptionBlindsense|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, you can force the hive mind to use its senses to assist you. You gain blindsense with a range of %1 feet until the beginning of your next turn; during that time, you negate the penalty on Perception checks from the stain and instead gain a +%2 bonus on Perception check.|HiveCorruptionBlindsense|HiveManifestationLevel/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HiveCorruptionBlindsense|5*(HiveManifestationLevel/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|HiveCorruptionBlindsense|TYPE=Base"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 390,
+    "record_key": "Hive Corruption ~ Blindsense Gift"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

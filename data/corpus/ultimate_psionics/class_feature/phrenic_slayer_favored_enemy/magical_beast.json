@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Phrenic Slayer Favored Enemy ~ Magical Beast",
+    "name": "Magical Beast",
+    "class": "Phrenic Slayer",
+    "description": "You gain a +%1 bonus on Attack rolls, Damage roll and skill checks against psionic magical beasts.|SlayerFavoredEnemy|!PRERULE:1,DisplayFullAbility",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phrenic Slayer Favored Enemy ~ Magical Beast"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Attack rolls, Damage roll and skill checks against psionic magical beasts.|SlayerFavoredEnemy|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 bonus on Bluff, Perception, Sense Motive, and Survival checks when using these skills against psionic magical beasts. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures.|SlayerFavoredEnemy|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.366"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|SlayerFavoredEnemy"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1354,
+    "record_key": "Phrenic Slayer Favored Enemy ~ Magical Beast"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

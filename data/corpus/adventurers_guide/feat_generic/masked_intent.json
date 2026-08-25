@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:16:16Z",
+  "data": {
+    "key": "Masked Intent",
+    "name": "Masked Intent",
+    "description": "Your masked face makes your intentions nearly impossible to discern.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "FEAT"
+      },
+      {
+        "key": "TYPE",
+        "value": "General"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=FEAT,Nameless One"
+      },
+      {
+        "key": "DESC",
+        "value": "Your masked face makes your intentions nearly impossible to discern."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "BENEFIT",
+        "value": "While benefiting from the Nameless One feat, your intentions become especially difficult to read. You gain a +4 circumstance bonus on opposed Bluff checks, and increase the DC by 4 to gather information about you using Diplomacy, to answer questions about you or your weaknesses or abilities using the appropriate Knowledge skill, or to identify any spells or spell-like abilities that you cast using Spellcraft. If you have 10 or more ranks in any of these skills, the bonus for that skill increases to +8."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_feats.lst",
+    "sha256": "e3c7767bc0491cf56909e0ded972ef6b70ae228bed3266f7f52ace170084756a",
+    "line": 44,
+    "record_key": "Masked Intent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

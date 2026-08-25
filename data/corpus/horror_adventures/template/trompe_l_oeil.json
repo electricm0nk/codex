@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "Trompe l'Oeil",
+    "name": "Trompe l'Oeil",
+    "raw_tokens": [
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.242"
+      },
+      {
+        "key": "PRESTAT",
+        "value": "1,INT=1"
+      },
+      {
+        "key": "!PRERACE",
+        "value": "1,RACESUBTYPE=Incorporeal"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Trompe l'Oeil"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|1|TYPE=NaturalArmorEnhancement|PREHD:MIN=5,MAX=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|2|TYPE=NaturalArmorEnhancement|PREHD:MIN=9,MAX=12"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|3|TYPE=NaturalArmorEnhancement|PREHD:MIN=13,MAX=16"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|4|TYPE=NaturalArmorEnhancement|PREHD:MIN=17"
+      },
+      {
+        "key": "HITDIE",
+        "value": "10|CLASS.TYPE=Monster"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|10|PRESIZEEQ:S"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|20|PRESIZEEQ:M"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|30|PRESIZEEQ:L"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|40|PRESIZEEQ:H"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|60|PRESIZEEQ:G"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|80|PRESIZEGTEQ:C"
+      },
+      {
+        "key": "DEFINESTAT",
+        "value": "NONSTAT|CON"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_templates.lst",
+    "sha256": "2bdc330c9f1d4fcc2fd799ba7dd02a4511dab172cf39abefcd480a3a0f9d2edb",
+    "line": 18,
+    "record_key": "Trompe l'Oeil"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

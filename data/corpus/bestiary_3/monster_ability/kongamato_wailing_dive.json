@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Kongamato ~ Wailing Dive",
+    "delivery": "Supernatural",
+    "description": "When a kongamato makes a charge while flying or uses its Flyby Attack feat, the creature's body becomes infused with energy, causing its bite to deal an extra +1d6 points of sonic damage on that attack.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:kongamato_wailing_dive",
+    "name": "Wailing Dive",
+    "owners": [
+      "bestiary_3:monster:kongamato"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a kongamato makes a charge while flying or uses its Flyby Attack feat, the creature's body becomes infused with energy, causing its bite to deal an extra +1d6 points of sonic damage on that attack."
+      },
+      {
+        "key": "KEY",
+        "value": "Kongamato ~ Wailing Dive"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.169"
+      },
+      {
+        "key": "TYPE",
+        "value": "KongamatoRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.169",
+    "traits": [
+      "KongamatoRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1154,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Kongamato ~ Wailing Dive",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Gnome Trickster",
+    "category": "Mythic",
+    "name": "Gnome Trickster (Mythic)",
+    "description": "Thanks to your mythic power, the magic in your blood has grown more potent and diverse. You gain the following spell-like abilities: 1/day--blur and vanish.\nYou can use your gnome spell-like abilities an additional times per day. You can spend these additional uses to use any of your gnome spell-like abilities you wish. Your caster level for your gnome spell-like abilities becomes.|HalfMythicLevel",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Gnome Trickster",
+      "PREVARGTEQ:MythicTierLevel,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst",
+    "sha256": "50bdb91b88676e1559dbeab699dad66fa13d45b53ee2233b7370daf019eece1b",
+    "line": 94,
+    "record_key": "Gnome Trickster"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

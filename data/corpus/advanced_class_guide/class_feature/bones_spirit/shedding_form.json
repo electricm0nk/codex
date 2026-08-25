@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Bones Spirit ~ Shedding Form",
     "name": "Shedding Form",
-    "class": "Bones Spirit",
+    "class": "Shaman",
     "description": "As a standard action, the shaman sheds her body and becomes incorporeal. While in this form, all of her weapon attacks are considered to have the ghost touch weapon special ability. The shaman can use this ability for a %1 rounds, though those rounds do not need to be consecutive.|ShamanSheddingFormRounds",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

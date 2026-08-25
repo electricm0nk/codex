@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Discipline Symbiosis ~ Bonus Spells",
+    "name": "Bonus Spells",
+    "class": "Psychic",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline Symbiosis ~ Bonus Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=1|Hide from Animals|PRECLASS:1,Psychic=1|PREVAREQ:Psychic_CF_DisciplineSpell1,0"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=2|Hold Animal|PRECLASS:1,Psychic=4|PREVAREQ:Psychic_CF_DisciplineSpell2,0"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=3|Dominate Animal|PRECLASS:1,Psychic=6|PREVAREQ:Psychic_CF_DisciplineSpell3,0"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=4|Command Plants|PRECLASS:1,Psychic=8|PREVAREQ:Psychic_CF_DisciplineSpell4,0"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=5|Awaken|PRECLASS:1,Psychic=10|PREVAREQ:Psychic_CF_DisciplineSpell5,0"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=6|Liveoak|PRECLASS:1,Psychic=12|PREVAREQ:Psychic_CF_DisciplineSpell6,0"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=7|Scrying (Greater)|PRECLASS:1,Psychic=14|PREVAREQ:Psychic_CF_DisciplineSpell7,0"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=8|Control Plants|PRECLASS:1,Psychic=16|PREVAREQ:Psychic_CF_DisciplineSpell8,0"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Psychic=9|Dominate Monster|PRECLASS:1,Psychic=18|PREVAREQ:Psychic_CF_DisciplineSpell9,0"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 165,
+    "record_key": "Psychic Discipline Symbiosis ~ Bonus Spells"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:34:12Z",
+  "data": {
+    "key": "Seeds of Influence",
+    "school": "Enchantment",
+    "level": 3,
+    "description": "You leave a magical trace in the mind of a creature with an attitude of at least indifferent toward you. The target takes a cumulative -2 penalty on its Will save to negate the spell for each step by which its attitude is better than indifferent. The target takes a -2 penalty on saving throws against divination spells you cast. You can target that creature with mind-affecting spells of a spell level lower than seeds of influence as if those spells were modified by Enlarge Spell (the modified spell doesn't take longer to cast and doesn't use a higher-level spell slot). Whenever the target succeeds at a saving throw against a divination or mind-affecting spell you cast, seeds of influence ends for that target. A creature can be subject to only one seeds of influence spell at a time; later castings of seeds of influence remove any previous casting."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
+    "sha256": "5bb5b3e39cf648c7cbf407c4f233cfad1c5b7962c54f89766abb2abe9d9eeb3b",
+    "line": 26,
+    "record_key": "Seeds of Influence"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

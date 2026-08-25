@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Dervish Dance",
+    "category": "Combat",
+    "name": "Dervish Dance",
+    "description": "You have learned to turn your speed into power, even with a heavier blade. Use Dex modifier instead of Str modifier with scimitar. You have learned to turn your speed into power, even with a heavier blade. When wielding a scimitar with one hand, you can use your Dexterity modifier intead of your Strength modifier on melee attack and damage rolls. You treat the scimitar as a one-handed piercing weapon for all feats and class abilities that require such a weapon. The scimitar must be for a creature of your size. You cannot use this feat if you are carrying a weapon or shield in your off hand.",
+    "prerequisites": [
+      "PREVAREQ:HasWeaponFinesseFeat,1",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]",
+      "PRESKILL:1,Perform (Dance)=2",
+      "PREWEAPONPROF:1,Scimitar"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 16,
+    "record_key": "Dervish Dance"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

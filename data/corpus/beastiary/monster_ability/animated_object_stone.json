@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Animated Object ~ Stone",
+    "delivery": null,
+    "description": "The object is made of stone or crystal.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:animated_object_stone",
+    "name": "Stone (1 CP)",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Animated Object ~ Metal (Mithral),Animated Object ~ Metal (Common),Animated Object ~ Metal (Adamantine)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstructionPointsSpent|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hardness|3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The object is made of stone or crystal."
+      },
+      {
+        "key": "KEY",
+        "value": "Animated Object ~ Stone"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.AnimatedObjectAbility"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
+    "source_page": "p.14",
+    "traits": [
+      "AnimatedObjectAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T12:58:07Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 85,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Animated Object ~ Stone",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

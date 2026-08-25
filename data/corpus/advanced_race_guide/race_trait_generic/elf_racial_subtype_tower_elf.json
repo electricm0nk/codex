@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf Racial Subtype ~ Tower Elf",
+    "name": "Tower Elf",
+    "description": "Some elven institutions of magical learning date back centuries, and entire clans of elves have lived for generations as caretakers, students, and instructors of these self-sufficient schools of wizardry. These elves have the arcane focus and urbanite alternate racial traits.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf Racial Subtype ~ Tower Elf"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elf Racial Subtype.SpecialQuality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf Racial Subtype ~ Tower Elf],[!PREFACT:1,ABILITIES,Elf_ReplaceWeaponFamiliarity=true,Elf_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some elven institutions of magical learning date back centuries, and entire clans of elves have lived for generations as caretakers, students, and instructors of these self-sufficient schools of wizardry. These elves have the arcane focus and urbanite alternate racial traits."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Tower Elf"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Elf Racial Trait|NORMAL|Elf ~ Arcane Focus|Elf ~ Urbanite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 2164,
+    "record_key": "Elf Racial Subtype ~ Tower Elf"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Wolverine ~ Major",
     "name": "Major Aspect of the Wolverine",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a dire wolverine (Bestiary p279). While in this form, you gain a climb speed of 10 feet, two claw attacks (1d8 damage), a bite attack (1d6 damage), low-light vision, and scent (30 feet). While in dire wolverine form, you gain the barbarian's rage power, but can activate this rage only in a round after you've taken damage. You can rage for %1 rounds each day. This ability otherwise functions the same as the barbarian rage ability (unlike a dire wolverine, you can choose to end this rage voluntarily).|ShifterWolverineAspectLVL",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

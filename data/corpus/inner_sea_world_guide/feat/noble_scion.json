@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Noble Scion",
+    "category": "General",
+    "name": "Noble Scion",
+    "description": "You are a member of a proud noble family, whether or not you remain in good standing with your family. +2 on Knowledge (nobility) plus gain a nobility-related boon. You are a member of a proud noble family, whether or not you remain in good standing with your family. You gain a +2 bonus on all Knowledge (nobility) checks, and Knowledge (nobility) is always considered a class skill for you. You also gain a benefit appropriate to your noble family.",
+    "prerequisites": [
+      "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Noble Scion],[PRELEVELMAX:1]",
+      "PRESTAT:1,CHA=13"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst",
+    "sha256": "b6435a0a073ef6f3e3cb6731b705dbbeffa5089deab97f66b98525036034a4a8",
+    "line": 32,
+    "record_key": "Noble Scion"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

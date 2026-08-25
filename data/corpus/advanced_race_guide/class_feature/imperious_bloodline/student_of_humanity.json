@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Imperious Bloodline ~ Student of Humanity",
     "name": "Student of Humanity",
-    "class": "Imperious Bloodline",
+    "class": "Sorcerer",
     "description": "You gain Diplomacy, Knowledge (history), Knowledge (local), Knowledge (nobility), and Linguistics as class skills. In addition, when using these skills to learn, study, or gather information about humans, you add a +%1 insight bonus on such checks.|Sorcerer_ImperiousStudentOfHumanity_SkillBonus",
     "raw_tokens": [
       {
@@ -83,5 +83,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

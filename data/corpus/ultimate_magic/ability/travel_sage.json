@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Preparation Ritual ~ Travel Sage",
+    "name": "Travel Sage",
+    "description": "There is nothing like a magic book to enhance the memory. Unlike other boons, you do not spend this one. Until you prepare spells again, you are considered trained in Knowledge (geography). If you are already trained in Knowledge (geography), you gain a +2 circumstance bonus on those checks instead.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Preparation Ritual ~ Travel Sage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.PreparationRitual"
+      },
+      {
+        "key": "DESC",
+        "value": "There is nothing like a magic book to enhance the memory. Unlike other boons, you do not spend this one. Until you prepare spells again, you are considered trained in Knowledge (geography). If you are already trained in Knowledge (geography), you gain a +2 circumstance bonus on those checks instead."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
+    "line": 41,
+    "record_key": "Preparation Ritual ~ Travel Sage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

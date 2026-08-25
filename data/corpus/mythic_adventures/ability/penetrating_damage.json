@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Penetrating Damage",
+    "name": "Penetrating Damage",
+    "description": "Whenever you deal damage to a creature with damage reduction, you can overcome one of the following types of damage reduction: chaotic, cold iron, evil, good, lawful, magic, or silver. You can change this type with each attack. This ability only aids in overcoming one type of damage reduction; if the creature's damage reduction requires a combination of different types of damage, you must be able to overcome the other types using other means.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Penetrating Damage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Champion"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,3"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever you deal damage to a creature with damage reduction, you can overcome one of the following types of damage reduction: chaotic, cold iron, evil, good, lawful, magic, or silver. You can change this type with each attack. This ability only aids in overcoming one type of damage reduction; if the creature's damage reduction requires a combination of different types of damage, you must be able to overcome the other types using other means."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 342,
+    "record_key": "Mythic Path Ability ~ Penetrating Damage"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

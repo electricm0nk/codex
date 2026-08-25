@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Time Mystery ~ Momentary Glimpse",
     "name": "Momentary Glimpse",
-    "class": "Time Mystery",
+    "class": "Oracle",
     "description": "You can gain a glimpse into your immediate future %1/day. On the round after you use this ability, you gain a +2 insight bonus on a single attack roll, saving throw, or skill check or to your Armor Class until the start of your next turn.|MomentaryGlimpseTimes",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

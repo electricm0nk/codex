@@ -226,6 +226,16 @@ fn main() -> ExitCode {
             tally.digests_checked,
             findings.len(),
         );
+        // decisions.md §24 / §22: the §24-redaction exemption
+        // (`corpus_literal_sweep::compare_tokens`'s third exemption) is
+        // reported unconditionally, zero included -- a reviewer must be
+        // able to tell "no §24 records this run" apart from "the exemption
+        // silently stopped being counted".
+        println!(
+            "{LABEL}: {} tokens exempted under decisions.md §24 redaction across {} codex_generated_name records",
+            tally.codex_generated_name_tokens_exempted,
+            tally.codex_generated_name_records_exempted.len(),
+        );
     }
 
     // The zero-cases-ran guard, in the binary rather than only in the gate

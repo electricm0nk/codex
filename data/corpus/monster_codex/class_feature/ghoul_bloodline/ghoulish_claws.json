@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ghoul Bloodline ~ Ghoulish Claws",
     "name": "Ghoulish Claws",
-    "class": "Ghoul Bloodline",
+    "class": "Sorcerer",
     "description": "You can grow claws as a free action. These claws are treated as natural weapons, allowing you to make two claw attacks as a full attack using your full base attack bonus.|!PRERACE:1,Ghoul",
     "raw_tokens": [
       {
@@ -159,5 +159,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

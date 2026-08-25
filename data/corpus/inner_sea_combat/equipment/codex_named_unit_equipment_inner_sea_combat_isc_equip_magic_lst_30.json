@@ -1,0 +1,32 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:26:33Z",
+  "data": {
+    "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_30)",
+    "category": "MagicItems",
+    "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_30)",
+    "cost_gp": 14800.0,
+    "weight_lbs": 3.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_equip_magic.lst",
+    "sha256": "6fc68dc8e7c39e038c3ac499020b7e86f948cf8b9303db583243e19028959f9e",
+    "line": 30,
+    "record_key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_30)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_combat:isc_equip_magic.lst:30"
+  }
+}

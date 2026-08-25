@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Oracle Archetype ~ Dual-Cursed Oracle",
     "name": "Dual-Cursed Oracle",
-    "class": "Oracle Archetype",
+    "class": "Oracle",
     "description": "Though doubly-inflicted with supernatural or physical hindrances, a dual-cursed oracle can manipulate fortune and gains greater insight into her mystery.",
     "raw_tokens": [
       {
@@ -55,6 +55,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Oracle"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Dual-Cursed Oracle],[!PREFACT:1,ABILITIES,Oracle_Archetype_MysterySkills=True,Oracle_Archetype_MysterySpell2=True,Oracle_Archetype_MysterySpell4=True,Oracle_Archetype_MysterySpell6=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_CF_MysterySpell6|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySkills|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell2|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell4|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Oracle_Archetype_MysterySpell6|true"
       }
     ]
   },
@@ -71,5 +107,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

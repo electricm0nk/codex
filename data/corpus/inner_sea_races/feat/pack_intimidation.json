@@ -1,0 +1,30 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Pack Intimidation",
+    "category": "Combat",
+    "name": "Pack Intimidation",
+    "description": "You draw on the strength of numbers and your shared convictions to intimidate your foes. Whenever you use the Intimidate skill to demoralize foes, you gain a +2 circumstance bonus on your check for every ally who also has this feat within 30 feet (maximum +6).",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Intimidating",
+      "PREFACT:1,TEMPLATES,IsHalfOrc=true",
+      "PRETEXT:Half-orc, intimidating racial trait."
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst",
+    "sha256": "082b55d0a2908a9c20bc977758f596c73e29a512f7a1407f62b977793587b649",
+    "line": 47,
+    "record_key": "Pack Intimidation"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

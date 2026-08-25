@@ -9,6 +9,10 @@
     "raw_bonus_chains": [],
     "raw_tokens": [
       {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
         "key": "KEY",
         "value": "Special Ability ~ Sensing ~ Armor"
       },
@@ -46,7 +50,7 @@
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 17,
+    "line": 90,
     "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
     "record_key": "Sensing",
     "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"

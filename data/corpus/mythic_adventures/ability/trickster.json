@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Dual Path ~ Trickster",
+    "name": "Trickster",
+    "description": "Seen only when they choose to be seen, tricksters manipulate kings and peasants alike, usually without anyone sensing their inf luence. Characters who rely upon their skills and wit find themselves drawn to the trickster's path. The mythic power of these heroes allows them to perform tasks that most would consider impossible. They can climb any wall, swim any current, and move without being seen by even the most observant guard. When they strike at their foes, they do so with unmatched accuracy.&nl;Role: As a trickster, your role in the party is one of deception and manipulation. You have access to a number of abilities that empower you to confound your foes, both physically and mentally. With a subtle jest or twist of phrase, you can steer entire cities and even nations to do your bidding--but should that fail, you can always rely on a dagger from the shadows.&nl;Classes: Members of any class that relies on skills would make good tricksters, as would those who heavily utilize ranged combat or magical methods of subterfuge. The alchemist, bard, and rogue all have a number of abilities that fit well with the trickster. Gunslingers, monks, and rangers will also find that the trickster has more than a few interesting options.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dual Path ~ Trickster"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dual Path.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Mythic Feat,Dual Path"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Mythic Path ~ Trickster"
+      },
+      {
+        "key": "DESC",
+        "value": "Seen only when they choose to be seen, tricksters manipulate kings and peasants alike, usually without anyone sensing their inf luence. Characters who rely upon their skills and wit find themselves drawn to the trickster's path. The mythic power of these heroes allows them to perform tasks that most would consider impossible. They can climb any wall, swim any current, and move without being seen by even the most observant guard. When they strike at their foes, they do so with unmatched accuracy.&nl;Role: As a trickster, your role in the party is one of deception and manipulation. You have access to a number of abilities that empower you to confound your foes, both physically and mentally. With a subtle jest or twist of phrase, you can steer entire cities and even nations to do your bidding--but should that fail, you can always rely on a dagger from the shadows.&nl;Classes: Members of any class that relies on skills would make good tricksters, as would those who heavily utilize ranged combat or magical methods of subterfuge. The alchemist, bard, and rogue all have a number of abilities that fit well with the trickster. Gunslingers, monks, and rangers will also find that the trickster has more than a few interesting options."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Mythic Path Feature ~ Trickster Attack|1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.44"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 52,
+    "record_key": "Dual Path ~ Trickster"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

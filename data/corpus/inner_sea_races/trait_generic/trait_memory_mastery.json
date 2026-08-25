@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:22:49Z",
+  "data": {
+    "key": "Trait ~ Memory Mastery",
+    "name": "Memory Mastery",
+    "description": "Once per day as an immediate action, you can cause yourself to forget a single event or fact for a period of 10 minutes. Enemies reading your mind cannot learn the information. Until the memory returns, you gain a +10 trait bonus on Bluff checks to convince others that you do not know the information.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Trait ~ Memory Mastery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Trait.RaceTrait.Gillman Race Trait"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassTraitRestriction,1],[!PREABILITY:1,CATEGORY=Special Ability,TYPE.RaceTrait],[PREABILITY:1,CATEGORY=Special Ability,Trait ~ Memory Mastery]"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,TEMPLATES,IsGillman=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as an immediate action, you can cause yourself to forget a single event or fact for a period of 10 minutes. Enemies reading your mind cannot learn the information. Until the memory returns, you gain a +10 trait bonus on Bluff checks to convince others that you do not know the information."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
+    "line": 83,
+    "record_key": "Trait ~ Memory Mastery"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

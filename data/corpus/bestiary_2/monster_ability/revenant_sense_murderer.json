@@ -1,0 +1,52 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Revenant ~ Sense Murderer",
+    "delivery": "Supernatural",
+    "description": "A revenant knows the direction but not the distance to its murderer - this sense can be blocked by any effect that blocks scrying.  Against its murderer, a revenant has true seeing and discern lies in effect at all times (CL 20th); these abilities cannot be dispelled.",
+    "description_variables": [],
+    "facet": "Sense",
+    "key": "bestiary_2:monster_ability:revenant_sense_murderer",
+    "name": "Sense Murderer",
+    "owners": [
+      "bestiary_2:monster:revenant"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A revenant knows the direction but not the distance to its murderer - this sense can be blocked by any effect that blocks scrying.  Against its murderer, a revenant has true seeing and discern lies in effect at all times (CL 20th); these abilities cannot be dispelled."
+      },
+      {
+        "key": "KEY",
+        "value": "Revenant ~ Sense Murderer"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sense.Supernatural"
+      }
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1081,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Revenant ~ Sense Murderer",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

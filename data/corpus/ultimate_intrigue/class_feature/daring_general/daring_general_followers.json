@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Daring General ~ Followers",
     "name": "Daring General Followers",
-    "class": "Daring General",
+    "class": "Cavalier",
     "description": "Beyond the rules noted in Aides-de-Camp, if the daring general uses his followers to create an army using the mass combat rules from Pathfinder RPG Ultimate Campaign, that army starts with one extra tactic of the daring general's choice and a +2 bonus to its morale score. The daring general can assign each of his followers individually to serve as either footmen or honor guards (described below). He does not need to assign either role to a given follower, if he prefers. He can change the role of a follower at any time, but it takes 1 day per level for the follower to change her tactics to suit her new role. Followers with a particular role must group together with other followers with the same role to form an army in mass combat.",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

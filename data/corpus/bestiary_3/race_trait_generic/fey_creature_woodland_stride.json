@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Fey Creature ~ Woodland Stride",
+    "name": "Woodland Stride",
+    "description": "A fey creature can move through any sort of undergrowth (such as natural thorns, briars, overgrown areas, and similar terrain) at its normal speed and without taking damage or suffering any other impairment. Thorns, briars, and overgrown areas that have been magically manipulated to impede motion still affect it. Optionally, this ability may function in a different type of terrain, to allow the fey creature to move through, swamps, rocky areas, ice, and so forth. Whatever the choice, this ability only functions in one type of terrain. This ability can be selected more than once, for a different terrain each time.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Fey Creature ~ Woodland Stride"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTrait.FeyCreatureSelection.FeyCreatureRacialTrait.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "A fey creature can move through any sort of undergrowth (such as natural thorns, briars, overgrown areas, and similar terrain) at its normal speed and without taking damage or suffering any other impairment. Thorns, briars, and overgrown areas that have been magically manipulated to impede motion still affect it. Optionally, this ability may function in a different type of terrain, to allow the fey creature to move through, swamps, rocky areas, ice, and so forth. Whatever the choice, this ability only functions in one type of terrain. This ability can be selected more than once, for a different terrain each time."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 860,
+    "record_key": "Fey Creature ~ Woodland Stride"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

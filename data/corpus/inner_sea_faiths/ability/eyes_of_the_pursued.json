@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Exalted Boon ~ Apsu ~ Eyes of the Pursued",
+    "name": "Eyes of the Pursued",
+    "description": "If you have performed your daily obedience, anytime you use a teleportation effect to move, you can place an invisible magic sensor in the area from which you just departed. As long as you are on the same plane as the sensor, you can see and hear everything occurring within 30 feet of the sensor as a swift action. The sensor lasts for %1 rounds. You can have a maximum of %1 active sensors.|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Exalted Boon ~ Apsu ~ Eyes of the Pursued"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Faith Based Boon.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, anytime you use a teleportation effect to move, you can place an invisible magic sensor in the area from which you just departed. As long as you are on the same plane as the sensor, you can see and hear everything occurring within 30 feet of the sensor as a swift action. The sensor lasts for %1 rounds. You can have a maximum of %1 active sensors.|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
+    "line": 69,
+    "record_key": "Exalted Boon ~ Apsu ~ Eyes of the Pursued"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

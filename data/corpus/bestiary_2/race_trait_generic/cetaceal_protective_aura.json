@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Cetaceal ~ Protective Aura",
+    "name": "Protective Aura",
+    "description": "Against attacks made or effects created by evil creatures, this ability provides a +4 deflection bonus to AC and a +4 resistance bonus on saving throws to anyone within 20 feet of the cetaceal.  Otherwise, it functions as a magic circle against evil effect and a lesser globe of invulnerability, both with a radius of 20 feet (caster level %1).  The defensive benefits from the circle are not included in the above stat block.|TL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cetaceal ~ Protective Aura"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aura.ModifyAC.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "Against attacks made or effects created by evil creatures, this ability provides a +4 deflection bonus to AC and a +4 resistance bonus on saving throws to anyone within 20 feet of the cetaceal.  Otherwise, it functions as a magic circle against evil effect and a lesser globe of invulnerability, both with a radius of 20 feet (caster level %1).  The defensive benefits from the circle are not included in the above stat block.|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 resistance vs. evil"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ModifyAC|+4 deflection vs. evil"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(20 ft.)"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 37,
+    "record_key": "Cetaceal ~ Protective Aura"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

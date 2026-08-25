@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Jabbing Master",
+    "category": "Combat",
+    "name": "Jabbing Master",
+    "description": "Your quick punches become even more lethal.",
+    "prerequisites": [
+      "PREABILITY:6,CATEGORY=FEAT,Dodge,Improved Unarmed Strike,Jabbing Dancer,Jabbing Style,Mobility,Power Attack",
+      "PREMULT:1,[PRETOTALAB:12],[PREVARGTEQ:MonkFeatQualify,8],[PRECLASS:1,Monk=8,Brawler=8]"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 104,
+    "record_key": "Jabbing Master"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

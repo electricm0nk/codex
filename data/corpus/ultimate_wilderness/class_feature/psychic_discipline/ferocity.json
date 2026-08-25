@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Psychic Discipline ~ Ferocity",
+    "name": "Ferocity",
+    "class": "Psychic",
+    "description": "You are in touch with the most primal part of your subconscious. Your training allows you to unlock animalistic senses and powers. Phrenic Pool Ability: Wisdom. Discipline Powers: Through your psychic training, you can unleash the most animalistic portions of your subconscious, enhancing your senses and physical capabilities.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Psychic Discipline ~ Ferocity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psychic Discipline.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "You are in touch with the most primal part of your subconscious. Your training allows you to unlock animalistic senses and powers. Phrenic Pool Ability: Wisdom. Discipline Powers: Through your psychic training, you can unleash the most animalistic portions of your subconscious, enhancing your senses and physical capabilities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Psychic Discipline Ferocity ~ Bonus Spells|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Ferocity ~ Enhanced Senses|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Ferocity ~ Survival Instinct|PRECLASS:1,Psychic=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Ferocity ~ Ferocity|PRECLASS:1,Psychic=5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psychic Discipline Ferocity ~ Primal Fury|PRECLASS:1,Psychic=13"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PhrenicPoolAbility|WIS"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.92"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 154,
+    "record_key": "Psychic Discipline ~ Ferocity"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

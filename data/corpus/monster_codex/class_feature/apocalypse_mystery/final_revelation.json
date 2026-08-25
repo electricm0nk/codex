@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Apocalypse Mystery ~ Final Revelation",
     "name": "Final Revelation",
-    "class": "Apocalypse Mystery",
+    "class": "Oracle",
     "description": "Upon reaching 20th level, you become a herald of the apocalypse and wield the awesome power to fulfill such prophecy. Anytime you successfully cast a spell or use an ability that bestows 1 or more negative levels, the effect bestows 1d4 additional negative levels. Whenever you confirm a critical hit against a creature (including with a melee, ranged, or spell attack), as a swift action you can curse the target of your attack, as the bestow curse spell, except the target doesn't receive a Will saving throw to negate the effects and spell resistance does not apply against this ability",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

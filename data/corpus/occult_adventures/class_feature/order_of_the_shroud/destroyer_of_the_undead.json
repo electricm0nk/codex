@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Order Of The Shroud ~ Destroyer of the Undead",
     "name": "Destroyer of the Undead",
-    "class": "Order Of The Shroud",
+    "class": "Cavalier",
     "description": "At 8th level, the cavalier's weapons are treated as having the cavalier's alignment for the purpose of overcoming the damage reduction of undead creatures. Against an undead target of his challenge, the cavalier automatically overcomes all damage reduction that undead possesses.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

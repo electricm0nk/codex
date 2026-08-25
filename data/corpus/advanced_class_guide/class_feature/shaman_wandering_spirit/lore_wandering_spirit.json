@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Shaman Wandering Spirit ~ Lore",
     "name": "Lore (Wandering Spirit)",
-    "class": "Shaman Wandering Spirit",
+    "class": "Shaman",
     "description": "Spirit Magic Spells: identify (1st), tongues (2nd), locate object (3rd), legend lore (4th), contact other plane (5th), mass owl's wisdom (6th), vision (7th), moment of prescience (8th), time stop (9th)",
     "raw_tokens": [
       {
@@ -43,6 +43,42 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.43"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=1|identify"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=2|tongues"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=3|locate object"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=4|legend lore"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=5|contact other plane"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=6|owl's wisdom (mass)"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=7|vision"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=8|moment of prescience"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "CLASS|Shaman=9|time stop"
       }
     ]
   },
@@ -59,5 +95,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

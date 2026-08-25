@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Aegis ~ Improved Armor 3",
+    "name": "Improved Armor 3",
+    "class": "Aegis",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aegis ~ Improved Armor 3"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AstralSuitCustomization"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aegis ~ Improved Armor 2"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "AstralSuitLVL,15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AegisImprovedArmorBonus|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 64,
+    "record_key": "Aegis ~ Improved Armor 3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

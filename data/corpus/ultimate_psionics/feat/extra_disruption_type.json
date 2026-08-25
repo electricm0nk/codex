@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Extra Disruption Type",
+    "category": "Psionic",
+    "name": "Extra Disruption Type",
+    "description": "When you gain psionic focus, you can select one additional creature type as your active type.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Cryptic ~ Disrupt Pattern",
+      "PREVARGTEQ:IsPsionic,1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 105,
+    "record_key": "Extra Disruption Type"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

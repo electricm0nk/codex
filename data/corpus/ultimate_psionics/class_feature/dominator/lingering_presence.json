@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Dominator ~ Lingering Presence",
+    "name": "Lingering Presence",
+    "class": "Dominator",
+    "description": "Once a creature has failed a Will saving throw against a mind-affecting power, but not a talent, manifested by you, it takes a -2 penalty to future Will saving throws against telepathy powers manifested by you for one day plus the duration of the power it failed the save against.  In addition, you can use the senses of a creature under the effect of lingering presence for %1 rounds per day as if using the sense link power.|LingeringPresenceSenseLinkRounds",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dominator ~ Lingering Presence"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PsionClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LingeringPresenceSenseLinkRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once a creature has failed a Will saving throw against a mind-affecting power, but not a talent, manifested by you, it takes a -2 penalty to future Will saving throws against telepathy powers manifested by you for one day plus the duration of the power it failed the save against.  In addition, you can use the senses of a creature under the effect of lingering presence for %1 rounds per day as if using the sense link power.|LingeringPresenceSenseLinkRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LingeringPresenceSenseLinkRounds|PsionLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.312"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1994,
+    "record_key": "Dominator ~ Lingering Presence"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

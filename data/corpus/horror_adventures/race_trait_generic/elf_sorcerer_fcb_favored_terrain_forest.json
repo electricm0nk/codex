@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Elf Sorcerer FCB ~ Favored Terrain ~ Forest",
+    "name": "Forest",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf Sorcerer FCB ~ Favored Terrain ~ Forest"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "ElfSorcererFCB_HA"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElfSorcererFCB_FT_Forest|0"
+      },
+      {
+        "key": "STACK",
+        "value": "YES"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElfSorcererFCB_FT_Forest|1"
+      },
+      {
+        "key": "ASPECT",
+        "value": "AbilityBenefit|When casting sorcerer spells in forest terrain, add %1 to the effective caster level of the spell, for the purpose of determining the spells' duration.|ElfSorcererFCB_FT_Forest/3|PREVARGTEQ,ElfSorcererFCB_FT_Forest,3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 186,
+    "record_key": "Elf Sorcerer FCB ~ Favored Terrain ~ Forest"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

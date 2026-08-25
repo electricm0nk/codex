@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ninja Trick ~ Forgotten Trick",
     "name": "Forgotten Trick",
-    "class": "Ninja Trick",
+    "class": "Ninja",
     "description": "A ninja with this ability can recall one trick taught to her by her ancient masters. When she uses this ability, she selects one ninja trick (not a master trick or rogue talent) that she does not know and can use that ninja trick for a number of rounds equal to her level. She must pay any ki costs associated with the trick as normal. Using this ability expends 2 ki point from her ki pool, plus the ki cost of the trick she chooses.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

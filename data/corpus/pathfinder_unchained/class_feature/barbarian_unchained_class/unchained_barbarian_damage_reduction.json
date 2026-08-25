@@ -1,25 +1,76 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
-    "key": "Unchained Barbarian ~ Damage Reduction",
-    "name": "Damage Reduction",
-    "class_key": "Barbarian ~ Unchained Class",
     "base_class_key": "Barbarian",
     "category": "Special Ability",
-    "type_tokens": [
-      "Unchained Barbarian Class Feature",
-      "ClassFeatures",
-      "SpecialQuality",
-      "Extraordinary"
-    ],
-    "min_level": 7,
-    "is_granted": true,
-    "visible": null,
+    "class_key": "Barbarian ~ Unchained Class",
     "class_skills": [],
     "description": "You gain damage reduction. Subtract from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.",
-    "source_page": "p.13",
+    "is_granted": true,
+    "key": "Unchained Barbarian ~ Damage Reduction",
+    "min_level": 7,
+    "name": "Damage Reduction",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "BarbarianDR",
+          "(BarbarianDRLVL-4)/3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BarbarianDRLVL",
+          "BarbarianLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BarbarianDR",
+          "-1",
+          "PREVARGTEQ:(BarbarianDRLVL-4)/3,1",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BarbarianDR",
+          "-1",
+          "PREVARGTEQ:(BarbarianDRLVL-4)/3,2",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BarbarianDR",
+          "-1",
+          "PREVARGTEQ:(BarbarianDRLVL-4)/3,3",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BarbarianDR",
+          "-1",
+          "PREVARGTEQ:(BarbarianDRLVL-4)/3,4",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BarbarianDR",
+          "-1",
+          "PREVARGTEQ:(BarbarianDRLVL-4)/3,5",
+          "PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianDamageReduction5"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -58,33 +109,27 @@
         "value": "p.13"
       }
     ],
-    "raw_bonus_chains": [
-      {
-        "qualifiers": [
-          "VAR",
-          "BarbarianDR",
-          "(BarbarianDRLVL-4)/3"
-        ]
-      },
-      {
-        "qualifiers": [
-          "VAR",
-          "BarbarianDRLVL",
-          "BarbarianLVL"
-        ]
-      }
-    ]
+    "source_page": "p.13",
+    "type_tokens": [
+      "Unchained Barbarian Class Feature",
+      "ClassFeatures",
+      "SpecialQuality",
+      "Extraordinary"
+    ],
+    "visible": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
-    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
-    "line": 293,
-    "record_key": "Unchained Barbarian ~ Damage Reduction"
-  },
+  "ingested_at": "2026-08-03T17:43:07Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 293,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "record_key": "Unchained Barbarian ~ Damage Reduction",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T19:21:37Z",
+  "data": {
+    "corpus_key": "Shikigami ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 6th; concentration +8) At will-invisibility (self only), statue (self only) 3/day-hide from animals, purify food and drink 1/week-commune with nature (CL 12th)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "occult_adventures:monster_ability:shikigami_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [],
+    "source_page": null,
+    "traits": [
+      "ShikigamiRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/support/oa_abilities_race_b3.lst",
+    "sha256": "0bc71f2432abdf7b5d8af974cb43d8a8c40bdd0f1b012371c56e8f47e265abea",
+    "line": 10,
+    "record_key": "Shikigami ~ Spell-Like Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

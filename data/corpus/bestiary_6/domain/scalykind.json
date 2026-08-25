@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Scalykind",
+    "name": "Scalykind",
+    "raw_tokens": [
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVARLT:DomainNotAllowed,1],[PREVAREQ:AllowDomainScalykind,1]"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREDOMAIN:1,Scalykind],[PREVARLT:ScalykindDomain,1]"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Core Domain ~ Scalykind Domain|!PREABILITY:1,CATEGORY=Special Ability,TYPE.ScalykindDomainReplacement"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ScalykindDomain|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainScalykindTimes|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Scalykind=1|Magic Fang|Scalykind=2|Animal Trance|Scalykind=3|Magic Fang (Greater)|Scalykind=4|Poison|Scalykind=5|Animal Growth (Reptiles Only)|Scalykind=6|Eyebite|Scalykind=7|Creeping Doom|Scalykind=8|Animal Shapes (Reptiles Only)|Scalykind=9|Shapechange"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_domains.lst",
+    "sha256": "8bd9c25d265755949bbf401885e4e1e17621d4d5aed66544a8680dd442f85ed8",
+    "line": 3,
+    "record_key": "Scalykind"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

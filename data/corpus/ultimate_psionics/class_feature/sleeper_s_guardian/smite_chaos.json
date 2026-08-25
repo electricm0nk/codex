@@ -1,0 +1,93 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Sleeper's Guardian ~ Smite Chaos",
+    "name": "Smite Chaos",
+    "class": "Sleeper's Guardian",
+    "description": "You can call out to the powers of order to aid you in your struggle against chaos %1 times per day. As a swift action, you choose one target within sight to smite. If this target is chaotic, you add +%2 to your attack rolls and +%3 to all damage rolls made against the target of your smite. If the target of Smite Chaos is an outsider with the chaos subtype, a chaos-aligned dragon, or an undead creature, the bonus to damage on the first successful attack increases to +%4. Regardless of the target, Smite Chaos attacks automatically bypass any DR the creature might possess. In addition, while Smite Chaos is in effect, you gain a +%5 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not chaotic, the smite is wasted with no effect. The Smite Chaos effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.|SmiteChaosTimes|SmiteChaosAttackBonus|SmiteChaosDamageBonus|SmiteChaosDamageBonus*2|SmiteChaosACBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sleeper's Guardian ~ Smite Chaos"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "PaladinClassFeatures.SpecialAttack.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteChaosTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteChaosAttackBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteChaosDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteChaosACBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SmiteChaosLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can call out to the powers of order to aid you in your struggle against chaos %1 times per day. As a swift action, you choose one target within sight to smite. If this target is chaotic, you add +%2 to your attack rolls and +%3 to all damage rolls made against the target of your smite. If the target of Smite Chaos is an outsider with the chaos subtype, a chaos-aligned dragon, or an undead creature, the bonus to damage on the first successful attack increases to +%4. Regardless of the target, Smite Chaos attacks automatically bypass any DR the creature might possess. In addition, while Smite Chaos is in effect, you gain a +%5 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not chaotic, the smite is wasted with no effect. The Smite Chaos effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.|SmiteChaosTimes|SmiteChaosAttackBonus|SmiteChaosDamageBonus|SmiteChaosDamageBonus*2|SmiteChaosACBonus"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteChaosTimes|min((SmiteChaosLVL+2)/3,7)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteChaosAttackBonus,SmiteChaosACBonus|max(CHA,0)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteChaosDamageBonus|SmiteChaosLVL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SmiteChaosLVL|PaladinLVL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.318"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|SmiteChaosTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2554,
+    "record_key": "Sleeper's Guardian ~ Smite Chaos"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_formula_segment"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rage Power ~ Undead Blood (Lesser)",
     "name": "Undead Blood, Lesser",
-    "class": "Rage Power",
+    "class": "Barbarian",
     "description": "While raging, when the barbarian hits a creature with a charge attack, the creature she hit becomes shaken for %1 rounds. This effect does not stack with other fear effects to cause a stronger condition.|max(floor(BarbarianLVL/2))",
     "raw_tokens": [
       {
@@ -52,5 +52,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

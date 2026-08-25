@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Improved Great Fortitude",
+    "category": "General",
+    "name": "Improved Great Fortitude",
+    "description": "You can draw upon an inner reserve to resist diseases, poisons, and other grievous harm.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Great Fortitude"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+    "sha256": "5ad62f0183b3005a452c93c4d954bcad97033f92dfb8276f214c1c321831db7f",
+    "line": 99,
+    "record_key": "Improved Great Fortitude"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

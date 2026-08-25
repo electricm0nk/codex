@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Swashbuckler Archetype ~ Picaroon",
     "name": "Picaroon",
-    "class": "Swashbuckler Archetype",
+    "class": "Swashbuckler",
     "description": "While some swashbucklers take pride in their ability to wear down an opponent with great skill at arms and clever positioning, there are those who use firearms to get in close and hit hard.",
     "raw_tokens": [
       {
@@ -75,6 +75,74 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Swashbuckler"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Swashbuckler Archetype ~ Picaroon],[!PREFACT:1,ABILITIES,Swashbuckler_Archetype_Proficiencies=True,Swashbuckler_Archetype_Panache=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_Deeds=True,Swashbuckler_Archetype_SwashbucklerFinesse=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_WeaponProficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_OpportuneParryandRiposteDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_KipUpDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SuperiorFeintDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_BleedingWoundDeed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_CF_SwashbucklerFinesse|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Panache|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_Deeds|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Swashbuckler_Archetype_SwashbucklerFinesse|true"
       }
     ]
   },
@@ -91,5 +159,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

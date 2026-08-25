@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half-Elf ~ Dual Minded",
+    "name": "Dual Minded",
+    "description": "The mixed ancestry of some half-elves makes them resistant to mental attacks. Half-elves with this racial trait get a +2 bonus on all Will saving throws.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Dual Minded"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Dual Minded],[!PREFACT:1,ABILITIES,HalfElf_ReplaceAdaptability=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "The mixed ancestry of some half-elves makes them resistant to mental attacks. Half-elves with this racial trait get a +2 bonus on all Will saving throws."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the adaptability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Dual Minded"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|Will|2"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAdaptability|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
+    "line": 62,
+    "record_key": "Half-Elf ~ Dual Minded"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

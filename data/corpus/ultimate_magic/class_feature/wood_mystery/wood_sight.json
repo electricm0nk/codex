@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wood Mystery ~ Wood Sight",
     "name": "Wood Sight",
-    "class": "Wood Mystery",
+    "class": "Oracle",
     "description": "As a move action, you can alter your vision to see through underbrush and plant growth that would normally grant concealment, up to a range of 60 feet (though darkness and other obstacles still may block your sight).",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

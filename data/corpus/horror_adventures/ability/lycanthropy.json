@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Corruption ~ Lycanthropy",
+    "name": "Lycanthropy",
+    "description": "Lycanthropy is contracted from being savagely wounded by the teeth or claws of a lycanthrope, typically when reduced to less than 10%% of your maximum hit points in a single combat with one. (This can vary with the power of the creature.) When you contract this corruption, note the animal associated with the lycanthrope, as that is the kind if lycanthrope you will become. Lycanthropy's progress is tied to the phases of the moon. Each month, the moon is considered full for three nights. At the onset of the corruption, you must attempt a Will saving throw during one of the nights chosen by the GM. For each stage of lycanthropy corruption you have, you must attempt a save on one additional night, eventually needing to save on nights leading up to and possibly after the full moon. The DC of this save is %1. If you fail a save, you don't need to attempt more until the next full moon. Failing a saving throw against this corruption causes you to black out, losing control of your character. During this time, your form becomes that of the associated creature and you give into your animalistic urges, hunting and killing with abandon. The next morning, you regain control, typically in the wilderness without any gear and soaked in blood. If you fail the save but your inner animal is prevented from running free, perhaps because you were restrained, you transform and attempt to run free without a save on the remaining full moon nights, and you also go out of control any time you shift forms during the days of that full moon. If you last through it and remain restrained, your corruption doesn't progress to the next stage. However, the DC of the Will save against your corruption progressing increases by 2. These increases stack each time this occurs, and they last until your corruption reaches the next stage.|15+LycanthropyManifestationLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Corruption ~ Lycanthropy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CorruptionType"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LycanthropyCorruptionResistance|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "DESC",
+        "value": "Lycanthropy is contracted from being savagely wounded by the teeth or claws of a lycanthrope, typically when reduced to less than 10%% of your maximum hit points in a single combat with one. (This can vary with the power of the creature.) When you contract this corruption, note the animal associated with the lycanthrope, as that is the kind if lycanthrope you will become. Lycanthropy's progress is tied to the phases of the moon. Each month, the moon is considered full for three nights. At the onset of the corruption, you must attempt a Will saving throw during one of the nights chosen by the GM. For each stage of lycanthropy corruption you have, you must attempt a save on one additional night, eventually needing to save on nights leading up to and possibly after the full moon. The DC of this save is %1. If you fail a save, you don't need to attempt more until the next full moon. Failing a saving throw against this corruption causes you to black out, losing control of your character. During this time, your form becomes that of the associated creature and you give into your animalistic urges, hunting and killing with abandon. The next morning, you regain control, typically in the wilderness without any gear and soaked in blood. If you fail the save but your inner animal is prevented from running free, perhaps because you were restrained, you transform and attempt to run free without a save on the remaining full moon nights, and you also go out of control any time you shift forms during the days of that full moon. If you last through it and remain restrained, your corruption doesn't progress to the next stage. However, the DC of the Will save against your corruption progressing increases by 2. These increases stack each time this occurs, and they last until your corruption reaches the next stage.|15+LycanthropyManifestationLevel"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +%1 circumstance bonus on saving throws related to the corruption progressing.|LycanthropyCorruptionResistance|PREVARGTEQ:LycanthropyCorruptionResistance,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Lycanthropy Corruption Counter"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 542,
+    "record_key": "Corruption ~ Lycanthropy"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

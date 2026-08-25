@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Sage ~ Sage's Knowledge",
+    "name": "Sage's Knowledge",
+    "description": "A sage stores information on every topic and is happy to lecture its master on the finer points of a subject. A sage can attempt all Knowledge checks untrained and gains a bonus on Knowledge checks equal to half its master's class level. [SKILL RANK CHANGES NOT IMPLEMENTED] Additionally, a sage gains 2 skill ranks each time its master gains a class level. Its maximum number of ranks in any given skill is equal to its master's class level. This replaces the familiar's ability to share its master's skill ranks.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sage ~ Sage's Knowledge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "FamiliarClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "A sage stores information on every topic and is happy to lecture its master on the finer points of a subject. A sage can attempt all Knowledge checks untrained and gains a bonus on Knowledge checks equal to half its master's class level. [SKILL RANK CHANGES NOT IMPLEMENTED] Additionally, a sage gains 2 skill ranks each time its master gains a class level. Its maximum number of ranks in any given skill is equal to its master's class level. This replaces the familiar's ability to share its master's skill ranks."
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|TYPE=Knowledge|MasterLevel/2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 623,
+    "record_key": "Sage ~ Sage's Knowledge"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

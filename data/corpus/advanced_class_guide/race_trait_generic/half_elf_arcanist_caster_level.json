@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Half Elf ~ Arcanist ~ Caster Level",
+    "name": "Caster Level",
+    "description": "When casting arcanist enchantment spells, add %1 to the effective caster level, but only for the purpose of determining duration.|HalfElfArcanistFavClassBonus/3",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half Elf ~ Arcanist ~ Caster Level"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "When casting arcanist enchantment spells, add %1 to the effective caster level, but only for the purpose of determining duration.|HalfElfArcanistFavClassBonus/3"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
+    "line": 319,
+    "record_key": "Half Elf ~ Arcanist ~ Caster Level"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

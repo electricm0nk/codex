@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Gravedigger Power ~ Soulbound Puppet",
+    "name": "Soulbound Puppet",
+    "class": "Gravedigger Power",
+    "description": "As a full-round action, you can expend 1 point of inspiration to create a soulbound puppet from a bone, doll, or skull. If you use a bone or a skull, your power builds a Tiny or Small flesh puppet around it that vaguely resembles the original creature from which the bones were taken. If the implement is a doll, the doll comes to life. Treat this as a familiar, using your investigator level as your wizard level to determine its powers and abilities. By using a bone or skull from the appropriate creature or a doll shaped like that creature, you can select any of the familiar choices available to a wizard. You can instead use a humanoid bone, doll, or skull, to give the puppet the base statistics of a homunculus (Bestiary 176), but without a fly speed or the poison bite or telepathic link abilities. No matter the form, this creature is a construct with an alignment matching your own. You can have no more than one soulbound puppet active at any given time. The soulbound puppet remains animated for %2 minutes.|10*InvestigatorLVL",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gravedigger Power ~ Soulbound Puppet"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "InvestigatorTalent.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Gravedigger ~ Relic Focus"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, you can expend 1 point of inspiration to create a soulbound puppet from a bone, doll, or skull. If you use a bone or a skull, your power builds a Tiny or Small flesh puppet around it that vaguely resembles the original creature from which the bones were taken. If the implement is a doll, the doll comes to life. Treat this as a familiar, using your investigator level as your wizard level to determine its powers and abilities. By using a bone or skull from the appropriate creature or a doll shaped like that creature, you can select any of the familiar choices available to a wizard. You can instead use a humanoid bone, doll, or skull, to give the puppet the base statistics of a homunculus (Bestiary 176), but without a fly speed or the poison bite or telepathic link abilities. No matter the form, this creature is a construct with an alignment matching your own. You can have no more than one soulbound puppet active at any given time. The soulbound puppet remains animated for %2 minutes.|10*InvestigatorLVL"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_class_oa.lst",
+    "sha256": "9c111f652f8442433ea215fa11e67258c7e6c15c75d1c1753fa6fef34827f46c",
+    "line": 49,
+    "record_key": "Gravedigger Power ~ Soulbound Puppet"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

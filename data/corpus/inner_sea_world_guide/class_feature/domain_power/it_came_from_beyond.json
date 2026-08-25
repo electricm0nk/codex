@@ -1,11 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ It Came From Beyond",
     "name": "It Came From Beyond",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Inquisitor",
+      "Paladin"
+    ],
     "description": "Once per day when you cast a summoning spell, any one creature you summon is more powerful than normal. The creature gains the advanced creature simple template. If you summon more than one creature with a spell, only one of the summoned creatures gains the advanced creature simple template. A summoned creature that gains the advanced creature simple template in this manner looks unusually deformed or hideous. This ability only works on spells you cast as a cleric-it does not work on spellcasting ability gained from any other spellcasting classes you might have. This ability replaces the Guarded Mind ability of the Void domain.",
     "raw_tokens": [
       {
@@ -39,5 +44,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

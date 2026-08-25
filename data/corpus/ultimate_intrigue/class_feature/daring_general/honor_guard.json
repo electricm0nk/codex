@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Daring General ~ Follower ~ Honor Guard",
     "name": "Honor Guard",
-    "class": "Daring General",
+    "class": "Cavalier",
     "description": "The follower gains a +2 bonus to her AC and on saving throws, but takes a -2 penalty on attack and damage rolls. An honor guard unit gains a +2 bonus to its DV and takes a -2 penalty to its OM in mass combat.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

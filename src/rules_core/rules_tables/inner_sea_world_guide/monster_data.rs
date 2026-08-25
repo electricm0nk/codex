@@ -10,28 +10,56 @@
 //! Sources, with the line each record was read from carried per row:
 //!   * `iswg_races_bestiary.lst` -- 5 monster rows
 //!   * `iswg_races.lst` -- 4 monster rows
-//!   * `iswg_abilities_race.lst` -- 14 monster-ability rows
+//!   * `iswg_abilities_race.lst` -- 30 monster-ability rows
 //!
-//! 5 monster row(s) and 3 ability row(s) of this
+//! 5 monster row(s) and 0 ability row(s) of this
 //! book are Product Identity and are NOT transcribed -- either because the corpus
-//! row DECLARES it (`NAMEISPI:YES`, PCGen's own per-record marker) or because an
-//! emitted value carries a `pi_screening::PI_BLACKLIST_TERMS` term. Both land in
-//! the name or key, which is the one field redaction cannot touch. Reclassifying
-//! is `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator
+//! row DECLARES its name Product Identity (`NAMEISPI:YES`, PCGen's own
+//! per-record marker) or because a `pi_screening::PI_BLACKLIST_TERMS` term lands
+//! in a field neither the `§24` rename nor the description-redact path can fix
+//! (an owner's name, a trait/variable value). A hit confined to the name/key or
+//! description alone ships instead -- see the renamed/redacted lists below.
+//! Reclassifying is `docs/governance/ogl-pi-blacklist.md` §3's per-book override,
+//! an operator
 //! decision, not a transcriber's:
 //!   * `iswg_races_bestiary.lst:13` (monster row, NAMEISPI:YES)
 //!   * `iswg_races.lst:13` (monster row, NAMEISPI:YES)
 //!   * `iswg_races_bestiary.lst:14` (monster row, NAMEISPI:YES)
 //!   * `iswg_races.lst:14` (monster row, NAMEISPI:YES)
 //!   * `iswg_races.lst:16` (monster row, NAMEISPI:YES)
-//!   * `iswg_abilities_race.lst:24` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
-//!   * `iswg_abilities_race.lst:25` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
-//!   * `iswg_abilities_race.lst:27` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
 //!
-//! 13 further ability row(s) in this book are ORPHANS -- no monster
-//! row here claims them, so they are deliberately NOT transcribed (a record
-//! with no owner loads and is never shown). `not-ingested` is their honest status
-//! in the work inventory, and the round's receipt records them by key:
+//! 3 ability row(s) of this book have their OWN name/key match
+//! a `pi_screening::PI_BLACKLIST_TERMS` term -- `decisions.md §24`'s "the name
+//! itself is PI" case. Each ships under a Codex-generated NEUTRAL name/key
+//! derived ONLY from `(kind, book, source_file, source_line)` -- never from the
+//! original name, not even transformed -- `scripts/codex_neutral_name.py`. Per
+//! `§24b`-4, the divergence record below stops at the coordinate and the reason;
+//! the original string is never written here:
+//!   * `iswg_abilities_race.lst:24` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24) (name_pi_blocked)
+//!   * `iswg_abilities_race.lst:25` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25) (name_pi_blocked)
+//!   * `iswg_abilities_race.lst:27` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27) (name_pi_blocked)
+//!
+//! 1 ability row(s) of this book carry Product Identity in
+//! their `description` field ONLY (declared `DESCISPI:YES`, or an undeclared
+//! `pi_screening::PI_BLACKLIST_TERMS` term found by scanning) -- `description`
+//! (and its `%N` variables) SHIP REDACTED to `shape_b_v1::REDACTED_PI_MARKER`
+//! rather than dropped, because a description (unlike a name) can be redacted
+//! and the record still works. Reclassifying is
+//! `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator
+//! decision, not a transcriber's:
+//!   * `iswg_abilities_race.lst:27` (Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27))
+//!
+//! 16 further ability row(s) in this book are ORPHANS -- no monster
+//! row here claims them, so they SHIP with `owners: &[]` rather than being
+//! dropped (`decisions.md §20`: an un-ingested row's shape cannot be measured,
+//! and Gate 1's DoD needs every unit's shape measured). `list_monster_catalog`
+//! only ever walks a monster's OWN `ability_keys`, so an owner-less record here
+//! reaches no screen -- reachability is NOT claimed for these, and each key is
+//! pinned as a named, provable non-reach in `reach_gate.rs::
+//! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
+//!   * `iswg_abilities_race.lst:24`
+//!   * `iswg_abilities_race.lst:25`
+//!   * `iswg_abilities_race.lst:27`
 //!   * `iswg_abilities_race.lst:50`
 //!   * `iswg_abilities_race.lst:51`
 //!   * `iswg_abilities_race.lst:52`
@@ -232,7 +260,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every inner_sea_world_guide monster-ability record (14 rows).
+/// Every inner_sea_world_guide monster-ability record (30 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Aluum ~ Immunity to Magic",
@@ -246,6 +274,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Aluum"],
         source_file: "iswg_abilities_race.lst",
         source_line: 7,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Aluum ~ Paralysis",
@@ -259,6 +290,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Aluum"],
         source_file: "iswg_abilities_race.lst",
         source_line: 8,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Aluum ~ Soul Shriek",
@@ -272,6 +306,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Aluum"],
         source_file: "iswg_abilities_race.lst",
         source_line: 9,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Calikang ~ Fast Healing",
@@ -285,6 +322,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Calikang"],
         source_file: "iswg_abilities_race.lst",
         source_line: 12,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Calikang ~ Defensive Slam",
@@ -298,6 +338,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Calikang"],
         source_file: "iswg_abilities_race.lst",
         source_line: 13,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Calikang ~ Energy Absorption",
@@ -311,6 +354,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Calikang"],
         source_file: "iswg_abilities_race.lst",
         source_line: 14,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Calikang ~ Breath Weapon",
@@ -324,6 +370,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Calikang"],
         source_file: "iswg_abilities_race.lst",
         source_line: 15,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Calikang ~ Suspend Animation",
@@ -337,6 +386,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Calikang"],
         source_file: "iswg_abilities_race.lst",
         source_line: 16,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Charau-ka ~ Shrieking Frenzy",
@@ -350,6 +402,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Charau-ka"],
         source_file: "iswg_abilities_race.lst",
         source_line: 19,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Charau-ka ~ Thrown-Weapon Mastery",
@@ -363,6 +418,105 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Charau-ka"],
         source_file: "iswg_abilities_race.lst",
         source_line: 20,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24)",
+        name: "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24)",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Bubonic Plague: Great claw--injury; save Fort DC %1; onset immediate; frequency 1/day; effect 1d4 damage and target is fatigued; cure 2 consecutive saves."),
+        description_variables: &["DoUDiseaseDC"],
+        source_page: Some("p.310"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 24,
+        codex_generated_name: true,
+        rename_reason: Some("name_pi_blocked"),
+        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race.lst:24"),
+    },
+    MonsterAbilityRecord {
+        key: "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)",
+        name: "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("One of the daughter's hands is a tremendous scythe-shaped claw. This attack inflicts x4 damage on a critical hit, and is treated as an evil weapon for the purposes of penetrating damage reduction."),
+        description_variables: &[],
+        source_page: Some("p.310"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 25,
+        codex_generated_name: true,
+        rename_reason: Some("name_pi_blocked"),
+        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race.lst:25"),
+    },
+    MonsterAbilityRecord {
+        key: "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27)",
+        name: "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27)",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &[],
+        description: Some("[redacted PI]"),
+        description_variables: &[],
+        source_page: Some("p.310"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 27,
+        codex_generated_name: true,
+        rename_reason: Some("name_pi_blocked"),
+        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race.lst:27"),
+    },
+    MonsterAbilityRecord {
+        key: "Sandpoint Devil ~ Bay",
+        name: "Bay",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("When the Sandpoint Devil screams as a standard action, all creatures within a 300-ft.-radius spread must succeed at a DC %1 Will save or become panicked for 2d5 rounds. This is a sonic, mind-affecting fear effect. Whether or not the save is successful, creatures within the effect are immune to the Sandpoint Devil's bay for 24 hours thereafter."),
+        description_variables: &["10+(HD/2)+CHA"],
+        source_page: Some("p.312"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 50,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Sandpoint Devil ~ Hellfire Breath",
+        name: "Hellfire Breath",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Once every 1d4 rounds, the Sandpoint Devil can unleash a blast of infernal flame from its mouth as a standard action. This hellfire fills a 30-ft. cone and causes 10d6 points of fire damage (Reflex DC %1 half). Anyone who takes damage from this breath weapon must also make a DC %1 Wo;; save to avoid becoming cursed by the infernal flames--those who become cursed take a -4 penalty on all attack rolls, saving throws, and skill checks for a number of days equal to the damage taken--during this time, the victim's skin appears to be horribly burned in places regardless of any healing applied. This curse effect functions at caster level %2."),
+        description_variables: &["10+(HD/2)+CON", "HD"],
+        source_page: Some("p.312"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 51,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Sandpoint Devil ~ Kick",
+        name: "Kick",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("The Sandpoint Devil's hoof attacks are primary attacks that deal bludgeoning and slashing damage."),
+        description_variables: &[],
+        source_page: Some("p.312"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 52,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Spine Dragon ~ Breath Weapon",
@@ -376,6 +530,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dragon (Spine)"],
         source_file: "iswg_abilities_race.lst",
         source_line: 55,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Spine Dragon ~ Ray Deflection",
@@ -389,6 +546,9 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dragon (Spine)"],
         source_file: "iswg_abilities_race.lst",
         source_line: 56,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Spine Dragon ~ Spines",
@@ -402,6 +562,105 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dragon (Spine)"],
         source_file: "iswg_abilities_race.lst",
         source_line: 57,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Treerazer ~ Regeneration",
+        name: "Regeneration",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["ModifyHP"],
+        description: Some("You are difficult to kill. You heal damage at %1 points per round, and you cannot die as long as your regeneration is still functioning (although you still fall unconscious when your hit points are below 0). Good aligned damage causes your regeneration to stop functioning on the round following the attack: you cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally."),
+        description_variables: &["RegenerationRate"],
+        source_page: Some("p.315"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 81,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Treerazer ~ Aura of Corruption",
+        name: "Aura of Corruption",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["Aura"],
+        description: Some("Treerazer exudes an aura of corruption to a radius of 120 ft. This aura causes plants to grow hideous, sprouting thorns, twisting, and becoming fungoid in nature. Creatures with woodland stride or freedom of movement can move through this fungal bloom with ease. Living creatures within Treerazer's aura of corruption must make a DC %1 Fortitude save each round or their flesh grows pasty and clammy as tendrils of diseased plant matter and fungal growth sprout from it. This condition persists as long as the creature remains within Treerazer's aura of corruption and for 1 minute thereafter. While suffering the effects of this aura, the living creature is treated as a plant for the purposes of spells and effects that harm or otherwise inconvenience plant creatures more than other creatures. The corruption does not otherwise impart plant traits to creatures."),
+        description_variables: &["10+(HD/2)+CON", "TYPE=Base"],
+        source_page: Some("p.315"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 82,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Treerazer ~ Defoliation",
+        name: "Defoliation",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("As a standard action once every 1d4 rounds, Treerazer can exude a pulse of defoliating energy in a 30-ft.-radius spread. This pulse appears as a wave of sickly green energy, and causes all plants and plant creatures in the area to blacken and wither. Such creatures take 20d10 points of damage and 1d8 points of Strength drain, or half with a successful DC %1 Fort save. A plant that isn't a creature (such as a tree or a shrub) doesn't receive a save and immediately withers and dies. Treerazer can choose to exclude any number of plants in the area from this effect, and generally does so to preserve twisted and corrupted plants and fungus."),
+        description_variables: &["10+(HD/2)+CON", "TYPE=Base"],
+        source_page: Some("p.315"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 83,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Nascent Demon Lord ~ Aligned Strike",
+        name: "Aligned Strike",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A nascent demon lord's natural weapons, as well as any weapon it wields, are treated as chaotic, epic, and evil for the purpose of resolving damage reduction."),
+        description_variables: &[],
+        source_page: Some("p.315"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 86,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Nascent Demon Lord ~ Grant Spells",
+        name: "Grant Spells",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Nascent demon lords can grant spells to their worshipers. Granting spells does not require any specific action on the nascent demon lord's behalf. All nascent demon lords grant access to the domains of Chaos and Evil--in addition, they grant access to two other domains and a favored weapon that vary according to the nascent demon lord's themes and interests."),
+        description_variables: &[],
+        source_page: Some("p.315"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 87,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Constant ~ Desecrate",
+        name: "Desecrate",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &["Aura"],
+        description: Some("You can use desecrate, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action."),
+        description_variables: &[],
+        source_page: Some("p.265"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 90,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
     MonsterAbilityRecord {
         key: "Constant ~ Magic Weapon",
@@ -415,5 +674,72 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Calikang"],
         source_file: "iswg_abilities_race.lst",
         source_line: 91,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Constant ~ Water Breathing",
+        name: "Water Breathing",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
+        description: Some("You can use water breathing, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action."),
+        description_variables: &[],
+        source_page: Some("p.368"),
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 92,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Clockwork ~ Winding",
+        name: "Winding",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("The construct must be wound with a special key in order to function. As a general rule, a fully wound clockwork can remain active for 1 day/HD, but shorter or longer durations are possible."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 96,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Clockwork ~ Swift Reactions",
+        name: "Swift Reactions",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Clockwork constructs generally react much more swiftly than other constructs. They gain Improved Initiative and Lightning Reflexes as bonus feats, and gain a +2 dodge bonus to AC."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 97,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
+    },
+    MonsterAbilityRecord {
+        key: "Clockwork ~ Difficult to Create",
+        name: "Difficult to Create",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &[],
+        description: Some("Increase the time and gp cost required to create a clockwork by 50%% over normal."),
+        description_variables: &[],
+        source_page: None,
+        owners: &[],
+        source_file: "iswg_abilities_race.lst",
+        source_line: 98,
+        codex_generated_name: false,
+        rename_reason: None,
+        rename_coordinate: None,
     },
 ];

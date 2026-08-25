@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Simurgh ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 16th; concentration +22) Constant-detect evil, detect magic, tongues At will-daylight, zone of truth (DC 18) 3/day-flame strike (DC 21), mass cure critical wounds",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:simurgh_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:monster:simurgh"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "(CL 16th; concentration +22) Constant-detect evil, detect magic, tongues At will-daylight, zone of truth (DC 18) 3/day-flame strike (DC 21), mass cure critical wounds"
+      },
+      {
+        "key": "KEY",
+        "value": "Simurgh ~ Spell-Like Abilities"
+      },
+      {
+        "key": "TYPE",
+        "value": "SimurghRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": null,
+    "traits": [
+      "SimurghRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1533,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Simurgh ~ Spell-Like Abilities",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

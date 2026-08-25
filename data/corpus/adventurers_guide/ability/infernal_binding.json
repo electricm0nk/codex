@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Devil Binder ~ Infernal Binding",
+    "name": "Infernal Binding",
+    "description": "A devil binder must select an eidolon of the devil subtype. The devil binder's eidolon never increases its maximum number of attacks, and its base attack bonus is equal to half its Hit Dice. At 4th level and every 4 levels thereafter, the eidolon's Charisma score increases by 2. This alters the summoner's eidolon.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Devil Binder ~ Infernal Binding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Summoner Class Feature.DevilBinderClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterIsDevilBinder|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      },
+      {
+        "key": "DESC",
+        "value": "A devil binder must select an eidolon of the devil subtype. The devil binder's eidolon never increases its maximum number of attacks, and its base attack bonus is equal to half its Hit Dice. At 4th level and every 4 levels thereafter, the eidolon's Charisma score increases by 2. This alters the summoner's eidolon."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Pool_UnchainedEidolonType|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MasterIsDevilBinder|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
+    "line": 61,
+    "record_key": "Devil Binder ~ Infernal Binding"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

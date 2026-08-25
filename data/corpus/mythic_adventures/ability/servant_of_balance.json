@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Servant of Balance",
+    "name": "Servant of Balance",
+    "description": "Whenever a critical hit is confirmed against you, the attack deals normal damage instead of critical damage. Other effects that trigger on a successful critical hit (such as the Blinding Critical feat, the fire damage from a critical hit with a flaming burst weapon, or the effects of a vorpal weapon) all affect you normally.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Servant of Balance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Hierophant"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "Whenever a critical hit is confirmed against you, the attack deals normal damage instead of critical damage. Other effects that trigger on a successful critical hit (such as the Blinding Critical feat, the fire damage from a critical hit with a flaming burst weapon, or the effects of a vorpal weapon) all affect you normally."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 399,
+    "record_key": "Mythic Path Ability ~ Servant of Balance"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

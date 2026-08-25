@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Equipment Bonus ~ Ioun Stone STR Bonus",
+    "name": "Equipment Bonus ~ Ioun Stone STR Bonus",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "NonDisplayed.StackingBonus.Ioun Stone STR Enhancement Bonus.Equipment"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IounStoneSTRBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IounStoneSTRResonantBonus|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|min(6,IounStoneSTRBonus)+IounStoneSTRResonantBonus|TYPE=Enhancement"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities.lst",
+    "sha256": "98f14777441cb86902ffe2b2cad2bba6be68cd2f3b0ff2fd0eef906fe2b9765b",
+    "line": 124,
+    "record_key": "Equipment Bonus ~ Ioun Stone STR Bonus"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Umbral Bloodline ~ Cloak of Shadows",
     "name": "Cloak of Shadows",
-    "class": "Umbral Bloodline",
+    "class": "Sorcerer",
     "description": "As a standard action, you can grant one target a cloak of shadows. This cloak gives the target a +%1 bonus on Stealth checks made in areas of dim or no light for %2|Sorcerer_UmbralCloakOfShadows_SkillBonus|Sorcerer_UmbralCloakOfShadows_Duration",
     "raw_tokens": [
       {
@@ -104,5 +104,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

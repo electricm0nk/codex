@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Heavens Mystery ~ Lure of the Heavens",
     "name": "Lure of the Heavens",
-    "class": "Heavens Mystery",
+    "class": "Oracle",
     "description": "Your connection to the skies above is so strong that your feet barely touch the ground. At 1st level, you no longer leave tracks. At 5th level, you can hover up to 6 inches above the ground or even above liquid surfaces, as if levitating. At 10th level, you gain the ability to fly, as per the spell, for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments.|OracleLureoftheHeavensFlyDuration",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

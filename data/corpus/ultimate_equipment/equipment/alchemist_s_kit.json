@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 40.0,
+    "description": "This kit includes an alchemy crafting kit, a backpack, a bedroll, a belt pouch, a flint and steel, ink, an inkpen, an iron pot, a mess kit, soap, torches (10), trail rations (5 days), and a waterskin.",
+    "key": "Alchemist's Kit",
+    "name": "Alchemist's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "40"
+      },
+      {
+        "key": "WT",
+        "value": "24"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "SPROP",
+        "value": "This kit includes an alchemy crafting kit, a backpack, a bedroll, a belt pouch, a flint and steel, ink, an inkpen, an iron pot, a mess kit, soap, torches (10), trail rations (5 days), and a waterskin."
+      }
+    ],
+    "weight_lbs": 24.0
+  },
+  "ingested_at": "2026-08-23T16:06:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 578,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Alchemist's Kit",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

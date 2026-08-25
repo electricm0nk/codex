@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Spirit Animal ~ Deliver Touch Spells",
     "name": "Deliver Touch Spells",
-    "class": "Spirit Animal",
+    "class": "Animal",
     "description": "Your spirit animal can deliver touch spells or hexes for you. If you and the spirit animal are in contact at the time you cast a touch spell, you can designate your animal as the \"toucher.\" The spirit animal can then deliver the touch spell just as you would. If you cast another spell before the touch is delivered, the touch spell dissipates. If you activate a hex, your spirit animal can be used to make the touch; you don't have to be in contact with the animal to use this ability with hexes.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

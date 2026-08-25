@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Cavalier Archetype ~ Wave Rider",
     "name": "Wave Rider",
-    "class": "Cavalier Archetype",
+    "class": "Cavalier",
     "description": "[redacted PI]",
     "raw_tokens": [
       {
@@ -47,6 +47,18 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.47"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Cavalier Archetype ~ Wave Rider],[!PREFACT:1,ABILITIES,Cavalier_Archetype_Proficiencies=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_CF_Proficiencies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Cavalier_Archetype_Proficiencies|true"
       }
     ]
   },
@@ -63,5 +75,6 @@
   ],
   "license": "PI-REDACTED",
   "pi_field": "description",
-  "pi_marker": "redacted"
+  "pi_marker": "redacted",
+  "codex_generated_name": false
 }

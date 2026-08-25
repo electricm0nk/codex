@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Suli ~ Elemental Assault",
+    "name": "Elemental Assault",
+    "description": "Once per day as a swift action, a suli can shroud her arms in acid, cold, electricity, or fire. This effect lasts for %1 rounds (1 round per level) and can be dismissed as a free action. Unarmed strikes with her arms or hands (or attacks with weapons held in those hands) deal +1d6 points of damage of the appropriate energy type.|Suli_ElementalAssault_Duration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Suli ~ Elemental Assault"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialAttack.Special Attack.Special Ability.Supernatural"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Suli_ReplaceElementalAssault=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Suli_ElementalAssault_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day as a swift action, a suli can shroud her arms in acid, cold, electricity, or fire. This effect lasts for %1 rounds (1 round per level) and can be dismissed as a free action. Unarmed strikes with her arms or hands (or attacks with weapons held in those hands) deal +1d6 points of damage of the appropriate energy type.|Suli_ElementalAssault_Duration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Suli_ElementalAssault_Duration|TL"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
+    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6",
+    "line": 20,
+    "record_key": "Suli ~ Elemental Assault"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

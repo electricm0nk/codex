@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "data": {
+    "key": "Animal Trick ~ Withhold Venom",
+    "name": "Withhold Venom",
+    "description": "The companion can be ordered to avoid injecting poison into creatures it strikes with whatever natural attack would normally deliver venom. As long as the companion has been ordered to withhold its venom, successful hits with that natural attack deal damage as normal and convey all other effects that they normally would, but they do not expose the target to the companion's poison. Only companions with the poison special ability can learn this trick.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Animal Trick ~ Withhold Venom"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "AnimalTrick"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Animal Trick ~ Attack"
+      },
+      {
+        "key": "DESC",
+        "value": "The companion can be ordered to avoid injecting poison into creatures it strikes with whatever natural attack would normally deliver venom. As long as the companion has been ordered to withhold its venom, successful hits with that natural attack deal damage as normal and convey all other effects that they normally would, but they do not expose the target to the companion's poison. Only companions with the poison special ability can learn this trick."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 118,
+    "record_key": "Animal Trick ~ Withhold Venom"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

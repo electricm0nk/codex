@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Slayer's Feint",
+    "category": "Combat",
+    "name": "Slayer's Feint",
+    "description": "You can use Acrobatics instead of Bluff to feint in combat.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=FEAT,Combat Expertise",
+      "PREMULT:1,[PRECLASS:1,Slayer=1],[PREABILITY:1,CATEGORY=FEAT,Acrobatic]",
+      "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,15],[PREVARGTEQ:FeatDexRequirement,15]",
+      "PRESKILL:1,Acrobatics=1"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+    "sha256": "a71dc625f64f057c38365b3c3a2c6b58b75170fb8ffeb5eb23d3b29c74b7edc3",
+    "line": 145,
+    "record_key": "Slayer's Feint"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

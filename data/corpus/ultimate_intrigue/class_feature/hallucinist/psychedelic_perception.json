@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Hallucinist ~ Psychedelic Perception",
+    "name": "Psychedelic Perception",
+    "class": "Investigator",
+    "description": "In addition to magical extracts, a hallucinist learns to swiftly mix various psychoactive substances, using a fraction of his own power to create a magical hallucinogen that he can imbibe to grant himself powers of psychedelic perception. A hallucinogen follows all the normal rules and restrictions for an alchemist's mutagen as if they were the same substance, just as a cognatogen does. The effects of a hallucinogen last for %1 minutes, and the hallucinogen grants a +%2 insight bonus on Perception checks, but imposes a -2 penalty to his Dexterity.|HallucinistHallucinogenDuration|HallucinistPerceptionBonus",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hallucinist ~ Psychedelic Perception"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HallucinistPerceptionBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HallucinistHallucinogenDuration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to magical extracts, a hallucinist learns to swiftly mix various psychoactive substances, using a fraction of his own power to create a magical hallucinogen that he can imbibe to grant himself powers of psychedelic perception. A hallucinogen follows all the normal rules and restrictions for an alchemist's mutagen as if they were the same substance, just as a cognatogen does. The effects of a hallucinogen last for %1 minutes, and the hallucinogen grants a +%2 insight bonus on Perception checks, but imposes a -2 penalty to his Dexterity.|HallucinistHallucinogenDuration|HallucinistPerceptionBonus"
+      },
+      {
+        "key": "DESC",
+        "value": " The hallucinogen also grants low-light vision.|!PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "DESC",
+        "value": " The hallucinogen also grants low-light vision, see invisibility and darkvision 60 feet (if the hallucinist drinking it already has darkvision, it increases the range of the darkvision by 30 feet).|PRECLASS:1,Investigator=7|!PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "DESC",
+        "value": " The hallucinogen also grants aura sight, low-light vision, see invisibility and darkvision 60 feet (if the hallucinist drinking it already has darkvision, it increases the range of the darkvision by 30 feet).|PRECLASS:1,Investigator=11|!PRECLASS:1,Investigator=15"
+      },
+      {
+        "key": "DESC",
+        "value": " The hallucinogen also grants aura sight, blindsense 60 feet, low-light vision, see invisibility and darkvision 60 feet (if the hallucinist drinking it already has darkvision, it increases the range of the darkvision by 30 feet).|PRECLASS:1,Investigator=15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinistHallucinogenDuration|InvestigatorLVL|!PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinistHallucinogenDuration|InvestigatorLVL*10|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinistPerceptionBonus|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinistPerceptionBonus|2|PRECLASS:1,Investigator=3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinistPerceptionBonus|2|PRECLASS:1,Investigator=7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinistPerceptionBonus|2|PRECLASS:1,Investigator=11"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HallucinistPerceptionBonus|2|PRECLASS:1,Investigator=15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.34"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/support/ui_abilities_class_oa.lst",
+    "sha256": "123f008e9a2f31828861df9025f48f5c2f7c78a648553f22dba96a8d8a2e24dc",
+    "line": 24,
+    "record_key": "Hallucinist ~ Psychedelic Perception"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

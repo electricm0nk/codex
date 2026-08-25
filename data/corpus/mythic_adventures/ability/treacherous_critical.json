@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Treacherous Critical",
+    "name": "Treacherous Critical",
+    "description": "When you score a critical threat, you can attempt a free combat maneuver check instead of dealing extra damage. If you do, attempt your confirmation roll as normal and add +%1 to the result. If the result is equal to or greater than your opponent's CMD, the attack deals damage as normal and you can attempt a free dirty trick, disarm, reposition, or trip combat maneuver check against that opponent, using the confirmation roll as your combat maneuver check for the purpose of determining the effects of the maneuver.|MythicLevel",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Treacherous Critical"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Trickster"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,1"
+      },
+      {
+        "key": "DESC",
+        "value": "When you score a critical threat, you can attempt a free combat maneuver check instead of dealing extra damage. If you do, attempt your confirmation roll as normal and add +%1 to the result. If the result is equal to or greater than your opponent's CMD, the attack deals damage as normal and you can attempt a free dirty trick, disarm, reposition, or trip combat maneuver check against that opponent, using the confirmation roll as your combat maneuver check for the purpose of determining the effects of the maneuver.|MythicLevel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.47"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Mythic Power"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 277,
+    "record_key": "Mythic Path Ability ~ Treacherous Critical"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

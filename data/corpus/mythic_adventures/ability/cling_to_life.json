@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Mythic Path Ability ~ Cling to Life",
+    "name": "Cling to Life",
+    "description": "When you die, as long as your body remains, you can be healed by any spell or effect that heals damage, though you regain only half the normal number of hit points. If you're healed to full hit points, you come back to life and gain 1 permanent negative level for each minute you were dead (these negative levels can be removed as normal). Until you're healed to full hit points, you don't regain consciousness and are still dead no matter what other abilities you might have. If you aren't brought back to life within a number of minutes equal to your total character level, your death is permanent (although you can still be brought back by spells such as raise dead).",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mythic Path Ability ~ Cling to Life"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mythic Path Ability.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mythic Path ~ Guardian"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "MythicTierLevel,6"
+      },
+      {
+        "key": "DESC",
+        "value": "When you die, as long as your body remains, you can be healed by any spell or effect that heals damage, though you regain only half the normal number of hit points. If you're healed to full hit points, you come back to life and gain 1 permanent negative level for each minute you were dead (these negative levels can be removed as normal). Until you're healed to full hit points, you don't regain consciousness and are still dead no matter what other abilities you might have. If you aren't brought back to life within a number of minutes equal to your total character level, your death is permanent (although you can still be brought back by spells such as raise dead)."
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
+    "line": 376,
+    "record_key": "Mythic Path Ability ~ Cling to Life"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

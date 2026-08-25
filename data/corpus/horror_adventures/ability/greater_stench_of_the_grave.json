@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Ghoul Corruption ~ Greater Stench",
+    "name": "Greater Stench of the Grave",
+    "description": "The smell surrounding you becomes overwhelming.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ghoul Corruption ~ Greater Stench"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "GhoulManifestation"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "GhoulManifestationLevel,6"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Ghoul Corruption ~ Stench of the Grave"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "DESC",
+        "value": "The smell surrounding you becomes overwhelming."
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghoul Greater Stench Stain Choice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Ghoul Greater Stench Gift Choice|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 249,
+    "record_key": "Ghoul Corruption ~ Greater Stench"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

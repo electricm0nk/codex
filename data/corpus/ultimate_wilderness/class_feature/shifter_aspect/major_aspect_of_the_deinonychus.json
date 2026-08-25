@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Deinonychus ~ Major",
     "name": "Major Aspect of the Deinonychus",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a deinonychus (Bestiary p84). While in this form, you gain a base speed of 60 feet, low-light vision, scent (30 feet), a bite attack (1d6 damage), two foreclaw attacks (1d4 damage), and two talon attacks (1d8 damage), and pounce.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

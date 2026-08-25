@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_323)",
+    "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_323)",
+    "description": "If you have performed your daily obedience, you can ensure the final rest of a creature. As a standard action, you can touch a corpse and cause it to dissolve into black ash. A corpse dissolved this way cannot be raised as an undead creature by any means short of a miracle or wish. The black ash left behind can, however, be used as the \"corpse\" for spells that return the dead to true life-such as raise dead-as long as the entire collection of ash is kept together.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "DESC",
+        "value": "If you have performed your daily obedience, you can ensure the final rest of a creature. As a standard action, you can touch a corpse and cause it to dissolve into black ash. A corpse dissolved this way cannot be raised as an undead creature by any means short of a miracle or wish. The black ash left behind can, however, be used as the \"corpse\" for spells that return the dead to true life-such as raise dead-as long as the entire collection of ash is kept together."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
+    "line": 323,
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_323)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name,raw_tokens",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:323"
+  }
+}

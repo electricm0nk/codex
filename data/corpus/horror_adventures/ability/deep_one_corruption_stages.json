@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Deep One Corruption Stages",
+    "name": "Deep One Corruption Stages",
+    "description": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet.",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=0|MAX=3|TITLE=Deep One Corruption Stage"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DeepOneCorruptionStage|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|DeepOneCorruptionStage|%CHOICE"
+      },
+      {
+        "key": "DESC",
+        "value": "Corruption Stage 0-You suffer no direct penalties due to your corruption as yet."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 1-The first time you fail, you lose control of yourself for 24 hours. When you regain your senses, you find yourself in the sea or an ocean, or at least on your way to such a place if you were too far away to reach it. Either way, your alignment shifts one step towards chaotic evil."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 2-The second time you fail, you lose control again, and you find that you have made contact with an alien entity during the missing time. Your alignment shifts to chaotic evil and your race changes to deep one hybrid (Bestiary 5 p70), if it wasn't already. If you are already over the venerable age for a deep one hybrid (60 years), you experience the final change as per the race's ability, becoming an NPC deep one under the GM's control."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Corruption Stage 3-The third time you fail, you  experience the final change early, becoming an NPC deep one under the GM's control."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|Current Deep One Corruption Stage %1|DeepOneCorruptionStage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 110,
+    "record_key": "Deep One Corruption Stages"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

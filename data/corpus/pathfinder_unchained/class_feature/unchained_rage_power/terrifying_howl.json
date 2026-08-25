@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Unchained Rage Power ~ Terrifying Howl",
+    "name": "Terrifying Howl",
+    "class": "Unchained Barbarian",
+    "description": "You unleash a terrifying howl as a standard action. All enemies that have been shaken by you (usually through the Intimidate skill) within 30 feet must succeed at a Will save (DC %1) or be panicked for 1d4+1 rounds. Once an enemy has attempted a save versus this ability (whether successful or not), it's immune to this power for 24 hours.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rage Power ~ Terrifying Howl"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rage Power.SpecialAttack.Extraordinary"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Unchained Rage Power ~ Intimidating Glare"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "RagePowersPrereqLVL,8"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rage Power ~ Terrifying Howl"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TerrifyingHowlDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You unleash a terrifying howl as a standard action. All enemies that have been shaken by you (usually through the Intimidate skill) within 30 feet must succeed at a Will save (DC %1) or be panicked for 1d4+1 rounds. Once an enemy has attempted a save versus this ability (whether successful or not), it's immune to this power for 24 hours."
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TerrifyingHowlDC|10+floor(RagePowersLVL/2)+STR"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "ASPECT",
+        "value": "ChildAbility|Rage"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 392,
+    "record_key": "Unchained Rage Power ~ Terrifying Howl"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

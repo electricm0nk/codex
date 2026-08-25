@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:09Z",
+  "data": {
+    "key": "Codex-Named Unit (language_bestiary_4_b4_languages_lst_6)",
+    "name": "Codex-Named Unit (language_bestiary_4_b4_languages_lst_6)",
+    "raw_tokens": [
+      {
+        "key": "NAMEISPI",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spoken.Written.Read"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_languages.lst",
+    "sha256": "b8e04b15ad8aaec4009668df8a907d9d7917889c3b8d9e43a2193aae87de5ce5",
+    "line": 6,
+    "record_key": "Codex-Named Unit (language_bestiary_4_b4_languages_lst_6)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "codex_generated_name": true,
+  "rename": {
+    "reason": "name_pi_blocked",
+    "coordinate": "bestiary_4:b4_languages.lst:6"
+  }
+}

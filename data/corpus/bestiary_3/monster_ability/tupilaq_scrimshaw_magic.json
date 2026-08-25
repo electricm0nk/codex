@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Tupilaq ~ Scrimshaw Magic",
+    "delivery": "SpellLike",
+    "description": "When a tupilaq is created, its creator can inscribe a single spell he knows (as long as that spell is no higher than 2nd level and requires no material components) into the tupilaq as a complex scrimshaw design. The tupilaq gains the ability to use that spell as a spell-like ability (CL 7th) three times per day. The tupilaq's creator can inscribe a new spell onto the tupilaq if he wishes, replacing the previous scrimshaw. Inscribing a new scrimshaw requires 24 hours of work and an expenditure of 500 gp in materials. The tupilaq presented here utilizes invisibility in this manner. Erase can destroy a tupilaq's scrimshaw if it fails a Fortitude save against the spell. If a tupilaq's scrimshaw is removed in this manner, it loses access to the spell as a spell-like ability, and seeks out its creator to attack and kill him. The tupilaq's creator becomes the target of the tupilaq's seek target ability in this case. If a tupilaq's creator is already dead, the tupilaq instead seeks out the nearest living creature and attacks this new target on sight, continuing this spree of murder until it is itself destroyed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:tupilaq_scrimshaw_magic",
+    "name": "Scrimshaw Magic",
+    "owners": [
+      "bestiary_3:monster:tupilaq"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a tupilaq is created, its creator can inscribe a single spell he knows (as long as that spell is no higher than 2nd level and requires no material components) into the tupilaq as a complex scrimshaw design. The tupilaq gains the ability to use that spell as a spell-like ability (CL 7th) three times per day. The tupilaq's creator can inscribe a new spell onto the tupilaq if he wishes, replacing the previous scrimshaw. Inscribing a new scrimshaw requires 24 hours of work and an expenditure of 500 gp in materials. The tupilaq presented here utilizes invisibility in this manner. Erase can destroy a tupilaq's scrimshaw if it fails a Fortitude save against the spell. If a tupilaq's scrimshaw is removed in this manner, it loses access to the spell as a spell-like ability, and seeks out its creator to attack and kill him. The tupilaq's creator becomes the target of the tupilaq's seek target ability in this case. If a tupilaq's creator is already dead, the tupilaq instead seeks out the nearest living creature and attacks this new target on sight, continuing this spree of murder until it is itself destroyed."
+      },
+      {
+        "key": "KEY",
+        "value": "Tupilaq ~ Scrimshaw Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.275"
+      },
+      {
+        "key": "TYPE",
+        "value": "TupilaqRacialAbility.SpecialQuality.SpellLike"
+      }
+    ],
+    "source_page": "p.275",
+    "traits": [
+      "TupilaqRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1641,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Tupilaq ~ Scrimshaw Magic",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

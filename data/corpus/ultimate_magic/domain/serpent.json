@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:10Z",
+  "data": {
+    "key": "Serpent",
+    "name": "Serpent",
+    "raw_tokens": [
+      {
+        "key": "PRECLASS",
+        "value": "1,Druid=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serpent Domain ~ Familiar|PREVARGTEQ:DomainSerpentAbilityTriggerLVL,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serpent Domain ~ Slither"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Serpent Domain ~ Venom Immunity|PREMULT:2,[PREVARGTEQ:DomainSerpentAbilityTriggerLVL,6],[PREVARLT:DomainSerpentAbilityTriggerLVL,12]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentTimes|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DomainSerpentAbilityTriggerLVL|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSerpentLVL|DomainLVL|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSerpentDC|10+(DomainSerpentLVL/2)+WIS|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSerpentTimes|DomainPowerTimes|TYPE=Domain"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DomainSerpentAbilityTriggerLVL|DomainAbilityTriggerLVL|TYPE=Domain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.35"
+      },
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Serpent=1|Charm Animal|Serpent=2|Animal Trance|Serpent=3|Poison|Serpent=4|Strong Jaw|Serpent=5|Snake Staff|Serpent=6|Charm Monster|Serpent=7|Animal Shapes (Reptiles and Snakes Only)|Serpent=8|Scintillating Pattern|Serpent=9|Crushing Hand"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_domains.lst",
+    "sha256": "3d67b581230f82003e5e621b9841aa7044770e8108eb71a7d4d5edc04fba9e01",
+    "line": 22,
+    "record_key": "Serpent"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

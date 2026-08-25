@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Pacifist ~ Let's Talk",
+    "name": "Let's Talk",
+    "class": "Pacifist",
+    "description": "You can as a standard action make a Diplomacy check against an enemy with an intelligence of 1 or higher (DC 10 + 1/2 the target's hit dice + the target's Wisdom modifier) to convince the enemy to talk instead of fight.  If the Diplomacy check was successful, the target's starting attitude is improved by one step.  Should the target choose to fight anyway and the Diplomacy check successfully improved the target's starting attitide, the target is shaken for %1 rounds.  This ability can be used %2/day.|LetsTalkDuration|LetsTalkTimes",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pacifist ~ Let's Talk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "VitalistClassFeatures.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LetsTalkDuration|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "LetsTalkTimes|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You can as a standard action make a Diplomacy check against an enemy with an intelligence of 1 or higher (DC 10 + 1/2 the target's hit dice + the target's Wisdom modifier) to convince the enemy to talk instead of fight.  If the Diplomacy check was successful, the target's starting attitude is improved by one step.  Should the target choose to fight anyway and the Diplomacy check successfully improved the target's starting attitide, the target is shaken for %1 rounds.  This ability can be used %2/day.|LetsTalkDuration|LetsTalkTimes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LetsTalkDuration|VitalistPrimeStat"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|LetsTalkTimes|3+VitalistPrimeStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.334"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|LetsTalkTimes"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per day"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 2345,
+    "record_key": "Pacifist ~ Let's Talk"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

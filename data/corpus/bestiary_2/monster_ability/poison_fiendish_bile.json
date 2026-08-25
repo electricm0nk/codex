@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Poison ~ Fiendish Bile",
+    "delivery": "Supernatural",
+    "description": "Bite-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d4 Str damage, also 2d8 damage if good-aligned; cure 2 consecutive saves.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:poison_fiendish_bile",
+    "name": "Poison (Fiendish Bile)",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Fort DC %1; 1/round for 6 rounds; 1d4 Str damage, also 2d8 damage if good; 2 consecutive saves)|PoisonSaveDC"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PoisonSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bite-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d4 Str damage, also 2d8 damage if good-aligned; cure 2 consecutive saves.|PoisonSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Poison ~ Fiendish Bile"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
+    "source_page": "p.288",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1394,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Poison ~ Fiendish Bile",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

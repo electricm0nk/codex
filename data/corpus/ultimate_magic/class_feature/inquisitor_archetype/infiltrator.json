@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor Archetype ~ Infiltrator",
     "name": "Infiltrator",
-    "class": "Inquisitor Archetype",
+    "class": "Inquisitor",
     "description": "This inquisitor uses guile and deception to blend in among the enemies of the faith rather than confronting them head-on.",
     "raw_tokens": [
       {
@@ -59,6 +59,42 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Inquisitor"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Infiltrator],[!PREFACT:1,ABILITIES,Inquisitor_Archetype_SternGaze=True,Inquisitor_Archetype_MonsterLore=True,Inquisitor_Archetype_Track=True,Inquisitor_Archetype_DiscernLies=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_CF_DiscernLies|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_SternGaze|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_MonsterLore|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_Track|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Inquisitor_Archetype_DiscernLies|true"
       }
     ]
   },
@@ -75,5 +111,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

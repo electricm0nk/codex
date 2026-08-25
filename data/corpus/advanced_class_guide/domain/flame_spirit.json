@@ -1,0 +1,31 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T15:18:04Z",
+  "data": {
+    "key": "Flame (Spirit)",
+    "name": "Flame (Spirit)",
+    "raw_tokens": [
+      {
+        "key": "SPELLLEVEL",
+        "value": "DOMAIN|Flame (Spirit)=1|burning hands|Flame (Spirit)=2|resist energy|Flame (Spirit)=3|fireball|Flame (Spirit)=4|wall of fire|Flame (Spirit)=5|summon monster V (fire elementals only)|Flame (Spirit)=6|fire seeds|Flame (Spirit)=7|fire storm|Flame (Spirit)=8|incendiary cloud|Flame (Spirit)=9|fiery body"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_domains.lst",
+    "sha256": "80e1bd9e91ad02c2653b6faf0a94bc92b528c0e89b6bfeb60c379ec40d4e64fd",
+    "line": 7,
+    "record_key": "Flame (Spirit)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Hunter Archetype ~ Roof Runner",
     "name": "Roof Runner",
-    "class": "Hunter Archetype",
+    "class": "Hunter",
     "description": "Roof runners are skilled ambushers, skirmishers, and spies who eschew heavier types of armor in order to remain light on their feet. They lurk in the shadows of the rooftops to find people or houses to rob, though some use their specialized skills for nobler purposes.",
     "raw_tokens": [
       {
@@ -115,5 +115,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

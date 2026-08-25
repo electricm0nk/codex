@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Implement School Focus Power ~ Telekinetic Mastery",
     "name": "Telekinetic Mastery [Transmutation]",
-    "class": "Implement School Focus Power",
+    "class": "Occultist",
     "description": "As a standard action, you can expend 1 point of mental focus to grant yourself telekinetic power. This functions as telekinesis, except you don't need to concentrate on the effect to maintain it, and using any one of its effects is a standard action. This effect lasts for %1 rounds. You must be at least 9th level to select this focus power.|OccultistLVL",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

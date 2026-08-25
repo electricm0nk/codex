@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Total Destruction",
     "name": "Total Destruction",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "The brute is adept at rampaging through an area, throwing whatever is available at his opponents. The brute gains Throw Anything as a bonus feat. As a standard action, while in his vigilante identity, he can throw any unattended object up to two size categories smaller than he is up to 60 feet if he is Medium and 80 feet if he is Large. This deals 1d6 points of bludgeoning damage if he is Medium or 1d8 if he is Large, and the brute adds 1-1/2 times his Strength modifier to this damage.",
     "raw_tokens": [
       {
@@ -64,5 +64,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

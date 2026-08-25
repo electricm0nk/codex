@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Upasunda ~ Infused Weapons",
+    "delivery": "Supernatural",
+    "description": "In addition to being evil and lawful, weapons an upasunda wields are considered to be magic for the purposes of overcoming damage reduction.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:upasunda_infused_weapons",
+    "name": "Infused Weapons",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to being evil and lawful, weapons an upasunda wields are considered to be magic for the purposes of overcoming damage reduction."
+      },
+      {
+        "key": "KEY",
+        "value": "Upasunda ~ Infused Weapons"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "TYPE",
+        "value": "UpasundaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
+    "source_page": "p.27",
+    "traits": [
+      "UpasundaRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:09:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 421,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Upasunda ~ Infused Weapons",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

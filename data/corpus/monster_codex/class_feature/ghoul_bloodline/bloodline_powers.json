@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Ghoul Bloodline ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Ghoul Bloodline",
+    "class": "Sorcerer",
     "description": "The dark energies that fuel your existence and undying hunger form the basis of your power.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

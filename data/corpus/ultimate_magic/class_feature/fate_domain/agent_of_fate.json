@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Fate Domain ~ Agent of Fate",
     "name": "Agent of Fate",
-    "class": "Fate Domain",
+    "class": "Cleric",
     "description": "When you use your augury spell-like ability, you gain a benefit that lasts until the end of your next combat. If the result was \"weal,\" all curing effects used on you cure an additional +1d10 hit points. If the result was \"woe,\" your melee attacks deal an additional +1d6 points of damage. If the result is \"weal and woe\" or \"nothing,\" you gain a +2 insight bonus to your Armor Class.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

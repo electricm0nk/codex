@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Giant Toad ~ Poison Skin",
+    "name": "Poison Skin",
+    "description": "A creature that strikes a giant toad with an unarmed strike or a natural weapon exposes itself to the toad's poisonous skin.  Skin - contact; save Fort DC %1; frequency 1/round for 4 rounds; effect 1d2 Wisdom damage; cure 1 save.|GiantToadPoisonSkinDC",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Giant Toad ~ Poison Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiantToadPoisonSkinDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that strikes a giant toad with an unarmed strike or a natural weapon exposes itself to the toad's poisonous skin.  Skin - contact; save Fort DC %1; frequency 1/round for 4 rounds; effect 1d2 Wisdom damage; cure 1 save.|GiantToadPoisonSkinDC"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison Skin"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantToadPoisonSkinDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantToadPoisonSkinDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison Skin)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.268"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1273,
+    "record_key": "Giant Toad ~ Poison Skin"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

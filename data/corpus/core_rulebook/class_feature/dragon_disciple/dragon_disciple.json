@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Dragon Disciple",
     "name": "Dragon Disciple",
-    "class": null,
+    "class": "Dragon Disciple",
     "description": null,
     "raw_tokens": [
       {
@@ -19,6 +19,38 @@
       {
         "key": "BONUS",
         "value": "VAR|DragonDisciple_CFP_Level|DragonDiscipleLVL|TYPE=Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dragon Disciple Class Feature|AUTOMATIC|Dragon Disciple ~ Weapon and Armor Proficiency|PREVARGTEQ:DragonDisciple_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dragon Disciple Class Feature|AUTOMATIC|Dragon Disciple ~ Spells per Day|PREVARGTEQ:DragonDisciple_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dragon Disciple Class Feature|AUTOMATIC|Dragon Disciple ~ Blood of Dragons|Dragon Disciple ~ Natural Armor Increase|PREVARGTEQ:DragonDisciple_CFP_Level,1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dragon Disciple Class Feature|AUTOMATIC|Dragon Disciple ~ Ability Boost|Dragon Disciple ~ Dragon Bite|Dragon Disciple ~ Bloodline Feat|PREVARGTEQ:DragonDisciple_CFP_Level,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dragon Disciple Class Feature|AUTOMATIC|Dragon Disciple ~ Breath Weapon|PREVARGTEQ:DragonDisciple_CFP_Level,3"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dragon Disciple Class Feature|AUTOMATIC|Dragon Disciple ~ Blindsense|PREVARGTEQ:DragonDisciple_CFP_Level,5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dragon Disciple Class Feature|AUTOMATIC|Dragon Disciple ~ Dragon Form|PREVARGTEQ:DragonDisciple_CFP_Level,7"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Dragon Disciple Class Feature|AUTOMATIC|Dragon Disciple ~ Wings|PREVARGTEQ:DragonDisciple_CFP_Level,9"
       }
     ]
   },
@@ -35,5 +67,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

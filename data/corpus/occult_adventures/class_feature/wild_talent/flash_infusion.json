@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Wild Talent ~ Flash Infusion",
     "name": "Flash Infusion",
-    "class": "Wild Talent",
+    "class": "Kineticist",
     "description": "Element fire; Type substance infusion; Level 4; Burn 3 Associated Blasts blue flame, fire, plasma Saving Throw Will negates Your kinetic blast is so bright that it blinds your foes. Whenever an infused blast hits a foe and penetrates its spell resistance, that foe must succeed at a Will save or be blinded for 1 round, regardless of whether it takes damage from the blast. You can reduce the blast's damage by half to increase the DC of this save by 2.",
     "raw_tokens": [
       {
@@ -47,5 +47,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

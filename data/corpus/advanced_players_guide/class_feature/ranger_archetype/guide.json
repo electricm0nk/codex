@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Ranger Archetype ~ Guide",
     "name": "Guide",
-    "class": "Ranger Archetype",
+    "class": "Ranger",
     "description": "Many rangers are loners, but some choose to use their familiarity with the land to guide others safely through the wilderness. The guide forgoes a favored enemy to focus on the task or foe at hand, and can pass his knowledge and luck on to his charges.",
     "raw_tokens": [
       {
@@ -63,6 +63,58 @@
       {
         "key": "ASPECT",
         "value": "Archetype Base Class|Ranger"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Guide],[!PREFACT:1,ABILITIES,Ranger_Archetype_FavoredEnemy=True,Ranger_Archetype_HuntersBond=True,Ranger_Archetype_Evasion=True,Ranger_Archetype_Quarry=True,Ranger_Archetype_ImprovedQuarry=True,Ranger_Archetype_ImprovedEvasion=True]"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_CF_ImprovedEvasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_FavoredEnemy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_HuntersBond|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Evasion|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_Quarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ImprovedQuarry|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Ranger_Archetype_ImprovedEvasion|true"
       }
     ]
   },
@@ -79,5 +131,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

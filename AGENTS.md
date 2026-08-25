@@ -118,6 +118,30 @@ Stop and report the blocker instead of guessing when any of the following is tru
 - verification failed
 - required authoritative inputs are missing
 
+## Blocker Discipline
+
+**A blocker standing between the work and 100% of its stated Definition of Done gets attacked until
+it is cleared, or escalated to the operator. It never gets deferred.** Two dispositions only:
+
+1. **Clear it.** Do the work. A blocker bigger than one cycle is a sequencing problem, not an
+   exemption — decompose it and run the cycles.
+2. **Raise your hand.** Escalate, naming what blocks you, what you already tried, and the specific
+   ruling, write scope, or precondition you need. Then stop and wait. "This is hard" is not an
+   escalation; "I need write scope to `<path>` to fix `<defect>`" is.
+
+Filing a `## Open blockers` entry **is** the written form of disposition 2 — a request for an
+operator ruling. It **pauses** the work; it is not a disposition, not a closure path, and never a
+licence to proceed past the blocked item. "Filed with a named owner", "forwarded to a successor
+bundle", "deferred with reason", and "out of scope for this cycle" are ways of writing down that
+the work is not done.
+
+A cycle that correctly refuses to write outside its granted scope has **not** failed — it has hit a
+blocker only the operator can clear. Prepare the exact change, escalate, wait.
+
+Full doctrine: `docs/governance/blocker-closure-doctrine.md`. Distinguish a blocker from a planned
+*capability deferral* (`docs/governance/deferral-revisit-doctrine.md`) with one test: **was this
+scope in the Definition of Done when the work was scoped?** If yes, it is a blocker.
+
 ## Retrospective Logging
 
 When you catch an error, hit an incident, defer work, or redo something, emit a one-line event to the retrospective log via `scripts/retro.py`. The log is append-only and survives the run — git does not.

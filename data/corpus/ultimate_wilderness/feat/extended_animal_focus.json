@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T11:41:53Z",
+  "data": {
+    "key": "Extended Animal Focus",
+    "category": "General",
+    "name": "Extended Animal Focus",
+    "description": "You can assume the aspects of an animal for longer stretches of time than most of your rivals and allies. Add your Wisdom bonus (minimum 1) to the number of minutes per day that you can use your animal focus ability to assume the aspects of an animal.",
+    "prerequisites": [
+      "PREABILITY:1,CATEGORY=Special Ability,Hunter ~ Animal Focus"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst",
+    "sha256": "85553e0ae251fe68932ef20b959cb6f4950591a533bfec9d4b4c760fb3f539b1",
+    "line": 46,
+    "record_key": "Extended Animal Focus"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

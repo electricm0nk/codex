@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Maestro Bloodline ~ Fascinate",
     "name": "Fascinate",
-    "class": "Maestro Bloodline",
+    "class": "Sorcerer",
     "description": "You gain the ability to use a Perform skill to cause one or more creatures to become fascinated with you. This acts as the fascinate bardic perform ability, except the save DC is %1, and it lasts %2 rounds.|Sorcerer_MaestroFascinate_DC|Sorcerer_MaestroFascinate_Duration",
     "raw_tokens": [
       {
@@ -120,5 +120,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

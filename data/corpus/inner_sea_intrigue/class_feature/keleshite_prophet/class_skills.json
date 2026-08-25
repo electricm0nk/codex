@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Keleshite Prophet ~ Class Skills",
+    "name": "Class Skills",
+    "class": "Oracle",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Keleshite Prophet ~ Class Skills"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Internal"
+      },
+      {
+        "key": "TYPE",
+        "value": "Oracle Class Features.KeleshiteProphetClassFeatures"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Perception|Perform (dance)|TYPE=Knowledge"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst",
+    "sha256": "8920e30af6a4125ca58d2792cbf2a8376fc06b488bfb1d7158c4038ddc1cdf27",
+    "line": 207,
+    "record_key": "Keleshite Prophet ~ Class Skills"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

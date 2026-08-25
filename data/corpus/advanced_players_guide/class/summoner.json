@@ -1,167 +1,265 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "class_id": "summoner",
-    "maxlevel": 20,
     "chassis": [
       {
-        "level": 1,
         "base_attack_bonus": 0,
         "fort_save": 0,
+        "level": 1,
         "ref_save": 0,
         "will_save": 2
       },
       {
-        "level": 2,
         "base_attack_bonus": 1,
         "fort_save": 0,
+        "level": 2,
         "ref_save": 0,
         "will_save": 3
       },
       {
-        "level": 3,
         "base_attack_bonus": 2,
         "fort_save": 1,
+        "level": 3,
         "ref_save": 1,
         "will_save": 3
       },
       {
+        "base_attack_bonus": 3,
+        "fort_save": 1,
         "level": 4,
-        "base_attack_bonus": 3,
-        "fort_save": 1,
         "ref_save": 1,
         "will_save": 4
       },
       {
+        "base_attack_bonus": 3,
+        "fort_save": 1,
         "level": 5,
-        "base_attack_bonus": 3,
-        "fort_save": 1,
         "ref_save": 1,
         "will_save": 4
       },
       {
-        "level": 6,
         "base_attack_bonus": 4,
         "fort_save": 2,
+        "level": 6,
         "ref_save": 2,
         "will_save": 5
       },
       {
-        "level": 7,
         "base_attack_bonus": 5,
         "fort_save": 2,
+        "level": 7,
         "ref_save": 2,
         "will_save": 5
       },
       {
-        "level": 8,
         "base_attack_bonus": 6,
         "fort_save": 2,
+        "level": 8,
         "ref_save": 2,
         "will_save": 6
       },
       {
-        "level": 9,
         "base_attack_bonus": 6,
         "fort_save": 3,
+        "level": 9,
         "ref_save": 3,
         "will_save": 6
       },
       {
-        "level": 10,
         "base_attack_bonus": 7,
         "fort_save": 3,
+        "level": 10,
         "ref_save": 3,
         "will_save": 7
       },
       {
-        "level": 11,
         "base_attack_bonus": 8,
         "fort_save": 3,
+        "level": 11,
         "ref_save": 3,
         "will_save": 7
       },
       {
+        "base_attack_bonus": 9,
+        "fort_save": 4,
         "level": 12,
-        "base_attack_bonus": 9,
-        "fort_save": 4,
         "ref_save": 4,
         "will_save": 8
       },
       {
+        "base_attack_bonus": 9,
+        "fort_save": 4,
         "level": 13,
-        "base_attack_bonus": 9,
-        "fort_save": 4,
         "ref_save": 4,
         "will_save": 8
       },
       {
-        "level": 14,
         "base_attack_bonus": 10,
         "fort_save": 4,
+        "level": 14,
         "ref_save": 4,
         "will_save": 9
       },
       {
-        "level": 15,
         "base_attack_bonus": 11,
         "fort_save": 5,
+        "level": 15,
         "ref_save": 5,
         "will_save": 9
       },
       {
+        "base_attack_bonus": 12,
+        "fort_save": 5,
         "level": 16,
-        "base_attack_bonus": 12,
-        "fort_save": 5,
         "ref_save": 5,
         "will_save": 10
       },
       {
+        "base_attack_bonus": 12,
+        "fort_save": 5,
         "level": 17,
-        "base_attack_bonus": 12,
-        "fort_save": 5,
         "ref_save": 5,
         "will_save": 10
       },
       {
-        "level": 18,
         "base_attack_bonus": 13,
         "fort_save": 6,
+        "level": 18,
         "ref_save": 6,
         "will_save": 11
       },
       {
-        "level": 19,
         "base_attack_bonus": 14,
         "fort_save": 6,
+        "level": 19,
         "ref_save": 6,
         "will_save": 11
       },
       {
-        "level": 20,
         "base_attack_bonus": 15,
         "fort_save": 6,
+        "level": 20,
         "ref_save": 6,
         "will_save": 12
       }
+    ],
+    "class_id": "summoner",
+    "maxlevel": 20,
+    "raw_tokens": [
+      {
+        "key": "HD",
+        "value": "8"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC.SpontaneousArcane.Spontaneous"
+      },
+      {
+        "key": "MAXLEVEL",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SummonerLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CasterLevelBLSummoner|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_Summoner|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Caster_Level_BL_Stripped_Summoner|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4|TYPE=Base.REPLACE|PREVAREQ:DisableBAB,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/2+2|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|BASE.Fortitude,BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/3|PREVAREQ:UseAlternateSaveProgression,0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassBABModerate|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalBAB,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SummonerLVL|CL"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Fortitude|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSavePoor_Reflex|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClassSaveGood_Will|classlevel(\"APPLIEDAS=NONEPIC\")|PREVAREQ:UseFractionalSave,1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_BL_Stripped_Summoner|Caster_Level_Summoner-CasterLevelBLSummoner"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Summoner|CL+Caster_Level_Bonus+CasterLevelBLSummoner"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CasterLevelBL_x_Summoner|charbonusto(\"PCLEVEL\",\"Summoner\")"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Highest__Arcane|Caster_Level_Summoner|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Caster_Level_Total__Arcane|Caster_Level_Summoner"
+      },
+      {
+        "key": "FACT",
+        "value": "ClassType|PC"
+      },
+      {
+        "key": "FACT",
+        "value": "Abb|Sum"
+      },
+      {
+        "key": "FACT",
+        "value": "SpellType|Arcane"
+      }
     ]
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
-    "sha256": "fc0f627d301eca409b7441c5b54fdb452404ea8924163ec1abdad13308fd83db",
     "line": 139,
-    "record_key": "CLASS:Summoner"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+    "record_key": "CLASS:Summoner",
+    "sha256": "fc0f627d301eca409b7441c5b54fdb452404ea8924163ec1abdad13308fd83db"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
     "derived:bonus",
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

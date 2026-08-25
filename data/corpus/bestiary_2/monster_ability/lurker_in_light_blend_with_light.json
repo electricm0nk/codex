@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Lurker in Light ~ Blend With Light",
+    "delivery": "Supernatural",
+    "description": "In areas of bright light, lurkers are invisible.  As with greater invisibility, they may attack and still remain invisible.  In shadowy illumination, a lurker loses this invisibility, though like all creatures in shadows, they have concealment unless the viewer has darkvision.  If the lurker is flying, its fluttering wings partially negate this effect, giving it only partial concealment (20%%) rather than total concealment.",
+    "description_variables": [],
+    "facet": "Defensive",
+    "key": "bestiary_2:monster_ability:lurker_in_light_blend_with_light",
+    "name": "Blend With Light",
+    "owners": [
+      "bestiary_2:monster:lurker_in_light"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "In areas of bright light, lurkers are invisible.  As with greater invisibility, they may attack and still remain invisible.  In shadowy illumination, a lurker loses this invisibility, though like all creatures in shadows, they have concealment unless the viewer has darkvision.  If the lurker is flying, its fluttering wings partially negate this effect, giving it only partial concealment (20%%) rather than total concealment."
+      },
+      {
+        "key": "KEY",
+        "value": "Lurker in Light ~ Blend With Light"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "TYPE",
+        "value": "Defensive.Supernatural"
+      }
+    ],
+    "source_page": "p.180",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T10:25:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 786,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Lurker in Light ~ Blend With Light",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

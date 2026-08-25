@@ -1,0 +1,64 @@
+{
+  "completeness": "full",
+  "data": {
+    "codex_generated_name": false,
+    "corpus_key": "Traits Output ~ Clockwork",
+    "delivery": "Extraordinary",
+    "description": "Winding (Ex) Clockwork constructs must be wound with special keys in order to function. As a general rule, a fully wound clockwork can remain active for 1 day per Hit Die, but shorter or longer durations are possible. &nl; Vulnerability to Electricity: Clockwork constructs take 150%% as much damage as normal from electricity attacks. &nl; Swift Reactions (Ex) Clockwork constructs generally react much more swiftly than other constructs. They gain Improved Initiative and Lightning Reflexes as bonus feats, and gain a +2 dodge bonus to AC. &nl; Difficult to Create (Ex) The time and gp cost required to create a clockwork is 150%% of normal. Construction requirements in individual clockwork monster entries are already increased.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:traits_output_clockwork",
+    "name": "Clockwork Traits",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Difficult to Create (Ex) The time and gp cost required to create a clockwork is 150%% of normal. Construction requirements in individual clockwork monster entries are already increased."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Swift Reactions (Ex) Clockwork constructs generally react much more swiftly than other constructs. They gain Improved Initiative and Lightning Reflexes as bonus feats, and gain a +2 dodge bonus to AC."
+      },
+      {
+        "key": "DESC",
+        "value": "&nl; Vulnerability to Electricity: Clockwork constructs take 150%% as much damage as normal from electricity attacks."
+      },
+      {
+        "key": "DESC",
+        "value": "Winding (Ex) Clockwork constructs must be wound with special keys in order to function. As a general rule, a fully wound clockwork can remain active for 1 day per Hit Die, but shorter or longer durations are possible."
+      },
+      {
+        "key": "KEY",
+        "value": "Traits Output ~ Clockwork"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
+    "rename": null,
+    "source_page": null,
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T22:59:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2307,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Traits Output ~ Clockwork",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

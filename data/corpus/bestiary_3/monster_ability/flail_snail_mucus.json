@@ -1,0 +1,57 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Flail Snail ~ Mucus",
+    "delivery": "Extraordinary",
+    "description": "As a free action, a flail snail can excrete a trail of mucus that covers its space and lasts for 10 minutes. This mucus comes in two types: slimy and sticky. A character who attempts to move through an area covered in slippery mucus must make a DC 14 Reflex save each round or fall prone. Sticky mucus transforms squares into difficult terrain. Only one type of mucus can be in effect at a time in any one square. Flail snails can move through either type of slime with ease. A square of mucus exposed to a fire source dries and reverts to normal. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:monster_ability:flail_snail_mucus",
+    "name": "Mucus",
+    "owners": [
+      "bestiary_3:monster:flail_snail"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a flail snail can excrete a trail of mucus that covers its space and lasts for 10 minutes. This mucus comes in two types: slimy and sticky. A character who attempts to move through an area covered in slippery mucus must make a DC 14 Reflex save each round or fall prone. Sticky mucus transforms squares into difficult terrain. Only one type of mucus can be in effect at a time in any one square. Flail snails can move through either type of slime with ease. A square of mucus exposed to a fire source dries and reverts to normal. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Flail Snail ~ Mucus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "TYPE",
+        "value": "FlailSnailRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
+    "source_page": "p.118",
+    "traits": [
+      "FlailSnailRacialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T10:26:03Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 865,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Flail Snail ~ Mucus",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

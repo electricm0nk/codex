@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Master Summoner ~ Lesser Eidolon",
     "name": "Lesser Eidolon",
-    "class": "Master Summoner",
+    "class": "Summoner",
     "description": "You possess the ability to summon a powerful outsider called an eidolon. You always summon an aspect of the same creature. Your eidolon has your alignment and can speak all of your languages. Your eidolon is treated as a summoned creature, except that it is not sent back to its home plane until reduced to a number of negative hit points equal to or greater than its Constitution score. In addition, due to its tie to you, your eidolon can touch and attack creatures warded by protection from evil and similar effects that prevent contact with summoned creatures. You can summon your eidolon in a ritual that takes 1 minute to perform. When summoned in this way, your eidolon's hit points are unchanged from the last time it was summoned. The only exception to this is if your eidolon was slain, in which case it returns with half its normal hit points. Your eidolon remains until dismissed (a standard action). If your eidolon is sent back to its home plane due to damage, it cannot be summoned again until the following day. Your eidolon cannot be sent back to its home plane by means of dispel magic, but spells such as dismissal and banishment work normally.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

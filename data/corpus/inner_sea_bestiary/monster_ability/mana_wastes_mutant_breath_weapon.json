@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Mana Wastes Mutant ~ Breath Weapon",
+    "delivery": "Extraordinary",
+    "description": "30-ft acid cone, %1d6 damage, Reflex half (DC %2)",
+    "description_variables": [
+      "HD/2",
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:mana_wastes_mutant_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "30-ft acid cone, %1d6 damage, Reflex half (DC %2)|HD/2|10+HD/2+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Mana Wastes Mutant ~ Breath Weapon"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Mana Wastes Mutant ~ Disease"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.MutantSpecialAbility"
+      }
+    ],
+    "source_page": "p.29",
+    "traits": [
+      "MutantSpecialAbility"
+    ]
+  },
+  "ingested_at": "2026-08-23T14:10:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 205,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Mana Wastes Mutant ~ Breath Weapon",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

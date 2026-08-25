@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:38:17Z",
+  "data": {
+    "key": "Raging Hulk",
+    "category": "General",
+    "name": "Raging Hulk",
+    "description": "For the purpose of level requirements for rage powers or astral suit customizations, add your levels of barbarian and aegis together. Damage reduction from either class stacks. In addition, any time you enter a rage, you can activate augment suit as a free action.",
+    "prerequisites": [
+      "PREABILITY:2,CATEGORY=Special Ability,Aegis ~ Form Astral Suit,Rage"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst",
+    "sha256": "528096cb97ebe8255b9f9fe67682dd7e045f53b65e32295cd57967002eccb137",
+    "line": 284,
+    "record_key": "Raging Hulk"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

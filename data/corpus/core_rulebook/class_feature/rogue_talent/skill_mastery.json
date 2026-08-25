@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Rogue Talent ~ Skill Mastery",
     "name": "Skill Mastery",
-    "class": "Rogue Talent",
+    "class": "Rogue",
     "description": "You become so confident in the use of certain skills that you can use them reliably even under adverse conditions. When making a skill check with one of these skills, you may take 10 even if stree and distraction would normally prevent you from doing so.",
     "raw_tokens": [
       {
@@ -63,5 +63,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

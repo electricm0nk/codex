@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T16:43:18Z",
+  "data": {
+    "key": "The Shield of the Sun",
+    "name": "The Shield of the Sun",
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Paladin=1|Bless,Bless Water,Bless Weapon,Create Water,Cure Light Wounds,Detect Poison,Detect Undead,Divine Favor,Endure Elements,Magic Weapon,Protection from Chaos,Protection from Evil,Read Magic,Resistance,Restoration (Lesser),Virtue"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Paladin=2|Bull's Strength,Delay Poison,Eagle's Splendor,Owl's Wisdom,Remove Paralysis,Resist Energy,Shield Other,Undetectable Alignment,Zone of Truth"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Paladin=3|Cure Moderate Wounds,Daylight,Discern Lies,Dispel Magic,Heal Mount,Magic Circle against Chaos,Magic Circle against Evil,Magic Weapon (Greater),Prayer,Remove Blindness/Deafness,Remove Curse"
+      },
+      {
+        "key": "SPELLKNOWN",
+        "value": "CLASS|Paladin=4|Break Enchantment,Cure Serious Wounds,Death Ward,Dispel Chaos,Dispel Evil,Holy Sword,Mark of Justice,Neutralize Poison,Restoration"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_templates.lst",
+    "sha256": "28e241f456abb993f50ad6b7941e675217dd576e774546156d8fdd75a1868bd5",
+    "line": 7,
+    "record_key": "The Shield of the Sun"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:sd32_simple_filename_kind_ingest"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Tiger ~ Major",
     "name": "Major Aspect of the Tiger",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a dire tiger (Bestiary p265). While in this form, you gain a base speed of 40 feet, low-light vision, scent (30 feet), two claw attacks (2d4 damage), a bite attack (2d6 damage), the grab ability with both your bite and claw attacks, and pounce.",
     "raw_tokens": [
       {
@@ -51,5 +51,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

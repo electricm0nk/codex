@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Vigilante Talent ~ Stalwart",
     "name": "Stalwart",
-    "class": "Vigilante Talent",
+    "class": "Vigilante",
     "description": "A zealot with this talent can use mental and physical resilience to avoid certain attacks. If he succeeds at a Fortitude or Will saving throw against an attack that has a reduced effect on a successful save, he avoids the effect entirely. A helpless zealot doesn't gain the benefit of this ability.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

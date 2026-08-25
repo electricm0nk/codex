@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Nightshade ~ Darksense",
+    "name": "Darksense",
+    "description": "Nightshades gain true seeing in dim light and darkness.  Regardless of light conditions, they can detect living creatures and their health within 60 feet, as blindsense with deathwatch continuously active.  Mind blank and nondetection prevent the latter effect but not the nightshade's true seeing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nightshade ~ Darksense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Sense.Extraordinary"
+      },
+      {
+        "key": "DESC",
+        "value": "Nightshades gain true seeing in dim light and darkness.  Regardless of light conditions, they can detect living creatures and their health within 60 feet, as blindsense with deathwatch continuously active.  Mind blank and nondetection prevent the latter effect but not the nightshade's true seeing."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1973,
+    "record_key": "Nightshade ~ Darksense"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

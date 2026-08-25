@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Skinwalker ~ Ability Scores",
+    "name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Racial Traits"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceStatAbility"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[!PREABILITY:1,CATEGORY=Racial Traits,TYPE.RaceStatAbility],[PREABILITY:1,CATEGORY=Racial Traits,Skinwalker ~ Ability Scores]"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ARG_RaceBuilderPoints|-1"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Racial Points|1"
+      },
+      {
+        "key": "INFO",
+        "value": "Racial Points|1"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_arg.lst",
+    "sha256": "95170e77a0bfbda598fb2bc72ef272cb37cf6cfba290dc904139e2cf03b02a4e",
+    "line": 6,
+    "record_key": "Skinwalker ~ Ability Scores"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

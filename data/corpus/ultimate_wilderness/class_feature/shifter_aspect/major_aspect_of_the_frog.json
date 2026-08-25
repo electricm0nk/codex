@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Shifter Aspect ~ Frog ~ Major",
     "name": "Major Aspect of the Frog",
-    "class": "Shifter Aspect",
+    "class": "Shifter",
     "description": "Your shape changes to that of a Large frog (as per the giant frog but with a space of 10 feet; Bestiary p135). While in this form, you gain a swim speed of %1 feet, low-light vision, scent (30 feet), a bite attack (1d6 damage) with the grab ability, and the ability to treat all jumps as if you had a running start.|FrogAspectSwimSpeed",
     "raw_tokens": [
       {
@@ -79,5 +79,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

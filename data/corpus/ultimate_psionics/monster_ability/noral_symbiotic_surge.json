@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T09:31:54Z",
+  "data": {
+    "corpus_key": "Noral ~ Symbiotic Surge",
+    "delivery": null,
+    "description": "Add 1d6 to a 1d20 roll %1/day.",
+    "description_variables": [
+      "SymbioticSurgeTimes"
+    ],
+    "facet": "SpecialQuality",
+    "key": "ultimate_psionics:monster_ability:noral_symbiotic_surge",
+    "name": "Symbiotic Surge",
+    "owners": [
+      "ultimate_psionics:monster:noral"
+    ],
+    "source_page": "p.21",
+    "traits": [
+      "RacialTraits",
+      "NoralRacialTrait",
+      "NoralRacialDefault"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_race.lst",
+    "sha256": "3368f2a5e87f65a202fb5dce31ecbe9bf6a0b8d0b715abc99d8233796131d9c7",
+    "line": 278,
+    "record_key": "Noral ~ Symbiotic Surge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

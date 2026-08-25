@@ -1,11 +1,15 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Domain Power ~ Sacrificial Bond",
     "name": "Sacrificial Bond",
     "class": "Domain Power",
+    "classes": [
+      "Cleric",
+      "Paladin"
+    ],
     "description": "At 8th level, when an ally within 30 feet takes damage from an attack, you can, as an immediate action, transfer this damage to yourself. This power also transfers any effects that accompany the damage. The damage done to you cannot be reduced in any way. You can use this ability %1 times per day.|min(3,(DomainNobilityLVL-2)/6)",
     "raw_tokens": [
       {
@@ -52,5 +56,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

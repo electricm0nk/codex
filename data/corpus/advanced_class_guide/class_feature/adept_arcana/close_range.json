@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Adept Arcana ~ Close Range",
     "name": "Close Range",
-    "class": "Adept Arcana",
+    "class": "Adept",
     "description": "You can deliver ray spells that feature a ranged touch attack as melee touch spells. You can use a ranged touch attack spell that targets more than one creature (such as Scorching Ray), but you make only one melee touch attack to deliver one of these ranged touch effects; additional ranged touch attacks from that spell are wasted and have no effect. These spells can be used with the spell strike class feature.",
     "raw_tokens": [
       {
@@ -43,5 +43,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

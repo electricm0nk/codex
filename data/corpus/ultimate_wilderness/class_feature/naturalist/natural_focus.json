@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Naturalist ~ Natural Focus",
+    "name": "Natural Focus",
+    "class": "Occultist",
+    "description": "A naturalist can always hear the spirits of nature whispering in his ears, and sometimes those whispers contain helpful advice. As a free action, a naturalist can expend 1 point of generic mental focus before rolling an ability check, saving throw, or skill check to add 1d%1 to the result. The naturalist must be conscious and aware to use this ability, and he can use this ability at most once per round. This ability doesn't function while the naturalist is wearing metal armor or using a metal shield (although he can wear a suit of armor or use a shield altered by the ironwood spell). This restriction is similar to the druid's armor restriction. This alters mental focus.|NaturalistFocusDieSize",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Naturalist ~ Natural Focus"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Occultist Class Features.NaturalistClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaturalistFocusDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A naturalist can always hear the spirits of nature whispering in his ears, and sometimes those whispers contain helpful advice. As a free action, a naturalist can expend 1 point of generic mental focus before rolling an ability check, saving throw, or skill check to add 1d%1 to the result. The naturalist must be conscious and aware to use this ability, and he can use this ability at most once per round. This ability doesn't function while the naturalist is wearing metal armor or using a metal shield (although he can wear a suit of armor or use a shield altered by the ironwood spell). This restriction is similar to the druid's armor restriction. This alters mental focus.|NaturalistFocusDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalistFocusDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalistFocusDieSize|2|PRECLASS:1,Occultist=8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaturalistFocusDieSize|2|PRECLASS:1,Occultist=16"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+    "sha256": "26a03f73c3534cd6bae0bcda9581b3a89fa28ce5f78f854e009fc8110c477568",
+    "line": 142,
+    "record_key": "Naturalist ~ Natural Focus"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

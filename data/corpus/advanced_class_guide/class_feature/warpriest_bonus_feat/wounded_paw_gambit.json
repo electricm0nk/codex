@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Warpriest Bonus Feat ~ Wounded Paw Gambit",
     "name": "Wounded Paw Gambit",
-    "class": "Warpriest Bonus Feat",
+    "class": "Warpriest",
     "description": "Whenever you use Broken Wing Gambit and an opponent attacks you as a result, each ally who has this feat and is within 30 feet of that opponent can attempt a ranged attack against it as an immediate action. The ally's ranged weapon must be in hand, loaded, and ready to be fired or thrown in order to make this attack possible.&nl; An ally who has this feat and Broken Wing Gambit can instead use Broken Wing Gambit to attempt an attack of opportunity against the foe, but cannot attempt both that attack of opportunity and this ranged attack.",
     "raw_tokens": [
       {
@@ -55,5 +55,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

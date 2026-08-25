@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Body Snatcher ~ Mindleap Contingency",
+    "name": "Mindleap Contingency",
+    "class": "Body Snatcher",
+    "description": "You unlock the ability to use a unique metapsionic effect known as a mindleap contingency.  Powers that specify a single target and can affect your current form can be made into mindleap contingent powers. A mindleap contingent power, once manifest, lies dormant, undetectable and undispellable, for up to five minutes (after which time it fades harmlessly), or until you leave your current body via mind switch (either to return to your original body or to possess another). Immediately after the switch occurs, the mindleap contingency triggers, and the linked power takes effect on the body you were in when you established the contingency. Any choices to be made about the effect must be made when the power is manifest, not when it triggers. Saving throws made against a mindleap contingent power suffer a -5 penalty due to the sudden shift in bodies. Using this ability is akin to using a metapsionic feat - you must expend your psionic focus when establishing a mindleap contingency, and establishing one increases the power's power point cost by 4.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Body Snatcher ~ Mindleap Contingency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "BodySnatcherClassFeatures.SpecialQuality.Supernatural"
+      },
+      {
+        "key": "DESC",
+        "value": "You unlock the ability to use a unique metapsionic effect known as a mindleap contingency.  Powers that specify a single target and can affect your current form can be made into mindleap contingent powers. A mindleap contingent power, once manifest, lies dormant, undetectable and undispellable, for up to five minutes (after which time it fades harmlessly), or until you leave your current body via mind switch (either to return to your original body or to possess another). Immediately after the switch occurs, the mindleap contingency triggers, and the linked power takes effect on the body you were in when you established the contingency. Any choices to be made about the effect must be made when the power is manifest, not when it triggers. Saving throws made against a mindleap contingent power suffer a -5 penalty due to the sudden shift in bodies. Using this ability is akin to using a metapsionic feat - you must expend your psionic focus when establishing a mindleap contingency, and establishing one increases the power's power point cost by 4."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.352"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1158,
+    "record_key": "Body Snatcher ~ Mindleap Contingency"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

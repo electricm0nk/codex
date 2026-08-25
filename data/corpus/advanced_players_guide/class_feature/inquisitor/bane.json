@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-24T03:51:47Z",
   "data": {
     "key": "Inquisitor ~ Bane",
     "name": "Bane",
@@ -43,6 +43,18 @@
       {
         "key": "ASPECT",
         "value": "CheckType|Rounds per Day"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor=1"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin=1"
+      },
+      {
+        "key": "DOMAINS",
+        "value": "Curse Subdomain=1"
       }
     ]
   },
@@ -59,5 +71,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

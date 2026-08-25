@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Discovery ~ Wings",
     "name": "Wings",
-    "class": "Discovery",
+    "class": "Alchemist",
     "description": "You gain batlike, birdlike, or insectlike functional wings, allowing you to fly as the Fly spell for %1 minutes per day. These minutes do not need to be consecutive, but they must be spent in 1-minute increments. You can select this discovery multiple times; each time you do so, you add your caster level to the number of minutes per day that you can fly with the wings. This flight is an extraordinary ability.|WingsDuration",
     "raw_tokens": [
       {
@@ -68,5 +68,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

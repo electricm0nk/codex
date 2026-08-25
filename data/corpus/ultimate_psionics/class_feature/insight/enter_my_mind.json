@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T18:50:56Z",
+  "data": {
+    "key": "Insight ~ Enter My Mind",
+    "name": "Enter My Mind",
+    "class": "Insight",
+    "description": "If unwilling target of mindlink ability fails its saving throw, it is shaken for %1 rounds.|EnterMyMindDuration",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Insight ~ Enter My Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.CrypticInsight.Psilike"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "CanTakeVoidInsights,1"
+      },
+      {
+        "key": "DEFINE",
+        "value": "EnterMyMindDuration|0"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3+CrypticInsightStat|CASTERLEVEL=CrypticML|Mindlink"
+      },
+      {
+        "key": "DESC",
+        "value": "If unwilling target of mindlink ability fails its saving throw, it is shaken for %1 rounds.|EnterMyMindDuration"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|EnterMyMindDuration|CrypticInsightStat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d",
+    "line": 1832,
+    "record_key": "Insight ~ Enter My Mind"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:spells"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lesser Cure ~ Prepared",
+    "name": "Lesser Cure",
+    "description": "Cure 1d6+1/caster level damage, max 5.  Boost: 1d8 base curing.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lesser Cure ~ Prepared"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Words of Power"
+      },
+      {
+        "key": "TYPE",
+        "value": "WordsOfPowerOutput.Effect.Healing.Alchemist1.Cleric1.Druid1.Paladin1.Ranger2.Witch1"
+      },
+      {
+        "key": "DESC",
+        "value": "Cure 1d6+1/caster level damage, max 5.  Boost: 1d8 base curing."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.179"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
+    "line": 547,
+    "record_key": "Lesser Cure ~ Prepared"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

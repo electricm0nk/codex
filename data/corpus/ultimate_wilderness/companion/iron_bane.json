@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "data": {
+    "key": "Feytouched Companion ~ Iron Bane",
+    "name": "Iron Bane",
+    "description": "A feytouched companion gains damage reduction %1/cold iron. Any creature holding or wearing an item made out of cold iron takes a -10 penalty on Handle Animal checks to handle the feytouched companion.|FeytouchedCompanionDR",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feytouched Companion ~ Iron Bane"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionClassFeatures.ArchetypeAbility.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "FeytouchedCompanionDR|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A feytouched companion gains damage reduction %1/cold iron. Any creature holding or wearing an item made out of cold iron takes a -10 penalty on Handle Animal checks to handle the feytouched companion.|FeytouchedCompanionDR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FeytouchedCompanionDR|MasterLevel/3"
+      },
+      {
+        "key": "DR",
+        "value": "FeytouchedCompanionDR/Cold Iron"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      }
+    ],
+    "origin": "declared",
+    "owners": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 496,
+    "record_key": "Feytouched Companion ~ Iron Bane"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Frog Domain ~ Sticky Strike",
     "name": "Sticky Strike",
-    "class": "Frog Domain",
+    "class": "Cleric",
     "description": "As a standard action, you can attempt a ranged touch attack with a sticky tendril against a target up to 15 feet away, then use the pull universal monster ability (see page 303 of the Pathfinder RPG Bestiary) to pull the target 5 feet toward you. You gain a +%1 bonus on the pull's combat maneuver check. If the target is larger than you, you may pull yourself 5 feet toward the target without making a check. The target can remove the tendril by making an opposed Strength check as a standard action, or by dealing enough slashing damage to the tendril (%3 hit points, Armor Class %4). You can dissolve the tendril as a free action. You can use this ability %2 times per day.|StickyStrikeBonus|DomainFrogTimes|StickyStrikeHP|StickyStrikeAC",
     "raw_tokens": [
       {
@@ -75,5 +75,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

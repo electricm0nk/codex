@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "data": {
+    "key": "Jiang-Shi Vampire ~ Prayer Scroll",
+    "name": "Prayer Scroll",
+    "description": "The scroll attached to the brow of a jiang-shi grants immunity to any effects generated from spell-completion or spell-trigger magic items, such as scrolls and wands. Such magical effects treat the jiang-shi as if it had unbeatable spell resistance. A jiang-shi's prayer scroll can be removed with a successful steal combat maneuver (Advanced Player's Guide 322), which immediately ends the jiang-shi's immunity to these effects. If a jiang-shi's prayer scroll is destroyed (a standard action), the vampire also loses its fast healing ability. A jiang-shi may create a replacement prayer scroll by using any strip of parchment and a writing instrument, but doing so requires 10 minutes of uninterrupted work.",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Jiang-Shi Vampire ~ Prayer Scroll"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Supernatural.RaceAbility.SpecialQuality.JiangShiVampire"
+      },
+      {
+        "key": "DESC",
+        "value": "The scroll attached to the brow of a jiang-shi grants immunity to any effects generated from spell-completion or spell-trigger magic items, such as scrolls and wands. Such magical effects treat the jiang-shi as if it had unbeatable spell resistance. A jiang-shi's prayer scroll can be removed with a successful steal combat maneuver (Advanced Player's Guide 322), which immediately ends the jiang-shi's immunity to these effects. If a jiang-shi's prayer scroll is destroyed (a standard action), the vampire also loses its fast healing ability. A jiang-shi may create a replacement prayer scroll by using any strip of parchment and a writing instrument, but doing so requires 10 minutes of uninterrupted work."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
+    "line": 1659,
+    "record_key": "Jiang-Shi Vampire ~ Prayer Scroll"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

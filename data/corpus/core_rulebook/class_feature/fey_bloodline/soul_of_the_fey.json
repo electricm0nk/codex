@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T14:49:05Z",
+  "ingested_at": "2026-08-23T18:50:56Z",
   "data": {
     "key": "Fey Bloodline ~ Soul of the Fey",
     "name": "Soul of the Fey",
-    "class": "Fey Bloodline",
+    "class": "Sorcerer",
     "description": "Your soul becomes one with the world of the fey. You gain immunity to poison and DR 10/cold iron. Creatures of the animal type do not attack you unless compelled to do so through magic. Once per day, you can cast shadow walk as a spell-like ability with a caster level of %1.|Sorcerer_FeySoulOfTheFey_CasterLevel",
     "raw_tokens": [
       {
@@ -80,5 +80,6 @@
   ],
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "codex_generated_name": false
 }

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Winter Witch",
+    "name": "Winter Witch",
+    "description": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Aligned Class"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aligned Class"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Class,Winter Witch"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Winter Witch|EvangelistLVL-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WinterWitchLVL|EvangelistLVL-1"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Witch"
+      },
+      {
+        "key": "BONUS",
+        "value": "CASTERLEVEL|Witch|WinterWitchLVL-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Witch|var(\"WinterWitchLVL\")-2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/abilities_rowpg.lst",
+    "sha256": "b0033de846008a32d09b92cfe65177d33b881c91c8cda3a5df125220b24ea6e4",
+    "line": 24,
+    "record_key": "Winter Witch"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:has_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

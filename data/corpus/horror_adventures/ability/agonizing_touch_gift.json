@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-23T14:17:00Z",
+  "data": {
+    "key": "Lich Corruption ~ Agonizing Touch Gift",
+    "name": "Agonizing Touch Gift",
+    "description": "%1 times day per manifestation level, you can make an agonizing touch as a standard action. A living creature hit by this touch attack must succeed at a Fortitude save (DC %2) or be staggered for %3 rounds.|LichManifestationLevel|10+TL/2+LichManifestationLevel|LichManifestationLevel/2",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lich Corruption ~ Agonizing Touch Gift"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.LichAgonizingTouchGift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times day per manifestation level, you can make an agonizing touch as a standard action. A living creature hit by this touch attack must succeed at a Fortitude save (DC %2) or be staggered for %3 rounds.|LichManifestationLevel|10+TL/2+LichManifestationLevel|LichManifestationLevel/2"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
+    "line": 469,
+    "record_key": "Lich Corruption ~ Agonizing Touch Gift"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "codex_generated_name": false,
+  "rename": null
+}

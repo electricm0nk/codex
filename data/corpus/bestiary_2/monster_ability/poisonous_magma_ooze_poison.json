@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Poisonous Magma Ooze ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Slam - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Con; cure 2 consecutive saves.",
+    "description_variables": [
+      "PoisonousMagmaOozePoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:poisonous_magma_ooze_poison",
+    "name": "Poison",
+    "owners": [],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonousMagmaOozePoisonDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PoisonousMagmaOozePoisonDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Poison)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PoisonousMagmaOozePoisonDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Slam - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Con; cure 2 consecutive saves.|PoisonousMagmaOozePoisonDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Poisonous Magma Ooze ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
+    "source_page": "p.184",
+    "traits": []
+  },
+  "ingested_at": "2026-08-23T14:07:19Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 805,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Poisonous Magma Ooze ~ Poison",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
