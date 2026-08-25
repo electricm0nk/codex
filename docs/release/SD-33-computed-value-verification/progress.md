@@ -225,6 +225,52 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E5-remainder-spell — spell-casting-ability lane (rows 16/17, Epic 5) — complete
+
+- **Criterion:** contributes to `AT-33-E5-001`/`AT-33-E5-002` (rows 16/17) — one named 815-unit
+  slice (598 `fixture-verified` `spell` units carrying evidence `spell_list_entry_with_resolved_level`
+  + 217 `literal-verified` `spell` units) of the 1,390-unit Epic-5 remainder wave 1 could not reach.
+  Two sibling lanes ran in parallel on the other slices of the same 1,390; this lane does not total
+  or close rows 16/17/18 — a finalize cycle owns that call.
+- **Files:** `scripts/oracle_harness/derive_spell_casting_ability_mapping.py` +
+  `spell_casting_ability_mapping.json` (new — the casting-ability mapping, derived from the pinned
+  PCGen oracle's own `CLASS:...SPELLSTAT:` data); `src/bin/fixture_verified_oracle_probe.rs`
+  (extended with a `--remainder` mode, not forked); `artifacts/epic-5-reverification/
+  spell-remainder-*` (new — probe output, 6 real `.pcg`/export fixtures, compare/merge scripts,
+  the committed `spell-remainder.oracle-results.json`); `kanban.md` (rows 16/17 Notes — pointer
+  appended, not overwritten); `AT-33-E5-001_cycle_receipt.md`/`AT-33-E5-002_cycle_receipt.md`
+  (this lane's totals appended to each).
+- **What landed:** built the casting-ability mapping (36 classes, cross-checked 7/7 against the
+  engine's own `casting_ability_for_class`); ran 100 already-examinable units through a real,
+  live PCGen oracle round-trip; found the REAL blocker for the other 708 is per-school table
+  book-scope (only `core_rulebook`/`advanced_players_guide`/`advanced_class_guide`), not solely
+  casting-ability mapping as the dispatch brief framed it — confirmed by a live
+  `compute_spellbook_coverage` attempt against every mapped-class candidate on each unit's own
+  corpus `CLASSES:` token, zero of which resolved. Found and fixed a real bug in this cycle's own
+  first draft (a join-key/DC-source table mismatch producing 8 spurious disagreements); the fix
+  surfaced 14 of those as a genuine candidate engine defect (`oracle_export_dropped_declared_level`
+  — PCGen drops a `SPELLNAME` line whose declared level its own class list disagrees with),
+  named for `AT-33-E5-003`, not buried as an ordinary unverifiable.
+- **Figures:**
+  - Population: 815 (598 + 217, `jq` commands in the lane's own receipt)
+  - Examined via live oracle: 100 of 815 (12.3%) — 55 agree / 0 disagree / 45 unverifiable
+    (`python3 -c "import json,collections; d=json.load(open('artifacts/epic-5-reverification/spell-remainder.oracle-results.json')); print(collections.Counter(r['verdict'] for r in d['results']))"`)
+  - `box_ledger.py --check` against this file → `uncovered=0 overlap=0 population=49438
+    oracle_disagreement=0 unverifiable_done=0 stale=False`, exit 0
+  - Reasonless `unverifiable` in this lane's own rows: 0 of 760
+  - Remaining not oracle-examined: 715 of 815 — every one carries a real, per-unit, execution-derived
+    structural reason (469 book-scope + 192 class-unmapped + 47 no-class-binding + 7 no-corpus-level),
+    named per-shape in the lane's own receipt
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 (real ceilings found
+  — per-school table book scope, per-class ability-map scope — neither widened, `src/rules_core/`
+  out of write scope) / instrument-correction 1 (this cycle's own join-key/DC-source mismatch,
+  found and fixed within the same cycle before commit).
+- **Status:** complete — every one of this lane's 815 units carries a real per-unit row with a
+  populated reason on every `unverifiable`; the population-classification obligation is fully
+  discharged (same "population coverage, not full oracle-round-trip" bar `AT-33-E5-002`'s own
+  closure used), even though only 100 of 815 carry a live oracle comparison.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-spell_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-remainder-equipment — equipment-remainder lane (rows 16/17, Epic 5) — in-progress
 
 - **Criterion:** contributes to `AT-33-E5-001`/`AT-33-E5-002` (rows 16/17) — one named 494-unit slice

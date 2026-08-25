@@ -215,3 +215,32 @@ receipt's own figures above, which remain this cycle's own 1,128-of-1,741 result
   `SITUATION` 34, `SAVE` 24, `WEAPON` 18, ... ) with a concrete next-cycle plan.
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-equipment_cycle_receipt.md`.
 - **Results file:** `artifacts/epic-5-reverification/equipment-remainder.oracle-results.json`.
+
+## Remediation wave 2 — sibling lane contribution (`spell-remainder`)
+
+Reported here per the wave-2 dispatch's own instruction ("report your slice's totals into both
+AT-33-E5-00{1,2} receipts' figure rows"); this lane (`sd33-r2-spell`) does not alter this receipt's
+own figures above, which remain this cycle's own 1,128-of-1,741 result.
+
+- **Population:** 815 (598 `fixture-verified` `spell` units, `evidence=spell_list_entry_with_resolved_level`
+  + 217 `literal-verified` `spell` units) — its own named slice of the 1,390-unit Epic-5 remainder.
+- **Examined via live oracle:** 100 of 815 — 55 agree / 0 disagree / 45 unverifiable (each
+  `unverifiable` row carries a populated `reason`).
+- **The real blocker, found by execution, corrects this receipt's own framing**: this receipt's
+  Notes attributed the 598-unit remainder to "no casting-ability mapping." This cycle built that
+  mapping (36 classes, derived from the pinned PCGen oracle's own `SPELLSTAT` data) and found it is
+  NOT the dominant blocker — a live `compute_spellbook_coverage` attempt against every mapped-class
+  candidate on each of the 708 named-blocker units' own corpus `CLASSES:` token resolved **zero**.
+  The real ceiling: `src/rules_core/spellbook/*.rs`'s per-school `resolve_<school>_spell_effect`
+  functions only read `core_rulebook`/`advanced_players_guide`/`advanced_class_guide`'s own
+  `SPELL_LIST` tables (469 of 708 blocked by this alone); the remaining 239 are genuinely blocked
+  by class-mapping scope (192) or a missing class/domain binding in the corpus record (47).
+- **A real defect surfaced, named for `AT-33-E5-003`**: 14 of the 100 examined units' declared
+  spell level (this engine's per-school generic table) was silently dropped by PCGen's own
+  `BatchExporter` — real, live evidence the per-school table's level disagrees with the per-class
+  table's level for those 14 spells (`Blood Biography`, `Bestow Curse`, `Contagion`, and 11 others,
+  named individually in this lane's own receipt).
+- **Remaining 715:** every unit carries a real, per-unit, execution-derived reason (469 book-scope
+  + 192 class-unmapped + 47 no-class-binding + 7 no-corpus-level) — none reasonless.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-spell_cycle_receipt.md`.
+- **Results file:** `artifacts/epic-5-reverification/spell-remainder.oracle-results.json`.

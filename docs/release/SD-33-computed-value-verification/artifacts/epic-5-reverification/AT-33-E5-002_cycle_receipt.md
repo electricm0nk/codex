@@ -344,3 +344,21 @@ Reported here per the wave-2 dispatch's own instruction; does not alter this rec
   receipt, not folded into any verdict here.
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-equipment_cycle_receipt.md`.
 - **Results file:** `artifacts/epic-5-reverification/equipment-remainder.oracle-results.json`.
+
+## Remediation wave 2 — sibling lane contribution (`spell-remainder`)
+
+Reported here per the wave-2 dispatch's own instruction; does not alter this receipt's own 5,812-of-
+6,589 figures above.
+
+- **Population:** 217 `literal-verified` `spell` units — the whole `spell` slice of this receipt's
+  own named 777-unit unexamined remainder (this lane's brief also covers 598 `fixture-verified`
+  spell units from `AT-33-E5-001`'s side, 815 total for the lane; only the 217 belong to this
+  receipt's own population).
+- **Examined via live oracle:** 100 of 217 (the `spell_effect_probe_observed_computed_delta`-evidence
+  subset, already reachable through the proven wave-1 mechanism) — 55 agree / 0 disagree / 45
+  unverifiable.
+- **Remaining 117** of this receipt's own 217-unit `spell` population: 110 blocked by the same
+  per-school table book-scope / class-mapping ceilings the lane's own receipt names in full for its
+  wider 708-unit shared population, plus 7 with no resolvable corpus level at all.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-spell_cycle_receipt.md`.
+- **Results file:** `artifacts/epic-5-reverification/spell-remainder.oracle-results.json`.
