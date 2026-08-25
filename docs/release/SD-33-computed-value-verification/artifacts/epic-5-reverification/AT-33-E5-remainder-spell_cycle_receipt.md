@@ -1,7 +1,7 @@
 # Cycle AT-33-E5-remainder-spell — Epic 5 Re-verification / AT-33-E5-001 & AT-33-E5-002 (spell-casting-ability remainder)
 
-- **Commit SHA:** `<pending>` (recorded in a follow-up commit, same convention `AT-33-E5-001`'s
-  `e10dead123`/`AT-33-E5-002`'s `114bba8ec4` precedent used)
+- **Commit SHA:** `bce3b3d868` (landed on `tranche/13`; this line updated in a follow-up commit,
+  same convention `AT-33-E5-001`'s `e10dead123`/`AT-33-E5-002`'s `114bba8ec4` precedent used)
 - **Files touched:**
   - `scripts/oracle_harness/derive_spell_casting_ability_mapping.py` (new) — derives the PF1 class
     -> governing-ability mapping directly from the pinned PCGen oracle checkout's own
