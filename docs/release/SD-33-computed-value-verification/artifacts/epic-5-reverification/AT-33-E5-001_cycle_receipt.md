@@ -195,3 +195,23 @@ this binary is future scope, named in next-cycle plan).
    (`fixture_verified_oracle_probe.rs`, `fixture-generate-spell-batch.py`,
    `fixture-compare-spell-batch.py`) is directly reusable for its own spell/equipment sub-populations
    once that lane's own inventory join is built; not started by this cycle.
+
+## Remediation wave 2 — sibling lane contribution (`equipment-remainder`)
+
+Reported here per the wave-2 dispatch's own instruction ("report your slice's totals into both
+AT-33-E5-00{1,2} receipts' figure rows"); this lane (`sd33-r2-equipment`) does not alter this
+receipt's own figures above, which remain this cycle's own 1,128-of-1,741 result.
+
+- **Population:** 494 (448 equipment `other_bonus_shape` + 46 `equipment_modifier`) — its own named
+  slice of the 1,390-unit Epic-5 remainder (32 -> 6,940 of 8,330 after wave 1).
+- **Examined:** 103 of 494 — 65 agree / 1 disagree / 37 unverifiable (each `unverifiable` row
+  carries a populated `reason`).
+- **The 1 real disagreement** (`ultimate_equipment:equipment:ring_of_the_sea_strider`, `ours=8`
+  `oracle=16`): a real, root-caused engine gap — `compute_general_effect` does not model PF1's
+  "a granted swim speed implies an automatic +8 racial Swim bonus" rule, which stacks with the
+  item's own explicit `+8` racial token in PCGen's real output. Named for `AT-33-E5-003` to fix or
+  escalate; not fixed by this lane.
+- **Remaining 391:** named per-shape (`VAR` 108, `COMBAT` 92, `STAT_multi_or_other_slot` 43,
+  `SITUATION` 34, `SAVE` 24, `WEAPON` 18, ... ) with a concrete next-cycle plan.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-equipment_cycle_receipt.md`.
+- **Results file:** `artifacts/epic-5-reverification/equipment-remainder.oracle-results.json`.

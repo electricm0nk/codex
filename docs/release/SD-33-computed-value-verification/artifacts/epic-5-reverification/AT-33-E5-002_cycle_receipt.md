@@ -320,3 +320,27 @@ See "Not folded into a false 100%" above for the concrete, per-shape breakdown o
 units. Highest-leverage next step: `SKILL` (124 of 448 equipment `other_bonus_shape` units) reuses
 the already-proven `CHECK.<i>.TOTAL` export token with a skill-name-to-index lookup, no new PCGen
 mechanism needed.
+
+**Correction (remediation wave 2, `equipment-remainder` lane, `--verified-by`: live PCGen export
+`CHECK.0.NAME=Fortitude`):** the paragraph above is wrong about which token family covers `SKILL`.
+`CHECK.<i>` resolves to PF1's three SAVES (Fortitude/Reflex/Will), not skills — confirmed empirically
+before building on it. The correct token family is `SkillToken`'s own `SKILL.<name>.<property>`
+syntax (`SKILL.<literal skill name>.MISC` isolates a circumstance/competence/racial bonus directly,
+no ability-mod baseline diff needed) — real PCGen source: `code/src/java/pcgen/io/exporttoken/
+SkillToken.java`. See `AT-33-E5-remainder-equipment_cycle_receipt.md` for the full mechanism.
+
+## Remediation wave 2 — sibling lane contribution (`equipment-remainder`)
+
+Reported here per the wave-2 dispatch's own instruction; does not alter this receipt's own 5,812-of-
+6,589 figures above.
+
+- **Population:** 494 (448 equipment `other_bonus_shape` + 46 `equipment_modifier`) of this
+  receipt's own named 777-unit unexamined remainder.
+- **Examined:** 103 of 494 — 65 agree / 1 disagree / 37 unverifiable, real oracle round-trip for the
+  `SKILL` shape (90 of the 448's 118 SKILL-carrying units attempted; 71 reached a real comparison,
+  19 named exclusions — see the lane's own receipt); 32 `equipment_modifier` units dispositioned
+  `unverifiable`/`no_bonus_chain` by real whole-record read.
+- **Remaining 391** of this lane's own 494-unit population stay named per-shape in the lane's own
+  receipt, not folded into any verdict here.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-equipment_cycle_receipt.md`.
+- **Results file:** `artifacts/epic-5-reverification/equipment-remainder.oracle-results.json`.

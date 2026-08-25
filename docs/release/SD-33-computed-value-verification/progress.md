@@ -225,6 +225,50 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E5-remainder-equipment — equipment-remainder lane (rows 16/17, Epic 5) — in-progress
+
+- **Criterion:** contributes to `AT-33-E5-001`/`AT-33-E5-002` (rows 16/17) — one named 494-unit slice
+  (448 equipment `other_bonus_shape` + 46 `equipment_modifier`) of the 1,390-unit Epic-5 remainder
+  wave 1 could not reach (32 -> 6,940 of 8,330 examined). Two sibling lanes ran in parallel on the
+  other slices of the same 1,390; this lane does not total or close rows 16/17/18 — a finalize cycle
+  owns that call.
+- **Files:** `src/bin/e5_equipment_remainder_skill_ours.rs` (new); `artifacts/epic-5-reverification/
+  equipment-remainder-*` (new — export template, generator/build/census scripts, 90 `.pcg`+`.ftl`
+  fixtures, 90 real PCGen export `.txt` outputs, working JSON); `artifacts/epic-5-reverification/
+  equipment-remainder.oracle-results.json` (new, the committed deliverable); `kanban.md` (rows
+  16/17 Notes — pointer appended, not overwritten); `AT-33-E5-001_cycle_receipt.md` /
+  `AT-33-E5-002_cycle_receipt.md` (this lane's totals appended to each).
+- **What landed:** re-derived the 448-unit shape breakdown fresh (SKILL 118 largest, then VAR 108 /
+  COMBAT 92 / STAT-multi 43 / SITUATION 34 / SAVE 24 / WEAPON 18 / ...); real whole-record
+  classification of all 46 `equipment_modifier` units (32 genuinely no bonus chain, 14 with an
+  unhandled real chain shape). Built a repo-local SKILL-shape oracle pipeline (`SKILL.<name>.MISC`
+  PCGen token isolates an item's circumstance/competence/racial bonus with no baseline-character
+  diff needed) — found and fixed a real `EQUIPSET:Carried` vs `:Equipped` equip-location hazard
+  before it could produce a false result. 71 of 90 attempted SKILL-shape units reached a real, live
+  oracle comparison (19 named exclusions, each a real diagnosed cause, not silent drops).
+- **Figures:**
+  - Population: 494 (`brief-stated: 448 other_bonus_shape + 46 equipment_modifier`)
+  - Examined: 103 of 494 (20.9%) — 65 agree / 1 disagree / 37 unverifiable (`python3 -c "import
+    json,collections; d=json.load(open('artifacts/epic-5-reverification/equipment-remainder.oracle-results.json'));
+    print(collections.Counter(r['verdict'] for r in d['results']))"`)
+  - `box_ledger.py --check` against this file → `uncovered=0 overlap=0 population=49438
+    oracle_disagreement=1 unverifiable_done=0 stale=False`, exit 1 (correctly — 1 real disagreement)
+  - Reasonless `unverifiable` in this lane's own rows: 0 of 37
+  - Remaining unexamined: 391 of 494 (79.1%), named per-shape in the lane's own receipt
+- **The 1 real disagreement, root-caused:** `ultimate_equipment:equipment:ring_of_the_sea_strider`
+  (`ours=8`, `oracle=16`) — `compute_general_effect` does not model PF1's "a granted swim speed
+  implies an automatic +8 racial Swim bonus" rule, which stacks with the item's own explicit `+8`
+  token in PCGen's real output. Named for `AT-33-E5-003`; not fixed this cycle.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 (real ceilings found
+  — multi-skill/`ALL` chains, the `Implant` slot, a `ultimate_psionics` campaign-load fixture
+  defect, the swim-speed engine gap — none widened) / instrument-correction 1 (the `Carried`→
+  `Equipped` equip-location fix, found and fixed within this cycle) — plus one correction to
+  `AT-33-E5-002`'s own receipt (its `SKILL` next-step note named the wrong PCGen token family;
+  corrected in place, `--verified-by`: live `CHECK.0.NAME=Fortitude` export).
+- **Status:** in-progress — this lane's own 494-unit slice is not fully examined; the 391-unit
+  remainder is named per-shape with a concrete next-cycle plan.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-equipment_cycle_receipt.md`.
+
 ### Cycle AT-33-E1-004-remediation — denominator-gate (row 4, Epic 1) — complete
 
 - **Criterion:** `AT-33-E1-004` — `scripts/verify.sh --only denominator-gate` runs and passes.

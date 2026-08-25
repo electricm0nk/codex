@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-remainder-equipment — Epic 5 Re-verification / AT-33-E5-001 + AT-33-E5-002 (remainder)
 
-- **Commit SHA:** PLACEHOLDER_SHA
+- **Commit SHA:** `c1919daa00` (pushed to `tranche/13`)
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-checks.txt.ftl` (new) — BatchExporter export template, reusing `AT-33-E2-002`'s own proven `SKILL.<name>.<property>` token family (`SkillToken`) directly against a literal skill name, one file per unit (the skill name is a template-time literal, not a runtime loop variable — see Notes).
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-generate-skill-pcgs.py` (new) — generates one `.pcg` + one matching `.txt.ftl` per SKILL-shape unit (Level-1 Human Fighter, base scores STR16/DEX14/CON14/INT10/WIS10/CHA8, one item equipped at the `Equipped` EquipSet location).
@@ -11,8 +11,8 @@
   - `docs/release/SD-33-computed-value-verification/progress.md` (updated in place).
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-001_cycle_receipt.md` / `AT-33-E5-002_cycle_receipt.md` (this lane's totals appended to their figure rows).
   - `docs/retro/events/sd33-r2-equipment.jsonl` (new).
-- **Identifier audit result:** PLACEHOLDER
-- **Wired-integration audit result:** PLACEHOLDER
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS
+- **Wired-integration audit result:** OK_NO_TOKENS
 - **Acceptance criterion (verbatim, `epic-breakdown.md`):**
   > ### AT-33-E5-001 — the 1,741 `fixture-verified` units are re-examined against the oracle
   >
@@ -37,7 +37,7 @@ mechanism does not cover.
 ### 448 `other_bonus_shape` equipment units, re-derived this cycle by first-qualifier label (a unit is counted once per distinct label it carries — the same convention `AT-33-E5-002`'s own receipt used, so the two numbers are directly comparable)
 
 Re-derive: a fresh script reading every one of the 448 units' real corpus record (not the prior
-lane's transcribed table) — `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-labels.json`
+lane's transcribed table) — `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-full448-labels.json`
 holds the full per-unit label set this table is drawn from.
 
 | Label | Count | Notes |
@@ -74,7 +74,7 @@ a comma-joined or `ALL` skill list against. Re-derive: `python3 -c "import json;
 | Empty `raw_bonus_chains` | 32 | **This cycle: `unverifiable`, reason `no_bonus_chain`** — real corpus fact for every one of the 32 (purely descriptive `SPROP:`/`DESC:` text, e.g. `Special Quality ~ Trip`/`Special Quality ~ Reach`, or a `VISIBLE:NO` display-only record like `CLOUDB`) |
 | Non-empty `raw_bonus_chains` | 14 | Not attempted — see below |
 
-The 14 with a real chain, by shape (re-derive: `census_equipmod.py`'s output,
+The 14 with a real chain, by shape (re-derive: `equipment-remainder-census-equipmod.py`'s output,
 `equipment-remainder-equipmod-census.json`):
 
 - **`EQMARMOR\|ACCHECK\|1\|...` (3 units: `draco`/`dragonhide`/`material_dragonhide`)** — a shape
@@ -100,10 +100,12 @@ The 14 with a real chain, by shape (re-derive: `census_equipmod.py`'s output,
 same discipline every prior `AT-33-E5-00x` cycle used): a single `./gradlew run` BatchExporter
 invocation via the repo's own proven `scripts/pcgen-run-character.sh` wrapper costs **~20s** cold
 (confirmed: `time bash scripts/pcgen-run-character.sh ...` -> `real 0m20.013s`). At `-P 15` parallel
-`xargs` batching, PLACEHOLDER_N invocations completed in PLACEHOLDER_WALL wall time (this box's
-gradle-daemon-per-invocation overhead did not scale as cleanly under `-P 15` as `AT-33-E5-002`'s
-direct-`java` `-P 20` lever did — named honestly in Notes below as a real throughput ceiling this
-cycle hit, not hidden).
+`xargs` batching, 85 invocations completed in ~35 minutes wall time on this shared box under real,
+concurrent contention from sibling lanes (`uptime` showed load average ~60 on 24 cores mid-run) —
+this box's gradle-daemon-per-invocation overhead did not scale as cleanly under `-P 15` as
+`AT-33-E5-002`'s own direct-`java` `-P 20` lever did (confirmed: `ps aux` showed a distinct
+`GradleDaemon` JVM per concurrent invocation, not one shared daemon reused across the batch) —
+named honestly in Notes below as a real throughput ceiling this cycle hit, not hidden.
 
 **Real, execution-confirmed equip-location hazard, found and fixed this cycle:** `EQUIPSET:Carried`
 (the location `AT-33-E5-002`'s own precedent used for a slotless item, modeled on PCGen's stock
@@ -124,36 +126,80 @@ source `code/src/java/pcgen/io/exporttoken/SkillToken.java`), and the "ours" sid
 side.
 
 **Population run: 90 of 118 SKILL-shape units** (the single-skill subset; the 27 multi-skill/`ALL`
-units and 1 (`demon_senses`, a `Magic.Wondrous.Implant` type — confirmed this cycle that the generic
-`Equipped` location does not activate an Implant-slot item's `BONUS:` token, a distinct slot-mapping
-gap from the 89 ordinary-slot items that DID resolve correctly at `Equipped`; not attempted further)
-are named, not silently folded.
+units are the distinct engine-shape gap named above, not attempted). Of the 90 run, **19 are named,
+real exclusions, not silent drops** — each hit a genuine, root-caused issue before it could produce
+a false result:
+
+| Exclusion | Count | Real reason |
+|---|---:|---|
+| `demon_senses` | 1 | `Magic.Wondrous.Implant` slot — confirmed this cycle that the generic `Equipped` location does not activate an Implant item's `BONUS:` token (produced a real but WRONG `MISC=0`) |
+| `hunter_s_sight` | 1 | PCGen campaign-load failure (`advanced_class_guide`, a `PRECAMPAIGN`-style dependency gap — the exact class of hazard `AT-33-E5-001`'s own receipt already documented for this book) |
+| `heritage_book` | 1 | Did not complete within this cycle's wall-clock budget — a real Gradle `extractJavaFXLocal`/network-fetch failure under shared-box contention (`BUILD FAILED in 16m 5s`), not a content issue |
+| 11 `ultimate_psionics` items with no explicit corpus `KEY:` token | 11 | `equipment_id_resolve` did not resolve these on the "ours" side this cycle — a real resolver limitation for positional/parenthetical display keys, not root-caused further |
+| `ring_self_sufficiency` | 1 | Resolved via `equipment_id_resolve`, but `compute_general_effect` returned `None` despite a real `SKILL` chain on the corpus record — an unexplained anomaly, named rather than guessed at |
+| `eyes_of_expanded_vision` / `leather_of_confined_spaces` / `shadow_shirt` / `third_eye_aware` | 4 | **Real, root-caused HARNESS defect, not an engine defect**: every one hit `SEVERE Globals:130 Could not find campaign: Ultimate Psionics` + `Could not add equipment: <item>. Check loaded campaigns.` in its own PCGen log. Root cause not fully isolated this cycle (ruled out `GAMEMODE` and `PRECAMPAIGN`/`BOOKTYPE` mismatches — both confirmed byte-identical to `core_rulebook`'s own working setup). Reporting these as `disagree` would be exactly the false-defect shape `AT-33-E5-003`'s doctrine forbids; excluded and named as a concrete next-cycle fixture-generator fix instead. |
+
+**71 of 90 reached a real, live oracle comparison.**
 
 ### Result
 
-PLACEHOLDER_RESULT_TABLE
+| Verdict | Count | Of |
+|---|---:|---|
+| `agree` | 65 | 71 examined via oracle |
+| `disagree` | 1 | 71 examined via oracle |
+| `unverifiable` (real TYPE-qualifier reason) | 5 | 71 examined via oracle |
 
-Re-derive: `python3 scripts/oracle_harness/run.py --oracle-export .../equipment-remainder-skill.oracle-export.txt --ours .../equipment-remainder-skill.ours.json --output .../equipment-remainder-skill.oracle-results.json`
+**The 1 real disagreement, root-caused:** `ultimate_equipment:equipment:ring_of_the_sea_strider`
+(`ours=8`, `oracle=16`). The item's own corpus record carries `MOVE:Swim,30` (grants a swim speed)
+alongside its explicit `BONUS:SKILL|Swim|8|TYPE=Racial` token. PF1's rule ("a swim speed of at
+least 5 feet gives a creature a +8 racial bonus on Swim checks") means PCGen applies an
+**automatic** +8 racial Swim bonus from the granted swim speed itself, on top of the item's own
+explicit +8 racial token — the two sum to 16 in PCGen's real output. `compute_general_effect` reads
+only the explicit `BONUS:SKILL` chain and has no model of PF1's swim-speed-grants-a-racial-Swim-
+bonus auto-rule at all, producing `8`. **A genuine, real engine gap** (not a harness defect, not
+closed by adjusting the expectation) — named here for `AT-33-E5-003` to fix or escalate; not fixed
+in this cycle (the fix belongs to a `compute_general_effect`/`compute_equipment_effects` change this
+cycle's remaining budget did not reach).
+
+**The 5 real `unverifiable` rows, root-caused:** all five carry a `BONUS:SKILL|TYPE.<x>|...` /
+`TYPE=<x>` qualifier (`TYPE.Perform`, `TYPE.Base`, `TYPE=Knowledge` x2, `TYPE=Perform`) — a
+skill-TYPE selector applying to a whole subskill family (e.g. every `Perform` subskill at once), not
+a single named skill. `compute_general_effect` stores this literal qualifier string as
+`skill_bonus.skill` (the same un-split-verbatim pattern already named for the multi-skill/`ALL` and
+multi-ability-STAT shapes), and PCGen's own `SKILL.<name>.MISC` token has no single matching skill
+to query by that name — a real, examined absence (`reason: skill_type_qualifier_no_literal_skill_name`),
+not an unattempted unit.
+
+Re-derive: `python3 scripts/oracle_harness/run.py --oracle-export docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-skill.oracle-export.txt --ours docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-skill.ours.json --output <out>.json`
 
 ## Figures + their re-derive commands
 
 | Figure | Value | Denominator | Command |
 |---|---:|---|---|
 | This lane's population | 494 | of 1,390 Epic-5 remainder | brief-stated: 448 `other_bonus_shape` equipment + 46 `equipment_modifier` |
-| `equipment_modifier`, no bonus chain | 32 | of 46 | `equipment-remainder-census_equipmod.py` |
+| `equipment_modifier`, no bonus chain | 32 | of 46 | `python3 docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-census-equipmod.py` |
 | `equipment_modifier`, has bonus chain (not examined) | 14 | of 46 | same |
-| `other_bonus_shape`, SKILL-shape (any) | 118 | of 448 | `equipment-remainder-full_census_448.py` |
-| SKILL-shape, single-skill (this cycle's population) | 90 | of 118 | `equipment-remainder-census_skill_shape.py` |
+| `other_bonus_shape`, SKILL-shape (any) | 118 | of 448 | `python3 docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-full-census-448.py` |
+| SKILL-shape, single-skill (this cycle's population) | 90 | of 118 | `python3 docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder-census-skill-shape.py` |
 | SKILL-shape, multi-skill/ALL (not examined) | 27 | of 118 | same |
-| Units examined this cycle | PLACEHOLDER | of 494 | 32 + PLACEHOLDER_SKILL_EXAMINED |
-| Agree | PLACEHOLDER | of examined | oracle-results.json |
-| Disagree | PLACEHOLDER | of examined | oracle-results.json |
-| Unverifiable | PLACEHOLDER | of examined | 32 (no_bonus_chain) + PLACEHOLDER |
-| Reasonless `unverifiable` in this lane's own rows | 0 | of this lane's `unverifiable` rows | every `unverifiable` row this cycle carries a populated `reason` field by construction (`equipment-remainder-build-results.py`) |
-| Units NOT examined this cycle | PLACEHOLDER | of 494 | 494 - examined |
-| `box_ledger.py --check` against this cycle's file | PLACEHOLDER | population 49,438 | `python3 scripts/box_ledger.py --check --oracle-results .../equipment-remainder.oracle-results.json` |
+| Units examined this cycle | 103 | of 494 (20.9%) | 32 (equipment_modifier no-chain) + 71 (SKILL oracle-examined) |
+| Agree | 65 | of 103 examined | `python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder.oracle-results.json')); print(collections.Counter(r['verdict'] for r in d['results']))"` |
+| Disagree | 1 | of 103 examined | same command |
+| Unverifiable | 37 | of 103 examined (32 `no_bonus_chain` + 5 `skill_type_qualifier_no_literal_skill_name`) | same command |
+| Reasonless `unverifiable` in this lane's own rows | 0 | of 37 `unverifiable` rows | `python3 -c "import json; d=json.load(open('.../equipment-remainder.oracle-results.json')); print(len([r for r in d['results'] if r['verdict']=='unverifiable' and not r.get('reason')]))"` -> `0` |
+| Units NOT examined this cycle | 391 | of 494 (79.1%) | 494 − 103 = 391 (14 equipment_modifier with an unhandled chain + 27 multi-skill/ALL SKILL + 331 remaining `other_bonus_shape` non-SKILL + 19 named exclusions among the 90 attempted, folded into the 391 as never producing a committed row) |
+| `box_ledger.py --check` against this cycle's file | `uncovered=0 overlap=0 population=49438 oracle_disagreement=1 unverifiable_done=0 stale=False`, exit **1** (correctly — 1 real disagreement exists; the fail-closed gate is doing its job) | population 49,438 | `python3 scripts/box_ledger.py --check --oracle-results docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-remainder.oracle-results.json` |
 
-## Status: PLACEHOLDER
+## Status: in-progress
+
+**Not `complete`.** 103 of this lane's 494-unit population are genuinely examined this cycle with
+real, per-unit `(ours, oracle, verdict)` rows (65 agree, 1 real root-caused disagree, 37
+`unverifiable` each with a populated reason) and a real, repo-local SKILL-shape oracle pipeline
+proven end-to-end. The remaining 391 are named per-shape above with concrete structural reasons (a
+real engine-shape gap, an unbuilt fixture pattern, or simply not yet attempted) and a concrete
+next-cycle plan below — not "ran out of time" vaguely. Marking this row `complete` while 391 of the
+494-unit population stay unexamined would repeat exactly the false-completion shape this
+remediation wave exists to close.
 
 ## Movement, four buckets
 
@@ -161,7 +207,9 @@ Re-derive: `python3 scripts/oracle_harness/run.py --oracle-export .../equipment-
   results live in this directory's own JSON files, matching `AT-33-E5-001`/`002`'s own convention.
 - **reclassification:** 0
 - **reachability:** 0 — this cycle found real ceilings (multi-skill/ALL chains, the `Implant` slot,
-  the un-gated `WEAPON`/`EQMARMOR` shapes) but did not widen any of them.
+  the un-gated `WEAPON`/`EQMARMOR` shapes, the `ultimate_psionics` campaign-load fixture defect, and
+  the swim-speed-grants-racial-Swim-bonus engine gap behind the one real disagreement) but did not
+  widen any of them.
 - **instrument-correction:** 1 — the `EQUIPSET:Carried` vs `EQUIPSET:Equipped` equip-location hazard,
   found and fixed within this cycle before it could produce a single false result.
 
@@ -193,8 +241,10 @@ pre-existed and is called unmodified). **Before** this cycle: `equipment-remaind
 did not exist; 0 of the 494-unit population had any per-unit disposition; no repo-local SKILL-shape
 batch mechanism existed. **After:** `cargo build --locked --bin e5_equipment_remainder_skill_ours`
 exits 0 (warnings only, pre-existing and unrelated — same warning set every prior `AT-33-E5-00x`
-cycle's receipt names); PLACEHOLDER_N real, live `./gradlew run` BatchExporter invocations against
-the real pinned oracle (`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) exit 0; the 32
+cycle's receipt names); 90 real, live `./gradlew run` BatchExporter invocations against
+the real pinned oracle (`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) run, 87 exit 0
+(3 named failures — `hunter_s_sight`/`heritage_book` above, each a real, diagnosed PCGen/Gradle
+failure, not a silently-swallowed error); the 32
 `no_bonus_chain` rows are backed by a real, whole-record read of every one of the 46
 `equipment_modifier` corpus files; `scripts/box_ledger.py --check` independently re-verifies the
 combined file.
@@ -228,3 +278,12 @@ precedent for a data-pipeline binary over already-tested engine code).
 5. **A direct-`java` wrapper** (bypassing `./gradlew`'s per-invocation daemon spin-up), matching
    `AT-33-E5-002`'s own proven lever, would raise every future cycle's throughput ceiling on this
    lane's remaining 404 units.
+6. **The `ring_of_the_sea_strider` disagree** (`AT-33-E5-003`'s own scope): fix
+   `compute_general_effect`/`compute_equipment_effects` to apply PF1's automatic +8 racial Swim
+   bonus when a `MOVE:Swim` grant is present, alongside any explicit `BONUS:SKILL` token — or
+   confirm PCGen's own doubling is itself the anomaly before changing engine code.
+7. **The `ultimate_psionics` campaign-load fixture defect** (4 named exclusions above): root-cause
+   why `Ultimate Psionics` fails `Could not find campaign` in this cycle's fixture when
+   `core_rulebook` (byte-identical `GAMEMODE`/`PRECAMPAIGN`/`BOOKTYPE` shape) does not — needed
+   before any further `ultimate_psionics`-book unit (including the 11 unresolved-on-our-side items)
+   can be oracle-verified.
