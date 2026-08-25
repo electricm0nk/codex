@@ -225,6 +225,51 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E5-last75 — remediation wave 4, the 75-unit residual named by AT-33-E6-001 attempt 4 (row 17, AT-33-E5-002 remediation) — blocked-escalated
+
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last75_cycle_receipt.md`.
+- **Population re-derived, not inherited:** 75 (61 `equipment` + 14 `equipment_modifier`) — same
+  set difference the attempt-4 scan used, re-run live this cycle after rebasing onto
+  `origin/tranche/13` (this worktree started from the `develop` merge commit).
+- **Examined this cycle: 8 of 75** — 1 `agree` (`hunter_s_sight`, live PCGen round-trip, `-2`/`-2`),
+  7 `unverifiable` (1 Implant-slot hazard, 3 multi-skill-comma-joined chains, 3 `WIELDCATEGORY`-only
+  wield-size chains), every `unverifiable` row carries a populated, structural reason. 0 reasonless,
+  0 duplicate `unit_id`.
+- **Finding 1 (instrument-correction):** the `oracle_harness_ultimate_psionics_campaign_load_failure`
+  reason (28 rows across prior waves, plus named exclusions for `advanced_class_guide` and
+  `book_of_the_damned_volume_2`) is a `gradlew`-runner-specific failure, not a real oracle-data gap —
+  the repo's own direct-`java` runner (`scripts/oracle_harness/charbuild_remainder_run_one.sh`) loads
+  all three campaigns cleanly on the SAME `.pcg` files (`hunter_s_sight` now agrees live).
+  `scripts/retro.py incident`, `docs/retro/events/sd33-r4-last75.jsonl`.
+- **Finding 2 (open defect, NOT fixed):** a second, deeper `ultimate_psionics`-specific defect
+  remains underneath Finding 1 — equipped items' `BONUS:SKILL` chains export `0` even once the
+  campaign loads cleanly (confirmed 2 of 2 sampled: `crystal_mask_psionic_craft`,
+  `meld_stone_alchemist`; a non-psionics control with the identical shape, `Circlet of Persuasion`,
+  correctly exports its real value on the same runner). Blocks 17 units (14 SKILL + 1 COMBAT + 2
+  dissonance). Not root-caused further this cycle.
+- **Finding 3 (real reachability progress, no row written yet):** `compute_equipmods_effect`
+  (existing resolver, zero new `src/rules_core/` code) already covers 24 of 75 units
+  (`WEAPONPROF=<x>`/bare-`WEAPON` enhancement family: amulets, rods, claw blades, mattock, talons,
+  cursed weapons, horseshoes). Live oracle round-trip started: found and fixed a real indexing
+  hazard (`WEAPON.<n>` PCGen export tokens are **zero**-indexed, not one — `WEAPON.1.*` silently
+  returns empty on a one-weapon character). `WEAPON.0.MAGICDAMAGE` confirmed correct live
+  (`mattock_of_the_titans`: `+3`/`+3`); `WEAPON.0.MAGICHIT`'s sign is unexplained (`-3` vs expected
+  `+3`) and not committed as any verdict; 4 Rod units are further blocked by a likely missing Exotic
+  Weapon Proficiency grant in the fixture.
+- **Remaining 67 named by shape, not lumped:** 17 blocked by Findings 1+2 (`ultimate_psionics`), 24
+  blocked by Finding 3 (existing resolver, fixture engineering only), 3 wield-size-no-penalty (real
+  magnitude, deliberately unmatched by design), 3 `EQMARMOR` material (resolver exists, needs a
+  base-armor+attached-modifier fixture — same gap `AT-33-E5-remainder-equipment`'s own next-cycle
+  plan already named), 20 genuinely new engine shapes across 6 sub-shapes (`COMBAT` non-AC, `WEAPON|
+  DAMAGEMULT`, `EQMWEAPON|DAMAGESIZE`, `EQMWEAPON|RANGEADD`, `EQM|WEIGHTDIV`, `WEAPON|ATTACKS`
+  extra-attack formulas) — full per-shape table in the receipt.
+- **Movement (four buckets):** closure 8 (first real oracle disposition for 8 of the 75) /
+  reclassification 0 / reachability 24 (confirmed reachable via an existing resolver, row not yet
+  written — see Finding 3) / instrument-correction 2 (Finding 1; `WEAPON.<n>` zero-indexing).
+- **Write scope respected:** only `equipment-last75.oracle-results.json` written (never the merged
+  files or a sibling's file — the disagreement-resolution lane runs concurrently); kanban rows
+  16/17/18 left untouched, per this lane's own instructions (finalize owns that call).
+
 ### Cycle AT-33-E6-001 (attempt 4) — final-acceptance-scan (row 19, Epic 6) — blocked-escalated, gate **FAIL**
 
 - **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-attempt4_cycle_receipt.md` (every command and its output inline).
