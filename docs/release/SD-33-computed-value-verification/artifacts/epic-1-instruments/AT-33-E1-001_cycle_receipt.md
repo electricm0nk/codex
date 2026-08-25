@@ -1,6 +1,6 @@
 # Cycle AT-33-E1-001 — Epic 1 Instruments / AT-33-E1-001
 
-- **Commit SHA:** (this receipt is written pre-commit; the commit that lands it is reported in the cycle's final message and `progress.md`/`kanban.md`)
+- **Commit SHA:** `08bfa4931d` (the commit that lands this receipt and the files below, on `tranche/13`)
 - **Files touched:**
   - `scripts/box_ledger.py` (new)
   - `scripts/tests/test_box_ledger.py` (new)
