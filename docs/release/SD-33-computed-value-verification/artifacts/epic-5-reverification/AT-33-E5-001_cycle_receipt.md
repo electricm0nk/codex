@@ -298,3 +298,12 @@ check (0 found — every lane's claimed split was correct).
   uniform finding" section above and `progress.md`'s `AT-33-E5-finalize` entry).
 - **Kanban row 16:** marked `complete` — the full 1,741-unit population is rowed, 0 disagree, 0
   reasonless unverifiable. Full detail: `AT-33-E5-finalize_cycle_receipt.md`.
+
+## Finalized by `AT-33-E5-finalize-wave3` — confirmed unaffected
+
+Wave 3's three new lanes (`var`, `combat`, `stat-save-tail`) examined only `literal-verified`
+units — 0 `fixture-verified` units touched (re-derive:
+`python3 -c "import json; inv={u['id']:u['status'] for u in json.load(open('docs/work-inventory.json'))['units']}; ids=set(); [ids.update(r['unit_id'] for r in json.load(open(f))['results']) for f in ['docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-shape-var.oracle-results.json','docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-shape-combat.oracle-results.json','docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/equipment-shape-stat-save-tail.oracle-results.json']]; import collections; print(collections.Counter(inv.get(u) for u in ids))"`
+→ `Counter({'literal-verified': 321})`, 0 `fixture-verified`). `fixture-verified.combined-oracle-results.json`
+is unchanged at **1,741 of 1,741**, 396 agree / 1,345 unverifiable / 0 disagree. Kanban row 16
+stays `complete`. Full detail: `AT-33-E5-finalize-wave3_cycle_receipt.md`.

@@ -302,3 +302,38 @@ disagreement survived (none did), but because row 17 (`AT-33-E5-002`) is still 3
 6,589-unit denominator. A unit with no row at all has not been checked for disagreement either way,
 so "every disagreement is resolved" cannot be asserted over the FULL 8,330-unit population yet,
 only over the 7,939 actually examined. Full detail: `AT-33-E5-finalize_cycle_receipt.md`.
+
+## Finalized by `AT-33-E5-finalize-wave3` — 26 NEW disagreements, all root-caused, none fixed
+
+Wave 3's `var` and `combat` shape lanes introduced 27 raw disagreeing rows (1 `var`, 26 `combat`)
+against units the prior finalize cycle's 0-disagree figure never examined; after merging the 10
+`var`↔`combat` duplicate `unit_id`s (worst-verdict-wins), the distinct disagree count is **26**.
+
+**Disagreements across the full 8,255-unit examined population** (re-derive:
+`python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json')); print(len(d['results'])); print(collections.Counter(r['verdict'] for r in d['results']))"`
+→ `8255`, `Counter({'unverifiable': 7494, 'agree': 735, 'disagree': 26})`): **26**, all
+root-caused this cycle (full per-unit table: `progress.md`'s `AT-33-E5-finalize-wave3` entry):
+
+- **21** share one named engine gap: `compute_arms_armor_effect`/`compute_var_effect` do not
+  resolve and sum a base item's `EQMOD:`-referenced modifier record's own separate `BONUS:` chain
+  (the same base-item-plus-attached-EQMOD gap `AT-33-E5-remainder-equipment` first named,
+  confirmed recurring here for both `COMBAT` and `VAR` shapes).
+- **3** (`field_plate`, `stoneplate`, `snakeskin_tunic`) are a real harness baseline-diff
+  methodology limitation, not necessarily an engine defect — a second-order AC effect
+  (`MAXDEX` cap or a co-located Dex-enhancement chain) the whole-character `AC.Total` diff
+  technique cannot separate from the item's own token.
+- **1** (`sea_knife`) is an unhandled `PRE`-gated conditional chain, read unconditionally.
+- **1** (`diviner_s_blight`) is not yet individually diagnosed.
+
+**None fixed this cycle** — the dominant 21-unit fix is a real, cross-cutting engine change (both
+resolvers need EQMOD-chain resolution) needing its own TDD cycle and full oracle re-verification
+of the affected units; out of this merge/finalize cycle's turn budget. Named as the concrete
+top item of the next cycle's plan, not attempted rushed.
+
+**Disagree-capability re-proof on the current, unmodified batch path**: `python3 scripts/box_ledger.py --check --oracle-results docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json`
+→ `uncovered=0 overlap=0 population=49438 oracle_disagreement=26 unverifiable_done=0 stale=False`,
+exit **1** (fail-closed, correctly) — all 26 real disagreements independently detected by the
+gate itself, not just by this cycle's own Python merge script.
+
+**Kanban row 18:** kept `in-progress` — 26 real, unresolved disagreements plus row 17's own
+75-unit gap. Full detail: `AT-33-E5-finalize-wave3_cycle_receipt.md`.

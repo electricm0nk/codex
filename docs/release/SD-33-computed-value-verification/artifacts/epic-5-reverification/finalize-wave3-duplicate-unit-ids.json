@@ -1,0 +1,292 @@
+{
+  "duplicates": [
+    {
+      "sources": [
+        {
+          "lane": "literal-verified",
+          "oracle": 5,
+          "ours": 5,
+          "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 1,
+          "ours": 1,
+          "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+          "verdict": "agree"
+        }
+      ],
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions"
+    },
+    {
+      "sources": [
+        {
+          "lane": "literal-verified",
+          "oracle": -2,
+          "ours": -2,
+          "unit_id": "ultimate_equipment:equipment:boots_of_the_mastodon",
+          "verdict": "agree"
+        },
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 2,
+          "ours": 2,
+          "unit_id": "ultimate_equipment:equipment:boots_of_the_mastodon",
+          "verdict": "agree"
+        }
+      ],
+      "unit_id": "ultimate_equipment:equipment:boots_of_the_mastodon"
+    },
+    {
+      "sources": [
+        {
+          "lane": "literal-verified",
+          "oracle": 4,
+          "ours": 4,
+          "unit_id": "ultimate_equipment:equipment:crown_of_conquest",
+          "verdict": "agree"
+        },
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 0,
+          "ours": 1,
+          "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline",
+          "unit_id": "ultimate_equipment:equipment:crown_of_conquest",
+          "verdict": "unverifiable"
+        }
+      ],
+      "unit_id": "ultimate_equipment:equipment:crown_of_conquest"
+    },
+    {
+      "sources": [
+        {
+          "lane": "literal-verified",
+          "oracle": 5,
+          "ours": 5,
+          "unit_id": "ultimate_equipment:equipment:hunter_s_band",
+          "verdict": "agree"
+        },
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 0,
+          "ours": 1,
+          "reason": "var_gated_by_unbuilt_class_feature_zero_on_generic_baseline",
+          "unit_id": "ultimate_equipment:equipment:hunter_s_band",
+          "verdict": "unverifiable"
+        }
+      ],
+      "unit_id": "ultimate_equipment:equipment:hunter_s_band"
+    },
+    {
+      "sources": [
+        {
+          "lane": "literal-verified",
+          "oracle": 5,
+          "ours": 5,
+          "unit_id": "ultimate_equipment:equipment:rod_escape",
+          "verdict": "agree"
+        },
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 5,
+          "ours": 5,
+          "unit_id": "ultimate_equipment:equipment:rod_escape",
+          "verdict": "agree"
+        }
+      ],
+      "unit_id": "ultimate_equipment:equipment:rod_escape"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 4,
+          "ours": 4,
+          "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 7,
+          "ours": 6,
+          "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 4,
+          "ours": 4,
+          "unit_id": "inner_sea_races:equipment:coat_of_shells",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 7,
+          "ours": 5,
+          "unit_id": "inner_sea_races:equipment:coat_of_shells",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:coat_of_shells"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 1,
+          "ours": 1,
+          "unit_id": "inner_sea_races:equipment:gnome_scrap_armor",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 5,
+          "ours": 3,
+          "unit_id": "inner_sea_races:equipment:gnome_scrap_armor",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:gnome_scrap_armor"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 6,
+          "ours": 6,
+          "unit_id": "inner_sea_races:equipment:goblin_plate",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 9,
+          "ours": 9,
+          "unit_id": "inner_sea_races:equipment:goblin_plate",
+          "verdict": "agree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:goblin_plate"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 5,
+          "ours": 5,
+          "unit_id": "inner_sea_races:equipment:hallowed_chain",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 8,
+          "ours": 6,
+          "unit_id": "inner_sea_races:equipment:hallowed_chain",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:hallowed_chain"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 5,
+          "ours": 5,
+          "unit_id": "inner_sea_races:equipment:hallowed_chain_greater",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 9,
+          "ours": 6,
+          "unit_id": "inner_sea_races:equipment:hallowed_chain_greater",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:hallowed_chain_greater"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 3,
+          "ours": 3,
+          "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 5,
+          "ours": 4,
+          "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 2,
+          "ours": 2,
+          "unit_id": "inner_sea_races:equipment:mail_of_sly_steps",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 6,
+          "ours": 4,
+          "unit_id": "inner_sea_races:equipment:mail_of_sly_steps",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:mail_of_sly_steps"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 3,
+          "ours": 6,
+          "reason": "base item explicit VAR|ArmorCheckPenalty|6 chain + attached Material~Mithril EQMOD's own separate ArmorCheckPenalty reduction chain (real PF1 rule: Mithril reduces ACP by 3) -- a compound base-item-plus-attached-EQMOD computation compute_var_effect (record-level only) does not resolve; the same EQMARMOR base+modifier fixture-construction gap AT-33-E5-remainder-equipment_cycle_receipt.md already named, not a fresh defect.",
+          "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight",
+          "verdict": "disagree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 11,
+          "ours": 9,
+          "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight"
+    },
+    {
+      "sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 0,
+          "ours": 0,
+          "unit_id": "ultimate_intrigue:equipment:diviner_s_blight",
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 6,
+          "ours": 2,
+          "unit_id": "ultimate_intrigue:equipment:diviner_s_blight",
+          "verdict": "disagree"
+        }
+      ],
+      "unit_id": "ultimate_intrigue:equipment:diviner_s_blight"
+    }
+  ]
+}

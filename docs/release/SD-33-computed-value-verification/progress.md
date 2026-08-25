@@ -225,6 +225,200 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E5-finalize-wave3 — totals Epic 5 across all wave-3 lanes, owns the kanban call on rows 16/17/18 — blocked-escalated
+
+- **Criterion:** `AT-33-E5-001`/`AT-33-E5-002`/`AT-33-E5-003` — merge every lane's results into the
+  three canonical files, re-derive the unexamined set, close reasonless-`unverifiable`, root-cause
+  every new disagreement, re-prove disagree capability on the current batch path, keep the
+  denominator gate green.
+
+**Trust nothing above — every figure below was re-derived by counting rows in the committed files,
+not taken from any lane's own report.**
+
+- **What this cycle merged:** wave 3's three new lane files —
+  `equipment-shape-var.oracle-results.json` (108 rows, `sd33-r3-var`),
+  `equipment-shape-combat.oracle-results.json` (82 rows, `sd33-r3-combat`),
+  `equipment-shape-stat-save-tail.oracle-results.json` (141 rows, `sd33-r3-statsave`) — into
+  `literal-verified.oracle-results.json` (previously 6,198 rows, per `AT-33-E5-finalize`'s own
+  prior cycle). `fixture-verified.combined-oracle-results.json` (1,741 rows) was **not touched** —
+  no wave-3 lane examined a `fixture-verified` unit. Re-derive:
+  `python3 -c "import json; inv={u['id']:u['status'] for u in json.load(open('docs/work-inventory.json'))['units']}; ids=set(); [ids.update(r['unit_id'] for r in json.load(open(f))['results']) for f in ['artifacts/epic-5-reverification/equipment-shape-var.oracle-results.json','artifacts/epic-5-reverification/equipment-shape-combat.oracle-results.json','artifacts/epic-5-reverification/equipment-shape-stat-save-tail.oracle-results.json']]; import collections; print(collections.Counter(inv.get(u) for u in ids))"`
+  → `Counter({'literal-verified': 321})` (321 distinct unit_ids across the 331 raw rows — 108+82+141
+  minus the 10 `var`↔`combat` duplicate ids counted once — all `literal-verified`, 0 `fixture-verified`).
+
+- **15 real duplicate `unit_id`s found across lanes — root-caused, not last-writer-wins.** A single
+  equipment record can carry more than one magnitude token (e.g. an armor item with BOTH a
+  `VAR|ArmorCheckPenalty` chain AND a `COMBAT|AC` chain); more than one shape lane's census
+  independently counted and examined the SAME unit_id for a DIFFERENT dimension of that unit,
+  producing more than one row. Full detail (every source row, every lane) committed at
+  `artifacts/epic-5-reverification/finalize-wave3-duplicate-unit-ids.json`; merge script
+  `artifacts/epic-5-reverification/finalize-wave3-merge.py`. **Merge rule:** the merged row takes
+  the WORST verdict across all of a unit's source rows (`disagree` > `unverifiable` > `agree` — a
+  unit is not correctly-verified as a whole if any one of its examined dimensions is wrong or
+  unchecked); every source row is preserved verbatim under the merged row's own
+  `multi_shape_sources` field, nothing is discarded. Breakdown of the 15: 4 `literal-verified`↔`var`
+  (2 genuinely independent dimensions both agreeing, 2 `var` dimension `unverifiable` while the
+  `literal-verified` dimension agrees), 1 `literal-verified`↔`combat` (independent dimension, both
+  agree), 10 `var`↔`combat` (9 cases where the `var` dimension agrees but the `combat` dimension
+  disagrees or vice versa, 1 case — `panoply_of_the_fierani_knight` — where BOTH dimensions
+  disagree, from the same underlying EQMOD-summation gap). Re-derive:
+  `python3 -c "import json; d=json.load(open('artifacts/epic-5-reverification/finalize-wave3-duplicate-unit-ids.json')); print(len(d['duplicates']))"` → `15`.
+
+- **`literal-verified.oracle-results.json`: 6,514 of 6,589 rows** (distinct `unit_id`s, 0 internal
+  duplicates post-merge). Re-derive:
+  `python3 -c "import json,collections; d=json.load(open('artifacts/epic-5-reverification/literal-verified.oracle-results.json')); r=d['results']; print(len(r), len(set(x['unit_id'] for x in r))); print(collections.Counter(x['verdict'] for x in r))"`
+  → `6514 6514`, `Counter({'unverifiable': 6149, 'agree': 339, 'disagree': 26})`.
+  **75 of 6,589 remain genuinely unrowed** — re-derived directly from `docs/work-inventory.json`'s
+  own `literal-verified` id set minus every id present in the merged file (never inferred from a
+  count): `python3 -c "import json; inv=set(u['id'] for u in json.load(open('docs/work-inventory.json'))['units'] if u['status']=='literal-verified'); got=set(r['unit_id'] for r in json.load(open('artifacts/epic-5-reverification/literal-verified.oracle-results.json'))['results']); print(len(inv-got))"`
+  → `75`. **Real corpus record read for every one of the 75**, classified by shape (full detail:
+  `artifacts/epic-5-reverification/finalize-wave3-missing-literal-shapes.json`,
+  `artifacts/epic-5-reverification/finalize-wave3-missing-shapes.py`): `WEAPON` 23, `SKILL` 17
+  (multi-skill/`ALL` chains + the named `SKILL`-shape exclusions), `WEAPONPROF` 15, `COMBAT` 7 (the
+  non-AC/formula-valued remainder of the 92-unit `COMBAT` population), `VAR` 5 (the
+  `equipment_modifier`-kind chain-bearing units, distinct from the 108-unit `VAR`-shape lane's own
+  standalone-equipment population), `EQMWEAPON` 3, `SITUATION` 2, `EQM` 1, `MOVEADD` 1, `STAT` 1.
+  Sum: 23+17+15+7+5+3+2+1+1+1 = 75.
+
+- **`fixture-verified.combined-oracle-results.json`: unchanged, 1,741 of 1,741** (`row 16`'s own
+  full population, per `decisions.md`'s "do not disturb" instruction). Re-derive:
+  `python3 -c "import json; d=json.load(open('artifacts/epic-5-reverification/fixture-verified.combined-oracle-results.json')); print(len(d['results']))"` → `1741`.
+
+- **`AT-33-E5-003.combined-oracle-results.json`: 8,255 of 8,330** (1,741 fixture + 6,514 literal).
+  Re-derive: `python3 -c "import json,collections; d=json.load(open('artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json')); r=d['results']; print(len(r), len(set(x['unit_id'] for x in r))); print(collections.Counter(x['verdict'] for x in r))"`
+  → `8255 8255`, `Counter({'unverifiable': 7494, 'agree': 735, 'disagree': 26})`. 75 unexamined
+  (8,330 − 8,255).
+
+- **Reasonless `unverifiable`: 0 across all three files.** Re-derived, not carried forward:
+  `python3 -c "import json; d=json.load(open('artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json')); print(len([r for r in d['results'] if r['verdict']=='unverifiable' and not r.get('reason')]))"`
+  → `0`.
+
+- **26 unresolved `disagree` rows — every one root-caused this cycle, NONE fixed (real engine
+  change out of this merge cycle's scope/turn budget), NONE adjusted to match our output.** One
+  entry per disagreement:
+
+  | unit_id | ours | oracle | root cause |
+  |---|---:|---:|---|
+| `inner_sea_races:equipment:armor_of_grim_triumph` | 6 | 7 | eqmod_embedded_modifier_chain_not_summed |
+| `inner_sea_races:equipment:coat_of_shells` | 5 | 7 | eqmod_embedded_modifier_chain_not_summed |
+| `inner_sea_races:equipment:gnome_scrap_armor` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `inner_sea_races:equipment:hallowed_chain` | 6 | 8 | eqmod_embedded_modifier_chain_not_summed |
+| `inner_sea_races:equipment:hallowed_chain_greater` | 6 | 9 | eqmod_embedded_modifier_chain_not_summed |
+| `inner_sea_races:equipment:hide_of_grim_triumph` | 4 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `inner_sea_races:equipment:mail_of_sly_steps` | 4 | 6 | eqmod_embedded_modifier_chain_not_summed |
+| `inner_sea_races:equipment:panoply_of_the_fierani_knight` | 6 | 3 | eqmod_embedded_modifier_chain_not_summed — **compound**: both its VAR/ArmorCheckPenalty row (var lane) and this COMBAT/AC row (combat lane) trace to the same Mithril-EQMOD summation gap |
+| `advanced_class_guide:equipment:full_plate_of_the_corpse` | 9 | 10 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:hero_s_hauberk` | 4 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_cold` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_desert` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_forest` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_jungle` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_mountain` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_plains` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_swamp` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_underground` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_urban` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:stalking_armor_water` | 3 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_class_guide:equipment:tireless_tracking_hide` | 4 | 5 | eqmod_embedded_modifier_chain_not_summed |
+| `advanced_race_guide:equipment:sea_knife` | -2 | 0 | conditional_pre_gated_chain_read_as_unconditional (a `TYPE=Circumstance` −2 chain read unconditionally where the oracle shows it inactive on a standing test character) |
+| `inner_sea_world_guide:equipment:field_plate` | 7 | 6 | baseline_diff_harness_limitation (`MAXDEX:1` second-order Dex-cap interaction, not separable by `armor_class_bonus`) |
+| `inner_sea_world_guide:equipment:stoneplate` | 9 | 8 | baseline_diff_harness_limitation (same `MAXDEX:1` mechanism) |
+| `ultimate_equipment:equipment:snakeskin_tunic` | 1 | 2 | baseline_diff_harness_limitation (co-located `BONUS:STAT\|DEX\|2\|TYPE=Enhancement` raises `AC.Total` via the Dex-to-AC path, not separable from the item's own `COMBAT\|AC` token) |
+| `ultimate_intrigue:equipment:diviner_s_blight` | 2 | 6 | not_yet_individually_diagnosed |
+
+  **21 of 26 (the `eqmod_embedded_modifier_chain_not_summed` majority) share one real, named
+  engine gap**: `compute_arms_armor_effect` (`src/rules_core/equipment_effects/arms_armor.rs`)
+  reads only a base equipment record's own literal `COMBAT|AC` chain; it has no mechanism to
+  resolve a base item's `EQMOD:`-referenced modifier record (a separate `equipment_modifier`
+  corpus record baked into the same equipped item, e.g. "Special Ability ~ +2 ~ Armor") and sum
+  its own separate `BONUS:` chain. `compute_var_effect` (`general.rs`) has the same class of gap
+  for `VAR`-shape chains (confirmed by the `panoply_of_the_fierani_knight` compound case). **This
+  is the same base-item-plus-attached-EQMOD fixture/summation gap `AT-33-E5-remainder-equipment`'s
+  own receipt first named**, now confirmed to recur across VAR and COMBAT shapes both — not a
+  fresh defect, a structural one. **Not fixed this cycle**: closing it needs a real cross-cutting
+  change to both resolvers' EQMOD-chain resolution (read the base item's `EQMOD:` token, look up
+  the referenced `equipment_modifier` record, sum its own `BONUS:` chain into the total) plus a
+  TDD cycle re-verifying all 21+ affected units against the live oracle — scoped as its own
+  next-cycle item below, not attempted rushed inside this merge/finalize cycle.
+  - **3** are a named harness-methodology limitation (`field_plate`/`stoneplate`'s `MAXDEX:1`
+    Dex-cap interaction; `snakeskin_tunic`'s co-located Dex-enhancement chain) — the baseline-diff
+    technique cannot separate a second-order AC effect from the item's own token. Fixing this needs
+    a harness change (isolate `armor_class_bonus` directly rather than diffing whole-character
+    `AC.Total`), not an engine change.
+  - **1** (`sea_knife`) is a `PRE`-gated conditional chain this cycle's `qualifiers` extraction
+    does not carry forward — a real, distinct engine gap.
+  - **1** (`diviner_s_blight`) is not yet individually diagnosed; named for next-cycle pickup
+    rather than guessed at.
+
+  **Note found while consolidating:** `AT-33-E5-shape-combat_cycle_receipt.md`'s own prose states
+  "21 confirmed exact... plus 2 close variants = 23 of 26" for the EQMOD bucket, which — added to
+  its own separately-named 3 baseline-diff + 1 PRE-gated + 1 undiagnosed — sums to 28, not the
+  receipt's own stated 26-unit denominator. This cycle's own re-derivation from the committed
+  per-unit rows (table above) finds 21 in the EQMOD bucket, not 23 — a 2-unit prose/data mismatch
+  in the source receipt, corrected here by direct re-count rather than propagated.
+
+- **Disagree capability re-proven on the current batch path** (item 5): a zero-disagreement result
+  would be suspicious, not happy — but this merge does not land on zero. Real proof the CURRENT
+  path (unmodified `scripts/box_ledger.py`, the same script `AT-33-E1-002`/`AT-33-E5-remainder-*`
+  all use) correctly flags disagreement: `python3 scripts/box_ledger.py --check --oracle-results artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json`
+  → `uncovered=0 overlap=0 population=49438 oracle_disagreement=26 unverifiable_done=0 stale=False`,
+  **exit 1** (fail-closed, correctly — all 26 real disagreements independently detected by the
+  gate, not just by this cycle's own Python merge). `uncovered=0 overlap=0` also re-confirms
+  `THE-BOX.md`'s partition still holds after this merge.
+
+- **Denominator gate:** `bash scripts/verify.sh --only denominator-gate` → `PASS` (re-run after
+  this cycle's own prose edits to `kanban.md`/`progress.md`/the three receipts, per this bundle's
+  own rule that the gate scans the prose it is checking, not a pre-edit snapshot).
+
+- **Kanban call, made honestly against the re-derived figures above, not against any lane's own
+  claim:**
+  - **Row 16 (`AT-33-E5-001`, fixture-verified): stays `complete`.** Unchanged, 1,741 of 1,741,
+    0 disagree.
+  - **Row 17 (`AT-33-E5-002`, literal-verified): stays `in-progress`.** 6,514 of 6,589 — 75 short.
+    A population not fully rowed does not become `complete` because three more lanes landed;
+    it becomes closer.
+  - **Row 18 (`AT-33-E5-003`, disagreement-resolution): stays `in-progress`.** 26 real, newly
+    root-caused disagreements, none fixed this cycle, plus row 17's own 75-unit gap (a unit with
+    no row has not been checked for disagreement either way — this row's own long-standing
+    inheritance rule, unchanged from `AT-33-E5-finalize`'s and `AT-33-E6-001` attempt 2's own
+    precedent).
+
+- **Movement (four buckets):** closure 0 (no `work-inventory.json` `status` field changed —
+  oracle-verification results live in this directory's own JSON files, matching every prior
+  `AT-33-E5-00x` cycle's convention) / reclassification 0 / reachability 0 (this cycle widened
+  neither the examined population nor any resolver) / instrument-correction 1 (the 2-unit
+  prose/count mismatch in `AT-33-E5-shape-combat_cycle_receipt.md` named and corrected above,
+  by direct re-derivation rather than propagated).
+
+- **Files touched:**
+  - `artifacts/epic-5-reverification/literal-verified.oracle-results.json` (regenerated, 6,514 rows)
+  - `artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json` (regenerated, 8,255 rows)
+  - `artifacts/epic-5-reverification/finalize-wave3-merge.py` (new — the merge script)
+  - `artifacts/epic-5-reverification/finalize-wave3-duplicate-unit-ids.json` (new — full detail on the 15 duplicates)
+  - `artifacts/epic-5-reverification/finalize-wave3-missing-shapes.py` (new)
+  - `artifacts/epic-5-reverification/finalize-wave3-missing-literal.json`, `finalize-wave3-missing-literal-shapes.json` (new — the 75 unexamined, by shape)
+  - `artifacts/epic-5-reverification/AT-33-E5-001_cycle_receipt.md`, `AT-33-E5-002_cycle_receipt.md`, `AT-33-E5-003_cycle_receipt.md` (final-totals rows appended)
+  - `artifacts/epic-5-reverification/AT-33-E5-finalize-wave3_cycle_receipt.md` (new, this cycle's own receipt)
+  - `kanban.md` (rows 16/17/18)
+  - `progress.md` (this entry)
+  - `docs/retro/events/sd33-r3-e5-finalize.jsonl` (new)
+
+- **Next-cycle plan (concrete):**
+  1. The EQMOD-embedded-modifier-chain-summation fix (`compute_arms_armor_effect` +
+     `compute_var_effect`), TDD'd against 2-3 of the 21 affected units first, then re-run against
+     all 21 plus `panoply_of_the_fierani_knight`'s compound case — the single highest-value
+     remaining fix (21 of 26 disagreements, one mechanism).
+  2. The 75 unexamined: `WEAPON` (23) and `WEAPONPROF` (15) need `WEAPON.<i>.MAGICHIT`/
+     `.MAGICDAMAGE` oracle isolation (identified, not yet run, per
+     `AT-33-E5-shape-combat_cycle_receipt.md`'s own next-cycle plan); `SKILL` (17, multi-skill/
+     `ALL`) and the `VAR`/equipment_modifier 5 need the base-item-plus-attached-EQMOD fixture
+     pattern (shared with item 1 above); `COMBAT` (7 remaining) needs a natural-attack fixture and
+     a formula evaluator for non-literal `COMBAT|AC` chains.
+  3. `sea_knife`'s `PRE`-gate and `diviner_s_blight`'s undiagnosed gap are each standalone,
+     smaller fixes.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-finalize-wave3_cycle_receipt.md`.
+
+
 ### Cycle sd33-r3-combat — Epic 5 remediation wave 3, combat/weapon shape lane (row 17, AT-33-E5-002 remediation) — blocked-escalated
 
 - **Criterion:** `AT-33-E5-002` remediation — the equipment `other_bonus_shape` `COMBAT`/`WEAPON`/

@@ -418,3 +418,27 @@ claims), with an explicit duplicate-`unit_id` check (0 found).
 - **Kanban row 17:** kept `in-progress`, honestly — 391 short of the 6,589 denominator is a real,
   named gap with a concrete next-cycle plan, not a false 100%. Full detail:
   `AT-33-E5-finalize_cycle_receipt.md`.
+
+## Finalized by `AT-33-E5-finalize-wave3` — final totals (supersedes the `AT-33-E5-finalize` section above)
+
+Merged wave 3's three new lane files — `equipment-shape-var.oracle-results.json` (108),
+`equipment-shape-combat.oracle-results.json` (82), `equipment-shape-stat-save-tail.oracle-results.json`
+(141) — into `literal-verified.oracle-results.json`, resolving 15 real cross-lane duplicate
+`unit_id`s (a single multi-magnitude-token equipment record independently examined by more than
+one shape lane for a different dimension) via a worst-verdict-wins rule, never last-writer-wins.
+Full detail: `progress.md`'s `AT-33-E5-finalize-wave3` entry,
+`artifacts/epic-5-reverification/finalize-wave3-duplicate-unit-ids.json`.
+
+- **Population:** 6,589 `literal-verified` units (unchanged).
+- **Rows committed:** **6,514 of 6,589 (98.9%)**. Re-derive:
+  `python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/literal-verified.oracle-results.json')); r=d['results']; print(len(r), len(set(x['unit_id'] for x in r))); print(collections.Counter(x['verdict'] for x in r))"`
+  → `6514 6514`, `Counter({'unverifiable': 6149, 'agree': 339, 'disagree': 26})`.
+- **75 of 6,589 remain genuinely unrowed** — re-derived directly from `docs/work-inventory.json`'s
+  own `literal-verified` id set minus every id in the merged file. Classified by real corpus record:
+  `WEAPON` 23, `SKILL` 17, `WEAPONPROF` 15, `COMBAT` 7, `VAR` (equipment_modifier) 5, `EQMWEAPON` 3,
+  `SITUATION` 2, `EQM` 1, `MOVEADD` 1, `STAT` 1 (sum 75). Full detail:
+  `artifacts/epic-5-reverification/finalize-wave3-missing-literal-shapes.json`.
+- **26 disagree, all newly root-caused this wave, none fixed** — see `AT-33-E5-003_cycle_receipt.md`'s
+  own finalize-wave3 section and `progress.md`'s per-unit table.
+- **Kanban row 17:** kept `in-progress` — 75 short of the 6,589 denominator, a real named gap, not
+  a false 100%. Full detail: `AT-33-E5-finalize-wave3_cycle_receipt.md`.
