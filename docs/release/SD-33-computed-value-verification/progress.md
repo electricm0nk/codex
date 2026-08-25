@@ -225,6 +225,47 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle sd33-r3-combat — Epic 5 remediation wave 3, combat/weapon shape lane (row 17, AT-33-E5-002 remediation) — blocked-escalated
+
+- **Criterion:** `AT-33-E5-002` remediation — the equipment `other_bonus_shape` `COMBAT`/`WEAPON`/
+  `WEAPONPROF=*` population (125 units of the 391 unexamined-of-6,589 `literal-verified` total).
+- **Two real, additive engine fixes landed** (`src/rules_core/equipment_effects/arms_armor.rs`,
+  `equipmods.rs`; commit `b32920cbe9`, pushed ahead of the oracle-verification work): widened
+  `armor_class_bonus_from_bonus_chains` from an Armor/Shield-only `TYPE=` allowlist to any
+  `COMBAT|AC` chain (a real Ring of Protection/Amulet of Natural Armor/etc. previously resolved
+  to `None`); added the `WEAPONPROF=<name>` (bare, non-`TYPE.`) shape to `compute_equipmods_effect`
+  (e.g. `WEAPONPROF=Longsword|TOHIT,DAMAGE|-2`, no `TYPE=Enhancement` requirement, confirmed
+  against real PCGen source). 62 of 62 `equipment_effects` tests green, 4 new RED→GREEN tests.
+- **Rows written: 82 of 125** (`python3 -c "import json;print(len(json.load(open('artifacts/epic-5-reverification/equipment-shape-combat.oracle-results.json'))['results']))"` → `82`) — 40 agree, **26
+  disagree**, 16 unverifiable (0 reasonless). 43 unexamined, each named per-shape with a concrete
+  next-cycle plan (no engine resolver at all for bare `COMBAT|TOHIT`/`INITIATIVE`/`ATTACK,AC`;
+  `WEAPON.<i>.MAGICHIT`/`.MAGICDAMAGE` identified as the right oracle isolator for the `WEAPON`/
+  self-weapon `WEAPONPROF` groups but not yet run; a natural-attack fixture needed for
+  `Hoof`/`Bite`/`TYPE.Natural`; formula-valued chains with no evaluator).
+- **The 26 disagreements are real and root-caused, not closed by adjusting the expectation:** 23 to
+  one clean mechanism (a base item's own `EQMOD:`-embedded modifier record carries a separate
+  `BONUS:` chain `compute_arms_armor_effect` never resolves or sums — confirmed by regex-matching
+  every `EQMOD:` string's own `+N Armor/Shield` value against each unit's real `oracle − ours`
+  gap); 3 to a real baseline-diff harness-methodology limitation (MAXDEX-cap / co-located
+  ability-score-enhancement interaction on the same record); 1 to an apparently PRE-gated
+  conditional chain read as unconditional; 1 not yet individually diagnosed. Named for
+  `AT-33-E5-003`, not fixed this cycle.
+- **One instrument-correction, found and fixed this cycle before it could produce a single false
+  result:** every book beyond `core_rulebook` needs its FULL transitive `PRECAMPAIGN` closure
+  loaded together (e.g. `inner_sea_races` needs 6 other books, not just itself) — read directly
+  from each book's own real `.pcc` file, not guessed.
+- **16 unverifiable, two real reasons:** 14 hit the same pre-existing PCGen `ultimate_psionics`
+  campaign-load defect `AT-33-E5-remainder-equipment`'s own receipt already named (`SEVERE ...
+  Could not find campaign: Ultimate Psionics`, confirmed per-unit from each invocation's own log);
+  2 hit a real `equipment_id_resolve` limitation on a templated multi-variant corpus record with
+  no `KEY:` token (`Psychoactive Skin (Defender)`/`(Hero)`).
+- **Status: blocked-escalated** (82 rows < 125 population, per this wave's own row-count-is-status
+  rule). Not a failure — 82 real, per-unit `(ours, oracle, verdict)` rows landed, with 2 real
+  engine fixes and 26 real, root-caused disagreements for the next cycle.
+- **Commits:** `b32920cbe9` (engine fixes), `c99609071f` (results + receipt), `aba4b9c7e5`
+  (receipt SHA record).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-shape-combat_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-shape-var — VAR-bonus-shape lane (rows 16/17, Epic 5) — complete
 
 - **Criterion:** `AT-33-E5-002` — the `VAR` sub-population (108 of the 391 units
