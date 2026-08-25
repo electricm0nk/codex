@@ -1,8 +1,7 @@
 # Cycle AT-33-E5-003 (remediation) — Epic 5 Re-verification / AT-33-E5-003
 
-- **Commit SHA:** recorded by the commit that lands this receipt on `tranche/13` (this line updated
-  in a follow-up commit per this bundle's own precedent — `AT-33-E5-001`'s `73fdbb8803`,
-  `AT-33-E5-002`'s `114bba8ec4`)
+- **Commit SHA:** `dded72f0b4` (landed on `tranche/13`; this line updated in a follow-up commit per
+  this bundle's own precedent — `AT-33-E5-001`'s `73fdbb8803`, `AT-33-E5-002`'s `114bba8ec4`)
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixture-generate-spell-batch.py` (fixed — `STAT:WIS|SCORE:10` → `18`, the harness bug this cycle root-caused)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/fixture-spell-pcg/{wizard,cleric,druid,bard,paladin,ranger}.pcg` (regenerated with the fixed generator — all 6, so every `.pcg` this harness produces reflects the fix, not only the 3 that changed value)

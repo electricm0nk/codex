@@ -197,7 +197,7 @@ resolution/commit columns are identical across the full set — see the receipt 
 
 | unit_id | ours | oracle (pre-fix) | oracle (post-fix) | root cause | resolution | commit |
 |---|---:|---:|---:|---|---|---|
-| `advanced_class_guide:spell:align_weapon_communal` | 17 | 13 | 17 | harness fixture: `STAT:WIS|SCORE:10` should be `18` (Cleric is Wisdom-cast) | fixed `fixture-generate-spell-batch.py`, regenerated `cleric.pcg`, re-ran the real oracle | this cycle's commit (SHA recorded in `AT-33-E5-003_cycle_receipt.md`) |
+| `advanced_class_guide:spell:align_weapon_communal` | 17 | 13 | 17 | harness fixture: `STAT:WIS|SCORE:10` should be `18` (Cleric is Wisdom-cast) | fixed `fixture-generate-spell-batch.py`, regenerated `cleric.pcg`, re-ran the real oracle | `dded72f0b4` |
 | `advanced_class_guide:spell:anti_incorporeal_shell` | 18 | 14 | 18 | same root cause (Cleric) | same resolution | same commit |
 | `advanced_class_guide:spell:blazing_rainbow` | 20 | 16 | 20 | same root cause (Druid) | same resolution | same commit |
 | `advanced_class_guide:spell:enemy_insight` | 16 | 12 | 16 | same root cause (Ranger) | same resolution | same commit |
