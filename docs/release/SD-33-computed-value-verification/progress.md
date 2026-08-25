@@ -415,6 +415,58 @@ RED→GREEN landing the widening.
   population as fully rowed, one of three sibling slices of the 39.
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last39-weapon_cycle_receipt.md`.
 
+### Cycle AT-33-E5-last39-eqm — remediation wave 6, eqm-modifier-final lane (row 17, AT-33-E5-002 remediation) — complete
+
+- **Criterion:** `AT-33-E5-002` — this lane's 7-unit slice of the 39 units named by
+  `AT-33-E6-001-attempt6`'s own remainder list: `EQMARMOR` material (`draco`/`dragonhide`/
+  `material_dragonhide`, all three aliasing to the same real modifier `KEY:Material ~ Dragonhide`),
+  `EQMWEAPON|DAMAGESIZE` (`spike_sb`/`special_quality_spikes_shieldbash`, both aliasing to
+  `KEY:Special Quality ~ Spikes ~ Shieldbash`), `EQM|WEIGHTDIV`
+  (`material_darkleaf_cloth_clothing`), `EQMWEAPON|RANGEADD`
+  (`ultimate_combat:equipment:arrow_iron_tipped_distance_20`) — exactly wave 5's own `eqm-modifier-
+  final` population (`AT-33-E5-last67-eqm_cycle_receipt.md`), which returned 0 of 7 rowed.
+- **Wave 5's finding was not retried.** Wave 5 proved the `.pcg`-time `CUSTOMIZATION:[BASEITEM:...|
+  DATA:EQMOD=...]` attachment mechanism silently does not take effect in this harness (live-run
+  proof, 2 shapes/hosts/tokens). This cycle used a genuinely different mechanism instead: bake
+  `EQMOD:<real-modifier-key>` directly into a new homebrew item's own LST line (the same encoding
+  every real PCGen magic item uses, e.g. `Armor of Grim Triumph`) — a normal item-LOAD-time
+  resolution, not a post-load customizer path. Worked on the first live run, on every shape tried.
+  Host named per modifier, same host both sides (`sd33r6_eqm_items.lst`): Leather Armor (Base)-shaped
+  for the material, Heavy Wooden Shield (Base)-shaped for the shieldbash spikes, Outfit
+  (Explorer's)-shaped for the darkleaf cloth — all three equipped simultaneously on one character,
+  one `BatchExporter` start verifying all three shapes.
+- **Two genuinely unhandled shapes got new, real, tested resolvers this cycle** (RED→GREEN, `src/
+  rules_core/` write scope): `damage_total::resolve_eqmweapon_damagesize_effect` (+
+  `step_single_die`, the PF1 single-die progression table) and `equipment_effects::
+  resolve_eqm_weightdiv_effect` — neither `EQMWEAPON|DAMAGESIZE` nor `EQM|WEIGHTDIV` had any
+  resolver anywhere in `src/rules_core/` before this cycle (`grep -c` for each returned `0` against
+  the pre-cycle tree).
+- **The 7th unit (`arrow_iron_tipped_distance_20`) is a real, execution-proven `unverifiable`.**
+  First root-caused and fixed wave 5's separate Ultimate Combat book-load crash (missing
+  `CAMPAIGN:Advanced Player's Guide` — `AbilityCategory:Cavalier Class Feature` is defined only in
+  APG's own `apg_abilitycategories.lst`, not Ultimate Combat's; logged as a `correction` against
+  wave 5's vaguer "pre-existing, unreachable" characterization). With Ultimate Combat loading
+  cleanly, equipped a real `Longbow (Base)` + the arrow nested inside it and queried
+  `WEAPON.0.RANGE`: `100 ft.` — the arrow's own `RANGEADD:10` not reflected. Confirmed structural,
+  not a construction gap, by reading PCGen's own `WeaponToken.getRangeToken`/`Equipment.bonusTo`
+  source: `RANGE` is computed purely from the weapon's own attached `EquipmentModifier` list, never
+  from a separately-contained ammunition item's own raw `BONUS:` tokens, on any host. Recorded
+  `unverifiable`/`no_comparable_export_token`.
+- **Figures:** `population=7` (this lane's own table above); `rows_written=7`
+  (`python3 -c "import json; print(len(json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/last39-eqm.oracle-results.json'))['results']))"`
+  → `7`); `agree=6, disagree=0, unverifiable=1` (same file, grouped by `verdict`); denominator-gate
+  PASS, 48 of 48 files, 0 violations (`bash scripts/verify.sh --only denominator-gate`); full lib
+  suite `2829 passed; 4 failed` — the 4 are the SAME pre-existing failures `AT-33-E6-001-attempt6`
+  already named (Shortfall 4), not caused by this cycle (passed count rose exactly by this cycle's
+  own 5 new tests, 2824 → 2829).
+- **Movement (four buckets):** closure 6 (all `agree`) / reclassification 0 / reachability 1 (the
+  arrow, confirmed genuinely unreachable via `BatchExporter`'s own export surface) /
+  instrument-correction 3 (the working attachment mechanism; the Ultimate Combat root cause; the two
+  new engine resolvers).
+- **Status:** complete — 7 of 7 population rows written, 0 unexamined, the one `unverifiable` row
+  carries a populated `reason`.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last39-eqm_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-finalize-wave5 — total Epic 5 across wave-5's four lanes, own the kanban call (rows 16, 17, 18) — blocked-escalated
 
 - **Criteria:** `AT-33-E5-001`/`002`/`003` — merge, re-derive every figure independently, own rows 16-18.

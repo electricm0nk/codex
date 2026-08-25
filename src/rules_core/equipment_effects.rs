@@ -553,6 +553,105 @@ fn resolve_category_effect(
     effect
 }
 
+/// Resolves an item's real base `WT:` token divided by every
+/// `BONUS:EQM|WEIGHTDIV|<n>` chain carried by its `EQMOD:`-referenced
+/// modifier records (SD-33 remediation wave 6, `eqm-modifier-final`
+/// lane, `AT-33-E5-002` -- the `EQM|WEIGHTDIV` shape had no resolver at
+/// all before this cycle, confirmed absent by
+/// `grep -rn "WEIGHTDIV" src/rules_core/`). Real corpus example:
+/// Advanced Race Guide's `Material ~ Darkleaf Cloth ~ Clothing`,
+/// `BONUS:EQM|WEIGHTDIV|2` -- confirmed live against the pinned PCGen
+/// oracle this cycle: an `Outfit (Explorer's)`-shaped host (`WT:8`)
+/// with this modifier's real `KEY:` baked into its own item line
+/// exports `EQ.MERGELOC.x.WT=4`.
+///
+/// Multiple attached instances compound by successive division (each
+/// divides the running weight, not the base weight independently) --
+/// this cycle's population only ever carries one instance, so that
+/// choice is unexercised by any real corpus record and stated here as
+/// the documented behavior, not proven by a corpus example.
+///
+/// Returns `None` when the item carries no `WT:` token, or resolves to
+/// no `EQMOD:`-referenced modifier carrying this chain -- honest
+/// absence, never a fabricated weight.
+pub fn resolve_eqm_weightdiv_effect(item_id: &str, corpus: &SourcePackageContent) -> Option<f32> {
+    let (record, _table_cell) = equipment_id_resolve(item_id, RuleSetId::Crb, corpus)?;
+    let base_weight: f32 = record
+        .tokens
+        .iter()
+        .find(|token| token.key == "WT")
+        .and_then(|token| token.value.parse().ok())?;
+    let eqmod_records = eqmod_referenced_records(record, RuleSetId::Crb, corpus);
+    let divisors: Vec<f32> = eqmod_records
+        .iter()
+        .filter_map(|modifier| {
+            modifier.bonus_chains.iter().find_map(|bonus| {
+                let qualifiers = &bonus.qualifiers;
+                if qualifiers.len() >= 3 && qualifiers[0] == "EQM" && qualifiers[1] == "WEIGHTDIV" {
+                    qualifiers[2].parse::<f32>().ok()
+                } else {
+                    None
+                }
+            })
+        })
+        .collect();
+    if divisors.is_empty() {
+        return None;
+    }
+    Some(
+        divisors
+            .iter()
+            .fold(base_weight, |acc, divisor| if *divisor != 0.0 { acc / divisor } else { acc }),
+    )
+}
+
+#[cfg(test)]
+mod eqm_weightdiv_tests {
+    use super::*;
+    use crate::pcgen_import::ir_converter::convert_equipment_record;
+    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::rules_core::source_content::SourceRef;
+
+    fn corpus_from(text: &str, source_file: &str) -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries(source_file, text);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: source_file.to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("advanced_race_guide", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    /// Real verbatim tokens: `KEY:Outfit (Explorer's)` (`WT:8`,
+    /// `core_rulebook/cr_equip_general.lst`) with `EQMOD:Material ~
+    /// Darkleaf Cloth ~ Clothing` baked in, plus the real modifier record
+    /// (`advanced_race_guide/arg_equipmods.lst`, `BONUS:EQM|WEIGHTDIV|2`)
+    /// -- the pair the live oracle confirmed this cycle (`WT:8` -> `4`).
+    #[test]
+    fn weightdiv_halves_a_real_hosts_weight() {
+        let text = "\
+Outfit (Explorer's) Darkleaf\tKEY:Outfit ~ Darkleaf Test\tTYPE:Goods.Clothing.Resizable.Starting\tCOST:10\tWT:8\tEQMOD:Material ~ Darkleaf Cloth ~ Clothing\n\
+Darkleaf Cloth\tKEY:Material ~ Darkleaf Cloth ~ Clothing\tTYPE:BaseMaterial.MasterworkQuality.Cloth.Clothing\tCOST:500\tBONUS:EQM|WEIGHTDIV|2\n";
+        let corpus = corpus_from(text, "arg_equip_general.lst");
+
+        let weight = resolve_eqm_weightdiv_effect("Outfit ~ Darkleaf Test", &corpus);
+
+        assert_eq!(weight, Some(4.0), "8 lbs divided by WEIGHTDIV:2 must be 4");
+    }
+
+    #[test]
+    fn a_host_with_no_eqmod_yields_none_not_a_fabricated_weight() {
+        let text = "Outfit (Explorer's)\tKEY:Outfit (Base) Test\tTYPE:Goods.Clothing\tCOST:10\tWT:8\n";
+        let corpus = corpus_from(text, "cr_equip_general.lst");
+
+        let weight = resolve_eqm_weightdiv_effect("Outfit (Base) Test", &corpus);
+
+        assert_eq!(weight, None, "no EQMOD attached means no WEIGHTDIV chain to apply -- honest None");
+    }
+}
+
 #[cfg(test)]
 mod attack_bonus_delta_tests {
     use super::*;
