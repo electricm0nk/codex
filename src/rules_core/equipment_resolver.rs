@@ -860,7 +860,24 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // `cargo run --locked --bin gen_equipment_gap_tables`'s own diff:
         // 3 insertions, 2 deletions, all in the `adventurers_guide` block).
         // Retargeted to the proven total: 6,146 + 1,954 = 8,100.
-        assert_eq!(rows.len(), 8_100);
+        //
+        // `AT-33-E6-001` (2026-08-25): 8,100 was already stale AT THE
+        // `tranche/13` CUT (`f652db7ac7`) -- inherited, not caused by any
+        // SD-33 wave. `equipment_gap_tables.rs`'s own header already stated
+        // "Total: 1973 rows" at that exact commit (`git show
+        // f652db7ac7:src/rules_core/rules_tables/equipment_gap_tables.rs |
+        // grep '^//! Total:'` -> `1973 rows`; `git log
+        // f652db7ac7..HEAD -- src/rules_core/rules_tables/
+        // equipment_gap_tables.rs` is EMPTY -- no SD-33 commit, including
+        // wave 6's `data/corpus/**` regeneration, ever touched this
+        // generated file) -- another untraced drift from whatever cycle
+        // last ran `gen_equipment_gap_tables` before the cut, same shape as
+        // the 1953->1954 one two paragraphs up: the generated table moved,
+        // this pinned arithmetic did not follow it. Hand-authored count is
+        // unchanged (still 6,146, asserted above, still passing) --
+        // 6,146 + 1,973 = 8,119, matching `rows.len()` live. Retargeted to
+        // the proven total.
+        assert_eq!(rows.len(), 8_119);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.
