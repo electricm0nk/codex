@@ -26,10 +26,10 @@ One row per acceptance criterion. **21 rows.** A cycle marks its row `complete` 
 | 6 | `oracle-character-roundtrip` | 2 | AT-33-E2-002 | not-started | |
 | 7 | `oracle-comparison-harness` | 2 | AT-33-E2-003 | not-started | |
 | 8 | `oracle-path-ruling` | 2 | AT-33-E2-004 | not-started | |
-| 9 | `coverage-gap-rootcause` | 3 | AT-33-E3-001 | not-started | |
-| 10 | `coverage-f1` | 3 | AT-33-E3-002 | not-started | |
-| 11 | `coverage-f2-f9` | 3 | AT-33-E3-003 | not-started | |
-| 12 | `coverage-100-with-denominator` | 3 | AT-33-E3-004 | not-started | |
+| 9 | `coverage-gap-rootcause` | 3 | AT-33-E3-001 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
+| 10 | `coverage-f1` | 3 | AT-33-E3-002 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
+| 11 | `coverage-f2-f9` | 3 | AT-33-E3-003 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
+| 12 | `coverage-100-with-denominator` | 3 | AT-33-E3-004 | complete | `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md` |
 | 13 | `unknown-rootcause` | 4 | AT-33-E4-001 | not-started | |
 | 14 | `unknown-to-zero` | 4 | AT-33-E4-002 | not-started | |
 | 15 | `no-effort-named-buckets` | 4 | AT-33-E4-003 | not-started | |

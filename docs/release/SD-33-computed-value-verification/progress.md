@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epic 1 complete, rows 1-4 (AT-33-E1-001..004) all complete
+status: in progress — Epic 1 complete (rows 1-4); Epic 3 complete (rows 9-12, AT-33-E3-001..004)
 date: 2026-08-24
 ---
 
@@ -32,7 +32,8 @@ computed-delta observation (`monster`, `monster_ability`, `companion`) — see
 `artifacts/epic-1-instruments/probe-surface-census.json` and its cycle receipt for the full
 per-kind table and the source citations.
 
-**Cards complete: 4 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body).
+**Cards complete: 8 / 21** (`jq` re-derive: count `complete` rows in `kanban.md`'s table body) —
+Epic 1 (rows 1-4) plus Epic 3 (rows 9-12); Epics 2/4 (rows 5-8, 13-15) are concurrent worktree-isolated lanes, status as of this cycle's own commit.
 
 **Denominator gate is now live** (`AT-33-E1-004`): `scripts/verify.sh --only denominator-gate`
 runs `scripts/denominator_gate.py --check` against this bundle's own `artifacts/**/*_cycle_receipt.md`
@@ -56,6 +57,61 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E3-001..004 — engine coverage (rows 9-12, Epic 3)
+
+- **Criteria:** `AT-33-E3-001` (root-cause), `AT-33-E3-002` (F1 gap closes), `AT-33-E3-003`
+  (F2-F9 close), `AT-33-E3-004` (corpus-wide run reports 100%, 11,652 of 11,652, with its denominator).
+- **Files:** `src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs` (modified),
+  `artifacts/epic-3-engine-coverage/coverage-gap-rootcause.md` (new),
+  `artifacts/epic-3-engine-coverage/formula_interpreter.corpus-wide.json` (new, SD-33's own path —
+  SD-32's `artifacts/gate-2-engines/...` never touched), `THE-BOX.md` (append-only note, no
+  group/count changed).
+- **Root cause (execution-verified, not assumed):** two independent staleness layers, not a code
+  defect. (1) SD-32's committed Gate-2 run artifact (`population=4,798`) predates 9 later commits
+  (`25dbee17aa..80329736f4`) that grew its own Gate-1 census inside SD-32 itself
+  (`ledger.json` F1..F9 grew to 11,338) and was never regenerated — 6,540 of the 6,854-unit gap
+  (95.4% of 6,854). (2) that frozen census is itself stale against the CURRENT corpus/inventory —
+  314 more units exist today (11,652 of 11,652 fresh `python3 scripts/shape_ledger.py` rollup) —
+  4.6% of 6,854. Full trace with concrete sample unit coordinates and commit SHAs:
+  `artifacts/epic-3-engine-coverage/coverage-gap-rootcause.md`.
+- **Fix:** `formula_interpreter_corpus_wide.rs` no longer reads SD-32's frozen
+  `docs/release/SD-32-.../artifacts/gate-1-shape-closure/ledger.json`. It regenerates the Gate 1
+  census fresh, at scan time, by invoking `scripts/shape_ledger.py` (never re-implemented in Rust —
+  `decisions.md §4` single-source-of-truth), caching the result process-wide (`OnceLock`) so
+  `cargo test`'s several `#[test]` fns in this module share one ~28s regeneration.
+- **Figures:**
+  - True F1..F9 population (`README.md §4` row E) = **11,652** —
+    `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` (family rollup summed)
+  - Prior committed run population = **4,798 of 11,652** —
+    `jq .total_population docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-2-engines/formula_interpreter.corpus-wide.json`
+  - Fresh SD-33 run population = **11,652 of 11,652** —
+    `jq .total_population docs/release/SD-33-computed-value-verification/artifacts/epic-3-engine-coverage/formula_interpreter.corpus-wide.json`
+  - Row G comparison (E − new F): `11,652 − 11,652 = 0`
+  - F1 (largest family): true = run = **6,308 of 6,308** (up from the prior run's 1,790)
+  - Per-family run-population == true-population for all of F1..F9: full table in the receipt
+  - Recognition (separate from coverage, per the epic-breakdown NOTE): **10,626 of 11,652**
+    recognised, **240 of 11,652** refused (named, e.g. unrecognised `var("CL=...")`), **786 of
+    11,652** unjoined (this module's own join is narrower than `shape_ledger.py`'s three-way join —
+    named forward scope, not silently folded into "recognised")
+- **Movement (four buckets):** closure 6,854 (the full population gap — 6,854 previously-un-walked
+  F1..F9 units now walked and either recognised or named-refused) / reclassification 0 /
+  reachability 0 / instrument-correction 6,854 (the "41%"/"4,798 of 11,652" figures are corrected
+  to their real cause, staleness — both bucket counts describe the same movement from two angles:
+  the population figure closes, and the prior figure is corrected).
+- **RED→GREEN:** new test
+  `f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census`. RED
+  (module still reading the frozen census): `assertion left == right failed ... left: 6032 right:
+  6308`. GREEN (module regenerates fresh): `cargo test --locked --lib -p codex
+  rules_core::pilot_compute::formula_interpreter_corpus_wide::tests::f1_population...` → `1 passed`.
+  Existing `a_subset_run_trips_the_population_mismatch_check` re-pointed at the new fresh-census
+  function and still green.
+- **Test scoping:** ran `cargo test --locked --lib -p codex formula_interpreter` (42/42 passed —
+  both `formula_interpreter` and `formula_interpreter_corpus_wide` modules, matched by substring)
+  and `cargo build --locked --lib -p codex` (clean, pre-existing unrelated warnings only). Did not
+  run the full `cargo test --locked --lib -p codex` workspace sweep (2,824+ tests, no other module
+  touched) or `apps/desktop/src-tauri` (separate cargo workspace, untouched).
+- **Receipt:** `artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md`.
 
 ### Cycle AT-33-E1-004 — denominator-gate (row 4, Epic 1)
 

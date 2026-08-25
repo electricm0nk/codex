@@ -192,3 +192,17 @@ thereafter (`workflow-instruction.md` §3): a later cycle may add new groups (fo
 example, once units currently `unverifiable` are reclassified) but must not
 remove or shrink an existing one without the sum continuing to equal 49,438,
 and every new group must state `"unverifiable"` explicitly.
+
+## Epic 3 note — engine-coverage census (no group/count changed)
+
+AT-33-E3-001..004 (`artifacts/epic-3-engine-coverage/`) closed the
+F1..F9 formula-shape engine-coverage gap `README.md §4` row G named
+(41.2% → 100%, 4,798 of 11,652 → 11,652 of 11,652). This does **not**
+move any unit between the groups above: `formula_interpreter`'s F1..F9
+census is a cross-cutting shape classification over
+`docs/work-inventory.json`'s `(book, source_file, source_line)` join, not
+the `status` field this box partitions on, and this epic never writes
+`docs/work-inventory.json` (Epic 4's sole-writer scope,
+`workflow-instruction.md §3`). Root cause and both figures:
+`artifacts/epic-3-engine-coverage/coverage-gap-rootcause.md`; receipt:
+`artifacts/epic-3-engine-coverage/AT-33-E3-001..004_cycle_receipt.md`.
