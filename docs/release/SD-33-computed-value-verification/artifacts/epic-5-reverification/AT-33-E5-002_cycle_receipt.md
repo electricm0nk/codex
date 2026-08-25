@@ -362,3 +362,31 @@ Reported here per the wave-2 dispatch's own instruction; does not alter this rec
   wider 708-unit shared population, plus 7 with no resolvable corpus level at all.
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-spell_cycle_receipt.md`.
 - **Results file:** `artifacts/epic-5-reverification/spell-remainder.oracle-results.json`.
+
+## Remediation wave 2 — sibling lane contribution (`charbuild-remainder`)
+
+Reported here per the wave-2 dispatch's own instruction; does not alter this receipt's own 5,812-of-
+6,589 figures above.
+
+- **Population belonging to THIS receipt:** 66 `literal-verified` units — 17 `class_feature` + 36
+  `race` + 13 `race_trait` (the lane's own full 81-unit population also covers 15
+  `fixture-verified` `class_feature` units, reported in `AT-33-E5-001`'s own receipt, not
+  double-counted here) — its own named "full-character-build" slice of this receipt's own 777-unit
+  unexamined remainder (777 = 448 equipment `other_bonus_shape` + 217 spell + 46
+  `equipment_modifier` + 36 race + 17 class_feature + 13 race_trait).
+- **Examined via live oracle:** 66 of 66 (100% of this receipt's own slice) — 44 agree / 1
+  disagree / 21 unverifiable (every `unverifiable` row carries a populated `reason`).
+- **The 1 real disagreement**, named for `AT-33-E5-003`:
+  `core_rulebook:class_feature:monk_ac_bonus` (`ours=2`, `oracle=7`) —
+  `class_chassis.monk.ac_bonus` grounds only the flat Wisdom-to-AC component; PF1's real rule also
+  adds a level-scaled dodge bonus (+5 at level 20) this engine does not yet compute. Not fixed by
+  this lane (`src/rules_core/pilot_compute/mod.rs` out of write scope).
+- **Method**: one L20 `build_pilot_headless_receipt` per source class (13 classes, up to 6 units
+  amortised per build) + `race_creation_chassis` per race (36), cross-checked against 49 real,
+  live PCGen `BatchExporter` exports via direct-`java` (no gradle daemon, proven byte-identical to
+  `./gradlew run`). Full method and both live-tool corrections (the `COUNT[SA]` token assumption;
+  the campaign-closure assumption) are in the lane's own receipt.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-charbuild_cycle_receipt.md`.
+- **Results file:** `artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json`
+  (all 81 rows; re-derive this receipt's own 66-unit subset via
+  `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); st={u['id']:u['status'] for u in inv['units']}; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json')); print([r for r in d['results'] if st.get(r['unit_id'])=='literal-verified'])"`).

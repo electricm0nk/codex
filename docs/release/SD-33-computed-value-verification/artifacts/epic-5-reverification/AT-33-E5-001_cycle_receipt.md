@@ -244,3 +244,33 @@ own figures above, which remain this cycle's own 1,128-of-1,741 result.
   + 192 class-unmapped + 47 no-class-binding + 7 no-corpus-level) — none reasonless.
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-spell_cycle_receipt.md`.
 - **Results file:** `artifacts/epic-5-reverification/spell-remainder.oracle-results.json`.
+
+## Remediation wave 2 — sibling lane contribution (`charbuild-remainder`)
+
+Reported here per the wave-2 dispatch's own instruction ("report your slice's totals into both
+AT-33-E5-00{1,2} receipts' figure rows"); this lane (`sd33-r2-charbuild`) does not alter this
+receipt's own figures above, which remain this cycle's own 1,128-of-1,741 result.
+
+- **Population belonging to THIS receipt:** 15 `fixture-verified` `class_feature` units,
+  matching this receipt's own next-cycle plan item 1 verbatim (the lane's own full 81-unit
+  population also covers 66 `literal-verified` units — 17 `class_feature` + 36 `race` + 13
+  `race_trait` — reported in `AT-33-E5-002`'s own receipt below, not double-counted here).
+- **Examined via live oracle:** 15 of 15 (100% of this receipt's own slice) — 14 agree / 0
+  disagree / 1 unverifiable (`advanced_class_guide:class_feature:slayer_trapfinding` — PCGen's
+  real Slayer L20 Special-Ability list carries no entry named "Trapfinding" at all, confirmed
+  absent rather than a lookup miss; reason populated in the committed row).
+- **Method, following this receipt's own next-cycle plan**: one L20 `build_pilot_headless_receipt`
+  per source class (13 classes, up to 6 units amortised per build) + `race_creation_chassis` per
+  race (36), cross-checked against 49 real, live PCGen `BatchExporter` exports via direct-`java`
+  (no gradle daemon, proven byte-identical to `./gradlew run`). Corrected two of its own
+  instruments live before trusting them at scale: the `COUNT[SA]`/`SPECIALABILITY` export token
+  this bundle assumed evaluates to 0 for this gamemode (the real mechanism is
+  `countdistinct("ABILITIES","CATEGORY=Special Ability",...)` + `ABILITYALL`, proven against a
+  real level-20 Rogue first); and the single-book campaign-closure assumption for
+  Bloodrager/Slayer/Investigator/Ninja/Samurai/Inquisitor, corrected to each sourcebook's own real
+  `PRECAMPAIGN` chain. The lane's full 81-unit result (including the one real disagreement,
+  `monk_ac_bonus`, which belongs to the `literal-verified` population) is in the lane's own receipt.
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-charbuild_cycle_receipt.md`.
+- **Results file:** `artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json`
+  (all 81 rows; re-derive this receipt's own 15-unit subset via
+  `python3 -c "import json; inv=json.load(open('docs/work-inventory.json')); st={u['id']:u['status'] for u in inv['units']}; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json')); print([r for r in d['results'] if st.get(r['unit_id'])=='fixture-verified'])"`).

@@ -225,6 +225,61 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E5-remainder-charbuild — full-character-build lane (rows 16/17, Epic 5) — complete
+
+- **Criterion:** contributes to `AT-33-E5-001`/`AT-33-E5-002` (rows 16/17) — the named 81-unit
+  "full-character-build" slice (15 fixture-verified + 17 literal-verified `class_feature` + 36
+  `race` + 13 `race_trait`) of the 1,390-unit Epic-5 remainder both prior E5-001/E5-002 receipts
+  declined to rush, naming it as their own explicit next-cycle plan. Two sibling lanes
+  (`AT-33-E5-remainder-spell`, `AT-33-E5-remainder-equipment`) ran in parallel on other slices of
+  the same 1,390; this lane does not total or close rows 16/17/18 — a finalize cycle owns that.
+- **Files:** `src/bin/v06_work_inventory.rs` (probe extension — new `--charbuild-remainder-probe`
+  flag, no existing function changed); `scripts/oracle_harness/charbuild-remainder.txt.ftl` (new
+  BatchExporter template) + `charbuild_remainder_generate.py` (new — one L20 `.pcg` per source
+  class, one L1 `.pcg` per race) + `charbuild_remainder_run_one.sh` (new — direct-`java` runner,
+  no gradle daemon); `artifacts/epic-5-reverification/charbuild-remainder-compare.py` +
+  `charbuild-remainder.oracle-results.json` (the 81-row deliverable) +
+  `fixtures/charbuild-remainder-{pcg,oracle-txt}/` (49 real `.pcg`/export pairs) +
+  `AT-33-E5-remainder-charbuild_cycle_receipt.md` (new).
+- **What landed:** one `build_pilot_headless_receipt` per source class (13 classes, amortising up
+  to 6 units per build) plus `race_creation_chassis` per race (36), cross-checked against 49 real,
+  live PCGen `BatchExporter` exports. Discovered live that `COUNT[SA]`/`SPECIALABILITY.*` (the
+  token this bundle's own prior receipt assumed) evaluates to 0 for this gamemode; the real
+  mechanism (`countdistinct("ABILITIES","CATEGORY=Special Ability",...)` + `ABILITYALL`, the same
+  one this gamemode's own shipped character sheet uses) was proven live against a real level-20
+  Rogue before scaling to all 49 builds. Also found and fixed a real campaign-`PRECAMPAIGN`-chain
+  defect live (6 of 13 classes' builds initially aborted with 0 output; fixed by reading each
+  sourcebook's own `.pcc` dependency chain directly, not guessed).
+- **Figures:**
+  - Population: 81 (`python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(len([u for u in d['units'] if u['status']=='fixture-verified' and u['kind']=='class_feature'])+len([u for u in d['units'] if u['status']=='literal-verified' and u['kind']=='class_feature'])+len([u for u in d['units'] if u['status']=='literal-verified' and u['kind']=='race'])+len([u for u in d['units'] if u['status']=='literal-verified' and u['kind']=='race_trait']))"` → `81`)
+  - Examined: 81 of 81 (100% of this slice) — `agree=58 disagree=1 unverifiable=22`
+    (`python3 -c "import json,collections; d=json.load(open('docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/charbuild-remainder.oracle-results.json')); print(collections.Counter(r['verdict'] for r in d['results']))"`)
+  - Reasonless `unverifiable`: 0 of 22 (`python3 -c "import json; d=json.load(open('...charbuild-remainder.oracle-results.json')); print(len([r for r in d['results'] if r['verdict']=='unverifiable' and not r.get('reason')]))"`)
+  - One real disagreement: `core_rulebook:class_feature:monk_ac_bonus` (ours=2, oracle=7 — engine
+    grounds only the flat Wisdom-to-AC component, real PF1 rule also adds a level-scaled dodge
+    bonus reaching +5 at level 20). Reported for `AT-33-E5-003`, not fixed here (out of write scope).
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 / instrument-correction 2
+  (the `COUNT[SA]` token assumption; the single-book campaign-closure assumption) — this cycle
+  examines a population and corrects its own instruments; it moves no `docs/work-inventory.json`
+  `status` field.
+- **RED→GREEN:** 0 of 81 units carried any `(ours, oracle, verdict)` row before this cycle (both
+  prior receipts explicitly declined this slice); 81 of 81 carry a real row after, `cargo build`
+  clean, 49 real live PCGen invocations all exit 0 (one retry wave of 6 after the campaign-closure
+  fix), spot-checked against raw export text for 5 units (Catfolk ability scores, Human floating
+  bonus, Superstition +7, Sneak Attack 10d6, monk_ac_bonus 2 vs 7).
+- **Notes:** ability scores pinned to 14 uniformly across every class build so every
+  ability-modifier-dependent formula is comparable by construction; the three choice-gated units
+  (Superstition rage power, Foil Scrutiny slayer talent, Resiliency rogue talent) use the same
+  `CLASS_FEATURE_POOLS` table the existing wiring probe already uses, never a hand-rolled
+  selection id; `paladin_aura_of_righteousness` is deliberately compared against the DR clause's
+  own explanation (`class_chassis.paladin.damage_reduction`), not the grant-only identity record
+  — a judgment call, stated in the receipt.
+- **Test scoping:** `cargo build --locked --bin v06_work_inventory` + probe run, both exit 0. No
+  root `cargo test` sweep or `apps/desktop/src-tauri` (no file in either touched). No dedicated
+  test suite for the new Python compare script (a data-pipeline script over committed export
+  text, matching this bundle's own prior precedent for similar scripts).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-remainder-charbuild_cycle_receipt.md`.
+
 ### Cycle AT-33-E5-remainder-spell — spell-casting-ability lane (rows 16/17, Epic 5) — complete
 
 - **Criterion:** contributes to `AT-33-E5-001`/`AT-33-E5-002` (rows 16/17) — one named 815-unit
