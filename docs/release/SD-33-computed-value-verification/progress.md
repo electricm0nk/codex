@@ -2,30 +2,33 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: Epic 6 as of `AT-33-E6-001-suite-green` (remediation wave 7, this cycle). Attempt 7's own
-  **SURVIVING BLOCKER** is CLOSED, verified by execution: `cargo test --locked --lib` is now
-  **GREEN — 2,836 of 2,836** executed lib tests pass, **0 fail**, 14 ignored (up from 2,832 of
-  2,836 / 4 failing). Both named causes fixed with a real diff, not a silenced check: (1)
-  `pf1e_dashboard_producer.py`'s doneness table was missing the `unmeasurable` spelling of its own
-  pre-existing `unknown` checked-first rule (`AT-33-E4-002` renamed the STATUS_VOCABULARY word and
-  missed this one call site) — fixed, plus a second, deeper stale pin the crash had been masking
-  (`f1_population...`'s `6,308` pin predated the same `AT-33-E4-002` regen by 44 minutes; retargeted
-  to the freshly re-derived `6,278`, matching `shape_ledger.py` exactly); (2)
-  `equipment_resolver.rs:863`'s `8,100` catalog-count pin, confirmed already stale AT the
-  `tranche/13` cut itself (not caused by any SD-33 wave), retargeted to `8,119`, cross-confirmed by
-  two independently-computed tables that already agreed. Full detail, all re-derive commands, and
-  the count-sweep: `artifacts/epic-6-closure/AT-33-E6-001-suite-green_cycle_receipt.md`. Row 14
-  stays `complete` (its own regen commit caused the gap; this cycle closes the mapper's debt
-  against it). **A separate, unrelated pre-existing defect was found and NOT fixed** (out of this
-  cycle's scope, per its own dispatch): the root-workspace `cargo test --locked` (full suite, not
-  `--lib`) fails to COMPILE `tests/sd20_equipment_equipmods.rs` (stale `WeaponEnhancementBonus`
-  field references from wave 6's `7d439876b7`, confirmed untouched by this cycle's own diff) —
-  0 of N integration suites run; named for a future cycle. `apps/desktop/src-tauri` (separate
-  cargo workspace, tested explicitly): GREEN, 548 of 548. Epic 5 re-confirmed undisturbed
-  (`box_ledger.py --check` → `oracle_disagreement=0`, exit 0). Row 19 (`final-acceptance-scan`)
-  stays `blocked-escalated` — a fresh attempt-8 scan against this cycle's own landing commit is
-  the next Epic-6 act, not performed by this cycle (out of its own granted scope: fix the suite,
-  not re-run the gate). `## Open blockers` remains empty.
+status: Epic 6 as of `AT-33-E6-001` **attempt 8** (final-acceptance scan, this cycle). **Gate
+  FAIL — eighth consecutive correct halt, 1 shortfall.** Attempt 7's entire surviving shortfall
+  is **CLOSED**, re-verified by execution in a clean worktree at `47a37804c0`: `cargo test
+  --locked --lib` → **2,836 of 2,836** executed lib tests pass, **0 of 2,836** fail, 14 ignored,
+  exit 0. Both halves closed by real work, not by an edited expectation — the producer's
+  fail-closed raise **survives** (a genuinely unmapped pair still raises; probe planted and
+  removed), `docs/work-inventory.json` was **not** edited (only commit on this branch remains
+  `00ca087775`), the 11 of 49,438 `(ambiguous, unmeasurable)` units still carry the pair, and the
+  `8,119` catalog count was **re-derived** three independent ways (6,146 hand-authored + 1,973 of
+  1,973 generated gap rows), not fitted to the actual. Both moved counts swept across `tests/`,
+  `src/`, `apps/`, `scripts/`: **0 stale live assertions**. **The surviving shortfall is new and
+  is this bundle's own debt:** the root-workspace `cargo test --locked` does not COMPILE, so
+  **0 of 543 integration test targets execute** — `tests/sd20_equipment_equipmods.rs` reads
+  `WeaponEnhancementBonus::{affects,bonus}`, which SD-33's **`2f1d52f22d`**
+  (`AT-33-E5-finalize-wave5`, rows 17/18's own commit) split into `tohit_bonus`/`damage_bonus`
+  without updating the caller. The target **compiled at the `tranche/13` cut**, so this is
+  neither pre-existing nor wave 6's — the suite-green cycle's contrary attribution is corrected
+  in `docs/retro/events/sd33-r8-acceptance-scan.jsonl`. Rows 16-18 are `complete` over a build
+  their own commit broke, the same shape that made attempt 7's shortfall blocking for row 14.
+  `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly): **548 of 548** passed.
+  Epic 5 re-confirmed undisturbed — `box_ledger.py --check` → `oracle_disagreement=0`, exit 0,
+  rows **1,741 / 6,589 / 8,330** with the unexamined set **empty as a set**. Denominator gate
+  **0 violations of 55 files**, scope widened from 53, detection re-proven live. `## Open
+  blockers` remains **0 of 0** active entries. Row 19 stays `blocked-escalated`; the one item
+  left is updating `tests/sd20_equipment_equipmods.rs:94-111` to the post-`2f1d52f22d` field
+  shape. Full detail and every re-derive command:
+  `artifacts/epic-6-closure/AT-33-E6-001-attempt8_cycle_receipt.md`.
 date: 2026-08-25
 ---
 
@@ -387,6 +390,69 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 </details>
 
 ## Cycles
+
+### Cycle AT-33-E6-001 (attempt 8) — final-acceptance scan — blocked-escalated (gate FAIL)
+
+- **Criterion / card:** `AT-33-E6-001`, kanban row 19.
+- **Commit SHA:** this cycle's own landing commit.
+- **Gate result: FAIL.** Eighth consecutive correct halt. **1 shortfall**, and it is not
+  attempt 7's — attempt 7's entire surviving shortfall is CLOSED.
+- **Scanned tree:** clean detached worktree at `origin/tranche/13` = `47a37804c0`.
+- **CLOSED — attempt 7's Shortfall 1 (red lib suite):** `cargo test --locked --lib` →
+  **2,836 of 2,836** executed lib tests pass, **0 of 2,836** fail, 14 ignored, exit 0.
+  **Group A closed by mapping, not by swallowing:** fail-closed re-proven live — a genuinely
+  unmapped pair still raises (`ValueError: doneness: unmapped 'ambiguous' +
+  'totally-made-up-status-xyz'`), probe removed. `docs/work-inventory.json` was NOT edited
+  (`git log f652db7ac7..HEAD -- docs/work-inventory.json` → `00ca087775` only), the 11 of
+  49,438 `(ambiguous, unmeasurable)` units still carry the pair, and `unknown` is **0 of
+  49,438**. F1's `6,308`→`6,278` retarget independently re-derived
+  (`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` → `F1 6278`).
+  **Group B derived, not fitted:** 6,146 hand-authored + **1,973 of 1,973** generated gap rows
+  = **8,119**, the generated table's own header and an independent count of its row
+  constructors agreeing, the table already at 1,973 **at the cut** and never touched by any
+  SD-33 commit, cross-confirmed by the desktop crate's already-correct `8119`.
+  **Sweep clean:** both moved counts grepped across `tests/`, `src/`, `apps/`, `scripts/` —
+  **0 stale live assertions** of 2 counts moved; the 2 surviving old-number hits are prose.
+- **SURVIVING SHORTFALL (new, visible only because the lib suite went green):** the full
+  workspace test build does not compile, so **0 of 543 integration test targets execute**.
+  `cargo test --locked --no-run` → `error[E0609]: no field 'affects' on type
+  '&WeaponEnhancementBonus'` (×2), `no field 'bonus'` (×2), `could not compile 'codex' (test
+  "sd20_equipment_equipmods")`, exit 101. **It is SD-33's own Epic 5 work.** The struct
+  carried `affects`/`bonus` at the `tranche/13` cut and the target compiled; `2f1d52f22d`
+  (`AT-33-E5-finalize-wave5`, rows 17/18's own commit) split them into
+  `tohit_bonus`/`damage_bonus` and never updated the caller
+  (`git log f652db7ac7..HEAD -- tests/sd20_equipment_equipmods.rs` is empty). Rows 16-18 are
+  therefore `complete` over a build their own commit broke — the identical
+  `complete`-with-a-deferred-half shape that made attempt 7's Shortfall 1 blocking for row 14.
+  `AGENTS.md`: "Verify at the widest build scope the repo has … one broken bin meant 0 of 502
+  suites ran while the phase reported COMPLETE."
+- **Correction filed:** the suite-green lane recorded this item's cause as wave-6 commit
+  `7d439876b7` and called it an "unrelated pre-existing gap". Both are wrong — `7d439876b7`
+  did not perform the split, `2f1d52f22d` did one wave earlier, and the target compiled at the
+  cut. Verified by reading the struct at `f652db7ac7`/`66984fe7bc`/`2f1d52f22d`/`7d439876b7`.
+- **Other suites:** desktop crate (separate cargo workspace, tested explicitly, own
+  `CARGO_TARGET_DIR`) **548 of 548** passed, 0 failed, exit 0.
+- **Re-verified CLOSED (by execution, not by report):** `box_ledger.py --check` →
+  `oracle_disagreement=0`, exit 0; row counts **1,741 / 6,589 / 8,330** with the unexamined
+  set **EMPTY as a set** (computed and printed, not inferred from a count); **0 of 8,330**
+  duplicate `unit_id`; **0 of 811** `agree` rows with `ours != oracle`; **0 of 7,519**
+  reasonless `unverifiable`; `## Open blockers` **0 of 0** active entries (real heading at
+  line 302; the naive `sed` false-matches the frontmatter); denominator gate **0 violations of
+  55 files checked**, scope widened from 53 with the matcher untouched and detection re-proven
+  live then the probe removed; `EXCLUDED_BOOKS = frozenset()` size 0; **0 missing of 31**
+  kanban-cited receipts; corpus **137 of 137** modifies with **0 of 137** losing license/PI
+  metadata and **0 of 137** shrinking `raw_tokens`; Epic 3's artifact at the SD-33 path with
+  SD-32's untouched; **0 of 8** open forward-scope rows defer DoD scope.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — a scan rows no unit and changed no instrument; two detection
+  probes planted and removed with no residue.
+- **Environment:** the shared checkout was 8 commits behind `origin/tranche/13` with 154
+  `git status` entries this agent did not create, including a staged revert of the
+  corpus-extraction fix; nothing was written there. Third consecutive wave with this hazard.
+  Separately, `RETRO_ACTOR` does not survive between tool calls, so `verify.sh` auto-attributed
+  this scan's gate event to `sd31-transcribe`; the event is real, only its actor is wrong,
+  left in place (append-only log) and corrected via `retro.py correction`.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-attempt8_cycle_receipt.md`.
 
 ### Cycle AT-33-E6-001-suite-green — remediation wave 7, close attempt 7's surviving `cargo test --locked --lib` shortfall — complete
 
