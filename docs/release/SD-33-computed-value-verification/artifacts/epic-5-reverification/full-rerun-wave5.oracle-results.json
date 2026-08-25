@@ -1,0 +1,532 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_class_guide:equipment:full_plate_of_the_corpse",
+      "ours": 11,
+      "oracle": 11,
+      "verdict": "agree",
+      "prior_diff_oracle": 10,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:hero_s_hauberk",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_cold",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_desert",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_forest",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_jungle",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_mountain",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_plains",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_swamp",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_underground",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_urban",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_water",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_class_guide:equipment:tireless_tracking_hide",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:sea_knife",
+      "ours": 0,
+      "oracle": 0,
+      "verdict": "agree",
+      "prior_diff_oracle": 0,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_1",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_2",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "prior_diff_oracle": 2,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_3",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree",
+      "prior_diff_oracle": 3,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_4",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_5",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_1",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_2",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "prior_diff_oracle": 2,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_3",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree",
+      "prior_diff_oracle": 3,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_4",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_5",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_6",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "prior_diff_oracle": 6,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_7",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree",
+      "prior_diff_oracle": 7,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_8",
+      "ours": 8,
+      "oracle": 8,
+      "verdict": "agree",
+      "prior_diff_oracle": 8,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_dusty_rose_prism",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_force_shield",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "prior_diff_oracle": 2,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_1",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_2",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "prior_diff_oracle": 2,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_3",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree",
+      "prior_diff_oracle": 3,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_4",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_protection_5",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:knight_inheritor_s_ring",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:profane_seal_signet",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:red_hound_ring",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_seven_lovely_colors",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree",
+      "prior_diff_oracle": 7,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:coat_of_shells",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree",
+      "prior_diff_oracle": 7,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:gnome_scrap_armor",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:goblin_plate",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "prior_diff_oracle": 9,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hallowed_chain",
+      "ours": 8,
+      "oracle": 8,
+      "verdict": "agree",
+      "prior_diff_oracle": 8,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hallowed_chain_greater",
+      "ours": 9,
+      "oracle": 9,
+      "verdict": "agree",
+      "prior_diff_oracle": 9,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "prior_diff_oracle": 5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:mail_of_sly_steps",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "prior_diff_oracle": 6,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight",
+      "ours": 11,
+      "oracle": 11,
+      "verdict": "agree",
+      "prior_diff_oracle": 11,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:field_plate",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree",
+      "prior_diff_oracle": 6,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:klar_as_shield",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:leaf_armor",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree",
+      "prior_diff_oracle": 3,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:stoneplate",
+      "ours": 9,
+      "oracle": 9,
+      "verdict": "agree",
+      "prior_diff_oracle": 8,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bracers_of_defenselessness",
+      "ours": -5,
+      "oracle": -5,
+      "verdict": "agree",
+      "prior_diff_oracle": -5,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cape_of_bravado",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:guardian_gorget",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "prior_diff_oracle": 2,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:jingasa_of_the_fortunate_soldier",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_dark_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_guardian_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_lunar_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_royal_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_spirit_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_water_naga",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree",
+      "prior_diff_oracle": 4,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:snakeskin_tunic",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 2,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:vambraces_of_defense",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_intrigue:equipment:diviner_s_blight",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "prior_diff_oracle": 6,
+      "method": "ac_isolated_bonus_by_type"
+    },
+    {
+      "unit_id": "ultimate_magic:equipment:scroll_shield",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "prior_diff_oracle": 1,
+      "method": "ac_isolated_bonus_by_type"
+    }
+  ]
+}

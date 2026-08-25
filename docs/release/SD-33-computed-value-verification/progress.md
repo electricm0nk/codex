@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 as of AT-33-E5-finalize-wave4: AT-33-E5-001 (row 16) complete, 1,741 of 1,741 fixture-verified units, 0 disagree; AT-33-E5-002 (row 17) in-progress, 6,522 of 6,589 literal-verified units rowed (67 remain unrowed, named by shape); AT-33-E5-003 (row 18) blocked-escalated, 4 of 8,263 examined units disagree (down from 26 — 22 fixed by a real engine fix this wave, 4 escalated to baseline_diff_harness_limitation needing a harness rebuild + full re-run). AT-33-E6-001 attempt 4 FAIL still stands pending attempt 5.
+status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 as of sd33-r5-disagreements (this cycle, criterion-level result — kanban rows 16/17/18 not marked here, reserved for a dedicated finalize cycle per this wave's coordination instructions): AT-33-E5-001 (row 16) 1,741 of 1,741 fixture-verified units, 0 disagree; AT-33-E5-002 (row 17) 6,522 of 6,589 literal-verified units rowed, 67 remain unrowed (owned by sibling lanes running concurrently); AT-33-E5-003 (row 18) 0 of 8,263 examined units disagree — all 26 disagreements this criterion has ever surfaced are now resolved to a commit (22 by wave 4's compute fix, 4 by this cycle's harness fix + full 66-unit re-run). AT-33-E6-001 attempt 5 FAIL still stands (67 unrowed + this cycle's own disagreement fix not yet folded in) pending the next attempt.
 date: 2026-08-25
 ---
 
@@ -209,6 +209,40 @@ resolution/commit columns are identical across the full set — see the receipt 
 | `advanced_class_guide:spell:nauseating_dart` | 15 | 11 | 15 | same root cause (Druid) | same resolution | same commit |
 | _(93 more, all Cleric/Druid/Ranger, all `ours-oracle=4` pre-fix / `0` post-fix — see `fixture-spell.oracle-results.json` for the complete set)_ | | | | | | |
 
+### The last 4 (`AT-33-E5-003` wave 5) — all resolved
+
+The 4 `disagree` rows waves 3/4 named `baseline_diff_harness_limitation` and escalated. **All 4
+resolved this cycle, harness route** (see `sd33-r5-disagreements` below for the full derivation):
+`combat-shape-work/ac_build_results.py`'s whole-character `AC.TOTAL` diff was the ONLY oracle-
+generation path in this bundle using that method (`grep -rl "AC.TOTAL\|baseline_diff\|item_AC.Total"
+scripts/oracle_harness artifacts/epic-5-reverification/*.py` → one file), so its already-judged
+population is 66 (not the bundle's 8,263), and this cycle re-ran all 66, live, through an absolute
+per-type isolator (`BONUS.COMBAT.AC.<Type>`/`BONUS.COMBAT.AC.TOTAL.!BASE.!Ability.!Size`, no baseline
+character): `66/66 agree, 0 disagree`. Re-derive:
+`python3 -c "import json,collections; d=json.load(open('artifacts/epic-5-reverification/full-rerun-wave5.oracle-results.json')); print(len(d['results'])); print(collections.Counter(r['verdict'] for r in d['results']))"`
+→ `66`, `Counter({'agree': 66})`.
+
+| unit_id | ours (stale, in combined file) | oracle (was, diff-based) | ours (now) | oracle (now, isolated) | root cause | resolution | commit |
+|---|---:|---:|---:|---:|---|---|---|
+| `advanced_class_guide:equipment:full_plate_of_the_corpse` | 9 | 10 | 11 | 11 | harness: whole-character `AC.TOTAL` diff conflated a `MAXDEX:1` cap's Dex loss with the item's own bonus; also a stale `ours` never re-run after `abc72f75ec`'s general EQMOD resolver landed | new isolating oracle template (`ac-isolate.txt.ftl`, `BONUS.COMBAT.AC.<Type>`, no baseline needed) + fresh `ours` recompute (no new engine code) | see top of this entry |
+| `inner_sea_world_guide:equipment:field_plate` | 7 | 6 | 7 | 7 | same harness mechanism (`MAXDEX:1` cap) | same | same |
+| `inner_sea_world_guide:equipment:stoneplate` | 9 | 8 | 9 | 9 | same harness mechanism (`MAXDEX:1` cap) | same | same |
+| `ultimate_equipment:equipment:snakeskin_tunic` | 1 | 2 | 1 | 1 | same harness mechanism (a co-located `STAT|DEX` enhancement chain, not a `MAXDEX` cap) | same | same |
+
+**A 5th unit's own coincidental double-error, caught only by re-running the FULL 66-unit
+already-judged population (not just the 4 named disagreements):** `inner_sea_races:equipment:goblin_plate`
+was recorded `agree` (`9`/`9`) under the old method, but both sides were independently wrong by the
+same amount — a stale `ours=9` (never re-run after `abc72f75ec`, same as `full_plate_of_the_corpse`)
+against an old diff-oracle that also happened to read `9`. Fresh values: `ours=10`, isolated
+`oracle=10` — still `agree`, at the real value. Disclosed as an instrument-correction, not a new
+`AT-33-E5-003` disagreement (it was never `disagree` in the combined file).
+
+Full detail, commands, and the live PCGen transcripts:
+`artifacts/epic-5-reverification/AT-33-E5-003-disagreement-fixes-wave5_cycle_receipt.md`.
+
+**`AT-33-E5-003` now stands at 0 of 8,263 examined units disagree — all disagreements this criterion
+has ever surfaced (26 total across waves 3-5) are closed to a commit.**
+
 ## Cycle entry schema
 
 Each entry states, at minimum:
@@ -302,6 +336,70 @@ None. **This section is not a parking lot.** An entry here is a request for an o
   file changed, so the root `cargo test` sweep and `apps/desktop/src-tauri` were not run this
   cycle.
 - **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-last67-weapon_cycle_receipt.md`.
+
+### Cycle sd33-r5-disagreements — remediation wave 5, the last 4 disagreements (row 18, AT-33-E5-003) — complete
+
+- **Criterion:** `AT-33-E5-003` — every disagreement is a named defect, fixed or escalated.
+- **Commit:** recorded on landing (see the follow-up SHA-record commit).
+- **Files:** `src/bin/e5_ac_isolator.rs` (new probe), `artifacts/epic-5-reverification/combat-shape-work-wave5/` (new — isolating `.ftl` template, batch driver, 66 raw live PCGen exports), `artifacts/epic-5-reverification/disagreement-fixes-wave5.oracle-results.json` (new, 4 rows), `artifacts/epic-5-reverification/full-rerun-wave5.oracle-results.json` (new, 66 rows — the harness-fix route's full re-run), `docs/retro/events/sd33-r5-disagreements.jsonl` (new, 1 correction).
+
+**Route: harness, not our-compute.** All 4 remaining disagreements were `baseline_diff_harness_limitation`
+(waves 3/4's own diagnosis): `combat-shape-work/ac_build_results.py`'s whole-character `AC.TOTAL`
+diff (`item AC.Total - baseline AC.Total`) cannot separate the item's own `armor_class_bonus` from a
+`MAXDEX`-cap Dex loss or a co-located Dex-enhancement chain — both flow through the SAME `AC.Total`
+number the diff differences. Confirmed by execution before changing anything: read each of the 4
+corpus records directly (ruling out a base-armor/masterwork double-count), then built and live-ran an
+absolute isolator, `BONUS.COMBAT.AC.TOTAL.!BASE.!Ability.!Size` (PCGen's own per-type bonus export,
+`code/src/java/pcgen/io/exporttoken/BonusToken.java`) against the SAME already-committed single-item
+`.pcg` fixtures — **no baseline character needed at all**, so nothing about Dex/`MAXDEX` can leak in
+by construction. All 4 isolated values matched this engine's own (already-correct, or freshly
+re-derived with no new code) `armor_class_bonus` exactly: `11=11, 7=7, 9=9, 1=1`.
+
+**Second limb honored: re-ran everything this specific harness already judged.** That population is
+66 (this harness's own 82-item manifest minus 16 that never got a numeric oracle at all from it — a
+different, smaller, precisely-bounded construct than the bundle's 8,263 grand total; confirmed by
+grep that no other oracle-generation script in this bundle uses this diff method). Full live re-run,
+`--workers 8`, real pinned oracle: **66/66 agree, 0 disagree, 0 unresolved.** 5 of 66 oracle values
+moved (the 4 disagreements + one coincidental double-error caught only by re-running the full
+population — see the Disagreement ledger entry above for `goblin_plate`'s own detail).
+
+**Disagree-capability re-proof (after the fix):** a scratch mutation on the CURRENT batch path →
+`oracle_disagreement=1`, exit 1, correctly naming the mutated unit; removed, never committed.
+
+**Before/after (`box_ledger.py --check`):**
+```
+$ python3 scripts/box_ledger.py --check --oracle-results artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json
+uncovered=0 overlap=0 population=49438 oracle_disagreement=4 unverifiable_done=0 stale=False   # BEFORE, exit 1
+```
+Simulated merge (temp copy, never committed — the real merge is the finalize cycle's own job):
+```
+$ python3 scripts/box_ledger.py --check --oracle-results /tmp/sim-merged-wave5.json
+uncovered=0 overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False   # AFTER, exit 0
+```
+
+**Figures + re-derive commands:** 4 disagreements in (`AT-33-E5-003.combined-oracle-results.json`'s
+own `disagree` count). 66 of 66 already-judged-by-this-harness units re-run
+(`python3 -c "import json; print(len(json.load(open('artifacts/epic-5-reverification/full-rerun-wave5.oracle-results.json'))['results']))"`
+→ `66`). 0 of 66 disagree post-fix. 4 of 4 this cycle's own slice agree
+(`python3 scripts/box_ledger.py --check --oracle-results artifacts/epic-5-reverification/disagreement-fixes-wave5.oracle-results.json`
+→ `oracle_disagreement=0`). 0 of 4 remaining bundle-wide (projected, simulated merge).
+
+**Test scoping:** `cargo test --locked --lib equipment_effects::` (70/70, unchanged — no
+`src/rules_core/` file touched this cycle, since the route was harness-only). `cargo build --locked
+--bin e5_ac_isolator` exits 0 (pre-existing warnings only, same set every prior cycle's receipt
+names).
+
+**Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 / **instrument-correction
+66** (the entire AC-shape already-judged population's oracle value re-derived by an absolute,
+non-diff method; 5 of 66 values actually moved).
+
+**Status: complete.** All 4 disagreements resolved to this cycle's own commit, not filed as a
+blocker. `AT-33-E5-003` now stands at 0 of 8,263 examined units disagree.
+
+**Next-cycle plan:** `AT-33-E5-002`'s 67 remaining unrowed units (disjoint sibling-lane scope, not
+touched here); once both close, `AT-33-E6-001` can re-run the final-acceptance scan.
+
+**Receipt:** `artifacts/epic-5-reverification/AT-33-E5-003-disagreement-fixes-wave5_cycle_receipt.md`.
 
 ### Cycle AT-33-E5-finalize-wave4 — total Epic 5 across wave-4's two lanes, own the kanban call (rows 16, 17, 18) — blocked-escalated
 
