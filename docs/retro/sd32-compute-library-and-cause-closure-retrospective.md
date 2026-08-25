@@ -454,3 +454,104 @@ needed that and is the one that quietly expired.
    look finished.
 6. **Carve-out sweeps must grep code, not only prose** — `EXCLUD*`, `SKIP*`, `_ALLOWLIST`, and any
    hardcoded book/kind list in the scripts that compute closure figures.
+
+## Final closure — 2026-08-24/25, `closure-epilogue` (kanban row 13, second attempt)
+
+The first `closure-epilogue` attempt (`4e6e1afaf5`) correctly stopped at Step 1 on two real,
+named blockers. Both were fixed and re-verified by a second attempt before this one, and this
+cycle re-derived everything from scratch rather than trusting that filing.
+
+**The carve-out was concealing real work.** `EXCLUDED_BOOKS = {'beginner_box'}` in the corpus
+census tooling was a live carve-out `decisions.md §27b` should have closed — `beginner_box` is a
+real, licensed, ingestible book, and neither admissible §27b reason (source absent, licensing)
+applied. Removing the carve-out moved `no_record` `0 → 14` for a single instant; those 14 units
+were then ingested and it returned to `0`. The bundle's population figure had been honestly
+computed but incomplete, because 19 units sat outside the *question the instrument asked*, not
+outside the corpus. Final population: **34,416**, not the earlier **34,397** — the 19-unit delta
+is exactly `beginner_box`.
+
+**Three carve-out sites, all in code, none reachable by a prose sweep of `decisions.md` or the
+kanban:**
+
+1. `EXCLUDED_BOOKS = {'beginner_box'}` (the census/shape-coverage path, above).
+2. An `out_of_scope` set in `src/bin/v06_work_inventory.rs` still honouring a 2026-07-27
+   directive that `decisions.md §27b` had overturned on 2026-08-23 — the directive changed, the
+   code that encoded it did not.
+3. The pinned-count staleness that followed from (2): `apps/desktop/src-tauri/src/
+   reach_gate.rs`'s `CORPUS_BOOK_IDS` never had `beginner_box` added after it was ingested, and
+   `equipment_catalog.rs`'s hardcoded pins went stale alongside it. Both fixed at `21bef06d95`;
+   the desktop suite went from a misreported 542/6 (itself an instrument-correction over a filed
+   541/7) to a real, clean **548 passed / 0 failed** (`cargo test --locked --bin codex-desktop`,
+   re-confirmed this cycle in a clean `git worktree` checkout of `tranche/12` — see below).
+
+Finding 6 above (from the 2026-08-22 body) named this exact pattern in the abstract —
+`EXCLUD*`/`SKIP*`/`_ALLOWLIST`/hardcoded book lists — before any of the three sites above had
+been found. The lesson arrived; two of the three sites it warned about were still live when this
+cycle started.
+
+**A live self-erasure defect**, found while verifying an unrelated deferral
+(`sd32-five-unverified-deferrals`): `gen_cache_advanced_race_guide`'s `feat_gap` stale-key sweep
+deleted **48 real `feat_gap` records** per live run. The deferral that had waved this off cited a
+"single writer" comment for `advanced_race_guide/feat/` — the comment was never re-verified for
+this book, and `cache_gen::feat_gap` in fact registers `advanced_race_guide` as a second writer.
+Root-caused and fixed; not a hypothetical, a live data-loss bug caught by re-deriving a filed
+deferral instead of trusting it (`decisions.md §17a`).
+
+**The site pipeline was broken end-to-end.** `build_public_status.py` crashed outright on 8 kinds
+missing from `KIND_LABELS`. Fixed; the public percentage honestly *drops* as a result — **39.6%
+→ 33.5%** — because the denominator grows by 8,370 once those 8 kinds are counted at all. A
+percentage that improves by hiding kinds from its own denominator is not a improvement; the drop
+here is the correct number, not a regression.
+
+**`declared-pi-audit` could not complete and had been reported PASS at an older population** — the
+O(files × citing-records) shape re-read each cited `.lst` file once per citing record (36.7 GB of
+redundant reads for 72 MB of unique bytes), 99.9% CPU for 6+ minutes with no verdict. Memoized at
+`30aa99d18e`.
+
+**A second instrument-contamination finding, new to this cycle:** even after both fixes above,
+running `declared-pi-audit` and the desktop suite directly in the shared, long-lived checkout at
+`/home/ubuntu/workspace/repos/codex` still FAILed — 60 `NAME-PI-SHIPPED`/`BLACKLIST-TERM-SHIPPED`
+violations, and the desktop suite's `advanced_race_guide` live-walk count off by exactly one. Both
+binaries walk `data/corpus/**` on disk with `fs::read_dir`, not `git ls-files` — they cannot tell
+a committed record from a concurrent lane's untracked litter. Every one of the ~60 flagged files
+was traced to a commit (`5c0178a397`) that had already `git rm`'d it as a real fix, then
+regenerated on disk, untracked, by a sibling lane still running in the same shared checkout.
+Re-run in a disposable `git worktree add ... HEAD --detach` (a true clean checkout of the same
+commit, zero untracked files): `declared-pi-audit` → **CLEAN**, desktop suite → **548 passed / 0
+failed**, exactly as this cycle's dispatch brief said the prior remediation had left it. **The
+shared-checkout hazard this program has documented before (concurrent lanes' untracked
+`data/corpus/**` litter) now has a second, more expensive shape: it can fail a disk-walking gate
+outright, not just skew a count.** A future cycle closing this bundle-family should either make
+these two binaries git-aware, or standardize on the disposable-worktree pattern for any gate that
+walks `data/corpus/` directly, rather than re-diagnosing this from scratch each time.
+
+**`retro.py`'s `deferrals.open` was `deferrals[-limit:]`** — a windowing bug, not a filter. 19 of
+the 29 deferrals in the SD-32 window had never actually been checked against their claims; the
+summary just hadn't shown them. Fixed to an unresolved-deferral count, invariant under `--limit`.
+All 29 were then driven to resolved, including the two findings above (the carve-out chain and the
+`feat_gap` self-erasure) that the fix surfaced.
+
+**Decision §28 — operator ruling, 2026-08-24.** Presented with the 23,090-record candidate
+population `scripts/pi_key_rawtokens_audit.py`'s heuristic scan surfaced, the operator ruled the
+signed-off 60-term PI vocabulary (`decisions.md §19`) **stands as-is — no expansion.** The
+candidate population is not Product Identity by default; the heuristic remains a prompt for a
+question, never a gate.
+
+**Final figures, each with its command:**
+
+| Figure | Value | Command |
+|---|---:|---|
+| Population | 34,416 | `scripts/verify.sh --only shape-coverage-standing-gate` |
+| `no_record` / `unclassified` | 0 / 0 | (same command) |
+| Deferrals | 29 total, 0 open, 29 resolved | `python3 scripts/retro.py summary --since 2026-08-22 \| grep -i DEFERRALS` |
+| `declared-pi-audit` | CLEAN | `cargo run --locked --bin declared_pi_shipping_audit`, clean worktree |
+| Desktop suite | 548 passed / 0 failed | `cargo test --locked --bin codex-desktop`, clean worktree |
+| `pi-sweep` | PASS, 10 hits / 10 baseline | `scripts/verify.sh --only pi-sweep` |
+| `site-public-status-pi-gate` | PASS, zero leaked / 1,612 declared | `scripts/verify.sh --only site-public-status-pi-gate` |
+| `site-dashboard-pi-gate` | PASS, zero leaked / 1,612 declared | `scripts/verify.sh --only site-dashboard-pi-gate` |
+| Kanban | 21/22 `complete` | row 13 is this cycle |
+| Worktrees found / removed | 18 / 17 (merged by content) | `git worktree list`, `git merge-base --is-ancestor <sha> HEAD` |
+| Branches found / removed | 148 / 144 (merged by content) | `git branch --list 'worktree-wf_*'`, same ancestry check |
+
+The 4 unmerged `worktree-wf_*` branches and `sd31/racetrait4-SD31-E6-F4-005` are SD-31-lane work,
+out of this bundle's scope, and were left untouched.

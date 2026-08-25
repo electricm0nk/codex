@@ -1,25 +1,22 @@
 ---
 canonical: true
 owner: god-emporer
-status: draft carried from the 2026-08-22 cycle, corrected in part 2026-08-24 -- NOT yet the final
-  populated-at-merge version (row 13/`closure-epilogue` is not `complete`; see the 2026-08-24
-  correction note below)
+status: FINAL — populated at closure 2026-08-24, all figures re-derived against the final corpus
+  state (`kanban.md` row 13 `closure-epilogue`)
 date: 2026-08-22
 ---
 
 # SD-32 Release Notes — Compute Library and Cause Closure
 
-**Correction, 2026-08-24 (closure cycle):** the body below was written 2026-08-22 against PR #375,
-which the operator rejected and which is now CLOSED (`decisions.md §10` — card 11 was filed under
-Open blockers rather than genuinely closed, and no PR may open while any Epic card is short of
-`complete`). Card 11 has since closed for real (`kanban.md` row 11, this cycle), and every item in
-"Deferred findings" below has closed too — see `docs/retro/sd32-compute-library-and-cause-closure-
-retrospective.md`'s "What actually closed the bundle" section for the live re-verification. **This
-file's "What closed" figures (Gate 1 family counts, Epic 2/3 numbers) are the 2026-08-22 snapshot
-and have not been re-derived against the final corpus state** — that re-derivation, the real
-`tranche/12 → develop` PR, and this file's final population are `closure-epilogue`'s own remaining
-work, blocked this cycle on the worktree/branch sweep (see the retrospective). Treat the sections
-below as historical scaffolding, not the bundle's final reported numbers.
+**Closure re-derivation, 2026-08-24 (`closure-epilogue`, kanban row 13):** every figure below has
+been re-derived live against the final corpus state and replaces the 2026-08-22 snapshot and the
+partial 2026-08-24 correction that preceded it. **Population is 34,416, not the earlier 34,397** —
+the 19-unit delta is `beginner_box`, which a code-level carve-out (`EXCLUDED_BOOKS =
+{'beginner_box'}`) had kept outside the counted population; removing the carve-out moved
+`no_record` `0 → 14` for one instant and then those 14 were ingested, returning it to `0`. Any
+figure below whose denominator predates this cycle is marked historical and superseded. See
+`docs/retro/sd32-compute-library-and-cause-closure-retrospective.md`'s closure section for the
+full account of what changed between the 2026-08-22 snapshot and this final state.
 
 **Populated at closure.** Every figure below carries the command that produces it (and the
 corpus SHA when it came from the oracle), per this program's standing convention.
@@ -44,17 +41,23 @@ cleaned up at the same time the chassis was filled out — no content to recover
 written AT-32-* criteria (`acceptance-and-verification.md`); full per-gate evidence in
 `progress.md`'s Cycles 1-9 and `artifacts/gate-{0,1,2,3}-*`.
 
-**Gate 1 — per-family unit counts** (`jq '.families' artifacts/gate-1-shape-closure/ledger.json`,
-sums to the 24,914-unit not-done population, `unclassified_count` = 0):
+**Gate 1 — per-family unit counts, re-derived at closure**
+(`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`, sums to the final
+34,416-unit population, `unclassified` = 0, `no_record` = 0). `artifacts/gate-1-shape-closure/
+ledger.json` is the 2026-08-22 snapshot (24,914-unit population) and is retained only as
+historical scaffolding — the table below is the live re-derivation:
 
 | Family | Units | Family | Units |
 |---|---:|---|---:|
-| F0 (no formula content) | 20,113 | F6 | 211 |
-| F1 | 1,790 | F7 | 5 |
-| F2 | 1,490 | F8 (residual) | 41 |
-| F3 | 303 | F9 | 27 |
-| F4 | 570 | F10 | 3 |
-| F5 | 361 | | |
+| F0 (no formula content) | 22,759 | F6 | 391 |
+| F1 | 6,308 | F7 | 12 |
+| F2 | 2,337 | F8 (residual) | 196 |
+| F3 | 671 | F9 | 62 |
+| F4 | 1,086 | F10 | 5 |
+| F5 | 589 | | |
+
+Sum: 22,759+6,308+2,337+671+1,086+589+391+12+196+62+5 = **34,416**, matching
+`shape-coverage-standing-gate`'s `population=34416` exactly.
 
 **Correction (card `family-vocabulary-reconciliation`, `decisions.md §12a`):** `bonus_stack_reader.
 rs`'s binding layer targets **F4** ("named-counter/pool variable"), not F10 (a 3-unit
@@ -104,6 +107,32 @@ binaries, unit-test RED→GREEN for the library modules.
 **Cause closure (Epic 2, card 11) — T1 closed corpus-wide, T5/T3 cited, the rest deferred with
 named owners.** See "Deferred findings" below; full reasoning in
 `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`.
+
+## Closure figures (2026-08-24, `closure-epilogue`)
+
+- **Population:** 34,416 (`scripts/verify.sh --only shape-coverage-standing-gate` →
+  `population=34416 unclassified=0 no_record=0`).
+- **Deferrals:** 29 total, 0 open, 29 resolved (`python3 scripts/retro.py summary --since
+  2026-08-22 | grep -i DEFERRALS`). `retro.py`'s `deferrals.open` previously read
+  `deferrals[-limit:]` — fixed to an unresolved-deferral count, invariant under `--limit`; 19 of
+  29 deferrals had never actually been checked under the old code.
+- **`declared-pi-audit`:** CLEAN over the full shipped corpus (`cargo run --locked --bin
+  declared_pi_shipping_audit`, run in a clean `git worktree` checkout of `tranche/12` to exclude
+  concurrent-lane working-tree contamination — see the retrospective's closure section). Previously
+  could not reach a verdict (99.9% CPU, 6+ min, no output) because it re-read each cited `.lst`
+  file once per citing record (36.7 GB of redundant reads for 72 MB of unique bytes); memoized.
+- **`apps/desktop/src-tauri` test suite:** 548 passed, 0 failed (`cargo test --locked --bin
+  codex-desktop`, run in a clean checkout — `beginner_box` had been ingested but never added to
+  `reach_gate.rs`'s `CORPUS_BOOK_IDS`, and `equipment_catalog.rs`'s pins were stale; both fixed).
+- **PI vocabulary:** stands at the `§19`-approved 60 terms, no expansion (`decisions.md §28`,
+  operator ruling 2026-08-24).
+- **Kanban:** 21 of 22 cards `complete`; row 13 (`closure-epilogue`) is this cycle's own card.
+- **Worktree/branch sweep:** 18 `git worktree`s found (17 besides the primary checkout, all with
+  tip commits already ancestors of `tranche/12` HEAD — merged by content, `git merge-base
+  --is-ancestor <sha> HEAD`), all removed. 148 local `worktree-wf_*` branches found; 144 merged by
+  content and deleted, 4 unmerged (SD-31-lane work, out of this bundle's scope) left untouched.
+  `sd31/racetrait4-SD31-E6-F4-005` (the SD-31 rescue branch that must not be merged on trust) left
+  alone, outside SD-32's lane.
 
 ## Deferred findings, each with a named owner — SUPERSEDED, see 2026-08-24 correction above
 

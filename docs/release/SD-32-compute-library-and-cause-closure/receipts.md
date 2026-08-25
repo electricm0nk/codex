@@ -112,3 +112,37 @@ contract, not by `workflow-instruction.md`'s own local-file convention.
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: 0 conflict(s) found; loop self-heals
+
+- cycle_id: 2026-08-25T01:11:27Z
+  row_or_kind: architecture:truth_up
+  bundle: SD-32
+  branch: 88449a629705a8067728306ca660cf0e00f27243
+  integration_target: origin/develop
+  branch_tip_before: 88449a62
+  branch_tip_after: 88449a62
+  diff_path_count: 38225
+  docs_touched: []
+  stub_graduations: []
+  stub_regressions: []
+  obsolete_removals: 0
+  cited_path_check: pass
+  relative_link_check: pass
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: no architecture impact — diff is outside architecture scope
+
+- cycle_id: 2026-08-25T01:11:47Z
+  row_or_kind: graphify:update
+  bundle: SD-32
+  branch: 88449a629705a8067728306ca660cf0e00f27243
+  integration_target: origin/develop
+  branch_tip: 88449a62
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 0.2
+  log_path: graphify-out/.truth-up-run-2026-08-25T01:11:47Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1 (no pre-existing graph.json in the scratch worktree used
+    for this run -- "run /graphify first"); per operator directive 2026-07-20 a non-zero
+    graphify exit does not refuse closure. Pipeline continues.

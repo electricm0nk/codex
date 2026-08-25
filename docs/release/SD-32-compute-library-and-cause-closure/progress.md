@@ -9115,3 +9115,77 @@ above.
 
 Full receipt: `artifacts/epic-5-protective-sweep/row11-row13-final-closure_cycle-1_cycle_receipt.md`.
 Commit: (this cycle's commit -- see push output).
+
+## Cycle sd32-closure-epilogue-final-2 (2026-08-24/25) — Closure, row 13 (`closure-epilogue`)
+
+**Second closure-epilogue attempt, run to completion.** The first attempt (`4e6e1afaf5`) correctly
+stopped at Step 1 on two real, named blockers; a remediation attempt fixed both (`21bef06d95`
+desktop suite; `30aa99d18e` `declared-pi-audit` memoization). This cycle re-derived Step 1 from
+scratch rather than trusting either prior filing, per standing instruction.
+
+**Step 1 (final-acceptance scan) — a live re-run found BOTH previously-fixed gates still FAILing
+in the shared checkout, traced and resolved as instrument contamination, not real defects:**
+
+- `declared-pi-audit`: FAILed with 60 `NAME-PI-SHIPPED`/`BLACKLIST-TERM-SHIPPED` violations against
+  the live shared checkout. Every flagged file traced to commit `5c0178a397`, which had already
+  `git rm`'d it as a real, correct fix — the files were regenerated on disk, untracked, by a
+  concurrent lane still running in the shared checkout (`git status --porcelain` confirmed `??` for
+  every one). Re-run in a disposable `git worktree add ... HEAD --detach` (zero untracked files):
+  **CLEAN**.
+- `apps/desktop/src-tauri` test suite: FAILed 547/1 in the shared checkout — one off-by-one on a
+  live `advanced_race_guide` disk walk, traced to the same untracked-litter shape (one extra
+  untracked `language/azlanti.json`). Re-run in the same disposable clean worktree: **548 passed /
+  0 failed**, exactly as the remediation commits claimed.
+- `shape-coverage-standing-gate`, `shape_ledger.py`, `row17_census.py --check`, `retro.py summary`,
+  `pi-sweep`, `site-public-status-pi-gate`, `site-dashboard-pi-gate` all PASS directly (no
+  contamination exposure — these don't disk-walk `data/corpus/**` the same way).
+- Kanban: 21 of 22 cards `complete`; row 13 is this row. `## Open blockers` in `progress.md` is the
+  empty template — no live open blocker.
+
+**Step 1 verdict: GREEN.** Proceeded.
+
+**Step 2 (retrospective).** Appended a "Final closure" section to
+`docs/retro/sd32-compute-library-and-cause-closure-retrospective.md` covering: the
+`EXCLUDED_BOOKS = {'beginner_box'}` carve-out (population 34,397 → 34,416, `no_record` 0→14→0 on
+removal/re-ingest); the three carve-out sites found (`EXCLUDED_BOOKS`, `v06_work_inventory.rs`'s
+stale `out_of_scope` set, the `reach_gate.rs`/`equipment_catalog.rs` pin staleness that followed);
+the live `feat_gap` self-erasure bug (48 real records/run) found while re-verifying a filed
+deferral; the site pipeline crash and its honest percentage drop (39.6% → 33.5%, denominator
++8,370); the `declared-pi-audit` O(n²) re-read fix; `retro.py`'s `deferrals.open` windowing bug (19
+of 29 deferrals had never actually been checked); Decision §28 (60-term PI vocabulary stands, no
+expansion); and this cycle's own new finding — the shared-checkout instrument-contamination hazard
+above, a second and more expensive shape of the standing "untracked `data/corpus/**` litter"
+hazard. Cited from `docs/release/SD-32-compute-library-and-cause-closure/references/README.md`
+(updated in place, same row).
+
+**Step 3 (worktree/branch sweep).** 18 `git worktree`s found (17 besides the primary checkout).
+All 17 had tip commits already ancestors of `tranche/12` HEAD (`git merge-base --is-ancestor <sha>
+HEAD`, all MERGED) — merged by content, none locked, all removed. 148 local `worktree-wf_*`
+branches found; 144 merged by content (`git branch -D`), 4 unmerged (SD-31-lane work — waves
+20/21/26/30 — out of this bundle's scope) left alone. `sd31/racetrait4-SD31-E6-F4-005` (the SD-31
+rescue branch that must not be merged on trust) left alone.
+
+**Step 4 (release notes).** `release-notes.md` fully re-derived: Gate 1 family table rebuilt at the
+final 34,416-unit population (was the 24,914-unit 2026-08-22 snapshot), a new "Closure figures"
+section added with every headline number and its command, "Deferred findings" and "Known issues"
+left as historical record with the correction note intact.
+
+**Step 5 (architecture + graphify).** Both scripts exist at
+`~/.hermes/profiles/god-emporer/skills/devops/{architecture-truth-up,graphify-update}/scripts/`.
+Both require a clean working tree; run in a disposable `git worktree` (receipts-md pointed at the
+worktree's own copy, then the new receipt entries copied back to the real file — diffed first to
+confirm only the intended entries moved). `architecture-truth-up`: diff path count 38,225 (566 in
+architecture scope), **no architecture impact** — no `docs/architecture/` edits needed, receipt
+appended. `graphify-update`: exit 1 (no baseline `graphify-out/graph.json` existed in the fresh
+disposable worktree — "run /graphify first"); receipt appended per the operator's standing
+non-refusing policy (2026-07-20).
+
+**Step 6 (version + PR).** `apps/desktop/package.json` / `apps/desktop/src-tauri/tauri.conf.json`
+both already read `0.12.0`; per `decisions.md §1` the tranche digit bumps once, at the tranche cut
+— not at a bundle's own closure — and `0.12.<build>` is stamped only at publish time. **No bump.**
+PR opened `tranche/12 → develop`.
+
+**Step 7.** `kanban.md` row 13 → `complete`. This entry.
+
+Full receipt: `artifacts/epic-5-protective-sweep/sd32-closure-epilogue-final-2_cycle_receipt.md`.
+Commit: (this cycle's commit — see push output).
