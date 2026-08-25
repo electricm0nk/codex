@@ -2,8 +2,8 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: in progress — Epics 1-4 complete (rows 1-15); Epic 5: AT-33-E5-001 (row 16) in-progress (1,128 of 1,741 fixture-verified units re-examined: 382 agree/0 disagree/746 unverifiable, after AT-33-E5-003's harness fix; remaining 613 named — 598 no-casting-ability-mapping + 15 class_feature); AT-33-E5-002 (row 17) complete (5,812 of 6,589 literal-verified units dispositioned, 777 named-unexamined); AT-33-E5-003 (row 18) complete — 103 disagreements found across the two lanes' 6,940-unit examined population, all root-caused to one harness fixture bug and resolved to a commit, 0 remaining
-date: 2026-08-24
+status: in progress — Epics 1-4 complete (rows 1-15); Epic 5 as of AT-33-E5-finalize-wave4: AT-33-E5-001 (row 16) complete, 1,741 of 1,741 fixture-verified units, 0 disagree; AT-33-E5-002 (row 17) in-progress, 6,522 of 6,589 literal-verified units rowed (67 remain unrowed, named by shape); AT-33-E5-003 (row 18) blocked-escalated, 4 of 8,263 examined units disagree (down from 26 — 22 fixed by a real engine fix this wave, 4 escalated to baseline_diff_harness_limitation needing a harness rebuild + full re-run). AT-33-E6-001 attempt 4 FAIL still stands pending attempt 5.
+date: 2026-08-25
 ---
 
 # SD-33 Progress
@@ -224,6 +224,27 @@ Each entry states, at minimum:
 None. **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
 ## Cycles
+
+### Cycle AT-33-E5-finalize-wave4 — total Epic 5 across wave-4's two lanes, own the kanban call (rows 16, 17, 18) — blocked-escalated
+
+- **Criteria:** `AT-33-E5-001`/`002`/`003` — merge, re-derive every figure independently, own rows 16-18.
+- **Files:** `artifacts/epic-5-reverification/finalize-wave4-merge.py` (new), `literal-verified.oracle-results.json` and `AT-33-E5-003.combined-oracle-results.json` (merged in place), this cycle's receipt.
+- **Merge (the one sanctioned overwrite):** `disagreement-fixes.oracle-results.json`'s 22 `agree` rows supersede the matching stale `disagree` rows (verified all 22 target rows were `disagree` pre-merge, never an unrelated overwrite); `equipment-last75.oracle-results.json`'s 8 rows are a pure addition (verified 0 pre-existing overlap in any of the three canonical files). `fixture-verified.combined-oracle-results.json` verified untouched. 0 unexpected duplicate `unit_id` — the merge script asserts and refuses to write on any (never tripped).
+  ```
+  $ python3 artifacts/epic-5-reverification/finalize-wave4-merge.py
+  fixture-verified.combined-oracle-results.json: UNTOUCHED, rows=1741 (verified 0 overlap)
+  literal-verified: rows=6522 distinct=6522 population=6589 superseded=22 added=8 verdicts={'agree': 362, 'unverifiable': 6156, 'disagree': 4}
+  combined (AT-33-E5-003): rows=8263 distinct=8263 population=8330 superseded=22 added=8 verdicts={'agree': 758, 'unverifiable': 7501, 'disagree': 4}
+  ```
+- **Unexamined set, re-derived (not inferred from a count):** `docs/work-inventory.json`'s `literal-verified`+`fixture-verified` id set minus the merged combined file's ids → **67 of 8,330** (`56 equipment + 11 equipment_modifier`), matching the last75 lane's own 75-in/8-rowed/67-remaining shape table exactly.
+- **`box_ledger.py --check --oracle-results .../AT-33-E5-003.combined-oracle-results.json`** → `oracle_disagreement=4, exit 1` — the 4 `baseline_diff_harness_limitation` units, not new, not suppressed, escalated per `AGENTS.md` Blocker Discipline disposition 2 (the fix — an `AC.Armor`-isolating harness probe plus a full 8,263-row re-run — is real, multi-hour, live-PCGen work outside this cycle's one-turn budget; named precisely, not deferred vaguely).
+- **0 reasonless `unverifiable`, 0 duplicate `unit_id`** confirmed across all three files (1,741 + 6,522 + 8,263 rows).
+- **`disagree` capability re-proven on the CURRENT (post-merge) batch path:** a known-agreeing row mutated to a deliberately-wrong value, fed through `box_ledger.py` unmodified, returns `disagree` (5 total: the 1 probe + the 4 real) at exit 1; probe lived only under `/tmp`, never committed.
+- **Denominator gate:** `bash scripts/verify.sh --only denominator-gate` → `PASS (files_checked=39 violations=0)`.
+- **Kanban call:** row 16 stays `complete` (1,741/1,741, 0 disagree, confirmed unaffected). Row 17 → `in-progress` (6,522/6,589, 67 short — real gap, not closure). Row 18 → `blocked-escalated` (4/26 original disagreements unresolved, root-caused and escalated with the exact fix named, not fixed).
+- **Full detail:** `artifacts/epic-5-reverification/AT-33-E5-finalize-wave4_cycle_receipt.md`.
+
+**Movement, four buckets:** Closure 0 (no `work-inventory.json` status changed). Reclassification 0. Reachability 8 (last75 lane's new rows, re-confirmed here). Instrument-correction 22 (the disagreement-fixes lane's `ours` corrections, re-confirmed via the merge's own `superseded=22` count matching its manifest).
 
 ### Cycle sd33-r4-disagreements — remediation wave 4, the 26 real disagreements (row 18, AT-33-E5-003) — blocked-escalated
 
