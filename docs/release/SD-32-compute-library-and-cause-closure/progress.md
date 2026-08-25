@@ -1600,15 +1600,32 @@ advanced_race_guide_counts_match_the_real_underlying_tables` passed both before 
 cycle. See `artifacts/epic-5-protective-sweep/sd32-desktop-count-resweep_cycle_receipt.md` for the
 full per-assertion old/new/command table.
 
-### Card 13 `closure-epilogue` — `declared-pi-audit` did not complete at the widened population (filed 2026-08-24)
+### Card 13 `closure-epilogue` — `declared-pi-audit` did not complete at the widened population (filed 2026-08-24) — RESOLVED 2026-08-24
 
-`scripts/verify.sh --only declared-pi-audit` did not reach a PASS/FAIL verdict in two attempts: a
-300s wrapped `timeout` killed it (`Terminated`), and a second unwrapped attempt ran the underlying
-`declared_pi_shipping_audit` binary at sustained 99.9% CPU for 6+ more minutes with no output past
-its banner line before this cycle killed it to end its turn. Previously reported `PASS (clean)` at
-the pre-widening population (34,397). Not a known-bad result — genuinely unverified. Named owner:
-next cycle to re-run with an extended timeout or profile the binary for the 34,416-record corpus
-before this epilogue can retry Step 1.
+**Root-caused and fixed, not just re-run.** The stage's own `declared_pi_shipping_audit.rs` CHECK A
+(`declared_at()`) re-read and re-split the SAME cited PCGen `.lst` file from disk on every citing
+record, with no caching — the current corpus cites 677 distinct `.lst` files 51,208 times total
+(one file, `acg_abilities_class.lst`, cited 2,687 times), which measured out to 36.7 GB of
+redundant re-reads for 72 MB of unique bytes. That, not CHECK C, was the process pegged at 99.9%
+CPU with no output. Fixed with a per-run file cache (`LstFileCache`); a second, smaller
+inefficiency in `pi_screening::normalized_term_hits` (re-canonicalizing the same haystack once per
+blacklist term instead of once per the ≤3 distinct fold-flag pairs that actually occur) was found
+and memoized in the same pass. Neither fix touches `data/corpus/**` — this was a stage-tooling
+defect, not a PI-shipping defect.
+
+**Verdict, both proven and reproduced:** `declared-pi-audit: CLEAN` — 0 violations across
+**51,408** shipped corpus records (`find data/corpus -name '*.json' ! -name LICENSE.json | wc -l`,
+the audit's own actual scan denominator — distinct from the 34,416 `shape_ledger.py` population
+figure, a different metric). Release build: 78.3s. Debug build via
+`scripts/verify.sh --only declared-pi-audit` itself (the exact stage command): 6m55.9s — now
+completes where it did not before, at the pinned oracle SHA
+`7f818006e371188e5717fd18d74d18a420747fc6`. Behaviour-unchanged proof: `cargo test --locked --lib
+rules_core::pi_screening::` 40/40, `cargo test --locked --bin declared_pi_shipping_audit` 21/21,
+`cargo test --locked --lib cache_gen::class_feature::` 53/53 — all green before and after, no test
+added or removed (the cache is transparent to every existing mutation-proof fixture). No blacklist
+term added or removed (`ogl-pi-blacklist.md` untouched, still `decisions.md §28`'s signed-off 60).
+Full receipt:
+`artifacts/epic-5-protective-sweep/sd32-declared-pi-audit-verdict_cycle_receipt.md`.
 
 ### Card 11 `epic-2-cause-closure` — remaining blocker shapes (filed 2026-08-22) — RESOLVED, removed 2026-08-23
 

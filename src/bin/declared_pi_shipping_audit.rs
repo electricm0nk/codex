@@ -27,7 +27,7 @@
 //!
 //! Run via `cargo run --locked --bin declared_pi_shipping_audit`.
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeSet, HashMap};
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -64,18 +64,44 @@ fn find_json_files(root: &Path) -> Vec<PathBuf> {
     out
 }
 
+/// A cache of PCGen `.lst` source files, keyed by their corpus-relative
+/// path, each read and line-split from disk exactly once. Without this,
+/// `declared_at` re-reads and re-splits the SAME source file once per
+/// citing record — real corpus files are cited thousands of times each
+/// (`acg_abilities_class.lst` alone is cited by 2,687 of the 34k+ shipped
+/// records at the current widened population), which turned this stage
+/// from a linear scan of ~72MB of unique `.lst` bytes into tens of GB of
+/// repeated re-reads and re-splitting, hanging `declared-pi-audit` at
+/// 99.9% CPU with no output for minutes. Caching each file's lines once
+/// makes the total work proportional to (unique files read once) +
+/// (one Vec index per citation) instead of (citations × file size).
+type LstFileCache = HashMap<PathBuf, Option<Vec<String>>>;
+
 /// [`pi_screening::declared_product_identity`] read off the real corpus
 /// line at `corpus_root/rel_path:line` (1-indexed). `line == 0` or a
 /// missing file/line reads as no declaration, matching every generator's
-/// own honest-gap handling.
-fn declared_at(corpus_root: &Path, rel_path: &str, line: u64) -> pi_screening::DeclaredProductIdentity {
+/// own honest-gap handling. `cache` memoizes each source file's lines
+/// across every call so a file cited by many records is only ever read
+/// and split once — see [`LstFileCache`].
+fn declared_at(
+    corpus_root: &Path,
+    rel_path: &str,
+    line: u64,
+    cache: &mut LstFileCache,
+) -> pi_screening::DeclaredProductIdentity {
     if line == 0 {
         return pi_screening::DeclaredProductIdentity::default();
     }
-    let Ok(text) = fs::read_to_string(corpus_root.join(rel_path)) else {
+    let full_path = corpus_root.join(rel_path);
+    let lines = cache.entry(full_path.clone()).or_insert_with(|| {
+        fs::read_to_string(&full_path)
+            .ok()
+            .map(|text| text.lines().map(str::to_string).collect())
+    });
+    let Some(lines) = lines else {
         return pi_screening::DeclaredProductIdentity::default();
     };
-    let Some(row) = text.lines().nth((line - 1) as usize) else {
+    let Some(row) = lines.get((line - 1) as usize) else {
         return pi_screening::DeclaredProductIdentity::default();
     };
     let tokens: Vec<(&str, &str)> = row.split('\t').filter_map(|field| field.split_once(':')).collect();
@@ -92,6 +118,7 @@ struct Violation {
 /// against its own cited corpus row's declaration.
 fn audit_shipped_records(corpus_root: &Path, data_corpus_root: &Path) -> Vec<Violation> {
     let mut violations = Vec::new();
+    let mut lst_cache: LstFileCache = HashMap::new();
     for path in find_json_files(data_corpus_root) {
         let Ok(text) = fs::read_to_string(&path) else { continue };
         let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
@@ -101,7 +128,7 @@ fn audit_shipped_records(corpus_root: &Path, data_corpus_root: &Path) -> Vec<Vio
         }
         let Some(rel_path) = source.get("path").and_then(Value::as_str) else { continue };
         let line = source.get("line").and_then(Value::as_u64).unwrap_or(0);
-        let declared = declared_at(corpus_root, rel_path, line);
+        let declared = declared_at(corpus_root, rel_path, line, &mut lst_cache);
         let file_str = path.display().to_string();
 
         // SD-32 `decisions.md §24`: a record whose cited row declares

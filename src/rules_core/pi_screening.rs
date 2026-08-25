@@ -233,11 +233,33 @@ pub(crate) fn word_bounded_contains(haystack: &str, needle: &str) -> bool {
 
 /// Every blacklist term whose canonicalized form appears, word-bounded, in
 /// the canonicalized `free_text` -- mirrors `pi_scrub.py::normalized_term_hits`.
+///
+/// PERFORMANCE: `canonicalize(free_text, ...)` only ever depends on the
+/// (`needs_rn_fold`, `needs_char_fold`) pair, not on which term is being
+/// checked -- and across the current [`PI_BLACKLIST_TERMS`], only 2 terms
+/// (`term_needs_rn_fold`/`term_needs_char_fold`'s own documented Jarn/Galt
+/// exceptions) diverge from the common `(true, true)` case, so there are at
+/// most 3 distinct pairs in practice, never 61. The naive per-term loop
+/// re-canonicalized the SAME `free_text` up to 61 times regardless -- for
+/// `declared-pi-audit`'s CHECK C, called once per shipped string across the
+/// full corpus (order-of-a-million calls at the current widened population),
+/// that repeated re-allocation (two `to_lowercase`/`replace` passes per call)
+/// was the dominant cost of a stage that hung at 99.9% CPU for minutes with
+/// no output. Caching each distinct canonicalized form the first time this
+/// call needs it -- keyed on the same two booleans the naive version already
+/// branched on -- collapses that to at most 3 canonicalizations of
+/// `free_text` per call, with byte-for-byte identical output (same terms,
+/// same order, same hits): a pure memoization of a pure function of
+/// `free_text` and the two fold flags, nothing about which terms match or in
+/// what order changes.
 pub fn normalized_term_hits(free_text: &str) -> Vec<&'static str> {
     if free_text.trim().is_empty() {
         return Vec::new();
     }
     let mut hits = Vec::new();
+    // At most 3 entries ever populated: (true,true) [59 terms], (false,true)
+    // [Jarn], (true,false) [Galt] -- see the doc comment above.
+    let mut canon_text_cache: Vec<((bool, bool), String)> = Vec::with_capacity(3);
     for term in PI_BLACKLIST_TERMS {
         let needs_rn_fold = term_needs_rn_fold(term);
         let needs_char_fold = term_needs_char_fold(term);
@@ -245,8 +267,15 @@ pub fn normalized_term_hits(free_text: &str) -> Vec<&'static str> {
         if canon_term.is_empty() {
             continue;
         }
-        let canon_text = canonicalize(free_text, needs_rn_fold, needs_char_fold);
-        if word_bounded_contains(&canon_text, &canon_term) {
+        let key = (needs_rn_fold, needs_char_fold);
+        let idx = match canon_text_cache.iter().position(|(k, _)| *k == key) {
+            Some(i) => i,
+            None => {
+                canon_text_cache.push((key, canonicalize(free_text, needs_rn_fold, needs_char_fold)));
+                canon_text_cache.len() - 1
+            }
+        };
+        if word_bounded_contains(&canon_text_cache[idx].1, &canon_term) {
             hits.push(*term);
         }
     }
