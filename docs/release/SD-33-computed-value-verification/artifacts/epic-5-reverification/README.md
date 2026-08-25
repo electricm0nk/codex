@@ -111,6 +111,16 @@ running the next cycles, not escalating.
 
 # AT-33-E5-002 — the 6,589 `literal-verified` units
 
+> **Superseded by a remediation cycle (kanban row 17).** Everything below this note is
+> **attempt 1's** narrative, kept verbatim for its honest methodology and as the worked example
+> the remediation's generator/probe binary derived its `.pcg`/template format from. Attempt 1
+> examined 21 of 6,589 by hand-authoring one character per unit — real, but not throughput that
+> reaches the population. The remediation cycle replaces the FIGURES (not the mechanism) with a
+> full-population classification: current, authoritative numbers are in
+> `AT-33-E5-002_cycle_receipt.md` (same path, overwritten in place) and the committed
+> `literal-verified.oracle-results.json` (5,812 per-unit rows). Do not re-quote this section's own
+> 21-of-6,589/1,730-remaining figures as current.
+
 `AT-33-E5-002`'s population: the **6,589** `literal-verified` units in `docs/work-inventory.json`
 (`THE-BOX.md`'s `literal-verified` group — a corpus record carries a real magnitude token, but no
 verified engine consumer was observed reading it, per `AT-33-E1-003`'s `evidence` field on these

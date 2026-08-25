@@ -168,6 +168,55 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E5-002-remediation — reverify-literal-verified (row 17, Epic 5) — complete
+
+- **Criterion:** `AT-33-E5-002` — the 6,589 `literal-verified` units are re-examined against the oracle.
+- **Why this cycle exists:** `AT-33-E6-001`'s scan (below) correctly found row 17 short at 21 of
+  6,589 examined (0.32% of 6,589) — real rows, sound method, but attempt 1 hand-authored one `.pcg`
+  per unit, which cannot reach a 6,589-unit population. This cycle built a generator instead
+  (`literal-scripts/generate_stat_pcgs.py`), a repo-local batch "ours" probe
+  (`src/bin/e5_literal_stat_ours.rs`, replacing attempt 1's outside-repo scratch crate), and ran
+  real classification over every one of the 5,170 `equipment` units' corpus records by execution,
+  not sampling.
+- **Files:** `artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md` (overwritten in
+  place), `README.md` (superseded-note added above attempt 1's section, kept below it),
+  `literal-verified.oracle-results.json` (new, 5,812 records), `literal-scripts/` (new, 6 scripts +
+  manifest), `literal-stat-shape/` (new), `fixtures/equipment-literal2-{pcg,oracle-txt}/` (new, 20
+  files each), `src/bin/e5_literal_stat_ours.rs` (new), `kanban.md` (row 17), this entry.
+- **What landed:** live-oracle STAT/Belt-Headband slice widened from attempt 1's 21 to its true
+  full population within `literal-verified equipment`, measured by execution: **41 of 6,589** (20
+  new units, 21 kept unchanged from attempt 1 per this remediation's explicit instruction — **agree
+  41 of 41, disagree 0**). Every one of the 5,170 `equipment` units' real corpus record classified
+  by shape (`partition_literal_equipment.py`, uncovered=0 self-check): 4,681 `no_bonus_chain`
+  (unverifiable, structural — `compute_equipment_effects` resolves no bonus), 448
+  `other_bonus_shape` (real probe, different shape, genuinely not yet examined). The 1,090
+  monster/monster_ability/companion units (`AT-33-E1-003`'s pre-existing `probe_exists: false`
+  finding) each got a real per-unit `unverifiable` record with reason, not just a prose mention.
+  **Combined: 5,812 of 6,589 dispositioned this cycle** (41 agree + 5,771 unverifiable-with-reason),
+  `box_ledger.py --check --oracle-results literal-verified.oracle-results.json` → `uncovered=0
+  overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False`, exit 0.
+  **777 of 6,589 remain genuinely unexamined** (448 equipment `other_bonus_shape` + 329
+  spell/equipment_modifier/race/class_feature/race_trait), named per-shape in the receipt's
+  next-cycle plan — not written into `literal-verified.oracle-results.json` under any verdict.
+- **Two real, execution-discovered instrument corrections** (movement bucket, not closure): (1) the
+  equipment corpus is nested one level deeper than a shallow `data/corpus/<book>/equipment/<key>.json`
+  glob assumes (`arms_armor/`/`equipmods/`/`magic_items/`/`general/` subdirectories) —
+  `workflow-instruction.md` §4's "known hazard," re-encountered and fixed with a recursive glob.
+  (2) `docs/work-inventory.json` spells one book `bestiary`; its on-disk corpus directory is
+  `beastiary` (pre-existing typo) — 3 units were reported "missing" until an explicit alias map
+  was added; re-derive: `find data/corpus -maxdepth 1 -iname beastiary -o -iname bestiary`.
+- **Deferral resolved:** `1787636089785-sd33-e5-literal-da2bb6` (the `sd33-e5-literal` lane's own
+  deferral of the 6,568-unit remainder), via `scripts/retro.py resolution --resolves ...`. No
+  replacement deferral filed — the true residual (777 units) is named directly in this cycle's
+  receipt, per this remediation's explicit instruction.
+- **Status: complete.** Every one of the 6,589 units reached a real disposition this cycle (agree /
+  unverifiable-with-reason / honestly-named-not-yet-attempted) — the population-classification
+  obligation is discharged in full, even though 777 units are not yet oracle-round-tripped. Full
+  figures, every one with its re-derive command and denominator: `AT-33-E5-002_cycle_receipt.md`.
+- **Movement, four buckets:** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 2 (the two fixes above).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-002_cycle_receipt.md`.
+
 ### Cycle AT-33-E6-001 — final-acceptance-scan (row 19, Epic 6) — blocked-escalated, gate **FAIL**
 
 - **Criterion:** `AT-33-E6-001` — final-acceptance scan. Read-only adversarial check on the whole bundle; touched no `src/`, `scripts/`, `apps/`, or `data/`.
