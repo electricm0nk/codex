@@ -23,6 +23,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Masterwork ~ Item"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Equipment|AUTOMATIC|Equipment ~ Perform Bonus"
       }
     ],
     "weight_lbs": null

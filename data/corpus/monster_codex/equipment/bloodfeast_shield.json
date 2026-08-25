@@ -15,6 +15,14 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +2 ~ Shield.Special Ability ~ Enhancement Cost|14600"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
       }
     ],
     "weight_lbs": null

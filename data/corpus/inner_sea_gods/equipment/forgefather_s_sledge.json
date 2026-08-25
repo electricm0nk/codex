@@ -6,7 +6,16 @@
     "description": null,
     "key": "Forgefather's Sledge",
     "name": "Forgefather's Sledge",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "FireResistanceBonus",
+          "1",
+          "TYPE=Base"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +24,30 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Resistance to Fire"
+      },
+      {
+        "key": "DESC",
+        "value": "This hefty +1 warhammer is crafted to resemble a dwarven face and is decorated with lavish gems. By speaking a command word, the wielder can transform the Forgefather's sledge into a blacksmithing hammer of any size suitable for the wielder's size and strength or back into its weapon form. The weapon grants the wielder fire resistance 1. If the wielder places the Forgefather's sledge in a Small or larger fire (such as a campfire, forge, or wood-burning stove) for at least 1 minute, the hammer's head glows bright red from the heat for 1d4 minutes, though the handle remains cool to the touch. If used in combat during this time, the hammer deals 1 point of fire damage to creatures struck in addition to the regular damage dealt."
       }
     ],
     "weight_lbs": null

@@ -6,7 +6,17 @@
     "description": null,
     "key": "Hammer (Dwarfbond)",
     "name": "Hammer, Dwarfbond",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "2",
+          "TYPE=Enhancement",
+          "PREFACT:1,TEMPLATES,IsDwarf=true"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -19,6 +29,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Dwarfbond Hammer"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|25300.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "SPROP",
+        "value": "When thrown will return just before thrower's next turn. Deals an extra 1d8 against creatures of the Giant subtype.|PREFACT:1,TEMPLATES,IsDwarf=true"
       }
     ],
     "weight_lbs": null

@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +2 ~ Armor.Special Ability ~ Shadow / Improved ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "SPROP",
+        "value": "It grants its wearer the ability to use vanishAPG as a quickened spell-like ability five times per day. If a mythic wearer uses the vanish ability, he can expend one use of mythic power to also make himself incorporeal for 1 round."
       }
     ],
     "weight_lbs": null

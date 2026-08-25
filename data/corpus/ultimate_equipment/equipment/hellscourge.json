@@ -6,8 +6,73 @@
     "description": null,
     "key": "Hellscourge",
     "name": "Hellscourge",
-    "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Intimidate",
+          "5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Scorpion Whip"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.Finesseable.Exotic.Slashing.Flail"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|39300.Special Ability ~ +1 ~ Weapon.Special Ability ~ Unholy ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "SPROP",
+        "value": "Shaken creature struck becomes Frightened (DC 17 Will negates), Frightened or Panicked creature must cower 1d4 rounds."
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

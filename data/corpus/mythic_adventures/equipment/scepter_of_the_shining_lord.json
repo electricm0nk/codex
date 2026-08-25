@@ -6,7 +6,24 @@
     "description": null,
     "key": "Scepter of the Shining Lord",
     "name": "Scepter of the Shining Lord",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "CHA",
+          "4",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT,DAMAGE",
+          "1",
+          "TYPE=Enhancement.STACK"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +32,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Artifact.Major"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Brilliant Energy ~ Weapon.Special Ability ~ +5 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
       }
     ],
     "weight_lbs": null

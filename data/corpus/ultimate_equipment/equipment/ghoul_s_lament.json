@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Disruption ~ Weapon.Special Ability ~ Ghost Touch ~ Weapon.Special Ability ~ Enhancement Cost|35300.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day can knock an undead creature prone (Fort DC 20 negates)."
       }
     ],
     "weight_lbs": null

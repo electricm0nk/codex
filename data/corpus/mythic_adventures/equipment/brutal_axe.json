@@ -11,6 +11,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Adamantine ~ Weapon.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "SPROP",
+        "value": "While wielding this axe, a creature is considered to have the Improved Sunder feat. It also deals an additional 1d12 points of damage when used to sunder. If the wielder already has Improved Sunder, the axe grants Greater Sunder; and if the wielder already has Greater Sunder, it instead provides a further +2 bonus on sunder combat maneuver checks. As an immediate action after making a successful attack with the axe, the wielder can expend one use of mythic power to make a combat maneuver check to sunder a single item being used by the creature he just successfully attacked. This sunder attempt deals double damage and uses the wielder's full base attack bonus. If the item is destroyed by this sunder attempt, no excess damage is applied to the item's wielder or other items."
       }
     ],
     "weight_lbs": null

@@ -15,6 +15,14 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ignores the hardness of any object with hardness less than 20. As a swift action the wielder can suppress this property and cause the weapon to phase through earth and stone, thereby ignoring cover. Does no damage to earth and stone while this ability is active."
       }
     ],
     "weight_lbs": null

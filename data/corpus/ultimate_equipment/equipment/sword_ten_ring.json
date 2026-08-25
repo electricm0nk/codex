@@ -6,8 +6,77 @@
     "description": null,
     "key": "Sword (Ten-Ring)",
     "name": "Sword (Ten-Ring)",
-    "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SLOTS",
+          "RING",
+          "1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Nine-Ring Broadsword"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Broadsword (Nine Ring)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.EasternWeapon.Eastern.Melee.OneHanded.Martial.Slashing.Monk.Sword"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Ten Ring Sword"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|14300.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

@@ -280,39 +280,85 @@ Each entry states, at minimum:
 
 **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
-### `rending_claw_blades` corpus-extraction gap (`AT-33-E5-003`) — filed `sd33-r5-e5-finalize`, 2026-08-25
+### `rending_claw_blades` compute_equipment_effects weapon-path EQMOD-resolution gap (`AT-33-E5-003`) — filed `sd33-r6-corpus-extraction`, 2026-08-25 (supersedes the `sd33-r5-e5-finalize` corpus-extraction entry below, CLEARED this cycle)
 
-**What blocks:** `advanced_race_guide:equipment:rending_claw_blades` is a genuine, examined
-`disagree` (`ours=0`, `oracle=1`, DAMAGE dimension) with a precise root cause: the pinned PCGen
-source defines this record via a `.MOD`-attached line (`arg_equip_arms_armor.lst`) that references
-two additional `Special Ability` EQMODs (`+1 ~ Weapon`, `Keen ~ Weapon`); this repo's corpus
-extraction pipeline never captured those `.MOD`-attached EQMOD references into
-`data/corpus/advanced_race_guide/equipment/rending_claw_blades.json`'s `raw_tokens` — the record's
-own JSON genuinely has no DAMAGE-affecting token to read. **No `src/rules_core/` resolver change
-can fix this** — `compute_equipmods_effect` would need to invent a value not present in its input,
-which the module's own no-fabrication discipline forbids.
+**The prior entry's blocker is CLEARED, not merely narrowed.** The corpus-extraction `.MOD`-attached-EQMOD
+gap it named is fixed: `src/bin/enrich_equipment_raw_tokens.rs`'s `enrich_one` now also folds in a
+`<record_key>.MOD` row found anywhere else in the cited LST file (not only a `.COPY=` base), RED→GREEN
+(`enrich_one_folds_in_a_dot_mod_row_targeting_the_copy_created_identity`, real corpus reproduction of
+`arg_equip_arms_armor.lst:27`/`:34`/`:54`). Full-corpus blast radius re-derived live (not assumed to be 1):
+**139 of 7,621** `lst_token` equipment/equipment_modifier records across **9 of 27** books carry a
+`.MOD`-attached EQMOD or BONUS reference the pipeline dropped (of **391 of 7,621** records that carry
+*any* matching `.MOD` row at all) —
+`python3 <scan over data/corpus/**/{equipment,equipment_modifier}/*.json cross-referenced against every
+${PCGEN_DATA_ROOT}-cited .MOD row's own EQMOD:/BONUS: tokens>`, full command and per-record detail in
+`AT-33-E5-003-corpus-extraction-fix_cycle_receipt.md`. All 139 regenerated via the guarded generator path
+only (`ENRICH_TARGET_LIST` + `ENRICH_FORCE_MOD_REFRESH=1`, both env-gated additions to the same tool —
+never a hand-edit), **137 written + 2 correctly refused** (declared `NAMEISPI:YES`, matching this tool's
+pre-existing PI discipline) — license/`pi_field`/`pi_marker` preserved and `raw_tokens` monotonically grew
+on all 139, verified per-record; record counts unchanged (no add/delete, only modifies); no unexpected file
+outside the diagnosed 139 touched (verified: `git status --porcelain -- data/corpus` == exactly the 137).
 
-**What was tried / ruled out this cycle:** confirmed live via `compute_equipmods_effect`'s existing
-resolver (already correctly reads the record's one captured chain, `BONUS:WEAPON|TOHIT|1|TYPE=Enhancement`
-→ `tohit_bonus=1`, matching the oracle's `MAGICHIT=+1` exactly) and via a direct read of the pinned
-LST source line against the corpus JSON, side by side.
+**A SEPARATE, narrower defect remains, discovered and proven live this cycle, and is what this new entry
+requests a ruling on.** `advanced_race_guide:equipment:rending_claw_blades` is STILL `disagree`
+(`ours=0`, `oracle=1`, DAMAGE dimension) — **not** because the corpus lacks the token (it doesn't, anymore),
+but because `compute_equipment_effects` (`src/rules_core/equipment_effects.rs`, the
+`let weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);` line) only ever reads the
+resolved item's *own* `bonus_chains` for its weapon to-hit/damage enhancement. It never resolves the item's
+`EQMOD:`-referenced modifier records (`eqmod_referenced_records`, already defined and already used for the
+AC dimension — `resolve_category_effect` → `arms_armor::apply_eqmod_armor_class_bonus`, wave 4's
+`abc72f75ec`) and sums *their* `compute_equipmods_effect` result in for the weapon TOHIT/DAMAGE dimension.
+Proven live: a scratch integration test (`compute_equipment_effects` against the real, post-fix, on-disk
+corpus record, one equipped selection, no fixture — written, run, printed, then deleted, never committed)
+prints `weapon_enhancement_bonus = Some(WeaponEnhancementBonus { tohit_bonus: Some(1), damage_bonus: None,
+... })`: `tohit_bonus` still matches the oracle's own `MAGICHIT=+1` exactly (always agreed, unaffected), but
+`damage_bonus` stays `None` because the EQMOD-referenced `Special Ability ~ +1 ~ Weapon` record's own
+`BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement` chain is never folded in for this dimension. **This is the
+prior entry's own "no `src/rules_core/` change can fix this" finding shown to be incomplete**, not
+re-litigated blind: that finding was true only while the corpus lacked the token; now that it doesn't, a
+resolver change genuinely can (and must) close it, and would not be fabricating anything — it would read a
+now-real corpus token through the exact pattern the AC dimension already uses.
 
-**Why this is escalated, not fixed:** the real fix is in the corpus extraction pipeline (the
-generic `.MOD`-attached-EQMOD-merge path, likely shared by every book's ingestion, not just
-`advanced_race_guide`) followed by a REGENERATE of `data/corpus/**` via the guarded generator —
-never a hand-edit (`workflow-instruction.md §5`, `--allow-stamp-loss` forbidden). This is a
-bundle-wide-blast-radius change (the merge logic is generic, not per-book) that needs its own
-dedicated investigation of how many OTHER `.MOD`-attached records across the full corpus carry the
-same gap — out of this lane's write scope and turn budget to attempt blind.
+**Why this is escalated, not fixed:** the fix is a small, well-precedented widening of
+`compute_equipment_effects`'s weapon-enhancement assembly (fold `eqmod_referenced_records(record,
+RuleSetId::Crb, corpus).iter().map(equipmods::compute_equipmods_effect)` into `weapon_enhancement_bonus` by
+`Option`-summing `tohit_bonus`/`damage_bonus`, mirroring the AC path's already-shipped, already-tested
+pattern) — but `src/rules_core/**` was not in this lane's granted write scope this cycle (scoped to the
+corpus extraction pipeline and `data/corpus/**` only, per this wave's own dispatch, with four sibling lanes
+concurrently running elsewhere in the tree). Also touches `9 of 12` of the 13 corpus-fixed records that
+already carried an oracle-results row: 3 (`inner_sea_gods:equipment:{blade_of_three_fancies,
+golden_judge_s_breastplate,kimle_coat}`) now have a real, previously-absent `skill_bonus` (`general.rs`
+already resolves `BONUS:SKILL|...` — no engine gap there, just no live oracle capture for the new dimension
+yet); the other 9 (`calmitous_mail`, `forgefather_s_sledge`, `fugitive_finder`, `lucky_drunk_s_mail`,
+`red_stalker_armor`, and the 4 `ultimate_equipment` hushing-ammunition records) genuinely have no matching
+resolver for their newly-captured chain shape (`SAVE`/`VAR`/`MOVEADD`/`SITUATION`/ammunition `EQMOD`) —
+all 13 detailed, with real computed values, in
+`artifacts/epic-5-reverification/corpus-extraction-fix.oracle-results.json`.
 
-**What's needed:** an operator ruling on whether to open a dedicated remediation cycle to (1) audit
-the corpus extraction pipeline's `.MOD`-attached-EQMOD-merge handling for its true blast radius
-(how many corpus records, across which books, carry an unmerged `.MOD`-attached EQMOD reference —
-not assumed to be 1), and (2) regenerate the affected corpus files via the existing guarded
-generator once the extraction fix lands. Revisit condition: this ruling, or a future cycle's own
-audit output naming the blast radius.
+**What's needed:** an operator ruling on whether to open a dedicated one-cycle remediation with
+`src/rules_core/equipment_effects.rs` write scope to land the widening above (RED→GREEN, a real corpus
+fixture matching `rending_claw_blades`'s exact shape), plus a live-oracle capture cycle for the 3
+newly-skill-computable units named above (owned by whichever lane holds the literal-verified skill-shaped
+population, row 17 — not this lane's mandate). Revisit condition: this ruling, or a future cycle's own
+RED→GREEN landing the widening.
 
 ## Cycles
+
+### Cycle AT-33-E5-003-corpus-extraction-fix — clear the `rending_claw_blades` corpus-extraction blocker (`sd33-r6-corpus-extraction`) — complete (extraction), new narrower blocker filed (resolver)
+
+- **Criterion:** clear the `## Open blockers` entry filed by `sd33-r5-e5-finalize` (a blocker is never a closure path — decompose it and run the cycles, `blocker-closure-doctrine.md`).
+- **Files:** `src/bin/enrich_equipment_raw_tokens.rs` (RED→GREEN: `.MOD`-attached-row fold-in + `ENRICH_TARGET_LIST`/`ENRICH_FORCE_MOD_REFRESH` regeneration modes), 137 of `data/corpus/**/{equipment,equipment_modifier}/*.json` (regenerated, guarded generator only), `artifacts/epic-5-reverification/corpus-extraction-fix.oracle-results.json` (new, 13 rows), this cycle's receipt.
+- **Gap located:** `src/bin/enrich_equipment_raw_tokens.rs:enrich_one` folded in a `.COPY=` base's tokens but never a separate `<record_key>.MOD` row appearing elsewhere in the same cited LST file — `parse_equipment_entries` opens a `.MOD` row as its own, differently-named entry (`extract_record_name` strips only `.COPY=`), so nothing upstream ever matched it back to the identity it modifies. Confirmed for the real `rending_claw_blades` shape (`arg_equip_arms_armor.lst:27` `.MOD`-attached to the `:54` `.COPY=` row's created identity "Rending Claw Blades").
+- **Blast radius, re-derived live (denominator stated in the same construct):** **139 of 7,621** `lst_token` equipment/equipment_modifier corpus records across **9 of 27** scanned books carry a `.MOD`-attached `EQMOD:`/`BONUS:` reference the extraction pipeline dropped (of **391 of 7,621** records carrying *any* matching `.MOD` row). Command: full-corpus scan cross-referencing every corpus record's `source.record_key`/`source.path` against every `<identity>.MOD` row in the cited `$PCGEN_DATA_ROOT` LST file (script + full per-record list in the cycle receipt). Books affected: `advanced_players_guide`, `advanced_race_guide`, `beginner_box`, `inner_sea_combat`, `inner_sea_gods`, `monster_codex`, `mythic_adventures`, `ultimate_equipment`, `ultimate_intrigue`.
+- **RED→GREEN:** `enrich_one_folds_in_a_dot_mod_row_targeting_the_copy_created_identity` — real reproduction of the `rending_claw_blades` shape (a `.COPY=`-created identity separately amended by a `.MOD` row elsewhere in the file); RED confirmed (`raw_tokens` missing the `.MOD` row's `EQMOD`) before the fix, GREEN after. `9/9` tests in the bin's own test module pass (`cargo test --locked --bin enrich_equipment_raw_tokens`).
+- **Regeneration, guarded generator path only:** two new env-gated modes added to the SAME tool (never a hand-edit) — `ENRICH_TARGET_LIST=<path>` processes exactly the newline-listed corpus JSON paths (avoids a full-corpus sweep re-parsing every cited LST file once per citing record — a real, measured cost: a blind full sweep was killed after ~4 minutes still inside book 1 of ~20, and before the kill had already silently begun retroactively applying an UNRELATED, separate pre-existing gap — a missing `.COPY=`-base-fold on records enriched under an older tool version — to 2 records having nothing to do with `.MOD` rows; both reverted, confirmed clean via `git checkout --`); `ENRICH_FORCE_MOD_REFRESH=1` allows an already-enriched target to be re-examined (compares the newly-computed closure to what's on disk and only writes when it genuinely differs). Run against exactly the 139 diagnosed files: **137 written (135 refreshed + 2 newly enriched), 2 correctly refused** (`Legendsbane`, `Witherfang` — both declare `NAMEISPI:YES`, matching this tool's pre-existing, unrelated PI-redaction discipline, not a new defect). Verified: `git status --porcelain -- data/corpus` == exactly those 137 files (0 unexpected); license/`pi_field`/`pi_marker` byte-identical pre/post on all 139 checked; `raw_tokens` length only grew, never shrank, on all 139; total equipment/equipment_modifier record count unchanged (7,808 before and after — no add/delete, count-sweep hazard does not apply since no count moved).
+- **`rending_claw_blades` re-run through the oracle harness — CONFIRMED STILL `disagree`, ours=0, oracle=1, DAMAGE dimension, for an honestly different reason.** The corpus fix alone does not flip the verdict: `compute_equipment_effects`'s weapon path (`src/rules_core/equipment_effects.rs`) sums the resolved item's own `bonus_chains` only — it never resolves the item's `EQMOD:`-referenced modifier records for the TOHIT/DAMAGE dimension, unlike the AC dimension's already-shipped `eqmod_referenced_records` + `apply_eqmod_armor_class_bonus` pattern (wave 4, `abc72f75ec`). Proven live via a scratch integration test (real on-disk corpus, `compute_equipment_effects`, no fixture — written, run, printed, deleted, never committed, out of this lane's write scope which is corpus-extraction/`data/corpus/**` only): `weapon_enhancement_bonus = Some(WeaponEnhancementBonus { tohit_bonus: Some(1), damage_bonus: None, ... })` — `tohit_bonus` still matches the oracle's `MAGICHIT=+1` exactly; `damage_bonus` stays `None`. This is a genuinely smaller, precisely-named, one-cycle-sized residual — see the new `## Open blockers` entry above.
+- **Other units already judged, re-run (13 of 8,291 examined units overlap with the 139-record blast radius):** `rending_claw_blades` (above, unchanged verdict). 3 of the other 12 (`inner_sea_gods:equipment:{blade_of_three_fancies,golden_judge_s_breastplate,kimle_coat}`) had their `unverifiable: no_bonus_chain` reason go STALE — the corpus fix populated a real `BONUS:SKILL|...` chain the engine's own `general.rs` already resolves (proven live: real `skill_bonus` values now compute, e.g. `kimle_coat` → `Swim +5`), but no live PCGen oracle export exists yet for these specific skill dimensions, so no new verdict is claimed — reported honestly as `unverifiable` with a corrected reason. The remaining 9 (`calmitous_mail`, `forgefather_s_sledge`, `fugitive_finder`, `lucky_drunk_s_mail`, `red_stalker_armor`, 4 `ultimate_equipment` hushing-ammunition records) also went from an empty `bonus_chains`/`EQMOD` to a real one, but no resolver in `equipment_effects/{arms_armor,general,magic_items,equipmods}.rs` matches their specific chain shape (`SAVE`/`VAR`/`MOVEADD`/`SITUATION`/ammunition `EQMOD`) — genuinely still `unverifiable`, reason corrected from `no_bonus_chain` to `no_resolver`. **0 verdicts flipped to `agree` or `disagree`; 0 rows dropped; all 13 rows present** in `corpus-extraction-fix.oracle-results.json`. Full per-unit detail and the exact computed values in that file and the cycle receipt.
+- **Did not attempt:** the 126 of 139 fixed records with no prior oracle-results row at all (never previously examined — outside this lane's mandate, which is the extraction gap, not newly examining the un-rowed population; row 17's own three shape lanes own that population); the `src/rules_core/equipment_effects.rs` widening the new blocker names (out of this lane's granted write scope this cycle, with 4 sibling lanes concurrently running).
+- **Test scoping:** `cargo test --locked --bin enrich_equipment_raw_tokens` (9/9), `cargo test --locked --lib equipment_effects` (71/71), `cargo test --locked --lib corpus_loader` (6/6), `cargo test --locked --lib equipmods` (20/20) — all green, no regression from the corpus regeneration. Did not run the full `cargo test --locked --lib` sweep (scoped to the modules this cycle's diff touches or reads; the workspace-wide 4-failure state named in `AT-33-E6-001-attempt6` is pre-existing and unrelated to this cycle's files).
+- **Movement, four buckets:** closure 0 (no verdict flipped). Reclassification 0. Reachability 0 (no new unit rowed). Instrument-correction 13 (all 13 overlapping rows' `reason`/`note` corrected to match the now-fixed corpus; 139 corpus records' `raw_tokens`/`raw_bonus_chains` corrected at the source).
+- **Kanban call:** none — this lane does not mark rows 16/17/18 (`AT-33-E5-finalize` owns that call, per this dispatch's own coordination note).
+- **Receipt:** `artifacts/epic-5-reverification/AT-33-E5-003-corpus-extraction-fix_cycle_receipt.md`.
 
 ### Cycle AT-33-E5-last39-weapon — remediation wave 6, weapon-shape-final lane (row 17, AT-33-E5-002 remediation) — complete (lane-scoped)
 

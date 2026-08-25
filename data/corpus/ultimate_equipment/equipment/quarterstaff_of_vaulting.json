@@ -6,11 +6,36 @@
     "description": null,
     "key": "Quarterstaff of Vaulting",
     "name": "Quarterstaff of Vaulting",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Acrobatics",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Darkwood.Special Ability ~ Enhancement Cost|19100.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Material ~ Darkwood.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can use staff to vault over opponent's head instead of 5-ft step."
       }
     ],
     "weight_lbs": null

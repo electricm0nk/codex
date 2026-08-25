@@ -6,8 +6,34 @@
     "description": "+4 on Sleight of Hand checks to conceal these on your body.",
     "key": "Thieves' Tools (Concealable)",
     "name": "Thieves' Tools (Concealable)",
-    "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Disable Device",
+          "2",
+          "TYPE=Circumstance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "COST",
+        "value": "190"
+      },
+      {
+        "key": "WT",
+        "value": ".5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "SPROP",
+        "value": "+4 on Sleight of Hand checks to conceal these on your body."
+      }
+    ],
     "weight_lbs": 0.5
   },
   "ingested_at": "2026-08-16T05:06:54Z",

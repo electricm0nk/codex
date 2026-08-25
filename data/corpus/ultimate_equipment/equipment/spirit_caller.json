@@ -7,7 +7,56 @@
     "key": "Spirit Caller",
     "name": "Spirit Caller",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Mere Club"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Simple.Bludgeoning.Piercing.Hammer"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Stone"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Ghost Touch ~ Weapon.Special Ability ~ Enhancement Cost|25300.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "SPROP",
+        "value": "Incorporeal undead struck are drawn inside the club (DC 16 Will negates). When containing a spirit, the club glows from within and gains +2 Undead Bane properties."
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

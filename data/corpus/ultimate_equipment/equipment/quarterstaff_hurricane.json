@@ -21,8 +21,28 @@
         "value": "YES"
       },
       {
-        "key": "VISIBLE",
-        "value": "YES"
+        "key": "OUTPUTNAME",
+        "value": "Hurricane Quarterstaff"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|7820.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=1|Gust of Wind,13"
+      },
+      {
+        "key": "SPROP",
+        "value": "Monk or Ninja can spend 1 ki point to activate Gust of Wind property with DC %1.|12+WIS"
       }
     ],
     "weight_lbs": null

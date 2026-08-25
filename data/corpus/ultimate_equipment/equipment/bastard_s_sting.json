@@ -6,11 +6,37 @@
     "description": null,
     "key": "Bastard's Sting",
     "name": "Bastard's Sting",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "5",
+          "TYPE=Enhancement",
+          "PREVARGTEQ:AntipaladinLVL,1"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Adamantine ~ Weapon.Special Ability ~ Enhancement Cost|123000.Special Ability ~ +2 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=ATWILL|CASTERLEVEL=AntipaladinLVL|Unholy Blight,10+WIS+AntipaladinLVL/2|PREVARGTEQ:AntipaladinLVL,1"
+      },
+      {
+        "key": "SPROP",
+        "value": "While wielded by an antipaladin, deals 2d6 points of negative energy damage to all living creatures that start their turn adjacent to the wielder."
       }
     ],
     "weight_lbs": null

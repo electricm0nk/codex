@@ -7,7 +7,20 @@
     "key": "Gun with no Name",
     "name": "Gun with no Name",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Lucky / Greater ~ Firearm.Special Ability ~ Mythic Bane ~ Weapon.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "SPROP",
+        "value": "This weapon can be reloaded normally, but if its wielder expends either one use of mythic power or 1 grit point as a swift action, each of the firearm's empty barrels magically reloads with either black powder and a bullet or with a flare alchemical cartridge (the wielder chooses, and she can mix and match the ammunition type with each barrel). While carrying this firearm, the wielder is immune to scrying and any form of divination that attempts to ascertain her location, thoughts, or alignment. The firearm itself is immune to locate object and similar effects."
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-17T12:09:37Z",

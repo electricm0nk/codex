@@ -7,7 +7,24 @@
     "key": "Ekujae Jungle Armor",
     "name": "Ekujae Jungle Armor",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leaf.Special Ability ~ +1 ~ Armor"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Combat"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "ISC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-17T12:09:37Z",

@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Shield.Special Ability ~ Rallying ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "SPROP",
+        "value": "reduces the extra damage she takes from anarchic weapons, smite good, smite law, and unholy weapons by her tier, to a minimum of 0. When its wearer uses the smite evil class feature, she can expend one use of mythic power to extend the deflection bonus to AC she gains against her target to all allies in a 10-foot-radius burst centered on her. This bonus lasts for 1 minute or until the smite evil ends, whichever comes first."
       }
     ],
     "weight_lbs": null

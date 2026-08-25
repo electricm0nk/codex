@@ -11,6 +11,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Bane ~ Weapon|Evil Outsider Bane.Material ~ Cold Iron.Special Ability ~ Holy ~ Weapon.Special Ability ~ Enhancement Cost|90460.Special Ability ~ +3 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "SPROP",
+        "value": "Bars all creatures with the demon subtype within 60 ft from teleporting as per Dimensional Anchor."
       }
     ],
     "weight_lbs": null

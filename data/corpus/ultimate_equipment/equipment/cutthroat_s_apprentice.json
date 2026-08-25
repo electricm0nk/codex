@@ -18,11 +18,15 @@
       },
       {
         "key": "EQMOD",
-        "value": "Material ~ Steel"
+        "value": "Special Ability ~ Dancing ~ Melee.Special Ability ~ Enhancement Cost|33900.Special Ability ~ +1 ~ Weapon"
       },
       {
-        "key": "VISIBLE",
-        "value": "YES"
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can be drawn as per Quick Draw feat. Dances 8 rounds 2/day. Provides flanking."
       }
     ],
     "weight_lbs": null

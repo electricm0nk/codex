@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Keen ~ Weapon.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "SPROP",
+        "value": "It ignores bonuses to AC provided by deflection and force effects, and deals 2 points of Strength damage on a confirmed critical hit. By expending one use of mythic power while attacking, the wielder can strike a force effect and disintegrate it as a touch attack. This effect also automatically dispels force effects that can be dispelled whether or not they're subject to disintegrate. As a standard action, the wielder can expend a use of mythic power while slashing at the air to open up a rift to the Shadow Plane. This functions as shadow walk, except that a maximum number of creatures equal to double the wielder's tier can pass through before the rift closes."
       }
     ],
     "weight_lbs": null

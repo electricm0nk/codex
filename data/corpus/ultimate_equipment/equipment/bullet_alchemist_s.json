@@ -19,6 +19,30 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Alchemist's Bullet"
+      },
+      {
+        "key": "TYPE",
+        "value": "Container"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "*1|Splash=1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|330.Special Ability ~ +1 ~ Ammunition"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      },
+      {
+        "key": "DESC",
+        "value": "On successful hit, splash damage is dealt as normal."
       }
     ],
     "weight_lbs": null

@@ -6,7 +6,16 @@
     "description": null,
     "key": "Black Iron Axe",
     "name": "Black Iron Axe",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT,DAMAGE",
+          "1",
+          "TYPE=Enhancement.STACK"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +24,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Artifact.Minor"
+      },
+      {
+        "key": "WT",
+        "value": "12"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Keen ~ Weapon.Special Ability ~ +5 ~ Weapon.Special Ability ~ Vorpal ~ Melee"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
       }
     ],
     "weight_lbs": null

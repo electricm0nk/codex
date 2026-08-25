@@ -15,6 +15,14 @@
       {
         "key": "OUTPUTNAME",
         "value": "Masterwork Artisan's Tools"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Masterwork ~ Item"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
       }
     ],
     "weight_lbs": null

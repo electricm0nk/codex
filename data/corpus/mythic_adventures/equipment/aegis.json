@@ -15,6 +15,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Artifact.Minor"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Determination ~ Armor.Special Ability ~ +4 ~ Shield"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
       }
     ],
     "weight_lbs": null

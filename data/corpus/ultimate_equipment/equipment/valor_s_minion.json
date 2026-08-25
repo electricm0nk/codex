@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Holy ~ Weapon.Special Ability ~ Enhancement Cost|41300.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.163"
+      },
+      {
+        "key": "SPROP",
+        "value": "Whenever a wielder uses either the challenge or smite evil class feature, one additional use of that class feature can be sacrificed to treat the smite or challenge as three class levels higher."
       }
     ],
     "weight_lbs": null

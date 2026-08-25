@@ -11,6 +11,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cold Iron.Special Ability ~ Enhancement Cost|42800.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "SPROP",
+        "value": "2d6 against summoned creatures and wielder can make a dispel check to send away or destroy the creature. 1/day wielder can attempt Dismissal instead."
       }
     ],
     "weight_lbs": null

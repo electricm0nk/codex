@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Special Ability ~ Enhancement Cost|6000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day can force struck creature to attempt a DC 16 Fort or be slowed one round, 2nd save or be petrified 1d4 rounds"
       }
     ],
     "weight_lbs": null

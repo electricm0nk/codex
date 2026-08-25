@@ -72,6 +72,22 @@
       {
         "key": "SPROP",
         "value": "Bought in a set of five, they fit over the wearer's claws on one hand. The blades grant the wearer a +1 enhancement bonus on claw attack rolls with that hand and change the weapon type from a natural weapon to a light slashing weapon. Catfolk with the cat's claws racial trait are proficient with this weapon.|PRERULE:1,DisplayWeaponDetails"
+      },
+      {
+        "key": "COST",
+        "value": "10305"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.95"
+      },
+      {
+        "key": "SPROP",
+        "value": "When making a full attack with claws, if the wielder hits the same target with this weapon and a different claw attack or set of claw blades, he deals an extra 1d4 damage plus 1-1/2 times his Strength bonus. The wearer can deal this extra damage no more than once per round."
       }
     ],
     "weight_lbs": 2.0

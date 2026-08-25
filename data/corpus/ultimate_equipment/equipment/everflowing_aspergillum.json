@@ -7,7 +7,20 @@
     "key": "Everflowing Aspergillum",
     "name": "Everflowing Aspergillum",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|7800.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "SPROP",
+        "value": "The holy water in this battle aspergillum never runs dry."
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

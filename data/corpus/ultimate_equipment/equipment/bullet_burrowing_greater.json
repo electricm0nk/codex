@@ -7,7 +7,36 @@
     "key": "Bullet (Burrowing/Greater)",
     "name": "Bullet (Burrowing/Greater)",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "FirearmGear.Ammo.Ammunition.Resizable.FirearmBullet"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Greater Burrowing Bullet"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|1721.Special Ability ~ +1 ~ Ammunition"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "SPROP",
+        "value": "Target staggered for 1d3+2 rounds."
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

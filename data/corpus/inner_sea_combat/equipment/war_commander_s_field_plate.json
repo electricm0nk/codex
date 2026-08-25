@@ -7,7 +7,24 @@
     "key": "War Commander's Field Plate",
     "name": "War Commander's Field Plate",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Champion ~ Armor.Special Ability ~ +2 ~ Armor"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Combat"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "ISC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.53"
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-17T12:09:37Z",

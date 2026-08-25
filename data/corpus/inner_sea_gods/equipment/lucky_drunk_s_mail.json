@@ -6,7 +6,16 @@
     "description": null,
     "key": "Lucky Drunk's Mail",
     "name": "Lucky Drunk's Mail",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "1",
+          "TYPE=Luck"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +24,34 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "WT",
+        "value": "40"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.252"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Lucky Drunk's Mail|TIMES=1|CASTERLEVEL=3|Moment of Greatness"
+      },
+      {
+        "key": "DESC",
+        "value": "This +1 chainmail is decorated with a row of small metal disks, each stamped with a tankard symbol. The wearer gains a +1 luck bonus on all saving throws and can use Moment of Greatness once per day."
       }
     ],
     "weight_lbs": null

@@ -7,7 +7,24 @@
     "key": "Risen Blade",
     "name": "Risen Blade",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Flaming ~ Weapon.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Combat"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "ISC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-17T12:09:37Z",
