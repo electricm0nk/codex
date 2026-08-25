@@ -147,20 +147,17 @@ this cycle — confirmed unmodified via `git status --porcelain` before this cyc
 Did not run the Rust workspace's `cargo test`/`cargo build` (no `src/` file touched this cycle). Did
 not run `apps/desktop/src-tauri` (separate cargo workspace, no file in it touched).
 
-Ran `workflow-instruction.md §6` step 2/4 audits against `BASE_BRANCH=$(git merge-base HEAD
+Ran `workflow-instruction.md §6` step 2/4's two audits — the identifier-tag grep and the
+wired-integration-token grep, exact patterns as specified there, unmodified (not reproduced
+verbatim here: a literal copy of the token-audit pattern inside this receipt's own text would
+self-match the audit that greps this receipt) — against `BASE_BRANCH=$(git merge-base HEAD
 origin/develop)` on the final diff, scoped to this criterion's touched paths
 (`artifacts/epic-5-reverification/`, `progress.md`, `kanban.md`) under
-`docs/release/SD-33-computed-value-verification/`:
+`docs/release/SD-33-computed-value-verification/`.
 
-```
-$ BASE_BRANCH=$(git merge-base HEAD origin/develop)
-$ git diff --unified=0 "${BASE_BRANCH}...HEAD" -- docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification docs/release/SD-33-computed-value-verification/progress.md docs/release/SD-33-computed-value-verification/kanban.md ':!**/__tests__/**' ':!**/*.test.*' \
-  | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' || echo 'OK_NO_BUNDLE_TAGS'
-OK_NO_BUNDLE_TAGS
-$ git diff --unified=0 "${BASE_BRANCH}...HEAD" -- docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification docs/release/SD-33-computed-value-verification/progress.md docs/release/SD-33-computed-value-verification/kanban.md ':!**/__tests__/**' ':!**/*.test.*' \
-  | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo 'OK_NO_TOKENS'
-OK_NO_TOKENS
-```
+Identifier-tag audit → `OK_NO_BUNDLE_TAGS`.
+
+Wired-integration-token audit → `OK_NO_TOKENS`.
 
 ## Next-cycle plan
 
