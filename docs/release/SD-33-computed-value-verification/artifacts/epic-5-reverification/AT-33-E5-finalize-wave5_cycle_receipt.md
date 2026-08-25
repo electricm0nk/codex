@@ -1,6 +1,6 @@
 # Cycle AT-33-E5-finalize-wave5 — Epic 5 Re-verification / AT-33-E5-001, 002, 003 (totals + kanban call)
 
-- **Commit SHA:** recorded on landing (see `progress.md` entry `AT-33-E5-finalize-wave5`)
+- **Commit SHA:** `2f1d52f22d` (`feat(sd33): AT-33-E5-finalize-wave5 -- total Epic 5 across wave-5 lanes, fix heavy_hammer, own the kanban call`, pushed to `origin/tranche/13`)
 - **Files touched:**
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/finalize-wave5-merge.py` (new — the merge script, run for real, output in Step 3)
   - `docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/literal-verified.oracle-results.json` (merged in place, 6,522 → 6,550 rows)
