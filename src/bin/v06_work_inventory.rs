@@ -1557,11 +1557,12 @@ mod equipment_verdict_rung_tests {
         assert_ne!(verdict.status, "text-complete");
         // Falls through to the same "nothing safe to show a player" verdict
         // Decision 7's own condition-3 refusal uses for a genuinely
-        // description-less record -- `unknown`, not a fabricated `done` or
-        // `held` credit.
+        // description-less record -- `unmeasurable` (renamed from `unknown`
+        // `AT-33-E4-002`), not a fabricated `done` or `held` credit.
         assert_eq!(
-            verdict.status, "unknown",
-            "expected the leak refusal to fall through to unknown, got status {:?}", verdict.status
+            verdict.status, "unmeasurable",
+            "expected the leak refusal to fall through to unmeasurable, got status {:?}",
+            verdict.status
         );
     }
 
@@ -7509,9 +7510,17 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
         "The book has no compiled rule set at all. Nothing about this unit has been attempted.",
     ),
     (
-        "unknown",
-        "Could not be classified. `reason` says why. An honest unknown beats a confident wrong \
-         entry.",
+        // Renamed from `unknown` `AT-33-E4-002` (`unknown-rootcause.md` §3):
+        // the disposition is unchanged (this is decisions.md §7's permanent,
+        // explicit `unverifiable` bucket) but the old name read as "nobody
+        // looked" even though every unit here carries a specific, stated
+        // `reason`. `unmeasurable` says what is actually true: we looked,
+        // and this specific unit cannot currently be classified without
+        // guessing or fabricating.
+        "unmeasurable",
+        "Could not be classified without guessing. `reason` states, per unit, exactly what is \
+         missing or ambiguous -- an honest unmeasurable beats a confident wrong entry, and is \
+         never a stand-in for work not yet attempted.",
     ),
 ];
 
@@ -8406,18 +8415,22 @@ fn classify(
             }
             // SD31-W9-INTEGRATE-001: the fallback for a record that IS
             // text_only with a real CLOSURE description but whose SERVED
-            // value is a placeholder marker -- `unknown` (so
-            // `doneness_verdict` reads it `unmeasurable`, never `done` or
-            // `held`), the same shape the "nothing to show a player" branch
-            // just below already uses, because the player's screen carries
-            // nothing real either way -- never a fabricated description.
+            // value is a placeholder marker -- `unmeasurable` (previously
+            // named `unknown`; renamed `AT-33-E4-002`, see
+            // `unknown-rootcause.md` §3 -- the disposition is unchanged, the
+            // status string just no longer reads as "nobody looked" when
+            // this specific unit's own `reason` field states precisely why
+            // it cannot be classified), the same shape the "nothing to show
+            // a player" branch just below already uses, because the
+            // player's screen carries nothing real either way -- never a
+            // fabricated description.
             if text_only
                 && has_real_description
                 && !universal_sheet_modifier
                 && facts.feat_desc_leaks_pi_or_upstream_marker(engine_book.as_str(), &unit.key, &unit.name)
             {
                 return Verdict {
-                    status: "unknown",
+                    status: "unmeasurable",
                     evidence: "feat_served_description_is_a_placeholder_marker_not_prose".to_string(),
                     reason: Some(
                         "the feat is in the engine's catalog and its raw corpus closure carries \
@@ -8451,14 +8464,45 @@ fn classify(
                 };
             }
             if text_only {
+                // AT-33-E4-002 (`unknown-rootcause.md` §2): `wiring_class`
+                // is closure-aware (it follows `.COPY=`/`.MOD` rows) while
+                // `magnitude_token_count`/`carries_prose_magnitude` here are
+                // this record's OWN line only. `wiring_class::signals` only
+                // ever emits a `computed:`/`derived:`/`static:` signal when
+                // its `mags` set (MAGNITUDE_TOKENS-prefixed fields) is
+                // non-empty -- so `wc_class != "display"` is structural
+                // proof the closure carries a real magnitude even when this
+                // record's own line does not. Reported `held`
+                // (`ingested-magnitude`), not `unmeasurable`: there IS a
+                // real magnitude to eventually verify, this record's own
+                // row just does not carry it directly.
+                if wc_class != "display" {
+                    return Verdict {
+                        status: "ingested-magnitude",
+                        evidence: "feat_own_line_has_no_magnitude_but_closure_wiring_class_does"
+                            .to_string(),
+                        reason: Some(
+                            "the feat's own corpus row carries no magnitude token and no real \
+                             DESC: text, but wiring_class (computed from the full token closure, \
+                             including any inherited .COPY=/.MOD rows) is not display -- proof \
+                             a real magnitude exists somewhere in the closure this record's own \
+                             line does not show. Held, pending a verified consumer, not the \
+                             zero-magnitude completion Decision 7 describes and not genuinely \
+                             empty either"
+                                .to_string(),
+                        ),
+                        engine_book: engine_book_field,
+                    };
+                }
                 // Decision 7's condition 3: zero magnitude AND no real DESC:
                 // text anywhere in the token closure is nothing to compute
                 // AND nothing to show a player -- not the completion the
-                // ruling describes. `unknown` (not `not-ingested`, the
-                // record IS in the catalog) so `doneness_verdict` reads it
-                // `unmeasurable`, never `done` or `held`.
+                // ruling describes. `unmeasurable` (not `not-ingested`, the
+                // record IS in the catalog; renamed from `unknown`
+                // `AT-33-E4-002`, disposition unchanged, see
+                // `unknown-rootcause.md` §3).
                 return Verdict {
-                    status: "unknown",
+                    status: "unmeasurable",
                     evidence: "text_only_but_corpus_record_carries_no_description_to_show_a_player"
                         .to_string(),
                     reason: Some(
@@ -8471,17 +8515,33 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
+            // AT-33-E4-002 (`unknown-rootcause.md`): before this cycle this
+            // fallback returned `status: "unknown"` -- the ONE Kind whose
+            // "real magnitude, no observed consumer" shape did not match
+            // its own siblings. `Kind::Equipment`'s identical shape (bottom
+            // fallback, a few hundred lines below) already returns
+            // `ingested-magnitude`; so does `Kind::Spell`'s `Some(true)` arm
+            // and `Kind::RaceTrait`'s consumer-check fallback -- all three
+            // read "a real record with a real magnitude exists, no verified
+            // consumer yet" as `held`, never `unmeasurable`. Nothing about
+            // this branch differs: `magnitude_token_count>0 ||
+            // carries_prose_magnitude` is already established by `text_only`
+            // being false above, and the catalog/effect-wired checks above
+            // already confirmed the record is real and un-probed. The old
+            // test `a_prose_formula_feat_does_not_read_text_complete`'s own
+            // comment already named this the honest answer ("Honestly
+            // `unknown`/`held`") before `held` was wired here.
             Verdict {
-                status: "unknown",
+                status: "ingested-magnitude",
                 evidence: "in_catalog_with_corpus_magnitude_but_no_observed_consumer".to_string(),
                 reason: Some(format!(
                     "corpus record carries {} magnitude token(s){} and the feat IS in the \
                      engine's catalog, but the feat-effect probe observed no computed delta \
                      across the swept postures. That is the probe's documented lower-bound \
                      behaviour: the effect may need a posture, an opponent or a combat action \
-                     this engine does not model. Reported as unknown rather than deferred \
-                     because no engine diagnostic is scoped to a feat, so there is no engine \
-                     text to quote",
+                     this engine does not model. Reported as held (ingested-magnitude), matching \
+                     every sibling Kind's identical shape, rather than deferred, because no \
+                     engine diagnostic is scoped to a feat, so there is no engine text to quote",
                     unit.magnitude_token_count,
                     if carries_prose_magnitude {
                         " and a prose-embedded formula (wiring_class: derived)"
@@ -8580,8 +8640,31 @@ fn classify(
                     reason: None,
                     engine_book: engine_book_field,
                 },
+                // AT-33-E4-002 (`unknown-rootcause.md` §2): same closure-vs-
+                // own-line disagreement as `Kind::Feat`'s `text_only` branch
+                // above. `wc_class != "display"` is structural proof
+                // (`wiring_class::signals` never emits `computed:`/
+                // `derived:`/`static:` on an empty `mags` set) that the
+                // spell's token closure carries a real magnitude even
+                // though this book's record has no resolved level.
+                Some(false) if wc_class != "display" => Verdict {
+                    status: "ingested-magnitude",
+                    evidence: "spell_own_record_has_no_level_but_closure_wiring_class_does"
+                        .to_string(),
+                    reason: Some(
+                        "the spell resolves in the engine's spell list and this book's corpus \
+                         record carries no resolved level and no real DESC: text, but \
+                         wiring_class (computed from the full token closure) is not display -- \
+                         proof a real magnitude exists in the closure. Held, pending a verified \
+                         consumer"
+                            .to_string(),
+                    ),
+                    engine_book: engine_book_field,
+                },
+                // Renamed from `unknown` `AT-33-E4-002`, disposition
+                // unchanged -- see `unknown-rootcause.md` §3.
                 Some(false) => Verdict {
-                    status: "unknown",
+                    status: "unmeasurable",
                     evidence: "spell_list_entry_with_no_corpus_level_and_no_description".to_string(),
                     reason: Some(
                         "the spell resolves in the engine's spell list but this book's corpus \
@@ -8693,13 +8776,45 @@ fn classify(
                 };
             }
             if text_only {
+                // AT-33-E4-002 (`unknown-rootcause.md` §2): same closure-vs-
+                // own-line disagreement as `Kind::Feat`'s `text_only` branch
+                // above -- `wc_class != "display"` is structural proof
+                // (`wiring_class::signals` never emits `computed:`/
+                // `derived:`/`static:` on an empty `mags` set) that the
+                // closure carries a real magnitude, most often a `.COPY=`
+                // alias row's inherited base-row `BONUS:` chain (the exact
+                // shape `token_closure_rows_resolves_a_copy_row_s_inherited_
+                // base_row` proves the closure genuinely follows). Reported
+                // `held`, matching this Kind's own bottom fallback for the
+                // sibling non-`text_only` shape a few lines below.
+                if wc_class != "display" {
+                    return Verdict {
+                        status: "ingested-magnitude",
+                        evidence:
+                            "equipment_own_line_has_no_magnitude_but_closure_wiring_class_does"
+                                .to_string(),
+                        reason: Some(
+                            "the item's own corpus row carries no magnitude token and no real \
+                             DESC: text, but wiring_class (computed from the full token closure, \
+                             including any inherited .COPY=/.MOD rows) is not display -- proof a \
+                             real magnitude exists somewhere in the closure this record's own \
+                             line does not show. Held, pending a verified consumer, not the \
+                             zero-magnitude completion Decision 7 describes and not genuinely \
+                             empty either"
+                                .to_string(),
+                        ),
+                        engine_book: engine_book_field,
+                    };
+                }
                 // Decision 7's condition 3, re-derived 2026-08-16: 634 units
                 // of this exact shape (magnitude_token_count==0, corpus
                 // `description: null`) were already `done` on the live board
                 // -- `chassis_only`/`.COPY` equipment rows with no cost, no
                 // weight and no DESC: token anywhere in their closure.
+                // Renamed from `unknown` `AT-33-E4-002`, disposition
+                // unchanged -- see `unknown-rootcause.md` §3.
                 return Verdict {
-                    status: "unknown",
+                    status: "unmeasurable",
                     evidence: "text_only_but_corpus_record_carries_no_description_to_show_a_player"
                         .to_string(),
                     reason: Some(
@@ -9266,14 +9381,36 @@ fn classify(
                 if text_only {
                     return not_ingested("class_feature_option_pool_record_not_held_by_engine");
                 }
+                // AT-33-E4-002 (`unknown-rootcause.md` §1): before this
+                // cycle this was `status: "unknown"`. The magnitude-bearing
+                // sibling of the `text_only` branch immediately above --
+                // same owner-resolution failure, same
+                // `class_feature_effect_wired` probe already run (and found
+                // nothing) at the top of this arm before either branch is
+                // reached. The ONLY difference between the two branches is
+                // `magnitude_token_count`/`carries_prose_magnitude` on this
+                // record's own line, which has no bearing on whether the
+                // ENGINE holds a record for it -- `not-ingested` ("book IS
+                // ingested but the engine holds no record matching this
+                // unit's identity") is exactly as true here as it is one
+                // branch up. Only 2 registered pools exist
+                // (`REGISTERED_POOL_GROUPS`) against 1,128 distinct
+                // unmatched group prefixes in this population as of this
+                // cycle; widening the catalog to resolve MORE of these to a
+                // real owner (rather than the generic not-ingested finding)
+                // is real future reclassification work, not done here.
                 return Verdict {
-                    status: "unknown",
-                    evidence: "class_feature_group_names_no_class_at_all".to_string(),
+                    status: "not-ingested",
+                    evidence: "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+                        .to_string(),
                     reason: Some(format!(
                         "the record's `{group}` group prefix names neither a class this engine \
                          models nor any class the corpus declares (it is an option pool, an \
                          archetype, or a shared sub-choice set), so no explanation id can be \
-                         derived for it without guessing"
+                         derived for it without guessing; the engine's own \
+                         class_feature_effect_wired probe already found no delta for this \
+                         record's key, the same finding that already routes its text_only \
+                         sibling to not-ingested"
                     )),
                     engine_book: engine_book_field,
                 };
@@ -11863,10 +12000,13 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        // Honestly `unknown`/`held`, not silently promoted to `done`: the
-        // fix must not manufacture a done-eligible status out of a formula
-        // the corpus-literal/evaluator-fixture bar has not verified.
-        assert_eq!(verdict.status, "unknown");
+        // Honestly `held` (`ingested-magnitude`, `AT-33-E4-002`'s upgrade
+        // from `unknown` -- this comment used to name it "unknown/held"
+        // before `held` was wired for this shape), not silently promoted to
+        // `done`: the fix must not manufacture a done-eligible status out
+        // of a formula the corpus-literal/evaluator-fixture bar has not
+        // verified.
+        assert_eq!(verdict.status, "ingested-magnitude");
     }
 
     /// A feat with genuinely zero magnitude anywhere -- no
@@ -11924,7 +12064,10 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "unknown");
+        // Renamed from `unknown` `AT-33-E4-002` (disposition unchanged);
+        // `wc_class` is `display` here, so the new closure-magnitude gate
+        // does not apply and this stays the genuinely-empty terminal case.
+        assert_eq!(verdict.status, "unmeasurable");
         assert_eq!(
             verdict.evidence,
             "text_only_but_corpus_record_carries_no_description_to_show_a_player"
@@ -11955,7 +12098,7 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.status, "unmeasurable"); // renamed from unknown, AT-33-E4-002
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
 
@@ -11979,7 +12122,7 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.status, "unmeasurable"); // renamed from unknown, AT-33-E4-002
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
 
@@ -12012,7 +12155,7 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.status, "unmeasurable"); // renamed from unknown, AT-33-E4-002
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
 
@@ -12035,7 +12178,7 @@ mod prose_magnitude_status_tests {
             "display",
             false,
         );
-        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.status, "unmeasurable"); // renamed from unknown, AT-33-E4-002
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
 
@@ -14981,7 +15124,7 @@ mod class_feature_type_facet_owner_fallback_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
-        assert_ne!(verdict.status, "unknown", "the owner must be recovered via type_facet");
+        assert_ne!(verdict.status, "unmeasurable", "the owner must be recovered via type_facet");
         assert_ne!(
             verdict.status, "grounded",
             "a type_facet-recovered owner must never ground a record: status={} evidence={}",
@@ -15043,11 +15186,15 @@ mod class_feature_type_facet_owner_fallback_tests {
     }
 
     /// NEGATIVE CONTROL: without the type_facet fix, a record with no
-    /// class-name signal anywhere still reads `unknown` -- the fallback is
-    /// additive, it does not change behaviour for the genuinely
-    /// unattributable population.
+    /// class-name signal anywhere still reads `not-ingested` -- the
+    /// fallback is additive, it does not change behaviour for the
+    /// genuinely unattributable population. Before `AT-33-E4-002` this
+    /// read `unknown`/`class_feature_group_names_no_class_at_all`; see
+    /// `unknown-rootcause.md` §1 for why the magnitude-bearing shape now
+    /// gets the same `not-ingested` finding its `text_only` sibling
+    /// already had.
     #[test]
-    fn a_record_with_no_class_signal_anywhere_still_reads_unknown() {
+    fn a_record_with_no_class_signal_anywhere_reads_not_ingested() {
         let mut facts = EngineFacts::default();
         facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
         let unit = CorpusUnit {
@@ -15063,8 +15210,11 @@ mod class_feature_type_facet_owner_fallback_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "unknown");
-        assert_eq!(verdict.evidence, "class_feature_group_names_no_class_at_all");
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
     }
 }
 
@@ -17400,9 +17550,9 @@ mod class_feature_consumer_delta_tests {
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_ne!(
-            verdict.status, "unknown",
+            verdict.status, "unmeasurable",
             "a group matching a registered CLASS_FEATURE_POOLS entry must resolve an owner via \
-             the pool-catalog fallback, not fall through to unknown/unmeasurable"
+             the pool-catalog fallback, not fall through to unmeasurable"
         );
         // Exact landing spot: no diagnostic names this synthetic feature and
         // no explanation id exists in `facts`, so it must land the same
@@ -17442,7 +17592,7 @@ mod class_feature_consumer_delta_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
-        assert_ne!(verdict.status, "unknown", "the owner must be recovered via the pool catalog");
+        assert_ne!(verdict.status, "unmeasurable", "the owner must be recovered via the pool catalog");
         assert_ne!(
             verdict.status, "grounded",
             "a pool-catalog-recovered owner must never ground a record: status={} evidence={}",
@@ -17453,15 +17603,16 @@ mod class_feature_consumer_delta_tests {
 
     /// NEGATIVE CONTROL: a group whose text shape does NOT match any
     /// registered pool entry (no suffix, no exact word) must be entirely
-    /// unaffected by this fallback and still read `unknown` -- the fallback
-    /// is additive, not a behaviour change for the genuinely unattributable
-    /// population. Reuses the exact fixture
+    /// unaffected by this fallback and still read `not-ingested` -- the
+    /// fallback is additive, not a behaviour change for the genuinely
+    /// unattributable population. Before `AT-33-E4-002` this read
+    /// `unknown`; see `unknown-rootcause.md` §1. Reuses the exact fixture
     /// `class_feature_type_facet_owner_fallback_tests::
-    /// a_record_with_no_class_signal_anywhere_still_reads_unknown` already
+    /// a_record_with_no_class_signal_anywhere_reads_not_ingested` already
     /// pins ("Domain Power" matches neither "Domain" exactly nor the
     /// `" Domain"` suffix), confirming the two fallbacks agree.
     #[test]
-    fn a_group_shape_matching_no_registered_pool_still_reads_unknown() {
+    fn a_group_shape_matching_no_registered_pool_still_reads_not_ingested() {
         let mut facts = EngineFacts::default();
         facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
         let unit = CorpusUnit {
@@ -17477,8 +17628,11 @@ mod class_feature_consumer_delta_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "unknown");
-        assert_eq!(verdict.evidence, "class_feature_group_names_no_class_at_all");
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
     }
 
     /// NEGATIVE CONTROL, the guard itself: `class_feature_owner_via_pool_catalog`
@@ -17560,7 +17714,11 @@ mod class_feature_consumer_delta_tests {
             if unit["kind"].as_str() != Some("class_feature") {
                 continue;
             }
-            if unit["status"].as_str() != Some("unknown") {
+            // `AT-33-E4-002` renamed the status string from `unknown` to
+            // `unmeasurable` (disposition unchanged) -- see
+            // `unknown-rootcause.md` §3. This filter follows the rename so
+            // the regression lock keeps checking the same real population.
+            if unit["status"].as_str() != Some("unmeasurable") {
                 continue;
             }
             let Some(key) = unit["corpus_key"].as_str() else { continue };
