@@ -19,7 +19,7 @@ One row per acceptance criterion. **21 rows.** A cycle marks its row `complete` 
 | # | Card | Epic | Criterion | Status | Notes (pointer only) |
 |---|---|---|---|---|---|
 | 1 | `box-partition` | 1 | AT-33-E1-001 | complete | `artifacts/epic-1-instruments/AT-33-E1-001_cycle_receipt.md` |
-| 2 | `box-fail-closed` | 1 | AT-33-E1-002 | not-started | |
+| 2 | `box-fail-closed` | 1 | AT-33-E1-002 | complete | `artifacts/epic-1-instruments/AT-33-E1-002_cycle_receipt.md` |
 | 3 | `probe-surface-census` | 1 | AT-33-E1-003 | not-started | |
 | 4 | `denominator-gate` | 1 | AT-33-E1-004 | not-started | |
 | 5 | `oracle-path-a-feasibility` | 2 | AT-33-E2-001 | not-started | |
