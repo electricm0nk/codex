@@ -1,6 +1,6 @@
 # Cycle AT-33-E1-002 — Epic 1 Instruments / AT-33-E1-002
 
-- **Commit SHA:** _(filled in after commit, see push confirmation below — landed as part of this cycle's single commit on `tranche/13`)_
+- **Commit SHA:** `9a52667cc5`
 - **Files touched:**
   - `scripts/box_ledger.py` (extended — same file `AT-33-E1-001` created)
   - `scripts/tests/test_box_ledger.py` (extended)
