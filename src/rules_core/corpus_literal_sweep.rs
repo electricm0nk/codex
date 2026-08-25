@@ -360,20 +360,35 @@ fn compare_typed_numeric_field(
 /// NOT `license: "PI-REDACTED"`) is still checked normally, and every OTHER
 /// token on a redacted record still must byte-match.
 ///
-/// **A second, narrower exemption for non-`DESC` tokens (`SD31-E6-F10-001`,
-/// widened t9-onboarding cycle 2026-08-23 for `class_feature`'s
-/// concatenated-blacklist redaction path).** `enrich_spell_raw_tokens.rs`'s
-/// `enrich_one` redacts ANY token (not only `DESC`) whose value hits the
-/// shared blacklist term scan, one field at a time -- so a `FACTSET:`-shaped
-/// token naming a deity on an Inner Sea Gods spell legitimately stores
-/// [`REDACTED_PI_MARKER`], the identical shape a redacted `DESC` uses, but
-/// the record-level `pi_redacted_description` flag only ever describes
-/// `DESC`. Rather than trust the marker string alone (which would let an
-/// accidental literal `"[redacted PI]"` value hide a real transcription
-/// defect), this token is exempt ONLY when the real corpus closure's own
-/// same-key value RE-SCREENS as blacklisted through EITHER of the two scans
-/// a write path in this repo actually uses: `pi_screening::classify_field`
-/// (the older, bare-substring scan `enrich_spell_raw_tokens.rs` uses), OR
+/// **A second, re-derived exemption covering every key, `DESC` included**
+/// (`SD31-E6-F10-001`, widened t9-onboarding cycle 2026-08-23 for
+/// `class_feature`'s concatenated-blacklist redaction path; widened again
+/// `SD33-R9-CORPUS-SWEEP` to stop excluding `DESC`). `enrich_spell_raw_
+/// tokens.rs`'s `enrich_one` redacts ANY token (not only `DESC`) whose value
+/// hits the shared blacklist term scan, one field at a time -- so a
+/// `FACTSET:`-shaped token naming a deity on an Inner Sea Gods spell
+/// legitimately stores [`REDACTED_PI_MARKER`], the identical shape a
+/// redacted `DESC` uses, but the record-level `pi_redacted_description` flag
+/// only ever describes a `DESC` redaction DECLARED via the record's own
+/// top-level `license`/`pi_field`. `enrich_equipment_raw_tokens.rs`'s
+/// `screen_field_value` runs the identical blacklist scan (`classify_field`)
+/// over `DESC` itself, independently of whatever the record's OWN top-level
+/// metadata declares -- real corpus reproduction,
+/// `inner_sea_gods/equipment/fugitive_finder.json`
+/// (`isg_equip.lst:137`'s `.MOD`-attached `DESC:` names the blacklisted
+/// deity "Abadar"; the record's own `license`/`pi_field` never declare a
+/// redaction, so `pi_redacted_description` is `false`, yet `raw_tokens`
+/// legitimately carries the marker anyway). This branch previously excluded
+/// `token.key == "DESC"` on the assumption that every `DESC` redaction is
+/// always the FIRST, declared-only branch's job -- false whenever the
+/// blacklist scan fires independently of the declaration, and the sole
+/// cause of this record's sweep finding. Removing that exclusion is safe
+/// for the identical reason the rest of this exemption already is: the
+/// token is exempt ONLY when the real corpus closure's own same-key value
+/// RE-SCREENS as blacklisted through EITHER of the two scans a write path
+/// in this repo actually uses: `pi_screening::classify_field` (the older,
+/// bare-substring scan `enrich_spell_raw_tokens.rs` and
+/// `enrich_equipment_raw_tokens.rs` both use), OR
 /// `pi_screening::blacklist_term_hit_including_concatenated` (the
 /// word-bounded, OCR-normalized, concatenation-aware scan
 /// `cache_gen::class_feature::redact_concatenated_blacklist_tokens` uses,
@@ -383,10 +398,14 @@ fn compare_typed_numeric_field(
 /// of the blacklisted `"Cayden Cailean"` -- that `classify_field`'s
 /// unbounded literal substring check alone cannot see). Purely additive: a
 /// token that neither scan's re-derivation backs is still reported exactly
-/// as before, so this widening cannot hide a real transcription defect,
-/// only recognise a second write path's own legitimate redaction shape --
-/// so the exemption is re-derived against the oracle every sweep run, never
-/// merely asserted by the shipped record.
+/// as before (proven live: `the_redaction_exemption_does_not_cover_other_
+/// tokens_or_undeclared_records`'s own undeclared-`DESC` case has a real
+/// corpus value, `"The real prose."`, that re-screens clean under both
+/// scans, so it still reports `TokenNotInClosure` after this widening), so
+/// this widening cannot hide a real transcription defect, only recognise a
+/// second write path's own legitimate redaction shape -- so the exemption
+/// is re-derived against the oracle every sweep run, never merely asserted
+/// by the shipped record.
 ///
 /// **The typed-field cross-check (`OPEN-ISSUES.md` row 91).** Before this,
 /// the sweep compared ONLY `data.raw_tokens` against the closure — and
@@ -487,8 +506,30 @@ pub fn compare_tokens(
         if record.pi_redacted_description && token.key == "DESC" && token.value == REDACTED_PI_MARKER {
             continue;
         }
-        if token.key != "DESC"
-            && token.value == REDACTED_PI_MARKER
+        // decisions.md §24 (see this function's doc comment): a
+        // Codex-generated-neutral-name record's own redaction is not
+        // confined to DESC or to tokens that independently re-screen as
+        // blacklisted -- `§24b`-2 redacts ANY token restating the original
+        // name/key. Exempt ONLY the exact sentinel, ONLY on a record
+        // carrying the record's own `codex_generated_name: true` marker,
+        // and count it -- the divergence stays visible, never silent.
+        // Checked BEFORE the generic re-screen branch below
+        // (`SD33-R9-CORPUS-SWEEP`, `a_codex_generated_name_records_multi_
+        // field_redaction_is_exempt_and_counted`'s own `DESC:Torag's sacred
+        // duties...` fixture): a §24 record's exemption does not, and must
+        // not, depend on whether the token happens to ALSO independently
+        // re-screen as blacklisted -- if the generic branch ran first, a
+        // §24 `DESC` whose real value happens to contain a blacklisted term
+        // would be silently absorbed by that uncounted branch instead of
+        // this counted one, understating `codex_generated_name_tokens_
+        // exempted` for a record this repo's own `§24b`-4 requires stay
+        // visible.
+        if record.codex_generated_name && token.value == REDACTED_PI_MARKER {
+            tally.codex_generated_name_tokens_exempted += 1;
+            tally.codex_generated_name_records_exempted.insert(record.record_path.clone());
+            continue;
+        }
+        if token.value == REDACTED_PI_MARKER
             && closure.iter().any(|field| {
                 field.split_once(':').is_some_and(|(key, raw_value)| {
                     key == token.key
@@ -497,18 +538,6 @@ pub fn compare_tokens(
                 })
             })
         {
-            continue;
-        }
-        // decisions.md §24 (see this function's doc comment): a
-        // Codex-generated-neutral-name record's own redaction is not
-        // confined to DESC or to tokens that independently re-screen as
-        // blacklisted -- `§24b`-2 redacts ANY token restating the original
-        // name/key. Exempt ONLY the exact sentinel, ONLY on a record
-        // carrying the record's own `codex_generated_name: true` marker,
-        // and count it -- the divergence stays visible, never silent.
-        if record.codex_generated_name && token.value == REDACTED_PI_MARKER {
-            tally.codex_generated_name_tokens_exempted += 1;
-            tally.codex_generated_name_records_exempted.insert(record.record_path.clone());
             continue;
         }
         // A second §24 shape (t9-onboarding, corpus-literal-sweep-remainder
@@ -978,6 +1007,35 @@ mod tests {
                 token: "DESC:[redacted PI]".to_string()
             }],
             "the marker string on an UNDECLARED record must still be checked normally"
+        );
+    }
+
+    /// **`SD33-R9-CORPUS-SWEEP`, real corpus reproduction of
+    /// `inner_sea_gods/equipment/fugitive_finder.json`.** `enrich_equipment_
+    /// raw_tokens.rs`'s `screen_field_value` redacts `DESC` through the SAME
+    /// blacklist scan (`classify_field`) as any other field, independently
+    /// of whether the record's own top-level `license`/`pi_field` declare a
+    /// redaction (`pi_redacted_description` stays `false` here, exactly as
+    /// on the real `fugitive_finder` record). Before this fix `compare_
+    /// tokens` special-cased `token.key != "DESC"` out of the re-screen
+    /// exemption, so this exact shape -- undeclared record, `DESC` ==
+    /// [`REDACTED_PI_MARKER`], real corpus `DESC` value independently
+    /// re-screens as blacklisted -- reported a false `TokenNotInClosure`
+    /// even though the enricher's redaction was correct.
+    #[test]
+    fn an_undeclared_desc_redaction_is_exempt_when_the_real_corpus_desc_independently_rescreens_as_blacklisted() {
+        let rec = record(&[("DESC", "[redacted PI]")]);
+        assert!(!rec.pi_redacted_description, "matches the real fugitive_finder record: undeclared");
+        let rows = ["Thing\tDESC:This crossbow was commissioned by the church of Abadar."];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![],
+            "an undeclared record's DESC redaction must be exempt once the real corpus DESC \
+             independently re-screens as blacklisted (\"Abadar\"), the same way a non-DESC token \
+             already was"
         );
     }
 

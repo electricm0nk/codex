@@ -306,6 +306,54 @@ Each entry states, at minimum:
 
 **This section is not a parking lot.** An entry here is a request for an operator ruling and it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is never a disposition, never a closure path, and no later cycle may proceed past a blocked card on its own authority.
 
+**Empty as of `sd33-r9-corpus-sweep`, 2026-08-25.** The entry this section carried
+(`corpus_literal_sweep` mismatch on 10 weapon records, filed `sd33-r8-build-green`) is **CLEARED, not
+superseded**: `src/rules_core/corpus_literal_sweep.rs` — the SWEEP, not
+`enrich_equipment_raw_tokens.rs` — had two independent defects, both proven by hand against the
+pinned oracle `.lst` bytes, not merely inferred from disagreement between the two tools:
+
+1. **`Sweep::copy_base_row` resolved a `.COPY=` base by walking the WHOLE book in `std::fs::read_dir`'s
+   own unsorted, filesystem-order-dependent order** (9 of 10 records:
+   `ultimate_equipment/equipment/{hellscourge,lash_of_the_howler,blade_of_the_rising_sun,
+   blade_of_the_sword_saint,hammer_polarity,pistol_firedrake,pistol_of_the_infinite_sky,spirit_caller,
+   sword_ten_ring}.json`). Hand-derived for `hellscourge` (`ue_equip_arms_armor.lst:496`
+   `Scorpion Whip.COPY=Hellscourge`) and `blade_of_the_sword_saint` (`:454` `Katana.COPY=Blade of the
+   Sword-Saint`): the real, full base row (`COST:`/`WT:`/`CRITMULT:`/`CRITRANGE:`/`DAMAGE:`/
+   `PROFICIENCY:`/`EQMOD:`/…) lives in the SAME `.lst` file as the citing `.COPY=` row (`:349`/`:356`),
+   while a same-named but structurally different row — a weapon-PROFICIENCY-list definition, `TYPE:`
+   only, no `COST:`/`WT:`/`DAMAGE:` — lives in a SEPARATE file in the same book
+   (`ue_profs_weapon.lst:79`/`:88`) and won the old book-wide "first match" race on this checkout
+   (confirmed via a raw `os.scandir` dump: `ue_profs_weapon.lst` precedes `ue_equip_arms_armor.lst` in
+   this filesystem's own `read_dir` order). `enrich_equipment_raw_tokens.rs::find_copy_base` never has
+   this failure mode — it only ever parses the ONE cited file — and its `raw_tokens` for both
+   hand-checked records byte-match the real corpus line exactly, token for token. Fixed: `copy_base_row`
+   now checks the citing record's OWN file first, always, falling back to the rest of the book (now
+   `.sort()`ed, for determinism — matching `wiring_class::build_mod_index`'s existing precedent) only
+   when no same-file base exists. A strict superset of the prior resolution, never a narrowing.
+2. **`compare_tokens`'s blacklist-rescreen exemption unconditionally excluded `DESC`** (1 of 10:
+   `inner_sea_gods/equipment/fugitive_finder.json`). `enrich_equipment_raw_tokens.rs::screen_field_value`
+   redacts `DESC` through the identical blacklist scan (`classify_field`) used for every other field,
+   independently of whether the record's own top-level `license`/`pi_field` declare a redaction — real
+   corpus reproduction: `isg_equip.lst:137`'s `.MOD`-attached `DESC:` names the blacklisted deity
+   "Abadar"; `fugitive_finder`'s own `license`/`pi_field` are `"OGL"`/`null` (never declared), so
+   `pi_redacted_description` is `false` and the token was reported as a false mismatch even though the
+   redaction was correct (protecting real, undeclared PI the same way this exact mechanism already
+   fixed for 28 `inner_sea_gods` records in wave 12). Fixed: the exemption now covers `DESC` too, and is
+   checked AFTER the `codex_generated_name` branch (reordered, not merely widened) so that branch's own
+   `§24b`-4 counted-exemption invariant stays exact.
+
+Neither fix touched `data/corpus/**` or `enrich_equipment_raw_tokens.rs` — both hand-checked records'
+`raw_tokens` were already byte-correct; no regeneration was needed or performed, and Epic 5 is
+undisturbed (`box_ledger.py --check` still `oracle_disagreement=0`, rows still `1,741`/`6,589`/`8,330`).
+RED→GREEN: 2 new unit tests plus a reordering fix to keep a pre-existing test green (all detailed in the
+receipt below); `cargo run --locked --bin corpus_literal_sweep` moved from **105 findings across 10 of
+137 changed corpus records, exit 1** to **0 findings, exit 0** (48,634 records examined). Full
+hand-derivation (token by token, against the pinned oracle bytes), evidence and commands:
+`artifacts/epic-6-closure/AT-33-E6-001-corpus-sweep_cycle_receipt.md`.
+
+<details>
+<summary>Historical entry (CLEARED 2026-08-25, kept for audit trail — not an active blocker)</summary>
+
 ### `corpus_literal_sweep` mismatch on 10 weapon records — filed `sd33-r8-build-green`, 2026-08-25
 
 `scripts/verify.sh`'s `corpus-sweep` stage (`cargo run --locked --bin corpus_literal_sweep`) FAILs:
@@ -335,6 +383,8 @@ scope and turn budget. Full evidence, exact command, and the 5 confirmed record 
 `src/rules_core/corpus_literal_sweep.rs`, whichever is wrong) write scope to reconcile the two, then
 re-run `cargo run --locked --bin corpus_literal_sweep` to confirm `0 findings`. Revisit condition:
 that re-run, or an operator ruling that the 10 affected records are out of this bundle's DoD scope.
+
+</details>
 
 **Empty as of `AT-33-E5-finalize-wave6`, 2026-08-25** (this section's history below, unaffected by
 the new entry above). The one entry this section carried
