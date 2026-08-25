@@ -1,0 +1,113 @@
+{
+  "results": [
+    {
+      "unit_id": "core_rulebook:equipment:rod_flailing",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=3 affects=DAMAGE,TOHIT (BONUS:WEAPON|DAMAGE,TOHIT|3|TYPE=Enhancement, no TYPE.Natural/WEAPONPROF scope). Live oracle (direct-java runner, Rod (Flailing) worn as its own weapon, PROFICIENCY WEAPON|Flail (Dire)): WEAPON.n.MAGICHIT=+3, WEAPON.n.MAGICDAMAGE=+3. This is the control fixture that resolved AT-33-E5-last75's open MAGICHIT-sign question: a Medium-sized weapon's MAGICHIT matches its enhancement bonus cleanly."
+    },
+    {
+      "unit_id": "core_rulebook:equipment:rod_python",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=1 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+1 (Rod (Python), PROFICIENCY WEAPON|Quarterstaff, worn as its own weapon)."
+    },
+    {
+      "unit_id": "core_rulebook:equipment:rod_thunder_and_lightning",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=1 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+1 (Rod (Thunder and Lightning), PROFICIENCY WEAPON|Mace (Light))."
+    },
+    {
+      "unit_id": "core_rulebook:equipment:rod_viper",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=2 affects=DAMAGE,TOHIT. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Rod (Viper), PROFICIENCY WEAPON|Mace (Heavy))."
+    },
+    {
+      "unit_id": "core_rulebook:equipment:mattock_of_the_titans",
+      "ours": 3,
+      "oracle": 3,
+      "verdict": "agree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=3 affects=TOHIT,DAMAGE (BONUS:WEAPON|TOHIT,DAMAGE|3|TYPE=Enhancement). Live oracle: WEAPON.n.MAGICDAMAGE=+3 (agrees). TOHIT is DELIBERATELY EXCLUDED from this comparison: MAGICHIT=-3, not +3 -- Mattock of the Titans is SIZE:G (Gargantuan) wielded by a Medium fixture; a size-matched control (Rod (Flailing), SIZE:M, same fixture, same run) shows MAGICHIT=+3 cleanly, proving the -3 is PCGen's own oversized-weapon to-hit penalty folding into the WEAPON|TOHIT bonusTo bucket alongside the item's own +3 enhancement (3 - 6 = -3), not a defect in either our compute or the harness. This resolves AT-33-E5-last75's open 'next-cycle plan' item 1 (the MAGICHIT sign question) precisely: MAGICHIT is a valid comparable token for a normally-sized weapon, and is confounded (not wrong) for a size-mismatched one. DAMAGE is the single comparable magnitude for this unit."
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:claw_blades_catfolk",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree",
+      "dimension": "TOHIT",
+      "note": "compute_equipmods_effect bonus=1 affects=TOHIT only (BONUS:WEAPON|TOHIT|1|TYPE=Enhancement, no DAMAGE component on either side). Live oracle: WEAPON.n.MAGICHIT=+1, MAGICDAMAGE=+0 (Claw Blades (Catfolk), PROFICIENCY WEAPON|Claw, worn as its own weapon). TOHIT is the comparable magnitude here (the only one either side claims)."
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:rending_claw_blades",
+      "ours": 0,
+      "oracle": 1,
+      "verdict": "disagree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=1 affects=TOHIT ONLY -- matches this record's own raw_bonus_chains (single chain, BONUS:WEAPON|TOHIT|1|TYPE=Enhancement), so ours=0 on the DAMAGE dimension (no chain grants it). Live oracle (direct-java runner, worn as its own weapon, PROFICIENCY WEAPON|Claw): WEAPON.n.MAGICHIT=+1 (agrees with ours), MAGICDAMAGE=+1 (disagrees -- ours has no DAMAGE-affecting chain at all). Root-caused this cycle: the pinned PCGen source (advanced_race_guide/arg_equip_arms_armor.lst) defines this record via `Rending Claw Blades.MOD ... EQMOD:Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon.Material ~ Steel`, i.e. the live item carries an attached 'Special Ability ~ +1 ~ Weapon' equipmod (the canonical BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement quality) PLUS Keen, on top of its own base TOHIT-only chain. This record's corpus JSON (data/corpus/advanced_race_guide/equipment/rending_claw_blades.json) carries only `EQMOD: Material ~ Steel` in raw_tokens -- the `.MOD`-attached 'Special Ability ~ +1 ~ Weapon' / 'Special Ability ~ Keen ~ Weapon' EQMOD references were not captured by the corpus extraction pipeline for this .MOD-defined record. This is a corpus-extraction gap (data/corpus/**, out of this lane's write scope -- never hand-edited), not a compute_equipmods_effect defect: a perfect resolver reading this exact JSON would still compute DAMAGE=0, because the source JSON itself has no DAMAGE-affecting token to read."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:berserking_sword",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Greatsword (BONUS:WEAPONPROF=Greatsword|TOHIT,DAMAGE|2, no TYPE=Enhancement -- the Cursed-Weapon family compute_equipmods_effect matches unconditionally per its own module doc comment). Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Berserking Sword, itself PROFICIENCY WEAPON|Greatsword, worn as its own weapon -- WEAPONPROF scope matches itself)."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cursed_backbiter_spear",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Shortspear. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Cursed Backbiter Spear, itself PROFICIENCY WEAPON|Shortspear, worn as its own weapon)."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:heavy_hammer",
+      "ours": 0,
+      "oracle": 4,
+      "verdict": "disagree",
+      "dimension": "DAMAGE",
+      "note": "REAL ENGINE DEFECT, confirmed this cycle. This record's own corpus JSON (data/corpus/ultimate_equipment/equipment/heavy_hammer.json) carries THREE separate raw_bonus_chains: BONUS:MOVEADD|TYPE.All|-10, BONUS:WEAPONPROF=Warhammer|TOHIT|-2, and BONUS:WEAPONPROF=Warhammer|DAMAGE|4 -- all present in the corpus. compute_equipmods_effect's own doc comment states it 'reads the record's FIRST BONUS:<WEAPON|WEAPONPROF=TYPE.Natural>|... chain, if any' -- confirmed live: this cycle's e5_last67_weapon_ours probe (real call into compute_equipment_effects) returns bonus=-2 affects=TOHIT ONLY for heavy_hammer; the second WEAPONPROF=Warhammer|DAMAGE|4 chain is silently dropped, never reaching WeaponEnhancementBonus at all. Live oracle (direct-java runner, worn as its own weapon, PROFICIENCY WEAPON|Warhammer): WEAPON.n.MAGICHIT=-2 (agrees with ours), WEAPON.n.MAGICDAMAGE=+4 (disagrees -- ours has no DAMAGE value at all for this unit, a real player-facing gap: the item's own +4 damage bonus would never render). This is a genuine single-record, multi-chain limitation in compute_equipmods_effect (src/rules_core/equipment_effects/equipmods.rs), not a corpus gap -- named for next-cycle remediation, not fixed this cycle (a same-record multi-chain-summing change needs its own RED->GREEN and a check against every other examined unit in this lane to confirm no other multi-chain record silently regresses)."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ornery_pistol",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "dimension": "DAMAGE",
+      "note": "compute_equipmods_effect bonus=2 affects=TOHIT,DAMAGE weapon_prof_scope=Pistol. Live oracle: WEAPON.n.MAGICHIT=+2, MAGICDAMAGE=+2 (Ornery Pistol, itself PROFICIENCY WEAPON|Pistol, worn as its own weapon)."
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:crossbow_double",
+      "ours": null,
+      "oracle": -4,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: bare BONUS:WEAPON|TOHIT|-4 chain, no TYPE=Enhancement qualifier. compute_equipmods_effect deliberately excludes TYPE=Enhancement-less bare WEAPON chains (module doc comment, SD-31 wave 17/18 adversarial review) -- this cycle's e5_last67_weapon_ours probe (real compute_equipment_effects call) confirms ours=null for this record, not a fabricated literal. Comparable magnitude, IF an engine resolver existed: TOHIT (the chain's only affected roll). Live oracle recorded for the next cycle that builds this resolver: WEAPON.n.MAGICHIT=-4, WEAPON.n.MAGICDAMAGE=+0 (Crossbow (Double), worn as its own weapon, direct-java runner)."
+    },
+    {
+      "unit_id": "core_rulebook:equipment:rod_withering",
+      "ours": null,
+      "oracle": 1,
+      "verdict": "unverifiable",
+      "reason": "no_resolver: bare BONUS:WEAPON|TOHIT|1 chain, no TYPE=Enhancement qualifier -- same deliberate compute_equipmods_effect exclusion as crossbow_double above (e5_last67_weapon_ours confirms ours=null). Comparable magnitude, IF an engine resolver existed: TOHIT. Live oracle recorded: WEAPON.n.MAGICHIT=+1, WEAPON.n.MAGICDAMAGE=+0 (Rod (Withering), PROFICIENCY WEAPON|Mace (Light), worn as its own weapon, direct-java runner)."
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:sword_cane",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "no_comparable_export_token: BONUS:WEAPON|DAMAGEMULT:2|-0.5 is a fractional per-attack crit-multiplier delta, not a TOHIT/DAMAGE roll -- compute_equipmods_effect does not resolve DAMAGEMULT chains at all (e5_last67_weapon_ours confirms ours=null), and no single PCGen WEAPON.n export token isolates a DAMAGEMULT-family delta: WEAPON.n.MULT (PCGen's own crit-multiplier export, WeaponToken.java case MULT) returned the weapon's unmodified base value (2, i.e. x2) on a live direct-java run of Sword Cane worn as its own weapon -- confirmed empirically this cycle, not assumed. PCGen's own row format also carries no fractional-value token for this family. Decision for this shape (applies to the sibling DAMAGEMULT units this lane did not reach live-test time for): the comparable magnitude WOULD be the fractional DAMAGEMULT value itself if a token existed; none does, so unverifiable rather than a fabricated integer truncation (truncating -0.5 to 0 or -1 would manufacture a false agree/disagree)."
+    }
+  ]
+}
