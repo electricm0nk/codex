@@ -1,0 +1,864 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_class_guide:class_feature:bloodrager_damage_reduction",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_sneak_attack",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_stalker",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_studied_target",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_trapfinding",
+      "ours": 10,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "PCGen's own Special Abilities list for the slayer L20 build carries no ability named 'Trapfinding' (real names present: Bonus Feat, Foil Scrutiny, Improved Quarry, Master Slayer, Quarry, Skilled, Slayer's Advance, Sneak Attack, Stalker, Studied Target, Swift Tracker, Track, Weapon and Armor Proficiency) -- confirmed absent, not a lookup miss: no oracle value exists for this feature at this build's posture."
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:paladin_channel_positive_energy",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:paladin_lay_on_hands",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rage_power_superstition",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:ranger_master_hunter",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_master_strike",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_trap_sense",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_trapfinding",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "ultimate_combat:class_feature:ninja_no_trace",
+      "ours": 6,
+      "oracle": 6,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "ultimate_combat:class_feature:ninja_sneak_attack",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "ultimate_combat:class_feature:samurai_resolve",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:investigator_alchemy",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_talent_foil_scrutiny",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_players_guide:class_feature:inquisitor_track",
+      "ours": 10,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "PCGen's real DESCRIPTION text for 'Track' carries no bonus-shaped numeric token this comparison's regex recognizes. Real DESC text: 'An inquisitor adds half her level on Survival skill checks made to follow or identify tracks.'"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:barbarian_uncanny_dodge",
+      "ours": 0,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "engine's own explanation for this feature is a grant-only identity record (value 0 by design, per its own doc comment in src/rules_core/pilot_compute/) -- the feature has no single numeric magnitude this engine computes at all (a boolean immunity, or a multi-clause ability whose clauses are individually unmodelled), so there is no 'ours' number to compare against any oracle export token regardless of what PCGen's own DESCRIPTION renders."
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:druid_nature_sense",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:druid_wild_empathy",
+      "ours": 22,
+      "oracle": 22,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:monk_ac_bonus",
+      "ours": 2,
+      "oracle": 7,
+      "verdict": "disagree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:monk_high_jump",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:monk_wholeness_of_body",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:paladin_aura_of_righteousness",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:paladin_holy_champion",
+      "ours": 0,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "engine's own explanation for this feature is a grant-only identity record (value 0 by design, per its own doc comment in src/rules_core/pilot_compute/) -- the feature has no single numeric magnitude this engine computes at all (a boolean immunity, or a multi-clause ability whose clauses are individually unmodelled), so there is no 'ours' number to compare against any oracle export token regardless of what PCGen's own DESCRIPTION renders."
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:ranger_hunter_s_bond",
+      "ours": 0,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "engine's own explanation for this feature is a grant-only identity record (value 0 by design, per its own doc comment in src/rules_core/pilot_compute/) -- the feature has no single numeric magnitude this engine computes at all (a boolean immunity, or a multi-clause ability whose clauses are individually unmodelled), so there is no 'ours' number to compare against any oracle export token regardless of what PCGen's own DESCRIPTION renders."
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:ranger_track",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_talent_resiliency",
+      "ours": 20,
+      "oracle": 20,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_sneak_attack",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_uncanny_dodge",
+      "ours": 0,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "class_feature",
+      "reason": "engine's own explanation for this feature is a grant-only identity record (value 0 by design, per its own doc comment in src/rules_core/pilot_compute/) -- the feature has no single numeric magnitude this engine computes at all (a boolean immunity, or a multi-clause ability whose clauses are individually unmodelled), so there is no 'ours' number to compare against any oracle export token regardless of what PCGen's own DESCRIPTION renders."
+    },
+    {
+      "unit_id": "pathfinder_unchained:class_feature:unchained_rogue_sneak_attack",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree",
+      "kind": "class_feature"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:catfolk",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:dhampir",
+      "ours": {
+        "charisma": 2,
+        "constitution": -2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:drow",
+      "ours": {
+        "charisma": 2,
+        "constitution": -2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:duergar",
+      "ours": {
+        "charisma": -4,
+        "constitution": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "constitution": 2,
+        "wisdom": 2,
+        "charisma": -4
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:dwarf",
+      "ours": {
+        "charisma": -2,
+        "constitution": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "constitution": 2,
+        "wisdom": 2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:elf",
+      "ours": {
+        "constitution": -2,
+        "dexterity": 2,
+        "intelligence": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "intelligence": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:fetchling",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:gillman",
+      "ours": {
+        "charisma": 2,
+        "constitution": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "constitution": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:gnome",
+      "ours": {
+        "charisma": 2,
+        "constitution": 2,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "constitution": 2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:goblin",
+      "ours": {
+        "charisma": -2,
+        "dexterity": 4,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 4,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:grippli",
+      "ours": {
+        "dexterity": 2,
+        "strength": -2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:half_elf",
+      "ours": {
+        "floating_bonus_points": 2
+      },
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race",
+      "reason": "this race grants a floating +2 to a player-chosen ability rather than a fixed set; this cycle's minimal .pcg makes no ability selection, so PCGen shows all six scores at the unmodified base (no per-ability delta exists to compare the floating magnitude against in an unselected build)."
+    },
+    {
+      "unit_id": "advanced_race_guide:race:half_orc",
+      "ours": {
+        "floating_bonus_points": 2
+      },
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race",
+      "reason": "this race grants a floating +2 to a player-chosen ability rather than a fixed set; this cycle's minimal .pcg makes no ability selection, so PCGen shows all six scores at the unmodified base (no per-ability delta exists to compare the floating magnitude against in an unselected build)."
+    },
+    {
+      "unit_id": "advanced_race_guide:race:halfling",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:hobgoblin",
+      "ours": {
+        "constitution": 2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:human",
+      "ours": {
+        "floating_bonus_points": 2
+      },
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race",
+      "reason": "this race grants a floating +2 to a player-chosen ability rather than a fixed set; this cycle's minimal .pcg makes no ability selection, so PCGen shows all six scores at the unmodified base (no per-ability delta exists to compare the floating magnitude against in an unselected build)."
+    },
+    {
+      "unit_id": "advanced_race_guide:race:ifrit",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:kobold",
+      "ours": {
+        "constitution": -2,
+        "dexterity": 2,
+        "strength": -4
+      },
+      "oracle": {
+        "strength": -4,
+        "dexterity": 2,
+        "constitution": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:merfolk",
+      "ours": {
+        "charisma": 2,
+        "constitution": 2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": 2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:orc",
+      "ours": {
+        "charisma": -2,
+        "intelligence": -2,
+        "strength": 4,
+        "wisdom": -2
+      },
+      "oracle": {
+        "strength": 4,
+        "intelligence": -2,
+        "wisdom": -2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:oread",
+      "ours": {
+        "charisma": -2,
+        "strength": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": 2,
+        "wisdom": 2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:ratfolk",
+      "ours": {
+        "dexterity": 2,
+        "intelligence": 2,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "intelligence": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:strix",
+      "ours": {
+        "charisma": -2,
+        "dexterity": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:suli",
+      "ours": {
+        "charisma": 2,
+        "intelligence": -2,
+        "strength": 2
+      },
+      "oracle": {
+        "strength": 2,
+        "intelligence": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:svirfneblin",
+      "ours": {
+        "charisma": -4,
+        "dexterity": 2,
+        "strength": -2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "wisdom": 2,
+        "charisma": -4
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:sylph",
+      "ours": {
+        "constitution": -2,
+        "dexterity": 2,
+        "intelligence": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "intelligence": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:tengu",
+      "ours": {
+        "constitution": -2,
+        "dexterity": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "constitution": -2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:undine",
+      "ours": {
+        "dexterity": 2,
+        "strength": -2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:vanara",
+      "ours": {
+        "charisma": -2,
+        "dexterity": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": 2,
+        "charisma": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race:vishkanya",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "wisdom": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_4:race:kitsune",
+      "ours": {
+        "charisma": 2,
+        "dexterity": 2,
+        "strength": -2
+      },
+      "oracle": {
+        "strength": -2,
+        "dexterity": 2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_4:race:nagaji",
+      "ours": {
+        "charisma": 2,
+        "intelligence": -2,
+        "strength": 2
+      },
+      "oracle": {
+        "strength": 2,
+        "intelligence": -2,
+        "charisma": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_4:race:samsaran",
+      "ours": {
+        "constitution": -2,
+        "intelligence": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "constitution": -2,
+        "intelligence": 2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_4:race:wayang",
+      "ours": {
+        "dexterity": 2,
+        "intelligence": 2,
+        "wisdom": -2
+      },
+      "oracle": {
+        "dexterity": 2,
+        "intelligence": 2,
+        "wisdom": -2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_5:race:skinwalker",
+      "ours": {
+        "intelligence": -2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "intelligence": -2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "bestiary_6:race:rougarou",
+      "ours": {
+        "intelligence": -2,
+        "strength": 2,
+        "wisdom": 2
+      },
+      "oracle": {
+        "strength": 2,
+        "intelligence": -2,
+        "wisdom": 2
+      },
+      "verdict": "agree",
+      "kind": "race"
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:suli_earthfoot",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:suli_firehand",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:suli_icewalk",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:suli_shockshield",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:world_walker_skilled",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_ability_scores",
+      "ours": {
+        "charisma": 2,
+        "wisdom": 2
+      },
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "real engine-side magnitude computed ({'charisma': 2, 'wisdom': 2}, floating_bonus_points=0) via the same race_creation_chassis(...) read the `race` population uses, but this cycle built no PCGen .pcg for 'Aasimar' itself (it is a race_trait unit, not one of the 36 race units already built) -- no live oracle round-trip was run for this specific unit this cycle."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_celestial_resistance",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_skilled",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_speed",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "bestiary:race_trait:aasimar_vision",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "horror_adventures:race_trait:deep_jungle_halfling_poison_use",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "inner_sea_races:race_trait:junk_tinker_skilled",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no consumer anywhere in this codebase reads this record's own magnitude (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- the same structural class of finding AT-33-E1-003 established for companion/monster/monster_ability's probe_exists:false kinds. Not a throughput gap: this unit was fed to real corpus-loaded classification, and the classification is that no comparable 'ours' magnitude exists to compare against any oracle export."
+    },
+    {
+      "unit_id": "monster_codex:race_trait:oversized_goblin_ability_scores",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "kind": "race_trait",
+      "reason": "race_creation_chassis did not resolve for this race_trait's own race in this cycle's probe run"
+    }
+  ]
+}

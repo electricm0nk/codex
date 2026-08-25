@@ -1,0 +1,45 @@
+STAT.0.NAME=STR
+STAT.0.SCORE=14
+STAT.1.NAME=DEX
+STAT.1.SCORE=14
+STAT.2.NAME=CON
+STAT.2.SCORE=14
+STAT.3.NAME=INT
+STAT.3.SCORE=14
+STAT.4.NAME=WIS
+STAT.4.SCORE=14
+STAT.5.NAME=CHA
+STAT.5.SCORE=14
+SA.COUNT=14
+SA.0.NAME=Bonus Feat
+SA.0.DESC=Humans select one extra feat at 1st level.
+SA.1.NAME=Danger Sense
+SA.1.DESC=You gain a +6 bonus on Reflex saves to avoid traps and a +6 dodge bonus to AC against attacks by traps. In addition, you gain a +6 bonus on Perception checks to avoid being surprised by a foe. This ability counts as trap sense for any feat or class prerequisite, and can be replaced by any archetype class feature that replaces trap sense. The bonuses gained from this ability stack with those gained from trap sense (if you have trap sense from another class).
+SA.2.NAME=Debilitating Injury
+SA.2.DESC=At 4th level, whenever a rogue deals sneak attack damage to a foe, she can also debilitate the target of her attack, causing it to take a penalty for 1 round (this is in addition to any penalty caused by a rogue talent or other special ability). The rogue can choose to apply any one of the following penalties when the damage is dealt.
+ Bewildered: The target becomes bewildered, taking a -2 penalty to AC. The target takes an additional -2 penalty to AC against all attacks made by the rogue. At 10th level and 16th level, the penalty to AC against attacks made by the rogue increases by -2 (to a total maximum of -8).
+ Disoriented: The target takes a -2 penalty on attack rolls.  In addition, the target takes an additional -2 penalty on all attack rolls it makes against the rogue. At 10th level and 16th level, the penalty on attack rolls made against the rogue increases by -2 (to a total maximum of -8).
+ Hampered: All of the target's speeds are reduced by half (to a minimum of 5 feet). In addition, the target cannot take a 5-foot step.
+ These penalties do not stack with themselves, but additional attacks that deal sneak attack damage extend the duration by 1 round. A creature cannot suffer from more than one penalty from this ability at a time. If a new penalty is applied, the old penalty immediately ends. Any form of healing applied to a target suffering from one of these penalties also removes the penalty.
+SA.3.NAME=Evasion
+SA.3.DESC=You can avoid damage from many area-effect attacks. If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage. Evasion can only be used if you are wearing light armor or no armor. If you are helpless, you do not gain the benefit of evasion.
+SA.4.NAME=Evasion
+SA.4.DESC=
+SA.5.NAME=Finesse Training
+SA.5.DESC=At 1st level, a rogue gains Weapon Finesse as a bonus feat. In addition, starting at 3rd level, she can select any one type of weapon that can be used with Weapon Finesse (such as rapiers or daggers). Once this choice is made, it cannot be changed. Whenever she makes a successful melee attack with the selected weapon, she adds her Dexterity modifier instead of her Strength modifier to the damage roll. If any effect would prevent the rogue from adding her Strength modifier to the damage roll, she does not add her Dexterity modifier. The rogue can select a second weapon at 11th level and a third at 19th level.
+SA.6.NAME=Improved Uncanny Dodge
+SA.6.DESC=You can no longer be flanked. This defense denies a rogue the ability to sneak attack you by flanking you, unless the attacker is a rogue of at least level 24.
+SA.7.NAME=Master Strike
+SA.7.DESC=You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is 32. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.
+SA.8.NAME=Rogue's Edge
+SA.8.DESC=You have mastered 4 skills beyond those skill's normal boundaries, gaining results that others can only dream about. You gain the skill unlock powers as appropriate for the number of ranks you have.
+SA.9.NAME=Skilled
+SA.9.DESC=Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.
+SA.10.NAME=Skills
+SA.10.DESC=
+SA.11.NAME=Sneak Attack
+SA.11.DESC=If you can catch an opponent when he is unable to defend himself effectively from your attack, you can strike a vital spot for extra damage. Your attack deals 10d6 points of extra damage anytime your target would be denied a Dexterity bonus to AC, or when you flank your target. Should you score a critical hit with a sneak attack, this extra damage is not multiplied. Ranged attacks can count as sneak attacks only if the target is within 30 feet. With a weapon that deals nonlethal damage, you can make a sneak attack that deals nonlethal damage instead of lethal damage. You cannot use a weapon that deals lethal damage to deal nonlethal damage in a sneak attack, not even with the usual -4 penalty. You must be able to see the target well enough to pick out a vital spot and must be able to reach such a spot. You cannot sneak attack while striking a creature with concealment.
+SA.12.NAME=Trapfinding
+SA.12.DESC=You add +10 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.
+SA.13.NAME=Uncanny Dodge
+SA.13.DESC=You can react to danger before your senses would normally allow you to do so. You cannot be caught flat-footed, nor do you lose your Dexterity bonus to AC if the attacker is invisible. You still lose your Dexterity bonus to AC if immobilized. You can still lose your Dexterity bonus to AC if an opponent successfully uses the feint action against you.
