@@ -225,6 +225,17 @@ None. **This section is not a parking lot.** An entry here is a request for an o
 
 ## Cycles
 
+### Cycle AT-33-E6-001 (attempt 4) — final-acceptance-scan (row 19, Epic 6) — blocked-escalated, gate **FAIL**
+
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-attempt4_cycle_receipt.md` (every command and its output inline).
+- **Verdict: FAIL.** No retrospective, no sweep, no PR. Three shortfalls stand.
+- **Shortfall 1 — 75 of 8,330 blessed units carry no oracle row.** Derived as a *set* difference, not a count: `docs/work-inventory.json`'s `literal-verified` (6,589) plus `fixture-verified` (1,741) id set minus every `unit_id` in `AT-33-E5-003.combined-oracle-results.json` leaves 75 ids — `equipment` 61, `equipment_modifier` 14. Row counts against their denominators: fixture 1,741 of 1,741 (**closed**), literal 6,514 of 6,589, combined 8,255 of 8,330. Wave 3 moved the gap from 391 of 8,330 to 75 of 8,330 — real movement, not closure. `kanban.md` rows 17 and 18 are `in-progress` and say so honestly; under §11 step 1 that still blocks.
+- **Shortfall 2 — 26 of 8,255 examined units at `disagree`, all unresolved, NEW since attempt 3.** `AT-33-E5-003` requires each "fixed or escalated"; all 26 are root-caused and none is either. 21 of the 26 share one engine gap (`compute_arms_armor_effect`/`compute_var_effect` do not resolve and sum a base item's `EQMOD:`-referenced modifier record's own `BONUS:` chain); 3 harness baseline-diff; 1 `PRE`-gated chain; 1 undiagnosed.
+- **Shortfall 3 — kanban rows 17, 18 `in-progress`; 19 `blocked-escalated`; 20, 21 `not-started`.** Rows 1–16 of 21 are `complete`.
+- **Re-verified CLOSED (attempt 3's other findings), not re-investigated:** row 16 at 1,741 of 1,741; 0 reasonless `unverifiable` and 0 duplicate `unit_id` across all three results files; denominator gate genuinely widened (receipts glob + `progress.md` + seven bundle-root docs) with teeth intact — a bare percentage FAILS, a bare hundred-percent token FAILS, the corrected form passes, baseline 0 violations of 36 files; no hardcoded exclusion list in any closure instrument (`EXCLUDED_BOOKS` is `frozenset()`); `unknown` at 0 in `docs/work-inventory.json`; Epic 3's artifact at the SD-33 path with SD-32's `gate-2-engines/` last touched by an SD-32 commit; deferral posture 2 open of 8, both capability deferrals with named revisit conditions, 0 covering DoD scope; all 20 kanban-cited receipts exist and carry §7's figures and four-buckets rows.
+- **Instrument-correction found (reported, not fixed — this cycle writes no code):** `scripts/box_ledger.py`'s `DEFAULT_ORACLE_RESULTS` points at `artifacts/epic-2-oracle-harness/oracle-results.json`, which Epic 2 never produced, so a bare `--check` reports `oracle_disagreement=0` and exits 0 while 26 real disagreements stand. Pointed at the merged Epic 5 file it reports `oracle_disagreement=26` and exits 1. The default aim misses the bundle's own evidence.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability re-derived wave 3's 7,939 of 8,330 → 8,255 of 8,330 (316 units) / instrument-correction 1 found.
+
 ### Cycle AT-33-E5-finalize-wave3 — totals Epic 5 across all wave-3 lanes, owns the kanban call on rows 16/17/18 — blocked-escalated
 
 - **Criterion:** `AT-33-E5-001`/`AT-33-E5-002`/`AT-33-E5-003` — merge every lane's results into the
