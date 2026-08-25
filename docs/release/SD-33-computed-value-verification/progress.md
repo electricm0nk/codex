@@ -2,7 +2,30 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: Epic 6 as of AT-33-E6-001 attempt 7 (this cycle) — gate **FAIL**, seventh consecutive correct halt, **1 shortfall** (down from 4 at attempt 6). Rows 1-18 all `complete`; row 19 stays `blocked-escalated`. 3 of attempt 6's 4 shortfalls CLOSED and verified by execution: **0 of 8,330** blessed units unexamined, **0 of 8,330** examined units `disagree` (`box_ledger.py --check` exit 0), and **66 of 66** wave-5 method-rerun rows reaching the closure artifact — `method_change_rerun_verified: true` (**21 of 21** derived-affected rows re-run across all three wave-5 corrections, **0 of 21** moved `agree`→`disagree`). **SURVIVING BLOCKER:** `cargo test --locked --lib` is RED — **2,832 of 2,836** executed lib tests pass, **4 of 2,836** fail; 3 of the 4 are SD-33's own Epic 4 debt (`doneness: unmapped 'ambiguous' + 'unmeasurable'`, a pair on **11 of 49,438** work-inventory units introduced by `00ca087775` `AT-33-E4-002`), so **kanban row 14 is `complete` over a suite its own commit turned red**, and 1 of the 4 (`equipment_resolver.rs:863`, `left: 8119 right: 8100`) is inherited from the cut. No retrospective, no sweep, no PR. `## Open blockers` remains empty — this is a named, in-scope defect with a named fix, not a request for a ruling.
+status: Epic 6 as of `AT-33-E6-001-suite-green` (remediation wave 7, this cycle). Attempt 7's own
+  **SURVIVING BLOCKER** is CLOSED, verified by execution: `cargo test --locked --lib` is now
+  **GREEN — 2,836 of 2,836** executed lib tests pass, **0 fail**, 14 ignored (up from 2,832 of
+  2,836 / 4 failing). Both named causes fixed with a real diff, not a silenced check: (1)
+  `pf1e_dashboard_producer.py`'s doneness table was missing the `unmeasurable` spelling of its own
+  pre-existing `unknown` checked-first rule (`AT-33-E4-002` renamed the STATUS_VOCABULARY word and
+  missed this one call site) — fixed, plus a second, deeper stale pin the crash had been masking
+  (`f1_population...`'s `6,308` pin predated the same `AT-33-E4-002` regen by 44 minutes; retargeted
+  to the freshly re-derived `6,278`, matching `shape_ledger.py` exactly); (2)
+  `equipment_resolver.rs:863`'s `8,100` catalog-count pin, confirmed already stale AT the
+  `tranche/13` cut itself (not caused by any SD-33 wave), retargeted to `8,119`, cross-confirmed by
+  two independently-computed tables that already agreed. Full detail, all re-derive commands, and
+  the count-sweep: `artifacts/epic-6-closure/AT-33-E6-001-suite-green_cycle_receipt.md`. Row 14
+  stays `complete` (its own regen commit caused the gap; this cycle closes the mapper's debt
+  against it). **A separate, unrelated pre-existing defect was found and NOT fixed** (out of this
+  cycle's scope, per its own dispatch): the root-workspace `cargo test --locked` (full suite, not
+  `--lib`) fails to COMPILE `tests/sd20_equipment_equipmods.rs` (stale `WeaponEnhancementBonus`
+  field references from wave 6's `7d439876b7`, confirmed untouched by this cycle's own diff) —
+  0 of N integration suites run; named for a future cycle. `apps/desktop/src-tauri` (separate
+  cargo workspace, tested explicitly): GREEN, 548 of 548. Epic 5 re-confirmed undisturbed
+  (`box_ledger.py --check` → `oracle_disagreement=0`, exit 0). Row 19 (`final-acceptance-scan`)
+  stays `blocked-escalated` — a fresh attempt-8 scan against this cycle's own landing commit is
+  the next Epic-6 act, not performed by this cycle (out of its own granted scope: fix the suite,
+  not re-run the gate). `## Open blockers` remains empty.
 date: 2026-08-25
 ---
 
@@ -364,6 +387,83 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 </details>
 
 ## Cycles
+
+### Cycle AT-33-E6-001-suite-green — remediation wave 7, close attempt 7's surviving `cargo test --locked --lib` shortfall — complete
+
+- **Criterion:** attempt 7's own Shortfall 1 (`AT-33-E6-001`'s own scope): `cargo test --locked
+  --lib` must be GREEN.
+- **Starting state, re-confirmed by execution:** `test result: FAILED. 2832 passed; 4 failed`,
+  matching attempt 7's own figures exactly.
+- **Group A (3 of 4 failures) — the unmapped `(ambiguous, unmeasurable)` doneness pair.** Traced
+  to `_doneness_verdict_uncapped`'s checked-first branch (`scripts/observer/pf1e_dashboard_producer.py`):
+  it special-cased `status == "unknown"` → `DONENESS_UNMEASURABLE` (deliberately ahead of every
+  `wiring_class` branch, per its own doc comment), but `AT-33-E4-002` (`00ca087775`) renamed that
+  STATUS_VOCABULARY word to `unmeasurable` everywhere in the real generator EXCEPT this one call
+  site. Confirmed the pair is a legitimate, live combination (not a misclassification): **11 of
+  49,438** work-inventory units carry it, all from row 14's own regen. Fixed:
+  `if status in ("unknown", "unmeasurable"):` — kept both spellings so an older, already-generated
+  inventory snapshot legitimately carrying the old word still resolves identically (proven by a
+  new test asserting the two spellings agree across all 5 wiring classes). Also fixed the same
+  gap's silent, non-crashing twin: `310 of 49,438` `(display, unmeasurable)` units were falling
+  through `display`'s catch-all into `in-progress` instead of the honest `unmeasurable`.
+  `scripts/tests/test_pf1e_dashboard_producer.py`'s own "full grid, kept in sync BY HAND with
+  STATUS_VOCABULARY" self-test had gone stale too (`STATUS_WORDS` still listed the dead `unknown`
+  word instead of the real `unmeasurable`) — fixed, plus two new targeted tests.
+  **A second, deeper stale pin the crash had been masking**: fixing the crash let
+  `f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census` run to
+  completion for the first time, exposing its own `6,308` expectation as stale — that pin
+  (`347e9d1a34`) predates `00ca087775`'s regen of `docs/work-inventory.json` by 44 minutes, and F1's
+  population is built directly from that file. Re-derived fresh: `python3 scripts/shape_ledger.py
+  --inventory docs/work-inventory.json` → `F1 6278`, matching the Rust test's own live population
+  exactly. Retargeted `6_308` → `6_278`, full derivation chain in the test's own doc comment.
+- **Group B (1 of 4 failures) — the stale `equipment_resolver.rs` catalog count.**
+  `catalog_rows_span_every_ingested_book_with_their_real_counts` asserted `8,100`; live
+  `rows.len()` is `8,119`. Traced to `equipment_gap_tables.rs`'s own generated header
+  ("Total: 1973 rows") — `6,146` hand-authored (unchanged, still passing) + `1,973` gap rows =
+  `8,119`. Confirmed **inherited from the `tranche/13` cut itself**, not caused by wave 6's corpus
+  regeneration: `equipment_gap_tables.rs` already said "1973 rows" at `f652db7ac7` (`git log
+  f652db7ac7..HEAD -- .../equipment_gap_tables.rs` is empty — no SD-33 commit ever touched it), and
+  the 7,808-record `data/corpus` equipment population is unchanged corpus-wide. Independently
+  cross-confirmed by two other, differently-computed tables that already agreed:
+  `tests/equipment_gap_tables.rs`'s own `EXPECTED_PER_BOOK` sum (`1973`) and
+  `apps/desktop/src-tauri/src/equipment_catalog.rs`'s already-correct `8119` assertion (a separate
+  cargo workspace, landed by SD-32's own `sd32-desktop-count-resweep`) — only this one file's
+  pinned assertion had never been swept. Retargeted `8_100` → `8_119`, derivation chain and both
+  cross-confirming tables recorded in the test's own doc comment.
+- **Count sweep:** `8100`/`8119` and `6308`/`6278` grepped recursively across `tests/`, `src/`,
+  `apps/`, `scripts/`. No other live assertion needed to move — the desktop crate and
+  `tests/equipment_gap_tables.rs` were already correct; every other `8100`/`6308` hit outside this
+  cycle's own edited lines is either an unrelated date-derived token (`cycle-2026-07-15T8100`) or
+  historical prose inside closed Epic-3 receipts/this file's own prior entries, correctly left
+  as-is (not live assertions, not read by any test or `verify.sh` stage).
+- **Finish line:** `cargo test --locked --lib` → **2,836 of 2,836 pass, 0 fail, 14 ignored.**
+  `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly): **548 of 548 pass, 0
+  fail.** Root-workspace `cargo test --locked` (full suite): **fails to compile** —
+  `tests/sd20_equipment_equipmods.rs` references `WeaponEnhancementBonus` fields (`bonus`/
+  `affects`) that `7d439876b7` (wave 6, closed Epic 5 work, not this cycle) replaced with
+  `tohit_bonus`/`damage_bonus`; confirmed unrelated to this cycle (`git diff --stat HEAD --
+  tests/sd20_equipment_equipmods.rs src/rules_core/equipment_effects/equipmods.rs` is empty) — 0 of
+  N integration suites run as a result, the exact "one broken bin, 0 suites ran" hazard
+  `AGENTS.md`'s Concurrency section names; **not fixed**, per this cycle's own dispatch scope,
+  named for a future cycle. `scripts/verify.sh` (full, all stages, run to completion): **32
+  passed, 5 failed**; `denominator-gate` (this cycle's own hard requirement) **PASS**, 55 files
+  checked, 0 violations; `root-lib` (the same `cargo test --locked --lib` command this cycle's own
+  criterion names) independently re-confirms **2,836 passed** through `verify.sh`'s own harness.
+  All 5 failures traced to source and confirmed unrelated to this cycle's 4-file diff:
+  `root-full`/`clippy`(root half) share the `sd20_equipment_equipmods.rs` cause above;
+  `clippy`(desktop half) and `frontend-test` are pre-existing `apps/desktop` findings (zero files
+  under `apps/` touched this cycle); `corpus-sweep` (`corpus_literal_sweep`, 105 findings/10
+  records) is a NEW finding — every named record (`ultimate_equipment:{blade_of_the_rising_sun,
+  blade_of_the_sword_saint,hammer_polarity,hellscourge}`, `inner_sea_gods:fugitive_finder`) was
+  last touched by `fbc945f198` (wave 6's corpus-extraction-fix, the closed Epic-5/`data/corpus/**`
+  territory this cycle's dispatch forbids touching) — flagged for Epic 5's future owner, not acted
+  on here. Full detail and the per-stage table: this cycle's own receipt. `box_ledger.py --check`
+  against `AT-33-E5-003.combined-oracle-results.json`: still `oracle_disagreement=0`, exit 0 —
+  Epic 5 undisturbed.
+- **Movement, four buckets:** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 3 (the doneness mapping table, the equipment catalog count pin, the F1
+  population pin — all three retargeted to a proven total, none silenced or hidden).
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-suite-green_cycle_receipt.md`.
 
 ### Cycle AT-33-E6-001 (attempt 7) — final-acceptance scan — blocked-escalated (gate FAIL)
 
