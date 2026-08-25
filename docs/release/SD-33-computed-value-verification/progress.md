@@ -2,7 +2,7 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: Epics 1-4 complete (rows 1-15); Epic 5 as of AT-33-E5-finalize-wave6 (this cycle, owns the kanban call on rows 16/17/18) — ALL THREE COMPLETE: AT-33-E5-001 (row 16) complete, 1,741 of 1,741 fixture-verified units, 0 disagree; AT-33-E5-002 (row 17) complete, 6,589 of 6,589 literal-verified units rowed (the prior 39-unit remainder fully closed: 23 weapon-shape + 11 skill-combat-shape + 7 eqm-shape, 2 unit_ids deduped across the weapon/skill-combat lanes — see `## Cycles`), 0 unrowed; AT-33-E5-003 (row 18) complete, 0 of 8,330 examined units disagree — `advanced_race_guide:equipment:rending_claw_blades` FIXED this cycle (two real `src/rules_core/equipment_effects.rs`/`equipmods.rs` defects: `eqmod_referenced_records` only ever read the first of a record's possibly-multiple `EQMOD:` tokens, and the weapon path never folded an `EQMOD:`-referenced modifier's own chain in at all), `## Open blockers` is now empty. 29 of 29 disagreements this criterion has ever surfaced are dispositioned (28 fixed to a commit, 0 remain escalated). AT-33-E6-001's next attempt is unblocked on rows 16/17/18 (Epic 4's own `cargo test --locked --lib` debt, `AT-33-E6-001-attempt6`'s Shortfall 4, is out of this row's scope and remains for its own owner).
+status: Epic 6 as of AT-33-E6-001 attempt 7 (this cycle) — gate **FAIL**, seventh consecutive correct halt, **1 shortfall** (down from 4 at attempt 6). Rows 1-18 all `complete`; row 19 stays `blocked-escalated`. 3 of attempt 6's 4 shortfalls CLOSED and verified by execution: **0 of 8,330** blessed units unexamined, **0 of 8,330** examined units `disagree` (`box_ledger.py --check` exit 0), and **66 of 66** wave-5 method-rerun rows reaching the closure artifact — `method_change_rerun_verified: true` (**21 of 21** derived-affected rows re-run across all three wave-5 corrections, **0 of 21** moved `agree`→`disagree`). **SURVIVING BLOCKER:** `cargo test --locked --lib` is RED — **2,832 of 2,836** executed lib tests pass, **4 of 2,836** fail; 3 of the 4 are SD-33's own Epic 4 debt (`doneness: unmapped 'ambiguous' + 'unmeasurable'`, a pair on **11 of 49,438** work-inventory units introduced by `00ca087775` `AT-33-E4-002`), so **kanban row 14 is `complete` over a suite its own commit turned red**, and 1 of the 4 (`equipment_resolver.rs:863`, `left: 8119 right: 8100`) is inherited from the cut. No retrospective, no sweep, no PR. `## Open blockers` remains empty — this is a named, in-scope defect with a named fix, not a request for a ruling.
 date: 2026-08-25
 ---
 
@@ -364,6 +364,76 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 </details>
 
 ## Cycles
+
+### Cycle AT-33-E6-001 (attempt 7) — final-acceptance scan — blocked-escalated (gate FAIL)
+
+- **Criterion:** `AT-33-E6-001` — every criterion `complete`, every card rows 1-18 `complete`,
+  every figure re-derived, the closure instruments re-proven.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-attempt7_cycle_receipt.md`
+- **Scanned tree:** a clean detached worktree at `origin/tranche/13` = `7d439876b7`, NOT the
+  shared checkout (see the environment hazard below).
+- **Result: FAIL.** Seventh consecutive correct halt. **1 shortfall**, down from 4 at attempt 6.
+
+**3 of attempt 6's 4 shortfalls are CLOSED**, each verified by running the work rather than
+reading the lane reports:
+
+- **0 of 8,330** blessed units lack an oracle row (was 39 of 8,330). `fixture-verified` **1,741
+  of 1,741**, `literal-verified` **6,589 of 6,589**, combined **8,330 of 8,330**, **0 of 8,330**
+  duplicate `unit_id`. The 39 new rows are 7 `agree` / 32 `unverifiable` of 39, **0 of 39**
+  reasonless.
+- **0 of 8,330** examined units `disagree` (was 1 of 8,291). `rending_claw_blades` is fixed
+  behind two real `src/rules_core/` defects whose diff was read: `eqmod_referenced_records`
+  read only the first `EQMOD:` token, and the weapon path never folded `EQMOD:`-referenced
+  modifiers' chains at all. RED→GREEN with real verbatim corpus tokens, per-dimension MAX
+  stacking. `## Open blockers` holds **0 of 0** active entries.
+- **66 of 66** wave-5 re-run rows now reach the closure artifact, byte-identical, independently
+  re-verified row-by-row. `method_change_rerun_verified: true` — **21 of 21** derived-affected
+  rows re-run (AC isolator **66 of 66**, campaign-key **14 of 14**, identity-resolve **5 of 5**),
+  **0 of 21** moved `agree`→`disagree`, corroborated by a whole-artifact diff finding **0 of
+  8,291** such transitions and by the 4 corrected `ours` values reconciling exactly to the
+  separately-committed engine output.
+
+**The surviving shortfall** is attempt 6's Shortfall 4, unchanged and not named in this
+attempt's dispatch brief: `cargo test --locked --lib` reports `test result: FAILED. 2832
+passed; 4 failed` — **2,832 of 2,836** executed lib tests pass, **4 of 2,836** fail. 3 of the 4
+raise `ValueError: doneness: unmapped 'ambiguous' + 'unmeasurable'` through a real shell-out to
+`scripts/shape_ledger.py`; the pair exists on **11 of 49,438** work-inventory units and
+`docs/work-inventory.json` still has exactly one commit on this branch, `00ca087775`
+(`AT-33-E4-002`, kanban row 14, marked `complete`). The mapper is untouched since attempt 6.
+1 of the 4 (`equipment_resolver.rs:863`, `left: 8119 right: 8100`) is inherited from the
+`tranche/13` cut and re-confirmed not caused by wave 6's corpus regeneration (**7,808 of 7,808**
+records unchanged; **137 of 137** changed files are modifies, 0 added or removed; **0 of 137**
+lost license/PI metadata or shrank `raw_tokens`).
+
+The fix is one mapping entry plus one count reconciliation. It is a blocker, not a deferral:
+the scope was in row 14's Definition of Done when row 14's own commit made the suite red.
+
+**Re-verified closed:** row 16 at **1,741 of 1,741** with 0 disagree; denominator gate **0
+violations of 53 files checked** with detection re-proven live (probe planted in a scanned
+`*_cycle_receipt.md`, 53→54 files and 0→1 violation, probe removed, no residue) and the matcher
+untouched since attempt 6; `disagree` capability re-proven live on the current batch path
+(verdict-flip probe → `oracle_disagreement=1`, exit 1, probe removed); **0 of 7,519** reasonless
+`unverifiable`; **0 of 811** `agree` rows with `ours != oracle`; `unknown` at **0 of 49,438**;
+no hardcoded exclusion lists in the closure instruments; Epic 3's artifact at the SD-33 path
+with SD-32's `gate-2-engines` untouched; **0 missing** kanban-cited receipts; 0 deferrals cover
+DoD scope.
+
+**Recorded for the next scanner:** `box_ledger`'s `oracle_disagreement` counts rows whose
+`verdict` field is `"disagree"` (`scripts/box_ledger.py:219`) and never recomputes the verdict
+from `ours`/`oracle` — so a probe that changes only `ours` does not trip it, and the separate
+consistency audit above is load-bearing rather than redundant.
+
+**Environment hazard:** the shared checkout at `/home/ubuntu/workspace/repos/codex` was **8
+commits behind** `origin/tranche/13` and carried **154** `git status --porcelain` entries this
+scanner did not create — including a STAGED revert of the corpus-extraction fix `fbc945f198`
+(139 corpus files and `src/bin/enrich_equipment_raw_tokens.rs` restored to pre-fix content) and
+7 wave-6 receipt/retro files staged as deleted. Per `AGENTS.md`'s one-writer-per-tree rule
+nothing was written there; the scan ran in a clean detached worktree. Had it run in the shared
+checkout it would have measured a tree that exists on no branch and produced a confidently
+wrong FAIL.
+
+- **Movement, four buckets:** closure 0, reclassification 0, reachability 0,
+  instrument-correction 0 (two detection probes planted and removed, no instrument changed).
 
 ### Cycle AT-33-E5-finalize-wave6 — total Epic 5 across wave-6 lanes, fix `rending_claw_blades`, own the kanban call on rows 16/17/18 — complete
 
