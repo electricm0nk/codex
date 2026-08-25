@@ -1,0 +1,505 @@
+{
+  "items": [
+    {
+      "unit_id": "advanced_race_guide:equipment_modifier:cloudb",
+      "book": "advanced_race_guide",
+      "corpus_key": "CLOUDB",
+      "corpus_path": "data/corpus/advanced_race_guide/equipment/equipmods/cloudb.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment_modifier:material_darkleaf_cloth_clothing",
+      "book": "advanced_race_guide",
+      "corpus_key": "Material ~ Darkleaf Cloth ~ Clothing",
+      "corpus_path": "data/corpus/advanced_race_guide/equipment/equipmods/material_darkleaf_cloth_clothing.json",
+      "chains": [
+        [
+          "EQM",
+          "WEIGHTDIV",
+          "2"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment_modifier:special_ability_cloudburst_armor",
+      "book": "advanced_race_guide",
+      "corpus_key": "Special Ability ~ Cloudburst ~ Armor",
+      "corpus_path": "data/corpus/advanced_race_guide/equipment/equipmods/special_ability_cloudburst_armor.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:brace",
+      "book": "core_rulebook",
+      "corpus_key": "BRACE",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/brace.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:disarm",
+      "book": "core_rulebook",
+      "corpus_key": "DISARM",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/disarm.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:draco",
+      "book": "core_rulebook",
+      "corpus_key": "DRACO",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/draco.json",
+      "chains": [
+        [
+          "VAR",
+          "ArmorCheckPenalty",
+          "-1",
+          "TYPE=Enhancement"
+        ],
+        [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:dragonhide",
+      "book": "core_rulebook",
+      "corpus_key": "Dragonhide",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/dragonhide.json",
+      "chains": [
+        [
+          "VAR",
+          "ArmorCheckPenalty",
+          "-1",
+          "TYPE=Enhancement"
+        ],
+        [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:monk",
+      "book": "core_rulebook",
+      "corpus_key": "MONK",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/monk.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:material_dragonhide",
+      "book": "core_rulebook",
+      "corpus_key": "Material ~ Dragonhide",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/material_dragonhide.json",
+      "chains": [
+        [
+          "VAR",
+          "ArmorCheckPenalty",
+          "-1",
+          "TYPE=Enhancement"
+        ],
+        [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:nonlethal",
+      "book": "core_rulebook",
+      "corpus_key": "NONLETHAL",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/nonlethal.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:spike_sb",
+      "book": "core_rulebook",
+      "corpus_key": "SPIKE_SB",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/spike_sb.json",
+      "chains": [
+        [
+          "EQMWEAPON",
+          "DAMAGESIZE",
+          "1"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_brace",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Brace",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_brace.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_disarm",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Disarm",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_disarm.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_double",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Double",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_double.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_nonlethal",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Nonlethal",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_nonlethal.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_reach",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Reach",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_reach.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_spikes_shieldbash",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Spikes ~ Shieldbash",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_spikes_shieldbash.json",
+      "chains": [
+        [
+          "EQMWEAPON",
+          "DAMAGESIZE",
+          "1"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_trip",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Trip",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_trip.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_1_step_greater",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Wield Size / 1 Step Greater",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_wield_size_1_step_greater.json",
+      "chains": [
+        [
+          "WEAPON",
+          "WIELDCATEGORY",
+          "-1"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_1_step_greater_no_penalty",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Wield Size / 1 Step Greater / No Penalty",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_wield_size_1_step_greater_no_penalty.json",
+      "chains": [
+        [
+          "WEAPON",
+          "WIELDCATEGORY",
+          "-1"
+        ],
+        [
+          "WEAPON",
+          "TOHIT",
+          "2"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_2_steps_greater",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Wield Size / 2 Steps Greater",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_wield_size_2_steps_greater.json",
+      "chains": [
+        [
+          "WEAPON",
+          "WIELDCATEGORY",
+          "-2"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_2_steps_greater_no_penalty",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Wield Size / 2 Steps Greater / No Penalty",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_wield_size_2_steps_greater_no_penalty.json",
+      "chains": [
+        [
+          "WEAPON",
+          "WIELDCATEGORY",
+          "-2"
+        ],
+        [
+          "WEAPON",
+          "TOHIT",
+          "4"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_3_steps_greater",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Wield Size / 3 Steps Greater",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_wield_size_3_steps_greater.json",
+      "chains": [
+        [
+          "WEAPON",
+          "WIELDCATEGORY",
+          "-3"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:special_quality_wield_size_3_steps_greater_no_penalty",
+      "book": "core_rulebook",
+      "corpus_key": "Special Quality ~ Wield Size / 3 Steps Greater / No Penalty",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/special_quality_wield_size_3_steps_greater_no_penalty.json",
+      "chains": [
+        [
+          "WEAPON",
+          "WIELDCATEGORY",
+          "-3"
+        ],
+        [
+          "WEAPON",
+          "TOHIT",
+          "6"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "core_rulebook:equipment_modifier:trip",
+      "book": "core_rulebook",
+      "corpus_key": "TRIP",
+      "corpus_path": "data/corpus/core_rulebook/equipment/equipmods/trip.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:blocking",
+      "book": "ultimate_combat",
+      "corpus_key": "BLOCKING",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/blocking.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:deadly",
+      "book": "ultimate_combat",
+      "corpus_key": "DEADLY",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/deadly.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:distracting",
+      "book": "ultimate_combat",
+      "corpus_key": "DISTRACTING",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/distracting.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:firearm_scatter",
+      "book": "ultimate_combat",
+      "corpus_key": "FIREARM_SCATTER",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/firearm_scatter.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:fragile",
+      "book": "ultimate_combat",
+      "corpus_key": "FRAGILE",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/fragile.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:grapple",
+      "book": "ultimate_combat",
+      "corpus_key": "GRAPPLE",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/grapple.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:performance",
+      "book": "ultimate_combat",
+      "corpus_key": "PERFORMANCE",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/performance.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_blocking",
+      "book": "ultimate_combat",
+      "corpus_key": "Special Quality ~ Blocking",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/special_quality_blocking.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_deadly",
+      "book": "ultimate_combat",
+      "corpus_key": "Special Quality ~ Deadly",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/special_quality_deadly.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_distracting",
+      "book": "ultimate_combat",
+      "corpus_key": "Special Quality ~ Distracting",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/special_quality_distracting.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_fragile",
+      "book": "ultimate_combat",
+      "corpus_key": "Special Quality ~ Fragile",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/special_quality_fragile.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_grapple",
+      "book": "ultimate_combat",
+      "corpus_key": "Special Quality ~ Grapple",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/special_quality_grapple.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_performance",
+      "book": "ultimate_combat",
+      "corpus_key": "Special Quality ~ Performance",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/special_quality_performance.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_scatter_firearm",
+      "book": "ultimate_combat",
+      "corpus_key": "Special Quality ~ Scatter ~ Firearm",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/special_quality_scatter_firearm.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:special_quality_throwing_shield_shield",
+      "book": "ultimate_combat",
+      "corpus_key": "Special Quality ~ Throwing Shield ~ Shield",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/special_quality_throwing_shield_shield.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_combat:equipment_modifier:thrw_shld",
+      "book": "ultimate_combat",
+      "corpus_key": "THRW_SHLD",
+      "corpus_path": "data/corpus/ultimate_combat/equipment/equipmods/thrw_shld.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment_modifier:special_quality_blood_reservoir_of_physical_prowess_weapon",
+      "book": "ultimate_equipment",
+      "corpus_key": "Special Quality ~ Blood Reservoir of Physical Prowess ~ Weapon",
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/equipmods/special_quality_blood_reservoir_of_physical_prowess_weapon.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment_modifier:special_quality_performance",
+      "book": "ultimate_equipment",
+      "corpus_key": "Special Quality ~ Performance",
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/equipmods/special_quality_performance.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment_modifier:special_quality_scatter_firearm",
+      "book": "ultimate_equipment",
+      "corpus_key": "Special Quality ~ Scatter ~ Firearm",
+      "corpus_path": "data/corpus/ultimate_equipment/equipment/equipmods/special_quality_scatter_firearm.json",
+      "chains": [],
+      "has_chain": false
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_alt",
+      "book": "ultimate_psionics",
+      "corpus_key": "Special Quality ~ Dissonance / Enhancement Bonus / Alt",
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/equipmods/special_quality_dissonance_enhancement_bonus_alt.json",
+      "chains": [
+        [
+          "VAR",
+          "DissonanceEnhancementBonusAlt",
+          "1"
+        ],
+        [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "DissonanceEnhancementBonusAlt",
+          "TYPE=ENHANCEMENT"
+        ]
+      ],
+      "has_chain": true
+    },
+    {
+      "unit_id": "ultimate_psionics:equipment_modifier:special_quality_dissonance_enhancement_bonus_main",
+      "book": "ultimate_psionics",
+      "corpus_key": "Special Quality ~ Dissonance / Enhancement Bonus / Main",
+      "corpus_path": "data/corpus/ultimate_psionics/equipment/equipmods/special_quality_dissonance_enhancement_bonus_main.json",
+      "chains": [
+        [
+          "VAR",
+          "DissonanceEnhancementBonusMain",
+          "1"
+        ],
+        [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "DissonanceEnhancementBonusMain",
+          "TYPE=ENHANCEMENT"
+        ]
+      ],
+      "has_chain": true
+    }
+  ],
+  "missing_corpus_file": []
+}
