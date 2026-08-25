@@ -105,6 +105,22 @@ pub struct WeaponEnhancementBonus {
     /// natural attack. `false` for a bare `WEAPON` chain, which applies to
     /// any weapon per PF1's ordinary enhancement rule.
     pub natural_attack_only: bool,
+    /// SD-33 Epic 5 combat/weapon lane: the specific weapon-proficiency
+    /// name this bonus is scoped to, when the source chain's subject is a
+    /// bare `WEAPONPROF=<name>` other than `TYPE.Natural` — e.g.
+    /// `Some("Longsword")` for `BONUS:WEAPONPROF=Longsword|TOHIT,DAMAGE|
+    /// <n>` (`ultimate_equipment`'s "Cursed Sword" family), `Some("Hoof")`
+    /// for the Horseshoes of a Zealous Warhorse family. Real, verbatim
+    /// from the token — never inferred. `None` for a bare `WEAPON` chain
+    /// (applies broadly) and for `WEAPONPROF=TYPE.Natural`
+    /// (`natural_attack_only` already carries that distinct scope, kept
+    /// as its own field for every existing consumer's back-compat).
+    /// Confirmed against real PCGen source
+    /// (`pcgen.io.exporttoken.WeaponToken.getMagicHitToken`/
+    /// `getMagicDamageToken`): PCGen sums a `WEAPONPROF=<name>` bonus onto
+    /// a specific equipped weapon only when that weapon's own resolved
+    /// proficiency name matches `<name>` exactly.
+    pub weapon_prof_scope: Option<String>,
 }
 
 /// Resolve one `equipmods` corpus record's weapon-enhancement-bonus
@@ -120,23 +136,60 @@ pub struct WeaponEnhancementBonus {
 pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhancementBonus> {
     record.bonus_chains.iter().find_map(|bonus| {
         let qualifiers = &bonus.qualifiers;
-        let natural_attack_only = qualifiers.first().map(String::as_str) == Some("WEAPONPROF=TYPE.Natural");
-        let is_weapon_subject = qualifiers.first().map(String::as_str) == Some("WEAPON") || natural_attack_only;
-        let is_weapon_enhancement_bonus = qualifiers.len() >= 4
-            && is_weapon_subject
-            && matches!(
-                qualifiers[1].as_str(),
-                "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE"
-            )
-            && qualifiers[3] == "TYPE=Enhancement";
-        if !is_weapon_enhancement_bonus {
+        let subject = qualifiers.first().map(String::as_str);
+        let natural_attack_only = subject == Some("WEAPONPROF=TYPE.Natural");
+        let is_roll_shape = qualifiers.len() >= 2
+            && matches!(qualifiers[1].as_str(), "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE");
+
+        if (subject == Some("WEAPON") || natural_attack_only) && is_roll_shape {
+            // Unchanged from before this cycle: a bare `WEAPON` chain or
+            // `WEAPONPROF=TYPE.Natural` chain still requires the trailing
+            // `TYPE=Enhancement` qualifier (see module doc comment for
+            // why: it excludes `WIELDCATEGORY` and untyped Wield-Size
+            // to-hit-offset chains, which are real but are not a magic
+            // enhancement bonus).
+            if qualifiers.len() >= 4 && qualifiers[3] == "TYPE=Enhancement" {
+                return qualifiers[2].parse::<i16>().ok().map(|bonus_value| WeaponEnhancementBonus {
+                    affects: qualifiers[1].clone(),
+                    bonus: bonus_value,
+                    natural_attack_only,
+                    weapon_prof_scope: None,
+                });
+            }
             return None;
         }
-        qualifiers[2].parse::<i16>().ok().map(|bonus_value| WeaponEnhancementBonus {
-            affects: qualifiers[1].clone(),
-            bonus: bonus_value,
-            natural_attack_only,
-        })
+
+        // SD-33 Epic 5 combat/weapon lane: a bare `WEAPONPROF=<name>|
+        // <TOHIT|DAMAGE|...>|<n>` chain scoped to one SPECIFIC named
+        // proficiency (e.g. Longsword, Hoof, Bite) -- distinct from both
+        // the broadly-applying bare `WEAPON` chain and the natural-
+        // attack-only `TYPE.Natural` chain. Every real corpus record of
+        // this shape (`ultimate_equipment`'s "Cursed <Weapon>" and
+        // "Horseshoes of a Zealous Warhorse" families) carries this
+        // WITHOUT a trailing `TYPE=Enhancement` qualifier at all -- real
+        // PCGen source (`pcgen.io.exporttoken.WeaponToken.
+        // getMagicHitToken`/`getMagicDamageToken`) sums a
+        // `WEAPONPROF=<name>` bonus unconditionally, with no `TYPE=`
+        // filter either, so no such gate applies here.
+        if let Some(name) = subject.and_then(|s| s.strip_prefix("WEAPONPROF=")) {
+            // Excludes every `TYPE.`-prefixed subject, not just the
+            // literal `TYPE.Natural` string: a `WEAPONPROF=TYPE.<x>`
+            // chain names a whole weapon-TYPE category (a hypothetical
+            // shape this module's own pre-existing negative-control test,
+            // `a_different_weaponprof_subject_has_no_weapon_enhancement_
+            // bonus`, deliberately keeps unrecognized), never a single
+            // literal proficiency name PCGen's own `getProfName(eq)`
+            // would compare a specific weapon's proficiency against.
+            if !name.starts_with("TYPE.") && is_roll_shape && qualifiers.len() >= 3 {
+                return qualifiers[2].parse::<i16>().ok().map(|bonus_value| WeaponEnhancementBonus {
+                    affects: qualifiers[1].clone(),
+                    bonus: bonus_value,
+                    natural_attack_only: false,
+                    weapon_prof_scope: Some(name.to_string()),
+                });
+            }
+        }
+        None
     })
 }
 
@@ -186,6 +239,7 @@ mod tests {
                 affects: "DAMAGE,TOHIT".to_string(),
                 bonus: 1,
                 natural_attack_only: false,
+                weapon_prof_scope: None,
             })
         );
     }
@@ -206,6 +260,7 @@ mod tests {
                 affects: "TOHIT".to_string(),
                 bonus: 1,
                 natural_attack_only: false,
+                weapon_prof_scope: None,
             })
         );
     }
@@ -229,6 +284,7 @@ mod tests {
                 affects: "TOHIT,DAMAGE".to_string(),
                 bonus: 3,
                 natural_attack_only: false,
+                weapon_prof_scope: None,
             })
         );
     }
@@ -260,6 +316,56 @@ mod tests {
 
         let effect = compute_equipmods_effect(record);
         assert_eq!(effect, None);
+    }
+
+    /// SD-33 Epic 5 combat/weapon lane: real verbatim tokens copied from
+    /// `data/corpus/ultimate_equipment/equipment/cursed_sword_2.json`
+    /// (`ue_equip_magic_items.lst`) — a bare `WEAPONPROF=Longsword|
+    /// TOHIT,DAMAGE|<n>` chain, no trailing `TYPE=Enhancement` qualifier
+    /// at all (confirmed against the real record: arity 3, not 4). Before
+    /// this cycle `compute_equipmods_effect` only recognized `WEAPON` and
+    /// `WEAPONPROF=TYPE.Natural` subjects, so this real, comparable,
+    /// negative (`-2`, a cursed item) magnitude silently resolved to
+    /// `None`.
+    #[test]
+    fn named_weaponprof_scope_yields_a_real_bonus_with_no_type_enhancement_gate() {
+        let text = "Cursed Sword\tKEY:Cursed Sword\tTYPE:Weapon.Melee.Martial\tCOST:1\tWT:4\tCRITMULT:x2\tDAMAGE:1d8\tBONUS:WEAPONPROF=Longsword|TOHIT,DAMAGE|-2\n";
+        let result = parse_equipment_entries("ue_equip_magic_items.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_equipmods_effect(record);
+        assert_eq!(
+            effect,
+            Some(WeaponEnhancementBonus {
+                affects: "TOHIT,DAMAGE".to_string(),
+                bonus: -2,
+                natural_attack_only: false,
+                weapon_prof_scope: Some("Longsword".to_string()),
+            })
+        );
+    }
+
+    /// The same named-`WEAPONPROF=` shape with a single affected roll
+    /// (`TOHIT` alone, not the combined `TOHIT,DAMAGE` pair) — real
+    /// verbatim tokens copied from
+    /// `data/corpus/ultimate_equipment/equipment/belt_of_teeth.json`.
+    #[test]
+    fn named_weaponprof_scope_single_roll_yields_a_real_bonus() {
+        let text = "Belt of Teeth\tKEY:Belt of Teeth\tTYPE:Magic.Belt\tCOST:1\tWT:1\tBONUS:WEAPONPROF=Bite|TOHIT|4\n";
+        let result = parse_equipment_entries("ue_equip_magic_items.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_equipmods_effect(record);
+        assert_eq!(
+            effect,
+            Some(WeaponEnhancementBonus {
+                affects: "TOHIT".to_string(),
+                bonus: 4,
+                natural_attack_only: false,
+                weapon_prof_scope: Some("Bite".to_string()),
+            })
+        );
     }
 
     /// Real verbatim tokens copied from `KEY:Material ~ Cloth` — a plain
@@ -297,6 +403,7 @@ mod tests {
                 affects: "TOHIT,DAMAGE".to_string(),
                 bonus: 1,
                 natural_attack_only: true,
+                weapon_prof_scope: None,
             })
         );
     }

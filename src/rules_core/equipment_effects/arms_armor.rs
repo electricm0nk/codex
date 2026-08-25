@@ -90,16 +90,30 @@ fn token_i16(record: &EquipmentRecord, key: &str) -> Option<i16> {
 fn armor_class_bonus_from_bonus_chains(record: &EquipmentRecord) -> Option<i16> {
     record.bonus_chains.iter().find_map(|bonus| {
         let qualifiers = &bonus.qualifiers;
-        let is_armor_or_shield_ac_bonus = qualifiers.len() >= 3
-            && qualifiers[0] == "COMBAT"
-            && qualifiers[1] == "AC"
-            && qualifiers.iter().any(|qualifier| {
-                matches!(
-                    qualifier.as_str(),
-                    "TYPE=Armor" | "TYPE=Shield" | "TYPE=ArmorEnhancement" | "TYPE=ShieldEnhancement"
-                )
-            });
-        if is_armor_or_shield_ac_bonus {
+        // SD-33 Epic 5 combat/weapon lane: widened from an Armor/Shield-
+        // only `TYPE=` allowlist to any `COMBAT|AC|<n>` chain, regardless
+        // of its bonus-type qualifier (or the qualifier's absence).
+        // `resolve_category_effect` (`equipment_effects.rs`) already
+        // calls this function unconditionally on EVERY equipped item,
+        // not just base armor/shield records, so an item like a Ring of
+        // Protection (`TYPE=Deflection`) or an Amulet of Natural Armor
+        // (`TYPE=NaturalArmor`) carries an equally real, comparable
+        // `COMBAT|AC` magnitude the old Armor/Shield-only gate silently
+        // dropped to `None`. Also handles a real corpus grammar quirk
+        // confirmed against PCGen's own parser
+        // (`pcgen.core.bonus.Bonus.newBonus`, `code/src/java/pcgen/core/
+        // bonus/Bonus.java`): a qualifier segment is only ever parsed as
+        // a bonus type when it literally starts with `TYPE=`/`TYPE.`, so
+        // a real corpus line like `BONUS:COMBAT|AC|4|NaturalArmor`
+        // (`ultimate_equipment/ue_equip_magic_items.lst:1209`, no `TYPE=`
+        // prefix at all) still carries a real literal magnitude on this
+        // record even though PCGen itself never registers a `TYPE=`
+        // string for it. The record's own "Broken" penalty chain is
+        // still never the first `COMBAT|AC` chain on an unbroken record
+        // (see this function's own doc comment above), so taking the
+        // first match is still the correct default.
+        let is_ac_bonus = qualifiers.len() >= 3 && qualifiers[0] == "COMBAT" && qualifiers[1] == "AC";
+        if is_ac_bonus {
             qualifiers[2].parse::<i16>().ok()
         } else {
             None
@@ -164,6 +178,57 @@ mod tests {
         assert_eq!(effect.max_dex, None);
         assert_eq!(effect.spell_failure, Some(5.0));
         assert_eq!(effect.armor_check_penalty, Some(-1), "Buckler's real ACCHECK is -1");
+    }
+
+    /// SD-33 Epic 5 combat/weapon lane: real verbatim tokens copied from
+    /// `data/corpus/inner_sea_gods/equipment/knight_inheritor_s_ring.json`
+    /// (`isg_equip.lst:160`) — a Ring of Protection-shaped AC bonus,
+    /// `TYPE=Deflection`, not `TYPE=Armor`/`TYPE=Shield`. Before this
+    /// cycle, `armor_class_bonus_from_bonus_chains`'s `TYPE=` allowlist
+    /// (Armor/Shield/ArmorEnhancement/ShieldEnhancement) silently dropped
+    /// this real, comparable, player-facing AC bonus to `None` even
+    /// though `resolve_category_effect` calls this function
+    /// unconditionally on every equipped item, not just base armor/
+    /// shield records (see `equipment_effects.rs`'s own comment on why
+    /// that call is unconditional). A Ring of Protection is exactly the
+    /// canonical PF1 non-armor AC-bonus item this gap silently zeroed.
+    #[test]
+    fn ring_of_protection_shaped_deflection_ac_bonus_resolves() {
+        let text = "Knight-Inheritor's Ring\tKEY:Knight-Inheritor's Ring\tTYPE:SLOT_Ring.Ring.Magic\tCOST:3000\tWT:0\tBONUS:COMBAT|AC|1|TYPE=Deflection\n";
+        let result = parse_equipment_entries("isg_equip.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(
+            effect.armor_class_bonus,
+            Some(1),
+            "a Deflection-type AC chain is a real, comparable magnitude, not an Armor/Shield-only one"
+        );
+    }
+
+    /// SD-33 Epic 5 combat/weapon lane: real verbatim token copied from
+    /// `data/corpus/ultimate_equipment/equipment/naga_scale_bindi_dark_naga.json`
+    /// (`ue_equip_magic_items.lst:1209`) — the record's own real LST line
+    /// is `BONUS:COMBAT|AC|4|NaturalArmor`, a bare bonus-type qualifier
+    /// with no `TYPE=`/`TYPE.` prefix at all (confirmed against real
+    /// PCGen source, `code/src/java/pcgen/core/bonus/Bonus.java`: a
+    /// qualifier segment is only ever parsed as a bonus type when it
+    /// literally starts with `TYPE=`/`TYPE.`; a bare `NaturalArmor`
+    /// segment does not, and PCGen itself registers this bonus with an
+    /// empty/default type). This engine's own literal magnitude (`4`) is
+    /// still the real, comparable value on the record regardless of that
+    /// grammar quirk — the widened match takes the chain's value
+    /// unconditionally once `qualifiers[0]=="COMBAT"`/`qualifiers[1]==
+    /// "AC"`, never gated on a specific `TYPE=` string being present.
+    #[test]
+    fn ac_bonus_with_a_bare_untyped_qualifier_still_resolves() {
+        let text = "Naga-Scale Bindi (Dark Naga)\tKEY:Naga-Scale Bindi (Dark Naga)\tTYPE:Magic.Wondrous\tCOST:6600\tWT:0\tBONUS:COMBAT|AC|4|NaturalArmor\n";
+        let result = parse_equipment_entries("ue_equip_magic_items.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(effect.armor_class_bonus, Some(4));
     }
 
     /// Real verbatim tokens copied from `KEY:Longsword (Base)` — a
