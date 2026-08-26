@@ -608,20 +608,48 @@ mod tests {
     /// `character_hub.rs` reads `race_trait_generic` at all (grep confirms
     /// zero references), so this is a measurement-instrument reclassifi-
     /// cation, not an engine or corpus-quality regression.
+    ///
+    /// **6,260 -> 6,257 by `cef0ca1b39` (fold-inventory, 2026-08-26), an
+    /// ORDERING bug, not a further content change.** `6e2f2f076b`
+    /// (fold-skinwalker) pinned 6,260 correctly against the
+    /// `docs/work-inventory.json` committed at that moment. The very next
+    /// commit, `cef0ca1b39`, then regenerated that same file (89 of 49,438
+    /// units moved status) and did **not** re-run `cargo test --locked
+    /// --lib` afterwards — its own receipt's "lib 2845 passed, 0 failed" is
+    /// a true measurement of the tree *before* its own inventory write, not
+    /// of the tree it landed. Three units left F1's `not_done_population()`
+    /// gate in that regen (id-keyed set diff between `shape_ledger.py` run
+    /// against `git show 56bbebe3d4:docs/work-inventory.json` and against
+    /// the committed HEAD file, both with `--corpus-root data/corpus`;
+    /// zero units entered):
+    /// `bestiary_5:race_trait:skinwalker_speed`,
+    /// `ultimate_psionics:equipment_modifier:plusn_svs`,
+    /// `ultimate_psionics:equipment_modifier:special_quality_severis_enhancement_bonus`.
+    /// The first of those three is itself fold-attributable (see the
+    /// `AT-33-E6-001` attempt-11 receipt's corrected 50/39 fold-attribution
+    /// split: `were*_kin_*`-named bestiary_5 ids missed by a
+    /// `'skinwalker' in id` substring test are fold output too), the other
+    /// two are the regen's disclosed unrelated drift. Re-derived
+    /// 2026-08-26 via `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus`, run **after**
+    /// the last commit that writes `docs/work-inventory.json` — the rule
+    /// this re-pin exists to make mechanical: run the suite after the last
+    /// write that can move it, not before.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 6260,
-            "F1 population must equal the CURRENT true formula-bearing count (6,260, re-derived \
+            f1.population, 6257,
+            "F1 population must equal the CURRENT true formula-bearing count (6,257, re-derived \
              2026-08-26 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
-             --corpus-root data/corpus` against the SD-33 Epic 6 Skinwalker fold's 65 new \
-             `race_trait/` records superseding their `race_trait_generic` verbatim-ingest \
-             duplicates in this scan's own `normalize_kind_dir` join -- see this test's own doc \
-             comment), not the pre-fold 6,278 (2026-08-25, AT-33-E6-001), not the pre-regen 6,308 \
-             this test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — \
+             --corpus-root data/corpus`, run AFTER the `cef0ca1b39` fold-inventory regen of \
+             `docs/work-inventory.json` -- see this test's own doc comment), not the pre-regen \
+             6,260 (2026-08-26, `6e2f2f076b` fold-skinwalker, invalidated one commit later by \
+             `cef0ca1b39` regenerating the inventory without a lib re-run), not the pre-fold 6,278 \
+             (2026-08-25, AT-33-E6-001), not the pre-regen 6,308 this test pinned on 2026-08-24, \
+             and not SD-32's frozen 2026-08-14 census (6,032) — \
              AT-33-E3-002 / AT-33-E6-001"
         );
     }

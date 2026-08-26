@@ -4305,7 +4305,7 @@ fn enumerate_file(
             // consequence otherwise makes an un-ingestible-by-design row
             // look like an unmet criterion forever).
             //
-            // Corpus-wide safety proof (not sampled): every one of the 831
+            // Corpus-wide safety proof (not sampled): every one of the 910
             // currently-ingested `race_trait` records' own source rows was
             // read back from the pinned oracle and checked against this
             // exact predicate -- zero matched (`scripts/

@@ -469,6 +469,46 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 
 ## Cycles
 
+### Cycle fold-fix-repin — attempt 11's Shortfall 1 closed, one-file re-pin (row 19)
+
+- **Gate closed.** Attempt 11's single blocking shortfall — `f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census`
+  RED at `formula_interpreter_corpus_wide.rs:616` (`left: 6257, right: 6260`) — is an ordering
+  bug: `6e2f2f076b` pinned 6,260 against the inventory committed at that moment; `cef0ca1b39`
+  then regenerated that inventory and did not re-run the lib suite afterwards.
+- **F1 re-derived live, not copied from the receipt:** `python3 scripts/shape_ledger.py
+  --inventory docs/work-inventory.json --corpus-root data/corpus` -> `F1 6257`. Cross-checked
+  against `git show 56bbebe3d4:docs/work-inventory.json` the same way -> `F1 6260`. The three
+  named movers (`bestiary_5:race_trait:skinwalker_speed`,
+  `ultimate_psionics:equipment_modifier:{plusn_svs,special_quality_severis_enhancement_bonus}`)
+  re-confirmed by an id-keyed F1-membership set diff between the two runs, both directions:
+  3 left, 0 entered.
+- **Re-pinned:** `formula_interpreter_corpus_wide.rs:616-617`, 6,260 -> 6,257, with a new doc
+  comment paragraph naming the ordering-bug cause, the re-derive command, and the three mover
+  ids. `docs/work-inventory.json` **not touched** this cycle (confirmed: `git status
+  --porcelain` never lists it; `jq '.units|length'` stays 49,438) — running the lib suite
+  after this cycle's own source edits, without regenerating the inventory, is the mechanical
+  form of the ordering rule the shortfall exists to teach.
+- **Stale prose:** `v06_work_inventory.rs:4308` (`831` -> `910`, re-derived two ways: a
+  filesystem walk of every `data/corpus/**/race_trait/*.json` = 910, and the independently
+  passing `checked == 910` test). `race_resolver.rs:3105`'s "same as the other 370" was
+  **checked and found NOT stale** (`415 - 45 = 370` is exactly what the sentence claims as the
+  running total before its own final addend; rewriting it to 415 would make it wrong, since 415
+  already includes the 45 being described) — left unchanged, a correction to attempt 11's own
+  RISK 2 finding, logged in the cycle receipt rather than silently actioned.
+- **Attribution correction logged:** `fold-inventory_cycle_receipt.md`'s 14/75
+  fold-attribution split (real: 50/39, per attempt 11's own derivation) recorded as a
+  `scripts/retro.py correction` event, not merely re-cited.
+- **RED->GREEN:** `cargo test --locked --lib` reproduced RED first (2,844 passed, 1 failed,
+  matching attempt 11 exactly), then GREEN after the re-pin, run **last**, after every source
+  edit: **2,845 passed; 0 failed; 14 ignored.**
+- **Finish line, full re-run:** no-run exit 0, 543 of 543 targets; desktop 548 of 548 (own
+  `CARGO_TARGET_DIR`); `corpus_literal_sweep` 48,699 examined, 0 findings, CLEAN (unchanged from
+  attempt 11 — this cycle touched no corpus file); denominator gate 0 violations of 68 files
+  (67 + this cycle's own receipt).
+- **Movement (four buckets):** closure **1** (row 19's blocking shortfall) / reclassification 0
+  / reachability 0 / instrument-correction **1** (fold-attribution split, logged to retro).
+- **Receipt:** `artifacts/epic-6-closure/fold-fix-repin_cycle_receipt.md`.
+
 ### Cycle sd33-fold-rescan — AT-33-E6-001 attempt 11, post-fold final-acceptance scan (row 19)
 
 - **Gate result: FAIL.** Attempt 10's PASS covered `1bfb80d7b7`; the operator's 2026-08-26 fold
