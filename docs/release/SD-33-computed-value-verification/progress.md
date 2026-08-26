@@ -2,33 +2,12 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: Epic 6 as of `AT-33-E6-001` **attempt 8** (final-acceptance scan, this cycle). **Gate
-  FAIL — eighth consecutive correct halt, 1 shortfall.** Attempt 7's entire surviving shortfall
-  is **CLOSED**, re-verified by execution in a clean worktree at `47a37804c0`: `cargo test
-  --locked --lib` → **2,836 of 2,836** executed lib tests pass, **0 of 2,836** fail, 14 ignored,
-  exit 0. Both halves closed by real work, not by an edited expectation — the producer's
-  fail-closed raise **survives** (a genuinely unmapped pair still raises; probe planted and
-  removed), `docs/work-inventory.json` was **not** edited (only commit on this branch remains
-  `00ca087775`), the 11 of 49,438 `(ambiguous, unmeasurable)` units still carry the pair, and the
-  `8,119` catalog count was **re-derived** three independent ways (6,146 hand-authored + 1,973 of
-  1,973 generated gap rows), not fitted to the actual. Both moved counts swept across `tests/`,
-  `src/`, `apps/`, `scripts/`: **0 stale live assertions**. **The surviving shortfall is new and
-  is this bundle's own debt:** the root-workspace `cargo test --locked` does not COMPILE, so
-  **0 of 543 integration test targets execute** — `tests/sd20_equipment_equipmods.rs` reads
-  `WeaponEnhancementBonus::{affects,bonus}`, which SD-33's **`2f1d52f22d`**
-  (`AT-33-E5-finalize-wave5`, rows 17/18's own commit) split into `tohit_bonus`/`damage_bonus`
-  without updating the caller. The target **compiled at the `tranche/13` cut**, so this is
-  neither pre-existing nor wave 6's — the suite-green cycle's contrary attribution is corrected
-  in `docs/retro/events/sd33-r8-acceptance-scan.jsonl`. Rows 16-18 are `complete` over a build
-  their own commit broke, the same shape that made attempt 7's shortfall blocking for row 14.
-  `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly): **548 of 548** passed.
-  Epic 5 re-confirmed undisturbed — `box_ledger.py --check` → `oracle_disagreement=0`, exit 0,
-  rows **1,741 / 6,589 / 8,330** with the unexamined set **empty as a set**. Denominator gate
-  **0 violations of 55 files**, scope widened from 53, detection re-proven live. `## Open
-  blockers` remains **0 of 0** active entries. Row 19 stays `blocked-escalated`; the one item
-  left is updating `tests/sd20_equipment_equipmods.rs:94-111` to the post-`2f1d52f22d` field
-  shape. Full detail and every re-derive command:
-  `artifacts/epic-6-closure/AT-33-E6-001-attempt8_cycle_receipt.md`.
+status: closed. All 21 kanban rows `complete`, all 6 epics closed. `AT-33-E6-001` gate PASS on
+  attempt 10 (row 19); retrospective written and cited (row 20,
+  `docs/retro/sd33-computed-value-verification-retrospective.md`); `AT-33-E6-003` complete (row
+  21) — 5 architecture docs refreshed, graphify run, PR #377 open (`tranche/13` → `develop`),
+  `release-notes.md` generated for build `0.13.0`. See `## Status` below for the full closure
+  entry and `receipts.md` for the closure-pipeline receipts.
 date: 2026-08-25
 ---
 
@@ -37,6 +16,24 @@ date: 2026-08-25
 Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and update `kanban.md` in the same commit, via `workflow-instruction.md §5`'s retry protocol.
 
 ## Status
+
+**Bundle closed 2026-08-25 (`AT-33-E6-003` part 2 — release notes + version confirm).** All 21
+kanban rows `complete`. Row 21 (`sweep-archdocs-graphify-pr`) transitions `not-started` →
+`complete` this cycle: part 1 (architecture docs, graphify, PR #377) landed in an earlier cycle,
+and this cycle closes part 2 — `release-notes.md` generated for build `0.13.0` (status:
+`generated`), figures re-derived independently in a clean `git worktree add --detach` off
+`origin/tranche/13` rather than copied from `AT-33-E6-001-attempt10_cycle_receipt.md`: oracle
+examination **8,330 of 8,330** (811 agree / 7,519 unverifiable, 0 reasonless / 0 disagree,
+`box_ledger.py --check` → `oracle_disagreement=0`), work-inventory `unknown` **0 of 49,438**,
+formula interpreter **11,652 of 11,652**, lib **2,837 of 2,837**, desktop **548 of 548**,
+integration targets **543 of 543** build, corpus sweep **0 findings of 48,634 records**,
+denominator gate **0 violations** (re-run at the end of this cycle over the closure diff, see the
+cycle receipt for the final file count). PR #377 recorded in `release-notes.md` and `receipts.md`.
+Versions confirmed unchanged at `0.13.0` in both `apps/desktop/package.json` and
+`apps/desktop/src-tauri/tauri.conf.json` — neither bumped, per `decisions.md §3`: the tranche
+digit moved to `13` on `tranche/13`'s own cut and moves only on a new `tranche/N` cut, never on a
+bundle's own closure. Full figures and re-derive commands:
+`artifacts/epic-6-closure/AT-33-E6-003-part2_cycle_receipt.md`.
 
 **Launch gates passed 2026-08-25** (`technical-requirements.md §1`, `workflow-instruction.md §1`):
 

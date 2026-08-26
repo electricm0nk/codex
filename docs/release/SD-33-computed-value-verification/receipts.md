@@ -19,8 +19,6 @@ Expected blocks, in order, all from Epic 6:
 
 ## Receipts
 
-_None yet — bundle not launched._
-
 - cycle_id: 2026-08-26T01:12:00Z
   row_or_kind: architecture:truth_up
   bundle: SD-33
@@ -77,3 +75,20 @@ sub-step. `docs_touched` should read
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: graphify succeeded
+
+- cycle_id: 2026-08-25T22:03:00Z
+  row_or_kind: pr:open
+  bundle: SD-33
+  branch: tranche/13
+  integration_target: origin/develop
+  pr_number: 377
+  pr_url: https://github.com/electricm0nk/codex/pull/377
+  pr_state: open
+  receipt_note: "SD-33: computed-value verification -- oracle harness, 12 defects fixed, 0 disagree of 8,330" (AT-33-E6-003 part 1, verified via `gh pr view 377 --json state,url` -> state=OPEN)
+
+- cycle_id: 2026-08-25T22:30:00Z
+  row_or_kind: AT-33-E6-003-part2
+  bundle: SD-33
+  branch: tranche/13
+  integration_target: origin/develop
+  receipt_note: release-notes.md generated for build 0.13.0 (status: generated), PR #377 recorded here and in release-notes.md, kanban row 21 marked complete, progress.md closed. Versions confirmed unchanged at 0.13.0 in both apps/desktop/package.json and apps/desktop/src-tauri/tauri.conf.json. See artifacts/epic-6-closure/AT-33-E6-003-part2_cycle_receipt.md for full figures and re-derive commands.
