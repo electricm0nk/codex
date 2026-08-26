@@ -20,3 +20,46 @@ Expected blocks, in order, all from Epic 6:
 ## Receipts
 
 _None yet — bundle not launched._
+
+- cycle_id: 2026-08-26T01:12:00Z
+  row_or_kind: architecture:truth_up
+  bundle: SD-33
+  branch: tranche/13
+  integration_target: origin/develop
+  branch_tip_before: tranche/
+  branch_tip_after: tranche/
+  diff_path_count: 1502
+  docs_touched: []
+  stub_graduations: []
+  stub_regressions: []
+  obsolete_removals: 0
+  cited_path_check: pass
+  relative_link_check: pass
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: no architecture impact — diff is outside architecture scope
+
+**Correction to the receipt immediately above, filed the same cycle
+(`AT-33-E6-003` part 1).** `docs_touched: []` and the `receipt_note` are
+**wrong** — 5 architecture docs were genuinely edited this cycle (real
+content, not header-only), landed in `93ccd564ab` before this script ran:
+`corpus-ingest.md`, `homebrew-and-oracle.md`, `rules-engine.md`,
+`status.md`, `testing.md`. Root cause, confirmed by reading the script:
+`architecture_truth_up.py::parse_source_dirs_index`'s regex requires a
+literal `||` (doubled pipe) at both the start and end of a table row —
+`docs/architecture/README.md`'s real index table uses a single `|` per
+Markdown convention, so the regex matches zero rows and `map_paths_to_docs`
+always returns empty, on every invocation, regardless of diff content. Also
+wrong in the block above: `branch_tip_before`/`branch_tip_after` both read
+`tranche/` (8-char-truncated from the literal `--branch tranche/13` string,
+never a real SHA) — `short_sha()` is only correct when `--branch` is
+omitted and the script falls back to `git rev-parse HEAD` itself. Neither
+bug is in this bundle's write scope (`~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/`
+is outside `docs/release/SD-33-computed-value-verification/` and outside
+this repo's own tree); flagged here per `AGENTS.md` rule 8 ("a warning is
+not a control") rather than left silently wrong, and the real doc edits
+plus real cited-path/relative-link check results (both `pass`, re-verified
+by hand — see the commit) stand as the actual audit evidence for this
+sub-step. `docs_touched` should read
+`[corpus-ingest.md, homebrew-and-oracle.md, rules-engine.md, status.md, testing.md]`;
+`receipt_note` should read `truth-up touched 5 doc(s)`.
