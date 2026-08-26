@@ -11,10 +11,11 @@ Doctrine, skills, sibling bundles, and the retrospectives this package is derive
 
 ## 1. Retrospectives — the source of this bundle's decisions
 
+- **`../../../retro/sd33-computed-value-verification-retrospective.md`** — **this bundle's own retrospective**, written and cited in the same cycle (`AT-33-E6-002`, kanban row 20). Ten dispatch waves, nine correct final-acceptance-scan halts, the twelve real computed-value and instrument defects SD-33 found and fixed (each with its commit), the throughput arc (32 → 6,940 → 7,939 → 8,255 → 8,263 → 8,291 → 8,330 of 8,330 examined; disagreements 26 → 4 → 1 → 0), and lessons a–j each with its enforcing mechanism per `decisions.md §4`. Also closes `workflow-instruction.md §12` rows 3 and 8 (both `UNENFORCED` at launch).
 - **`../../../retro/sd32-compute-library-and-cause-closure-retrospective.md`** — the direct predecessor's retrospective, including the **operator retrospective of 2026-08-24** whose four findings become `decisions.md §1`, `§2`, `§4`, `§6` and `§7`. Read the "Operator retrospective" section before any Epic 1 cycle: it explains why `THE-BOX.md` and the denominator gate are build obligations rather than lessons.
 - **`../../../retro/sd31-retrospective.md`** — SD-31's retrospective, the source of the seven standing lessons SD-32 transcribed and then ignored. **Read as a case study in why capture is not enough** (`decisions.md §4`), not as a lesson list to re-transcribe.
 
-**This citation is a closure obligation, not a courtesy.** SD-32's chassis review found its own predecessor's retrospective carried into the package's *content* while the *source document* was never linked. AT-33-E6-002 requires SD-33's own retrospective to be cited here in the same cycle that writes it.
+**This citation is a closure obligation, not a courtesy.** SD-32's chassis review found its own predecessor's retrospective carried into the package's *content* while the *source document* was never linked. AT-33-E6-002 requires SD-33's own retrospective to be cited here in the same cycle that writes it — done above.
 
 ## 2. Doctrine of record
 

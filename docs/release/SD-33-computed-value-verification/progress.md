@@ -472,6 +472,45 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 
 ## Cycles
 
+### Cycle AT-33-E6-002 — retrospective written and cited, forward-scope register, worktree/branch sweep (row 20)
+
+- **Criterion / card:** `AT-33-E6-002`, kanban row 20. Also closes `workflow-instruction.md §11.3`
+  (worktree/branch sweep) and registers `§11.2`'s inherited-debt obligation.
+- **Environment:** the shared checkout at `/home/ubuntu/workspace/repos/codex` was found **8
+  commits behind `origin/tranche/13`** with **159 foreign `git status --porcelain` entries** this
+  agent did not create (the same staged revert of wave 6's `.MOD`-fold fix waves 6–10 each
+  reported and worked around — matches `AT-33-E6-001-build-green_cycle_receipt.md`'s own
+  description of the identical hazard). Per `AGENTS.md` "One writer per tree", nothing was
+  written there and nothing was discarded. All writes below happened in a clean
+  `git worktree add --detach` off `origin/tranche/13` = `4a84b567e0` (attempt 10's own landing
+  SHA); the shared checkout was left exactly as found. **Seventh** consecutive wave to hit this.
+- **Retrospective:** `docs/retro/sd33-computed-value-verification-retrospective.md` (new), grounded
+  in `python3 scripts/retro.py summary --since 2026-08-24 --json` — read live, not from memory.
+  `deferrals.open` confirmed trustworthy: `grep -n 'len(open_deferrals)' scripts/retro.py` → line
+  772, `"open": len(open_deferrals)`; live re-derive → **3 open** (down from attempt 9's 8, matching
+  attempt 10's own ledger-hygiene closure of 4). Leads with the twelve real defects SD-33 found and
+  fixed (spell-DC fixture, armor compute, AC-measurement method, `compute_equipmods_effect`
+  multi-chain, `equipment_id_resolve`, campaign-KEY-vs-display-name, corpus-extraction `.MOD`-EQMOD
+  gap, two previously-unwired resolvers, Epic 4's doneness-pair regression, the Epic-5 struct-rename
+  build break, the two corpus-sweep `.MOD`-chain derivations, and the scan's own scope defect), each
+  with its commit; the throughput arc (32 → 6,940 → 7,939 → 8,255 → 8,263 → 8,291 → 8,330 of 8,330
+  examined, disagreements 26 → 4 → 1 → 0); ten lessons a–j each with an enforcing mechanism; and
+  closes `workflow-instruction.md §12` rows 3 and 8 (both `UNENFORCED` at launch).
+- **Cited from `references/README.md` §1, same cycle** — new top bullet linking the retrospective,
+  ahead of SD-32's and SD-31's.
+- **Inherited debt registered** (`forward-scope-register.md`, new `## D1.x` section): **31 of 599**
+  test suites / **49 of 8,026** executed tests proven pre-existing at the `tranche/13` cut (0 of 31
+  carry a commit since it — re-verified, not re-quoted, from attempt 10's Check 3), plus the
+  `site-dashboard-check` hang's root cause (`v06_work_inventory --summary` wrapped in no timeout by
+  either `verify.sh` or `publish-site-dashboard.sh`), each with its owner and proof command — this
+  bundle verified the inheritance rather than assuming it, and the fact is recorded rather than left
+  to vanish once the bundle closes.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — this cycle writes package docs only; no unit, instrument, or gate
+  changed.
+- **Worktree/branch sweep:** see the cycle receipt for the full found-vs-removed accounting.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-002_cycle_receipt.md`.
+
 ### Cycle AT-33-E6-001 (attempt 10) — final-acceptance scan — gate PASS, row 19 complete
 
 - **Criterion / card:** `AT-33-E6-001`, kanban row 19.
