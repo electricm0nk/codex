@@ -469,6 +469,121 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 
 ## Cycles
 
+### Cycle fold-inventory — SD-33 reopen fold / Epic 6 closure (row 24)
+
+- **Criterion:** operator fold ruling, 2026-08-26 (`workflow-instruction.md`'s "WHY THIS EXISTS"
+  header) — regenerate `docs/work-inventory.json` and re-green every gate after `fold-skinwalker`/
+  `fold-undine` landed.
+- **Files:** `docs/work-inventory.json` (regenerated, sole-writer scope), `THE-BOX.md`
+  (append-only — group counts corrected + "Epic 6 note" section).
+- **What landed:** fast-forwarded local `tranche/13` onto `origin/tranche/13` (3 commits it was
+  missing: `fold-undine` + `fold-skinwalker`'s two). Verified both lanes' own claims by execution,
+  not trust (`corpus_literal_sweep` 0 findings; lib 2,845/0 failed; desktop 548/0 failed).
+  Regenerated `docs/work-inventory.json` via its own binary against the pinned oracle.
+- **Figures:** total units **49,438, unchanged** (a fixed census over the pinned oracle's `.lst`
+  rows, not a `data/corpus/` walk — this is why record counts moving doesn't move the census size).
+  89 units moved status by an `id`-keyed join against the pre-cycle file (`00ca087775`): **14
+  fold-attributable** (all Skinwalker; Undine moved **0**, exactly as `fold-undine`'s own receipt
+  states) + **75 unrelated regen-drift** (25 commits landed `src/rules_core`/`src/bin` changes
+  between the file's last regen and this cycle, independent of the fold). `not-ingested`
+  26,047→26,002, `grounded` 3,340→3,415, `ingested-magnitude` 2,497→2,455, `text-complete`
+  8,838→8,850; `literal-verified`/`fixture-verified` **unchanged** (6,589 / 1,741).
+- **Movement (four buckets), this cycle's own 89:** closure 14 / reachability 73 /
+  reclassification 2 / instrument-correction 0 — full per-transition breakdown and re-derive
+  commands in the receipt and in `THE-BOX.md`'s new "Epic 6 note" section.
+- **Oracle unexamined-set (the check this cycle exists to protect):** `{id : status in
+  (literal-verified, fixture-verified)}` minus `AT-33-E5-003.combined-oracle-results.json`'s
+  covered `unit_id`s → **0**. Neither status moved, so Epic 5's `oracle_disagreement=0` over its
+  stated 8,330-unit population still covers it in full — **no new units needed the oracle harness
+  this cycle.**
+- **Gates, all re-run live and green:** `box_ledger.py --check` (`oracle_disagreement=0`, exit 0,
+  twice — with and without the Epic 5 oracle-results file) / denominator-gate (`violations=0`) /
+  `verify.sh --only corpus-sweep` (PASS, 0 findings) / `corpus_literal_sweep` raw binary (CLEAN) /
+  `cargo test --locked --no-run` (exit 0) / lib (2,845 passed, 0 failed, 14 ignored) / desktop
+  (548 passed, 0 failed).
+- **Count sweep:** population unchanged means the one hard test assertion
+  (`test_box_ledger.py:395`, `population=49438`) needed no fix — confirmed still true by execution
+  (25/25 green). Grep of old/new figures across `tests/`/`src/`/`apps/`/`scripts/` found no other
+  stale live assertion.
+- **RED→GREEN:** first regen attempt correctly refused to write (stamp-loss guard, `8330 of 8330`
+  would be lost) — a scratch-JSON-formatting bug in this cycle's own env setup (Python
+  `json.dump`'s default separators vs. the loader's exact-substring match), not a defect in the
+  binary. Logged as a rework event (`docs/retro/events/sd33-fold-inventory.jsonl`), fixed, re-run
+  to completion with the stamps correctly preserved.
+- **Notes:** `PCGEN_CORPUS_ROOT` used the SD-33-required repo-local slot
+  (`docs/release/SD-32-.../artifacts/corpus/operator-supplied/pcgen/data`), confirmed
+  byte-identical to `~/workspace/repos/pcgen/data` via `diff -rq` before relying on it for the
+  gate commands. `BASELINE_CORPUS_LITERAL_RECORDS` in `scripts/verify-baselines.env` is stale
+  (26,500 vs. the true 48,699) — flagged, not fixed (a floor; the gate passes either way; bumping
+  it is out of this narrowly-scoped cycle).
+- **Test scoping:** ran the full set the dispatch named — `box_ledger.py --check` (both forms),
+  `verify.sh --only denominator-gate`, `verify.sh --only corpus-sweep`, `corpus_literal_sweep`,
+  `cargo test --locked --no-run`, `cargo test --locked --lib`, `apps/desktop/src-tauri`'s own
+  `cargo test --locked`, plus `python3 -m unittest scripts.tests.test_box_ledger`.
+- **Receipt:** `artifacts/epic-6-closure/fold-inventory_cycle_receipt.md`.
+
+### Cycle fold-undine — SD-33 reopen fold / Epic 6 closure (row 23)
+
+- **Criterion:** operator fold ruling, 2026-08-26 — fold the recovered Undine race-trait fixture
+  work from `worktree-wf_be4660f2-72a-3`, per `OPEN-ISSUES.md` row 365's remediation path (a).
+- **Files:** `scripts/derive_race_trait_formula_fixtures.py` (new), `tests/fixtures/rules_core/derived-evaluator-fixtures.json`,
+  `src/rules_core/derived_evaluator_fixture_check.rs`, `src/rules_core/pilot_compute/mod.rs`.
+- **What landed:** 3 real `race_trait_formula_entries` records (Acid Breath, Nereid Fascination,
+  Ooze Breath), a fixture bar check, and a production compute seam
+  (`explain_undine_formula_race_trait`) wired unconditionally into `compute_pilot_base_chassis`.
+  **Deliberately did not** add `"undine"` to `race_ids_with_a_magnitude_consumer()` — banks 0
+  board-credit units, the exact gaming vector `OPEN-ISSUES.md` row 365 identified.
+- **Figures:** the dispatch's own "103 recovered Undine race-trait fixture entries" framing
+  corrected in the same receipt that reproduced it: 103 is a raw string-occurrence count of the
+  word "Undine" (~34 mentions × 3 records), not an entries count — the real population is **3**
+  entries / 30 sample points / 90 scalar checks. `cargo test --locked --lib
+  race_trait_formula_bar_check_tests` → 3-of-3 fixtures clear. `formula_race_trait_tests` (the
+  production seam, end-to-end through `compute_pilot_base_chassis`) → 5 passed.
+  `race_ids_with_a_magnitude_consumer` union → 18, unchanged.
+- **Movement (four buckets):** closure 0 (deliberate — 0 board-credit units banked, by design) /
+  reclassification 0 / reachability 3 (the 3 Undine records now have a real, corpus-verified
+  compute path that did not exist on HEAD before) / instrument-correction 0.
+- **Notes:** touched `pilot_compute/mod.rs` outside the dispatch's named 3-file list — the new bar
+  check cannot compile or check anything real without the production table it verifies against;
+  judged in-scope ("the fixtures must actually run"), not creep. Full reasoning, the two
+  pre-existing-and-not-fixed defects found (an `equipment_resolver` count mismatch and a
+  `companion_save_dc` `fixtures_total` omission), and all figures' re-derive commands are in the
+  receipt.
+- **Receipt:** `artifacts/epic-6-closure/fold-undine_cycle_receipt.md`.
+
+### Cycle fold-skinwalker — SD-33 reopen fold / Epic 6 closure (row 22)
+
+- **Criterion:** operator fold ruling, 2026-08-26 — fold the 45 recovered Skinwalker race-trait
+  records from `sd31/racetrait4-SD31-E6-F4-005`, via the guarded generator path, with hand-traced
+  verification against the pinned oracle.
+- **Files:** `data/corpus/bestiary_5/race_trait/skinwalker/` (65 new records, regenerated not
+  hand-copied) + `LICENSE.json`, `src/bin/ingest_race_traits.rs`, `src/bin/ingest_races.rs`,
+  `src/rules_core/race_resolver.rs`, `src/rules_core/pilot_compute/{mod.rs,formula_interpreter_corpus_wide.rs}`,
+  `apps/desktop/src-tauri/src/{race_catalog.rs,race_trait_picker.rs,reach_gate.rs}`,
+  `tests/sd27_alternate_racial_trait_reachability.rs`,
+  `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs`.
+- **What landed:** the branch's own 45 records were re-derived, not merged from — a new
+  `direct_subrace_grants()` generator path (Skinwalker's heritage-grant shape differs structurally
+  from Aasimar/Tiefling's) produced **65** real records (the branch's 45 was an undercount).
+  Fixed a fabricated-token `corpus_literal_sweep` RED (36 findings→0), a real double-selection bug
+  (36 replacement rows had no exclusion guard), a real missing wiring row
+  (`Werebear-Kin`/`Wereshark-Kin ~ Animal-Minded`), and 8 stale count-sweep assertions
+  (831→910 ingested race-trait total, 370→415 selectable `Alternate`, 6,278→6,260 F1 population).
+- **Figures:** `find data/corpus/bestiary_5/race_trait/skinwalker -name '*.json' | wc -l` → **75**
+  (10 pre-existing + 65 new). `corpus_literal_sweep` → 0 findings, 48,699 records examined. lib
+  2,837/0 failed, 14 ignored; desktop 548/0 failed.
+- **Movement (four buckets):** closure 45 (the fold's own record count, all reachable/wired) /
+  reclassification 0 / reachability 20 (`Change Shape (<Option>)` records — real, ingested,
+  oracle-traced, but reach no player surface today; a TYPE-pool option-picker UI does not exist
+  anywhere in the app — recorded honestly via `OPEN_FINDINGS`/`UNREACHED_RECORD_FINDINGS`,
+  matching the pre-existing Monster Codex `Oversized Goblin` precedent) / instrument-correction 65
+  (F1 population 6,278→6,260 — a `race_trait_generic/` duplicate-bucket join effect with zero
+  player-facing consequence, confirmed no engine code reads `race_trait_generic` at all).
+- **RED→GREEN:** 9 documented cycles — full transcripts, hand-traced samples against the pinned
+  oracle, and the near-miss (`ingest_race_traits` run once with no book argument, touching the
+  entire corpus, caught by `git diff --stat` before commit and reverted) are in the receipt.
+- **Receipt:** `artifacts/epic-6-closure/fold-skinwalker_cycle_receipt.md`.
+
 ### Cycle AT-33-E6-003 (part 1) — architecture docs, graphify, PR (row 21)
 
 - **Criterion / card:** `AT-33-E6-003` part 1, kanban row 21 (`sweep-archdocs-graphify-pr`) —
