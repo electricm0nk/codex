@@ -109,8 +109,9 @@ own box rather than citing a predecessor's.
 (`python3 scripts/denominator_gate.py --check`) scans a bundle's own
 markdown documents for a figure written without a same-construct
 denominator (a bare "100%" or an "N of M" pair whose M is a different
-population than the one being reported) — the gate that has caught six
-agents' own receipts inside SD-33 alone. The **`corpus-sweep`** stage
+population than the one being reported) — catching this class of defect in
+package docs and cycle receipts before they land, not only in code. The
+**`corpus-sweep`** stage
 (`cargo run --locked --bin corpus_literal_sweep`) is the corpus-literal
 byte-equality sweep described in
 [corpus-ingest.md](./corpus-ingest.md)'s §"`raw_tokens` enrichment and the

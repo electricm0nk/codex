@@ -1265,7 +1265,7 @@ holds this magnitude), **854 → `ingested-magnitude`** (a real magnitude the
 engine holds, no observed consumer delta yet), **318 → `unmeasurable`** (the
 genuinely-irreducible remainder — status string renamed from `unknown`,
 disposition unchanged, every per-unit `reason` preserved verbatim per
-`decisions.md §7`'s permanent `unverifiable` bucket; the old name read as
+`SD-33 decisions.md §7`'s permanent `unverifiable` bucket; the old name read as
 "nobody looked" for a population that in fact carries a specific, stated
 reason per unit).
 
