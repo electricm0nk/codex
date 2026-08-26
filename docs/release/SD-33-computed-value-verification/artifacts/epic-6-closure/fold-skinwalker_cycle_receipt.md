@@ -1,6 +1,6 @@
 # Cycle fold-skinwalker — Epic 6 closure / SD-33 reopen fold
 
-- **Commit SHA:** (pending — see git log after push)
+- **Commit SHA:** `6e2f2f076b4effb0089693ce3cbb81a5b68da246` (pushed to `tranche/13`, rebased cleanly onto the sibling `fold-undine` lane's `948976aacb`)
 - **Files touched:**
   - `data/corpus/bestiary_5/race_trait/skinwalker/` — 65 new records (regenerated, not hand-copied) + `adopted_race_skinwalker.json` (`ingested_at` only, byte-identical content)
   - `data/corpus/bestiary_5/LICENSE.json` — `records_processed` 279 → 344, `records_redacted` 9 → 17, new PASS note
