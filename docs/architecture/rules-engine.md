@@ -1,12 +1,10 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: 2026-08-21 against tranche/11 (SD-31 wave 26 — formula interpreter wired to its
-> first production consumers). **Path correction 2026-08-22** (SD-32 closure epilogue): all 12
-> src/rules_core/pilot_compute.rs cites updated to `src/rules_core/pilot_compute/mod.rs` — the
-> module (still the deterministic chassis engine's own entry point) became a directory of 10 files
-> during SD-31 (`bonus_stack_reader.rs`, `formula_interpreter.rs`, and others alongside `mod.rs`);
-> no other content in this doc re-verified.
+> Last verified: **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the new §3c
+> subsection and the equipment-bonus-shape-widening paragraph in the per-domain engine catalog's
+> `equipment_effects.rs` entry; every other section carries its 2026-08-21 tranche/11 (SD-31 wave
+> 26) verification, path-corrected 2026-08-22, and is otherwise unchanged.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -292,6 +290,26 @@ net-new base-class tables, structurally-non-PC-class records, unstarted books).
   wave.** Both class-scoped lanes (a corpus-wide census, and a CRB-prestige-class architecture
   investigation) were comment-only diffs; zero classes were made buildable.
 
+### 3c. SD-33 — `formula_interpreter_corpus_wide.rs` regenerates its own population census fresh, never from a frozen file
+
+`src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs` is the corpus-wide *coverage*
+harness for `formula_interpreter.rs` above (SD-32 Gate 2, `AT-32-G2-004`) — it runs every
+formula-bearing F1..F9 corpus unit through the interpreter and reports agreement/refusal, distinct
+from `formula_reproduction_harness.rs`'s narrower 22-function proof set. Before SD-33 it sourced its
+population from SD-32's own frozen, committed `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-1-shape-closure/ledger.json`
+— a snapshot dated 2026-08-14 that had gone stale two ways: the module's own scan logic, unchanged,
+produced a different population (11,338 rows) when re-run against that same frozen file than the
+file's own committed figure (4,798) recorded, because the code that could walk the full census
+landed after the artifact was frozen; and the frozen ledger itself no longer matched the live corpus
+(11,652 real F1..F9 units exist today per `scripts/shape_ledger.py --inventory docs/work-inventory.json`).
+`fresh_census_rows` fixes both: it regenerates the Gate 1 census **at scan time**, invoking the same
+`scripts/shape_ledger.py` Python classifier SD-32 used (never re-implemented in Rust — the PF1e
+family-vocabulary regex rules stay single-sourced in Python) via a scratch output path, then reads
+the rows back. `AT-33-E3-004` runs the corpus-wide scan with `--corpus-wide --output` pointed at
+`docs/release/SD-33-computed-value-verification/artifacts/epic-3-engine-coverage/formula_interpreter.corpus-wide.json`
+— the binary's own default output path is SD-32's closed `gate-2-engines/` evidence file and is
+never overwritten; `--output` is always passed explicitly.
+
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 
 `compute_pilot_with_corpus(input: &CharacterInput, corpus: &SourcePackageContent) ->
@@ -428,6 +446,44 @@ spells is centralized, not duplicated per engine: `equipment_resolver::equipment
 (`src/rules_core/pilot_compute_corpus.rs`, `src/rules_core/equipment_effects.rs`,
 `src/rules_core/spellbook.rs`, `src/rules_core/damage_total.rs`) calls to turn a chosen
 `item_id`/`spell_id` into a real corpus record plus an optional `TableCellRef`.
+
+**SD-33 widened equipment bonus-shape coverage further, and fixed two real defects, both TDD
+RED→GREEN and both re-derived against real corpus records rather than assumed:**
+
+- **`equipmods.rs`'s `WeaponEnhancementBonus` was carrying only one `bonus: i16` field for both
+  to-hit and damage**, sufficient while every observed record's chain applied the same magnitude to
+  both — until `ultimate_equipment:equipment:heavy_hammer` surfaced a record with two *separately*
+  scoped `BONUS:WEAPON` chains (one `TOHIT`-only, one `DAMAGE`-only, different magnitudes).
+  `apply_eqmod_weapon_enhancement_bonus` (`compute_equipmods_effect`'s consumer) summed only the
+  first chain it found. Fixed by splitting the struct into independent `tohit_bonus: Option<i16>` /
+  `damage_bonus: Option<i16>` fields and summing each chain into its own field — a corpus-wide
+  re-scan confirmed `heavy_hammer` is the only affected record.
+- **`arms_armor.rs`'s `apply_eqmod_armor_class_bonus` and `general.rs`'s `apply_eqmod_var_bonus`**
+  resolve a base equipment record's own `EQMOD:`-referenced modifier record's *separate* `BONUS:`
+  chain and sum it into the base item's AC/VAR bonus — closing a gap where an item's `EQMOD:`
+  reference (e.g. a material or enhancement modifier attached via `EQMOD:`, not `.MOD`) carried its
+  own mechanical bonus that `compute_arms_armor_effect`/`compute_var_effect` never resolved at all.
+- **`equipment_resolver::equipment_id_resolve` (via `corpus_loader.rs`'s `equipment_key_token`)**
+  previously fell back to matching on a record's `.name` — not `.key` — whenever `raw_tokens`
+  carried no literal `KEY:` entry (a keyless LST line whose identity is its own first-column name).
+  `.name` diverges from the real identity whenever the record also carries an `OUTPUTNAME:` token,
+  which ingestion substitutes into `name` for display (e.g. `Companion Stone (Diplomacy)`'s real key
+  vs. its `[NAME]`-unsubstituted `name: "Companion Stone of [NAME]"`) — silently breaking resolution
+  for every OUTPUTNAME-bearing, KEY-less record (12 of `ultimate_psionics`'s own equipment records,
+  plus the templated-variant shape `Psychoactive Skin (Defender)`/`(Hero)`). Fixed: a synthetic
+  `KEY` token is appended from the record's own resolved key when none exists among `raw_tokens`,
+  so resolution never falls through to the display name.
+- **Two previously-unresolved `BONUS:` qualifier shapes now have real resolvers**:
+  `BONUS:EQMWEAPON|DAMAGESIZE|<n>` (`damage_total.rs`, ~line 226 — a weapon-die-size step carried by
+  an `EQMOD:`-referenced modifier, e.g. Core Rulebook `cr_equipmods.lst`'s
+  `BONUS:EQMWEAPON|DAMAGESIZE|1`) and `BONUS:EQM|WEIGHTDIV|<n>` (`equipment_effects.rs`, ~line 616 —
+  a weight-divisor chain, e.g. Advanced Race Guide's Darkleaf Cloth,
+  `arg_equipmods.lst`'s `BONUS:EQM|WEIGHTDIV|2`). Both were confirmed unhandled by grep
+  (`grep -rn "DAMAGESIZE\|WEIGHTDIV" src/rules_core/`) before being wired.
+
+Together with the pre-existing category set, the engine's equipment-bonus-shape coverage now spans
+`VAR` / `COMBAT` (AC) / `WEAPON` / `WEAPONPROF` / `STAT` / `SAVE` / `SITUATION` / `SKILL` /
+natural-attack-scoped / special-material / `EQM*`-qualified modifier chains.
 
 The intelligent-item resolver's own DTO shape has a real desktop-facing surface —
 `apps/desktop/src-tauri/src/intelligent_item_catalog.rs` (SD-31 wave 18) serves 152 intelligent-item

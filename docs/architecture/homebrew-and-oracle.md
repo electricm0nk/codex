@@ -1,10 +1,7 @@
 # Homebrew authoring and oracle validation
 
-> Scope: the headless GE-08 package-authoring surface and the GE-05 oracle-parity surface, as they exist today.
-> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure). **Path correction
-> 2026-08-22** (SD-32 closure epilogue): pilot_compute.rs (old path src/rules_core/pilot_compute.rs, no longer valid) updated to
-> `src/rules_core/pilot_compute/mod.rs` — the module became a directory during SD-31; no other
-> content in this doc re-verified.
+> Scope: the headless GE-08 package-authoring surface, the GE-05 pilot oracle-parity surface, and the SD-33 corpus-wide oracle harness (`scripts/oracle_harness/`), as they exist today.
+> Last verified: **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the new §"The SD-33 corpus-wide oracle harness" section; every other section carries its 2026-07-23 tranche/5-4 (SD-26 Epic 6 closure) verification, path-corrected 2026-08-22, and is otherwise unchanged.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 Both modules covered here are deliberately narrow, bounded proof slices, not
@@ -247,6 +244,79 @@ does not yet apply the chosen Human `+2 Strength` racial bonus before deriving
 genuinely disagree (the open CG-03 blocker, tracked in the SD-26 bundle's
 `## Open blockers`). The harness reporting a true mismatch rather than papering
 over it is the fail-honest discipline working as designed.
+
+## The SD-33 corpus-wide oracle harness (`scripts/oracle_harness/`)
+
+Distinct from the `oracle_validation/` Rust crate above (which is the narrow
+GE-05 pilot-case proof slice): `scripts/oracle_harness/` is a standalone
+Python harness built to compare **thousands** of engine-computed magnitudes
+against real PCGen BatchExporter output in one run, for `docs/work-inventory.json`'s
+`fixture-verified` and `literal-verified` populations. It does not replace
+`oracle_validation/`; it is a second, larger-scale comparison surface that
+reads the same kind of real PCGen export text.
+
+- **`compare.py`**: `compare_unit` answers, for one unit, `(ours, oracle,
+  verdict)` where `verdict` is exactly one of `"agree"`, `"disagree"`, or
+  `"unverifiable"` — `unverifiable` is returned as data, never raised as an
+  exception and never folded into `"agree"`. `run_comparison` is the batch
+  entry point over an `ours` mapping and a parsed oracle export.
+- **`oracle_export.py`**: parses PCGen's `KEY=VALUE`-per-line BatchExporter
+  text (the shape emitted by the `computed-values.txt.ftl` export template)
+  into a dict; a key the export never emitted is distinguished from a key
+  present with an empty value, though `compare_unit` treats both as
+  `unverifiable`.
+- **`run.py`**: the CLI entry point (`--oracle-export`, `--ours`, `--output`).
+  Writes `{"results": [{"unit_id", "ours", "oracle", "verdict"}, ...]}` — the
+  exact shape `scripts/box_ledger.py::load_oracle_results` reads (see
+  [testing.md](./testing.md) for `box_ledger.py`/`THE-BOX.md`).
+- **`campaign_key.py`**: PCGen's own campaign lookup
+  (`Globals.getCampaignKeyed`) matches a `.pcg`'s `CAMPAIGN:<name>` line
+  against each loaded campaign's `.pcc` `KEY:` token, **not** its
+  `CAMPAIGN:` display name — a campaign whose `.pcc` carries a separate
+  internal `KEY:` (e.g. `ultimate_psionics.pcc`'s `KEY:DSP - Ultimate
+  Psionics` vs. its display `CAMPAIGN:Ultimate Psionics`) fails to load if a
+  fixture names the display string. This module resolves the real key so
+  generated `.pcg` fixtures load every campaign correctly.
+- **`derive_spell_casting_ability_mapping.py`**: derives the PF1 class →
+  governing spellcasting-ability mapping directly from the pinned PCGen
+  oracle checkout's own `CLASS:<Name> ... SPELLSTAT:<ABBREV>` declarations
+  (official Paizo `roleplaying_game` class files only, matching this repo's
+  corpus-ingestion scope) — never hand-transcribed. Writes
+  `spell_casting_ability_mapping.json` alongside the script, with each entry
+  citing the source `.lst` line it was derived from.
+- **`charbuild_remainder_generate.py`**: generates the `.pcg` fixture set for
+  the full-character-build unit population — one L20 `.pcg` per source class
+  (amortizing many `class_feature` units per JVM start) and one L1 `.pcg`
+  per race. Every ability score is fixed at 14 (modifier +2) uniformly
+  across every build, so every ability-modifier-dependent formula uses the
+  same, easily re-derived modifier on both the engine side and the oracle
+  side — no per-class ability tuning. This is the corrected `.pcg` fixture
+  template: earlier fixtures pinned `STAT:WIS|SCORE:10` for spell-DC
+  probes when the intended build called for 18, silently understating every
+  computed DC by 4 (103 units affected, fixed).
+
+### The per-type AC isolator (`src/bin/e5_ac_isolator.rs`)
+
+The original AC-shape harness computed `oracle = item AC.TOTAL - baseline
+AC.TOTAL` — a whole-character diff that conflates the item's own
+`armor_class_bonus` (what the engine computes and what is graded) with
+second-order effects the diff cannot separate: a `MAXDEX` cap reducing the
+baseline's own Dex bonus when the item is worn, or a co-located
+ability-score-enhancement chain on the same record raising `AC.Total` via
+the normal Dex-to-AC path. `e5_ac_isolator.rs` replaces that diff with
+PCGen's own per-type isolator, reading
+`BONUS.COMBAT.AC.TOTAL.!BASE.!Ability.!Size` directly off the same
+unmodified `.pcg` fixtures — emitting, per item, the exact set of PCGen
+bonus-`TYPE` strings the engine's own `armor_class_bonus` is built from (the
+base record's first non-Circumstance `COMBAT|AC` chain's type, plus each
+EQMOD-referenced modifier's own chain's type), using the identical
+match/skip-Circumstance/first-match predicate
+`arms_armor::armor_class_bonus_from_bonus_chains` /
+`arms_armor::apply_eqmod_armor_class_bonus` use, read-only. It never decides
+`armor_class_bonus` itself — it calls `compute_equipment_effects` for that,
+like every other `AT-33-E5-*` "ours" probe (`src/bin/e5_*_ours.rs`), each of
+which pairs one population shape with the field(s) of the engine's real
+compute path it reads to produce the `ours` half of a `run.py` comparison.
 
 ## Relationship to the fail-honest pattern and test locations
 

@@ -5,6 +5,10 @@
 > **Path correction 2026-08-22** (SD-32 closure epilogue): src/rules_core/pilot_compute.rs cite
 > updated to `src/rules_core/pilot_compute/mod.rs` — the module became a directory during SD-31;
 > no other content in this doc re-verified.
+> **Touched again 2026-08-25 (SD-33 closure epilogue)**: new §"SD-33: `unknown` reaches zero, and
+> `docs/work-inventory.json` grows to 49,438 units" section added, and the stale `unknown` **3,547**
+> figure in the tranche/9-era corpus-coverage paragraph above is marked superseded (now `0` of
+> 49,438) with a pointer to the new section; no other row re-verified this pass.
 > Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
 
 ## Posture
@@ -74,7 +78,11 @@ units; `beginner_box`'s 19 units are excluded per
 `corpus-work-channels.md §10.2`). By status: `grounded` **4,726**,
 `ingested-magnitude` **6,518**, `text-complete` **2,391**, `not-ingested`
 **17,209**, `not-started` **4,113**, `unknown` **3,547**,
-`deferred-with-reason` **36**.
+`deferred-with-reason` **36**. **Superseded (SD-33): `unknown` is now `0`** —
+see §"SD-33: `unknown` reaches zero, and `docs/work-inventory.json` grows to
+49,438 units" below; every other row in this paragraph belongs to a much
+smaller, tranche/9-era population (38,540) and is kept here as history, not
+re-derived by SD-33.
 
 Grounded moved **491 → 4,699** across SD-29 — a gain of **4,208**, and
 **all 4,208 of it** is the three lanes the operator reopened on 2026-08-11:
@@ -1234,6 +1242,52 @@ class-dispatch story:**
   Combat classes from its roster and reports `blocked_count: 0` — a gate that cannot fail for classes
   it never enumerates. The real gate (`v06_work_inventory`'s `modelled_class_books()`) is unaffected
   and correct. `OPEN-ISSUES.md` row 374.
+
+## SD-33: `unknown` reaches zero, and `docs/work-inventory.json` grows to 49,438 units
+
+`docs/work-inventory.json`'s population grew from wave 27's 38,372 to
+**49,438 units** between tranche/11 and tranche/13 (real SD-32 engine work —
+companion grounding, bloodline/domain resolver widening, PI-audit fixes,
+equipment-gap onboarding — landing on `develop` in the interim, plus SD-33's
+own regenerations). `status: "unknown"` — a record `v06_work_inventory.rs`'s
+`classify()` could not place into any other status — carried **4,224** units
+at the start of SD-33's Epic 4. `classify()`'s own fallback logic had two
+distinct shapes producing false `unknown` verdicts (`AT-33-E4-001`'s
+root-cause finding): a `Kind::Feat`/`Kind::Equipment`/`Kind::EquipmentModifier`/
+`Kind::Spell` unit whose token closure already proves a real magnitude
+(`wc_class != "display"`) fell through a `text_only` branch that assumed no
+magnitude existed, and `Kind::ClassFeature`'s owner-unresolved,
+magnitude-bearing fallback had no disposition at all. Both are fixed at 5
+`classify()` call sites (`AT-33-E4-002`, `src/bin/v06_work_inventory.rs`,
+commit `00ca087775`). Per-unit movement of the exact 4,224, joined by `id`
+against the pre-cycle inventory: **3,052 → `not-ingested`** (no consumer
+holds this magnitude), **854 → `ingested-magnitude`** (a real magnitude the
+engine holds, no observed consumer delta yet), **318 → `unmeasurable`** (the
+genuinely-irreducible remainder — status string renamed from `unknown`,
+disposition unchanged, every per-unit `reason` preserved verbatim per
+`decisions.md §7`'s permanent `unverifiable` bucket; the old name read as
+"nobody looked" for a population that in fact carries a specific, stated
+reason per unit).
+
+```
+$ jq '[.units[]|select(.status=="unknown")]|length' docs/work-inventory.json
+0
+$ jq '.units|length' docs/work-inventory.json
+49438
+```
+
+**Doneness mapping.** Epic 4's reclassification required widening the
+dashboard producer's doneness-verdict table (`scripts/pf1e_dashboard_
+producer.py`, `verify.sh`'s `producer-selftest` stage) so every
+`(wiring_class, status)` pair `classify()` can now emit maps to a defined
+verdict — `unmeasurable` in particular needed a new `(ambiguous,
+literal-/fixture-verified) -> held` mapping rather than falling through
+`doneness_unmapped`. `AT-33-E6-001`'s own final-acceptance scan found this
+mapping gap had briefly left `cargo test --locked --lib` red over 11 of
+49,438 units (SD-33's own debt from `00ca087775`, closed same bundle,
+`artifacts/epic-6-closure/AT-33-E6-001-suite-green_cycle_receipt.md`) — a
+reclassification that changes a status string can leave a stale test
+assertion behind even when the reclassification itself is correct.
 
 ### Desktop app: character sheet and update actions
 
