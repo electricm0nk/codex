@@ -2147,7 +2147,39 @@ mod tests {
                 // the pre-existing gap `raceCreationCoverage.test.ts`'s
                 // "173, not 175" comment names), and a blanket filter on the
                 // flag alone would wrongly skip them here too.
-                if spec.book == "advanced_race_guide" && !record.data.is_racial_default {
+                //
+                // `bestiary_5`, `bestiary_2` and `bestiary_6` join this list
+                // for the same reason, found and fixed by SD-33 Epic 6's
+                // Skinwalker fold (2026-08-26) even though it is not this
+                // fold's own defect: SD-32 `decisions.md §25` cycle 2
+                // (2026-08-23) gave FOUR books --
+                // bestiary_2/bestiary_3/bestiary_5/bestiary_6 -- an
+                // `ingest_race_traits.rs`-written `adopted_race_<race>.json`
+                // "Adopted Race" selector (`key: "Adopted Race ~ <Race>"`,
+                // `is_racial_default: false`) sharing this binary's own
+                // `race_trait/<dir>/` directory for every race the two
+                // binaries both cover; `bestiary_3` is not in
+                // `IN_SCOPE_RACES` (0 standard-tier races), so only the
+                // other three ever reach this un-scoped
+                // `key.starts_with(race_key)` check. It already violated on
+                // the CURRENT committed HEAD -- unexercised, because
+                // `IN_SCOPE_RACES` did not walk `bestiary_5` (Skinwalker)
+                // deeply enough to fail loudly until this fold's own 65 new
+                // records made the directory-share visible, and the first
+                // alphabetical sibling this fix's own widening then exposed
+                // (`adopted_race_fetchling.json`, `bestiary_2`) was the SAME
+                // pre-existing shape, not a second defect. This fold's own
+                // 65 new bestiary_5 records ADD to the population this skip
+                // must cover (9 kin selectors + 36 replacement rows + 20
+                // `Change Shape (<Option>)` components, all
+                // `is_racial_default: false`, none of them this binary's
+                // own either) but did not create the underlying gap.
+                if (spec.book == "advanced_race_guide"
+                    || spec.book == "bestiary_2"
+                    || spec.book == "bestiary_5"
+                    || spec.book == "bestiary_6")
+                    && !record.data.is_racial_default
+                {
                     continue;
                 }
                 validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
@@ -2157,7 +2189,12 @@ mod tests {
                     Some(PLACEHOLDER_SOURCE_PAGE),
                     "{path:?}: the p.xx placeholder must never be stored as a citation"
                 );
-                assert!(record.data.key.starts_with(&record.data.race_key));
+                assert!(
+                    record.data.key.starts_with(&record.data.race_key),
+                    "{path:?}: key {:?} does not start with race_key {:?}",
+                    record.data.key,
+                    record.data.race_key
+                );
                 traits += 1;
             }
         }

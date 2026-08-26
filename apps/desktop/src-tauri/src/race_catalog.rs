@@ -729,7 +729,7 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 370,
+            alternates, 415,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 8 (SD-29 decisions.md §43's original 4 + SD-32 card-11 T2b lane's 4 Ratfolk \
              alternates, 2026-08-23) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
@@ -742,7 +742,11 @@ mod tests {
              chassis batch's real alternate-trait rows, minus Strix's Wing-Clipped-granted \
              Flight and Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield, \
              which are `FlagGranted` not `Alternate`) + SD31-E6-F4-006's 8 (2026-08-17, ARG's \
-             own follow-on 4-race chassis batch's real alternate-trait rows). \
+             own follow-on 4-race chassis batch's real alternate-trait rows) + SD-33 Epic 6's \
+             45 folded Skinwalker heritage records (2026-08-26: 9 kin selectors + their 36 \
+             replacement rows, all `TraitRole::Alternate` because each carries its own \
+             `FACT:Skinwalker_Replace<Trait>|True`; see `race_resolver.rs`'s \
+             `ALTERNATE_TRAIT_REPLACE_FLAGS` `Skinwalker` section). \
              Two loaded records are not \
              alternates at all and are correctly \
              outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \

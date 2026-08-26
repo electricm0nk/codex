@@ -215,8 +215,8 @@ fn the_pure_flag_table_agrees_with_the_disk_backed_resolver_for_every_alternate(
             checked += 1;
         }
     }
-    assert_eq!(checked, 370, "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows) + SD31-E6-F4-006's 8 (round 6, 2026-08-17: Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
-    assert_eq!(selectable_alternate_trait_keys().len(), 370, "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows) + SD31-E6-F4-006's 8 (round 6, 2026-08-17: Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(checked, 415, "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows) + SD31-E6-F4-006's 8 (round 6, 2026-08-17: Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2) + SD-33 Epic 6's 45 folded Skinwalker heritage records (2026-08-26: 9 kin selectors + their 36 replacement rows, all `TraitRole::Alternate`; each resolves clean here too -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` `Skinwalker` section names the real flags every one of the 45 sets). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(selectable_alternate_trait_keys().len(), 415, "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows) + SD31-E6-F4-006's 8 (round 6, 2026-08-17: Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2) + SD-33 Epic 6's 45 folded Skinwalker heritage records (2026-08-26: 9 kin selectors + their 36 replacement rows, all `TraitRole::Alternate`; each resolves clean here too -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` `Skinwalker` section names the real flags every one of the 45 sets). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// The three dependent rows named in this cycle's brief, confirmed by reading
@@ -248,7 +248,7 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .count();
     assert_eq!(
         all,
-        831,
+        910,
         "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
          + 43 Horror Adventures + 64 Core Essentials heritage rows + SD-31 Epic 1-F2's \
          113 (57 standard + 42 ARG + 6 Inner Sea Races + 8 grant-linked, 2026-08-15) + the \
@@ -263,7 +263,7 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
          closing arg_races.lst's full 37-row playable-race roster + SD-31 wave-24's Rougarou \
          (Bestiary 6, 2026-08-20), 8 standard rows (786 -> 794) + SD-32 card-11 T2b lane's 18 \
          (2026-08-23: Dhampir's 12 standard rows + Monster Codex's 4 new Ratfolk alternates \
-         + the 2 dependent rows Surface Sprinter grants; 794 -> 812) + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified) = 12 (812 -> 824) + this cycle's own SD-32 card-11 T2b lane, 2026-08-23 (decisions.md §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members (824 -> 831)"
+         + the 2 dependent rows Surface Sprinter grants; 794 -> 812) + a sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix (2026-08-22): 9 new alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified) = 12 (812 -> 824) + this cycle's own SD-32 card-11 T2b lane, 2026-08-23 (decisions.md §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members (824 -> 831) + SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker heritage lane (2026-08-26): 65 new records (9 kin selectors + 36 replacement rows + 20 shared `Change Shape (<Option>)` components) (831 -> 910)"
     );
     assert_eq!(
         arg,
@@ -281,7 +281,7 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
     );
 
     let selectable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
-    assert_eq!(selectable.len(), 370, "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows) + SD31-E6-F4-006's 8 (round 6, 2026-08-17: Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(selectable.len(), 415, "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows) + SD31-E6-F4-006's 8 (round 6, 2026-08-17: Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2) + SD-33 Epic 6's 45 folded Skinwalker heritage records (2026-08-26: 9 kin selectors + their 36 replacement rows, all `TraitRole::Alternate`; each resolves clean here too -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` `Skinwalker` section names the real flags every one of the 45 sets). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
     for dependent in [
         "Feral ~ Languages",
         "Scion of Humanity ~ Languages",
@@ -339,7 +339,7 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
     }
     assert_eq!(
         checked,
-        831,
+        910,
         "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15); 628 -> 637 by the Skinwalker follow-on \
          batch; 637 -> 695 by SD-31-E6-F4-002's Advanced Race Guide batch; 695 -> 719 by \
          SD-31-E6-F4-003's own alternate-trait batch for the same 6 races (2026-08-16); \
@@ -353,7 +353,10 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
          SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix (2026-08-22): 9 new \
          alternates + their 2 dependent rows + Suli ~ Trusted Mediator (Unclassified); \
          824 -> 831 by this cycle's own SD-32 card-11 T2b lane, 2026-08-23 (decisions.md \
-         §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members"
+         §16 item 2): the 7 `Human ~ Adoptive Parentage` CHOOSE-pool members; 831 -> 910 by \
+         SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker heritage lane \
+         (2026-08-26): 65 new records (9 kin selectors + their 36 replacement rows + 20 \
+         shared `Change Shape (<Option>)` components), none containing a colon"
     );
 }
 
@@ -547,7 +550,7 @@ fn every_alternate_computes_on_its_own_race_without_an_unknown_key_diagnostic() 
             computed += 1;
         }
     }
-    assert_eq!(computed, 370, "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows) + SD31-E6-F4-006's 8 (round 6, 2026-08-17: Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(computed, 415, "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows) + SD31-E6-F4-006's 8 (round 6, 2026-08-17: Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2) + SD-33 Epic 6's 45 folded Skinwalker heritage records (2026-08-26: 9 kin selectors + their 36 replacement rows, all `TraitRole::Alternate`; each resolves clean here too -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` `Skinwalker` section names the real flags every one of the 45 sets). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// **The measurement behind this cycle's honesty claim**, re-derived rather
@@ -585,8 +588,18 @@ fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_an
     ]);
 
     let mut landing: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    // The record's own `race_key`, keyed by trait key -- not re-derived by
+    // splitting the key string below. Every entry until SD-33 Epic 6's
+    // Skinwalker fold (2026-08-26) happened to satisfy "<Race> ~ <Trait>",
+    // so the split gave the right answer by coincidence; Skinwalker's own
+    // heritage replacement rows are keyed "<Kin> ~ <Trait>" (e.g.
+    // `Werebear-Kin ~ Animal-Minded`), where the string's first segment is
+    // the HERITAGE name, not the race PCGen resolves against -- the record's
+    // real `race_key` is `Skinwalker` regardless of which kin grants it.
+    let mut race_of: BTreeMap<String, String> = BTreeMap::new();
     for race_key in corpus.race_keys() {
         for record in corpus.alternate_traits(race_key) {
+            race_of.insert(record.data.key.clone(), race_key.to_string());
             for chain in &record.data.raw_bonus_chains {
                 // `["SAVE", "Will", "2"]` / `["SKILL", "Swim", "4", "TYPE=Racial"]`.
                 let (Some(head), Some(target), Some(magnitude)) =
@@ -659,11 +672,26 @@ fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_an
             ("Strix ~ Nimble", vec!["total_saves.reflex +1"]),
             ("Strix ~ Tough", vec!["total_saves.fortitude +1"]),
             ("Strix ~ Wing-Clipped", vec!["selected_skill_modifiers.climb +2"]),
+            // SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker
+            // heritage lane (2026-08-26). Of the fold's 45 `Alternate`
+            // records, exactly these 2 of the 9 kins' `~ Animal-Minded`
+            // replacement rows land a `BONUS:SKILL` on a tracked total --
+            // Werebear-Kin's `BONUS:SKILL|Climb|2|TYPE=Racial` and
+            // Wereshark-Kin's `BONUS:SKILL|Swim|2|TYPE=Racial`
+            // (`skinwalker_abilities_race_subrace.lst`). The other 7 kins'
+            // `~ Animal-Minded` rows land on Fly/Perception/Stealth/Survival
+            // /Perception-at-night, none of which is one of the six tracked
+            // totals, so they contribute nothing here (a `BONUS:VAR`
+            // `WildEmpathy` chain on Werebear-Kin's own row is also excluded
+            // the same way, since VAR is not SAVE/SKILL).
+            ("Werebear-Kin ~ Animal-Minded", vec!["selected_skill_modifiers.climb +2"]),
+            ("Wereshark-Kin ~ Animal-Minded", vec!["selected_skill_modifiers.swim +2"]),
         ],
         "the reachable set is a measurement of today's engine; a change here is a real change. \
          Round 2 added ISR's 4 without moving this list, so it was RED on the branch; round 3 \
          moved it and added HA's 1 (SD-29 decisions.md 47); round 5 (SD-31-E6-F4-003) added \
-         Strix's 4, 2026-08-16"
+         Strix's 4, 2026-08-16; SD-33 Epic 6's Skinwalker fold (2026-08-26) added Werebear-Kin \
+         and Wereshark-Kin's `~ Animal-Minded` rows"
     );
 
     // Every one of them is genuinely wired: the engine's own before/after
@@ -671,7 +699,10 @@ fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_an
     // reachable but not applied would be exactly the browse-only defect this
     // cycle exists to close.
     for (key, hits) in &reachable {
-        let race_token = key.split(" ~ ").next().expect("keys are '<Race> ~ <Trait>'").to_lowercase();
+        let race_token = race_of
+            .get(*key)
+            .unwrap_or_else(|| panic!("{key}: race_of must carry every reachable key"))
+            .to_lowercase();
         let before = computation_for(&race_token, &[]);
         let after = computation_for(&race_token, &[key]);
         for hit in hits {

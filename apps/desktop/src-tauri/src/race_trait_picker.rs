@@ -529,6 +529,39 @@ fn exclusion_guard_flags(record: &RaceTraitRecord) -> Vec<String> {
             }
         }
     }
+    // The fourth spelling, SD-33 Epic 6's Skinwalker fold (2026-08-26): a
+    // record with a positive `PREABILITY:...` dependency on a specific
+    // parent ability (i.e. `PREABILITY:1,CATEGORY=Special Ability,<parent
+    // key>`, not a negated `!PREABILITY` bracket -- that shape is already
+    // read above) AND its own `sets_replace_flags` is a heritage
+    // REPLACEMENT row this corpus never gives a `PREMULT`/`PREVAREQ` guard
+    // of its own to (Skinwalker's 36 `<Kin> ~ <Trait>` rows: PCGen gates
+    // them on their PARENT selector's `PREABILITY`/`PREMULT` alone, on the
+    // assumption a player reaches them only by picking that one selector
+    // first). Without this branch, none of the 36 carried ANY exclusion
+    // guard (unlike Monster Codex's `Oversized Goblin ~ Ability Scores`/
+    // `~ Size`, this branch's negative control: those carry no `PREABILITY`
+    // at all, so they never reach this branch and stay unguarded, matching
+    // `every_alternate_has_a_readable_exclusion_guard_including_the_
+    // preability_spelling`'s own pin) -- a player could tick e.g.
+    // `Werebat-Kin ~ Ability Scores` AND `Werebear-Kin ~ Ability Scores`
+    // together (both fire `Skinwalker_ReplaceAbilityScores`) and collect
+    // both incompatible ability-score swaps, since nothing suppressed the
+    // second. The guard is the record's OWN already-honest
+    // `sets_replace_flags` (read off its real `FACT:<flag>|True` token, the
+    // same field `classify()` itself reads), not a fabricated token --
+    // `corpus_literal_sweep` only audits `raw_tokens`, and this reads
+    // `sets_replace_flags` directly.
+    if out.is_empty()
+        && !record.data.sets_replace_flags.is_empty()
+        && record.data.raw_tokens.iter().any(|token| token.key == "PREABILITY")
+    {
+        for flag in &record.data.sets_replace_flags {
+            if !out.iter().any(|existing| existing == flag) {
+                out.push(flag.clone());
+            }
+        }
+    }
     out
 }
 
@@ -1145,7 +1178,7 @@ mod tests {
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 370,
+            total, 415,
             "ARG's 153 Alternate-classified records + Monster Codex's 8 (4 original, SD-29 \
              decisions.md §43, + SD-32 card-11 T2b lane's 4 new Ratfolk alternates, \
              2026-08-23) \
@@ -1159,7 +1192,14 @@ mod tests {
              2026-08-15) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch's \
              real alternate-trait rows, minus Strix's Wing-Clipped-granted Flight and Suli's \
              Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield) + SD31-E6-F4-006's 8 \
-             (2026-08-17, ARG's own follow-on 4-race chassis batch's real alternate-trait rows)"
+             (2026-08-17, ARG's own follow-on 4-race chassis batch's real alternate-trait rows) \
+             + SD-33 Epic 6's 45 folded Skinwalker heritage records (2026-08-26: 9 kin \
+             selectors + their 36 replacement rows, ALL `TraitRole::Alternate` -- unlike Core \
+             Essentials' 16+48 above, Skinwalker's replacement rows carry their own \
+             `FACT:Skinwalker_Replace<Trait>|True` and are not `FlagGranted`; see \
+             `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` `Skinwalker` section. The \
+             batch's other 20 records -- the shared Change Shape component rows -- are \
+             `TraitRole::Unclassified` and never menu rows either way)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -1229,6 +1269,20 @@ mod tests {
             // (`Market Dweller`, a sibling SD-32 card-11 T2b lane's
             // stale-regen fix, 2026-08-22).
             ("Ratfolk", 9),
+            // SD-33 Epic 6 fold (2026-08-26): 9 kin selectors
+            // (Werebat/Werebear/Wereboar/Werecrocodile/Wereraptor/Wererat/
+            // Wereshark/Weretiger/Werewolf-Kin) PLUS their 36 replacement
+            // rows (Ability Scores/Animal-Minded/Change Shape/Spell-Like
+            // Ability x 9) -- all 45 are `TraitRole::Alternate` and ARE menu
+            // rows, because each replacement row carries its own
+            // `FACT:Skinwalker_Replace<Trait>|True` (unlike Strix's
+            // Wing-Clipped/Suli's Energy Strike dependents above, which
+            // carry none and stay `FlagGranted`); see
+            // `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS`
+            // `Skinwalker` section for the corpus-level proof. Its 20 shared
+            // Change Shape component rows are `TraitRole::Unclassified` and
+            // are not menu rows.
+            ("Skinwalker", 45),
             // Strix's real ARG total is 6, but `Wing-Clipped` grants
             // `Wing-Clipped ~ Strix ~ Flight` (`TraitRole::FlagGranted`), so
             // only 5 are menu rows -- the same shape `Dwarf ~ Saltbeard`
@@ -1265,7 +1319,7 @@ mod tests {
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 370);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 415);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1323,13 +1377,20 @@ mod tests {
 
         assert_eq!(
             paged,
-            BTreeSet::from(["APG", "ARG", "HA", "ISR", "MC"]),
+            BTreeSet::from(["APG", "ARG", "B5", "HA", "ISR", "MC"]),
             "the books whose alternates carry a real page. HA joined with SD-29's race-trait \
              lane round 3: all 41 of its alternates cite a real `SOURCEPAGE` too, which is why \
              the `pageless` pin below did NOT move for this book either. ISR joined with \
              SD-29's race-trait \
              lane round 2: all 68 of its alternates cite a real `SOURCEPAGE`, none the literal \
-             `p.xx` stand-in that `ingest_races.rs` filters out"
+             `p.xx` stand-in that `ingest_races.rs` filters out. B5 joined with SD-33 Epic 6's \
+             Skinwalker fold (2026-08-26): of the fold's 45 Alternate records, Wereraptor-Kin's \
+             5 (the selector + its 4 replacement rows) genuinely cite `SOURCEPAGE:p.89` in the \
+             pinned oracle -- a real page from a DIFFERENT sourcebook than the other 8 kins \
+             (`SOURCELONG:Ironfang Invasion, Chapter 1 - Trail of the Hunted`,\
+             `skinwalker_abilities_race_subrace.lst:207,211-214`), not a fabrication. The other \
+             8 kins' 40 records all carry the `p.xx` stand-in, correctly dropped to `None` \
+             and counted in `pageless` below"
         );
         assert_eq!(
             pageless,
@@ -1352,6 +1413,52 @@ mod tests {
                 "Tiefling ~ Oni-Spawn",
                 "Tiefling ~ Qlippoth-Spawn",
                 "Tiefling ~ Rakshasa-Spawn",
+                // SD-33 Epic 6's Skinwalker fold (2026-08-26): 40 of the
+                // fold's 45 Alternate records -- 8 kin selectors (all but
+                // Wereraptor-Kin, `paged` above) plus their 32 replacement
+                // rows (8 kins x 4) -- carry the `p.xx` placeholder in the
+                // pinned oracle, dropped to `None` the same way as every
+                // other book here.
+                "Skinwalker ~ Werebat-Kin",
+                "Skinwalker ~ Werebear-Kin",
+                "Skinwalker ~ Wereboar-Kin",
+                "Skinwalker ~ Werecrocodile-Kin",
+                "Skinwalker ~ Wererat-Kin",
+                "Skinwalker ~ Wereshark-Kin",
+                "Skinwalker ~ Weretiger-Kin",
+                "Skinwalker ~ Werewolf-Kin",
+                "Werebat-Kin ~ Ability Scores",
+                "Werebat-Kin ~ Animal-Minded",
+                "Werebat-Kin ~ Change Shape",
+                "Werebat-Kin ~ Spell-Like Ability",
+                "Werebear-Kin ~ Ability Scores",
+                "Werebear-Kin ~ Animal-Minded",
+                "Werebear-Kin ~ Change Shape",
+                "Werebear-Kin ~ Spell-Like Ability",
+                "Wereboar-Kin ~ Ability Scores",
+                "Wereboar-Kin ~ Animal-Minded",
+                "Wereboar-Kin ~ Change Shape",
+                "Wereboar-Kin ~ Spell-Like Ability",
+                "Werecrocodile-Kin ~ Ability Scores",
+                "Werecrocodile-Kin ~ Animal-Minded",
+                "Werecrocodile-Kin ~ Change Shape",
+                "Werecrocodile-Kin ~ Spell-Like Ability",
+                "Wererat-Kin ~ Ability Scores",
+                "Wererat-Kin ~ Animal-Minded",
+                "Wererat-Kin ~ Change Shape",
+                "Wererat-Kin ~ Spell-Like Ability",
+                "Wereshark-Kin ~ Ability Scores",
+                "Wereshark-Kin ~ Animal-Minded",
+                "Wereshark-Kin ~ Change Shape",
+                "Wereshark-Kin ~ Spell-Like Ability",
+                "Weretiger-Kin ~ Ability Scores",
+                "Weretiger-Kin ~ Animal-Minded",
+                "Weretiger-Kin ~ Change Shape",
+                "Weretiger-Kin ~ Spell-Like Ability",
+                "Werewolf-Kin ~ Ability Scores",
+                "Werewolf-Kin ~ Animal-Minded",
+                "Werewolf-Kin ~ Change Shape",
+                "Werewolf-Kin ~ Spell-Like Ability",
             ]),
             // The stand-in spellings are quoted rather than described with the
             // word `tests/sd24_wired_integration_audit.rs` scans shipping
@@ -1364,9 +1471,10 @@ mod tests {
              24 Aasimar ones. `ingest_race_traits::is_placeholder_source_page` drops those at \
              ingest so the panel shows no page rather than a fake one; none of the four books \
              ingested before Core Essentials carries such a value at all, so this pin moving \
-             for any OTHER book means real page data was lost. A 19th pageless row is a \
-             regression, and any of these gaining a page means the upstream data changed and \
-             this pin should be re-derived"
+             for any OTHER book means real page data was lost. SD-33 Epic 6's Skinwalker fold \
+             (2026-08-26) adds 40 more pageless keys (see above), all `p.xx` in the pinned \
+             oracle; the 45th and final new Alternate record's own doc comment on `paged` above \
+             explains why Wereraptor-Kin's 5 records are absent from this list instead"
         );
     }
 
@@ -1492,14 +1600,16 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 370,
+            checked, 415,
             "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk \
              alternates, 2026-08-23) + 1 APG (SD-29 decisions.md §43) + 76 Inner Sea Races \
              (67, §45, + 9 from a sibling SD-32 card-11 T2b lane's stale-regen fix, \
              2026-08-22) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
              19 SD-31-E6-F4-003 (2026-08-16, ARG's own 6-race chassis batch) + 8 \
-             SD31-E6-F4-006 (2026-08-17, ARG's own follow-on 4-race chassis batch)"
+             SD31-E6-F4-006 (2026-08-17, ARG's own follow-on 4-race chassis batch) + 45 \
+             SD-33 Epic 6 (2026-08-26, folded Skinwalker heritage records: 9 kin selectors + \
+             their 36 replacement rows)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
@@ -2076,9 +2186,16 @@ mod tests {
         // A sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen
         // fix (2026-08-22) adds 9 more alternates (361 -> 370); `standard`
         // is unmoved, that fix wrote no chassis/standard-tier content.
-        assert_eq!((standard, alternates), (373, 370));
+        // SD-33 Epic 6's fold (2026-08-26) adds 45 more alternates, the
+        // folded Skinwalker heritage records -- 9 kin selectors + their 36
+        // replacement rows, all `TraitRole::Alternate` (370 -> 415);
+        // `standard` is unmoved -- Skinwalker's chassis and 9 standard-tier
+        // rows were already shipped by `ingest_races.rs`'s SD-31 Epic 1
+        // follow-on batch, and this fold touches no `is_racial_default:
+        // true` record.
+        assert_eq!((standard, alternates), (373, 415));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 743);
+        assert_eq!(checked, 788);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

@@ -578,18 +578,51 @@ mod tests {
     /// the 11 `(ambiguous, unmeasurable)` units, since `not_done_population`
     /// only tests `verdict != DONE`, never which specific non-`done` verdict
     /// a unit carries.
+    ///
+    /// **6,278 -> 6,260 by the SD-33 Epic 6 Skinwalker fold (2026-08-26).**
+    /// Re-derived with the identical command
+    /// (`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json
+    /// --corpus-root data/corpus --output <scratch>`, matching this test's
+    /// own live `report.families["F1"].population`). Root cause, verified
+    /// rather than assumed: all 65 of the fold's new
+    /// `data/corpus/bestiary_5/race_trait/skinwalker/*.json` filenames
+    /// (9 kin selectors + their 36 replacement rows + 20 shared `Change
+    /// Shape (<Option>)` components) exactly coincide with 65 pre-existing
+    /// `data/corpus/bestiary_5/race_trait_generic/*.json` filenames from
+    /// SD-32's "no_record closure via generic verbatim ingest" catch-all
+    /// lane (`75ea0c9109`) — the SAME heritage content, already captured
+    /// once, generically, before this fold gave it a properly-typed home.
+    /// `shape_ledger.py`'s `normalize_kind_dir` deliberately folds a
+    /// `<kind>_generic` sibling into its base `<kind>` bucket for this scan
+    /// (own doc comment: "a `<kind>_generic` sibling directory ... still
+    /// counts as a real answer for its base kind"), so the fold's real,
+    /// correctly-typed `race_trait/` records now win that join for all 65
+    /// ids where before only the generic verbatim copy existed — reclass-
+    /// ifying some of them off F1 (verified: the 9 kin selectors, e.g.
+    /// `bestiary_5:race_trait:skinwalker_werebear_kin`, are genuinely
+    /// `F0`/`no_formula_tokens` in the real record — a bare
+    /// `ABILITY:...AUTOMATIC...` grant token carries no numeric literal —
+    /// where the old generic-verbatim copy's broader raw-token capture
+    /// apparently read as `F1`-shaped). This never touches a player-facing
+    /// path: neither `race_resolver.rs` nor `race_trait_picker.rs` nor
+    /// `character_hub.rs` reads `race_trait_generic` at all (grep confirms
+    /// zero references), so this is a measurement-instrument reclassifi-
+    /// cation, not an engine or corpus-quality regression.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 6278,
-            "F1 population must equal the CURRENT true formula-bearing count (6,278, re-derived \
-             2026-08-25 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json` \
-             against the post-`AT-33-E4-002` inventory), not the pre-regen 6,308 this test pinned \
-             on 2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — AT-33-E3-002 / \
-             AT-33-E6-001"
+            f1.population, 6260,
+            "F1 population must equal the CURRENT true formula-bearing count (6,260, re-derived \
+             2026-08-26 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
+             --corpus-root data/corpus` against the SD-33 Epic 6 Skinwalker fold's 65 new \
+             `race_trait/` records superseding their `race_trait_generic` verbatim-ingest \
+             duplicates in this scan's own `normalize_kind_dir` join -- see this test's own doc \
+             comment), not the pre-fold 6,278 (2026-08-25, AT-33-E6-001), not the pre-regen 6,308 \
+             this test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — \
+             AT-33-E3-002 / AT-33-E6-001"
         );
     }
 }

@@ -166,6 +166,30 @@ struct BookSource {
     /// Skinwalker, Rougarou) -- Bestiary 3's five selector-only races are
     /// already covered by `IN_SCOPE_RACES` and need no entry here.
     extra_clear_races: &'static [&'static str],
+    /// SD-33 Epic 6 fold (2026-08-26) -- files admitted by
+    /// [`extra_in_scope_races`](Self::extra_in_scope_races) membership alone,
+    /// **never** gated by `selector_only`. Exists because a `selector_only`
+    /// book's `lst_relatives` share a file with another tool's already-owned
+    /// standard-trait content (see that field's doc comment) — but a
+    /// heritage file like Skinwalker's `_abilities_race_subrace.lst` is not
+    /// shared with anything; it is this binary's own, exclusive content, and
+    /// gating it by `selector_only` would silently drop it the same way the
+    /// ordinary `lst_relatives` loop drops every non-selector row in the
+    /// shared chassis file. Empty for every book but the one that needs it.
+    direct_heritage_relatives: &'static [&'static str],
+    /// Races admitted from [`direct_heritage_relatives`](Self::direct_heritage_relatives)
+    /// ONLY for this one `BookSource`'s own direct-heritage files — never
+    /// merged into the shared [`IN_SCOPE_RACES`] set every other book's
+    /// `in_scope.contains(...)` check reads. Widening the shared set instead
+    /// would have reached past this fold's scope: `inner_sea_races`'
+    /// `isr_abilities_race.lst` carries a real, un-ruled-on Skinwalker
+    /// alternate trait (`Skinwalker ~ Beast Talker` plus its two replacement
+    /// rows, `isr_abilities_race.lst:1213-1218`) that a shared widening would
+    /// have started admitting as an unplanned side effect the very next time
+    /// this binary ran the Inner Sea Races book. Scoping the race list to
+    /// this one `BookSource` keeps every other book's admission set,
+    /// including Inner Sea Races', byte-for-byte unchanged.
+    extra_in_scope_races: &'static [&'static str],
 }
 
 /// Every book whose alternate racial traits this binary ingests.
@@ -241,6 +265,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
         selector_only: false,
         extra_clear_races: &[],
+        direct_heritage_relatives: &[],
+        extra_in_scope_races: &[],
     },
     // Advanced Player's Guide -- INVESTIGATED and deliberately NOT added as a
     // `BookSource`, SD-31 Epic 6-F4 (2026-08-15). `docs/work-inventory.json`
@@ -285,6 +311,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
         selector_only: false,
         extra_clear_races: &[],
+        direct_heritage_relatives: &[],
+        extra_in_scope_races: &[],
     },
     // Inner Sea Races, SD-29's race-trait lane round 2. The single largest
     // alternate-racial-trait contribution after ARG's own: 68 of its 72
@@ -301,6 +329,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         pcgen_book_relative: "pathfinder/paizo/campaign_setting/inner_sea_races",
         selector_only: false,
         extra_clear_races: &[],
+        direct_heritage_relatives: &[],
+        extra_in_scope_races: &[],
     },
     // Horror Adventures, SD-29's race-trait lane round 3. 41 of its 43
     // in-scope rows in the book's main `_abilities_race.lst` set a
@@ -333,6 +363,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
         selector_only: false,
         extra_clear_races: &[],
+        direct_heritage_relatives: &[],
+        extra_in_scope_races: &[],
     },
     // SD-32 `decisions.md §25` cycle 2 -- the four books whose "Adopted Race"
     // selector rows (`decisions.md §25`'s 14-unit population) this binary was
@@ -372,6 +404,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         // needs its own scoped-clear entry or a stale selector record from a
         // prior run's different scope would never be removed.
         extra_clear_races: &["Dhampir"],
+        direct_heritage_relatives: &[],
+        extra_in_scope_races: &[],
     },
     BookSource {
         corpus_book: "bestiary_3",
@@ -388,6 +422,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         // All five (Catfolk/Ratfolk/Suli/Vanara/Vishkanya) are ARG-native
         // chassis already in `IN_SCOPE_RACES`; no extra entry needed.
         extra_clear_races: &[],
+        direct_heritage_relatives: &[],
+        extra_in_scope_races: &[],
     },
     BookSource {
         corpus_book: "bestiary_5",
@@ -401,6 +437,38 @@ const BOOK_SOURCES: &[BookSource] = &[
         // (`ingest_race_traits.rs`'s own header doc comment) even though
         // `ingest_races.rs` gave it a chassis.
         extra_clear_races: &["Skinwalker"],
+        // SD-33 Epic 6 fold (2026-08-26), recovering SD31-E6-F4-005's lost
+        // wave-11 lane. `skinwalker_abilities_race_subrace.lst` is
+        // Skinwalker's heritage file -- the "kin" system (9 heritages,
+        // `BONUS:ABILITYPOOL|Skinwalker Heritage|1|TYPE=Base` in the chassis
+        // file grants one pick), structurally the SAME two-row-shapes-per-
+        // heritage pattern Aasimar/Tiefling use (a `TYPE:<Race> Subrace`
+        // selector row plus its `TYPE:...<Race> Racial Trait...` replacement
+        // rows, each carrying a `FACT:<Race>_Replace<Trait>|True`) but
+        // gated differently: there is no
+        // `skinwalker_abilities_globalvar_subrace.lst` for `subrace_grants`
+        // to read (`ingest_races.rs`'s own `skinwalker` doc comment already
+        // named this exact gap as "a genuinely new mechanism, deferred").
+        // Each selector row instead names all four of its own grants
+        // directly, in one `ABILITY:Skinwalker Racial
+        // Trait|AUTOMATIC|<t1>|<t2>|<t3>|<t4>` token with no `PREVAREQ`
+        // clause at all -- see [`direct_subrace_grants`], the new function
+        // this shape needed, which reads that token off the already-parsed
+        // selector row itself instead of a second file.
+        //
+        // This file is listed here rather than added to `lst_relatives`
+        // above because it is not shared with `ingest_races.rs` or anything
+        // else -- `selector_only: true` (which governs `lst_relatives`) would
+        // silently drop every kin row exactly the way it already,
+        // correctly, drops the chassis file's OTHER 63 non-selector rows.
+        direct_heritage_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+        ],
+        // Scoped to this `BookSource` alone, not merged into the shared
+        // `IN_SCOPE_RACES` -- see `extra_in_scope_races`'s own doc comment
+        // for the Inner Sea Races hazard that would otherwise reach past
+        // this fold's ruled-in scope.
+        extra_in_scope_races: &["Skinwalker"],
     },
     BookSource {
         corpus_book: "bestiary_6",
@@ -412,6 +480,8 @@ const BOOK_SOURCES: &[BookSource] = &[
         selector_only: true,
         // Rougarou is not in `IN_SCOPE_RACES` either.
         extra_clear_races: &["Rougarou"],
+        direct_heritage_relatives: &[],
+        extra_in_scope_races: &[],
     },
 ];
 
@@ -1109,6 +1179,69 @@ fn subrace_grants(text: &str, race_key: &str) -> BTreeMap<String, Vec<SubraceGra
     out
 }
 
+/// [`subrace_grants`]'s sibling for a heritage shape that carries no separate
+/// `_abilities_globalvar_subrace.lst` at all -- Skinwalker's, per
+/// `ingest_races.rs`'s own `skinwalker` doc comment ("each heritage alternate
+/// sets its `Skinwalker_Replace*` FACT flags directly on its OWN constituent
+/// trait rows ... a structurally different shape `subrace_grants()` cannot
+/// parse without new code").
+///
+/// Every fact this function needs is already sitting in `rows`, parsed by the
+/// ordinary [`parse_row`] path, because Skinwalker's selector row states its
+/// whole grant set on itself: `ABILITY:Skinwalker Racial
+/// Trait|AUTOMATIC|Werebat-Kin ~ Ability Scores|Werebat-Kin ~
+/// Animal-Minded|Werebat-Kin ~ Change Shape|Werebat-Kin ~ Spell-Like
+/// Ability` -- one token, four targets, no per-target `PREVAREQ` clause (the
+/// shape [`subrace_grants`] expects). The four targets' own rows each still
+/// carry a genuine `FACT:<Race>_Replace<Trait>|True` (parsed generically by
+/// [`parse_row`] into [`TraitRow::sets_replace_flags`]), so the flag half of
+/// each [`SubraceGrant`] is read off the TARGET row, not manufactured: this
+/// is transcription of two already-parsed rows agreeing with each other, the
+/// same "checkable against a first source" property [`subrace_grants`]'s own
+/// doc comment requires of the Aasimar/Tiefling shape.
+fn direct_subrace_grants(rows: &[SourcedRow], race_key: &str) -> BTreeMap<String, Vec<SubraceGrant>> {
+    let category_prefix = format!("{race_key} Racial Trait");
+    // Every non-selector row of this race that sets exactly one replace flag
+    // on itself, keyed by its own KEY -- the target lookup the selector's
+    // multi-target ABILITY token resolves against.
+    let mut flag_of: BTreeMap<&str, &str> = BTreeMap::new();
+    for sourced in rows {
+        let row = &sourced.row;
+        if row.race_key != race_key || row.is_subrace_selector {
+            continue;
+        }
+        if let [flag] = row.sets_replace_flags.as_slice() {
+            flag_of.insert(row.key.as_str(), flag.as_str());
+        }
+    }
+    let mut out: BTreeMap<String, Vec<SubraceGrant>> = BTreeMap::new();
+    for sourced in rows {
+        let row = &sourced.row;
+        if row.race_key != race_key || !row.is_subrace_selector {
+            continue;
+        }
+        for token in &row.raw_tokens {
+            if token.key != "ABILITY" {
+                continue;
+            }
+            let parts: Vec<&str> = token.value.split('|').collect();
+            if parts.len() < 3 || parts[0].trim() != category_prefix || parts[1].trim() != "AUTOMATIC" {
+                continue;
+            }
+            for target in &parts[2..] {
+                let target = target.trim();
+                let Some(flag) = flag_of.get(target) else { continue };
+                let entry = out.entry(row.key.clone()).or_default();
+                let grant = SubraceGrant { granted_trait_key: target.to_string(), replaces_flag: (*flag).to_string() };
+                if !entry.contains(&grant) {
+                    entry.push(grant);
+                }
+            }
+        }
+    }
+    out
+}
+
 /// True for a `SOURCEPAGE` value that is an upstream placeholder rather than a
 /// page. Deliberately an exact-match list of the two spellings the corpus
 /// actually uses, not a pattern: a page cite is free text and a heuristic here
@@ -1373,6 +1506,8 @@ fn ingest_book(book: &BookSource) {
         pcgen_book_relative,
         selector_only,
         extra_clear_races,
+        direct_heritage_relatives,
+        extra_in_scope_races,
     } = *book;
     let data_root = pcgen_data_root();
 
@@ -1391,6 +1526,7 @@ fn ingest_book(book: &BookSource) {
     let cites_core_essentials = lst_relatives
         .iter()
         .chain(subrace_globalvar_relatives.iter())
+        .chain(direct_heritage_relatives.iter())
         .any(|rel| rel.starts_with(CORE_ESSENTIALS_RELATIVE));
     let wiring_index = if cites_core_essentials && ce_dir != pcgen_book_dir {
         WiringClassIndex::build_with_extra(corpus_book, &pcgen_book_dir, "core_essentials", &ce_dir)
@@ -1465,6 +1601,39 @@ fn ingest_book(book: &BookSource) {
         }
     }
 
+    // `direct_heritage_relatives` (`BookSource`'s own doc comment): this
+    // binary's own exclusive heritage content, never shared with another
+    // tool the way `lst_relatives`' `selector_only` files are, so it is
+    // admitted by `extra_in_scope_races` membership alone -- unconditionally,
+    // never gated by `selector_only`.
+    let extra_in_scope: BTreeSet<&str> = extra_in_scope_races.iter().copied().collect();
+    for lst_relative in direct_heritage_relatives {
+        let lst_path = data_root.join(lst_relative);
+        let bytes = fs::read(&lst_path)
+            .unwrap_or_else(|e| panic!("failed to read the {corpus_book} racial-ability corpus {lst_path:?}: {e}"));
+        let sha256 = sha256_hex(&bytes);
+        source_shas.push((lst_relative, sha256.clone()));
+        let text = String::from_utf8_lossy(&bytes).to_string();
+        for (idx, line) in text.lines().enumerate() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() || trimmed.starts_with('#') {
+                continue;
+            }
+            real_lines += 1;
+            let Some(row) = parse_row((idx + 1) as u32, line) else { continue };
+            if declared_product_identity_of(&row).name {
+                pi_dropped.push(format!("{lst_relative}:{} {}", row.line_number, row.key));
+                continue;
+            }
+            let admit = extra_in_scope.contains(row.race_key.as_str());
+            if admit {
+                rows.push(SourcedRow { row, lst_relative, sha256: sha256.clone() });
+            } else {
+                *skipped.entry(row.race_key.clone()).or_default() += 1;
+            }
+        }
+    }
+
     // The heritage-selector half of the swap, read from the book's
     // `_abilities_globalvar_subrace.lst` files. See `subrace_grants`.
     let mut grants: BTreeMap<String, Vec<SubraceGrant>> = BTreeMap::new();
@@ -1477,6 +1646,14 @@ fn ingest_book(book: &BookSource) {
             for (selector, found) in subrace_grants(&text, race) {
                 grants.entry(selector).or_default().extend(found);
             }
+        }
+    }
+    // `direct_heritage_relatives`' own grant shape -- see
+    // `direct_subrace_grants`'s doc comment for why this reads `rows` itself
+    // rather than a second `_abilities_globalvar_subrace.lst` file.
+    for race in extra_in_scope_races.iter().copied() {
+        for (selector, found) in direct_subrace_grants(&rows, race) {
+            grants.entry(selector).or_default().extend(found);
         }
     }
 
@@ -1531,23 +1708,48 @@ fn ingest_book(book: &BookSource) {
         // `link_automatic_grants`): the selector names its replacement rows
         // outright, so selecting it brings them in and nothing new is needed
         // on the engine side.
-        for grant in &found {
-            // The `PREVAREQ:<flag>,0` qualifier is carried through verbatim,
-            // not dropped as noise. It is the corpus's own statement of the
-            // heritage's mutual exclusion -- this heritage grants its
-            // replacement only while the standard trait it displaces has not
-            // already been displaced by a different heritage -- and
-            // `race_trait_picker::exclusion_guard_flags` reads exactly that.
-            // Without it two heritages of one race could both be ticked and
-            // the character would collect both sets of ability-score bonuses.
-            // `race_resolver::automatic_grant_targets` stops at the first
-            // `PRE` part, so the grant link itself is unaffected.
-            let value = format!(
-                "{} Racial Trait|AUTOMATIC|{}|PREVAREQ:{},0",
-                sourced.row.race_key, grant.granted_trait_key, grant.replaces_flag
-            );
-            if !sourced.row.raw_tokens.iter().any(|t| t.key == "ABILITY" && t.value == value) {
-                sourced.row.raw_tokens.push(RawToken { key: "ABILITY".to_string(), value });
+        //
+        // SD-33 Epic 6 fold (2026-08-26), fixing a `corpus_literal_sweep`
+        // RED this loop caused for Skinwalker: the `PREVAREQ:<flag>,0`
+        // synthesis below is legitimate ONLY for the Aasimar/Tiefling shape,
+        // where the selector's own row carries **no `PREMULT` of its own**
+        // (`core_essentials`' heritage selectors, per this fn's own doc
+        // comment) -- there, `race_trait_picker::exclusion_guard_flags`
+        // would read nothing at all without this carried-through qualifier.
+        // A selector that already carries its own `PREMULT` (Skinwalker's
+        // shape: `PREMULT:1,[PREABILITY:...],[!PREFACT:1,ABILITIES,
+        // Skinwalker_Replace...=True,...]`, real, on-disk, at
+        // `skinwalker_abilities_race_subrace.lst`) does not need it:
+        // `exclusion_guard_flags`'s own `PREMULT` branch (unchanged, generic,
+        // pre-existing) already reads every `_Replace...=True` name out of
+        // that literal negated bracket group, so the guard is already
+        // complete. Synthesizing the token there too would be BOTH
+        // redundant (same flags, doubly derived) AND a fabrication --
+        // `PREVAREQ:<flag>,0` naming Skinwalker's replacement-trait keys
+        // appears nowhere in the pinned oracle for this race, unlike
+        // Aasimar/Tiefling's genuinely-sourced `_abilities_globalvar_subrace.lst`
+        // rows -- so `corpus_literal_sweep` correctly refused to ship it.
+        let selector_has_own_premult_guard =
+            sourced.row.raw_tokens.iter().any(|t| t.key == "PREMULT");
+        if !selector_has_own_premult_guard {
+            for grant in &found {
+                // The `PREVAREQ:<flag>,0` qualifier is carried through verbatim,
+                // not dropped as noise. It is the corpus's own statement of the
+                // heritage's mutual exclusion -- this heritage grants its
+                // replacement only while the standard trait it displaces has not
+                // already been displaced by a different heritage -- and
+                // `race_trait_picker::exclusion_guard_flags` reads exactly that.
+                // Without it two heritages of one race could both be ticked and
+                // the character would collect both sets of ability-score bonuses.
+                // `race_resolver::automatic_grant_targets` stops at the first
+                // `PRE` part, so the grant link itself is unaffected.
+                let value = format!(
+                    "{} Racial Trait|AUTOMATIC|{}|PREVAREQ:{},0",
+                    sourced.row.race_key, grant.granted_trait_key, grant.replaces_flag
+                );
+                if !sourced.row.raw_tokens.iter().any(|t| t.key == "ABILITY" && t.value == value) {
+                    sourced.row.raw_tokens.push(RawToken { key: "ABILITY".to_string(), value });
+                }
             }
         }
     }
@@ -2471,11 +2673,33 @@ mod tests {
                 // bestiary_3 = 5 selector + 0 standard (`ingest_races.rs`
                 // does not write into bestiary_3 at all -- it is not in that
                 // binary's own book-clear list); bestiary_5 = 1 selector + 9
-                // Skinwalker standard; bestiary_6 = 1 selector + 8 Rougarou
-                // standard.
+                // Skinwalker standard + 65 heritage (see below); bestiary_6 =
+                // 1 selector + 8 Rougarou standard.
+                //
+                // bestiary_5 10 -> 75 by SD-33 Epic 6 fold (2026-08-26),
+                // recovering SD31-E6-F4-005's lost wave-11 lane:
+                // `direct_heritage_relatives`' new file contributes 65, not
+                // the 45 (or the rescue commit's claimed "48") the folded
+                // branch's own preserved records suggested -- re-derive with
+                // `find data/corpus/bestiary_5/race_trait/skinwalker -name
+                // '*.json' | wc -l` -> 75, `75 - 10` = 65. The 45 are the nine
+                // kin (`TYPE:Skinwalker Subrace` selector + its four
+                // `TYPE:...Skinwalker Racial Trait...` replacement rows
+                // apiece); the other 20 are the shared, description-less
+                // `Skinwalker ~ Change Shape (<Option>)` component abilities
+                // (Bite, Claw/Talon, Gore, Hoof, Scent, Darkvision, ...) every
+                // kin's own `Change Shape` replacement row pool-references by
+                // TYPE (`ABILITY:Skinwalker Racial
+                // Trait|AUTOMATIC|TYPE=Skinwalker Change Shape <Kin>`) --
+                // without them that grant resolves to nothing, so shipping
+                // only the 45 would leave `Change Shape` a stub for all nine
+                // kins. The rescued branch's own snapshot never reached this
+                // far (its lane died first); the generator's own output,
+                // read off the same pinned oracle file, is the corrected,
+                // complete population.
                 ("bestiary_2", 76),
                 ("bestiary_3", 5),
-                ("bestiary_5", 10),
+                ("bestiary_5", 75),
                 ("bestiary_6", 9),
             ]
                 .into_iter()
@@ -2493,8 +2717,14 @@ mod tests {
         // Named per book and pinned to the exact selector count (never a
         // blanket allowance) so a future record silently losing its
         // description elsewhere still fails loudly.
+        // bestiary_5 1 -> 21 by the same SD-33 Epic 6 fold: the 20 new
+        // `Skinwalker ~ Change Shape (<Option>)` component records are
+        // `VISIBLE:NO` mechanical helpers the pinned oracle gives no `DESC:`
+        // token at all (confirmed: `python3 -c` over the shipped files finds
+        // description `None` on all 20, joining the pre-existing
+        // Adopted-Race selector's 1).
         let expected_without_description: BTreeMap<&str, usize> =
-            [("bestiary_2", 7usize), ("bestiary_3", 5), ("bestiary_5", 1), ("bestiary_6", 1)].into_iter().collect();
+            [("bestiary_2", 7usize), ("bestiary_3", 5), ("bestiary_5", 21), ("bestiary_6", 1)].into_iter().collect();
 
         let mut total = 0usize;
         for book in BOOK_SOURCES {
@@ -2552,13 +2782,16 @@ mod tests {
         }
         assert_eq!(
             total,
-            669,
-            "569 (see below) + 100 across the four SD-32 `decisions.md §25` cycle-2 \
-             `selector_only` books (bestiary_2 76, bestiary_3 5, bestiary_5 10, bestiary_6 9 -- \
+            734,
+            "569 (see below) + 165 across the four SD-32 `decisions.md §25` cycle-2 \
+             `selector_only` books (bestiary_2 76, bestiary_3 5, bestiary_5 75, bestiary_6 9 -- \
              see the per-book map's own comment: each figure is 14's worth of this binary's own \
              new Adopted-Race selector records (7+5+1+1) PLUS 86 pre-existing `ingest_races.rs` \
-             standard-trait records this binary shares the directory with but never writes) \
-             = 669. \
+             standard-trait records this binary shares the directory with but never writes, PLUS \
+             SD-33 Epic 6's 65 Skinwalker heritage records folded into bestiary_5 (10 -> 75, \
+             see that book's own comment above -- the fold moves only this total, not ARG's \
+             below, whose own count is unrelated `advanced_race_guide` content)) \
+             = 734. \
              421 ARG (of which 7 are SD-32 card-11 T2b's Adoptive Parentage CHOOSE-pool \
              members, 2026-08-23, and 414 are the rest -- 114 are `ingest_races.rs`'s own standard-tier batches: \
              58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \

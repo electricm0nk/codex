@@ -3,12 +3,12 @@
   "completeness": "full",
   "ingested_at": "2026-08-26T19:37:17Z",
   "data": {
-    "key": "Adopted Race ~ Skinwalker",
-    "name": "Skinwalker",
+    "key": "Skinwalker ~ Change Shape (Saves)",
+    "name": "Change Shape (Saving Throws)",
     "race_key": "Skinwalker",
     "category": "Special Ability",
     "type_tokens": [
-      "AdoptiveRace"
+      "Skinwalker Racial Trait"
     ],
     "is_racial_default": false,
     "suppressed_by_flag": null,
@@ -18,7 +18,7 @@
     "raw_tokens": [
       {
         "key": "KEY",
-        "value": "Adopted Race ~ Skinwalker"
+        "value": "Skinwalker ~ Change Shape (Saves)"
       },
       {
         "key": "CATEGORY",
@@ -26,35 +26,31 @@
       },
       {
         "key": "TYPE",
-        "value": "AdoptiveRace"
+        "value": "Skinwalker Racial Trait"
       },
       {
-        "key": "MULT",
-        "value": "YES"
+        "key": "VISIBLE",
+        "value": "NO"
       },
       {
-        "key": "CHOOSE",
-        "value": "ABILITYSELECTION|Special Ability|TYPE=Skinwalker Race Trait"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Traits|VIRTUAL|%LIST"
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|ALL|2|TYPE=Racial"
       }
     ],
     "raw_bonus_chains": []
   },
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race.lst",
-    "sha256": "85db848be3900cc747ef7038cb2e8d480f209cc9b9683399fce207d5407516ee",
-    "line": 31,
-    "record_key": "Adopted Race ~ Skinwalker"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 246,
+    "record_key": "Skinwalker ~ Change Shape (Saves)"
   },
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "wiring_class": "display",
+  "wiring_class": "computed",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "computed:tempbonus"
   ]
 }

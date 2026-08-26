@@ -314,7 +314,7 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         }
     }
     assert_eq!(
-        checked, 370,
+        checked, 415,
         "ARG's 153 + Monster Codex's 8 (4 original + SD-32 card-11 T2b's 4 Ratfolk \
          alternates, 2026-08-23) + APG's 1 + Inner Sea Races' 76 (67 pre-existing + 9 from \
          a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + Horror \
@@ -322,7 +322,11 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
          + Core Essentials' 16 heritages, selectable alternates (SD-29 decisions.md §44, §45, \
          §47, §49) + SD-31 Epic 1-F2's 48 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, \
          2026-08-15) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
-         SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on 4-race chassis batch). The \
+         SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on 4-race chassis batch) + SD-33 \
+         Epic 6's 45 folded Skinwalker heritage records (2026-08-26: 9 kin selectors + their \
+         36 replacement rows, all `TraitRole::Alternate`; none is offered with an inert flag \
+         -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` `Skinwalker` section names \
+         the real flags every one of the 45 sets). The \
          158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
          corpus"
     );

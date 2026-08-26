@@ -1630,10 +1630,14 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("bestiary_2", "race_traits") => Some(race_traits_reach("B2", "bestiary_2")),
         // SD-31 Epic 1 follow-on batch (2026-08-15). Skinwalker's 9
         // standard-tier racial-trait records, filed under `bestiary_5` by
-        // `ingest_races` -- same claim shape as `bestiary_2` above. This
-        // batch does NOT ingest Skinwalker's heritage-shaped alternates
-        // (see `ingest_races.rs`'s `skinwalker` doc comment), so there is
-        // no separate alternate-trait claim to add here yet.
+        // `ingest_races` -- same claim shape as `bestiary_2` above.
+        // SD-33 Epic 6 fold (2026-08-26): Skinwalker's 65 heritage-shaped
+        // records (9 kin selectors + 36 replacement rows + 20 shared
+        // `Change Shape` component rows) are now ingested by
+        // `ingest_race_traits.rs`'s new `direct_heritage_relatives`, also
+        // filed under `bestiary_5` -- no code change needed here since
+        // `race_traits_reach` filters `book_dir`/`wire_book` generically,
+        // not by which binary wrote a record.
         ("bestiary_5", "race_traits") => Some(race_traits_reach("B5", "bestiary_5")),
         // SD-31 wave-24 integration cycle (2026-08-20). Rougarou's 8
         // standard-tier racial-trait records, filed under `bestiary_6` by
@@ -3067,6 +3071,40 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          race, and a record on disk that no selection can reach is exactly what this gate is for.",
     ),
     (
+        "bestiary_5",
+        "race_traits",
+        "55 of bestiary_5's 75 ingested race-trait records reach a player through \
+         `list_alternate_racial_traits` and `resolve_race_alternate_selection` (SD-33 Epic 6's \
+         Skinwalker fold, 2026-08-26: 9 chassis-tier + 45 kin-heritage Alternate records, plus \
+         the pre-existing Adopted-Race selector). TWENTY do not: the shared \
+         `Skinwalker ~ Change Shape (<Option>)` component records (Bite, Claw/Talon, Gore, \
+         Hoof, Scent, Darkvision, ...). \
+         \
+         **These are not a swap and no picker wiring would make them one.** Upstream, each \
+         kin's own `Change Shape` replacement row (`Werebat-Kin ~ Change Shape`, etc.) grants \
+         its options through a TYPE pool, `ABILITY:Skinwalker Racial \
+         Trait|AUTOMATIC|TYPE=Skinwalker Change Shape <Kin>` \
+         (`skinwalker_abilities_race_subrace.lst`), not by naming each option's KEY directly -- \
+         a real, resolvable PCGen mechanism (\"pick one of these N options when you change \
+         shape\"), but a DIFFERENT one from the replace-flag swap this whole race-trait lane's \
+         picker protocol is built on. Each component record itself is `VISIBLE:NO`, carries no \
+         `FACT:<flag>|True` and no positive gate, so `race_resolver::classify` correctly leaves \
+         all 20 `TraitRole::Unclassified` -- the same role, for the same reason, as Monster \
+         Codex's `Oversized Goblin` above. \
+         \
+         REMEDY: a TYPE-pool option picker -- a per-kin choice of one row out of a \
+         `TYPE=Skinwalker Change Shape <Kin>` pool, surfaced when a player selects that kin's \
+         own `Change Shape` replacement row. That is a new mechanism (this lane's Change Shape \
+         rows do not yet render an option sub-choice anywhere in `apps/desktop/src`, confirmed \
+         by grep), not a missing wire in the existing alternate-trait protocol, and it is \
+         outside this fold's scope (recovering 65 lost heritage records and giving them a \
+         correctly-typed home). Until it exists, these 20 records are real, verified, \
+         oracle-traced corpus content that no selection can reach; that is recorded here rather \
+         than smoothed over. Do NOT close this by deleting the records: each is genuine content \
+         for a modelled race's own Change Shape ability, and dropping them would silently break \
+         every kin's `Change Shape` replacement row's own TYPE-pool reference.",
+    ),
+    (
         "inner_sea_races",
         "race_traits",
         "88 of Inner Sea Races' 94 ingested race-trait records reach a player through \
@@ -3618,6 +3656,42 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // positive gate, so it is `TraitRole::Unclassified` and no selection
         // reaches it. Remedy in OPEN_FINDINGS above.
         &["Oversized Goblin"],
+    ),
+    (
+        "bestiary_5",
+        "race_traits",
+        // SD-33 Epic 6's Skinwalker fold (2026-08-26): the 20 shared,
+        // `VISIBLE:NO` `Skinwalker ~ Change Shape (<Option>)` component
+        // records every kin's own `Change Shape` replacement row
+        // TYPE-pool-references (`ABILITY:Skinwalker Racial
+        // Trait|AUTOMATIC|TYPE=Skinwalker Change Shape <Kin>`). Each carries
+        // no `FACT:<flag>|True` and no positive gate of its own, so
+        // `race_resolver::classify` correctly leaves all 20
+        // `TraitRole::Unclassified` -- never a picker menu row, exactly like
+        // Monster Codex's `Oversized Goblin` above. Remedy in OPEN_FINDINGS
+        // above.
+        &[
+            "Skinwalker ~ Change Shape (Amphibious)",
+            "Skinwalker ~ Change Shape (Base Speed Bonus)",
+            "Skinwalker ~ Change Shape (Bite)",
+            "Skinwalker ~ Change Shape (Charisma)",
+            "Skinwalker ~ Change Shape (Climb Speed 20 Feet)",
+            "Skinwalker ~ Change Shape (Climb Speed 30 Feet)",
+            "Skinwalker ~ Change Shape (Distraction)",
+            "Skinwalker ~ Change Shape (Endurance)",
+            "Skinwalker ~ Change Shape (Ferocity)",
+            "Skinwalker ~ Change Shape (Fly Speed Bonus)",
+            "Skinwalker ~ Change Shape (Gore)",
+            "Skinwalker ~ Change Shape (Hoof)",
+            "Skinwalker ~ Change Shape (Perception Bonus)",
+            "Skinwalker ~ Change Shape (Reduce Falling Damage)",
+            "Skinwalker ~ Change Shape (Saves)",
+            "Skinwalker ~ Change Shape (Scent)",
+            "Skinwalker ~ Change Shape (See In Darkness)",
+            "Skinwalker ~ Change Shape (Swim Speed)",
+            "Skinwalker ~ Change Shape (Talon)",
+            "Skinwalker ~ Change Shape (Wisdom)",
+        ],
     ),
     (
         "inner_sea_races",

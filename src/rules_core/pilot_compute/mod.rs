@@ -9877,17 +9877,23 @@ mod race_ids_with_a_magnitude_consumer_tests {
         );
     }
 
-    /// The union is exactly the 18 races this module has ANY seam for --
+    /// The union is exactly the 19 races this module has ANY seam for --
     /// the 16 pre-SD31-W27-RACETRAIT-001 races plus Samsaran and Nagaji,
     /// each now backed by a real `explain_<race>_flat_override_race_trait`
-    /// seam, not a hand-copied name.
+    /// seam, not a hand-copied name, plus Skinwalker (SD-33 Epic 6,
+    /// 2026-08-26): `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s own 2 new
+    /// rows (Werebear-Kin/Wereshark-Kin's `~ Animal-Minded`) are read
+    /// straight into this union the SAME way Strix/Grippli/Goblin already
+    /// are -- a narrow, measured slice of the race's alternates, not a
+    /// full-coverage claim (that stricter bar is
+    /// `FLAT_OVERRIDE_RACE_TRAIT_RACES`'s own, this table makes none).
     #[test]
-    fn the_union_is_exactly_the_eighteen_seamed_races() {
+    fn the_union_is_exactly_the_nineteen_seamed_races() {
         let races = race_ids_with_a_magnitude_consumer();
         let expected: std::collections::BTreeSet<&str> = [
             "dwarf", "elf", "gillman", "gnome", "goblin", "grippli", "half-elf", "half-orc",
             "halfling", "hobgoblin", "human", "kobold", "nagaji", "rougarou", "samsaran",
-            "strix", "svirfneblin", "vanara",
+            "skinwalker", "strix", "svirfneblin", "vanara",
         ]
         .into_iter()
         .collect();
@@ -9897,7 +9903,7 @@ mod race_ids_with_a_magnitude_consumer_tests {
     /// A race with no seam at all must NOT appear in the set. Nagaji moved
     /// OUT of this list as of SD31-W27-RACETRAIT-001 (it now has a real
     /// flat-override seam, pinned by
-    /// `the_union_is_exactly_the_eighteen_seamed_races` above); Aasimar and
+    /// `the_union_is_exactly_the_nineteen_seamed_races` above); Aasimar and
     /// Vishkanya remain genuinely unseamed and stay here as the negative
     /// control this test exists to prove can still fail.
     #[test]
@@ -12149,6 +12155,21 @@ const ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES: &[(&str, &str, i16, i16, i16)] = &
     // are not.
     ("Strix ~ Frightening", "race:strix", 0, 2, 0),
     ("Strix ~ Wing-Clipped", "race:strix", 2, 0, 0),
+    // SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker
+    // heritage lane (2026-08-26). Of the 9 kins' `~ Animal-Minded`
+    // replacement rows (all `TraitRole::Alternate`, independently
+    // selectable), exactly these 2 land a `BONUS:SKILL` on one of this
+    // table's three tracked skills:
+    // `skinwalker_abilities_race_subrace.lst`'s Werebear-Kin row is
+    // `BONUS:SKILL|Climb|2|TYPE=Racial` (plus a `BONUS:VAR|WildEmpathy|2`
+    // this table does not track) and Wereshark-Kin's is
+    // `BONUS:SKILL|Swim|2|TYPE=Racial`. The other 7 kins land on
+    // Fly/Perception/Stealth/Survival/Perception-at-night, none of which
+    // this table computes a total for, so they contribute nothing here --
+    // same "engine is narrow, not the content" shape this const's own doc
+    // comment already states for ARG.
+    ("Werebear-Kin ~ Animal-Minded", "race:skinwalker", 2, 0, 0),
+    ("Wereshark-Kin ~ Animal-Minded", "race:skinwalker", 0, 0, 2),
 ];
 
 /// The Climb / Intimidate / Swim racial bonus this character's chosen
