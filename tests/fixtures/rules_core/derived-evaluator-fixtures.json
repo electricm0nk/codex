@@ -50420,5 +50420,355 @@
       },
       "ability_modifier_inputs": {}
     }
+  ],
+  "race_trait_formula_token_family": "BONUS:VAR|<name>|<formula> (a PF1 racial-alternate-trait magnitude computed from total character level TL and, for some fields, one ability modifier, e.g. Undine's breath-weapon Dice/DC and Nereid Fascination's Duration/DC)",
+  "race_trait_formula_derivation": "PCGen `BONUS:VAR|<name>|<formula>` tokens on a race_trait alternate-racial-trait row, transcribed verbatim from the pinned oracle at write time and re-verified byte-for-byte by this script's own verify_tokens_against_oracle() before every generation run. expected_at_sample_points pins each formula's evaluated result at ten (TL, CON, CHA) points chosen for mutation sensitivity (both TL parities, negative/zero/positive ability modifiers), computed by a plain per-formula Python function -- NOT read back from this repo's evaluator.",
+  "race_trait_formula_independence": "scripts/derive_race_trait_formula_fixtures.py re-reads the pinned upstream .lst bytes directly, re-verifies the exact BONUS:VAR token text against the oracle, and computes every expected value with a small hand-written Python function per formula shape -- structurally independent of src/rules_core/derived_evaluator_fixture_check.rs's run_race_trait_formula_bar_check and of src/rules_core/pilot_compute/formula_interpreter.rs's PcgenFormulaEvaluator, neither of which this script imports, calls, or reads. It opens no file under data/corpus/, reads no Rust table. docs/work-inventory.json is read for identity and selection only (unit_id membership).",
+  "race_trait_formula_entries": [
+    {
+      "unit_id": "advanced_race_guide:race_trait:undine_acid_breath",
+      "book": "advanced_race_guide",
+      "record_key": "Undine ~ Acid Breath",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+      "upstream_lst_sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+      "upstream_line": 776,
+      "formulas": {
+        "Undine_AcidBreath_Times": "1",
+        "Undine_AcidBreath_Dice": "min(floor((TL+1)/2),5)",
+        "Undine_AcidBreath_DC": "10+(TL/2)+CON"
+      },
+      "expected_at_sample_points": [
+        {
+          "TL": 1,
+          "CON": 0,
+          "CHA": 0,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 1,
+            "Undine_AcidBreath_DC": 10
+          }
+        },
+        {
+          "TL": 2,
+          "CON": 2,
+          "CHA": -1,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 1,
+            "Undine_AcidBreath_DC": 13
+          }
+        },
+        {
+          "TL": 4,
+          "CON": -2,
+          "CHA": 3,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 2,
+            "Undine_AcidBreath_DC": 10
+          }
+        },
+        {
+          "TL": 5,
+          "CON": 1,
+          "CHA": 1,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 3,
+            "Undine_AcidBreath_DC": 13
+          }
+        },
+        {
+          "TL": 7,
+          "CON": 5,
+          "CHA": -3,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 4,
+            "Undine_AcidBreath_DC": 18
+          }
+        },
+        {
+          "TL": 10,
+          "CON": -5,
+          "CHA": 10,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 5,
+            "Undine_AcidBreath_DC": 10
+          }
+        },
+        {
+          "TL": 13,
+          "CON": 3,
+          "CHA": 0,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 5,
+            "Undine_AcidBreath_DC": 19
+          }
+        },
+        {
+          "TL": 16,
+          "CON": 0,
+          "CHA": 4,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 5,
+            "Undine_AcidBreath_DC": 18
+          }
+        },
+        {
+          "TL": 19,
+          "CON": -1,
+          "CHA": 2,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 5,
+            "Undine_AcidBreath_DC": 18
+          }
+        },
+        {
+          "TL": 20,
+          "CON": 10,
+          "CHA": -5,
+          "expected": {
+            "Undine_AcidBreath_Times": 1,
+            "Undine_AcidBreath_Dice": 5,
+            "Undine_AcidBreath_DC": 30
+          }
+        }
+      ]
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:undine_nereid_fascination",
+      "book": "advanced_race_guide",
+      "record_key": "Undine ~ Nereid Fascination",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+      "upstream_lst_sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+      "upstream_line": 781,
+      "formulas": {
+        "Undine_NereidFascination_Times": "1",
+        "Undine_NereidFascination_Duration": "max((TL/2),1)",
+        "Undine_NereidFascination_DC": "10+(TL/2)+CHA"
+      },
+      "expected_at_sample_points": [
+        {
+          "TL": 1,
+          "CON": 0,
+          "CHA": 0,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 1,
+            "Undine_NereidFascination_DC": 10
+          }
+        },
+        {
+          "TL": 2,
+          "CON": 2,
+          "CHA": -1,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 1,
+            "Undine_NereidFascination_DC": 10
+          }
+        },
+        {
+          "TL": 4,
+          "CON": -2,
+          "CHA": 3,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 2,
+            "Undine_NereidFascination_DC": 15
+          }
+        },
+        {
+          "TL": 5,
+          "CON": 1,
+          "CHA": 1,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 2,
+            "Undine_NereidFascination_DC": 13
+          }
+        },
+        {
+          "TL": 7,
+          "CON": 5,
+          "CHA": -3,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 3,
+            "Undine_NereidFascination_DC": 10
+          }
+        },
+        {
+          "TL": 10,
+          "CON": -5,
+          "CHA": 10,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 5,
+            "Undine_NereidFascination_DC": 25
+          }
+        },
+        {
+          "TL": 13,
+          "CON": 3,
+          "CHA": 0,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 6,
+            "Undine_NereidFascination_DC": 16
+          }
+        },
+        {
+          "TL": 16,
+          "CON": 0,
+          "CHA": 4,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 8,
+            "Undine_NereidFascination_DC": 22
+          }
+        },
+        {
+          "TL": 19,
+          "CON": -1,
+          "CHA": 2,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 9,
+            "Undine_NereidFascination_DC": 21
+          }
+        },
+        {
+          "TL": 20,
+          "CON": 10,
+          "CHA": -5,
+          "expected": {
+            "Undine_NereidFascination_Times": 1,
+            "Undine_NereidFascination_Duration": 10,
+            "Undine_NereidFascination_DC": 15
+          }
+        }
+      ]
+    },
+    {
+      "unit_id": "advanced_race_guide:race_trait:undine_ooze_breath",
+      "book": "advanced_race_guide",
+      "record_key": "Undine ~ Ooze Breath",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+      "upstream_lst_sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+      "upstream_line": 782,
+      "formulas": {
+        "Undine_OozeBreath_Times": "1",
+        "Undine_OozeBreath_Dice": "min(floor((TL+1/2)),5)",
+        "Undine_OozeBreath_DC": "10+(TL/2)+CON"
+      },
+      "expected_at_sample_points": [
+        {
+          "TL": 1,
+          "CON": 0,
+          "CHA": 0,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 1,
+            "Undine_OozeBreath_DC": 10
+          }
+        },
+        {
+          "TL": 2,
+          "CON": 2,
+          "CHA": -1,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 2,
+            "Undine_OozeBreath_DC": 13
+          }
+        },
+        {
+          "TL": 4,
+          "CON": -2,
+          "CHA": 3,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 4,
+            "Undine_OozeBreath_DC": 10
+          }
+        },
+        {
+          "TL": 5,
+          "CON": 1,
+          "CHA": 1,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 5,
+            "Undine_OozeBreath_DC": 13
+          }
+        },
+        {
+          "TL": 7,
+          "CON": 5,
+          "CHA": -3,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 5,
+            "Undine_OozeBreath_DC": 18
+          }
+        },
+        {
+          "TL": 10,
+          "CON": -5,
+          "CHA": 10,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 5,
+            "Undine_OozeBreath_DC": 10
+          }
+        },
+        {
+          "TL": 13,
+          "CON": 3,
+          "CHA": 0,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 5,
+            "Undine_OozeBreath_DC": 19
+          }
+        },
+        {
+          "TL": 16,
+          "CON": 0,
+          "CHA": 4,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 5,
+            "Undine_OozeBreath_DC": 18
+          }
+        },
+        {
+          "TL": 19,
+          "CON": -1,
+          "CHA": 2,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 5,
+            "Undine_OozeBreath_DC": 18
+          }
+        },
+        {
+          "TL": 20,
+          "CON": 10,
+          "CHA": -5,
+          "expected": {
+            "Undine_OozeBreath_Times": 1,
+            "Undine_OozeBreath_Dice": 5,
+            "Undine_OozeBreath_DC": 30
+          }
+        }
+      ]
+    }
   ]
 }

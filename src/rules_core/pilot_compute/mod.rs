@@ -8433,7 +8433,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_vanara_flat_override_race_trait(input, &mut explanations);
     explain_samsaran_flat_override_race_trait(input, &mut explanations);
     explain_nagaji_flat_override_race_trait(input, &ability_modifiers, &mut explanations);
-
+    explain_undine_formula_race_trait(input, &ability_modifiers, &mut explanations);
 
     explain_selected_alternate_racial_traits(input, &mut explanations, &mut diagnostics);
 
@@ -11210,6 +11210,291 @@ fn explain_nagaji_flat_override_race_trait(
                  the `Nagaji ~ Hypnotic Gaze` alternate trait, which replaces it (see above)"
             ),
         });
+    }
+}
+
+// -------------------------------------------------------------------------------------------
+// SD31-W26-RACETRAIT-001 — the race-trait FORMULA compute seam, folded into SD-33 per
+// `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` row 365's remediation
+// path (a): the seam + fixtures are real, correct, reusable work (reviewer-confirmed); only
+// the race-level `FORMULA_RACE_TRAIT_RACES` doneness-credit const from the original branch was
+// the gaming vector, and it is deliberately NOT ported here — this seam is wired unconditionally
+// (below, next to the other race seam calls) but `race_ids_with_a_magnitude_consumer` is left
+// untouched, banking 0 board-credit units per the operator's own instruction.
+// -------------------------------------------------------------------------------------------
+//
+// The flat-override seam above handles literal, unconditional magnitudes (`MOVE:Walk,30`, a
+// fixed `DAMAGESIZE`). `formula_interpreter` (`OPERATOR-RULINGS-2026-08-21.md` §20) built a real
+// evaluator for the PCGen `BONUS:VAR`/`DEFINE` arithmetic grammar; this block is a consumer of
+// it: Undine's three selectable alternate racial traits (replacing the racial-default Spell-Like
+// Ability trait) each state a real formula over total character level (`TL`) and one ability
+// modifier.
+//
+// **The formula text is the single source of truth for BOTH the compute path and its own fixture
+// gate**: [`UNDINE_RACE_TRAIT_FORMULAS`] is read by [`explain_undine_formula_race_trait`] below
+// AND by `derived_evaluator_fixture_check::run_race_trait_formula_bar_check` (a separate crate
+// module) — a transcription regression in this table therefore fails the SAME gate whether it
+// corrupts the value a player sees or the value the bar check verifies.
+//
+// Re-verified against this repo's own independently re-ingested corpus records
+// (`data/corpus/advanced_race_guide/race_trait/undine/undine_{acid_breath,nereid_fascination,
+// ooze_breath}.json`'s `raw_bonus_chains`) at fold time — all nine formula strings match the
+// transcription below byte-for-byte, including Ooze Breath's genuinely-as-written
+// `min(floor((TL+1/2)),5)` (not `(TL+1)/2`), confirming the branch's transcription was faithful
+// upstream arithmetic, not a typo.
+const UNDINE_RACE_ID: &str = "race:undine";
+const UNDINE_ACID_BREATH_TRAIT_KEY: &str = "Undine ~ Acid Breath";
+const UNDINE_NEREID_FASCINATION_TRAIT_KEY: &str = "Undine ~ Nereid Fascination";
+const UNDINE_OOZE_BREATH_TRAIT_KEY: &str = "Undine ~ Ooze Breath";
+
+/// `(unit_id, formula_field_name, raw_formula)` — the exact `BONUS:VAR` formula text transcribed
+/// verbatim from the pinned oracle, never hand-duplicated elsewhere in this file. See the section
+/// doc above for why this table is the shared source of truth for both compute and gate.
+pub(crate) const UNDINE_RACE_TRAIT_FORMULAS: &[(&str, &str, &str)] = &[
+    ("advanced_race_guide:race_trait:undine_acid_breath", "Undine_AcidBreath_Times", "1"),
+    (
+        "advanced_race_guide:race_trait:undine_acid_breath",
+        "Undine_AcidBreath_Dice",
+        "min(floor((TL+1)/2),5)",
+    ),
+    ("advanced_race_guide:race_trait:undine_acid_breath", "Undine_AcidBreath_DC", "10+(TL/2)+CON"),
+    (
+        "advanced_race_guide:race_trait:undine_nereid_fascination",
+        "Undine_NereidFascination_Times",
+        "1",
+    ),
+    (
+        "advanced_race_guide:race_trait:undine_nereid_fascination",
+        "Undine_NereidFascination_Duration",
+        "max((TL/2),1)",
+    ),
+    (
+        "advanced_race_guide:race_trait:undine_nereid_fascination",
+        "Undine_NereidFascination_DC",
+        "10+(TL/2)+CHA",
+    ),
+    ("advanced_race_guide:race_trait:undine_ooze_breath", "Undine_OozeBreath_Times", "1"),
+    (
+        "advanced_race_guide:race_trait:undine_ooze_breath",
+        "Undine_OozeBreath_Dice",
+        "min(floor((TL+1/2)),5)",
+    ),
+    ("advanced_race_guide:race_trait:undine_ooze_breath", "Undine_OozeBreath_DC", "10+(TL/2)+CON"),
+];
+
+/// Looks up one formula's raw text from [`UNDINE_RACE_TRAIT_FORMULAS`] by its field name. Panics
+/// on a missing field — every field this function is ever called with is a literal named
+/// directly below, so a mismatch is a coding error in this file, not a runtime corpus condition.
+fn undine_formula(field: &str) -> &'static str {
+    UNDINE_RACE_TRAIT_FORMULAS
+        .iter()
+        .find(|(_, f, _)| *f == field)
+        .unwrap_or_else(|| panic!("UNDINE_RACE_TRAIT_FORMULAS carries no field named {field:?}"))
+        .2
+}
+
+/// Undine (Advanced Race Guide): three selectable alternate racial traits, each replacing the
+/// racial-default Spell-Like Ability trait, each stating a real PCGen arithmetic formula over
+/// total character level and one ability modifier. Ruling §18 (option pools show ONLY VALID
+/// CHOICES): these three are mutually exclusive with each other and with the default — this
+/// function computes a magnitude ONLY for the alternate the player actually selected
+/// (`selected_alternate_trait_keys`, the same `RACE_ALTERNATE_TRAIT_CHOICE_ID` mechanism
+/// Gillman's Throwback and Vanara's Tree Stranger already use above); an unselected alternate
+/// produces no record at all, never a zero or a placeholder.
+fn explain_undine_formula_race_trait(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if input.chosen.race_id != UNDINE_RACE_ID {
+        return;
+    }
+    use formula_reproduction_harness::FormulaEvaluator as _;
+    let evaluator = formula_interpreter::PcgenFormulaEvaluator;
+
+    let total_level: i64 = input.chosen.class_levels.iter().map(|c| i64::from(c.level)).sum();
+    let mut vars: std::collections::BTreeMap<String, i64> = std::collections::BTreeMap::new();
+    vars.insert("TL".to_owned(), total_level);
+    vars.insert("CON".to_owned(), i64::from(ability_modifiers.constitution));
+    vars.insert("CHA".to_owned(), i64::from(ability_modifiers.charisma));
+
+    let selected = selected_alternate_trait_keys(input);
+
+    let eval = |field: &str| -> Option<i16> {
+        evaluator.evaluate(undine_formula(field), &vars).ok().and_then(|v| i16::try_from(v).ok())
+    };
+
+    if selected.iter().any(|k| k == UNDINE_ACID_BREATH_TRAIT_KEY) {
+        if let (Some(times), Some(dice), Some(dc)) =
+            (eval("Undine_AcidBreath_Times"), eval("Undine_AcidBreath_Dice"), eval("Undine_AcidBreath_DC"))
+        {
+            explanations.push(ComputationExplanation {
+                id: "race.undine.alternate_trait.acid_breath".to_owned(),
+                value: dice,
+                detail: format!(
+                    "Undine alternate racial trait — Acid Breath (Advanced Race Guide p.174): a \
+                     {times}/day 5-ft cone breath weapon dealing {dice}d8 acid damage, Reflex DC \
+                     {dc} for half (arg_abilities_race.lst:776 \
+                     BONUS:VAR|Undine_AcidBreath_Dice|min(floor((TL+1)/2),5), \
+                     BONUS:VAR|Undine_AcidBreath_DC|10+(TL/2)+CON, evaluated at total character \
+                     level {total_level} and Constitution modifier \
+                     {con:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     `derived_evaluator_fixture_check`'s race_trait_formula bar)",
+                    con = ability_modifiers.constitution,
+                ),
+            });
+        }
+    }
+
+    if selected.iter().any(|k| k == UNDINE_NEREID_FASCINATION_TRAIT_KEY) {
+        if let (Some(times), Some(duration), Some(dc)) = (
+            eval("Undine_NereidFascination_Times"),
+            eval("Undine_NereidFascination_Duration"),
+            eval("Undine_NereidFascination_DC"),
+        ) {
+            explanations.push(ComputationExplanation {
+                id: "race.undine.alternate_trait.nereid_fascination".to_owned(),
+                value: duration,
+                detail: format!(
+                    "Undine alternate racial trait — Nereid Fascination (Advanced Race Guide \
+                     p.175): {times}/day as a standard action, a 20-ft-radius aura fascinates \
+                     humanoids within it for {duration} rounds, Will DC {dc} negates \
+                     (arg_abilities_race.lst:781 \
+                     BONUS:VAR|Undine_NereidFascination_Duration|max((TL/2),1), \
+                     BONUS:VAR|Undine_NereidFascination_DC|10+(TL/2)+CHA, evaluated at total \
+                     character level {total_level} and Charisma modifier \
+                     {cha:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     `derived_evaluator_fixture_check`'s race_trait_formula bar)",
+                    cha = ability_modifiers.charisma,
+                ),
+            });
+        }
+    }
+
+    if selected.iter().any(|k| k == UNDINE_OOZE_BREATH_TRAIT_KEY) {
+        if let (Some(times), Some(dice), Some(dc)) =
+            (eval("Undine_OozeBreath_Times"), eval("Undine_OozeBreath_Dice"), eval("Undine_OozeBreath_DC"))
+        {
+            explanations.push(ComputationExplanation {
+                id: "race.undine.alternate_trait.ooze_breath".to_owned(),
+                value: dice,
+                detail: format!(
+                    "Undine alternate racial trait — Ooze Breath (Advanced Race Guide p.175): a \
+                     {times}/day 5-ft cone breath weapon dealing {dice}d4 acid damage and \
+                     sickening for 3 rounds, Reflex DC {dc} halves and negates sickened \
+                     (arg_abilities_race.lst:782 \
+                     BONUS:VAR|Undine_OozeBreath_Dice|min(floor((TL+1/2)),5), \
+                     BONUS:VAR|Undine_OozeBreath_DC|10+(TL/2)+CON, evaluated at total character \
+                     level {total_level} and Constitution modifier \
+                     {con:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     `derived_evaluator_fixture_check`'s race_trait_formula bar). This \
+                     record's `Dice` formula really is `TL+1/2`, not `(TL+1)/2` — real upstream \
+                     PCGen arithmetic, transcribed faithfully rather than \"corrected\" to match \
+                     Acid Breath's shape",
+                    con = ability_modifiers.constitution,
+                ),
+            });
+        }
+    }
+}
+
+#[cfg(test)]
+mod formula_race_trait_tests {
+    use super::compute_pilot_base_chassis;
+    use super::{race_alternate_trait_selection_id, RACE_ALTERNATE_TRAIT_CHOICE_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// `constitution:14` (modifier +2) and `charisma:8` (modifier -1) come straight from the
+    /// shared fixture; only race, level, and the selected alternate trait are overridden.
+    fn undine_input(level: u8, alternates: &[&str]) -> CharacterInput {
+        let text = FIGHTER_LEVEL_1_FIXTURE
+            .replace("race_id=race:human", "race_id=race:undine")
+            .replace("class_level=class:fighter:1", &format!("class_level=class:fighter:{level}"));
+        let loaded = load_character_input_fixture(&text);
+        assert!(loaded.diagnostics.is_empty(), "undine fixture should load cleanly: {:?}", loaded.diagnostics);
+        let mut input =
+            loaded.character_input.expect("valid fixture should produce a character input record");
+        for key in alternates {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: RACE_ALTERNATE_TRAIT_CHOICE_ID.to_owned(),
+                selection_id: race_alternate_trait_selection_id(key),
+            });
+        }
+        input
+    }
+
+    /// Level 5, Constitution modifier +2 (score 14): Dice = min(floor(6/2),5) = 3, DC =
+    /// trunc(10 + 2.5 + 2) = 14.
+    #[test]
+    fn undine_acid_breath_computes_the_real_formula_at_level_5() {
+        let computation = compute_pilot_base_chassis(&undine_input(5, &["Undine ~ Acid Breath"]));
+        let record = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.undine.alternate_trait.acid_breath")
+            .expect("undine with Acid Breath selected must produce an explanation");
+        assert_eq!(record.value, 3, "Dice = min(floor((5+1)/2),5) = 3");
+        assert!(record.detail.contains("DC 14"), "DC = trunc(10 + 5/2 + 2) = 14: {}", record.detail);
+        assert!(record.detail.contains("3d8"));
+    }
+
+    /// Level 5, Charisma modifier -1 (score 8): Duration = trunc(max(2.5,1)) = 2, DC =
+    /// trunc(10 + 2.5 - 1) = 11.
+    #[test]
+    fn undine_nereid_fascination_computes_the_real_formula_at_level_5() {
+        let computation =
+            compute_pilot_base_chassis(&undine_input(5, &["Undine ~ Nereid Fascination"]));
+        let record = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.undine.alternate_trait.nereid_fascination")
+            .expect("undine with Nereid Fascination selected must produce an explanation");
+        assert_eq!(record.value, 2, "Duration = trunc(max(5/2,1)) = 2");
+        assert!(record.detail.contains("DC 11"), "DC = trunc(10 + 5/2 - 1) = 11: {}", record.detail);
+    }
+
+    /// Level 5, Constitution modifier +2: Dice = min(floor(5+0.5),5) = 5 (the `TL+1/2`, not
+    /// `(TL+1)/2`, shape — one dice higher than Acid Breath's at this exact level, confirming
+    /// the two formulas are not accidentally identical in this seam).
+    #[test]
+    fn undine_ooze_breath_computes_its_own_distinct_formula_at_level_5() {
+        let computation = compute_pilot_base_chassis(&undine_input(5, &["Undine ~ Ooze Breath"]));
+        let record = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.undine.alternate_trait.ooze_breath")
+            .expect("undine with Ooze Breath selected must produce an explanation");
+        assert_eq!(record.value, 5, "Dice = min(floor(5+1/2),5) = 5");
+        assert!(record.detail.contains("DC 14"));
+        assert!(record.detail.contains("5d4"));
+    }
+
+    /// Selecting none of the three alternates (the racial-default Spell-Like Ability trait
+    /// applies instead) must produce NONE of the three records — never a zero, never a
+    /// placeholder (Ruling §18).
+    #[test]
+    fn no_alternate_selected_produces_no_formula_record() {
+        let computation = compute_pilot_base_chassis(&undine_input(5, &[]));
+        assert!(
+            !computation.explanations.iter().any(|e| e.id.starts_with("race.undine.alternate_trait.")),
+            "no formula record should appear when no Undine alternate trait is selected"
+        );
+    }
+
+    /// A race outside this seam (Human, the fixture's own default) gets no stray record from it.
+    #[test]
+    fn a_race_outside_undine_gets_no_record_from_this_seam() {
+        let loaded = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let input = loaded.character_input.expect("fixture should load");
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation.explanations.iter().any(|e| e.id.starts_with("race.undine.")),
+            "no stray Undine record should appear for Human"
+        );
     }
 }
 
