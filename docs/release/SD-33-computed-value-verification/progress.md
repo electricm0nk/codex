@@ -469,6 +469,52 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 
 ## Cycles
 
+### Cycle sd33-fold-rescan — AT-33-E6-001 attempt 11, post-fold final-acceptance scan (row 19)
+
+- **Gate result: FAIL.** Attempt 10's PASS covered `1bfb80d7b7`; the operator's 2026-08-26 fold
+  ruling landed four commits after it, so the scan was re-derived at `cef0ca1b39` in a clean
+  detached worktree.
+- **Blocking shortfall — SD-33's own, not inherited:** `cargo test --locked --lib` -> **2,844
+  passed, 1 FAILED of 2,845**.
+  `rules_core::pilot_compute::formula_interpreter_corpus_wide::tests::f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census`
+  pins F1 population at **6,260**; the live value is **6,257**
+  (`src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs:616`).
+  Re-derive: `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --corpus-root data/corpus`
+  -> `family rollup: F1 6257`; the same command against `git show 56bbebe3d4:docs/work-inventory.json`
+  -> `F1 6260`. Cause: `6e2f2f076b` re-pinned 6,278 -> 6,260 against the inventory committed at
+  that moment, and `cef0ca1b39` then regenerated that inventory (**89 of 49,438** units moved
+  status) without re-running the suite afterwards. The three units that left F1's
+  `not_done_population()` gate are `bestiary_5:race_trait:skinwalker_speed` and
+  `ultimate_psionics:equipment_modifier:{plusn_svs,special_quality_severis_enhancement_bonus}`.
+  Attribution: `git log --oneline f652db7ac7..HEAD -- <that file>` -> **3** commits since the cut,
+  against **0 of 29** for the inherited failing set.
+- **Everything else the ruling put at risk is clean, each re-derived by this scan:** corpus sweep
+  **0 findings of 48,699 records examined** (grown from 48,634 by exactly +65; detection re-proven
+  live on a folded record, 413,288 -> 413,289 tokens, 1 finding, then restored); license/PI intact
+  on **66 of 66** fold corpus files (58 `OGL` / 8 `PI-REDACTED`, cross-checked against
+  `grep -c DESCISPI:YES` = **8**), **0** with empty `raw_tokens`; **2 of 2** Skinwalker records
+  hand-traced to the pinned oracle by this scan (13 of 13 and 9 of 9 tokens, `source.sha256`
+  matching `sha256sum` of the pinned `.lst`); Undine **3 of 3** branch entries landed, 30 sample
+  points / 90 scalar assertions executing, generator imports no engine module and opens no
+  `data/corpus/` file; rows **1,741 / 6,589 / 8,330**, unexamined set empty both directions,
+  **0 of 8,330** disagree, **0 reasonless `unverifiable` of 7,519**; `box_ledger.py --check` exit 0;
+  work-inventory `unknown` **0 of 49,438**; `## Open blockers` **0 active of 2 historical**; open
+  deferrals **3**, **0 of 3** deferring live DoD scope; denominator gate **0 violations of 67
+  files** (probe caught, removed, baseline restored, `git status --porcelain` empty); no-run exit 0
+  at **543 of 543** targets; desktop **548 of 548**.
+- **Workspace `--no-fail-fast`:** **30 of 599** suites / **47 of 8,034** executed tests fail. The
+  set did not grow but changed composition: `src/bin/ingest_races.rs` (43/1) and
+  `tests/sd27_alternate_racial_trait_reachability.rs` (13/2) are now green, fixed by the fold;
+  `src/lib.rs` went 2837/0 -> 2844/1, broken by it.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction **1** — `fold-inventory_cycle_receipt.md`'s fold-attribution split is
+  **50 fold / 39 drift**, not the 14/75 it reports: its `'skinwalker' in id` substring test misses
+  the **36** `were*_kin_*` ids, and all **50** map to a corpus file the fold created. Conclusion
+  unaffected (Epic 5's population is untouched), but one of the three units that left F1 sits
+  inside the 36 it missed.
+- **No release-notes update and no PR change** were made, per the dispatch's halt rule.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-attempt11_cycle_receipt.md`.
+
 ### Cycle fold-inventory — SD-33 reopen fold / Epic 6 closure (row 24)
 
 - **Criterion:** operator fold ruling, 2026-08-26 (`workflow-instruction.md`'s "WHY THIS EXISTS"
