@@ -472,6 +472,64 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 
 ## Cycles
 
+### Cycle AT-33-E6-003 (part 1) — architecture docs, graphify, PR (row 21)
+
+- **Criterion / card:** `AT-33-E6-003` part 1, kanban row 21 (`sweep-archdocs-graphify-pr`) —
+  architecture docs refreshed, graphify run, PR `tranche/13 -> develop` opened, per
+  `../template/template.md §6`. Row 21 stays `not-started`: release-notes (part 2) owns the
+  transition to `complete`, per this cycle's own dispatch instruction.
+- **Environment:** the shared checkout was stale (12 commits behind `origin/tranche/13`) with 159
+  foreign `git status --porcelain` entries this agent did not create — same recurring hazard prior
+  waves logged. Nothing written there; all work happened in a fresh
+  `git worktree add -b sd33-r10-archdocs-pr` off `origin/tranche/13` = `d069d41806`.
+- **Architecture docs — 5 refreshed** (`93ccd564ab`): `homebrew-and-oracle.md` (new §"The SD-33
+  corpus-wide oracle harness" — `scripts/oracle_harness/`, the per-type AC isolator);
+  `rules-engine.md` (new §3c — `formula_interpreter_corpus_wide.rs`'s fresh-census fix — plus a new
+  equipment-bonus-shape-widening paragraph — `compute_equipmods_effect`/`equipment_id_resolve`/
+  `EQMWEAPON|DAMAGESIZE`/`EQM|WEIGHTDIV`); `corpus-ingest.md` (new §"`raw_tokens` enrichment and
+  the corpus-literal sweep's own closure builder" — `enrich_equipment_raw_tokens.rs`, the two real
+  `corpus_literal_sweep.rs` defects it surfaced); `testing.md` (new §"SD-33 additions" —
+  `box_ledger.py`/`THE-BOX.md`, the `denominator-gate`/`corpus-sweep` stages, the L20/L1
+  pilot-build `.pcg` fixtures); `status.md` (new §"SD-33: `unknown` reaches zero" — 4,224 -> 0 of
+  49,438, the doneness-mapping widening the reclassification required, the stale tranche/9-era
+  `unknown` **3,547** headline marked superseded in place with a pointer).
+- **Verification one-liners run by hand and both PASS** (cited-path check: 0 missing of the doc
+  set's own citations; relative-link check: 0 broken of the doc set's own `.md` links) — see
+  "Instrument finding" below for why by hand.
+- **Instrument finding, filed not fixed:**
+  `~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py`'s
+  own doc-mapping regex requires a literal doubled pipe and never matches
+  `docs/architecture/README.md`'s real single-pipe index table — the script always reports
+  `docs touched: none`, on every invocation, regardless of real diff content; confirmed live
+  against this cycle's own 5-doc diff. A correction entry naming the real 5 docs is filed in
+  `receipts.md` immediately after the script's auto-appended (and wrong) receipt (`58f0ba34a4`);
+  the script is outside this bundle's write scope, so not fixed in-repo. Logged as a retro
+  `incident` (`docs/retro/events/sd33-r10-archdocs-pr.jsonl`,
+  `--recurrence-key archtruthup-docs-touched-regex`).
+- **Denominator gate self-check caught a real violation in this cycle's own first receipt draft**
+  (a bare "41% coverage" without its `6,854 of 11,652` denominator) — `scripts/verify.sh --only
+  denominator-gate` FAILed once (`violations=1 of files_checked=62`), fixed, re-ran PASS
+  (`violations=0 of files_checked=62`) before pushing.
+- **Graphify:** a `graphify update .` pre-step (mechanical, no LLM) was killed after ~17 min with no
+  corruption (`graph.json` confirmed byte-unchanged) once it ran past a reasonable turn-budget
+  window; the official pipeline script (`update_graphify.py --force`, invoking `graphify
+  cluster-only`) then ran to real completion — `exit=0, elapsed=1463.5s (~24.4 min), success`
+  (`receipts.md`'s `graphify:update` entry, cycle_id `2026-08-26T01:32:02Z`). `GRAPH_REPORT.md`:
+  **648,328 nodes, 656,154 edges, 30,247 communities**, built from commit `a47bd3bb` (this cycle's
+  own latest doc commit at run time).
+- **PR:** `tranche/13 -> develop` opened. Leads with the twelve defects found and fixed (table with
+  unit counts and commits), the throughput arc (32 -> 6,940 -> 7,939 -> 8,255 -> 8,263 -> 8,291 ->
+  8,330 of 8,330 examined; disagreements 26 -> 4 -> 1 -> 0), headline figures each with its
+  denominator, the nine-failed/tenth-passed scan history with what each attempt closed, and the
+  31-of-599 inherited failing suites (49 of 8,026 tests, 0 of 31 carrying a commit since the cut)
+  so a reviewer is not surprised by a non-green workspace run. URL: `<pr-url>`.
+- **Merge conflicts:** none — every push this cycle rebased clean onto `origin/tranche/13`. **Did
+  not merge** — operator merges `tranche/13 -> develop` per `workflow-instruction.md §11.4`.
+- **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
+  instrument-correction 0 — this cycle writes package/architecture docs and opens the PR; no
+  `docs/work-inventory.json` unit, status, or gate changed.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-003-part1_cycle_receipt.md`.
+
 ### Cycle AT-33-E6-002 — retrospective written and cited, forward-scope register, worktree/branch sweep (row 20)
 
 - **Criterion / card:** `AT-33-E6-002`, kanban row 20. Also closes `workflow-instruction.md §11.3`

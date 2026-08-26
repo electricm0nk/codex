@@ -63,3 +63,17 @@ by hand — see the commit) stand as the actual audit evidence for this
 sub-step. `docs_touched` should read
 `[corpus-ingest.md, homebrew-and-oracle.md, rules-engine.md, status.md, testing.md]`;
 `receipt_note` should read `truth-up touched 5 doc(s)`.
+
+- cycle_id: 2026-08-26T01:32:02Z
+  row_or_kind: graphify:update
+  bundle: SD-33
+  branch: tranche/13
+  integration_target: origin/develop
+  branch_tip: tranche/
+  graphify_exit_code: 0
+  outcome: success
+  wall_clock_seconds: 1463.5
+  log_path: graphify-out/.truth-up-run-2026-08-26T01:32:02Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify succeeded
