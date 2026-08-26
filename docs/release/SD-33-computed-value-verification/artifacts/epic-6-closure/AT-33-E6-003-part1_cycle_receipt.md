@@ -137,8 +137,10 @@ commits), the throughput arc (32 → 6,940 → 7,939 → 8,255 → 8,263 → 8,2
 examined; disagreements 26 → 4 → 1 → 0), headline figures each with its denominator, the
 nine-failed-scans/tenth-passed history with what each attempt closed, and the 31-of-599 inherited
 failing suites (49 of 8,026 tests, 0 of 31 carrying a commit since the cut) so a reviewer checking
-out the branch and running the full workspace suite is not surprised by a non-green result. PR URL
-and number recorded in this cycle's final report and in `progress.md`.
+out the branch and running the full workspace suite is not surprised by a non-green result.
+**URL:** `https://github.com/electricm0nk/codex/pull/377` (**PR #377**), `state: OPEN`,
+`mergeable: MERGEABLE` (`gh pr view 377 --json url,number,mergeable,state,baseRefName,headRefName`,
+run immediately after opening).
 
 ## 4. Merge conflicts — none
 

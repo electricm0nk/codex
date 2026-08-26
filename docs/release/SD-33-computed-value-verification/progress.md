@@ -522,7 +522,9 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
   8,330 of 8,330 examined; disagreements 26 -> 4 -> 1 -> 0), headline figures each with its
   denominator, the nine-failed/tenth-passed scan history with what each attempt closed, and the
   31-of-599 inherited failing suites (49 of 8,026 tests, 0 of 31 carrying a commit since the cut)
-  so a reviewer is not surprised by a non-green workspace run. URL: `<pr-url>`.
+  so a reviewer is not surprised by a non-green workspace run. URL:
+  `https://github.com/electricm0nk/codex/pull/377` (PR #377, `mergeable: MERGEABLE`, confirmed live
+  via `gh pr view 377 --json mergeable,state` immediately after opening).
 - **Merge conflicts:** none — every push this cycle rebased clean onto `origin/tranche/13`. **Did
   not merge** — operator merges `tranche/13 -> develop` per `workflow-instruction.md §11.4`.
 - **Movement (four buckets):** closure 0 / reclassification 0 / reachability 0 /
