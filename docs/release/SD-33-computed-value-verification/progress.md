@@ -472,6 +472,92 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 
 ## Cycles
 
+### Cycle AT-33-E6-001 (attempt 10) — final-acceptance scan — gate PASS, row 19 complete
+
+- **Criterion / card:** `AT-33-E6-001`, kanban row 19.
+- **Commit SHA:** this cycle's own landing commit.
+- **Scanned tree:** clean detached worktree at `origin/tranche/13` = `1bfb80d7b7`
+  (`.claude/worktrees/sd33-r10-scan`); the shared checkout is still 8 commits behind with the same
+  foreign staged revert waves 6–9 each reported, and was not written to (`AGENTS.md`, "One writer
+  per tree").
+- **Gate result: PASS.** Attempt 9's sole surviving shortfall — `corpus_literal_sweep` RED with
+  **105 findings across 10 of 137** changed corpus records, filed under `## Open blockers` — is
+  CLEARED, and cleared honestly. No new shortfall was found.
+- **Shortfall 1 CLOSED, and the zero verified against all four illegitimate routes:**
+  - **Green:** `cargo run --locked --bin corpus_literal_sweep` → **0 findings, exit 0**
+    (48,634 records examined of 51,408 read).
+  - **Route (a), a narrowed population — RULED OUT BY EXECUTION, not by reading the diff.** The
+    **pre-fix** binary was built from `d0dc9fc3db` in its own worktree and its own
+    `CARGO_TARGET_DIR` and run against the same corpus: **48,634** records examined of **51,408**
+    read, **412,734** tokens compared, **51,395** digests checked, **105 findings**. Post-fix:
+    every one of those population figures byte-identical, findings **0**. Only the findings count
+    moved.
+  - **Route (b), reverted `raw_tokens` — no.** `hellscourge.json` carries **14 of 14** expected
+    `raw_tokens` entries; `fugitive_finder.json` carries **7**.
+  - **Route (c), an exclusion list — no.** 0 exclusion/allowlist constructs in either sweep file.
+    The one inventory-side entry (`out_of_scope = ["core_essentials"]`) is present verbatim at the
+    `tranche/13` cut — inherited, not SD-33's.
+  - **Route (d), a hand-edited corpus — no.** **0 of 6** files in the fix commit are under
+    `data/corpus/**`.
+  - **Hand-derivation re-done independently against the pinned oracle bytes** (pin confirmed at
+    `7f818006e371188e5717fd18d74d18a420747fc6` before reading): `hellscourge`'s **14 of 14**
+    `raw_tokens` tally byte-for-byte as **11** base tokens from `ue_equip_arms_armor.lst:349` — the
+    citing `.COPY=` row's OWN file — plus **3** from the `.MOD` row at `:497`, with the decoy
+    `ue_profs_weapon.lst:79` confirmed present; `fugitive_finder`'s `DESC` redaction is correct
+    because `isg_equip.lst:137`'s real `DESC` names `"Abadar"`, blacklist entry 5, while the
+    record's own `license`/`pi_field` are `"OGL"`/`null`. **`sweep-wrong` on both defects,
+    confirmed from the source, not from preferring one program.**
+  - **Detection re-proven live:** a bogus `COST:999999` planted in a **scratch hardlink copy**
+    (`cp -al`, 51,440 files, `--repo-root`) → **1 finding, exit 1**, naming the exact record and
+    token; tokens compared moved 412,734 → **412,735**. `data/corpus/**` never written
+    (`git status --porcelain` empty before and after).
+- **Epic 5 consequence, derived by execution rather than assumed empty:** joining the 10 affected
+  record paths against `docs/work-inventory.json` and the combined results file, **1 of 10** is in
+  Epic 5's 8,330-unit population at all (`inner_sea_gods:equipment:fugitive_finder`, verdict
+  `unverifiable`, `ours = None`, `oracle = None`); **9 of 10** are `ingested-magnitude`, a different
+  population. **0 of 8,330** units could have moved: the fix touched 0 `data/corpus/**` files and 0
+  lines of `enrich_equipment_raw_tokens.rs`, so no `raw_tokens` input changed. `epic5_rows_moved: 0`.
+- **Nothing else moved.** `cargo test --locked --no-run` exit **0**, **543 of 543** targets
+  (`ls tests/*.rs | wc -l` = 543); lib **2,837 of 2,837** (the 2,836 baseline **+1**, the
+  corpus-sweep lane's new test — growth, not a drop); desktop **548 of 548**; rows
+  **1,741 / 6,589 / 8,330** with 0 duplicates and the unexamined set empty **in both directions**,
+  per file and combined; **0 of 8,330** disagree; **0 reasonless `unverifiable` of 7,519**;
+  `box_ledger.py --check --oracle-results` → `oracle_disagreement=0`, exit 0, `population=49438`;
+  work-inventory `unknown` **0 of 49,438**; denominator gate **0 violations of 59 files** with
+  detection re-proven live by an in-scope probe and removed.
+- **Shortfall 2 (inherited, reported not blocking):** the full `--no-fail-fast` workspace run is
+  recorded in the receipt with its own re-derivation of the failing set against the `tranche/13`
+  cut. See the receipt's Check 3.
+- **`## Open blockers`: 0 active entries of 2 historical** — both `###` entries sit inside
+  `<details>` blocks (real heading at line 305, section bounded at the next `## ` at line 473).
+  The `deferral` event filed with the cleared blocker is resolved
+  (`docs/retro/events/sd33-r9-corpus-sweep.jsonl`).
+- **Open deferrals: 7, and 0 of 7 defer live DoD scope.** All **7 of 7** carry a revisit condition.
+  Four of them (`sd33-r4-last75`, `sd33-r5-weapon` ×2, `sd33-r5-e5-finalize`) named scope that *was*
+  DoD when written and has since been completed to a commit — verified here by execution
+  (**6,589 of 6,589** literal rows, unexamined set empty, `oracle_disagreement=0`), not by their own
+  text; their ledger entries are closed with `resolution` events this cycle, leaving **3 open** deferrals,
+  **0 of 3** deferring DoD scope and **3 of 3** carrying a revisit condition. The remaining three are
+  forward capability outside any criterion's DoD.
+- **`scripts/verify.sh` full run — did not complete in this turn's budget**, reported stage by stage
+  in the receipt: **7 stages PASS** (`preflight-disk`, `preflight-oracle`, `oracle-pin-selftest`,
+  `producer-selftest`, `pi-redaction-selftest`, `provenance-selftest`, `site-dashboard-selftest`),
+  then `site-dashboard-check` **HUNG** and was killed — the same stage attempt 9 and the
+  `corpus-sweep` lane each hit, on three different diffs. Root-caused one level further here:
+  the producer's own 600-second timeout on `v06_work_inventory --summary` had already fired once and
+  it was on its second attempt at 100% of one core when killed, and neither `verify.sh` nor
+  `publish-site-dashboard.sh` wraps that call in a timeout of its own, so the stage cannot bound
+  itself. Named as a real gate-plumbing defect rather than filed as "environmental". Every stage the
+  verdict rests on was run directly: `corpus-sweep`, `denominator-gate`, `root-lib`, `desktop`.
+- **Full scan:** rows **1–18 `complete` (18 of 18)**, no row `returned-to-backlog`, `in-progress`, or
+  `blocked-escalated`; **27 of 27** kanban-named receipt paths exist and carry the §7 four-buckets
+  row; Epic 3's artifact is at the **SD-33** path and re-derives to **F1 6,308 of 6,308**, F1..F9
+  **11,652 of 11,652**; SD-32's `gate-2-engines` tree is **UNTOUCHED** since the cut (**0** files).
+- **Movement (four buckets):** closure **1** (row 19 `blocked-escalated` → `complete`) /
+  reclassification 0 / reachability 0 / instrument-correction 0. Ledger hygiene: 4 stale `deferral`
+  events closed with `resolution` events, moving no number.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-attempt10_cycle_receipt.md`.
+
 ### Cycle AT-33-E6-001 (attempt 9) — final-acceptance scan — gate FAIL, blocked-escalated
 
 - **Criterion / card:** `AT-33-E6-001`, kanban row 19.
