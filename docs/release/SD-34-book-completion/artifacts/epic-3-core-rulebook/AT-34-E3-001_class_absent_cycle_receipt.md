@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_absent_from_ClassId_ALL_and_book_class_id_enums` mechanism)
 
-- **Commit SHA:** `<pending — filled after commit, see follow-up docs commit>`
+- **Commit SHA:** `1eeba6bb4d213e25f49eeb895ddbe0f1244ca077`
   (parent `1c4c479110`)
 - **Files touched:**
   - `src/rules_core/pilot_compute/crb_untabled_class_chassis.rs` (new) — real
@@ -357,7 +357,7 @@ class_absent_from_ClassId_ALL_and_book_class_id_enums: 0
 
 ## Build scope verified
 
-Run at this cycle's final commit (SHA filled in the follow-up docs commit):
+Run at this cycle's final commit (`1eeba6bb4d213e25f49eeb895ddbe0f1244ca077`):
 - `cargo test --locked --no-run` (full workspace) → exit 0.
 - `cargo test --locked --lib` → **2,863 passed; 0 failed; 14 ignored**
   (includes the F1 re-pin fix above).
