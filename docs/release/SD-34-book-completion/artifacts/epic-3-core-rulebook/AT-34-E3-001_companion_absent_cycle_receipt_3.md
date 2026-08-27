@@ -22,7 +22,7 @@ print(len(cr))"
 
 Matches both prior cycles' own after-figure exactly.
 
-- **Commit SHA:** `<filled after commit>`
+- **Commit SHA:** `186471f8d4a727c71842b3276091ae840433edb6`
 - **Files touched:**
   - `src/rules_core/rules_tables/companion_chassis.rs` — widened `CompanionAbilityRecord` with a
     new `cross_book_owners: &'static [(&'static str, &'static str)]` field (Shape 8); widened both
@@ -142,9 +142,10 @@ Re-derive command (same as above, run against HEAD after this cycle's regen):
 - Full `cargo test --lib` (workspace lib target): **2,878 passed, 0 failed, 14 ignored.**
 - `cargo test --bin v06_work_inventory`: **387 passed, 0 failed.**
 - **Build scope verified:** `cargo test --locked --no-run` (workspace, all bin/test targets)
-  exits 0 at this cycle's HEAD. `apps/desktop/src-tauri` (separate cargo workspace) also run
-  explicitly this cycle: `cargo test --locked --no-run` exits 0
-  (`CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop`).
+  exits 0, run BEFORE this cycle's own commit (no further commit moved a figure this receipt
+  depends on) at parent `7381b9ec01` / committed as `186471f8d4a727c71842b3276091ae840433edb6`.
+  `apps/desktop/src-tauri` (separate cargo workspace) also run explicitly this cycle:
+  `cargo test --locked --no-run` exits 0 (`CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop`).
 - Widening verified against every currently-registered book, not just `core_rulebook`: all 16
   registered companion books were regenerated this cycle; `git diff --stat` on the 15 books
   besides `core_rulebook` shows ONLY `cross_book_owners: &[],` insertion lines (1-8 lines each,
