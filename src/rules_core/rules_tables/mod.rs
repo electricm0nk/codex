@@ -38,6 +38,10 @@ pub mod companion_chassis;
 pub mod crb;
 pub mod equipment_gap_tables;
 pub mod feat_gap_tables;
+/// Runtime engine tables for Epic 2's seven new-built kinds (`ability`,
+/// `template`, `trait`, `deity`, `domain`, `skill`, `language`) --
+/// `AT-34-E2-001`. `companion`'s table is `companion_chassis`, above.
+pub mod simple_kind_tables;
 pub mod feats_all;
 pub mod horror_adventures;
 pub mod inner_sea_bestiary;

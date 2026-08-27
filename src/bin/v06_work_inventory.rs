@@ -66,6 +66,7 @@ use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
 use codex::rules_core::rules_tables::companion_chassis;
 use codex::rules_core::rules_tables::monster_chassis;
+use codex::rules_core::rules_tables::simple_kind_tables::{load_simple_kind_table, transcript_line, SEVEN_KIND_DIRS};
 use codex::rules_core::rules_tables::crb::{
     bard_spell_list as crb_bard_spell_list, class_tables::ClassId,
     cleric_spell_list as crb_cleric_spell_list, druid_spell_list as crb_druid_spell_list,
@@ -11507,6 +11508,52 @@ fn charbuild_remainder_probe(repo_root: &Path, fixture: &CharacterInput) -> Stri
 fn main() {
     let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let args: Vec<String> = std::env::args().collect();
+
+    // AT-34-E2-001's own evidence transcript: per kind, the table's location,
+    // its record count, and a named record it holds (or a named refusal for
+    // an absent key). Reads only `data/corpus/` and the engine's own tables,
+    // writes nothing, classifies nothing, moves no unit on any board -- same
+    // contract as `--spell-probe` below.
+    if args.iter().any(|a| a == "--epic2-table-transcript") {
+        for (kind, _dir) in SEVEN_KIND_DIRS {
+            let table = load_simple_kind_table(&repo_root, kind);
+            let (book, key) = match *kind {
+                "ability" => ("advanced_class_guide", "Aberrant Bloodline"),
+                "template" => ("advanced_class_guide", "Arcanist SpellBook"),
+                "trait" => ("advanced_players_guide", "Trait ~ Adopted"),
+                "deity" => ("bestiary_6", "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_21)"),
+                "domain" => ("advanced_class_guide", "Battle (Spirit)"),
+                "skill" => ("bestiary_2", "Craft (Rope)"),
+                "language" => ("advanced_race_guide", "Xenophobic"),
+                _ => unreachable!("SEVEN_KIND_DIRS lists only the seven kinds handled above"),
+            };
+            println!("{}", transcript_line(&table, book, key));
+            // A refusal on the same table, printed alongside the held
+            // record, so the transcript shows AT-34-E2-002's fail-closed
+            // half without a second command.
+            println!("{}", transcript_line(&table, book, "___a_key_no_corpus_record_carries___"));
+        }
+        // `companion`'s table is `companion_chassis`, built in SD-29 -- not
+        // rebuilt by Epic 2, exercised here for the same transcript.
+        if let Some(book) = companion_chassis::companion_book("inner_sea_combat") {
+            match book.companion_resolve("Companion (Worg)") {
+                Some(r) => println!(
+                    "kind=companion location=rules_tables::companion_chassis::COMPANION_BOOKS records={} sample=(inner_sea_combat, \"Companion (Worg)\") -> HELD name={:?}",
+                    book.companions.len(),
+                    r.key
+                ),
+                None => println!("kind=companion sample=(inner_sea_combat, \"Companion (Worg)\") -> REFUSED (absent key)"),
+            }
+            match book.companion_resolve("___a_key_no_corpus_record_carries___") {
+                Some(_) => println!("kind=companion REFUSAL_CHECK_FAILED (fabricated match)"),
+                None => println!(
+                    "kind=companion location=rules_tables::companion_chassis::COMPANION_BOOKS records={} sample=(inner_sea_combat, \"___a_key_no_corpus_record_carries___\") -> REFUSED (absent key)",
+                    book.companions.len()
+                ),
+            }
+        }
+        return;
+    }
 
     // The spell consumer-delta probe's own ceiling report. Reads only
     // `data/corpus/` and the engine's own tables, writes nothing, classifies

@@ -17,8 +17,8 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**8 of 27 criteria complete. 8 of 26 kanban rows complete.** Epic 1 is closed at 8 of 8;
-Epic 2 is unblocked.
+**9 of 27 criteria complete. 9 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
+Epic 2 has landed its first criterion (AT-34-E2-001).
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -36,6 +36,39 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 9 — AT-34-E2-001 — each of the eight tables is built, or proven unnecessary
+
+**Status: complete.** Epic 2 builds 8 of `power`'s 9 kinds; one of the eight — `companion` — already
+has a real, fail-closed table from SD-29 (`rules_core::rules_tables::companion_chassis`). This
+cycle builds the other **seven**: `ability`, `template`, `trait`, `deity`, `domain`, `skill`,
+`language`. New module `src/rules_core/rules_tables/simple_kind_tables.rs`:
+`load_simple_kind_table(repo_root, kind)` loads every corpus record for a kind, across every book,
+from the live `data/corpus/<book>/<dir>/*.json` tree; `resolve(book, key)` returns the real record
+for a present key or `None` for an absent one.
+
+**Directory-name hazard caught before shipping:** `trait`'s 487 units live under
+`data/corpus/*/trait_generic/*`, not `trait/` — a naive `kind == dir name` glob would silently
+return zero. `kind_dir_for("trait")` resolves this explicitly and a pinning test guards it. RED
+confirmed for the intended reason (a temporary revert to the naive mapping failed with `trait table
+loaded zero records from "trait"`, not an unrelated panic), then GREEN: 11/11 new unit tests pass.
+
+Wired into `v06_work_inventory.rs` via a new read-only `--epic2-table-transcript` flag (same
+contract as `--spell-probe`), which produced the committed transcript
+(`artifacts/epic-2-tables/AT-34-E2-001_table_transcript.txt`) — 8 of 8 kinds report `HELD` on a
+named sample record, and every kind also demonstrates `REFUSED` on a fabricated key in the same
+run.
+
+Identifier/wired-integration audits: `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS`. Denominator gate against
+this package: `files_checked=15 violations=0`. `cargo test --locked --no-run` exits 0 at the widest
+workspace scope; `apps/desktop/src-tauri` not touched, not run. `data/corpus/**` and
+`docs/work-inventory.json` untouched this cycle — zero movement across all four buckets; sweep
+population N/A (no corpus write). Receipt:
+`artifacts/epic-2-tables/AT-34-E2-001_cycle_receipt.md`.
+
+**This cycle does not attempt `AT-34-E2-004`** (bucket A to zero for both vehicle books) — that
+needs reachability/reclassification wiring these tables don't provide standalone, and is a
+separate criterion.
 
 ### Cycle 7-R — AT-34-E1-007 re-verified after AT-34-E1-008 — `corpus-trap-audit` is GREEN
 
