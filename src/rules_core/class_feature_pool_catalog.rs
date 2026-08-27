@@ -145,6 +145,18 @@ fn is_registered_pool_group(key: &str) -> bool {
     key.contains(" ~ ")
 }
 
+/// `true` for a `class_feature` corpus `key` that is NOT itself `"
+/// ~ "`-group-qualified -- i.e. a standalone, single-record feature
+/// (`"Timeless Body"`, `"Uncanny Dodge"`) rather than one member of an
+/// option pool. Mutually exclusive with [`is_registered_pool_group`] by
+/// construction (a key either contains `" ~ "` or it does not), so
+/// [`load_standalone_class_feature_catalog`] can never serve a record
+/// [`load_pool_catalog`] already does, and vice versa -- the two catalogs
+/// partition the corpus's `class_feature` keys, they never overlap.
+fn is_standalone_class_feature(key: &str) -> bool {
+    !key.contains(" ~ ")
+}
+
 /// Literal stub/placeholder markers found injected directly into some
 /// `occult_adventures` `class_feature` records' `description` field itself
 /// (e.g. `Sha'ir ~ Jin`'s real corpus row: `"[not implemented]At 1st
@@ -448,15 +460,18 @@ fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
     }
 }
 
-/// Reads every already-ingested `class_feature` cache record under
-/// `<repo_root>/data/corpus/*/class_feature/**/*.json` whose `data.class`
-/// names a [`REGISTERED_POOL_GROUPS`] entry, keeping only the ones whose
-/// description renders with nothing missing (see the module doc's
-/// render-and-refuse gate). Reads a NEW tree of nothing — every record
-/// already lives in the committed `data/corpus/` cache
-/// `cache_gen::class_feature::generate` writes; this module adds no new
-/// corpus data of its own, only a new reading of what already exists.
-pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
+/// Shared walk-and-render pipeline behind both [`load_pool_catalog`] and
+/// [`load_standalone_class_feature_catalog`] -- every safety gate (render-
+/// and-refuse, engine-effect-token, archetype-lock, multi-`DESC:`, bare-`%N`,
+/// the unimplemented-marker guard, the class-level-scaled-phrase guard) is
+/// identical for both; the two public entry points differ ONLY in
+/// `key_filter`, which is exactly what makes them a true partition (see
+/// [`is_standalone_class_feature`]'s doc comment) rather than two
+/// independently-drifting copies of the same logic.
+fn load_class_feature_catalog(
+    repo_root: &Path,
+    key_filter: impl Fn(&str) -> bool,
+) -> Vec<PoolCatalogEntry> {
     let corpus_root = repo_root.join("data/corpus");
     let mut out = Vec::new();
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
@@ -495,7 +510,7 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             // untouched by that fix, so `"Rogue Talent ~ Ledge Walker"` still
             // splits to `"Rogue Talent"` exactly as before.
             let group = key.split(" ~ ").next().unwrap_or(key);
-            if !is_registered_pool_group(key) {
+            if !key_filter(key) {
                 continue;
             }
             if CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS.contains(&key) {
@@ -554,6 +569,44 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
         }
     }
     out
+}
+
+/// Reads every already-ingested `class_feature` cache record under
+/// `<repo_root>/data/corpus/*/class_feature/**/*.json` whose `data.class`
+/// names a [`REGISTERED_POOL_GROUPS`] entry, keeping only the ones whose
+/// description renders with nothing missing (see the module doc's
+/// render-and-refuse gate). Reads a NEW tree of nothing — every record
+/// already lives in the committed `data/corpus/` cache
+/// `cache_gen::class_feature::generate` writes; this module adds no new
+/// corpus data of its own, only a new reading of what already exists.
+pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
+    load_class_feature_catalog(repo_root, is_registered_pool_group)
+}
+
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism): the sibling of [`load_pool_catalog`] for STANDALONE
+/// `class_feature` records (a bare feature name, never a `" ~ "`-qualified
+/// option-pool member) -- e.g. `"Timeless Body"`, `"Uncanny Dodge"`,
+/// `"Woodland Stride"`. These records reach `Kind::ClassFeature`'s "no
+/// owner resolved" branch in `v06_work_inventory.rs` for the same reason
+/// Rage Power records used to (their bare name shares no prefix/suffix
+/// with a modelled class's own name, since a shared multi-class feature
+/// like Evasion or Uncanny Dodge is not owned by any single class) — and
+/// until this catalog existed, that branch had no way to prove any of them
+/// genuinely reaches a rendered description, exactly the gap `Kind::
+/// ClassFeature`'s own doc comment names ("no generic class_feature catalog
+/// exists anywhere in this engine"). Every safety gate below is IDENTICAL
+/// to [`load_pool_catalog`]'s own (render-and-refuse, engine-effect-token,
+/// archetype-lock, multi-`DESC:`, bare-`%N`) — a record carrying a real
+/// mechanical token (`AUTO`, `ABILITY`, `BONUS`, ...) is refused here
+/// exactly as it would be for an option-pool member, so a genuinely
+/// mechanical, still-needs-computation record (e.g. `Armor Prof ~ Heavy`'s
+/// `AUTO:ARMORPROF|...` — which is ALSO `" ~ "`-qualified and therefore
+/// never reaches this catalog at all, [`is_standalone_class_feature`]'s own
+/// mutual-exclusion with [`is_registered_pool_group`]) can never be
+/// misreported `text-complete` by this addition.
+pub fn load_standalone_class_feature_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
+    load_class_feature_catalog(repo_root, is_standalone_class_feature)
 }
 
 /// `(book, key) -> description` for every entry the catalog holds — the
@@ -1006,6 +1059,68 @@ mod tests {
         // The original two groups must still be served -- no regression.
         assert!(groups.remove("Rogue Talent"));
         assert!(groups.remove("Rage Power"));
+    }
+
+    /// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+    /// mechanism): real, currently-shipped standalone CRB features with a
+    /// clean-rendering, mechanically-inert description -- the exact shape
+    /// this catalog exists to serve. Six real oracle keys, each hand-read
+    /// against its own `data/corpus/core_rulebook/class_feature/**/*.json`
+    /// row before being listed here.
+    #[test]
+    fn standalone_catalog_serves_real_prose_only_crb_features() {
+        let entries = load_standalone_class_feature_catalog(&repo_root());
+        let index = pool_catalog_index(&entries);
+        for key in [
+            "Timeless Body",
+            "Uncanny Dodge",
+            "Woodland Stride",
+            "Evasion Output",
+            "Improved Evasion",
+            "Blank Weapon Block OS",
+        ] {
+            assert!(
+                index.contains_key(&("core_rulebook".to_string(), key.to_string())),
+                "expected the standalone catalog to serve {key:?}"
+            );
+        }
+    }
+
+    /// The render-and-refuse / engine-effect-token gates must refuse a
+    /// standalone record exactly as they refuse an option-pool one: `Armor
+    /// Prof ~ Heavy` (`" ~ "`-qualified, so it can never reach THIS catalog
+    /// at all -- proven separately below) and `Channel Negative Energy`
+    /// (a real oracle row whose `description` is `null`, so `has_real_
+    /// description` fails upstream regardless of this catalog) must not be
+    /// served.
+    #[test]
+    fn standalone_catalog_refuses_records_with_no_real_description_or_an_engine_effect_token() {
+        let entries = load_standalone_class_feature_catalog(&repo_root());
+        let index = pool_catalog_index(&entries);
+        assert!(!index.contains_key(&("core_rulebook".to_string(), "Channel Negative Energy".to_string())));
+        assert!(!index.contains_key(&("core_rulebook".to_string(), "Evasion".to_string())));
+    }
+
+    /// [`is_standalone_class_feature`] and [`is_registered_pool_group`] must
+    /// partition the corpus's `class_feature` keys, never overlap --
+    /// otherwise a record could ride BOTH catalogs, which would let a fix
+    /// scoped to one mechanism's population silently also move another
+    /// mechanism's (`decisions.md §14`'s nine-way split is only meaningful
+    /// if each unit belongs to exactly one).
+    #[test]
+    fn pool_and_standalone_catalogs_never_overlap() {
+        let pool = load_pool_catalog(&repo_root());
+        let standalone = load_standalone_class_feature_catalog(&repo_root());
+        let pool_keys: std::collections::BTreeSet<(&str, &str)> =
+            pool.iter().map(|e| (e.book.as_str(), e.key.as_str())).collect();
+        for entry in &standalone {
+            assert!(
+                !pool_keys.contains(&(entry.book.as_str(), entry.key.as_str())),
+                "{:?}/{:?} appears in both catalogs",
+                entry.book,
+                entry.key
+            );
+        }
     }
 }
 

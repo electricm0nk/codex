@@ -33,10 +33,17 @@ cycle's own §6 step 3 run discovered and re-pinned); the next cycle cleared
 `deity_content_absent_from_deity_table_in_core_rulebook` (21 of 974 — all 21 `cr_deities.lst`
 records are PI-masked at ingestion; `Kind::Deity`'s `classify()` arm gained the same
 coordinate-fallback resolution the `domain` mechanism already proved, never reading the
-redacted real name). AT-34-E3-001 itself does not close yet — `core_rulebook`'s real,
-atlas-partitioned bucket B is 974 of 6,701 (`python3 scripts/completion_atlas.py --book
-core_rulebook --check`), and five of the nine named mechanisms remain (their populations sum
-to exactly 974 — no unnamed gap). See the cycle log below; `## Open blockers` is empty.
+redacted real name); the next cycle partially cleared
+`class_feature_option_pool_record_not_held_by_engine` (63 → 57 of 968 — a new
+`class_feature_pool_catalog::load_standalone_class_feature_catalog` closes six genuinely
+prose-only, mechanically-inert standalone features; the remaining 57 turned out NOT to be a
+single root cause on direct per-record inspection — seven distinct sub-shapes named with
+populations in that cycle's own receipt, most requiring new cross-cutting engine capabilities
+this program does not yet have — see the cycle log below for the full decomposition).
+AT-34-E3-001 itself does not close yet — `core_rulebook`'s real, atlas-partitioned bucket B is
+968 of 6,701 (`python3 scripts/completion_atlas.py --book core_rulebook --check`), and five of
+the nine named mechanisms remain (their populations sum to exactly 968 — no unnamed gap). See
+the cycle log below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -54,6 +61,76 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism) — one of nine, `decisions.md §14` — partial closure, further decomposed
+
+**Status: NOT complete (own mechanism only) — 63 → 57, six of nine.** Re-derived population at
+cycle start (`9e380e2ce6`): `63` (matches the task brief and `decisions.md §14`'s table
+exactly, verified not assumed). Direct inspection of all 63 units' real corpus rows
+(`data/corpus/core_rulebook/class_feature/**/*.json`) found this ONE evidence string is not a
+single root cause, unlike its four already-closed siblings — it bundles at least seven
+distinct real shapes:
+
+1. Genuinely prose-only, mechanically-inert standalone features (6 units: `Timeless Body`,
+   `Uncanny Dodge`, `Woodland Stride`, `Evasion Output`, `Improved Evasion`, `Blank Weapon
+   Block OS`) — **closed this cycle** via a new `src/rules_core/class_feature_pool_catalog.rs`
+   sibling catalog, `load_standalone_class_feature_catalog`, reusing the pool catalog's
+   identical render-and-refuse/engine-effect-token/multi-DESC/archetype-lock safety pipeline
+   for the mutually-exclusive non-`" ~ "`-qualified partition (proven disjoint by a new test).
+2. Proficiency/mechanical-grant tokens with no tracking system anywhere in this engine (28
+   units: Armor/Weapon/Shield Prof, Weapon Proficiencies, Weapon and Armor Proficiency, All
+   Automatic/Martial Proficiencies, Add Spoken Language, Armor Training, Channel
+   Negative/Positive Energy) — verified: no character-level proficiency-*possession* tracking
+   exists anywhere in `src/rules_core/` (only feat-driven bonus math and racial
+   `ABILITY:FEAT|AUTOMATIC` handling, both different subsystems).
+3. Class-skill lists computed from a wholly separate, hand-kept source, never these corpus
+   records (10 units: `Class Skills ~ <9 classes>`, `Jack of All Trades ~ Class Skills`) —
+   `skill_allocation.rs`'s `class_skill_set` reads hand-kept `GROUNDED_{FIGHTER,ROGUE,
+   WIZARD}_CLASS_SKILLS` constants, not these `CSKILL:` corpus rows.
+4. Wizard opposition-school spell-restriction tracking, absent entirely (9 units, the nine
+   `<School> Wizard Spells` records).
+5. Companion/special-mount summoning not attributed to these specific records (3 units).
+6. Vacuous placeholder rows with genuinely zero content — null description, `KEY`/`CATEGORY`/
+   `TYPE` tokens only (3 units, `Empty Selection ~ Standard {Barbarian,Monk,Rogue}`) — a real
+   unpredicted verdict shape (`decisions.md §2`), correctly left to AT-34-E3-006's own
+   `atlas-defects.md` process rather than invented here.
+7. `Domain Power ~ {Leadership, Sun's Blessing}` (2 units) — and a separately-verified,
+   more consequential finding: `CLASS_FEATURE_POOLS` has no `"Domain Power"` entry at all, so
+   even the FIVE domains `domain_power.rs` already computes correctly (Good/War/Strength/
+   Destruction/Glory) are never credited on the atlas — every one of their own units still
+   reports the SIBLING `..._with_magnitude_not_held_by_engine` evidence. Flagged for that
+   mechanism's own cycle, not fixed here (reaches its 333-unit population, not this one's).
+8. Multi-`DESC:` ingest truncation (2 units) — a `cache_gen::class_feature::generate`
+   ingest-territory fix, outside this cycle's consumer-territory file-touch set.
+
+28+10+9+3+3+2+2 = 57, no unnamed gap. Full evidence, per-record citations, and the six safety
+gates proving item 1's closure is real (not a stub) are in this cycle's own receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_cycle_receipt.md`.
+
+**Citation-drift self-heal:** this cycle's 47 inserted lines (across four sites in
+`src/bin/v06_work_inventory.rs`) shifted all ten of `completion_atlas.py`'s
+`BUCKET_DEFINITIONS` citations AND both of `missing_engine_tables.py`'s
+`ENGINE_SURFACE_CITATIONS` entries (the latter's own `--check` gate is not part of any
+standing verify stage, so its drift was silent until checked proactively this cycle). All
+twelve re-derived by grepping the literal target content and fixed; both gates' own
+`--check` report `citation_failures=0` at this cycle's HEAD.
+
+**Figures:** `63 → 57` (this mechanism); `974 → 968` (`core_rulebook` real atlas bucket B,
+`completion_atlas.py --book core_rulebook --check`); sibling mechanisms confirmed unmoved
+(`346`/`333`/`132`/`100`); `49,438` corpus-wide population unchanged (no records added).
+`corpus_literal_sweep`: `48708 of 51482, CLEAN`, unchanged (no corpus records touched).
+
+**Build scope:** `cargo test --locked --lib` 2866 passed; `cargo test --locked --bin
+v06_work_inventory` 376 passed; `cargo test --locked --no-run` (workspace) exit 0;
+`apps/desktop/src-tauri` `cargo test --locked --no-run` exit 0 (separate
+`CARGO_TARGET_DIR`).
+
+**Next-cycle plan (dispatch cheapest-first):** (1) vacuous placeholders — needs
+`decisions.md §2`'s ruling via AT-34-E3-006's `atlas-defects.md` process; (2) multi-DESC
+ingest fix (2 units); (3) class-skill/companion-mount attribution (13 units); (4) wizard
+opposition-school + proficiency tracking (37 units, largest, likely needs further splitting
+once scoped); (5) flag the `Domain Power` `CLASS_FEATURE_POOLS` gap to whichever cycle owns
+the `with_magnitude` sibling mechanism.
 
 ### Cycle — AT-34-E3-001 (`deity_content_absent_from_deity_table_in_core_rulebook` mechanism) — one of nine, `decisions.md §14`
 

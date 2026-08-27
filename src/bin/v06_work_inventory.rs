@@ -5190,6 +5190,13 @@ struct EngineFacts {
     /// `data/corpus/<source_book>/class_feature/`, so a re-attributed unit's
     /// lookup must use the same coordinate its row actually lives under.
     class_feature_pool_catalog: BTreeMap<(String, String), String>,
+
+    /// `AT-34-E3-001`: the sibling of [`Self::class_feature_pool_catalog`]
+    /// for STANDALONE (non-`" ~ "`-qualified) `class_feature` records --
+    /// [`class_feature_pool_catalog::load_standalone_class_feature_catalog`]'s
+    /// own doc comment carries the full argument. Keyed identically
+    /// (`source_book`, corpus `key`).
+    class_feature_standalone_catalog: BTreeMap<(String, String), String>,
 }
 
 impl EngineFacts {
@@ -5434,6 +5441,15 @@ impl EngineFacts {
     /// ([`class_feature_pool_catalog::REGISTERED_POOL_GROUPS`]).
     fn class_feature_pool_catalog_holds(&self, source_book: &str, key: &str) -> bool {
         self.class_feature_pool_catalog.contains_key(&(source_book.to_string(), key.to_string()))
+    }
+
+    /// `AT-34-E3-001`: whether a STANDALONE (non-`" ~ "`-qualified)
+    /// `class_feature` record has a real, clean-rendering browsable
+    /// description -- see
+    /// [`class_feature_pool_catalog::load_standalone_class_feature_catalog`]'s
+    /// doc comment.
+    fn class_feature_standalone_catalog_holds(&self, source_book: &str, key: &str) -> bool {
+        self.class_feature_standalone_catalog.contains_key(&(source_book.to_string(), key.to_string()))
     }
 
     /// Whether `book`/`key`/`name` names a `feat` whose SERVED description
@@ -7400,6 +7416,9 @@ fn gather_engine_facts(
         corpus_json_descriptions: load_corpus_json_descriptions(repo_root),
         class_feature_pool_catalog: class_feature_pool_catalog::pool_catalog_index(
             &class_feature_pool_catalog::load_pool_catalog(repo_root),
+        ),
+        class_feature_standalone_catalog: class_feature_pool_catalog::pool_catalog_index(
+            &class_feature_pool_catalog::load_standalone_class_feature_catalog(repo_root),
         ),
     }
 }
@@ -9533,6 +9552,34 @@ fn classify(
                     return Verdict {
                         status: "text-complete",
                         evidence: "class_feature_pool_catalog_serves_a_rendered_description"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                // AT-34-E3-001 (`class_feature_option_pool_record_not_held_
+                // by_engine` mechanism): the sibling of the rung immediately
+                // above, for a STANDALONE record -- a bare feature name that
+                // is nobody's option-pool member at all (`"Timeless Body"`,
+                // `"Uncanny Dodge"`, `"Woodland Stride"`, ...), so it never
+                // qualifies for `REGISTERED_POOL_GROUPS`-shaped serving
+                // regardless of how far that catalog widens.
+                // `class_feature_standalone_catalog_holds`'s own doc comment
+                // carries the full argument; the exact same three guards
+                // (`has_real_description`, `is_display_wiring_class_for_
+                // promotion`, `!universal_sheet_modifier`) gate it, so a
+                // computed/derived/static record, or a genuinely
+                // universal-sheet-modifier one, can never ride this rung
+                // either.
+                if text_only
+                    && has_real_description
+                    && is_display_wiring_class_for_promotion(wc_class)
+                    && !universal_sheet_modifier
+                    && facts.class_feature_standalone_catalog_holds(&unit.source_book, &unit.key)
+                {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence: "class_feature_standalone_catalog_serves_a_rendered_description"
                             .to_string(),
                         reason: None,
                         engine_book: engine_book_field,
