@@ -1,6 +1,6 @@
 # Cycle 6 — Epic 1 Completion Atlas / AT-34-E1-006
 
-- **Commit SHA:** `<filled below, this cycle's commit>`
+- **Commit SHA:** `6490738c38`
 - **Files touched:** `scripts/denominator_gate.py` (figure-provenance check + `SD34_BUNDLE_DIR` default-scope widening), `scripts/verify.sh` (new `figure-provenance` stage, wired into `ALL_STAGES`/`QUICK_STAGES`), `scripts/tests/test_denominator_gate.py` (RED→GREEN mutation-proof tests + widened-scope tests), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/AT-34-E1-006_cycle_receipt.md` (this file), `docs/release/SD-34-book-completion/progress.md` (updated), `docs/release/SD-34-book-completion/kanban.md` (updated)
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
 - **Wired-integration audit result:** OK_NO_TOKENS
