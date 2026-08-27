@@ -2,13 +2,16 @@
 canonical: true
 owner: god-emporer
 bundle_id: SD-33
-status: closed. All 21 kanban rows `complete`, all 6 epics closed. `AT-33-E6-001` gate PASS on
-  attempt 10 (row 19); retrospective written and cited (row 20,
-  `docs/retro/sd33-computed-value-verification-retrospective.md`); `AT-33-E6-003` complete (row
+status: closed. All 24 kanban rows `complete` (21 at first closure, plus the operator's
+  2026-08-26 fold-ruling reopen's 3 fold rows 22-24), all 6 epics closed. `AT-33-E6-001` gate PASS
+  on attempt 12 (row 19) — attempt 10 passed first, the fold reopened Epic 6, attempt 11 caught a
+  real regression the fold carried and `fold-fix-repin` closed it, attempt 12 re-derived the whole
+  closure clean; retrospective written and cited, then extended with the fold's own section (row
+  20, `docs/retro/sd33-computed-value-verification-retrospective.md`); `AT-33-E6-003` complete (row
   21) — 5 architecture docs refreshed, graphify run, PR #377 open (`tranche/13` → `develop`),
-  `release-notes.md` generated for build `0.13.0`. See `## Status` below for the full closure
-  entry and `receipts.md` for the closure-pipeline receipts.
-date: 2026-08-25
+  `release-notes.md` re-generated for build `0.13.0` after the fold. See `## Status` below for the
+  full closure entry and `receipts.md` for the closure-pipeline receipts.
+date: 2026-08-26
 ---
 
 # SD-33 Progress
@@ -483,6 +486,54 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 </details>
 
 ## Cycles
+
+### Cycle sd33-fold-fix-docs — re-derive closure documents for the fold, post-attempt-12 (no row; docs only)
+
+- **Criterion:** dispatched off attempt 12's PASS to bring `release-notes.md`,
+  `forward-scope-register.md`, and the retrospective in line with the fold — the same three docs
+  the attempt-12 scan's own instrument-correction note (row 19) flagged as carrying stale figures.
+  `progress.md` and `kanban.md` were already current from attempt 12's own cycle
+  (`sd33-fold-fix-rescan`); this cycle found and closed the gaps attempt 12 did not itself own:
+  `release-notes.md` had the corrected inherited-debt figure but no account of what the fold
+  actually *added* (the 65 Skinwalker records, the 3 Undine fixtures, their provenance), and
+  `forward-scope-register.md`/the retrospective had never recorded the three branches the fold
+  swept and ruled out.
+- **Figures re-derived live in this cycle, not copied from the attempt-12 receipt:**
+  - `cargo run --locked --bin corpus_literal_sweep` → **48,699** records examined of 51,473 read,
+    413,288 tokens compared, **0 findings**, CLEAN — matches attempt 12 exactly, independently
+    re-run.
+  - `cargo test --locked --lib` → **2,845 passed, 0 failed, 14 ignored**, finished in 50.79s —
+    including `f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census
+    ... ok`, the exact assertion attempt 11 found red. Independently re-run, own log kept.
+  - `python3 scripts/denominator_gate.py --check` → `files_checked=69 violations=0` (run against
+    the tree before this cycle's own doc edits; re-run again after, see below).
+  - `ls data/corpus/bestiary_5/race_trait/skinwalker/*.json | wc -l` → **75**
+  - `python3 -c "... race_trait_formula_entries ..."` on the committed fixture → **3 entries, 30**
+    sample points
+  - `jq '[.units[]|select(.status=="unknown")]|length' docs/work-inventory.json` → **0** of
+    `jq '.units|length'` → **49438**
+- **Files touched:** `release-notes.md` (new "Recovered work — the operator's 2026-08-26 fold"
+  section with counts/denominators/provenance for both the Skinwalker and Undine fold lanes, the
+  suites-fixed note, re-derived Test-suites/Corpus-sweep/Denominator-gate figures, a note on being
+  re-derived a second time), `forward-scope-register.md` (new `§E1` table naming the three
+  ruled-out branches and why), `docs/retro/sd33-computed-value-verification-retrospective.md`
+  (new `§6` fold section with the three requested lessons — stale-branch file count, run-after-
+  last-write, examined-population-must-grow — plus frontmatter/cross-reference updates),
+  `progress.md` (frontmatter + this entry), this receipt. `PR #377`'s body updated via `gh pr edit`
+  to summarize the fold (not merged).
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS (docs-only diff, no `src/` touched)
+- **Wired-integration audit result:** OK_NO_TOKENS
+- **Status:** complete
+- **Movement, four buckets:** closure 0 (docs, not code) / reclassification 0 / reachability 0 /
+  instrument-correction 0 — no figure changed value; this cycle only added the fold's own content
+  and re-confirmed figures already correct at attempt 12.
+- **Notes:** No corpus, code, or inventory file touched — write scope was the four named docs plus
+  the PR body, per dispatch. `progress.md`'s frontmatter `status`/`date` were stale (said "21 rows"
+  / "attempt 10" while the body already said 24/attempt 12) and corrected in the same commit as a
+  drive-by, since it is one of this cycle's four named files.
+- **Next-cycle plan:** none — this closes the fold-fix documentation gap. PR #377 remains open,
+  not merged, per the dispatch.
+- **Receipt:** `artifacts/epic-6-closure/fold-docs_cycle_receipt.md`.
 
 ### Cycle sd33-fold-fix-rescan — `AT-33-E6-001` attempt 12, final-acceptance scan **PASS** (row 19)
 

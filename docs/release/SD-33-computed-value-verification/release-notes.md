@@ -3,7 +3,7 @@ canonical: true
 owner: god-emporer
 bundle_id: SD-33
 status: generated
-date: 2026-08-25
+date: 2026-08-26
 ---
 
 # SD-33 Release Notes
@@ -22,6 +22,14 @@ Every headline figure was re-run in this closure cycle, in a clean `git worktree
 off `origin/tranche/13`, not copied from `AT-33-E6-001-attempt10_cycle_receipt.md` — the exact
 hazard SD-32's own release notes hit (its Gate-1 figures shipped stale and its closure cycle had
 to catch and re-derive them).
+
+**Re-derived a second time, 2026-08-26, after the operator's fold ruling.** This document was
+first generated against `1bfb80d7b7`. The fold added real content after that (the "Recovered
+work" section below) and, separately, briefly broke a live lib-test assertion that a later fold
+commit left stale — closed before this re-derivation, not papered over. Every figure in this
+version was re-run against the fold's final tree rather than edited from the pre-fold numbers; see
+`docs/retro/sd33-computed-value-verification-retrospective.md`'s fold section for the full account
+of what moved and why.
 
 ## What shipped
 
@@ -99,6 +107,69 @@ retrospective's own prose.
 in item 7, before it was root-caused) and is now closed by item 7's fix — 0 of 8,330 examined units
 remain `disagree` (below).
 
+## Recovered work — the operator's 2026-08-26 fold
+
+This is **recovered work, not newly built work**, and that provenance is the interesting part: a
+sweep of stale local branches after PR #377 opened found two lanes that had been generated during
+SD-31 and never merged, holding content genuinely absent from HEAD. Both branches' own commit
+messages say what happened to them — *"PRESERVE 48 generated Skinwalker race_trait records from the
+same lost lane"* and *"PRESERVE uncommitted race-chassis work from the wave-11 lane lost to an API
+error"*. The operator ruled: fold the genuinely-unique content into SD-33 before the PR merges,
+rather than let a real gap ride into SD-34 or force a from-scratch re-derivation of work that
+already existed. Neither branch was merged on trust — each was regenerated through its guarded
+generator path and independently hand-traced against the pinned oracle before landing. Three other
+stale branches were swept at the same time and ruled **out** as superseded, not folded — recorded in
+`forward-scope-register.md`.
+
+1. **65 recovered Skinwalker `race_trait` corpus records — bestiary_5, 10 → 75.** The rescue
+   branch (`sd31/racetrait4-SD31-E6-F4-005`) held 45 hand-copied Skinwalker `*_kin` records; folding
+   them through the guarded generator path (`cargo run --locked --bin ingest_race_traits
+   bestiary_5`) — rather than `git show`-ing the branch's own copies — produced **65** real records,
+   20 more than the branch itself carried. **75 of 75** on-disk records hand-traced token-for-token
+   against the pinned oracle `.lst`: 67 byte-identical, the other 8 differing only in the declared
+   `DESC` PI redaction (matching `grep -c 'DESCISPI:YES'` on the oracle → 8 exactly). License/PI
+   intact on all 65 new files (58 `OGL` / 8 `PI-REDACTED`); `data/corpus/bestiary_5/LICENSE.json`
+   moves `records_processed` 279 → 344, `records_redacted` 9 → 17. Nine real wiring/reachability
+   defects were fixed alongside the fold (two new `pilot_compute::ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`
+   rows a player's skill total actually reads, a missing per-kin exclusion guard that let two
+   incompatible replacement rows be selected together, and others) — full list in
+   `artifacts/epic-6-closure/fold-skinwalker_cycle_receipt.md`. Commits `6e2f2f076b`/`56bbebe3d4`.
+   Re-derive: `ls data/corpus/bestiary_5/race_trait/skinwalker/*.json | wc -l` → `75`.
+2. **3 recovered Undine `race_trait_formula` fixture entries, plus the compute seam that makes
+   them real.** The dispatch's own "103" framing was corrected in the same cycle it landed — 103 is
+   raw string occurrences of the word "Undine" across the fixture file (~34 mentions × 3 records),
+   not an entries count. The real population is **3** entries (`undine_acid_breath`,
+   `undine_nereid_fascination`, `undine_ooze_breath`), each with 3 formula fields and 10
+   `expected_at_sample_points` — **30 sample points, 90 scalar assertions total**, all 3 clearing in
+   `run_race_trait_formula_bar_check`. Folded from `worktree-wf_be4660f2-72a-3`:
+   `scripts/derive_race_trait_formula_fixtures.py` (reads only the pinned oracle `.lst` bytes via
+   `pcgen_data_root()`, no engine module, no `data/corpus/` read) plus a new
+   `UNDINE_RACE_TRAIT_FORMULAS`/`explain_undine_formula_race_trait` compute path wired unconditionally
+   into `compute_pilot_base_chassis`. **Deliberately did not** add `"undine"` to
+   `race_ids_with_a_magnitude_consumer()` — that would have silently credited 20 Undine `race_trait`
+   records as `grounded` when only 3 have any real consumer, the exact gaming vector
+   `OPEN-ISSUES.md` row 365 named; the union stays at 18 races, 0 board-credit units banked by this
+   fold. Commit `948976aacb`.
+   Re-derive: `python3 -c "import json; d=json.load(open('tests/fixtures/rules_core/derived-evaluator-fixtures.json')); e=d['race_trait_formula_entries']; print(len(e), sum(len(x['expected_at_sample_points']) for x in e))"` → `3 30`.
+3. **The fold fixed two previously-failing suites outright.** `src/bin/ingest_races.rs` (43 of 44
+   tests failing → green) and `tests/sd27_alternate_racial_trait_reachability.rs` (13 of 15 failing
+   → green) both carried a pre-existing gap that the Skinwalker fold's own new records made the
+   ingest walk reach deeply enough to trip and then close in the same cycle. The bundle's registered
+   inherited-debt figure moves accordingly, a **shrink, not a reclassification**: **31 of 599 suites
+   / 49 of 8,026 executed tests → 29 of 599 / 46 of 8,034 executed tests** (the executed denominator
+   also grew, by the fold's own 8 new test cases). Re-derive:
+   `cargo test --locked --no-fail-fast`, attributed back to each `Running` line
+   (`artifacts/epic-6-closure/AT-33-E6-001-attempt12_cycle_receipt.md`).
+
+**A regression the fold itself introduced was caught and closed inside this same reopen, not carried
+forward.** `docs/work-inventory.json`'s regeneration (folding the Skinwalker records' status)
+correctly moved F1's formula-bearing population 6,278 → 6,260, but a *later* commit
+(`cef0ca1b39`, regenerating the same inventory file for an unrelated reason) moved it again to
+6,257 without the lib suite being re-run afterward — leaving a stale `assert_eq!` red at HEAD.
+Attempt 11 of the final-acceptance scan caught it; `fold-fix-repin` (`c0f5e9091e`) re-pinned the
+assertion to the live value with its mechanism, and attempt 12 re-derived the whole closure clean.
+Full account: `artifacts/epic-6-closure/AT-33-E6-001-attempt11_cycle_receipt.md`.
+
 ## Figures, re-derived at closure
 
 **Oracle examination — 8,330 of 8,330 blessed units examined, 0 disagree:**
@@ -120,19 +191,25 @@ Re-derive: `jq -r '[.families[].population]|add'
 docs/release/SD-33-computed-value-verification/artifacts/epic-3-engine-coverage/formula_interpreter.corpus-wide.json`
 → `11652` (F1 6,308 / F2 2,337 / F3 671 / F4 1,086 / F5 589 / F6 391 / F7 12 / F8 196 / F9 62)
 
-**Test suites, run at closure:**
-- Rust lib: 2,837 of 2,837 passed (`cargo test --locked --lib`)
-- Desktop Tauri app: 548 of 548 passed (`cargo test --locked` in `apps/desktop/src-tauri`)
+**Test suites, re-derived after the fold:**
+- Rust lib: 2,845 of 2,845 passed (`cargo test --locked --lib`) — up from 2,837 at first closure;
+  the fold's own new tests, plus the F1 re-pin (`fold-fix-repin`, `c0f5e9091e`) closing the one
+  assertion the fold's inventory regen left stale
+- Desktop Tauri app: 548 of 548 passed (`cargo test --locked` in `apps/desktop/src-tauri`),
+  unchanged
 - Integration targets: 543 of 543 build (`cargo test --locked --no-run`, `grep -c 'Executable
   tests/'` on the output)
 
-**Corpus sweep — 0 findings of 48,634 records examined.**
-Re-derive: `cargo run --locked --bin corpus_literal_sweep` →
-`corpus-literal-sweep: 48634 records examined of 51408 read, 412734 tokens compared (9
-synthesized), 51395 digests checked, 0 findings`
+**Corpus sweep — 0 findings of 48,699 records examined.** Grown from 48,634 by exactly **+65**,
+the fold's own new Skinwalker records — not a vacuous pass; the population that grew is the one
+the new records actually landed in.
+Re-derive (run live for this doc, 2026-08-26): `cargo run --locked --bin corpus_literal_sweep` →
+`corpus-literal-sweep: 48699 records examined of 51473 read, 413288 tokens compared (9
+synthesized), 51460 digests checked, 0 findings`
 
 **Denominator gate — 0 violations, run against this closure diff.**
-Re-derive: `python3 scripts/denominator_gate.py --check`
+Re-derive (run live for this doc): `python3 scripts/denominator_gate.py --check` →
+`files_checked=69 violations=0`
 
 ## Inherited debt — registered, not vanished
 

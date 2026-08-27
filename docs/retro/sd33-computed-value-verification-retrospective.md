@@ -3,9 +3,11 @@ canonical: true
 owner: closure-epilogue
 purpose: SD-33 retrospective, grounded in `python3 scripts/retro.py summary --since 2026-08-24 --json`
   rather than recollection.
-date: 2026-08-25
-board: kanban rows 1-19 `complete` (AT-33-E6-001 attempt 10, PASS); rows 20-21 (`AT-33-E6-002`,
-  `AT-33-E6-003`) are this cycle's and the next one's own cards.
+date: 2026-08-26
+board: kanban rows 1-21 `complete` at first closure (`AT-33-E6-001` attempt 10 PASS, `AT-33-E6-002`,
+  `AT-33-E6-003`); the operator's 2026-08-26 fold ruling reopened Epic 6 with rows 22-24
+  (`fold-skinwalker`, `fold-undine`, `fold-inventory`) and re-ran row 19 (attempt 11 FAIL, attempt
+  12 PASS). All **24 of 24** rows `complete` as of this update — see §6 below.
 ---
 
 # SD-33 retrospective — computed-value verification
@@ -279,6 +281,59 @@ population, weakening an assertion, or filing a blocker in place of clearing it.
 (`AGENTS.md`) held for real, ten times: **clear it, or raise your hand and wait** — this bundle only
 ever took the first branch.
 
+## 6. The fold — recovered SD-31 work, and its own lessons
+
+The bundle closed once, at attempt 10 (`1bfb80d7b7`), with PR #377 open and not yet merged. Before
+the PR merged, a sweep of stale local branches — the same kind of sweep `AT-33-E6-002` ran to
+prune worktrees — found two branches holding real, unmerged content generated during SD-31 and
+lost when a wave-11 API error dropped the session that produced it: **45 hand-copied Skinwalker
+`race_trait` records** and **103 Undine fixture-file string occurrences (3 real fixture entries)**.
+The operator ruled: fold the genuinely-unique content into SD-33 rather than let it ride into
+SD-34 as an unexplained gap or force a from-scratch re-derivation of work that already existed.
+Neither branch was merged on trust — each was regenerated through its guarded generator path and
+independently hand-traced against the pinned oracle before landing (`fold-skinwalker` produced
+**65** real records from the branch's 45, all 75 on-disk records token-traced clean;
+`fold-undine`'s 3 entries were re-verified against HEAD's own corpus, byte-for-byte). Full account:
+`../release/SD-33-computed-value-verification/release-notes.md` "Recovered work" and
+`fold-skinwalker_cycle_receipt.md`/`fold-undine_cycle_receipt.md`.
+
+The same sweep found three other branches and ruled them **out** — recorded in
+`forward-scope-register.md §E1` so SD-34 does not re-litigate them.
+
+Folding after closure was not free: reopening Epic 6 cost two more final-acceptance-scan attempts
+(11 FAIL, 12 PASS) — bringing the bundle's total correct halts to **ten**: attempts 1 through 9,
+plus attempt 11. Attempt 11's shortfall was the fold's own, not inherited (3 commits since the cut
+touched the file the failing assertion lived in, against 0 for every genuinely-inherited target),
+and it is this reopen's own worked example of three lessons, each with what makes it fail:
+
+- **A stale branch's file count is not its value.** The 1,612-file grant branch
+  (`worktree-wf_a45ece26-3fc-1`) looked like the biggest recovery available in the sweep and was
+  superseded — its `class` field held feature-group names where HEAD's curated records hold real
+  class names, and it lacked `granted_via_archetype`, a field the live consumer treats as
+  authoritative and defaults to `true` when absent, so folding it would have silently mis-marked
+  every record. The 45-record Skinwalker branch looked like the smallest, most marginal find in
+  the same sweep and was the real one. **What tells them apart is never the file count** — it is
+  reading the branch's own record schema against HEAD's current schema, and checking whether the
+  live consumer requires a field the branch's records don't carry. A count comparison alone would
+  have picked the wrong branch to trust.
+- **Run the suite after the last write that can move it.** `fold-skinwalker` re-pinned F1's
+  population correctly (6,278 → 6,260) against the `docs/work-inventory.json` committed at that
+  moment, and its own receipt reported `cargo test --locked --lib` green — a true measurement of
+  the tree it actually landed. The *next* commit, `fold-inventory`, then regenerated that same
+  inventory file for an unrelated reason and moved F1 again (6,260 → 6,257) without re-running the
+  lib suite afterward, leaving a stale `assert_eq!` red at HEAD. The receipt that reported "0
+  failed" was correct and still produced a red tree one commit later, because a later write moved
+  the number the assertion depended on. The mechanism is not "run the suite" — every cycle already
+  does that — it is **run it after the last commit in the chain that can move the figure being
+  asserted**, which for an inventory-regeneration step is not necessarily the step's own commit.
+- **A gate's examined-population must grow when records are added, or its pass is unproven.**
+  `corpus_literal_sweep` going 48,634 → 48,699 examined — exactly **+65**, the fold's own new
+  record count, independently confirmed by a live mutation probe that caught a planted defect on
+  one of the folded records — is what proved the new records were genuinely inside the swept
+  population rather than the sweep passing vacuously over a corpus it never actually walked over
+  them. A "0 findings, unchanged" result with an unchanged examined-count would have been
+  indistinguishable from the sweep silently skipping every new file.
+
 ## Cross-references
 
 - `../release/SD-33-computed-value-verification/decisions.md` — §1-§7, the mechanisms this
@@ -286,8 +341,12 @@ ever took the first branch.
 - `../release/SD-33-computed-value-verification/workflow-instruction.md §12` — the standing-lessons
   table this retrospective closes rows 3 and 8 of.
 - `../release/SD-33-computed-value-verification/forward-scope-register.md` — the inherited-debt
-  entry and the 3 open deferrals.
+  entry, §E1's three ruled-out fold branches, and the 3 open deferrals.
 - `../release/SD-33-computed-value-verification/artifacts/epic-6-closure/AT-33-E6-001-attempt10_cycle_receipt.md` —
-  the passing scan this retrospective is written against.
+  the scan that first closed the bundle, pre-fold.
+- `../release/SD-33-computed-value-verification/artifacts/epic-6-closure/AT-33-E6-001-attempt11_cycle_receipt.md`,
+  `AT-33-E6-001-attempt12_cycle_receipt.md`, `fold-skinwalker_cycle_receipt.md`,
+  `fold-undine_cycle_receipt.md`, `fold-inventory_cycle_receipt.md`, `fold-fix-repin_cycle_receipt.md` —
+  the fold reopen this §6 is written against.
 - `sd32-compute-library-and-cause-closure-retrospective.md` — the direct predecessor, source of
   `decisions.md §1/§2/§4/§6/§7`.
