@@ -17,8 +17,8 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**9 of 27 criteria complete. 9 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
-Epic 2 has landed its first criterion (AT-34-E2-001).
+**10 of 27 criteria complete. 10 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
+Epic 2 has landed its first two criteria (AT-34-E2-001, AT-34-E2-002).
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -36,6 +36,25 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 10 — AT-34-E2-002 — each new table is fail-closed
+
+**Status: complete.** Formalizes fail-closed proof as its own deliverable
+(`artifacts/epic-2-tables/fail-closed-proofs.md`): all 8 Epic 2 tables, per-table, a RED→GREEN
+pair — refusing an absent key and returning a real record for a present one. The 7
+`simple_kind_tables` resolvers already carried this proof inline from AT-34-E2-001 (cited by
+test name, not duplicated). The 8th, `companion` (pre-existing from SD-29), had no dedicated
+fail-closed test; this cycle adds
+`companion_chassis::tests::companion_resolve_refuses_a_fabricated_key_it_never_defaults`.
+
+RED confirmed for the intended reason: `companion_resolve` was temporarily mutated to fall back
+to `self.companions.first()` instead of refusing an absent key, and the test failed on the
+fabricated-key assertion specifically (`a fabricated key must never resolve to a companion
+record, real or defaulted`), not an unrelated panic. Reverted, then GREEN: 15/15
+`companion_chassis` tests pass, 11/11 `simple_kind_tables` tests pass (unchanged).
+
+Row-count command output: `grep -c '^| \`' .../fail-closed-proofs.md` → `8`, of the 8 tables
+Epic 2 builds. Receipt: `artifacts/epic-2-tables/AT-34-E2-002_cycle_receipt.md`.
 
 ### Cycle 9 — AT-34-E2-001 — each of the eight tables is built, or proven unnecessary
 

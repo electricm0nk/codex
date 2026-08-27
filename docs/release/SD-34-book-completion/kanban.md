@@ -27,7 +27,7 @@ One row per acceptance criterion. **27 rows covering 28 criteria** — the last 
 | 7 | `corpus-trap-audit-stage` | 1 | AT-34-E1-007 | complete | `artifacts/epic-1-atlas/AT-34-E1-007_cycle_receipt.md`, `artifacts/epic-1-atlas/AT-34-E1-007_re-verification_receipt.md` |
 | 8 | `wiring-class-mismatch-to-zero` | 1 | AT-34-E1-008 | complete | `artifacts/epic-1-atlas/AT-34-E1-008_G1_cycle_receipt.md` .. `_G4_cycle_receipt.md`, verified by `artifacts/epic-1-atlas/AT-34-E1-007_re-verification_receipt.md` |
 | 9 | `build-eight-tables` | 2 | AT-34-E2-001 | complete | `artifacts/epic-2-tables/AT-34-E2-001_cycle_receipt.md`, `artifacts/epic-2-tables/AT-34-E2-001_table_transcript.txt` |
-| 10 | `tables-fail-closed` | 2 | AT-34-E2-002 | not-started | |
+| 10 | `tables-fail-closed` | 2 | AT-34-E2-002 | complete | `artifacts/epic-2-tables/fail-closed-proofs.md`, `artifacts/epic-2-tables/AT-34-E2-002_cycle_receipt.md` |
 | 11 | `table-build-rate-measured` | 2 | AT-34-E2-003 | not-started | |
 | 12 | `bucket-a-zero-both-books` | 2 | AT-34-E2-004 | not-started | |
 | 13 | `core-bucket-b-zero` | 3 | AT-34-E3-001 | not-started | |

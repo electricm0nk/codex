@@ -1294,4 +1294,25 @@ mod tests {
             }
         }
     }
+
+    /// `AT-34-E2-002`'s eighth table: `companion` (built in SD-29, not rebuilt
+    /// by Epic 2) must fail closed exactly like the seven Epic 2 tables in
+    /// `simple_kind_tables.rs` -- a fabricated key refuses, it never falls
+    /// back to the first companion in the book or any other defaulted entry.
+    #[test]
+    fn companion_resolve_refuses_a_fabricated_key_it_never_defaults() {
+        let book = companion_book("inner_sea_combat").expect("Inner Sea Combat is registered");
+        // GREEN half: a present key still resolves to its real record.
+        let worg = book
+            .companion_resolve("Companion (Worg)")
+            .expect("Companion (Worg) is a real record in this book");
+        assert_eq!(worg.key, "Companion (Worg)");
+        // RED half: a key no corpus record carries must refuse, not silently
+        // resolve to `book.companions[0]` or any other stand-in.
+        let refusal = book.companion_resolve("___a_key_no_corpus_record_carries___");
+        assert!(
+            refusal.is_none(),
+            "a fabricated key must never resolve to a companion record, real or defaulted"
+        );
+    }
 }
