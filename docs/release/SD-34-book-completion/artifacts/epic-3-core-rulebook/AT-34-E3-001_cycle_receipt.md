@@ -1,6 +1,6 @@
 # Cycle 1 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001
 
-- **Commit SHA:** <filled by a same-cycle follow-up commit, per `AT-34-E2-004`'s precedent>
+- **Commit SHA:** `a72c6787e6152bd0cfa7e9140a43ae1be6deec14`
 - **Files touched:**
   - `src/bin/v06_work_inventory.rs` (`holds_key_inner`: new arm for the seven
     Epic 2 simple-kind-table kinds; six new unit tests)
