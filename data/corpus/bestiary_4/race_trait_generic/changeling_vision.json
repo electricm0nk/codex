@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Changelings can see in the dark up to 60 feet.",
     "key": "Changeling ~ Vision",
     "name": "Darkvision",
-    "description": "Changelings can see in the dark up to 60 feet.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
-    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e",
-    "line": 18,
-    "record_key": "Changeling ~ Vision"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
+    "record_key": "Changeling ~ Vision",
+    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

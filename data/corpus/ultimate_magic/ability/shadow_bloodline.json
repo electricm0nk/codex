@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Shadow Bloodline",
     "name": "Shadow Bloodline",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -81,20 +80,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
-    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
-    "line": 77,
-    "record_key": "Shadow Bloodline"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 77,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "record_key": "Shadow Bloodline",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can summon a piscodaemon (Bestiary 2 p.72) to serve you. The piscodaemon follows your commands perfectly for %1 minutes before vanishing back to its home in Abaddon. The piscodaemon doesn't follow commands that would cause it to act in altruistically good ways, and could attack you if a command is particularly egregious.|TL",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_307)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_307)",
-    "description": "If you have performed your daily obedience, once per day as a standard action, you can summon a piscodaemon (Bestiary 2 p.72) to serve you. The piscodaemon follows your commands perfectly for %1 minutes before vanishing back to its home in Abaddon. The piscodaemon doesn't follow commands that would cause it to act in altruistically good ways, and could attack you if a command is particularly egregious.|TL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,23 +28,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
-    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
-    "line": 307,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_307)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:307"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:307",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 307,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_307)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

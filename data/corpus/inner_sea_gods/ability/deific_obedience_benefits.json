@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Deific Obedience Benefits",
     "name": "Deific Obedience Benefits",
-    "description": null,
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
-    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
-    "line": 14,
-    "record_key": "Deific Obedience Benefits"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Deific Obedience Benefits",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:bonus"
+  ]
 }

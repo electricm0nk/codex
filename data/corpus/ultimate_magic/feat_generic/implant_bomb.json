@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "You can attach a bomb to a creature that explodes when the creature dies or after 24 hours.",
     "key": "Implant Bomb",
     "name": "Implant Bomb",
-    "description": "You can attach a bomb to a creature that explodes when the creature dies or after 24 hours.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -53,20 +52,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
-    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
-    "line": 71,
-    "record_key": "Implant Bomb"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Implant Bomb",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "As a standard action %1 times per day, you can grant yourself fast healing 1 for 1 minute.|VampirismManifestationLevel/2",
     "key": "Vampirism Corruption ~ Unlife Gift",
     "name": "Unlife Gift",
-    "description": "As a standard action %1 times per day, you can grant yourself fast healing 1 for 1 minute.|VampirismManifestationLevel/2",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 942,
-    "record_key": "Vampirism Corruption ~ Unlife Gift"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 942,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Vampirism Corruption ~ Unlife Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

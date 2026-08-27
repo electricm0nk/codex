@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "At any point after taking this trait, you may choose one Knowledge skill. You gain a permanent +2 trait bonus on checks with that skill, and it is a class skill for you. Once this skill is chosen, it cannot be changed.",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_224)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_224)",
-    "description": "At any point after taking this trait, you may choose one Knowledge skill. You gain a permanent +2 trait bonus on checks with that skill, and it is a class skill for you. Once this skill is chosen, it cannot be changed.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,23 +56,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 224,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_224)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities.lst:224"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities.lst:224",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 224,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_224)",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

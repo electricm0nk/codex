@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Vishkanyas receive a +2 racial bonus on Perception checks.",
     "key": "Vishkanya ~ Keen Senses",
     "name": "Keen Senses",
-    "description": "Vishkanyas receive a +2 racial bonus on Perception checks.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
-    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627",
-    "line": 19,
-    "record_key": "Vishkanya ~ Keen Senses"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "record_key": "Vishkanya ~ Keen Senses",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

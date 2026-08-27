@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:18Z",
   "data": {
     "key": "Slam Convert x5",
     "name": "Slam Convert x5",
@@ -24,20 +23,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_templates.lst",
-    "sha256": "ced96ede43c1ea1f7fc8bc1b5925a13682eceade32bef6f94e8693585454f13f",
-    "line": 50,
-    "record_key": "Slam Convert x5"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 50,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_templates.lst",
+    "record_key": "Slam Convert x5",
+    "sha256": "ced96ede43c1ea1f7fc8bc1b5925a13682eceade32bef6f94e8693585454f13f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "Once per day, you can become incorporeal for %1 rounds. While in this form, you gain the incorporeal subtype and incorporeal quality. You only takes half damage from corporeal sources as long as they are magic (you take no damage from nonmagical weapons and objects). Likewise, your spells or spell-like abilities deal only half damage to corporeal creatures. Spells and other effects that do not deal damage function normally.|MasterLevel",
     "key": "Temp Evolution ~ Incorporeal Form",
     "name": "Incorporeal Form",
-    "description": "Once per day, you can become incorporeal for %1 rounds. While in this form, you gain the incorporeal subtype and incorporeal quality. You only takes half damage from corporeal sources as long as they are magic (you take no damage from nonmagical weapons and objects). Likewise, your spells or spell-like abilities deal only half damage to corporeal creatures. Spells and other effects that do not deal damage function normally.|MasterLevel",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -67,22 +67,22 @@
         "key": "SOURCEPAGE",
         "value": "p.77"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
-    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
-    "line": 225,
-    "record_key": "Temp Evolution ~ Incorporeal Form"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 225,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Temp Evolution ~ Incorporeal Form",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

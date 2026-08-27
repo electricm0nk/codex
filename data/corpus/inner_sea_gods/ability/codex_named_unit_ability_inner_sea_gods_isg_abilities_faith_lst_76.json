@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, you may add your Charisma bonus to your AC while wearing light or no armor. This bonus applies against touch attacks. Any condition that would cause you to lose your Dexterity bonus to AC also causes you to lose your Charisma bonus to AC.",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_76)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_76)",
-    "description": "If you have performed your daily obedience, you may add your Charisma bonus to your AC while wearing light or no armor. This bonus applies against touch attacks. Any condition that would cause you to lose your Dexterity bonus to AC also causes you to lose your Charisma bonus to AC.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,23 +28,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
-    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
-    "line": 76,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_76)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:76"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:76",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 76,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_76)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
 }

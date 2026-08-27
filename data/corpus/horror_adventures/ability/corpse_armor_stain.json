@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your flesh's corpselike consistency deadens your sensations and makes it harder for you to move. You take a -2 penalty to your Dexterity score.",
     "key": "Ghoul Corruption ~ Corpse Armor Stain",
     "name": "Corpse Armor Stain",
-    "description": "Your flesh's corpselike consistency deadens your sensations and makes it harder for you to move. You take a -2 penalty to your Dexterity score.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 221,
-    "record_key": "Ghoul Corruption ~ Corpse Armor Stain"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 221,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Ghoul Corruption ~ Corpse Armor Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Ratfolk can see in the dark up to 60 feet.",
     "key": "Ratfolk ~ Vision",
     "name": "Darkvision",
-    "description": "Ratfolk can see in the dark up to 60 feet.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
-    "sha256": "7f0453b27d69754ce333cf8cdd0f68df62a37c205f79fa22d06d617dc45bc5a3",
-    "line": 18,
-    "record_key": "Ratfolk ~ Vision"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
+    "record_key": "Ratfolk ~ Vision",
+    "sha256": "7f0453b27d69754ce333cf8cdd0f68df62a37c205f79fa22d06d617dc45bc5a3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

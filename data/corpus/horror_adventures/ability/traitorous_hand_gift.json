@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "%1 times per day, you can use traitorous hand to make a touch attack that confounds foes with the spirit's influence. The target is nauseated for 1 round per point of influence the spirit has over you (Will DC %2 negates). Even if the target succeeds, it can't make attacks of opportunity for 1 round. A creature affected by this ability becomes immune for 24 hours.|PossessedManifestationLevel|10+TL/2+PossessedManifestationLevel",
     "key": "Possessed Corruption ~ Traitorous Hand Gift",
     "name": "Traitorous Hand Gift",
-    "description": "%1 times per day, you can use traitorous hand to make a touch attack that confounds foes with the spirit's influence. The target is nauseated for 1 round per point of influence the spirit has over you (Will DC %2 negates). Even if the target succeeds, it can't make attacks of opportunity for 1 round. A creature affected by this ability becomes immune for 24 hours.|PossessedManifestationLevel|10+TL/2+PossessedManifestationLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 665,
-    "record_key": "Possessed Corruption ~ Traitorous Hand Gift"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 665,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Possessed Corruption ~ Traitorous Hand Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Vishkanyas can see twice as far as humans in conditions of dim light.",
     "key": "Vishkanya ~ Vision",
     "name": "Low-Light Vision",
-    "description": "Vishkanyas can see twice as far as humans in conditions of dim light.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
-    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627",
-    "line": 18,
-    "record_key": "Vishkanya ~ Vision"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "record_key": "Vishkanya ~ Vision",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

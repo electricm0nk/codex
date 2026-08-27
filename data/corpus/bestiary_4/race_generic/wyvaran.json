@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:37Z",
   "data": {
+    "description": null,
     "key": "Wyvaran",
     "name": "Wyvaran",
-    "description": null,
     "raw_tokens": [
       {
         "key": "SORTKEY",
@@ -53,20 +52,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_races.lst",
-    "sha256": "b73f9c64857f39a4fe4f088efd50eb7e9eb7b535c39e896be21791950c60abf8",
-    "line": 6,
-    "record_key": "Wyvaran"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:37Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_races.lst",
+    "record_key": "Wyvaran",
+    "sha256": "b73f9c64857f39a4fe4f088efd50eb7e9eb7b535c39e896be21791950c60abf8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

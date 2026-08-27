@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Ratfolk gain a +4 racial bonus on Handle Animal checks made to influence rodents.",
     "key": "Ratfolk ~ Rodent Empathy",
     "name": "Rodent Empathy",
-    "description": "Ratfolk gain a +4 racial bonus on Handle Animal checks made to influence rodents.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,18 +39,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
-    "sha256": "7f0453b27d69754ce333cf8cdd0f68df62a37c205f79fa22d06d617dc45bc5a3",
-    "line": 19,
-    "record_key": "Ratfolk ~ Rodent Empathy"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ratfolk/ratfolk_abilities_race.lst",
+    "record_key": "Ratfolk ~ Rodent Empathy",
+    "sha256": "7f0453b27d69754ce333cf8cdd0f68df62a37c205f79fa22d06d617dc45bc5a3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

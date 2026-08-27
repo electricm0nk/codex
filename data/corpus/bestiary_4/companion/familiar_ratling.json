@@ -200,8 +200,8 @@
     "record_key": "Familiar (Ratling)",
     "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

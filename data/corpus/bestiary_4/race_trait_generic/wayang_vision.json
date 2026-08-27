@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Wayangs can see in the dark up to 60 feet.",
     "key": "Wayang ~ Vision",
     "name": "Darkvision",
-    "description": "Wayangs can see in the dark up to 60 feet.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_abilities_race.lst",
-    "sha256": "33833b276238c5e31406ea770c9134c3f519d96ef698baa0248514a46a77977a",
-    "line": 18,
-    "record_key": "Wayang ~ Vision"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_abilities_race.lst",
+    "record_key": "Wayang ~ Vision",
+    "sha256": "33833b276238c5e31406ea770c9134c3f519d96ef698baa0248514a46a77977a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

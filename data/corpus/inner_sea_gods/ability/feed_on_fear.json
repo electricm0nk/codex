@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "At 8th level, as an immediate action upon successfully hitting a creature with a melee attack that's already suffering from a fear effect, you deal 2d6 extra points of damage and gain that amount in temporary hit points. These temporary hit points last for 24 hours or until lost. You can use this ability %1 times per day.|DomainEvilLVL/4-1",
     "key": "Domain Power ~ Feed on Fear",
     "name": "Feed on Fear",
-    "description": "At 8th level, as an immediate action upon successfully hitting a creature with a melee attack that's already suffering from a fear effect, you deal 2d6 extra points of damage and gain that amount in temporary hit points. These temporary hit points last for 24 hours or until lost. You can use this ability %1 times per day.|DomainEvilLVL/4-1",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 268,
-    "record_key": "Domain Power ~ Feed on Fear"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 268,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Domain Power ~ Feed on Fear",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

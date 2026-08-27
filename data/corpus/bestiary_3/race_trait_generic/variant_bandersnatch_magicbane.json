@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "These bandersnatches radiate an antimagic aura in a 20-foot radius. Should the aura be brought down, it returns automatically as a free action on the bandersnatch's next turn. Magicbane bandersnatches lack gaze and quick recovery.",
     "key": "Variant Bandersnatch ~ Magicbane",
     "name": "Magicbane Bandersnatch (+3 CR)",
-    "description": "These bandersnatches radiate an antimagic aura in a 20-foot radius. Should the aura be brought down, it returns automatically as a free action on the bandersnatch's next turn. Magicbane bandersnatches lack gaze and quick recovery.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,18 +35,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
     "line": 465,
-    "record_key": "Variant Bandersnatch ~ Magicbane"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Variant Bandersnatch ~ Magicbane",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

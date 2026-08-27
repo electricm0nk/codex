@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your spines make it difficult to move. Your armor check penalty for any armor you wear increases by 2. Even when not wearing armor, you take a -2 armor check penalty.",
     "key": "Hive Corruption ~ Bristling Spines Stain",
     "name": "Bristling Spines Stain",
-    "description": "Your spines make it difficult to move. Your armor check penalty for any armor you wear increases by 2. Even when not wearing armor, you take a -2 armor check penalty.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 400,
-    "record_key": "Hive Corruption ~ Bristling Spines Stain"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 400,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Hive Corruption ~ Bristling Spines Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

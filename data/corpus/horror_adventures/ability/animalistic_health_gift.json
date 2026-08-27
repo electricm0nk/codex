@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Whenever you shift forms, you gain a +2 bonus to your Constitution score that lasts as long as you are in your shifted form. Hit points gained from this bonus are lost when you revert to your normal form.",
     "key": "Lycanthropy Corruption ~ Animalistic Health Gift",
     "name": "Animalistic Health Gift",
-    "description": "Whenever you shift forms, you gain a +2 bonus to your Constitution score that lasts as long as you are in your shifted form. Hit points gained from this bonus are lost when you revert to your normal form.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 552,
-    "record_key": "Lycanthropy Corruption ~ Animalistic Health Gift"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 552,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Lycanthropy Corruption ~ Animalistic Health Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "computed:pre_guard"
+  ]
 }

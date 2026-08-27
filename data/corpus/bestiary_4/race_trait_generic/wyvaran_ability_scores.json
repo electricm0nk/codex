@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Wyvarans have a reptilian grace and a strong will, but are a little dim-witted.",
     "key": "Wyvaran ~ Ability Scores",
     "name": "+2 Dexterity, +2 Wisdom, -2 Intelligence",
-    "description": "Wyvarans have a reptilian grace and a strong will, but are a little dim-witted.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_race.lst",
-    "sha256": "f9263c1e5ec38c272aea979b35614055b3d7ae8ce582325efc216270053d6fed",
-    "line": 14,
-    "record_key": "Wyvaran ~ Ability Scores"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wyvaran/wyvaran_abilities_race.lst",
+    "record_key": "Wyvaran ~ Ability Scores",
+    "sha256": "f9263c1e5ec38c272aea979b35614055b3d7ae8ce582325efc216270053d6fed"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

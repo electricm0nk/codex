@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Some half-elves descend from elves who are not from this world, but rather visitors from another world, plane, or dimension. Half-elves with this trait gain Psychic Sensitivity (Occult Adventures 138) as a bonus feat at 1st level.",
     "key": "Half-Elf ~ Starchild",
     "name": "Starchild",
-    "description": "Some half-elves descend from elves who are not from this world, but rather visitors from another world, plane, or dimension. Half-elves with this trait gain Psychic Sensitivity (Occult Adventures 138) as a bonus feat at 1st level.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_race_oa.lst",
-    "sha256": "51dd1e75b16189109c965cea5a6dd7bd556dec31d79e76682d12d8c084039642",
-    "line": 5,
-    "record_key": "Half-Elf ~ Starchild"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_race_oa.lst",
+    "record_key": "Half-Elf ~ Starchild",
+    "sha256": "51dd1e75b16189109c965cea5a6dd7bd556dec31d79e76682d12d8c084039642"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

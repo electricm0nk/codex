@@ -170,8 +170,8 @@
     "record_key": "Zoog",
     "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

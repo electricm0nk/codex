@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "As a standard action, you dance, act like a buffoon, or commit some other act of whimsy. When you do, enemies within 30 feet of you that can see and hear you must succeed a Will saving throw (DC %1) or they collapse into gales of manic laughter, falling prone. Those who fail their saving throws can take no actions other than laughing for 1 round, but are not considered helpless. You can use this ability %2 times per day.|10+DomainChaosLVL/2+WIS/2|DomainChaosLVL/4-1",
     "key": "Domain Power ~ Unexpected Whimsy",
     "name": "Unexpected Whimsy",
-    "description": "As a standard action, you dance, act like a buffoon, or commit some other act of whimsy. When you do, enemies within 30 feet of you that can see and hear you must succeed a Will saving throw (DC %1) or they collapse into gales of manic laughter, falling prone. Those who fail their saving throws can take no actions other than laughing for 1 round, but are not considered helpless. You can use this ability %2 times per day.|10+DomainChaosLVL/2+WIS/2|DomainChaosLVL/4-1",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 283,
-    "record_key": "Domain Power ~ Unexpected Whimsy"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 283,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Domain Power ~ Unexpected Whimsy",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

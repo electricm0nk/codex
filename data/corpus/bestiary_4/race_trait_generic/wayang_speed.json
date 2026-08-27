@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Wayangs have a base speed of 20 feet.",
     "key": "Wayang ~ Speed",
     "name": "Slow Speed",
-    "description": "Wayangs have a base speed of 20 feet.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_abilities_race.lst",
-    "sha256": "33833b276238c5e31406ea770c9134c3f519d96ef698baa0248514a46a77977a",
-    "line": 17,
-    "record_key": "Wayang ~ Speed"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_abilities_race.lst",
+    "record_key": "Wayang ~ Speed",
+    "sha256": "33833b276238c5e31406ea770c9134c3f519d96ef698baa0248514a46a77977a"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

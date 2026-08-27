@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You have a knack for guessing just how to scare others. You gain a +2 bonus on Intimidate checks and the DCs of fear effects you create increase by 1.|ShadowboundFrightfulBonus*2|ShadowboundFrightfulBonus",
     "key": "Shadowbound Corruption ~ Frightful Gift",
     "name": "Frightful Gift",
-    "description": "You have a knack for guessing just how to scare others. You gain a +2 bonus on Intimidate checks and the DCs of fear effects you create increase by 1.|ShadowboundFrightfulBonus*2|ShadowboundFrightfulBonus",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 819,
-    "record_key": "Shadowbound Corruption ~ Frightful Gift"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 819,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Shadowbound Corruption ~ Frightful Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

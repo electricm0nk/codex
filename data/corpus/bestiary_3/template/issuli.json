@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:16Z",
   "data": {
     "key": "IsSuli",
     "name": "IsSuli",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_templates.lst",
-    "sha256": "b9ebaa95ac8b9d33696afbea4bea112050b5cc3e901b673a2304ee5704312948",
-    "line": 5,
-    "record_key": "IsSuli"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_templates.lst",
+    "record_key": "IsSuli",
+    "sha256": "b9ebaa95ac8b9d33696afbea4bea112050b5cc3e901b673a2304ee5704312948"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

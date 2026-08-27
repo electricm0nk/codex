@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:38Z",
   "data": {
+    "description": null,
     "key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_42)",
     "name": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_42)",
-    "description": null,
     "raw_tokens": [
       {
         "key": "SORTKEY",
@@ -169,23 +168,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 42,
-    "record_key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_42)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:38Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "bestiary_4:b4_races.lst:42"
-  }
+    "coordinate": "bestiary_4:b4_races.lst:42",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Codex-Named Unit (monster_bestiary_4_b4_races_lst_42)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

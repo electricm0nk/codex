@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Creatures damaged by your bite attack must succeed at a Fortitude save (DC %1) or contract ghoul fever (Bestiary 146). A humanoid who dies of ghoul fever rises as a ghoul at the next midnight, as described in the ghoul fever entry.|10+TL/2+GhoulManifestationLevel",
     "key": "Ghoul Corruption ~ Diseased Bite Gift",
     "name": "Diseased Bite Gift",
-    "description": "Creatures damaged by your bite attack must succeed at a Fortitude save (DC %1) or contract ghoul fever (Bestiary 146). A humanoid who dies of ghoul fever rises as a ghoul at the next midnight, as described in the ghoul fever entry.|10+TL/2+GhoulManifestationLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 227,
-    "record_key": "Ghoul Corruption ~ Diseased Bite Gift"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 227,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Ghoul Corruption ~ Diseased Bite Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

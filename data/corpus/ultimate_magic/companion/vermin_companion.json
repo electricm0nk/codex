@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:25:21Z",
   "data": {
+    "description": null,
     "key": "Vermin Companion",
     "name": "Vermin Companion",
-    "description": null,
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "OUTPUTNAME",
@@ -75,22 +75,23 @@
         "key": "FACT",
         "value": "Abb|VC"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes_companion.lst",
-    "sha256": "4cf830e5a1958ea30fa04951a19119c7a60be4fb4a373b241976eaf2bd8ae0b9",
-    "line": 9,
-    "record_key": "Vermin Companion"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:25:21Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes_companion.lst",
+    "record_key": "Vermin Companion",
+    "sha256": "4cf830e5a1958ea30fa04951a19119c7a60be4fb4a373b241976eaf2bd8ae0b9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

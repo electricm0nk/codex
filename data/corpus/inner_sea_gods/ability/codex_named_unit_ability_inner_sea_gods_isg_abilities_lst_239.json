@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "[redacted PI]",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_239)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_239)",
-    "description": "[redacted PI]",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,23 +40,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 239,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_239)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "description,name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities.lst:239"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities.lst:239",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 239,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_lst_239)",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

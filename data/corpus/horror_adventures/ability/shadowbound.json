@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Shadowbound corruption occurs after a month or more of exposure to the Shadow Plane or shadow magic, or contact with cruel kytons, aberrations, undead, or shadowy fey. Corruption sets in only if it is used to torment or disillusion you at least six times in a month in a deeply personal manner. The corruption progresses when you're tortured by shadow again, when you destroy a thing of beauty or joy because your melancholy makes it unbearable, or when you sow fear. Every month you must spend at least %1 entire days away from all light and other life. If you don't, at the end of the month you must attempt a Will saving throw (DC %2). If you fail, sometime in the next 24 hours you go berserk and destroy something precious. You also need to attempt such a saving throw the first time each day you come across a being or object of great beauty, or a being or object with a strong or overwhelming aura of good (this includes yourself, so to avoid the save, you might need to ruin or tarnish your own beauty). If allies are able to restrain you for 24 hours or otherwise prevent you from destroying anything precious during that time, your corruption doesn't progress. However, the DC of the Will save to prevent your corruption from progressing increases by 2. These increases stack each time this occurs, and they last until your corruption reaches the next corruption stage. The precious thing you destroy when you fail your save depends on your corruption stage, as noted below. If you voluntarily destroy a being or object related to a later corruption stage, you automatically progress to that stage (you might skip over intervening stages in this manner). For example, the first time that you intentionally terrorize innocents or destroy an important object of beauty, you then immediately proceed to stage 2. Repeating your actions doesn't cause your corruption stage to progress further (if you terrorize innocents again, you don't progress to stage 3).|ShadowboundManifestationLevel*2|15+ShadowboundManifestationLevel",
     "key": "Corruption ~ Shadowbound",
     "name": "Shadowbound",
-    "description": "Shadowbound corruption occurs after a month or more of exposure to the Shadow Plane or shadow magic, or contact with cruel kytons, aberrations, undead, or shadowy fey. Corruption sets in only if it is used to torment or disillusion you at least six times in a month in a deeply personal manner. The corruption progresses when you're tortured by shadow again, when you destroy a thing of beauty or joy because your melancholy makes it unbearable, or when you sow fear. Every month you must spend at least %1 entire days away from all light and other life. If you don't, at the end of the month you must attempt a Will saving throw (DC %2). If you fail, sometime in the next 24 hours you go berserk and destroy something precious. You also need to attempt such a saving throw the first time each day you come across a being or object of great beauty, or a being or object with a strong or overwhelming aura of good (this includes yourself, so to avoid the save, you might need to ruin or tarnish your own beauty). If allies are able to restrain you for 24 hours or otherwise prevent you from destroying anything precious during that time, your corruption doesn't progress. However, the DC of the Will save to prevent your corruption from progressing increases by 2. These increases stack each time this occurs, and they last until your corruption reaches the next corruption stage. The precious thing you destroy when you fail your save depends on your corruption stage, as noted below. If you voluntarily destroy a being or object related to a later corruption stage, you automatically progress to that stage (you might skip over intervening stages in this manner). For example, the first time that you intentionally terrorize innocents or destroy an important object of beauty, you then immediately proceed to stage 2. Repeating your actions doesn't cause your corruption stage to progress further (if you terrorize innocents again, you don't progress to stage 3).|ShadowboundManifestationLevel*2|15+ShadowboundManifestationLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 793,
-    "record_key": "Corruption ~ Shadowbound"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 793,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Corruption ~ Shadowbound",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
 }

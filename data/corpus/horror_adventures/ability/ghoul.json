@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "A hunger for the flesh of the living grows more every day, until every sentient creature seems no more than a meal. Each week, you need to consume one portion of flesh from a sentient creature. A creature one size category smaller than you counts as one portion, a creature of your size category counts as four portions, and a creature one size larger counts as 16 portions. The extra meat from Huge or larger creatures spoils quickly enough that it can't all be consumed within a week. After a week, if you haven't consumed enough flesh, you must succeed at a Will saving throw (DC %1) each day until you've eaten enough. If you fail the save, the next time you rest your corruption takes over and you unconsciously hunt and feed, devouring a living sentient creature completely. In this state, you can't differentiate between creatures and might consume an innocent; if you do so, your corruption progresses to the next stage. If circumstances make it impossible to feed (such as if you are tied down or in a locale with nothing to feed upon), you start to starve as if you had not eaten in 3 days (Core Rulebook 445), and you continue to hunger for flesh and struggle to escape and feed until you have received five times the amount of flesh from sentient creatures you normally require. If your allies are able to restrain and feed you flesh from sentient creatures, your corruption doesn't progress. However, the DC of the Will save against your corruption progressing increases by 2. These increases stack each time this occurs, and they last until your corruption reaches the next corruption stage. In addition to starvation, close brushes with death also increase your craving for flesh. Whenever you are dropped below 0 hit points, you must attempt a single saving throw as if you hadn't eaten enough flesh that week.|15+GhoulManifestationLevel",
     "key": "Corruption ~ Ghoul",
     "name": "Ghoul",
-    "description": "A hunger for the flesh of the living grows more every day, until every sentient creature seems no more than a meal. Each week, you need to consume one portion of flesh from a sentient creature. A creature one size category smaller than you counts as one portion, a creature of your size category counts as four portions, and a creature one size larger counts as 16 portions. The extra meat from Huge or larger creatures spoils quickly enough that it can't all be consumed within a week. After a week, if you haven't consumed enough flesh, you must succeed at a Will saving throw (DC %1) each day until you've eaten enough. If you fail the save, the next time you rest your corruption takes over and you unconsciously hunt and feed, devouring a living sentient creature completely. In this state, you can't differentiate between creatures and might consume an innocent; if you do so, your corruption progresses to the next stage. If circumstances make it impossible to feed (such as if you are tied down or in a locale with nothing to feed upon), you start to starve as if you had not eaten in 3 days (Core Rulebook 445), and you continue to hunger for flesh and struggle to escape and feed until you have received five times the amount of flesh from sentient creatures you normally require. If your allies are able to restrain and feed you flesh from sentient creatures, your corruption doesn't progress. However, the DC of the Will save against your corruption progressing increases by 2. These increases stack each time this occurs, and they last until your corruption reaches the next corruption stage. In addition to starvation, close brushes with death also increase your craving for flesh. Whenever you are dropped below 0 hit points, you must attempt a single saving throw as if you hadn't eaten enough flesh that week.|15+GhoulManifestationLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 201,
-    "record_key": "Corruption ~ Ghoul"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 201,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Corruption ~ Ghoul",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

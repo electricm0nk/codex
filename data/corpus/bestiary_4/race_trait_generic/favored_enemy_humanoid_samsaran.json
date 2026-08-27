@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Samsarans. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidSamsaran",
     "key": "Favored Enemy ~ Humanoid (Samsaran)",
     "name": "Humanoid (Samsaran)",
-    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Samsarans. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidSamsaran",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_abilities_race.lst",
-    "sha256": "70da33c402699e1d2fcaa92aa5b5704d73c07e9fcaf0bf49925f5062637b7278",
     "line": 26,
-    "record_key": "Favored Enemy ~ Humanoid (Samsaran)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_abilities_race.lst",
+    "record_key": "Favored Enemy ~ Humanoid (Samsaran)",
+    "sha256": "70da33c402699e1d2fcaa92aa5b5704d73c07e9fcaf0bf49925f5062637b7278"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

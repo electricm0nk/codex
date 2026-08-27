@@ -164,9 +164,8 @@
     "record_key": "Thais",
     "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:dr"
+    "static:literal_magnitudes_only"
   ]
 }

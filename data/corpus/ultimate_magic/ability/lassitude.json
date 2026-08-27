@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Whenever a spellcaster with this spellblight casts a spell, she must make a concentration check (DC 15 + twice the spell level of the spell being cast). If she fails the check, the spellcaster takes 1 point of nonlethal damage per spell level (or 1 point of nonlethal damage when casting a 0-level spell or 1 point per 2 caster levels if using a spell-like ability). This nonlethal damage cannot be reduced in any way so long as the spellcaster suffers from lassitude. Lassitude can be cured by lesser restoration, restoration, or any effect that completely removes exhaustion. Simply resting has no effect. Creatures immune to nonlethal damage are immune to this spellblight.",
     "key": "Spellblight ~ Lassitude",
     "name": "Lassitude",
-    "description": "Whenever a spellcaster with this spellblight casts a spell, she must make a concentration check (DC 15 + twice the spell level of the spell being cast). If she fails the check, the spellcaster takes 1 point of nonlethal damage per spell level (or 1 point of nonlethal damage when casting a 0-level spell or 1 point per 2 caster levels if using a spell-like ability). This nonlethal damage cannot be reduced in any way so long as the spellcaster suffers from lassitude. Lassitude can be cured by lesser restoration, restoration, or any effect that completely removes exhaustion. Simply resting has no effect. Creatures immune to nonlethal damage are immune to this spellblight.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
-    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
-    "line": 13,
-    "record_key": "Spellblight ~ Lassitude"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "record_key": "Spellblight ~ Lassitude",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ]
 }

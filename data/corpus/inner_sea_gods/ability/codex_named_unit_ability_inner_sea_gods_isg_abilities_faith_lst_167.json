@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, when using the strength surge granted power from the Strength domain, you can target allies within 30 feet of you instead of having to touch a single target. You can target a maximum of %1 allies. If you don't have access to the Strength domain, you instead gain the ability to use the strength surge granted power a number of times per day equal to 3 + your Wisdom modifier, as listed in the strength surge description. However, you can touch only a single target when using this granted power.|1+min(5,TL/4)|3+CHA",
     "key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_167)",
     "name": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_167)",
-    "description": "If you have performed your daily obedience, when using the strength surge granted power from the Strength domain, you can target allies within 30 feet of you instead of having to touch a single target. You can target a maximum of %1 allies. If you don't have access to the Strength domain, you instead gain the ability to use the strength surge granted power a number of times per day equal to 3 + your Wisdom modifier, as listed in the strength surge description. However, you can touch only a single target when using this granted power.|1+min(5,TL/4)|3+CHA",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,23 +28,27 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
-    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e",
-    "line": 167,
-    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_167)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:167"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities_faith.lst:167",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 167,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_faith.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_167)",
+    "sha256": "55f9ffcb82ea861db396063e8801becfb46e368a510ec6d413d87c2935f3419e"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:prose_expr",
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

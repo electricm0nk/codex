@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:37Z",
   "data": {
+    "description": null,
     "key": "Undead Phantom",
     "name": "Undead Phantom",
-    "description": null,
     "raw_tokens": [
       {
         "key": "SOURCEPAGE",
@@ -89,20 +88,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
-    "sha256": "09976b6c9e77606c0b7d76da9fff38a80148242e22f02896d0c44bdaa3140d89",
-    "line": 8,
-    "record_key": "Undead Phantom"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:37Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
+    "record_key": "Undead Phantom",
+    "sha256": "09976b6c9e77606c0b7d76da9fff38a80148242e22f02896d0c44bdaa3140d89"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

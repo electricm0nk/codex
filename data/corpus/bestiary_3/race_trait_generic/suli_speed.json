@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Sulis have a base speed of 30 feet.",
     "key": "Suli ~ Speed",
     "name": "Normal Speed",
-    "description": "Sulis have a base speed of 30 feet.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
-    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6",
-    "line": 17,
-    "record_key": "Suli ~ Speed"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
+    "record_key": "Suli ~ Speed",
+    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

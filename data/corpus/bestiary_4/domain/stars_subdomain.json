@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:09Z",
   "data": {
     "key": "Stars Subdomain",
     "name": "Stars Subdomain",
@@ -60,20 +59,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_domains.lst",
-    "sha256": "eb8b3691d0dd1377e752304342599964193b50dbf4643ad30c7bee0adb9f7977",
-    "line": 9,
-    "record_key": "Stars Subdomain"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:09Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_domains.lst",
+    "record_key": "Stars Subdomain",
+    "sha256": "eb8b3691d0dd1377e752304342599964193b50dbf4643ad30c7bee0adb9f7977"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

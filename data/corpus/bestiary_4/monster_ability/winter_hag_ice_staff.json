@@ -48,8 +48,8 @@
     "record_key": "Winter Hag ~ Ice Staff",
     "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
   },
-  "wiring_class": "display",
+  "wiring_class": "derived",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "derived:spells"
   ]
 }

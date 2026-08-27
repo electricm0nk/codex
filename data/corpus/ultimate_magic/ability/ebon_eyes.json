@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "spellcaster with ebon eyes develops a jet-black film over her eyes, which inverts her capacity to perceive light and darkness. The creature treats darkness as bright light, dim light as normal light, normal light as dim light, and bright light as darkness. The ebon eyes protect against blinding, dazzling, patterns, or other visual effects, granting a +2 bonus on all saving throws against those effects. Ebon eyes can be removed with an effect that removes blindness.",
     "key": "Spellblight ~ Ebon Eyes",
     "name": "Ebon Eyes",
-    "description": "spellcaster with ebon eyes develops a jet-black film over her eyes, which inverts her capacity to perceive light and darkness. The creature treats darkness as bright light, dim light as normal light, normal light as dim light, and bright light as darkness. The ebon eyes protect against blinding, dazzling, patterns, or other visual effects, granting a +2 bonus on all saving throws against those effects. Ebon eyes can be removed with an effect that removes blindness.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
-    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6",
-    "line": 10,
-    "record_key": "Spellblight ~ Ebon Eyes"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities.lst",
+    "record_key": "Spellblight ~ Ebon Eyes",
+    "sha256": "a08f7ed509102fe180c11544de6877bffe963ed196ba721f4894c5e4b081a5b6"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

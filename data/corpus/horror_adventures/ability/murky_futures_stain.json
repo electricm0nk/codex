@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Increase the DCs of Constitution checks you attempt to stabilize while dying, Heal checks targeting you, and caster level checks required for conjuration (healing) spells to benefit you by %1 (the DC increase applies on the caster level check required to raise you from the dead at corruption stage 1). Your soul flees immediately on death, so you can't be revived by breath of life, the gift of life domain power, or any similar ability.|MurkyFuturesPenalty",
     "key": "Hellbound Corruption ~ Murky Futures Stain",
     "name": "Murky Futures Stain",
-    "description": "Increase the DCs of Constitution checks you attempt to stabilize while dying, Heal checks targeting you, and caster level checks required for conjuration (healing) spells to benefit you by %1 (the DC increase applies on the caster level check required to raise you from the dead at corruption stage 1). Your soul flees immediately on death, so you can't be revived by breath of life, the gift of life domain power, or any similar ability.|MurkyFuturesPenalty",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 341,
-    "record_key": "Hellbound Corruption ~ Murky Futures Stain"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 341,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Hellbound Corruption ~ Murky Futures Stain",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

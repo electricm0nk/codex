@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Magus",
     "name": "Magus",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -21,20 +20,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
-    "sha256": "614263767e175881131144ad470c45e96d5f3e6e5ba0636409b45f8db8e124a9",
-    "line": 5,
-    "record_key": "Magus"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_globalvar.lst",
+    "record_key": "Magus",
+    "sha256": "614263767e175881131144ad470c45e96d5f3e6e5ba0636409b45f8db8e124a9"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:16Z",
   "data": {
     "key": "IsCatfolk",
     "name": "IsCatfolk",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_templates.lst",
-    "sha256": "11f8dd4865d4c169ba8618c42f5b49343f409d4c2ca5fe3cab9f34b5880248dd",
-    "line": 5,
-    "record_key": "IsCatfolk"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_templates.lst",
+    "record_key": "IsCatfolk",
+    "sha256": "11f8dd4865d4c169ba8618c42f5b49343f409d4c2ca5fe3cab9f34b5880248dd"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

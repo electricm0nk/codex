@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:25:21Z",
   "data": {
+    "description": null,
     "key": "Black Blade",
     "name": "Black Blade",
-    "description": null,
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "OUTPUTNAME",
@@ -39,22 +39,22 @@
         "key": "FACT",
         "value": "Abb|BB"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
+  "ingested_at": "2026-08-23T12:25:21Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes_companion.lst",
-    "sha256": "4cf830e5a1958ea30fa04951a19119c7a60be4fb4a373b241976eaf2bd8ae0b9",
     "line": 16,
-    "record_key": "Black Blade"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes_companion.lst",
+    "record_key": "Black Blade",
+    "sha256": "4cf830e5a1958ea30fa04951a19119c7a60be4fb4a373b241976eaf2bd8ae0b9"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

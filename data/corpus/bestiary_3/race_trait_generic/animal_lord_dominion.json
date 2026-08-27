@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "In both forms, an animal lord is treated as if constantly under the effects of a speak with animals spell, but this only applies to creatures of the animal lord's species affinity (see below). In addition, an animal lord can cast charm animal on any animal of its affinity as a spell-like ability at will (CL equals the animal lord's HD).",
     "key": "Animal Lord ~ Dominion",
     "name": "Dominion (Su)",
-    "description": "In both forms, an animal lord is treated as if constantly under the effects of a speak with animals spell, but this only applies to creatures of the animal lord's species affinity (see below). In addition, an animal lord can cast charm animal on any animal of its affinity as a spell-like ability at will (CL equals the animal lord's HD).",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,18 +27,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
-    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f",
-    "line": 333,
-    "record_key": "Animal Lord ~ Dominion"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 333,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst",
+    "record_key": "Animal Lord ~ Dominion",
+    "sha256": "9e3c679116ca6ddb5ca0516e484041dd5f80fa96cf488adc95ecb80553bd851f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
 }

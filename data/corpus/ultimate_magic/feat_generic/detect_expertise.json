@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "You can detect the mystic specialty of a foe.",
     "key": "Detect Expertise",
     "name": "Detect Expertise",
-    "description": "You can detect the mystic specialty of a foe.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
-    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1",
-    "line": 29,
-    "record_key": "Detect Expertise"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
+    "record_key": "Detect Expertise",
+    "sha256": "cd702f7234f0139f4683a207be036b57ba9b5bc3c6878b50e308abc661fa26e1"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

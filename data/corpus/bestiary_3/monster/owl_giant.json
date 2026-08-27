@@ -157,8 +157,8 @@
     "record_key": "Owl (Giant)",
     "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

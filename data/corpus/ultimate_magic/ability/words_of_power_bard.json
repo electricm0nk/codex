@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "A words of power using bard; %1 meta words/day.|BardMetaWordsPerDay",
     "key": "Bard Archetype ~ Words of Power",
     "name": "Words of Power Bard",
-    "description": "A words of power using bard; %1 meta words/day.|BardMetaWordsPerDay",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -133,20 +132,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
-    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04",
-    "line": 21,
-    "record_key": "Bard Archetype ~ Words of Power"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_wordsofpower.lst",
+    "record_key": "Bard Archetype ~ Words of Power",
+    "sha256": "93797e9bf9f74a955946ee9b82a1981b69e73a19950f3c30210d3f85dc34cc04"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

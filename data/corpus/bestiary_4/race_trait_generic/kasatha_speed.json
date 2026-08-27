@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Kasathas have a base speed of 30 feet.",
     "key": "Kasatha ~ Speed",
     "name": "Normal Speed",
-    "description": "Kasathas have a base speed of 30 feet.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,18 +39,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_abilities_race.lst",
-    "sha256": "53b266361b5a459401cf5e5e62de82ba990116851b84abeee70bf96e907c6971",
-    "line": 17,
-    "record_key": "Kasatha ~ Speed"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_abilities_race.lst",
+    "record_key": "Kasatha ~ Speed",
+    "sha256": "53b266361b5a459401cf5e5e62de82ba990116851b84abeee70bf96e907c6971"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

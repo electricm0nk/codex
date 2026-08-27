@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Once per day when a catfolk attempts a Reflex saving throw, he can roll the saving throw twice and take the better result. He must decide to use this ability before the saving throw is attempted.",
     "key": "Catfolk ~ Cat's Luck",
     "name": "Cat's Luck",
-    "description": "Once per day when a catfolk attempts a Reflex saving throw, he can roll the saving throw twice and take the better result. He must decide to use this ability before the saving throw is attempted.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_race.lst",
-    "sha256": "da1b87966e5404307d7f28d40f3aac9c8f9837de2151dfb307f446b0203d2d15",
-    "line": 19,
-    "record_key": "Catfolk ~ Cat's Luck"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_race.lst",
+    "record_key": "Catfolk ~ Cat's Luck",
+    "sha256": "da1b87966e5404307d7f28d40f3aac9c8f9837de2151dfb307f446b0203d2d15"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

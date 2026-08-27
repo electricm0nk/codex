@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:22:49Z",
   "data": {
+    "description": "Your soul is free from impurity, and you are deeply committed to fulfilling your duties to the church. You gain a +1 trait bonus on Will saving throws and a +1 trait bonus on saving throws against spells and effects originating from an outsider with the evil subtype.",
     "key": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_219)",
     "name": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_219)",
-    "description": "Your soul is free from impurity, and you are deeply committed to fulfilling your duties to the church. You gain a +1 trait bonus on Will saving throws and a +1 trait bonus on saving throws against spells and effects originating from an outsider with the evil subtype.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,23 +44,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
-    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd",
-    "line": 219,
-    "record_key": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_219)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T18:22:49Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_gods:isg_abilities.lst:219"
-  }
+    "coordinate": "inner_sea_gods:isg_abilities.lst:219",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 219,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities.lst",
+    "record_key": "Codex-Named Unit (trait_inner_sea_gods_isg_abilities_lst_219)",
+    "sha256": "e31ff7fb4fed812ae719cb19526442b9b9c9575efc25c169c06690f7a236fafd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

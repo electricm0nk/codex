@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Add 1 to the DCs of your spells and abilities that have the curse descriptor (Pathfinder RPG Ultimate Magic 137). Once per day as a standard action, you can use baleful polymorph as a spell-like ability, with a caster level equal to your character level. This counts as a curse, and the DC of any caster level check to remove it increases by 5.",
     "key": "Accursed Corruption ~ Spiteful Transformation Gift",
     "name": "Spiteful Transformation Gift",
-    "description": "Add 1 to the DCs of your spells and abilities that have the curse descriptor (Pathfinder RPG Ultimate Magic 137). Once per day as a standard action, you can use baleful polymorph as a spell-like ability, with a caster level equal to your character level. This counts as a curse, and the DC of any caster level check to remove it increases by 5.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
-    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381",
-    "line": 74,
-    "record_key": "Accursed Corruption ~ Spiteful Transformation Gift"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 74,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities.lst",
+    "record_key": "Accursed Corruption ~ Spiteful Transformation Gift",
+    "sha256": "c6c84f5d90ab2a1d576b8c3387ce463cddcc99b830260c5b9440686bfe413381"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:spells"
+  ]
 }

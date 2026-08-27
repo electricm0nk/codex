@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Sulis have resistance to acid 5, cold 5, electricity 5, and fire 5.",
     "key": "Suli ~ Energy Resistance",
     "name": "Energy Resistance",
-    "description": "Sulis have resistance to acid 5, cold 5, electricity 5, and fire 5.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,18 +35,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
-    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6",
-    "line": 21,
-    "record_key": "Suli ~ Energy Resistance"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
+    "record_key": "Suli ~ Energy Resistance",
+    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

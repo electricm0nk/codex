@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Changelings begin play speaking Common and the primary language of their host societies. Changelings with high Intelligence scores can choose from the following languages: Aklo, Draconic, Dwarven, Elven, Giant, Gnoll, Goblin, and Orc.",
     "key": "Changeling ~ Languages",
     "name": "Languages",
-    "description": "Changelings begin play speaking Common and the primary language of their host societies. Changelings with high Intelligence scores can choose from the following languages: Aklo, Draconic, Dwarven, Elven, Giant, Gnoll, Goblin, and Orc.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
-    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e",
-    "line": 22,
-    "record_key": "Changeling ~ Languages"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/changeling/changeling_abilities_race.lst",
+    "record_key": "Changeling ~ Languages",
+    "sha256": "ea1837e5672dcd358434489df12eb86cf7d50127cd9c60da090a6e95e32e011e"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

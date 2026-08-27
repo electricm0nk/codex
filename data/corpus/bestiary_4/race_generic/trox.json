@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:37Z",
   "data": {
+    "description": null,
     "key": "Trox",
     "name": "Trox",
-    "description": null,
     "raw_tokens": [
       {
         "key": "SORTKEY",
@@ -53,20 +52,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/trox/trox_races.lst",
-    "sha256": "70a4422c63969cdd95ef1e807a5ba8de933f8441ba93605f594720742d0c0b6a",
-    "line": 6,
-    "record_key": "Trox"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:37Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/trox/trox_races.lst",
+    "record_key": "Trox",
+    "sha256": "70a4422c63969cdd95ef1e807a5ba8de933f8441ba93605f594720742d0c0b6a"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }
