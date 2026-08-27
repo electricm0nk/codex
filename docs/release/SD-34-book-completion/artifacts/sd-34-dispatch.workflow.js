@@ -453,18 +453,16 @@ async function runRemediation() {
 const BT = String.fromCharCode(96)   // backtick, for inline code spans in prompt text
 
 const BUCKET_B_MECHANISMS = [
-  { ev: 'domain_content_absent_from_domain_table_in_core_rulebook', units: 1,
-    note: 'Death (Pharasma) at cr_domains.lst:46 has NO corpus JSON under data/corpus/core_rulebook/ at all. Ingest it through the guarded gen_book_cache path. Never hand-author a corpus record.' },
-  { ev: 'race_trait_absent_from_race_traits', units: 9, note: '' },
-  { ev: 'class_absent_from_ClassId_ALL_and_book_class_id_enums', units: 17, note: '' },
-  { ev: 'deity_content_absent_from_deity_table_in_core_rulebook', units: 21,
-    note: 'PI CONSTRAINT, decisions.md 14: every record is already redacted (codex_generated_name true, key rewritten to "Codex-Named Unit (...)"). Match on the record own stored source_file/source_line and KEEP the masked key. Do NOT read, log, emit, reconstruct, or infer the redacted real name in any code path, receipt, test name, or commit message. AT-34-E2-001 already ships the deity table keying on masked keys - follow it. scripts/verify.sh --only site-public-status-pi-gate and --only site-dashboard-pi-gate must stay green. If the work CANNOT be done inside this constraint, stop and return blocked-escalated: un-redaction is not a cycle decision.' },
-  { ev: 'class_feature_option_pool_record_not_held_by_engine', units: 63, note: '' },
-  { ev: 'companion_absent_from_core_rulebook_companion_tables', units: 100,
-    note: 'companion_chassis already exists from SD-29 (rules_core::rules_tables::companion_chassis, COMPANION_BOOKS registry). Extend it; do not build a second table.' },
-  { ev: 'race_trait_race_not_modelled', units: 132, note: '' },
-  { ev: 'class_feature_owner_matched_by_name_but_record_not_held_by_engine', units: 330, note: '' },
-  { ev: 'class_feature_option_pool_record_with_magnitude_not_held_by_engine', units: 333, note: '' },
+  // Re-derived from docs/work-inventory.json after wave 2. Bucket B = 757 of 6,701.
+  // race_trait_race_not_modelled closed fully (132 -> 0) in wave 2.
+  { ev: 'companion_absent_from_core_rulebook_companion_tables', units: 28,
+    note: 'A PRIOR CYCLE took this from 100 to 28 and named the remainder. READ ITS RECEIPT FIRST in artifacts/epic-3-core-rulebook/ and continue from it - do not re-derive its investigation. 16 of your 28 are cross-book-owned rows (14 familiar ability-pool, 2 monster-class) that a prior cycle judged to need a new record type; re-derive that judgement rather than inheriting it - if a narrower fix closes them, take it. companion_chassis already exists from SD-29-era work; EXTEND it, never build a second table.' },
+  { ev: 'class_feature_option_pool_record_not_held_by_engine', units: 55,
+    note: 'Two prior cycles took this 63 -> 57 -> 55 and named all 55 across 5 sub-causes summing exactly: proficiency/grant possession-tracking 28, class-skill/companion-mount attribution 13, wizard opposition-school tracking 9, vacuous placeholder rows 3, Domain Power pool-registration 2. READ THE RECEIPT FIRST. Take the cheapest sub-causes you can genuinely finish. The 3 vacuous placeholder rows (Empty Selection ~ Standard) are an UNPREDICTED verdict shape - record them in artifacts/epic-3-core-rulebook/atlas-defects.md as an atlas defect before deciding what to do with them. A PRIOR CYCLE NEARLY SHIPPED A CORPUS-WIDE REGRESSION HERE by relaxing a refusal gate on record SHAPE alone; it was caught only by diffing the regenerated inventory against the committed baseline before commit. Do that diff before every commit you make.' },
+  { ev: 'class_feature_option_pool_record_with_magnitude_not_held_by_engine', units: 328,
+    note: 'Owns the Domain Power CLASS_FEATURE_POOLS registration gap. A prior cycle established that registering the entry alone will NOT close the sibling mechanism 2 Domain Power units without additional formula work - so verify what registration actually moves in YOUR population before assuming it is the lever. 3,052 units across 21 of 37 books corpus-wide; build generically. `partial` with a named remainder that sums exactly is an expected and acceptable outcome.' },
+  { ev: 'class_feature_owner_matched_by_name_but_record_not_held_by_engine', units: 346,
+    note: 'Largest remaining and untouched so far - 3,594 units across 21 of 37 books corpus-wide. Expect `partial`. Your named remainder, with sub-cause populations summing exactly, IS the deliverable if you cannot close it all; it is what makes the next cycle dispatchable.' },
 ]
 
 function mechanismPrompt(m, idx) {
