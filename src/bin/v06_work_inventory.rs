@@ -61,6 +61,7 @@ use codex::rules_core::pilot_compute::{
 };
 use codex::rules_core::pilot_compute::untabled_base_class_chassis;
 use codex::rules_core::pilot_compute::crb_untabled_class_chassis;
+use codex::rules_core::pilot_compute::domain_power;
 use codex::rules_core::pilot_compute::prestige_class_entry_gate;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
@@ -5159,6 +5160,20 @@ struct EngineFacts {
     /// by `(<lst basename>, <line>)` -> corpus book, and every record that
     /// load found at all. See [`probe_race_trait_corpus`].
     race_trait_probe: RaceTraitProbe,
+    /// `AT-34-E3-001` (`decisions.md §14`, the `class_feature_option_pool_
+    /// record_with_magnitude_not_held_by_engine` mechanism's Domain Power
+    /// sub-cause): granted-power names (`"Touch of Good"`, ...) whose OWN
+    /// explanation id was genuinely observed on a real cleric's rendered
+    /// snapshot after selecting that exact domain, via
+    /// [`probe_domain_power_effect_wiring`]. **Not** a static reflection of
+    /// `domain_power::DOMAIN_POWER_CATALOG`'s membership -- the canonical
+    /// per-class sweep that fills `explanation_ids` below only ever selects
+    /// Good's own domain (`canonical_seeds_for`'s single `"domain:good"`
+    /// seed), so War/Strength/Destruction/Glory's own ids never appear there
+    /// even though the catalog carries formulas for all five; this probe
+    /// selects each catalog domain in turn specifically so a genuinely-wired
+    /// domain is never conflated with one the catalog merely lists.
+    domain_power_effect_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -7016,6 +7031,48 @@ fn class_effect_wired_from_outcomes(
         .collect()
 }
 
+/// `AT-34-E3-001` (`decisions.md §14`): verifies, by REAL computation and
+/// never by trusting `domain_power::DOMAIN_POWER_CATALOG`'s own membership,
+/// which `"Domain Power ~ <granted power name>"` corpus records the engine
+/// genuinely grounds. The class-wide sweep that fills `EngineFacts::
+/// explanation_ids` only ever selects Good's own domain for cleric
+/// (`canonical_seeds_for`'s single `"domain:good"` seed), so it alone can
+/// never observe War/Strength/Destruction/Glory's own explanation ids even
+/// though the catalog carries real formulas for all five -- this probe
+/// selects EACH catalog domain in turn, over the SAME real
+/// `compute_pilot_base_chassis` pipeline every other probe in this file
+/// uses, so a genuinely-wired domain is never conflated with one the catalog
+/// merely lists (Leadership/Sun's Blessing/... have no catalog entry at all
+/// and so can never appear here).
+fn probe_domain_power_effect_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for (selection_id, granted_power_name, explanation_ids) in domain_power::domain_power_probe_catalog() {
+        if wired.contains(granted_power_name) {
+            continue;
+        }
+        'levels: for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "cleric", level);
+            input.chosen.selected_choices.retain(|c| c.choice_set_id != "choice:cleric_domain");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:cleric_domain".to_string(),
+                selection_id: selection_id.to_string(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| explanation_ids.contains(&e.id)) {
+                wired.insert(granted_power_name.to_string());
+                break 'levels;
+            }
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -7398,6 +7455,7 @@ fn gather_engine_facts(
     EngineFacts {
         feat_effect_wired: probe_feat_effect_wiring(fixture),
         equipment_effect_wired: probe_equipment_effect_wiring(repo_root),
+        domain_power_effect_wired: probe_domain_power_effect_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -9527,6 +9585,40 @@ fn classify(
                 };
             }
             let group = unit.key.split(" ~ ").next().unwrap_or(&unit.key);
+            // `AT-34-E3-001` (`decisions.md §14`, Domain Power sub-cause of
+            // `class_feature_option_pool_record_with_magnitude_not_held_by_engine`):
+            // asked SECOND, immediately after the generic `class_feature_effect_wired`
+            // observation above and for the identical reason -- `"Domain
+            // Power"` never equals a class's own name, so `class_feature_owner`
+            // and its two fallbacks below can never resolve an owner for it,
+            // and even when `class_feature_owner_via_pool_catalog` COULD
+            // resolve one, the downstream `class_feature_exact_suffix_grounded`
+            // / `suffix_stripped_grounded` checks both require `group` to
+            // literally equal the owner's own class-name text -- `"Domain
+            // Power"` can never equal `"cleric"`, so registering this group in
+            // `CLASS_FEATURE_POOLS` alone would never ground a single record
+            // through that path (confirmed by reading both checks' own
+            // guards, not assumed). `probe_domain_power_effect_wiring` is the
+            // real, separate attribution path: it selects each
+            // `domain_power::DOMAIN_POWER_CATALOG` domain in turn on a real
+            // cleric and keeps only granted-power names whose own explanation
+            // id was genuinely observed, so this can only ever credit the
+            // five domains (Good/War/Strength/Destruction/Glory) that module
+            // truly computes -- every other `"Domain Power ~ *"` record
+            // (Leadership, Acid Dart, ...) falls through unaffected, exactly
+            // as before this cycle.
+            if group == "Domain Power" {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                if facts.domain_power_effect_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "domain_power_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+            }
             // `SD31-W17-CLASSFEATURE-001`: the corpus_key group prefix is
             // tried first (unchanged); only when it fails to name an
             // engine-modelled class do we ALSO try `type_facet`'s own
@@ -16294,6 +16386,43 @@ mod class_feature_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", true);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
+    }
+
+    /// `AT-34-E3-001` Domain Power sub-cause, proof case: `probe_domain_
+    /// power_effect_wiring` observed a real explanation id for this exact
+    /// granted power (a live cleric genuinely computes Good's Touch of
+    /// Good), so the record is `grounded` -- never routed to the generic
+    /// `class_feature_option_pool_record_with_magnitude_not_held_by_engine`
+    /// bucket-B evidence its sibling `"Domain Power ~ *"` records still get.
+    #[test]
+    fn a_domain_power_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.domain_power_effect_wired.insert("Touch of Good".to_string());
+        let unit =
+            class_feature_unit("core_rulebook", "cr_abilities_class.lst", 713, "Domain Power ~ Touch of Good", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "domain_power_probe_observed_a_real_computed_magnitude");
+    }
+
+    /// NEGATIVE CONTROL: a magnitude-bearing `"Domain Power ~ *"` record
+    /// `domain_power::DOMAIN_POWER_CATALOG` carries no formula for (Acid
+    /// Dart's own multi-`DESC`-token, level-gated shape is one this module's
+    /// own doc comment names as deliberately uncovered) is completely
+    /// unaffected by this cycle's fix -- the probe never observes a delta for
+    /// it, so it still falls through to the pre-existing `engine-does-not-hold`
+    /// finding, unchanged.
+    #[test]
+    fn a_domain_power_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit =
+            class_feature_unit("core_rulebook", "cr_abilities_class.lst", 700, "Domain Power ~ Acid Dart", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
     }
 
     /// CONFIRMED live regression, caught by this cycle's own guarded regen

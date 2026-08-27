@@ -50,16 +50,19 @@ sub-causes — 12 zero-content internal plumbing rows, 2 PCGen monster-class def
 master-side familiar-ability-pool rows this book registers no familiar creature to own — see
 the cycle log below).
 AT-34-E3-001 itself does not close yet — `core_rulebook`'s real, atlas-partitioned bucket B is
-still 762 of 6,701 (`python3 scripts/completion_atlas.py --by-book`, grepped for `core_rulebook`;
-unchanged this cycle, 0 units moved), and four of the nine named mechanisms remain (their live
-populations — 346, 333, 55, 28 — sum to exactly 762, no unnamed gap). This cycle picked up
-`class_feature_owner_matched_by_name_but_record_not_held_by_engine` (346, matching the drifted
-count the previous cycle flagged — confirmed still 346, not a further drift) and reported
-`partial`: an exact, sum-exact 7-way sub-cause partition, proven by a committed passing
-regression test, but 0 units closed — every sub-cause needs real engine wiring or new ingest
-work, not a narrow catalog-widening fix (see the cycle log below for the full investigation).
-`class_feature_option_pool_record_with_magnitude_not_held_by_engine` (333) has not yet been
-picked up by any cycle. See the cycle log below; `## Open blockers` is empty.
+now 757 of 6,701 (`python3 scripts/completion_atlas.py --by-book`, grepped for `core_rulebook`;
+down from 762, this cycle's own 5-unit closure), and four of the nine named mechanisms remain
+(their live populations — 346, 328, 55, 28 — sum to exactly 757, no unnamed gap). The previous
+cycle picked up `class_feature_owner_matched_by_name_but_record_not_held_by_engine` (346,
+confirmed still 346, not a further drift) and reported `partial`: an exact, sum-exact 7-way
+sub-cause partition, proven by a committed passing regression test, but 0 units closed — every
+sub-cause needs real engine wiring or new ingest work, not a narrow catalog-widening fix. This
+cycle picked up `class_feature_option_pool_record_with_magnitude_not_held_by_engine`
+(333 -> 328): built a real, live-probed attribution path for cleric's `"Domain Power"` group
+(`domain_power::domain_power_probe_catalog` + a new `probe_domain_power_effect_wiring`), closing
+the exactly 5 units the engine genuinely computes (Good/War/Strength/Destruction/Glory's own
+granted powers) and reported `partial` — a sum-exact, 129-group sub-cause partition for the
+remaining 328 (see the cycle log below). See the cycle log below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -77,6 +80,80 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism) — one of nine, `decisions.md §14` — partial
+
+**Status: partial — this mechanism 333 → 328 of 328 remaining** (`core_rulebook`; 5 closed, 328
+remaining named by a sum-exact, 129-group sub-cause partition).
+
+Re-derived the population before touching anything (`decisions.md §15`): grouping
+`core_rulebook` `engine-does-not-hold` units by `evidence` and taking
+`class_feature_option_pool_record_with_magnitude_not_held_by_engine` gives 333, matching the
+dispatch brief's own figure.
+
+Checked before building anything, per this cycle's own dispatch instruction: the prior cycle's
+receipt (`class_feature_option_pool_record_not_held_by_engine`, `8e7aecc855`) flagged a
+`CLASS_FEATURE_POOLS` registration gap for `"Domain Power"` shared with this mechanism, but had
+NOT built it. Read the downstream grounding checks directly rather than trusting that receipt's
+framing: `class_feature_exact_suffix_grounded`/`suffix_stripped_grounded`
+(`src/bin/v06_work_inventory.rs:7920-7934`, `:9784-9796`) both require the corpus group text to
+literally equal the resolved owner's class name — `"Domain Power"` can never equal `"cleric"`, so
+registering the pool alone would never ground a single record, only reclassify all 61 to a
+different bucket-B mechanism (already owned by another cycle) or bucket D. Built the real fix
+instead: `domain_power::domain_power_probe_catalog()` (new `pub` bridge, `pilot_compute::mod.rs`'s
+`mod domain_power;` widened to `pub mod domain_power;`) plus a new
+`probe_domain_power_effect_wiring` in `v06_work_inventory.rs` — selects each of
+`DOMAIN_POWER_CATALOG`'s five real domains on a live cleric and keeps only granted-power names
+whose own explanation id is genuinely observed on the rendered snapshot, never a static reflection
+of the catalog's membership. `classify()`'s `Kind::ClassFeature` arm gained one new early-return
+branch consuming this. Two new tests (`a_domain_power_record_the_probe_observed_reaches_grounded`,
+`a_domain_power_record_the_probe_never_observed_is_unaffected`) prove the positive and negative
+cases. Closed exactly 5 units: `Domain Power ~ {Battle Rage, Destructive Smite, Strength Surge,
+Touch of Good}` reach `DONE`; `Touch of Glory` reaches bucket `V` (its own `wiring_class: static`
+routes it through the literal-verification stamp instead) — every other Domain Power record
+(56 remaining, no catalog formula) is completely unaffected, confirmed by direct inventory diff.
+
+Corpus-wide (37 books, all sharing this evidence string): 3,052 → 3,047 — the same 5 units, no
+other book's Domain Power records were affected (core_rulebook is the only book carrying them).
+
+This cycle's own ~30-line net insertion into `v06_work_inventory.rs` shifted every hardcoded
+`file:line` citation `completion_atlas.py`'s `BUCKET_DEFINITIONS` and
+`missing_engine_tables.py`'s `ENGINE_SURFACE_CITATIONS` carry (the brief's own named hazard).
+Re-derived each one fresh by grepping the exact quoted string the citation targets (not a flat
+line offset); both `--check` gates now report `citation_failures=0`.
+
+Discovered, self-healed, and reported honestly rather than hidden: (1) the immediately-prior
+cycle's `formula_interpreter_corpus_wide` F1-population re-pin (6,257 → 5,563) was itself WRONG,
+not stale — the true value, re-derived twice (before and after this cycle's own edits) via the
+exact command that pin's own doc comment names, is 5,445; re-pinned with corrected provenance,
+`scripts/retro.py correction` filed. (2) A first `scripts/retro.py` call in this cycle ran
+without `RETRO_ACTOR` exported in that same shell invocation (harness shell state does not
+persist across tool calls) and wrote into the FORBIDDEN `docs/retro/events/sd31-transcribe.jsonl`
+— caught via `git status --porcelain` before the next git write, the one mistaken line removed
+(confirmed the file's other 5 pre-existing lines, from a different lane, were left byte-identical
+to their pre-session state), and the correction re-filed correctly into
+`docs/retro/events/sd34-at-34-e3-001.jsonl`. (3) `apps/desktop/src-tauri` carries 26 of 548
+pre-existing test failures (`companion_catalog`/`race_trait_picker`/`reach_gate`), confirmed
+unrelated to this cycle by running the identical suite in a throwaway `git worktree` checkout of
+this cycle's own start SHA before any edits — identical failure count and names. Not caused by,
+not fixed by, this cycle; named rather than silently absorbed.
+
+Verification: `cargo test --locked --bin v06_work_inventory` 383/383; `cargo test --locked --lib`
+2874/2888 (14 ignored, 0 failed); `cargo test --locked --no-run` exit 0 at the full workspace
+scope; `apps/desktop/src-tauri` `cargo test --locked` 522/548 (26 pre-existing, unrelated
+failures, see above). `corpus_literal_sweep`: 48708 examined before → 48708 after, delta 0 (no
+`data/corpus/**` touched). `derived_evaluator_fixture_check`: 1839 units cleared over 2580 rows,
+0 failed. Both dual-audit greps: `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS` on this cycle's own diff.
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt.md`.
+Remainder (328, sum-exact across 129 corpus-key groups, largest named): `Domain Power` (56,
+domains this catalog has no formula for), `Domain Base` (33, a different corpus shape — the
+domain header record, needs its own disposition ruling), `Favored Enemy/Terrain Bonus` (42),
+`Bardic Performance`/`Draconic Bloodline Choice`/`Secret Lore`/`New Arcana` (39), the wizard
+opposition/arcane-school cluster (~34, shares its root cause with the already-scoped 37-unit
+sibling gap in `class_feature_option_pool_record_not_held_by_engine`'s own receipt), ~22 more
+small per-class roster groups, and a ~106-unit long tail of single-unit trackers needing
+individual inspection.
 
 ### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism) — one of nine, `decisions.md §14` — partial
 

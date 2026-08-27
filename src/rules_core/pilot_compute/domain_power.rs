@@ -486,6 +486,36 @@ pub(super) fn resolve_domain_power(selection_id: &str) -> Option<&'static Domain
     DOMAIN_POWER_CATALOG.iter().find(|spec| spec.selection_id == selection_id)
 }
 
+/// AT-34-E3-001 bridge for `v06_work_inventory`'s completion-atlas classifier.
+///
+/// Each `docs/work-inventory.json` `"Domain Power ~ <granted power name>"`
+/// unit (e.g. `"Domain Power ~ Touch of Good"`) is a real corpus record this
+/// module has no relationship to unless its `granted_power_name` field
+/// matches. This returns, for every catalog entry, the exact `(selection_id,
+/// granted_power_name, [explanation ids])` triple the classifier needs to run
+/// its OWN probe (select `selection_id` on a real cleric, sweep the real
+/// pipeline, and check whether any of the three ids is genuinely emitted) --
+/// never a static "this power is covered" claim, since only a live
+/// computation can tell a genuinely-wired domain (Good, War, Strength,
+/// Destruction, Glory) from one this catalog does not carry a formula for at
+/// all (every other CRB domain).
+pub fn domain_power_probe_catalog() -> Vec<(&'static str, &'static str, [String; 3])> {
+    DOMAIN_POWER_CATALOG
+        .iter()
+        .map(|spec| {
+            (
+                spec.selection_id,
+                spec.granted_power_name,
+                [
+                    domain_power_explanation_id(spec, "self_application"),
+                    domain_power_explanation_id(spec, "not_active"),
+                    domain_power_explanation_id(spec, "uses_per_day"),
+                ],
+            )
+        })
+        .collect()
+}
+
 /// Interprets `spec`'s own `magnitude_formula` at `class_level`. `expect`s
 /// success: every catalog entry's formula is a fixed literal this module's
 /// own tests parse-check at `cargo test` time (`domain_power_catalog_formulas_all_parse`),

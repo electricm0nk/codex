@@ -631,47 +631,45 @@ mod tests {
     /// `'skinwalker' in id` substring test are fold output too), the other
     /// two are the regen's disclosed unrelated drift.
     ///
-    /// **6,257 -> 5,563, discovered stale by SD-34 `AT-34-E3-001` (2026-08-27),
-    /// already RED at this cycle's own start SHA (`ae25d75d7d`) before any of
-    /// this cycle's own edits.** `docs/work-inventory.json` was regenerated at
-    /// least four more times after the 6,257 pin (`0099df7a1e` AT-34-E1-005's
-    /// status-field rename to `engine-does-not-hold`, `a72c6787e6`,
-    /// `6eab21d761`, `ae25d75d7d`), each verifying its own scoped
-    /// `cargo test --bin v06_work_inventory` but never `cargo test --locked
-    /// --lib` (where this pin lives) — the exact "run the suite after the
-    /// last write that can move it" lesson this test's own history already
-    /// names, recurring across a different set of intervening cycles.
-    /// Confirmed pre-existing, not this cycle's own regeneration: a clean
-    /// worktree at `ae25d75d7d` with zero of this cycle's code changes
-    /// reproduces the identical `left: 5563, right: 6257` failure. Re-derived
-    /// 2026-08-27 via `python3 scripts/shape_ledger.py --inventory
-    /// docs/work-inventory.json --corpus-root data/corpus` against THIS
-    /// cycle's own final regeneration (which additionally moved a small,
-    /// disclosed set of `core_rulebook`/cross-book `class`/`class_feature`
-    /// units per `AT-34-E3-001_cycle_receipt.md`) — **5,563**, confirmed a
-    /// second, independent way: the exact same command against `ae25d75d7d`'s
-    /// own committed `docs/work-inventory.json`, untouched by this cycle,
-    /// ALSO returns 5,563 — so this cycle's own edits moved zero F1-population
-    /// units; the number was already 5,563 before this cycle began. Re-run
-    /// **after** the last commit that writes `docs/work-inventory.json` — the
-    /// rule this re-pin exists to make mechanical, restated for whichever
-    /// cycle next regenerates the file.
+    /// **6,257 -> 5,563 was ITSELF WRONG, discovered by SD-34 `AT-34-E3-001`'s
+    /// Domain Power cycle (2026-08-27).** The 5,563 re-pin (previous cycle,
+    /// same day) claimed this test's own live `run_corpus_wide_scan` value
+    /// matched `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus`'s F1 rollup at
+    /// commit `ae25d75d7d`. It did not: running that identical command
+    /// directly against `git show ae25d75d7d:docs/work-inventory.json`
+    /// returns **5,445**, not 5,563 — confirmed twice, independently, before
+    /// this cycle's own edits touched anything (the committed file at the
+    /// cycle's own start SHA already scores 5,445) and again after this
+    /// cycle's own Domain Power grounding fix (5 `core_rulebook`
+    /// `class_feature` units left bucket B for `DONE`/`V`, none of them
+    /// F1-shaped — their formulas are `max(.../2,1)`/bare-LVL, F5/F2 shapes,
+    /// never F1's bare-literal shape) landed and `docs/work-inventory.json`
+    /// was regenerated again: still 5,445. So this cycle's own edits moved
+    /// **zero** F1-population units; the 5,563 pin was a bad re-derivation,
+    /// not a stale one, and the true, currently-live number — both before
+    /// and after this cycle — is 5,445. `scripts/retro.py correction`
+    /// records this (`AT-34-E3-001-class_feature_owner_matched-cycle`
+    /// claimed 5,563; actual 5,445). Re-run **after** the last commit that
+    /// writes `docs/work-inventory.json` — the rule this re-pin exists to
+    /// make mechanical, restated for whichever cycle next regenerates the
+    /// file.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5563,
-            "F1 population must equal the CURRENT true formula-bearing count (5,563, re-derived \
+            f1.population, 5445,
+            "F1 population must equal the CURRENT true formula-bearing count (5,445, re-derived \
              2026-08-27 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
-             `docs/work-inventory.json` -- see this test's own doc comment), not the stale 6,257 \
-             pin (already RED before this cycle's own edits -- four intervening \
-             `docs/work-inventory.json` regens since that pin never re-ran `cargo test --locked \
-             --lib`), not the pre-fold 6,260/6,278, not the pre-regen 6,308 this test pinned on \
-             2026-08-24, and not SD-32's frozen 2026-08-14 census (6,032) — \
-             AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001"
+             `docs/work-inventory.json` -- see this test's own doc comment), not the previous \
+             cycle's own WRONG 5,563 re-pin (a bad re-derivation, not a stale one -- see this \
+             test's own doc comment and the `AT-34-E3-001-class_feature_owner_matched-cycle` \
+             retro correction), not the stale 6,257 pin, not the pre-fold 6,260/6,278, not the \
+             pre-regen 6,308 this test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 \
+             census (6,032) — AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001"
         );
     }
 }

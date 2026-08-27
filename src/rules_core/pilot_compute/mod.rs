@@ -223,7 +223,10 @@ mod generic_class_chassis;
 /// separate compilation unit) calls `covered_classes()` directly, the same
 /// visibility shape `untabled_base_class_chassis` already uses.
 pub mod crb_untabled_class_chassis;
-mod domain_power;
+/// SD-34 `AT-34-E3-001`: `pub` so `v06_work_inventory.rs` can call
+/// `domain_power::domain_power_probe_catalog()` directly, the same
+/// visibility shape `crb_untabled_class_chassis` above already uses.
+pub mod domain_power;
 use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
 use domain_power::*;
