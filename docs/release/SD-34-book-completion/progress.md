@@ -13,11 +13,11 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
-**Not launched.** The package is planning-ready; `workflow-instruction.md §1`'s launch
-checklist is unrun. SD-33's closure PR #377 merged to `develop` 2026-08-27 (`ea2b3396f2`); next
-is the `tranche/14` cut, the `0.14.0` stamp, and the §1 run with outputs pasted.
+`tranche/14` cut at `571307724f`, `0.14.0` stamped, launch checklist items 1-9, 11, 12 run.
+Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
+not reported here. Epic 1 dispatch underway.
 
-**0 of 27 criteria complete. 0 of 26 kanban rows complete.**
+**1 of 27 criteria complete. 1 of 26 kanban rows complete.**
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -36,7 +36,30 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
-*(empty — first cycle prepends here)*
+### Cycle 1 — AT-34-E1-001 — every unit carries exactly one named remaining-step
+
+**Status: complete.** New `scripts/completion_atlas.py` partitions the full 49,438-unit
+`docs/work-inventory.json` into the ten buckets fixed by `decisions.md §2`
+(`DONE A B C D M V U X Z`), keyed on `status` + `evidence` per `technical-design.md §1`'s
+implementation table.
+
+`python3 scripts/completion_atlas.py --check` → `population=49438 buckets=10 unclassified=0
+overlap=0`, exit 0. Bucket counts: `DONE=12265 A=8463 B=11921 C=4388 D=1230 M=2455 V=8330
+U=321 X=46 Z=19` (sum = 49,438). `A` and `U` match the epic-breakdown's independently-stated
+figures (8,463 across 9 kinds; 321 split 270/51 by evidence, 140/119/62 by kind) exactly on
+the first live run. `D` and `U` sub-causes are enumerated in the committed artifact, not
+shrugged. Cross-checked against SD-33's inherited, independent `box_ledger.py --check`
+partition: `uncovered=0 overlap=0 population=49438` — both partitions agree on the same
+population.
+
+18/18 new unit tests green (`scripts.tests.test_completion_atlas`); a live mutation on the
+bucket-A marker string was proven RED for the intended reason then reverted to GREEN.
+Denominator gate against this package: `files_checked=15 violations=0`. `cargo test --locked
+--no-run` exits 0 at the widest workspace scope; `apps/desktop/src-tauri` not touched, not run.
+
+**This cycle does not implement AT-34-E1-002** (the six fail-closed conditions) — a separate
+criterion in the same file, picked up next. Receipt:
+`artifacts/epic-1-atlas/AT-34-E1-001_cycle_receipt.md`.
 
 ## Open blockers
 

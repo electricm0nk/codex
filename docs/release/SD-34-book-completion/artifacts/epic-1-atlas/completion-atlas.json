@@ -1,0 +1,159 @@
+{
+  "buckets": {
+    "A": {
+      "clears": "building the table (Epic 2)",
+      "count": 8463,
+      "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'has_no_engine_table')",
+      "meaning": "engine has no table for this kind"
+    },
+    "B": {
+      "clears": "placing the record (Epic 3/4)",
+      "count": 11921,
+      "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
+      "meaning": "table exists, record not in it"
+    },
+    "C": {
+      "clears": "wiring the display/explanation path (Epic 3)",
+      "count": 4388,
+      "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
+      "meaning": "held and computed, never surfaced"
+    },
+    "D": {
+      "clears": "per named sub-cause",
+      "count": 1230,
+      "evidence_source": "src/bin/v06_work_inventory.rs (status == not-ingested, no other bucket matched)",
+      "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
+    },
+    "DONE": {
+      "clears": "\u2014",
+      "count": 12265,
+      "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
+      "meaning": "nothing remains"
+    },
+    "M": {
+      "clears": "running the compute path (shape engine)",
+      "count": 2455,
+      "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
+      "meaning": "magnitude ingested, never computed or applied"
+    },
+    "U": {
+      "clears": "instrument correction",
+      "count": 321,
+      "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
+      "meaning": "instrument cannot express a verdict"
+    },
+    "V": {
+      "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
+      "count": 8330,
+      "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
+      "meaning": "verified by proxy, never by the oracle"
+    },
+    "X": {
+      "clears": "revisiting the stated condition",
+      "count": 46,
+      "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
+      "meaning": "deferred with a stated reason"
+    },
+    "Z": {
+      "clears": "ordinary work",
+      "count": 19,
+      "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
+      "meaning": "not started"
+    }
+  },
+  "derived_at": "ce51884ebbb7ecc27ac94fb9d59a36d00f588625",
+  "overlap": 0,
+  "population": 49438,
+  "re_derive_command": "python3 scripts/completion_atlas.py --check",
+  "sub_causes": {
+    "D": {
+      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 156,
+      "class_feature_of_unmodelled_corpus_class:adaptive_warrior": 18,
+      "class_feature_of_unmodelled_corpus_class:adept": 23,
+      "class_feature_of_unmodelled_corpus_class:aldori_swordlord": 13,
+      "class_feature_of_unmodelled_corpus_class:animal": 23,
+      "class_feature_of_unmodelled_corpus_class:arcane_archer": 8,
+      "class_feature_of_unmodelled_corpus_class:arcane_trickster": 8,
+      "class_feature_of_unmodelled_corpus_class:argent_dramaturge": 2,
+      "class_feature_of_unmodelled_corpus_class:aristocrat": 2,
+      "class_feature_of_unmodelled_corpus_class:asavir": 20,
+      "class_feature_of_unmodelled_corpus_class:aspis_agent": 9,
+      "class_feature_of_unmodelled_corpus_class:assassin": 17,
+      "class_feature_of_unmodelled_corpus_class:battle_herald": 11,
+      "class_feature_of_unmodelled_corpus_class:bellflower_tiller": 7,
+      "class_feature_of_unmodelled_corpus_class:body_snatcher": 19,
+      "class_feature_of_unmodelled_corpus_class:cerebremancer": 10,
+      "class_feature_of_unmodelled_corpus_class:commoner": 2,
+      "class_feature_of_unmodelled_corpus_class:construct": 2,
+      "class_feature_of_unmodelled_corpus_class:cyphermage": 17,
+      "class_feature_of_unmodelled_corpus_class:dark_tempest": 6,
+      "class_feature_of_unmodelled_corpus_class:demoniac": 7,
+      "class_feature_of_unmodelled_corpus_class:diabolist": 10,
+      "class_feature_of_unmodelled_corpus_class:divine_scion": 46,
+      "class_feature_of_unmodelled_corpus_class:dragon": 6,
+      "class_feature_of_unmodelled_corpus_class:dragon_disciple": 16,
+      "class_feature_of_unmodelled_corpus_class:duelist": 22,
+      "class_feature_of_unmodelled_corpus_class:eidolon": 16,
+      "class_feature_of_unmodelled_corpus_class:eldritch_knight": 4,
+      "class_feature_of_unmodelled_corpus_class:elocater": 21,
+      "class_feature_of_unmodelled_corpus_class:enchanting_courtesan": 12,
+      "class_feature_of_unmodelled_corpus_class:evangelist": 5,
+      "class_feature_of_unmodelled_corpus_class:expert": 3,
+      "class_feature_of_unmodelled_corpus_class:gifted_blade": 3,
+      "class_feature_of_unmodelled_corpus_class:golden_legionnaire": 16,
+      "class_feature_of_unmodelled_corpus_class:gray_corsair": 9,
+      "class_feature_of_unmodelled_corpus_class:hellknight": 15,
+      "class_feature_of_unmodelled_corpus_class:hellknight_signifer": 7,
+      "class_feature_of_unmodelled_corpus_class:holy_vindicator": 10,
+      "class_feature_of_unmodelled_corpus_class:horizon_walker": 4,
+      "class_feature_of_unmodelled_corpus_class:lantern_bearer": 11,
+      "class_feature_of_unmodelled_corpus_class:lion_blade": 15,
+      "class_feature_of_unmodelled_corpus_class:loremaster": 6,
+      "class_feature_of_unmodelled_corpus_class:mammoth_rider": 15,
+      "class_feature_of_unmodelled_corpus_class:master_chymist": 7,
+      "class_feature_of_unmodelled_corpus_class:master_spy": 16,
+      "class_feature_of_unmodelled_corpus_class:metaforge": 6,
+      "class_feature_of_unmodelled_corpus_class:metamind": 11,
+      "class_feature_of_unmodelled_corpus_class:metamorph": 19,
+      "class_feature_of_unmodelled_corpus_class:mystic_archer": 7,
+      "class_feature_of_unmodelled_corpus_class:mystic_theurge": 3,
+      "class_feature_of_unmodelled_corpus_class:nature_warden": 14,
+      "class_feature_of_unmodelled_corpus_class:ooze": 1,
+      "class_feature_of_unmodelled_corpus_class:pathfinder_chronicler": 14,
+      "class_feature_of_unmodelled_corpus_class:pathfinder_delver": 10,
+      "class_feature_of_unmodelled_corpus_class:pathfinder_savant": 15,
+      "class_feature_of_unmodelled_corpus_class:phantom": 24,
+      "class_feature_of_unmodelled_corpus_class:phrenic_slayer": 31,
+      "class_feature_of_unmodelled_corpus_class:plant": 9,
+      "class_feature_of_unmodelled_corpus_class:psicrystal_imprinter": 14,
+      "class_feature_of_unmodelled_corpus_class:pure_legion_enforcer": 15,
+      "class_feature_of_unmodelled_corpus_class:pyrokineticist": 13,
+      "class_feature_of_unmodelled_corpus_class:rage_prophet": 11,
+      "class_feature_of_unmodelled_corpus_class:rivethun_emissary": 9,
+      "class_feature_of_unmodelled_corpus_class:sanguine_angel": 17,
+      "class_feature_of_unmodelled_corpus_class:sentinel": 1,
+      "class_feature_of_unmodelled_corpus_class:shadowdancer": 16,
+      "class_feature_of_unmodelled_corpus_class:sighted_seeker": 25,
+      "class_feature_of_unmodelled_corpus_class:soul_archer": 7,
+      "class_feature_of_unmodelled_corpus_class:stalwart_defender": 21,
+      "class_feature_of_unmodelled_corpus_class:steel_falcon": 12,
+      "class_feature_of_unmodelled_corpus_class:storm_kindler": 11,
+      "class_feature_of_unmodelled_corpus_class:student_of_war": 11,
+      "class_feature_of_unmodelled_corpus_class:telekinetic_weaponmaster": 12,
+      "class_feature_of_unmodelled_corpus_class:thrallherd": 21,
+      "class_feature_of_unmodelled_corpus_class:twilight_talon": 17,
+      "class_feature_of_unmodelled_corpus_class:ulfen_guard": 8,
+      "class_feature_of_unmodelled_corpus_class:undead": 13,
+      "class_feature_of_unmodelled_corpus_class:war_mind": 17,
+      "class_feature_of_unmodelled_corpus_class:warrior": 44,
+      "class_feature_of_unmodelled_corpus_class:westcrown_devil": 11,
+      "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 21,
+      "race_trait_record_loaded_but_never_applies": 44
+    },
+    "U": {
+      "feat_served_description_is_a_placeholder_marker_not_prose": 51,
+      "text_only_but_corpus_record_carries_no_description_to_show_a_player": 270
+    }
+  },
+  "unclassified": 0
+}

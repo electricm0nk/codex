@@ -18,7 +18,7 @@ One row per acceptance criterion. **26 rows covering 27 criteria** — the last 
 
 | # | Card | Epic | Criterion | Status | Notes (pointer only) |
 |---|---|---|---|---|---|
-| 1 | `atlas-one-bucket-per-unit` | 1 | AT-34-E1-001 | not-started | |
+| 1 | `atlas-one-bucket-per-unit` | 1 | AT-34-E1-001 | complete | `artifacts/epic-1-atlas/AT-34-E1-001_cycle_receipt.md` |
 | 2 | `atlas-fails-closed` | 1 | AT-34-E1-002 | not-started | |
 | 3 | `missing-tables-and-book-coverage` | 1 | AT-34-E1-003 | not-started | |
 | 4 | `shape-engine-boundary-stated` | 1 | AT-34-E1-004 | not-started | |
