@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 2)
 
-- **Commit SHA:** see below (this receipt's own commit).
+- **Commit SHA:** `16b1a85d3f` (docs-only: this receipt, `progress.md`, `kanban.md`).
 - **Files touched:** this receipt only (`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_2.md`), plus the standing three shared files (`progress.md`, `kanban.md`). No production code changed.
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS (the epic-scoped diff against `origin/develop`
   carries pre-existing `sd32_class_ingest`/`sd32_simple_filename_kind_ingest` **data-field
