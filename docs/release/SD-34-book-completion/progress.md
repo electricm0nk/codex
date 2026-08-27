@@ -101,6 +101,34 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 3) — one of nine, `decisions.md §14` — partial
+
+Re-derived the mechanism population fresh at this cycle's HEAD (`c3202a90ce`): still 346,
+unchanged from both prior cycles. This cycle's own contribution: broke open the previously-flat
+`engine_effect_token_present` sub-cause (121 units) into a real 13-shape, sum-exact partition by
+temporarily instrumenting the existing committed regression test and reverting the
+instrumentation before commit (`git diff --stat` on the touched production file is empty at
+commit time — no shipped code changed). The two largest shapes found, 87 `Sorcerer Bloodline
+Feat ~ *` and 16 `Ranger Combat Style Feat ~ *` (103 of 121), are the SAME architectural pattern
+this engine has already ratified elsewhere — `pilot_compute/mod.rs:1837-1844`'s own documented
+"only the COUNT of slots is grounded as a magnitude; which feat fills a slot is a player choice
+this seam deliberately does not model," the treatment already used for Fighter's, Cavalier's,
+Brawler's, and the Arcane bloodline's own bonus feats. Confirmed (not merely inferred) that
+widening `REGISTERED_POOL_GROUPS` alone would not close these: `ABILITY` is in
+`ENGINE_EFFECT_TOKEN_KEYS`, and `has_no_engine_effect_token` gates the SAME real serving path
+`load_pool_catalog` uses, so the catalog would still correctly refuse a real per-character
+mechanic. This surfaces a second operator-scoped classification question (should a "count
+grounds, choice not modelled" per-option enumeration record ever be a bucket-B target?),
+parallel to the prior cycle's own 143-unit `description_is_null_internal_bookkeeping` question
+— together the two questions now cover 246 of 346 (71%) of this mechanism's remaining
+population, and are named as such rather than left as one undifferentiated pile.
+
+0 of 346 closed this cycle (bucket B, `core_rulebook`, unchanged at 694 of 6,701 —
+`python3 scripts/completion_atlas.py --by-book`). `cargo test --locked --no-run` re-run at
+this cycle's HEAD, full workspace, exit 0 (`apps/desktop/src-tauri` not touched, not re-run).
+Full sub-cause partition, remainder table, and next-cycle plan:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_3.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 3) — one of nine, `decisions.md §14` — partial
 
 Continued cycle 2's own work (328 -> 324). Read the corpus directly and confirmed two facts
