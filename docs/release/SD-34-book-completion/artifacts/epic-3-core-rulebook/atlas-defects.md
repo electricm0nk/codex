@@ -54,3 +54,74 @@ trackers, BWBI wondrous-item slots, ...) — those 41 are untouched by this tabl
 **Atlas re-derivation:** `python3 scripts/completion_atlas.py --book core_rulebook --check`
 re-run at this cycle's own HEAD; `class_feature_option_pool_record_not_held_by_engine`'s share
 of bucket B drops by exactly 3 (55 → 52), and the 3 units now report under bucket `X`.
+
+## 2. The "no description, structural tokens only" shape is 517 of 51,482 records, and it is not one thing
+
+**Discovered:** orchestrator verification of defect 1, 2026-08-27. Defect 1's disposition is
+correct and is not changed by this entry. This is a **different** defect at a larger scale.
+
+**What defect 1 established.** Three `Empty Selection ~ Standard {Barbarian, Monk, Rogue}` rows
+carry `description: null` and only structural tokens, and were correctly moved to bucket `X`
+behind a **named-key** list rather than a shape predicate — because gating on shape alone had
+already, in this same mechanism, promoted 188 unrelated records before being caught pre-commit.
+
+**What a corpus-wide re-derivation shows.** That shape is not rare and is not confined to one
+book or kind:
+
+```bash
+# description is null AND raw_tokens carry only KEY / CATEGORY / TYPE
+python3 - <<'PY'
+import json, glob, collections
+vac = collections.Counter()
+for f in glob.glob('data/corpus/*/*/**/*.json', recursive=True):
+    if f.endswith('LICENSE.json'): continue
+    d = json.load(open(f)); data = d.get('data') or {}
+    if data.get('description') is not None: continue
+    names = {t.get('key') for t in (data.get('raw_tokens') or []) if isinstance(t, dict)}
+    if names and names <= {'KEY', 'CATEGORY', 'TYPE'}: vac[f.split('/')[2]] += 1
+print(sum(vac.values()), 'of 51,482'); print(vac.most_common())
+PY
+```
+
+**517 of 51,482** corpus records, across at least 12 books and 8 kinds — `feat_generic` 248,
+`language` 111, `race_trait_generic` 74, `class_feature` 41, `race_generic` 14, `ability` 10,
+`monster_ability` 8, `template` 5. The Core Rulebook's own share is **38 of 6,701**, of which
+defect 1 dispositioned **3**.
+
+**The shape has at least three distinct meanings, and they need different verdicts.** Sampled
+directly from the corpus:
+
+1. **Menu placeholders** — `Empty Selection ~ Standard Barbarian`, `Push Selection ~ Sting`,
+   `Standard Demilich`. Nothing to render, by the source's own construction. Defect 1's
+   disposition (`X`, named-key) is right for these.
+2. **Pointer rows whose content lives elsewhere** — `Duergar ~ Stability`,
+   `Triaxian ~ Keen Senses`. Re-derived: `Stability` has **14 of 19** records corpus-wide
+   carrying a real description, `Keen Senses` **11 of 21**. The rules text exists; this row
+   grants it. These are a cross-record ownership question, the same shape as the `companion`
+   mechanism's own 14 familiar-pool units — not vacuity.
+3. **Genuine content gaps** — `Witch Hex ~ Hag's Eye` (`advanced_players_guide`,
+   `class_feature`) is **1 of 1** records corpus-wide bearing that name and carries **no
+   description at all**. It is a real published hex with real rules text. Nothing in the corpus
+   holds it.
+
+**Why this is an atlas defect and not just work.** The atlas's `X` bucket means *deferred with a
+stated reason*, cleared by revisiting that reason. Meaning 3 is not deferred — it is **absent**,
+and no bucket's "cleared by" column describes "the corpus itself never captured this record's
+content." Meaning 2 is a cross-record ownership shape the atlas also does not name.
+
+**It also sharpens the bundle's headline claim.** `decisions.md §2b` and `README.md §8` state that
+ingestion is complete, evidenced by 100% of units carrying a real `source_file` and `source_line`.
+That evidence is about **sourcing**, and it holds. It does not establish that every sourced record
+carries its **content**, and meaning 3 is a case where it does not. The two claims are different
+and should not be read as one.
+
+**Disposition — not settled here.** No unit is reclassified by this entry. What it requires:
+
+- a per-record split of the 517 into the three meanings, by evidence rather than by shape
+  (shape alone is exactly what the 188-record near-miss proved unsafe);
+- meaning 3's population named with a count — that is the number that matters, and it is
+  currently unknown;
+- AT-34-E5-002's capability register to carry whatever meaning 3 turns out to need, since
+  recovering un-captured content is a corpus-extraction capability this bundle has not built.
+
+**Retro event:** `docs/retro/events/sd34-orchestrator-verify.jsonl`.
