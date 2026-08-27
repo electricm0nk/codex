@@ -45,7 +45,7 @@
 //! round, carry the continuation of the same block; the three books' 361
 //! orphans between them are one missing record type seen three times, not 361
 //! per-row accidents. Carried per `decisions.md §50`, named row by row in
-//! `companion_data`'s module doc, and keeping their honest `not-ingested`
+//! `companion_data`'s module doc, and keeping their honest `engine-does-not-hold`
 //! status in `docs/work-inventory.json`.
 
 pub mod alchemist_spell_list;

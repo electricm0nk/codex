@@ -704,7 +704,7 @@ def transcribe(book: str) -> str:
     # §50`): **transcribe the linked subset, and carry the orphans as an
     # `OPEN_FINDINGS` entry naming their remedy** rather than emitting
     # unreachable rows or skipping the book entirely.  The dropped rows keep
-    # their honest `not-ingested` status in the work inventory — this function
+    # their honest `engine-does-not-hold` status in the work inventory — this function
     # never touches that — so the shortfall stays a stated claim a reader can
     # check rather than a silent omission.
 
@@ -860,7 +860,7 @@ def transcribe(book: str) -> str:
     # The disposition is `§61.2`'s, already settled one round earlier for
     # Ultimate Wilderness's archetype rows: a row this chassis is the wrong
     # SHAPE for is dropped, named here and in the module doc, and left honestly
-    # `not-ingested` in `docs/work-inventory.json` -- never shipped as a card
+    # `engine-does-not-hold` in `docs/work-inventory.json` -- never shipped as a card
     # with nothing on it.
     #
     # The predicate is `reach_gate::companions_reach`'s own ability payload rule
@@ -998,7 +998,7 @@ def transcribe(book: str) -> str:
         # the reach gate's denominator entirely. The honest record of it is
         # this list plus the book's `mod.rs` (`decisions.md §61.2`).
         out.append(
-            "//! These rows keep their `not-ingested` status in"
+            "//! These rows keep their `engine-does-not-hold` status in"
         )
         out.append(
             "//! `docs/work-inventory.json`, which is where the shortfall is counted; they"
@@ -1065,7 +1065,7 @@ def transcribe(book: str) -> str:
         out.append(
             "//! no chassis in this program models yet -- the disposition is `§61.2`'s:"
         )
-        out.append("//! dropped, named here, left honestly `not-ingested`:")
+        out.append("//! dropped, named here, left honestly `engine-does-not-hold`:")
         for key in empty:
             out.append(f"//!   * `{key}`")
     if classes:
@@ -1086,7 +1086,7 @@ def transcribe(book: str) -> str:
             "//! Modelling it is a new record type (a level progression table), not a wider"
         )
         out.append(
-            "//! predicate on this one. Left honestly `not-ingested`; the creature rows that"
+            "//! predicate on this one. Left honestly `engine-does-not-hold`; the creature rows that"
         )
         out.append("//! name them ship, and carry the token verbatim:")
         for key in classes:

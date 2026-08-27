@@ -27,7 +27,7 @@
   --st-grounded: #6abf7b;
   --st-text-complete: #4f9e68;
   --st-ingested-magnitude: #6b9ad4;
-  --st-not-ingested: #d4a04a;
+  --st-engine-does-not-hold: #d4a04a;
   --st-not-started: #3a3f4e;
   --st-deferred: #8a7fb5;
   --st-unknown: #7a5f52;
@@ -285,13 +285,13 @@ const SHARDS = new Map();   // kind -> {fields, rows}
    then partial, then untouched. Keys match work_inventory.by_status exactly. */
 const STATUS_ORDER = [
   "grounded", "text-complete", "ingested-magnitude",
-  "not-ingested", "not-started", "deferred-with-reason", "unknown",
+  "engine-does-not-hold", "not-started", "deferred-with-reason", "unknown",
 ];
 const STATUS_COLOR = {
   "grounded": "var(--st-grounded)",
   "text-complete": "var(--st-text-complete)",
   "ingested-magnitude": "var(--st-ingested-magnitude)",
-  "not-ingested": "var(--st-not-ingested)",
+  "engine-does-not-hold": "var(--st-engine-does-not-hold)",
   "not-started": "var(--st-not-started)",
   "deferred-with-reason": "var(--st-deferred)",
   "unknown": "var(--st-unknown)",
@@ -362,7 +362,7 @@ const DONENESS_LABEL = {
    that verdict extends to every term of art this dashboard used to put in
    front of a reader: `held`, `wiring_class`, `status`, `unit`, `reach`,
    `computed`/`static`/`display`/`derived`, `ingested-magnitude`,
-   `not-ingested`, `text-complete`, `ambiguous`. None of those words appear in
+   `engine-does-not-hold`, `text-complete`, `ambiguous`. None of those words appear in
    PLAIN_DONENESS_LABEL or PLAIN_DONENESS_BLURB below, or anywhere else this
    dashboard renders by default -- the technical vocabulary (DONENESS_LABEL,
    STATUS_ORDER, WIRING_CLASS_ORDER, and everything derived from them) is
@@ -376,7 +376,7 @@ const DONENESS_LABEL = {
    DIFFERENT, non-matching sets of rows. Four entries here used to share the
    EXACT string with a STATUS_LABEL entry ("held"/"ingested-magnitude" both
    "recorded, not yet double-checked"; "not-started" and STATUS's
-   "not-started"/"not-ingested" both "not started"; "unmeasurable" and
+   "not-started"/"engine-does-not-hold" both "not started"; "unmeasurable" and
    STATUS's "unknown" both "can't be measured yet"; "deferred" and STATUS's
    "deferred-with-reason" both "skipped on purpose"). Identical wording on
    two different axes reads as the SAME claim, so a chip and a pill built
@@ -486,7 +486,7 @@ const STATUS_LABEL = {
   "grounded": "engine observed this in play",
   "text-complete": "written up in full",
   "ingested-magnitude": "recorded, not yet double-checked",
-  "not-ingested": "not started",
+  "engine-does-not-hold": "not started",
   "not-started": "not started",
   "deferred-with-reason": "skipped on purpose",
   "unknown": "can’t be measured yet",
@@ -783,7 +783,7 @@ function inScopeUnits() {
     books,
     byStatus: agg,
     units: books.reduce((a, b) => a + (b.units || 0), 0),
-    gaps: agg["not-ingested"] || 0,
+    gaps: agg["engine-does-not-hold"] || 0,
     unknown: agg["unknown"] || 0,
     byDoneness: aggDoneness(books),
   };
@@ -1694,7 +1694,7 @@ function donenessOf(wc, st, kind) {
 
 function donenessOfUncapped(wc, st) {
   if (st === "deferred-with-reason") return "deferred";
-  if (st === "not-ingested" || st === "not-started") return "not-started";
+  if (st === "engine-does-not-hold" || st === "not-started") return "not-started";
   if (st === "unknown") return "unmeasurable";
   // Mirrors doneness_verdict() in the producer (round 5 fix, SD-29 QA finding
   // #1, 2026-08-12): a `grounded`/`text-complete`/`ingested-magnitude` status
@@ -2464,7 +2464,7 @@ function renderFilterChips() {
   const by = chipStatusCounts();
   // Merge chips that share a plain label rather than emitting one per raw
   // status word (SD-29 QA finding #9, round 2, 2026-08-12): STATUS_LABEL maps
-  // both `not-ingested`/`not-started` to "not started", and round 1 still
+  // both `engine-does-not-hold`/`not-started` to "not started", and round 1 still
   // emitted one chip per raw status regardless — two indistinguishable chips
   // with different counts and no way to tell them apart. Each merged chip's
   // filter toggles every raw status it represents together. Round 4 (SD-29 QA

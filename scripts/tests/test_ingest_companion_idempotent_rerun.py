@@ -2,7 +2,7 @@
 idempotent across re-runs (`decisions.md §20`).
 
 **Why this matters.** `docs/work-inventory.json`'s `status` field for a
-`companion` unit stays `"not-ingested"` until the inventory is regenerated
+`companion` unit stays `"engine-does-not-hold"` until the inventory is regenerated
 by the Rust `v06_work_inventory` binary -- it is not updated by
 `ingest_companion.py` writing a corpus record. A cycle that widens the PI
 allowlist (this cycle) and re-runs the script against the SAME stale

@@ -48,35 +48,35 @@ class TestBucketOf(unittest.TestCase):
     def test_not_started_is_z(self):
         self.assertEqual(CA._bucket_of(_unit("u8", "not-started")), "Z")
 
-    def test_not_ingested_splits_a_by_evidence(self):
+    def test_engine_does_not_hold_splits_a_by_evidence(self):
         self.assertEqual(
-            CA._bucket_of(_unit("u9", "not-ingested", "ability_content_has_no_engine_table")),
+            CA._bucket_of(_unit("u9", "engine-does-not-hold", "ability_content_has_no_engine_table")),
             "A",
         )
 
-    def test_not_ingested_splits_b_by_evidence(self):
+    def test_engine_does_not_hold_splits_b_by_evidence(self):
         self.assertEqual(
-            CA._bucket_of(_unit("u10", "not-ingested", "class_feature_owner_matched_by_name_but_record_not_held_by_engine")),
+            CA._bucket_of(_unit("u10", "engine-does-not-hold", "class_feature_owner_matched_by_name_but_record_not_held_by_engine")),
             "B",
         )
         self.assertEqual(
-            CA._bucket_of(_unit("u10b", "not-ingested", "race_trait_absent_from_race_traits")),
+            CA._bucket_of(_unit("u10b", "engine-does-not-hold", "race_trait_absent_from_race_traits")),
             "B",
         )
         self.assertEqual(
-            CA._bucket_of(_unit("u10c", "not-ingested", "race_trait_race_not_modelled")),
+            CA._bucket_of(_unit("u10c", "engine-does-not-hold", "race_trait_race_not_modelled")),
             "B",
         )
 
-    def test_not_ingested_splits_c_by_evidence(self):
+    def test_engine_does_not_hold_splits_c_by_evidence(self):
         self.assertEqual(
-            CA._bucket_of(_unit("u11", "not-ingested", "no_explanation_id_and_no_diagnostic_names_this_feature")),
+            CA._bucket_of(_unit("u11", "engine-does-not-hold", "no_explanation_id_and_no_diagnostic_names_this_feature")),
             "C",
         )
 
-    def test_not_ingested_falls_through_to_d(self):
+    def test_engine_does_not_hold_falls_through_to_d(self):
         self.assertEqual(
-            CA._bucket_of(_unit("u12", "not-ingested", "class_feature_of_unmodelled_corpus_class:warrior")),
+            CA._bucket_of(_unit("u12", "engine-does-not-hold", "class_feature_of_unmodelled_corpus_class:warrior")),
             "D",
         )
 
@@ -98,10 +98,10 @@ class TestPartition(unittest.TestCase):
             _unit("u1", "unmeasurable", "text_only_but_corpus_record_carries_no_description_to_show_a_player"),
             _unit("x1", "deferred-with-reason"),
             _unit("z1", "not-started"),
-            _unit("a1", "not-ingested", "ability_content_has_no_engine_table"),
-            _unit("b1", "not-ingested", "not_held_by_engine"),
-            _unit("c1", "not-ingested", "no_explanation_id_and_no_diagnostic_names_this_feature"),
-            _unit("d1", "not-ingested", "class_feature_of_unmodelled_corpus_class:warrior"),
+            _unit("a1", "engine-does-not-hold", "ability_content_has_no_engine_table"),
+            _unit("b1", "engine-does-not-hold", "not_held_by_engine"),
+            _unit("c1", "engine-does-not-hold", "no_explanation_id_and_no_diagnostic_names_this_feature"),
+            _unit("d1", "engine-does-not-hold", "class_feature_of_unmodelled_corpus_class:warrior"),
         ]
         result = CA.partition(units)
         self.assertEqual(result["examined"], len(units))

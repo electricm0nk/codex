@@ -62,7 +62,7 @@ STATUS_WORDS = (
     "ingested-magnitude",
     "text-complete",
     "deferred-with-reason",
-    "not-ingested",
+    "engine-does-not-hold",
     "not-started",
     "unmeasurable",
 )

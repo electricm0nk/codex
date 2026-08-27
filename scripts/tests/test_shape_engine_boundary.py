@@ -28,7 +28,7 @@ def _unit(id_, magnitude_tokens, status):
 
 class TestMagnitudeBearing(unittest.TestCase):
     def test_zero_token_units_excluded(self):
-        units = [_unit("u1", 0, "not-ingested"), _unit("u2", 2, "grounded")]
+        units = [_unit("u1", 0, "engine-does-not-hold"), _unit("u2", 2, "grounded")]
         self.assertEqual([u["id"] for u in SEB.magnitude_bearing(units)], ["u2"])
 
     def test_missing_field_treated_as_zero(self):
@@ -41,9 +41,9 @@ class TestMagnitudeBearing(unittest.TestCase):
 
 
 class TestNotHeldByEngine(unittest.TestCase):
-    def test_only_not_ingested_status_counts(self):
+    def test_only_engine_does_not_hold_status_counts(self):
         units = [
-            _unit("u1", 1, "not-ingested"),
+            _unit("u1", 1, "engine-does-not-hold"),
             _unit("u2", 1, "grounded"),
             _unit("u3", 1, "literal-verified"),
             _unit("u4", 1, "ingested-magnitude"),
@@ -51,11 +51,11 @@ class TestNotHeldByEngine(unittest.TestCase):
         self.assertEqual([u["id"] for u in SEB.not_held_by_engine(units)], ["u1"])
 
     def test_scoped_to_the_magnitude_bearing_population_passed_in(self):
-        # A zero-token not-ingested unit is not part of "the shape engine's
+        # A zero-token engine-does-not-hold unit is not part of "the shape engine's
         # own feedstock" -- callers are expected to pass `magnitude_bearing()`
         # output in, not the raw unit list.
         mag = SEB.magnitude_bearing(
-            [_unit("u1", 0, "not-ingested"), _unit("u2", 1, "not-ingested")]
+            [_unit("u1", 0, "engine-does-not-hold"), _unit("u2", 1, "engine-does-not-hold")]
         )
         self.assertEqual([u["id"] for u in SEB.not_held_by_engine(mag)], ["u2"])
 
@@ -66,7 +66,7 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
     instrument, so it is not faked with a fixture."""
 
     def test_citation_resolves_at_head(self):
-        units = [_unit("u1", 1, "not-ingested"), _unit("u2", 1, "grounded")]
+        units = [_unit("u1", 1, "engine-does-not-hold"), _unit("u2", 1, "grounded")]
         report = SEB.build_report(units)
         self.assertTrue(report["citation_ok"])
         self.assertEqual(report["promotion_ladder_anchor_line"], 9595)
@@ -106,7 +106,7 @@ class TestCitationFailsClosedForTheIntendedReason(unittest.TestCase):
         self.assertIn("this text does not appear on that line", failures[0])
 
         with self.assertRaises(SEB.StaleCitationError):
-            SEB.build_report([_unit("u1", 1, "not-ingested")])
+            SEB.build_report([_unit("u1", 1, "engine-does-not-hold")])
 
     def test_out_of_range_line_is_caught(self):
         SEB.PROMOTION_LADDER_LINES[99999999] = "unreachable"
@@ -126,7 +126,7 @@ class TestCitationFailsClosedForTheIntendedReason(unittest.TestCase):
 
 class TestRenderMarkdownEmbedsReDeriveCommands(unittest.TestCase):
     def test_every_figure_carries_a_command(self):
-        units = [_unit("u1", 1, "not-ingested"), _unit("u2", 1, "grounded")]
+        units = [_unit("u1", 1, "engine-does-not-hold"), _unit("u2", 1, "grounded")]
         report = SEB.build_report(units)
         md = SEB.render_markdown(report)
         self.assertIn("python3 scripts/shape_engine_boundary.py --check", md)

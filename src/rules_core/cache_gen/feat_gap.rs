@@ -11,7 +11,7 @@
 //!
 //! **The gap this closes.** `feat_gap_tables` is a SEPARATE, already-shipped
 //! lever from any per-book hand-authored feat table: it is the corpus-wide
-//! `not-ingested` residue for 19 already-compiled books' `feat` kind (649
+//! `engine-does-not-hold` residue for 19 already-compiled books' `feat` kind (649
 //! rows total, `gen_feat_gap_tables`), checked in as plain Rust data and
 //! already chained into `feats_all::all_feat_tables()` so the desktop feat
 //! catalog already renders every one of them -- but (before this cycle)

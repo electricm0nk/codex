@@ -20,7 +20,7 @@ or `src/bin/v06_work_inventory.rs`:
   - `magnitude_bearing`   -- units carrying at least one magnitude token
                              (`magnitude_token_count > 0`)
   - `not_held_by_engine`  -- of those, the ones the engine has not promoted
-                             past `not-ingested` (i.e. it refused every rung,
+                             past `engine-does-not-hold` (i.e. it refused every rung,
                              including the four-condition ladder below)
   - the promotion ladder's own source text and line numbers, re-read from
     the live file and asserted to still contain the exact conditions this
@@ -107,9 +107,9 @@ def magnitude_bearing(units: list) -> list:
 
 def not_held_by_engine(units: list) -> list:
     """Of the magnitude-bearing population, the units the engine has not
-    promoted past `not-ingested` -- it refused every rung, including the
+    promoted past `engine-does-not-hold` -- it refused every rung, including the
     four-condition promotion ladder this document states as fact."""
-    return [u for u in units if u.get("status") == "not-ingested"]
+    return [u for u in units if u.get("status") == "engine-does-not-hold"]
 
 
 def build_report(units: list) -> dict:
@@ -177,8 +177,8 @@ record it would attach to.
   (denominator: {report['magnitude_bearing']} of the corpus's full unit population, printed by
   `scripts/completion_atlas.py --check`)
 - Of those **{report['magnitude_bearing']}**, **{report['not_held_by_engine']}** are still not
-  held by the engine (`status == not-ingested`) -- re-derive:
-  `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); m=[u for u in d['units'] if (u.get('magnitude_token_count') or 0) > 0]; print(sum(1 for u in m if u.get('status') == 'not-ingested'))"`
+  held by the engine (`status == engine-does-not-hold`) -- re-derive:
+  `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); m=[u for u in d['units'] if (u.get('magnitude_token_count') or 0) > 0]; print(sum(1 for u in m if u.get('status') == 'engine-does-not-hold'))"`
   (denominator: {report['magnitude_bearing']} magnitude-bearing units, computed immediately
   above)
 

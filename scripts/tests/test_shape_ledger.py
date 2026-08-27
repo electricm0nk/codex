@@ -416,10 +416,10 @@ class ClassifyUnitTest(unittest.TestCase):
 
     # decisions.md §27a / kanban.md row 17: `f0_reached_by` must tell a
     # genuinely-derived F0 apart from a placeholder wearing F0's label.
-    def test_no_record_f0_reached_by_is_not_ingested(self):
+    def test_no_record_f0_reached_by_is_engine_does_not_hold(self):
         unit = _unit("b:spell:x", "spell", "b", "not-started", "static", "missing.lst", 1)
         row = SL.classify_unit(unit, corpus_index={})
-        self.assertEqual(row["f0_reached_by"], "not_ingested")
+        self.assertEqual(row["f0_reached_by"], "engine_does_not_hold")
         self.assertFalse(row["pi_redacted_formula"])
 
     def test_no_formula_tokens_f0_reached_by_is_measured_empty(self):
@@ -826,7 +826,7 @@ class BuildLedgerTest(unittest.TestCase):
         }
         ledger = SL.build_ledger(units, base_index)
         f0b = ledger["f0_breakdown"]
-        self.assertEqual(f0b.get("not_ingested"), 1)
+        self.assertEqual(f0b.get("engine_does_not_hold"), 1)
         self.assertEqual(f0b.get("measured_empty"), 1)
         self.assertEqual(f0b.get("measured_pi_redacted"), 1)
         self.assertEqual(f0b.get("fallthrough"), 1)

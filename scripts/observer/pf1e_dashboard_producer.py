@@ -1621,11 +1621,11 @@ def build_pf1e_dashboard(
     # in a genuinely-attempted status.
     #
     # The status vocabulary (`status_vocabulary` on the same document) has
-    # SIX values, and "not landed yet" is two of them, not one: `not-ingested`
+    # SIX values, and "not landed yet" is two of them, not one: `engine-does-not-hold`
     # ("the book IS ingested but the engine holds no record matching this
     # unit's identity -- a real gap inside a started book") AND `not-started`
     # ("the book has no compiled rule set at all -- nothing about this unit
-    # has been attempted"). A first pass here excluded only `not-ingested`
+    # has been attempted"). A first pass here excluded only `engine-does-not-hold`
     # and silently counted every `not-started` unit as landed, which is the
     # exact inversion of what `not-started` means -- caught by checking
     # against a book known to be genuinely untouched (`bestiary_2`, all
@@ -1638,7 +1638,7 @@ def build_pf1e_dashboard(
     # `work_inventory_panel()`'s own narrower `proven` figure
     # (`grounded`/`text-complete` only), which is answering a different
     # question (fully proven) than this one (any real attempt at all).
-    _NOT_LANDED_STATUSES = {"not-ingested", "not-started", "unknown"}
+    _NOT_LANDED_STATUSES = {"engine-does-not-hold", "not-started", "unknown"}
     _wi_for_status = load_work_inventory()
     _landed_units_by_book: dict[str, int] = {}
     if _wi_for_status:
@@ -1711,7 +1711,7 @@ def build_pf1e_dashboard(
         # `_book_has_landed_units()`, the same `work-inventory` per-book
         # `by_status` authority `work_inventory_panel()`'s own `proven`
         # figure is built from -- a book only reads `in-progress` once at
-        # least one of its units has moved off `not-ingested`.
+        # least one of its units has moved off `engine-does-not-hold`.
         #
         # Three real, distinguishable facts, not collapsed into one label:
         #   "unassigned"  -- no SD-N channel at all (does not occur in this
@@ -3740,7 +3740,7 @@ DONENESS_VALUES = (
 # its probe lands AND is confirmed reaching a nonzero `grounded` count under
 # the `computed` class for that kind") neither belongs in this tuple any
 # longer. `companion`'s cap was already inert regardless (its `computed`
-# population is a strict `{grounded, not-ingested}` two-way split with no
+# population is a strict `{grounded, engine-does-not-hold}` two-way split with no
 # `in-progress`-shaped status to cap -- `build_companion_catalog()` in
 # `apps/desktop/src-tauri/src/companion_catalog.rs` is a proven bijection
 # over `companion_chassis::COMPANION_BOOKS`, own test
@@ -3814,7 +3814,7 @@ DONENESS_MEANING = {
         "exist at all."
     ),
     DONENESS_NOT_STARTED: (
-        "No record in the engine -- `not-ingested` (the book is in play, this "
+        "No record in the engine -- `engine-does-not-hold` (the book is in play, this "
         "unit is not) or `not-started` (the book has not been worked)."
     ),
     DONENESS_UNMEASURABLE: (
@@ -3956,7 +3956,7 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
     """The (wiring_class, status) table `doneness_verdict()` caps by kind."""
     if status == "deferred-with-reason":
         return DONENESS_DEFERRED
-    if status in ("not-ingested", "not-started"):
+    if status in ("engine-does-not-hold", "not-started"):
         return DONENESS_NOT_STARTED
     # An `unknown`/`unmeasurable` status cannot be measured against any bar,
     # classifiable or not -- checked first, ahead of both the ambiguous check
@@ -3989,7 +3989,7 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
     # the determinator could not tell how the unit is wired in, so there is no
     # class-specific bar to check its evidence against. Trace the ACTUAL
     # control flow to see what can still be sitting here: `deferred-with-
-    # reason`, `not-ingested`/`not-started` and `unknown` have all already
+    # reason`, `engine-does-not-hold`/`not-started` and `unknown` have all already
     # returned above, so the only statuses that can reach this line are
     # `grounded`, `text-complete` and `ingested-magnitude` -- i.e. every
     # remaining case IS real evidence of some tier, never a status this

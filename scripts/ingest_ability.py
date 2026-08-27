@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generic ingest of `Kind::Ability`'s enumerated-but-not-ingested units into
+"""Generic ingest of `Kind::Ability`'s enumerated-but-engine-does-not-hold units into
 `data/corpus/<book>/ability/*.json`.
 
 SD-32 `decisions.md §20`: `ability` is one of the 18 kinds whose 4,824-unit

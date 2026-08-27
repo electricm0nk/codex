@@ -498,7 +498,7 @@ fn main() {
         "ultimate_equipment",
         // SD-31 SD31-E6-F5-002: `gen_cache_equipment_gap` (`cache_gen::
         // equipment_gap`) landed real `lst_token` equipment/equipment_modifier
-        // records for these 4 books' `not-ingested` gap residue this cycle --
+        // records for these 4 books' `engine-does-not-hold` gap residue this cycle --
         // same reasoning as the `ultimate_equipment` entry above, these need
         // the same enrichment pass or their new records stay at the thin
         // KEY:-token-only fallback.

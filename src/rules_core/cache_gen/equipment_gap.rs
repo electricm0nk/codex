@@ -12,7 +12,7 @@
 //!
 //! `equipment_gap_tables` itself is a SEPARATE, already-shipped lever
 //! from any per-book hand-authored table: it is the corpus-wide
-//! `not-ingested` residue for 8 already-compiled books' `equipment`/
+//! `engine-does-not-hold` residue for 8 already-compiled books' `equipment`/
 //! `equipment_modifier` kinds -- generated once by `gen_equipment_gap_tables`
 //! against the real PCGen oracle and checked in as plain Rust data, but
 //! (before this cycle) never dumped to `data/corpus/`, so neither
@@ -225,7 +225,7 @@ pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static s
         "ISTEM" => Some(("inner_sea_temples", "pathfinder/paizo/campaign_setting/inner_sea_temples")),
         "ISM" => Some(("inner_sea_magic", "pathfinder/paizo/campaign_setting/inner_sea_magic")),
         // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUTS` entry at
-        // all (115 `not-ingested` equipment units, none captured). Added
+        // all (115 `engine-does-not-hold` equipment units, none captured). Added
         // alongside this routing arm; see `gen_equipment_gap_tables.rs`'s
         // `EQUIPMENT_BOOK_AG` `BookInput`.
         "AG" => Some(("adventurers_guide", "pathfinder/paizo/roleplaying_game/adventurers_guide")),

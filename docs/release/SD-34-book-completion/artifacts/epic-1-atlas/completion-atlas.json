@@ -37,11 +37,11 @@
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
         "line": 8346,
-        "must_contain": "not-ingested"
+        "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
       "count": 1230,
-      "evidence_source": "src/bin/v06_work_inventory.rs (status == not-ingested, no other bucket matched)",
+      "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
     "DONE": {
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "ceac19da29608ed042d5463f884366325eb51919",
+  "derived_at": "0d9fcc8ec89abe3f1608a59886a83c2ba6e918bc",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],

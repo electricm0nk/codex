@@ -54,7 +54,7 @@
 //! 64 of the 66 remain genuinely orphaned: the Astral Construct menu
 //! (`Astral_*`) and three namespaced rows (`Energy Touch ~ …`,
 //! `Astral Warrior ~ …`, `Horror ~ …`) whose namespace is not a monster key of
-//! this book. They stay `not-ingested`, which is their honest status.
+//! this book. They stay `engine-does-not-hold`, which is their honest status.
 //!
 //! **Two were not orphans in the corpus** — `Naturally Psionic` and
 //! `Psionic Aptitude`, and both now ship. Ten of this book's monster rows

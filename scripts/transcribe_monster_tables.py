@@ -302,7 +302,7 @@ BOOKS = {
     # `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
     # cross-referenced against `docs/work-inventory.json`'s own
     # `book=="occult_adventures"` rows -- exactly 5 `monster_ability` units,
-    # all `not-ingested`; the `race`(4)/`monster`(1) rows are a separate kind
+    # all `engine-does-not-hold`; the `race`(4)/`monster`(1) rows are a separate kind
     # this cycle does not touch. Zero Product Identity rows in either
     # abilities file (`grep -c 'NAMEISPI:YES\|DESCISPI:YES'
     # oa_abilities_race.lst support/oa_abilities_race_b3.lst` -> 0, 0).
@@ -437,7 +437,7 @@ def corpus_root() -> str:
 # anywhere under .../roleplaying_game/bestiary")`, and 108 (`bestiary`
 # `ce_abilities_race.lst` 32, `bestiary_2` 72, `bestiary_3` 4) plus 28 of
 # `bestiary_4`'s own `b4_abilities_races_ce.lst` -- 136 `static`/`derived`
-# `monster_ability` units total -- sat `not-ingested` for exactly this reason,
+# `monster_ability` units total -- sat `engine-does-not-hold` for exactly this reason,
 # not because they are orphaned.
 _CORE_ESSENTIALS_DIR = "pathfinder/paizo/roleplaying_game/core_essentials"
 
@@ -1965,7 +1965,7 @@ def transcribe(book: str, provisional_facets: dict[str, str] | None = None) -> s
     # never-ingested, and an un-ingested row's shape cannot be measured --
     # Gate 1's DoD is that every unit's shape IS measured, which is a
     # strictly weaker claim than "reaches a player". Rounds 2-through-T9
-    # dropped orphans because a `not-ingested` row is honest about BOTH
+    # dropped orphans because a `engine-does-not-hold` row is honest about BOTH
     # claims failing; that conflated the two. `§20`'s own text says to
     # "claim reachability separately from ingestion, and only where
     # `reach_gate.rs` actually proves it" -- which this cycle now does: an
@@ -1999,7 +1999,7 @@ def transcribe(book: str, provisional_facets: dict[str, str] | None = None) -> s
     # (before this fix) raised on exactly the 5 `ce_abilities_race.lst` rows
     # `OPEN-ISSUES.md` row 157 names and produced ZERO other movement, even
     # though `classify_monster_ability_rows.py` independently confirms 135
-    # (`bestiary`) + 95 (`bestiary_2`) OTHER not-ingested ability rows are
+    # (`bestiary`) + 95 (`bestiary_2`) OTHER engine-does-not-hold ability rows are
     # genuinely row-named/prefix-owned and parse cleanly -- the crash was
     # silently blocking all of them, not just the 5 unscreenable ones.
     #
@@ -2335,7 +2335,7 @@ def transcribe(book: str, provisional_facets: dict[str, str] | None = None) -> s
             "//! `BONUS:VAR`-set value), and picking one by position would risk shipping"
         )
         out.append(
-            "//! subtly wrong player-facing text. `not-ingested` is their honest status; widen"
+            "//! subtly wrong player-facing text. `engine-does-not-hold` is their honest status; widen"
         )
         out.append(
             "//! `parse_desc` deliberately, hand-verified per row, to reach them:"

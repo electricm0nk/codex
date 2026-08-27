@@ -118,7 +118,7 @@ class LoadUnitsIsKindScopedAndUsesLiveJoinTests(unittest.TestCase):
     never leak into a `monster`-kind run and vice versa; (2) `docs/work-
     inventory.json`'s own `status` field has drifted from the live corpus
     join before -- a unit already carrying a real corpus record but still
-    stamped `status: not-ingested` in the inventory must NOT be
+    stamped `status: engine-does-not-hold` in the inventory must NOT be
     re-transcribed, because `load_units` filters on the ledger's
     `join_status`, never on `status`."""
 
@@ -135,19 +135,19 @@ class LoadUnitsIsKindScopedAndUsesLiveJoinTests(unittest.TestCase):
                             "id": "book:race:stale-but-ingested",
                             "kind": "race",
                             "book": "book",
-                            "status": "not-ingested",
+                            "status": "engine-does-not-hold",
                         },
                         {
                             "id": "book:race:genuinely-open",
                             "kind": "race",
                             "book": "book",
-                            "status": "not-ingested",
+                            "status": "engine-does-not-hold",
                         },
                         {
                             "id": "book:monster:wrong-kind",
                             "kind": "monster",
                             "book": "book",
-                            "status": "not-ingested",
+                            "status": "engine-does-not-hold",
                         },
                     ]
                 },

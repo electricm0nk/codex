@@ -956,7 +956,7 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // another kind (race_trait: `Isr`/`Ha`/`Iswg`; monster: `Oa`;
             // race_trait+monster: `MonsterCodex`) but that never had a feat
             // table of their own -- same shape as `Ce` immediately above.
-            // Their `feat` units were `not-ingested` with evidence
+            // Their `feat` units were `engine-does-not-hold` with evidence
             // `feat_key_absent_from_catalog` (a started book with no feat
             // table), never `no_compiled_rule_set_for_book` (an un-started
             // book) -- `SD31-E6-F8-002`. Empty hand-authored slices here are

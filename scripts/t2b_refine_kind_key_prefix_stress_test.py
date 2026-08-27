@@ -52,7 +52,7 @@ KNOWN_RACE_BOOKS_DIRS = {
     "advanced_class_guide": "paizo/roleplaying_game/advanced_class_guide",
     # NOTE: bestiary/bestiary_1 is deliberately NOT listed here. It is not a
     # real playable-race book -- confirmed corpus-wide (0 CR:-less
-    # `b1_races.lst` entries; `not-ingested-figures-are-classifier-noise`
+    # `b1_races.lst` entries; `engine-does-not-hold-figures-are-classifier-noise`
     # memory note) -- every one of its 528 CR:-only hits below is a correct
     # reclassification (monster special-ability content), not a false
     # positive. Listing it here would just relabel real work as "trap found".

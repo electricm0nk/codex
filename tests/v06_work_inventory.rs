@@ -632,7 +632,7 @@ fn the_committed_inventory_is_well_formed_and_uses_only_declared_statuses() {
 /// Power, Discovery, Domain Power, ...) that carries no magnitude token AND
 /// is confirmed absent from every engine table, corpus JSON cache, and
 /// picker this program has (verified by direct search, not inferred from
-/// the magnitude check alone) must land `not-ingested` -- a real, honestly
+/// the magnitude check alone) must land `engine-does-not-hold` -- a real, honestly
 /// reported gap -- never `unknown`, which implies a mystery rather than a
 /// confirmed absence. `text-complete` was tried and rejected here: it
 /// requires the engine to HOLD the record per `status_vocabulary`'s own
@@ -641,7 +641,7 @@ fn the_committed_inventory_is_well_formed_and_uses_only_declared_statuses() {
 /// returned `unknown` unconditionally, misclassifying 2,275 of the epic's
 /// 4,172 `unknown` units as an open mystery rather than a confirmed gap.
 #[test]
-fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
+fn zero_magnitude_option_pool_class_features_are_engine_does_not_hold_not_unknown() {
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/work-inventory.json");
     let Ok(text) = std::fs::read_to_string(&path) else {
         println!("SKIP: docs/work-inventory.json has not been generated yet");
@@ -661,7 +661,7 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
     // moment `class_feature_pool_catalog::REGISTERED_POOL_GROUPS` widened to
     // include "Rage Power" -- both now correctly reach `text-complete` via
     // the new reference catalog, which is exactly the class of record this
-    // test's own doc comment says should NOT stay `not-ingested`.
+    // test's own doc comment says should NOT stay `engine-does-not-hold`.
     //
     // RE-PICKED a second time (`AT-33-E6-001`, 2026-08-25, root-caused not
     // assumed): the "Discovery" pick above went stale too, but NOT from any
@@ -702,8 +702,8 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
         let unit = units.iter().find(|u| u["id"] == id).unwrap_or_else(|| panic!("{id} missing from inventory"));
         assert_eq!(unit["magnitude_token_count"], 0, "{id}: fixture assumption changed, re-check");
         assert_eq!(
-            unit["status"], "not-ingested",
-            "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine must be not-ingested, not unknown or text-complete"
+            unit["status"], "engine-does-not-hold",
+            "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine must be engine-does-not-hold, not unknown or text-complete"
         );
         // Owner resolves via `classify()`'s third owner-resolution fallback,
         // `class_feature_owner_via_pool_catalog`: "Bloodrager Bloodline" is
@@ -712,7 +712,7 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
         // "Aberrant"/"Abyssal " qualifier-stripped suffix -- the identical
         // mechanism wave 29 originally proved for "Discovery" -> `alchemist`
         // (`class_feature_owner_via_pool_catalog`'s own history, this file's
-        // prior revision). `status` is `not-ingested`, not `text-complete`,
+        // prior revision). `status` is `engine-does-not-hold`, not `text-complete`,
         // because the fallback can never manufacture a holds-check result on
         // its own (`class_feature_consumer_delta_tests::
         // a_pool_catalog_recovered_owner_can_never_ground_a_record_even_with_a_matching_explanation_id`
@@ -730,7 +730,7 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
     // prose-embedded formula -- that combination is unreachable by
     // construction (it either finds an owner and grounds/defers through the
     // existing paths, or falls to the text_only check above and lands
-    // not-ingested).
+    // engine-does-not-hold).
     //
     // EXCEPTION carved out SD30-E0-F2 (2026-08-14), found live by this
     // cycle's own `verify.sh --full` run. Root-caused, not assumed:
@@ -745,10 +745,10 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
     // !carries_prose_magnitude`, landed in `2ce72913`, "teach classify()'s
     // text_only signal the %N prose-formula pattern") is correctly FALSE for
     // a unit with zero raw magnitude tokens but either signal detected, so
-    // it falls past the `not_ingested` branch below into `unknown` BY
+    // it falls past the `engine_does_not_hold` branch below into `unknown` BY
     // DESIGN -- the record genuinely needs prose-formula wiring
     // investigated, a real open question, not "confirmed absent from every
-    // engine table" (the stronger claim `not-ingested` makes and that
+    // engine table" (the stronger claim `engine-does-not-hold` makes and that
     // `2ce72913` exists to stop over-claiming). The DATA is correct; this
     // test's invariant predates `2ce72913` and never accounted for the
     // `carries_prose_magnitude` override, so it is the stale half.
@@ -1056,7 +1056,7 @@ fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
 /// file finding no local diff near it). Once a book has ANY compiled rule
 /// set, `classify()` stops returning blanket `not-started` and evaluates
 /// each unit against real per-kind engine facts instead -- so UPsi's units
-/// now carry a real, granular mix of statuses (`not-ingested`/`unknown` for
+/// now carry a real, granular mix of statuses (`engine-does-not-hold`/`unknown` for
 /// the un-landed majority, `text-complete`/`unknown` for the landed feat
 /// catalog, `grounded` for 4 race traits), never `not-started`. The old
 /// blanket assertion was asserting a fact about the world that stopped being
@@ -1166,7 +1166,7 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
     );
 
     // Pins the new `power` kind's own real per-unit status (`decisions.md
-    // §17`, commit `8e98424eb`): 421 units, all `not-ingested` -- a real,
+    // §17`, commit `8e98424eb`): 421 units, all `engine-does-not-hold` -- a real,
     // engine-consulted verdict (never `not-started`, already covered by the
     // loop above) reflecting that Epic 9 deferred mapping this kind's rows
     // to `Spell`'s ingest pipeline, not that the file goes unenumerated.
@@ -1183,8 +1183,8 @@ fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
         power_units.iter().filter_map(|u| u["status"].as_str()).collect();
     assert_eq!(
         power_statuses,
-        std::collections::BTreeSet::from(["not-ingested"]),
-        "ultimate_psionics' power units must all be not-ingested (Epic 9 deferred mapping \
+        std::collections::BTreeSet::from(["engine-does-not-hold"]),
+        "ultimate_psionics' power units must all be engine-does-not-hold (Epic 9 deferred mapping \
          them into an engine pipeline, not enumeration itself), statuses seen were \
          {power_statuses:?}"
     );

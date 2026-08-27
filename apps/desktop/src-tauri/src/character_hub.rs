@@ -6511,7 +6511,7 @@ mod tests {
         // SD-29 `epic-4-proven-equip-mod`: +584 corpus gap-lane Equipmods rows
         // (CRB 332 + UPsi 113 + ACG 48 + APG 37 + UC 20 + ARG 14 + UE 10 + UI 7
         // + UW 3), every one of them an `equipment_modifier` unit
-        // `docs/work-inventory.json` reported `not-ingested` until this cycle.
+        // `docs/work-inventory.json` reported `engine-does-not-hold` until this cycle.
         // The point of this test is the assertion BELOW, not this count: an
         // offered row the attach gate refuses is a dead affordance, and 584
         // newly offered rows is 584 new chances to ship one.

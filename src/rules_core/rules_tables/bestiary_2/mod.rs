@@ -63,7 +63,7 @@
 //! An ability reaches a player only underneath its monster, so a row no monster
 //! row of this book claims would load and never be shown — the
 //! record-that-is-never-seen class `decisions.md §44.2` is about. The 65 are
-//! left `not-ingested`, which is their honest status, and are cited by line in
+//! left `engine-does-not-hold`, which is their honest status, and are cited by line in
 //! `monster_data.rs`'s generated header. They namespace to `b2_templates.lst`
 //! templates (the `Draconal` family), to monsters defined in other books, and
 //! to rows this book only `.MOD`s. A template surface would close the first
@@ -94,7 +94,7 @@
 //! **`RuleSetId::B2` compiles this book's `companion` family and nothing else.**
 //! B2 also holds 782 `monster` / `monster_ability` units, which are the
 //! monster lane's (`decisions.md §46`, round-3 target list). Registering the
-//! rule set moves those units from `not-started` to `not-ingested` — a status
+//! rule set moves those units from `not-started` to `engine-does-not-hold` — a status
 //! relabel that states the truth more precisely, since the engine now compiles
 //! part of this book — and does not claim them.
 //!

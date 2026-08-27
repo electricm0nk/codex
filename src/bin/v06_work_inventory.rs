@@ -413,7 +413,7 @@ fn file_kind(basename: &str) -> Option<Kind> {
     // an unlisted kind safely with zero new code). So a kind of THIS shape --
     // proven filename-only in `15-card-15-other-kinds-memo.md`, same as
     // `Kind::Skill` was -- is ADDED AS DATA, one row here plus the `Kind::`
-    // variant and its one `classify()` arm (`not_ingested(...)`, itself
+    // variant and its one `classify()` arm (`engine_does_not_hold(...)`, itself
     // required by Rust's exhaustive match, not by any per-kind special-casing
     // in this file). This is the mechanism `decisions.md §17` asked for:
     // adding the next kind of this shape costs a table row, not a tour of
@@ -1021,7 +1021,7 @@ const TRAP_RULES: &[TrapRule] = &[
              carries a `FavoredClassBonus` dot-component. `file_kind` buckets the whole file as \
              `Kind::RaceTrait`, but a Favored Class Bonus row is a different mechanic (one row \
              per race x class) that can never appear in `race_trait_ids`. Counting it inflated \
-             ARG's race_trait `not-ingested` figure by 291 units that no amount of ingestion \
+             ARG's race_trait `engine-does-not-hold` figure by 291 units that no amount of ingestion \
              could ever close. See `decisions.md §35`.",
     },
     TrapRule {
@@ -1952,7 +1952,7 @@ const RACE_TRAIT_EXCLUDED_TYPE_PREFIX: &str = "ClassLevelAdjustment";
 ///   in this corpus uses, e.g. `DEFINE:HalfOrcHunterFavClassBonus|0`.
 ///
 /// Re-derived corpus-wide before this ruling, not assumed: of the 486 `monster_ability`
-/// `not-ingested` units `OPEN-ISSUES.md` row 34 flagged across `advanced_class_guide`
+/// `engine-does-not-hold` units `OPEN-ISSUES.md` row 34 flagged across `advanced_class_guide`
 /// (106) and `core_essentials` (380), this test moves **106 of 106** ACG units (100%
 /// of that file's facet-matching content; `acg_abilities_race.lst` carries 0
 /// `NaturalAttack`/`Universal Monster Rule` rows anywhere) and **0 of 380** CE units
@@ -4252,7 +4252,7 @@ fn enumerate_file(
         //   (`arg_abilities_race.lst`). `race_trait_ids` is keyed on
         //   `<race>.<trait-slug>` pairs and can never hold an FCB identity,
         //   so counting these as `race_trait` units reports them
-        //   `not-ingested` forever regardless of ingestion effort.
+        //   `engine-does-not-hold` forever regardless of ingestion effort.
         // - A `CATEGORY:Choice` row is a `CHOOSE:` sub-option belonging to an
         //   already-counted parent trait, e.g. `Elf ~ Elemental Resistance`
         //   (CATEGORY:Special Ability, already a unit) offers 4
@@ -5337,7 +5337,7 @@ impl EngineFacts {
             // name) and, since SD-29 Epic 5 round 8, the chassis holding the
             // book's other 284 rows (`decisions.md §58.3`). A UNION, not a
             // precedence: an early return on `monster_names` would report all
-            // 284 chassis rows `not-ingested` while the registry held them, and
+            // 284 chassis rows `engine-does-not-hold` while the registry held them, and
             // consulting only the chassis would demote the 46. Both halves have
             // to answer, because the book really is in both places.
             Kind::Monster => {
@@ -7054,7 +7054,7 @@ fn crb_class_name(class_id: ClassId) -> &'static str {
 /// modelled` population before this fix, `unit.name` equal to the race
 /// name in every one, hand re-derived against the pinned checkout (NOT
 /// this repo's own `data/corpus/` JSON tree, which carries only the
-/// smaller transcribed-and-verified subset -- these 44 stay `not-ingested`
+/// smaller transcribed-and-verified subset -- these 44 stay `engine-does-not-hold`
 /// after this fix too; it corrects only the evidence string for the 7
 /// that also name a CRB race). Confirmed the OTHER five headers sharing
 /// this cycle's `race_trait_race_not_modelled` population do NOT share this
@@ -7145,7 +7145,7 @@ fn gather_engine_facts(
     // `spell_catalog::build_spell_catalog`, which already chained FIVE books
     // (adding ARG and UI). The two never being reconciled silently
     // misreported every already-shipping ARG and UI spell as
-    // `not-ingested` -- Decision 36's pattern, the exact defect the
+    // `engine-does-not-hold` -- Decision 36's pattern, the exact defect the
     // `equipment_keys` map immediately below this one was rebuilt to close
     // for equipment in SD-28-E15, reproduced one record family over.
     // Derived directly from `spell_resolver::spell_catalog_rows()` now, so
@@ -7166,7 +7166,7 @@ fn gather_engine_facts(
     // `equipment_resolver::equipment_catalog_rows()`, which already chains
     // EIGHT books (adding arg/pu/ui/ue). The two never being reconciled
     // silently misreported ~1,650 already-landed UE/UI/PU units as
-    // `not-ingested` -- Decision 36's pattern, at the largest scale this
+    // `engine-does-not-hold` -- Decision 36's pattern, at the largest scale this
     // program has found it. Derived directly from `equipment_catalog_rows()`
     // now, so there is no second list left to diverge: adding a ninth book
     // to the resolver populates this map automatically, and an unmapped
@@ -7188,7 +7188,7 @@ fn gather_engine_facts(
 
     // Registry-driven: every book in `monster_chassis::MONSTER_BOOKS` is
     // indexed here without being named. Adding a book to that registry is what
-    // moves its `monster`/`monster_ability` units off `not-ingested`.
+    // moves its `monster`/`monster_ability` units off `engine-does-not-hold`.
     let mut chassis_monster_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
     let mut chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>> =
         BTreeMap::new();
@@ -7205,7 +7205,7 @@ fn gather_engine_facts(
     // finding in its own copy of this loop. Bestiary 1 is where the coincidence
     // ends: its corpus directory is `beastiary`, its engine book is
     // `bestiary_1`, and an untranslated key would have reported all 607 of its
-    // chassis records as `not-ingested` while the registry held them.
+    // chassis records as `engine-does-not-hold` while the registry held them.
     for book in monster_chassis::MONSTER_BOOKS {
         let engine_book = engine_book_for_corpus_dir(book.corpus_book).unwrap_or_else(|| {
             panic!(
@@ -7501,7 +7501,7 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
          diagnostic's message VERBATIM and `reason_id` is its id -- never re-narrated.",
     ),
     (
-        "not-ingested",
+        "engine-does-not-hold",
         "The book IS ingested but the engine holds no record matching this unit's identity. A \
          real gap inside a started book, distinct from a book nobody has begun.",
     ),
@@ -7666,7 +7666,7 @@ fn class_feature_type_facet_owner_candidates(type_facet: Option<&str>) -> Vec<St
 /// like "barbarian"/"sorcerer" -- if it did, the PRIOR, corpus_key-only
 /// `class_feature_owner` call would already have matched it and this
 /// fallback would never run at all. So recovering an owner this way can
-/// only ever route a record to `not-ingested` or, if a genuine per-class
+/// only ever route a record to `engine-does-not-hold` or, if a genuine per-class
 /// engine diagnostic separately names it, `deferred-with-reason` -- never
 /// `grounded`/`done`. `class_feature_type_facet_owner_fallback_tests::
 /// a_type_facet_recovered_owner_can_never_ground_a_pool_record_even_with_a_
@@ -7715,7 +7715,7 @@ fn class_feature_owner_via_type_facet<'a, I: Iterator<Item = &'a String>>(
 /// never equal a class's own name like `"barbarian"` -- if it did,
 /// `class_feature_owner` would already have matched it directly and this
 /// fallback would never run. So recovering an owner this way can only ever
-/// route a record to `not-ingested` or, if a genuine per-class engine
+/// route a record to `engine-does-not-hold` or, if a genuine per-class engine
 /// diagnostic separately names it, `deferred-with-reason` -- never
 /// `grounded`/`done`. Proven directly by
 /// `class_feature_consumer_delta_tests::
@@ -8237,7 +8237,7 @@ fn classify(
     // deleted.) `unit.book` is the TRUE reporting attribution
     // (`SD31-ATTRIB-001`) and may now name a book with no such table at all
     // -- using it here silently downgraded 16 already-`grounded` companion
-    // units to `not-ingested` (`companion_absent_from_bestiary_1_companion_tables`)
+    // units to `engine-does-not-hold` (`companion_absent_from_bestiary_1_companion_tables`)
     // the first time this fix was measured, because Bestiary 1 genuinely
     // has no companion table of its own; the content was never anything but
     // `core_essentials`-served. `source_book` is always the book
@@ -8266,7 +8266,7 @@ fn classify(
                 Some(b) => b.to_string(),
                 None => {
                     return Verdict {
-                        status: "not-ingested",
+                        status: "engine-does-not-hold",
                         evidence: "shared_library_record_held_by_no_ingested_host".to_string(),
                         reason: None,
                         engine_book: None,
@@ -8342,16 +8342,16 @@ fn classify(
     // still state a real, computable magnitude in prose -- see this
     // function's doc comment.
     let text_only = unit.magnitude_token_count == 0 && !carries_prose_magnitude;
-    let not_ingested = |evidence: &str| Verdict {
-        status: "not-ingested",
+    let engine_does_not_hold = |evidence: &str| Verdict {
+        status: "engine-does-not-hold",
         evidence: evidence.to_string(),
         reason: None,
         engine_book: engine_book_field.clone(),
     };
     // Same verdict, for the registry-driven arms whose evidence token names the
     // book that answered and so cannot be a `&'static str`.
-    let not_ingested_owned = |evidence: String| Verdict {
-        status: "not-ingested",
+    let engine_does_not_hold_owned = |evidence: String| Verdict {
+        status: "engine-does-not-hold",
         evidence,
         reason: None,
         engine_book: engine_book_field.clone(),
@@ -8365,7 +8365,7 @@ fn classify(
                 .map(|s| s.contains(&unit.key) || s.contains(&unit.name))
                 .unwrap_or(false);
             if !known {
-                return not_ingested("feat_key_absent_from_catalog");
+                return engine_does_not_hold("feat_key_absent_from_catalog");
             }
             if facts.feat_effect_wired.contains(&unit.key)
                 || facts.feat_effect_wired.contains(&unit.name)
@@ -8497,7 +8497,7 @@ fn classify(
                 // Decision 7's condition 3: zero magnitude AND no real DESC:
                 // text anywhere in the token closure is nothing to compute
                 // AND nothing to show a player -- not the completion the
-                // ruling describes. `unmeasurable` (not `not-ingested`, the
+                // ruling describes. `unmeasurable` (not `engine-does-not-hold`, the
                 // record IS in the catalog; renamed from `unknown`
                 // `AT-33-E4-002`, disposition unchanged, see
                 // `unknown-rootcause.md` §3).
@@ -8560,7 +8560,7 @@ fn classify(
             // Ultimate Wilderness's own `.lst`). Under `§13` branch 1 (identical printing, FIRST
             // print owns it -- Ultimate Wilderness published 2018, before Bestiary 6, 2021), the
             // first print owns the object and the later one is superseded, complete, not
-            // "not-ingested". `§19`, verbatim: "this is settled doctrine. flag it, mark as
+            // "engine-does-not-hold". `§19`, verbatim: "this is settled doctrine. flag it, mark as
             // complete, move on" -- and explicitly "do not build a cross-book-reprint crediting
             // mechanism." This is that instruction taken literally: a fixed, 2-item allowlist,
             // not a general mechanism. `spell_catalog_rows()`'s cross-book dedup (added wave 24 to
@@ -8594,7 +8594,7 @@ fn classify(
                 t.get(&unit.key).copied().or_else(|| t.get(&unit.name).copied())
             });
             match level_known {
-                None => not_ingested("spell_key_absent_from_spell_list"),
+                None => engine_does_not_hold("spell_key_absent_from_spell_list"),
                 // SD28-E14-F1 recorded that this arm could not promote,
                 // because no wired consumer read a spell's magnitude. That
                 // finding is SUPERSEDED, not overruled: `epic-31-spell-wiring`
@@ -8683,7 +8683,7 @@ fn classify(
                 .map(|s| s.contains(&unit.key) || s.contains(&unit.name))
                 .unwrap_or(false);
             if !known {
-                return not_ingested("equipment_key_absent_from_equipment_tables");
+                return engine_does_not_hold("equipment_key_absent_from_equipment_tables");
             }
             // `(engine_book, key)`, never a bare key: the probe observed this
             // delta on ONE book's corpus record, and only that book's unit may
@@ -8848,7 +8848,7 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested_owned(format!("monster_absent_from_{engine_book}_monsters"))
+            engine_does_not_hold_owned(format!("monster_absent_from_{engine_book}_monsters"))
         }
         Kind::MonsterAbility
             if facts.chassis_monster_ability_keys.contains_key(engine_book.as_str()) =>
@@ -8919,7 +8919,7 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested_owned(format!(
+            engine_does_not_hold_owned(format!(
                 "monster_ability_absent_from_{engine_book}_monster_abilities"
             ))
         }
@@ -8932,7 +8932,7 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested("monster_absent_from_MonsterId_ALL")
+            engine_does_not_hold("monster_absent_from_MonsterId_ALL")
         }
         Kind::Race => {
             // PRIMARY: the product's own character-creation roster offers
@@ -9001,7 +9001,7 @@ fn classify(
             // would describe the fallback rule rather than the rule that
             // decided -- and which was already the *wrong* reason for the
             // 30 races that had a real corpus chassis all along.
-            not_ingested("race_absent_from_the_character_creation_roster")
+            engine_does_not_hold("race_absent_from_the_character_creation_roster")
         }
         Kind::RaceTrait => {
             // PRIMARY: the race corpus the app really loads applies this
@@ -9193,19 +9193,19 @@ fn classify(
             // from "the engine holds no record matching this unit" and
             // reported as its own evidence rather than collapsed into it.
             if facts.race_trait_was_loaded(unit) {
-                return not_ingested("race_trait_record_loaded_but_never_applies");
+                return engine_does_not_hold("race_trait_record_loaded_but_never_applies");
             }
             if modelled_race_of_race_trait(&unit.key, &facts.race_names).is_some() {
-                return not_ingested("race_trait_absent_from_race_traits");
+                return engine_does_not_hold("race_trait_absent_from_race_traits");
             }
-            not_ingested("race_trait_race_not_modelled")
+            engine_does_not_hold("race_trait_race_not_modelled")
         }
         Kind::Class => {
             let name = unit.name.to_lowercase();
             // The engine must model a class of this name at all. Unchanged:
             // a name no class enum carries is a class nothing has ingested.
             if !facts.class_books.contains_key(&name) {
-                return not_ingested("class_absent_from_ClassId_ALL_and_book_class_id_enums");
+                return engine_does_not_hold("class_absent_from_ClassId_ALL_and_book_class_id_enums");
             }
             // PRIMARY, and the whole of the grounding decision: the class
             // consumer-delta probe OBSERVED this class put a magnitude
@@ -9228,7 +9228,7 @@ fn classify(
             // the probe still observed no magnitude a player can see for it.
             // Reported as its own evidence rather than collapsed into the
             // absence above.
-            not_ingested("class_modelled_but_no_observed_delta_on_the_rendered_snapshot")
+            engine_does_not_hold("class_modelled_but_no_observed_delta_on_the_rendered_snapshot")
         }
         Kind::ClassFeature => {
             // The option-pool consumer-delta observation, asked FIRST because
@@ -9300,7 +9300,7 @@ fn classify(
                 // The group names no class this engine models. Before calling
                 // it unclassifiable, ask whether the CORPUS declares a class by
                 // that name anywhere: if it does, this is a feature of a class
-                // nobody has ingested yet, which is a real `not-ingested` gap
+                // nobody has ingested yet, which is a real `engine-does-not-hold` gap
                 // rather than a mystery.
                 if let Some(corpus_class) = class_feature_owner(
                     &unit.key,
@@ -9313,7 +9313,7 @@ fn classify(
                     )
                 }) {
                     return Verdict {
-                        status: "not-ingested",
+                        status: "engine-does-not-hold",
                         evidence: format!(
                             "class_feature_of_unmodelled_corpus_class:{}",
                             slug(&corpus_class)
@@ -9379,7 +9379,7 @@ fn classify(
                     };
                 }
                 if text_only {
-                    return not_ingested("class_feature_option_pool_record_not_held_by_engine");
+                    return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");
                 }
                 // AT-33-E4-002 (`unknown-rootcause.md` §1): before this
                 // cycle this was `status: "unknown"`. The magnitude-bearing
@@ -9390,17 +9390,17 @@ fn classify(
                 // reached. The ONLY difference between the two branches is
                 // `magnitude_token_count`/`carries_prose_magnitude` on this
                 // record's own line, which has no bearing on whether the
-                // ENGINE holds a record for it -- `not-ingested` ("book IS
+                // ENGINE holds a record for it -- `engine-does-not-hold` ("book IS
                 // ingested but the engine holds no record matching this
                 // unit's identity") is exactly as true here as it is one
                 // branch up. Only 2 registered pools exist
                 // (`REGISTERED_POOL_GROUPS`) against 1,128 distinct
                 // unmatched group prefixes in this population as of this
                 // cycle; widening the catalog to resolve MORE of these to a
-                // real owner (rather than the generic not-ingested finding)
+                // real owner (rather than the generic engine-does-not-hold finding)
                 // is real future reclassification work, not done here.
                 return Verdict {
-                    status: "not-ingested",
+                    status: "engine-does-not-hold",
                     evidence: "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
                         .to_string(),
                     reason: Some(format!(
@@ -9410,7 +9410,7 @@ fn classify(
                          derived for it without guessing; the engine's own \
                          class_feature_effect_wired probe already found no delta for this \
                          record's key, the same finding that already routes its text_only \
-                         sibling to not-ingested"
+                         sibling to engine-does-not-hold"
                     )),
                     engine_book: engine_book_field,
                 };
@@ -9540,7 +9540,7 @@ fn classify(
                         engine_book: engine_book_field,
                     };
                 }
-                return not_ingested(
+                return engine_does_not_hold(
                     "class_feature_no_dedicated_magnitude_id_matched_the_record_slug",
                 );
             }
@@ -9602,9 +9602,9 @@ fn classify(
                         engine_book: engine_book_field,
                     };
                 }
-                return not_ingested("class_feature_owner_matched_by_name_but_record_not_held_by_engine");
+                return engine_does_not_hold("class_feature_owner_matched_by_name_but_record_not_held_by_engine");
             }
-            not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")
+            engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")
         }
         // SD-29 Epic 7 (companion lane). Registry-driven exactly as the two
         // monster arms above are: `companion_chassis::COMPANION_BOOKS` decides,
@@ -9653,9 +9653,9 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested_owned(format!("companion_absent_from_{engine_book}_companion_tables"))
+            engine_does_not_hold_owned(format!("companion_absent_from_{engine_book}_companion_tables"))
         }
-        Kind::Companion => not_ingested("companion_content_has_no_engine_table"),
+        Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table"),
         // SD28-E15 (2026-08-09): no engine table exists for monster
         // sub-abilities (natural attacks, special qualities/attacks,
         // universal monster rules) yet -- this kind is new precisely to
@@ -9663,7 +9663,7 @@ fn classify(
         // correct name, not to claim it is already reachable. Real content
         // in the wrong kind before this cycle; real content with no
         // engine table now, honestly reported as such.
-        Kind::MonsterAbility => not_ingested("monster_ability_has_no_engine_table"),
+        Kind::MonsterAbility => engine_does_not_hold("monster_ability_has_no_engine_table"),
         // SD-32 card 15 (`decisions.md §12b`): the per-skill definition
         // table (`KEYSTAT:`/`ACHECK:`/class-skill `BONUS:` rows) has no
         // engine table -- `src/rules_core/skill_allocation.rs` is
@@ -9671,7 +9671,7 @@ fn classify(
         // these corpus rows. Real, newly-visible content with no engine
         // table yet, honestly reported as such -- same shape as
         // `Kind::Companion`/`Kind::MonsterAbility` above.
-        Kind::Skill => not_ingested("skill_content_has_no_engine_table"),
+        Kind::Skill => engine_does_not_hold("skill_content_has_no_engine_table"),
         // SD-32 `decisions.md §17`: the five kinds landed through
         // `SIMPLE_FILENAME_KINDS` (see `file_kind`'s doc comment) -- none
         // has an engine table yet, same honest-uningested shape as
@@ -9681,14 +9681,14 @@ fn classify(
         // beyond the `SIMPLE_FILENAME_KINDS` data row -- and it is
         // deliberately not a blanket wildcard default, so a kind that DOES
         // later gain an engine table cannot silently keep reporting
-        // not-ingested by falling through an unattended `_ => ...` arm.
-        Kind::Template => not_ingested("template_content_has_no_engine_table"),
-        Kind::Deity => not_ingested("deity_content_has_no_engine_table"),
-        Kind::Power => not_ingested("power_content_has_no_engine_table"),
-        Kind::Domain => not_ingested("domain_content_has_no_engine_table"),
-        Kind::Language => not_ingested("language_content_has_no_engine_table"),
-        Kind::Ability => not_ingested("ability_content_has_no_engine_table"),
-        Kind::Trait => not_ingested("trait_content_has_no_engine_table"),
+        // engine-does-not-hold by falling through an unattended `_ => ...` arm.
+        Kind::Template => engine_does_not_hold("template_content_has_no_engine_table"),
+        Kind::Deity => engine_does_not_hold("deity_content_has_no_engine_table"),
+        Kind::Power => engine_does_not_hold("power_content_has_no_engine_table"),
+        Kind::Domain => engine_does_not_hold("domain_content_has_no_engine_table"),
+        Kind::Language => engine_does_not_hold("language_content_has_no_engine_table"),
+        Kind::Ability => engine_does_not_hold("ability_content_has_no_engine_table"),
+        Kind::Trait => engine_does_not_hold("trait_content_has_no_engine_table"),
     }
 }
 
@@ -9857,7 +9857,7 @@ fn load_sweep_verified(path: &Path) -> BTreeSet<(String, String, usize)> {
 /// `unit_id`s it verified.
 ///
 /// Shape: `{"fixtures_total":<n>,"cleared":<n>,"failed":<n>,
-/// "not_ingested":<n>,"verified":["id1","id2",...]}`. Unlike the sweep's
+/// "engine_does_not_hold":<n>,"verified":["id1","id2",...]}`. Unlike the sweep's
 /// report, there is no whole-report `clean` gate to check: this instrument's
 /// coverage is deliberately partial by design — re-derived 2026-08-19 over
 /// the committed inventory, **1,256 of 5,609 `derived` units carry a
@@ -9927,7 +9927,7 @@ fn load_derived_fixture_verified(path: &Path) -> BTreeSet<String> {
 /// fewer than 180 are true duplicates, report that." 33 is that honest
 /// answer.
 ///
-/// Every id below has `status` `unknown` or `not-ingested`/`not-started`
+/// Every id below has `status` `unknown` or `engine-does-not-hold`/`not-started`
 /// (none `done`-capable), so removing it withdraws no credit -- it only
 /// shrinks the denominator, per the ruling.
 ///
@@ -10487,7 +10487,7 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
     // `class_chassis.base_attack_bonus`/`base_save.*` explanations for a
     // selected character -- it was simply never registered here, so the
     // classifier reported every one of these 20 classes' `Kind::Class`
-    // records `not-ingested` even though the engine holds and computes a
+    // records `engine-does-not-hold` even though the engine holds and computes a
     // real chassis for them. Driven entirely by the registry's own data
     // (`untabled-base-class-chassis.json`, itself corpus-derived): adding a
     // 21st class here costs zero new code, unlike a hand-added match arm.
@@ -11880,7 +11880,7 @@ fn main() {
     // --- engine ------------------------------------------------------------
     // Every class name the corpus declares anywhere, so a class feature of an
     // un-ingested class (Magus, Ninja, Samurai, ...) is reported as a real
-    // `not-ingested` gap rather than as an unclassifiable mystery.
+    // `engine-does-not-hold` gap rather than as an unclassifiable mystery.
     let corpus_class_names: BTreeSet<String> = enumerations
         .values()
         .flat_map(|e| e.units.iter())
@@ -13423,7 +13423,7 @@ mod equipment_book_slug_tests {
     /// directly from `equipment_resolver::equipment_catalog_rows()` rather
     /// than a hand-maintained parallel list, closing the divergence that
     /// silently misreported ~1,650 landed UE/UI/PU equipment units as
-    /// `not-ingested`. This test exercises `equipment_book_slug_for`
+    /// `engine-does-not-hold`. This test exercises `equipment_book_slug_for`
     /// against every book code the resolver ACTUALLY returns today, so a
     /// ninth book added to the resolver without a matching arm here fails
     /// this test immediately (a panic on `cargo test`) instead of silently
@@ -13462,7 +13462,7 @@ mod equipment_book_slug_tests {
     /// The specific defect this fix closes, pinned so it cannot regress.
     /// Before the consolidation the work inventory's `spell_levels` map held
     /// three books while the shipped Spell Catalog served five, so every ARG
-    /// and UI spell was reported `not-ingested` despite already being on
+    /// and UI spell was reported `engine-does-not-hold` despite already being on
     /// screen. Two real corpus keys, one per newly-joined book, must now be
     /// reachable through the registry under their own book slug.
     #[test]
@@ -13904,7 +13904,7 @@ mod race_trait_grounding_tests {
     /// by the live `list_race_creation_roster` command, yet the `race` kind
     /// verdicted it `race_absent_from_RaceId_ALL` -- because `RaceId::ALL`
     /// is the seven-variant CRB enum and Catfolk is not one of the seven.
-    /// Before the probe existed this asserted `not-ingested`.
+    /// Before the probe existed this asserted `engine-does-not-hold`.
     #[test]
     fn a_non_crb_race_with_a_real_creation_chassis_is_grounded() {
         let facts = EngineFacts {
@@ -13921,7 +13921,7 @@ mod race_trait_grounding_tests {
     /// cannot fail is worse than no gate). The SAME Catfolk unit the test
     /// above grounds is classified against an EMPTY roster -- the state the
     /// probe itself returns when the corpus cannot be read -- and must fall
-    /// all the way back to `not-ingested`. If this ever passes as
+    /// all the way back to `engine-does-not-hold`. If this ever passes as
     /// `grounded`, the grounding is coming from somewhere other than the
     /// observation, and the rung is decorative.
     #[test]
@@ -13930,7 +13930,7 @@ mod race_trait_grounding_tests {
         assert!(facts.race_creation_roster.is_empty());
         let unit = race_unit("advanced_race_guide", "Catfolk", "catfolk_races.lst", 6);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "race_absent_from_the_character_creation_roster");
     }
 
@@ -13979,18 +13979,18 @@ mod race_trait_grounding_tests {
     /// The probe must DISCRIMINATE, not promote everything it is asked
     /// about. `Skeleton` is one of the monster-template `RACE:` rows that
     /// share this kind (`OPEN-ISSUES.md` row 170): no chassis record exists
-    /// for it, no player can create one, and it must stay `not-ingested`.
+    /// for it, no player can create one, and it must stay `engine-does-not-hold`.
     /// A probe that grounded this would be the "100 % promotion rate" shape
     /// `SD28-E14-F1`'s retracted spell probe was retracted for.
     #[test]
-    fn a_monster_template_race_row_with_no_chassis_stays_not_ingested() {
+    fn a_monster_template_race_row_with_no_chassis_stays_engine_does_not_hold() {
         let facts = EngineFacts {
             race_creation_roster: probe_race_creation_roster(&probe_root()),
             ..Default::default()
         };
         let unit = race_unit("bestiary", "Skeleton", "b1_races.lst", 1);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "race_absent_from_the_character_creation_roster");
     }
 
@@ -14189,7 +14189,7 @@ mod race_trait_grounding_tests {
     ///
     /// This is the assertion that would have caught the defect it was written
     /// for: Bestiary 1's 108 race-trait records were loaded, applied, and
-    /// reachable, and every one of them still reported `not-ingested` —
+    /// reachable, and every one of them still reported `engine-does-not-hold` —
     /// silently — because `data/corpus/beastiary` does not spell its book the
     /// way `corpus_dir_for` does. It also pins that `beastiary` is the ONLY
     /// book needing the alias, so a second divergence fails here rather than
@@ -14203,7 +14203,7 @@ mod race_trait_grounding_tests {
             assert!(
                 engine_book_for_corpus_dir(book).is_some(),
                 "corpus book {book} resolves to no engine book, so every one of its reachable \
-                 race traits would report not-ingested"
+                 race traits would report engine-does-not-hold"
             );
         }
         let aliased: BTreeSet<&str> =
@@ -14564,7 +14564,7 @@ mod monster_ability_text_complete_rung_tests {
     }
 
     /// PROVE THE RUNG CAN FAIL, case 3 (not held at all): an ability the
-    /// engine's chassis table does not hold must stay `not-ingested`
+    /// engine's chassis table does not hold must stay `engine-does-not-hold`
     /// regardless of `has_real_description` -- a real description on a
     /// record nothing loads is not condition 3 ("the sheet must render
     /// it"), it is an unreachable string.
@@ -14580,7 +14580,7 @@ mod monster_ability_text_complete_rung_tests {
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
     }
 
     /// SD31-D7-PROSE-004 (Decision 7 REFINED, `OPEN-ISSUES.md` rows 69/87/95
@@ -14815,7 +14815,7 @@ mod companion_text_complete_rung_tests {
     fn a_companion_not_held_by_any_chassis_table_does_not_read_text_complete() {
         // `EngineFacts::default()` carries no `chassis_companion_keys` entry
         // for ANY book, so this exercises the guard-failed fallback arm
-        // (`Kind::Companion => not_ingested(...)`), not the registry-driven
+        // (`Kind::Companion => engine_does_not_hold(...)`), not the registry-driven
         // arm the promotion above lives in -- the point being proven is only
         // that no code path here can ever read `text-complete` for a
         // companion the engine holds no table for at all.
@@ -15099,7 +15099,7 @@ mod class_feature_text_complete_rung_tests {
     /// prefix/suffix text with its owning class's own name ("barbarian"), so
     /// `class_feature_owner` -- and its `type_facet` fallback -- both return
     /// `None` for it; the record falls into the "no owner resolved" branch,
-    /// which used to hard-code `not_ingested` for every `text_only` record
+    /// which used to hard-code `engine_does_not_hold` for every `text_only` record
     /// regardless of the pool catalog (the wave-22 fix at case 3 above only
     /// reached the SEPARATE "owner resolved but not grounded" branch). This
     /// proves the unowned branch now consults the SAME catalog before
@@ -15127,7 +15127,7 @@ mod class_feature_text_complete_rung_tests {
 
     /// PROVE THE RUNG CAN FAIL for the unowned shape too: the SAME group
     /// text, but the catalog does not hold this exact `(source_book, key)`
-    /// -- must stay `not-ingested`, never manufacture `text-complete` from
+    /// -- must stay `engine-does-not-hold`, never manufacture `text-complete` from
     /// the group-name match alone.
     ///
     /// **Evidence string updated, wave 29 lane 2 (`THE-BOX.md` §3 item #2):**
@@ -15136,15 +15136,15 @@ mod class_feature_text_complete_rung_tests {
     /// carries the owner), so this record no longer falls through the "no
     /// owner resolved" branch at all -- it takes the SAME "owner resolved
     /// but not grounded, not catalog-held" path `a_pool_member_the_catalog_
-    /// does_not_hold_stays_not_ingested` (the OWNED "Rogue Talent" sibling
+    /// does_not_hold_stays_engine_does_not_hold` (the OWNED "Rogue Talent" sibling
     /// case, immediately below) already exercises, and so now correctly
     /// carries that path's evidence token instead of the generic "no owner
     /// at all" one. The doneness verdict is unchanged either way
-    /// (`not-ingested` -> `not-started` under both evidence strings) --
+    /// (`engine-does-not-hold` -> `not-started` under both evidence strings) --
     /// only the diagnostic detail improved, which is the entire point of
     /// wiring a real owner resolution in.
     #[test]
-    fn an_unowned_pool_member_the_catalog_does_not_hold_stays_not_ingested() {
+    fn an_unowned_pool_member_the_catalog_does_not_hold_stays_engine_does_not_hold() {
         let mut facts = EngineFacts::default();
         facts.class_books.insert("barbarian".to_string(), "core_rulebook");
         let unit = class_feature_unit(
@@ -15155,7 +15155,7 @@ mod class_feature_text_complete_rung_tests {
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,
             "class_feature_owner_matched_by_name_but_record_not_held_by_engine"
@@ -15168,7 +15168,7 @@ mod class_feature_text_complete_rung_tests {
     /// Regression guard for the SD28-E24/`decisions.md §42` defect this rung
     /// must never resurrect.
     #[test]
-    fn a_pool_member_the_catalog_does_not_hold_stays_not_ingested() {
+    fn a_pool_member_the_catalog_does_not_hold_stays_engine_does_not_hold() {
         let mut facts = EngineFacts::default();
         facts.class_books.insert("rogue".to_string(), "core_rulebook");
         let unit = class_feature_unit(
@@ -15179,7 +15179,7 @@ mod class_feature_text_complete_rung_tests {
             0,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,
             "class_feature_owner_matched_by_name_but_record_not_held_by_engine"
@@ -15625,7 +15625,7 @@ mod class_feature_type_facet_owner_fallback_tests {
     /// name ("sorcerer") under `class_name_as_group_text`, so even a real,
     /// matching `explanation_id` for the SAME slug/owner in `facts` must
     /// still fail `class_feature_exact_suffix_grounded`'s own group-equality
-    /// guard and fall through to `not_ingested`, never `grounded`.
+    /// guard and fall through to `engine_does_not_hold`, never `grounded`.
     #[test]
     fn a_type_facet_recovered_owner_can_never_ground_a_pool_record_even_with_a_matching_explanation_id(
     ) {
@@ -15654,7 +15654,7 @@ mod class_feature_type_facet_owner_fallback_tests {
             "a type_facet-recovered owner must never ground a record: status={} evidence={}",
             verdict.status, verdict.evidence
         );
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "no_explanation_id_and_no_diagnostic_names_this_feature");
     }
 
@@ -15682,12 +15682,12 @@ mod class_feature_type_facet_owner_fallback_tests {
     /// whose group names no ENGINE-modelled class, but whose `type_facet`
     /// carries a `"<Class> Class Feature"` marker for a class the CORPUS
     /// declares (even though the engine has no chassis for it), must land
-    /// `not-ingested` with a per-class diagnostic rather than the generic
+    /// `engine-does-not-hold` with a per-class diagnostic rather than the generic
     /// `class_feature_group_names_no_class_at_all` -- this call site's own
     /// production behavior, not just the shared helper function, so a
     /// mutation removing it must turn this test RED.
     #[test]
-    fn a_type_facet_marker_naming_a_corpus_declared_but_unmodelled_class_is_not_ingested() {
+    fn a_type_facet_marker_naming_a_corpus_declared_but_unmodelled_class_is_engine_does_not_hold() {
         let mut facts = EngineFacts::default();
         // Deliberately NOT in `class_books` (no engine chassis) but IS in
         // `corpus_class_names` (the corpus declares the class exists).
@@ -15705,20 +15705,20 @@ mod class_feature_type_facet_owner_fallback_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "class_feature_of_unmodelled_corpus_class:vigilante");
     }
 
     /// NEGATIVE CONTROL: without the type_facet fix, a record with no
-    /// class-name signal anywhere still reads `not-ingested` -- the
+    /// class-name signal anywhere still reads `engine-does-not-hold` -- the
     /// fallback is additive, it does not change behaviour for the
     /// genuinely unattributable population. Before `AT-33-E4-002` this
     /// read `unknown`/`class_feature_group_names_no_class_at_all`; see
     /// `unknown-rootcause.md` §1 for why the magnitude-bearing shape now
-    /// gets the same `not-ingested` finding its `text_only` sibling
+    /// gets the same `engine-does-not-hold` finding its `text_only` sibling
     /// already had.
     #[test]
-    fn a_record_with_no_class_signal_anywhere_reads_not_ingested() {
+    fn a_record_with_no_class_signal_anywhere_reads_engine_does_not_hold() {
         let mut facts = EngineFacts::default();
         facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
         let unit = CorpusUnit {
@@ -15734,7 +15734,7 @@ mod class_feature_type_facet_owner_fallback_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
@@ -16079,7 +16079,7 @@ mod modelled_class_books_registry_tests {
 
     /// The class-probe's own real compute sweep now finds an attributable
     /// delta for a formerly-unmodelled class: `Kind::Class` records for
-    /// these 20 move from `not-ingested` to `grounded`, proving the wiring
+    /// these 20 move from `engine-does-not-hold` to `grounded`, proving the wiring
     /// reaches the real dispatch chain (`compute_pilot_base_chassis` ->
     /// `untabled_base_class_chassis::resolve`), not just this map.
     #[test]
@@ -16794,7 +16794,7 @@ mod unit_id_uniqueness_tests {
     /// (`maker_s_call`), so a class_feature explanation id built the OTHER
     /// convention's way (`makers_call`) could never join it -- 412
     /// apostrophe-bearing `class_feature` keys, corpus-wide, all stuck
-    /// `not-ingested`/`unknown` on this alone.
+    /// `engine-does-not-hold`/`unknown` on this alone.
     #[test]
     fn class_feature_engine_join_slug_swallows_apostrophes_matching_pilot_computes_convention() {
         assert_eq!(class_feature_engine_join_slug("Maker's Call"), "makers_call");
@@ -17373,7 +17373,7 @@ mod spell_grounding_tests {
         assert_eq!(verdict.status, "text-complete");
     }
 
-    /// A spell absent from the catalog stays `not-ingested` even if some
+    /// A spell absent from the catalog stays `engine-does-not-hold` even if some
     /// stale observation names it: the catalog gate runs first, and an
     /// observation can never manufacture ingestion.
     #[test]
@@ -17384,7 +17384,7 @@ mod spell_grounding_tests {
             .insert(("core_rulebook".to_string(), "Invented Spell".to_string()));
         let verdict =
             classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
     }
 
     // ----- The fact set is exactly the probe's `Wired` verdicts -----
@@ -17661,7 +17661,7 @@ mod class_probe_tests {
         let mut facts = EngineFacts::default();
         facts.class_effect_wired.insert("adept".to_string());
         let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
     }
 }
@@ -18080,9 +18080,9 @@ mod class_feature_consumer_delta_tests {
         );
         // Exact landing spot: no diagnostic names this synthetic feature and
         // no explanation id exists in `facts`, so it must land the same
-        // honest `not-ingested` rung the type_facet fallback's own
+        // honest `engine-does-not-hold` rung the type_facet fallback's own
         // equivalent integration test lands on -- never `grounded`.
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(verdict.evidence, "no_explanation_id_and_no_diagnostic_names_this_feature");
     }
 
@@ -18122,21 +18122,21 @@ mod class_feature_consumer_delta_tests {
             "a pool-catalog-recovered owner must never ground a record: status={} evidence={}",
             verdict.status, verdict.evidence
         );
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
     }
 
     /// NEGATIVE CONTROL: a group whose text shape does NOT match any
     /// registered pool entry (no suffix, no exact word) must be entirely
-    /// unaffected by this fallback and still read `not-ingested` -- the
+    /// unaffected by this fallback and still read `engine-does-not-hold` -- the
     /// fallback is additive, not a behaviour change for the genuinely
     /// unattributable population. Before `AT-33-E4-002` this read
     /// `unknown`; see `unknown-rootcause.md` §1. Reuses the exact fixture
     /// `class_feature_type_facet_owner_fallback_tests::
-    /// a_record_with_no_class_signal_anywhere_reads_not_ingested` already
+    /// a_record_with_no_class_signal_anywhere_reads_engine_does_not_hold` already
     /// pins ("Domain Power" matches neither "Domain" exactly nor the
     /// `" Domain"` suffix), confirming the two fallbacks agree.
     #[test]
-    fn a_group_shape_matching_no_registered_pool_still_reads_not_ingested() {
+    fn a_group_shape_matching_no_registered_pool_still_reads_engine_does_not_hold() {
         let mut facts = EngineFacts::default();
         facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
         let unit = CorpusUnit {
@@ -18152,7 +18152,7 @@ mod class_feature_consumer_delta_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(
             verdict.evidence,
             "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
@@ -18390,7 +18390,7 @@ mod stamp_loss_guard_tests {
             ("a", "literal-verified"),
             ("b", "fixture-verified"),
             ("c", "grounded"),
-            ("d", "not-ingested"),
+            ("d", "engine-does-not-hold"),
         ]);
         let ids = stamped_ids(&doc);
         assert_eq!(ids, BTreeSet::from(["a".to_string(), "b".to_string()]));
@@ -19132,7 +19132,7 @@ mod core_essentials_book_attribution_tests {
 /// (`SD31-CE-COMPANION-001`) shipped with ZERO test coverage: the adversarial
 /// review's `grep -rn 'reattributed_engine_book' src/ tests/ apps/` returned
 /// only the four implementation lines. The whole of that lane's board movement
-/// (-189 `not-ingested`) came out of a mechanism nothing pinned, so a
+/// (-189 `engine-does-not-hold`) came out of a mechanism nothing pinned, so a
 /// non-monotone edit to its three-clause filter would have failed no gate —
 /// Decision 1(a)'s "a gate that cannot fail is worse than no gate", in its
 /// most literal form.

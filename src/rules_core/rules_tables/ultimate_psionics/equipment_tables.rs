@@ -597,7 +597,7 @@ const EQUIPMODS_TABLE: &[EquipmentTableEntry] = &[
 
 /// The 113 `VISIBLE:NO` `.COPY=` legacy-alias short codes this table
 /// deliberately does not carry as standalone entries -- named explicitly
-/// (not just counted) so the classifier's own resulting `not-ingested`
+/// (not just counted) so the classifier's own resulting `engine-does-not-hold`
 /// residue for this book can be attributed to this exclusion by anyone
 /// auditing `docs/work-inventory.json` later, the same way ARG's/UI's own
 /// modules name their excluded rows rather than leaving an unexplained gap.

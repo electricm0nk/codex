@@ -63,7 +63,7 @@
 //! "Rogue ". `v06_work_inventory.rs`'s `class_feature_owner` (and its
 //! `type_facet` fallback) therefore resolve `None` for every Rage Power
 //! record, which used to route the WHOLE pool through a hard-coded
-//! `not_ingested` regardless of this catalog. `classify()`'s "no owner
+//! `engine_does_not_hold` regardless of this catalog. `classify()`'s "no owner
 //! resolved" branch now ALSO consults `class_feature_pool_catalog_holds`
 //! before falling back (`SD31-W23-POOLMEMBER-002`), mirroring the check the
 //! "owner resolved" branch already had — without that fix, registering
@@ -185,7 +185,7 @@ fn carries_unimplemented_marker(description: &str) -> bool {
 /// owning class immediately followed by "level"/"levels" (optionally
 /// possessive), regardless of whether this engine happens to compute the
 /// referenced value. A false "not served" here costs nothing new -- the
-/// record simply stays `not_ingested`, exactly where it was before this
+/// record simply stays `engine_does_not_hold`, exactly where it was before this
 /// cycle; a false "text-complete" would be a new, wrong answer (`§1a`).
 fn carries_class_specific_level_phrase(description: &str, class_name: &str) -> bool {
     if class_name.trim().is_empty() {

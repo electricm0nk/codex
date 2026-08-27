@@ -31,7 +31,7 @@
 //!
 //! ---------------------------------------------------------------------------
 //! THE 138 ROWS THAT DO NOT SHIP, both groups named row by row in
-//! `companion_data`'s module doc and keeping their honest `not-ingested` status
+//! `companion_data`'s module doc and keeping their honest `engine-does-not-hold` status
 //! in `docs/work-inventory.json`:
 //!
 //! * **135 orphan ability rows**, carried per the monster lane's disposition

@@ -17,7 +17,7 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**4 of 27 criteria complete. 4 of 26 kanban rows complete.**
+**5 of 27 criteria complete. 5 of 26 kanban rows complete.**
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -35,6 +35,50 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 5 — AT-34-E1-005 — the `not-ingested` status field is renamed
+
+**Status: complete.** The field asserted the opposite of its meaning (26,002 of 26,002 of its
+units carry a real `source_file`+`source_line`; every evidence string is engine-side) and had
+already misled once, during this package's own authoring. Renamed `not-ingested` →
+`engine-does-not-hold` (and the Rust closures `not_ingested`/`not_ingested_owned` →
+`engine_does_not_hold`/`engine_does_not_hold_owned`) in `src/bin/v06_work_inventory.rs`,
+`docs/work-inventory.json` (26,239 of 26,239 occurrences), and every consumer under `tests/`,
+`src/`, `apps/`, `scripts/` — 78 tracked files total, matching Cycle 4's handoff note: both
+`completion_atlas.py`'s A/B/C/D bucket-D citation and `shape_engine_boundary.py`'s
+`not_held_by_engine()` were updated in this same commit, so neither silently zeroes out.
+
+New regression test `scripts/tests/test_legacy_not_ingested_string_swept.py`: sweeps `tests/`,
+`src/`, `apps/`, `scripts/` for either retired spelling and fails closed on any live hit,
+proven RED→GREEN by planting then reverting a synthetic violation
+(`test_sweep_goes_red_on_a_planted_use_and_green_on_its_revert`). Live sweep:
+`legacy_not_ingested_live_uses = 0` (of 76 files that carried the string before this cycle).
+
+`docs/work-inventory.json` was relabeled via a validated whole-file substitution
+(json-valid before/after, `26239` `"not-ingested"` → `0`, `26239` `"engine-does-not-hold"`,
+exact parity) rather than a full generator re-run, to avoid the unrelated regression risk of
+losing `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` context — this is a pure
+relabel, confirmed by `completion_atlas.py --check` reporting the identical bucket counts as
+before (`D=1230` unchanged) and by `tests/v06_work_inventory.rs`'s
+`the_committed_inventory_is_well_formed_and_uses_only_declared_statuses` passing against the
+edited file.
+
+Both identifier and wired-integration audits clean (`OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`).
+Denominator gate against this package: `files_checked=15 violations=0`. `cargo build --bin
+v06_work_inventory` exits 0; `cargo test --locked --no-run` (full workspace) exits 0; `apps/
+desktop/src-tauri` `cargo check --locked` exits 0 (touched via `character_hub.rs`,
+`spell_catalog.rs`, `reach_gate.rs`). Targeted Rust suites (`v06_work_inventory`,
+`equipment_gap_tables`, `feat_gap_tables`, both `derived_evaluator_fixture_check*`) all green;
+targeted Python suites all green except one **pre-existing, unrelated** failure in
+`test_transcribe_monster_tables.py` (confirmed identical against unmodified `HEAD` before this
+cycle's diff was reapplied — an unrelated concatenated-ability-text assertion, nothing to do
+with the renamed string).
+
+`docs/work-inventory.json`'s data content (which units exist, which status each carries) is
+unchanged — zero reclassification, zero reachability movement. This cycle's only real movement
+is closure of the misnomer itself, plus one instrument-correction (the atlas's stale-citation
+guard updated to the new literal so it keeps resolving). Receipt:
+`artifacts/epic-1-atlas/AT-34-E1-005_cycle_receipt.md`.
 
 ### Cycle 4 — AT-34-E1-004 — the shape-engine boundary is stated as a fact, not an assumption
 

@@ -99,7 +99,7 @@ pub struct BarCheckReport {
     /// `unit_id` -> book, for entries whose book has no ingest in this repo
     /// at all -- distinct from a failure because the evaluator was never
     /// reached.
-    pub not_ingested: BTreeMap<String, String>,
+    pub engine_does_not_hold: BTreeMap<String, String>,
     pub fixtures_total: usize,
 }
 
@@ -147,19 +147,19 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     failures.extend(companion_save_dc.failures);
     failures.extend(class_feature_description.failures);
     failures.extend(race_trait_formula.failures);
-    let mut not_ingested = equipment.not_ingested;
-    not_ingested.extend(monster.not_ingested);
-    not_ingested.extend(monster_sla.not_ingested);
-    not_ingested.extend(spell.not_ingested);
-    not_ingested.extend(spell_range.not_ingested);
-    not_ingested.extend(class_feature.not_ingested);
-    not_ingested.extend(monster_ability.not_ingested);
-    not_ingested.extend(monster_ability_formula.not_ingested);
-    not_ingested.extend(companion.not_ingested);
-    not_ingested.extend(companion_skill.not_ingested);
-    not_ingested.extend(companion_save_dc.not_ingested);
-    not_ingested.extend(class_feature_description.not_ingested);
-    not_ingested.extend(race_trait_formula.not_ingested);
+    let mut engine_does_not_hold = equipment.engine_does_not_hold;
+    engine_does_not_hold.extend(monster.engine_does_not_hold);
+    engine_does_not_hold.extend(monster_sla.engine_does_not_hold);
+    engine_does_not_hold.extend(spell.engine_does_not_hold);
+    engine_does_not_hold.extend(spell_range.engine_does_not_hold);
+    engine_does_not_hold.extend(class_feature.engine_does_not_hold);
+    engine_does_not_hold.extend(monster_ability.engine_does_not_hold);
+    engine_does_not_hold.extend(monster_ability_formula.engine_does_not_hold);
+    engine_does_not_hold.extend(companion.engine_does_not_hold);
+    engine_does_not_hold.extend(companion_skill.engine_does_not_hold);
+    engine_does_not_hold.extend(companion_save_dc.engine_does_not_hold);
+    engine_does_not_hold.extend(class_feature_description.engine_does_not_hold);
+    engine_does_not_hold.extend(race_trait_formula.engine_does_not_hold);
     // A unit that FAILED any seam must never be reported cleared by another
     // one. `cleared` is a union across seams and `failures` is keyed by
     // `unit_id`, so a unit covered by two seams could otherwise be stamped on
@@ -167,13 +167,13 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     // showed up in a report nothing reads. Subtracting here keeps
     // `apply_done_rung_stamps`'s input honest for every seam added later, not
     // just today's.
-    for id in failures.keys().chain(not_ingested.keys()) {
+    for id in failures.keys().chain(engine_does_not_hold.keys()) {
         cleared.remove(id);
     }
     BarCheckReport {
         cleared,
         failures,
-        not_ingested,
+        engine_does_not_hold,
         fixtures_total: equipment.fixtures_total
             + monster.fixtures_total
             + monster_sla.fixtures_total
@@ -199,12 +199,12 @@ fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for book in &books {
         let Some(dir) = ingested_equipment_dir(repo_root, book) else {
             for f in fixtures.iter().filter(|f| &f.book == book) {
-                not_ingested.insert(f.unit_id.clone(), book.clone());
+                engine_does_not_hold.insert(f.unit_id.clone(), book.clone());
             }
             continue;
         };
@@ -256,7 +256,7 @@ fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 // ---------------------------------------------------------------------------
@@ -448,13 +448,13 @@ fn run_monster_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
         let registry_book = monster_registry_book(&fixture.book);
         let Some(monster_book) = MONSTER_BOOKS.iter().find(|b| b.corpus_book == registry_book)
         else {
-            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            engine_does_not_hold.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
         };
         // Resolved by `.key` (the corpus `KEY:` identity, == `record_key` ==
@@ -509,7 +509,7 @@ fn run_monster_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 // ---------------------------------------------------------------------------
@@ -813,12 +813,12 @@ fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for book in &books {
         let Some(dir) = spell_corpus_dir_exists(repo_root, book) else {
             for f in fixtures.iter().filter(|f| &f.book == book) {
-                not_ingested.insert(f.unit_id.clone(), book.clone());
+                engine_does_not_hold.insert(f.unit_id.clone(), book.clone());
             }
             continue;
         };
@@ -869,7 +869,7 @@ fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 /// A PF1 rules-defined `RANGE:` formula for the three caster-level-linear
@@ -1062,12 +1062,12 @@ fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for book in &books {
         let Some(dir) = spell_corpus_dir_exists(repo_root, book) else {
             for f in fixtures.iter().filter(|f| &f.book == book) {
-                not_ingested.insert(f.unit_id.clone(), book.clone());
+                engine_does_not_hold.insert(f.unit_id.clone(), book.clone());
             }
             continue;
         };
@@ -1121,7 +1121,7 @@ fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 // ---------------------------------------------------------------------------
@@ -1431,12 +1431,12 @@ fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for book in &books {
         let Some(dir) = class_feature_corpus_dir_exists(repo_root, book) else {
             for f in fixtures.iter().filter(|f| &f.book == book) {
-                not_ingested.insert(f.unit_id.clone(), book.clone());
+                engine_does_not_hold.insert(f.unit_id.clone(), book.clone());
             }
             continue;
         };
@@ -1529,7 +1529,7 @@ fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 // ---------------------------------------------------------------------------
@@ -1717,14 +1717,14 @@ fn run_monster_sla_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut candidates: BTreeSet<String> = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
         candidates.insert(fixture.unit_id.clone());
         let registry_book = monster_registry_book(&fixture.book);
         let Some(monster_book) = MONSTER_BOOKS.iter().find(|b| b.corpus_book == registry_book)
         else {
-            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            engine_does_not_hold.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
         };
         let Some(monster) = monster_book.monster_resolve(&fixture.record_key) else {
@@ -1784,9 +1784,9 @@ fn run_monster_sla_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let cleared: BTreeSet<String> = candidates
         .into_iter()
-        .filter(|id| !failures.contains_key(id) && !not_ingested.contains_key(id))
+        .filter(|id| !failures.contains_key(id) && !engine_does_not_hold.contains_key(id))
         .collect();
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 #[cfg(test)]
@@ -1904,9 +1904,9 @@ mod class_feature_seam_tests {
             "the committed fixture must carry at least one class_feature_entries row"
         );
         assert!(
-            report.not_ingested.is_empty(),
+            report.engine_does_not_hold.is_empty(),
             "every committed class_feature fixture's book must be ingested, got: {:?}",
-            report.not_ingested
+            report.engine_does_not_hold
         );
         assert!(
             report.failures.is_empty(),
@@ -2331,9 +2331,9 @@ mod spell_range_seam_tests {
             "the committed fixture must carry at least one spell_range_entries row"
         );
         assert!(
-            report.not_ingested.is_empty(),
+            report.engine_does_not_hold.is_empty(),
             "every committed spell-range fixture's book must be ingested, got: {:?}",
-            report.not_ingested
+            report.engine_does_not_hold
         );
         assert!(
             report.failures.is_empty(),
@@ -2541,9 +2541,9 @@ mod spell_seam_tests {
             "the committed fixture must carry at least one spell_entries row"
         );
         assert!(
-            report.not_ingested.is_empty(),
+            report.engine_does_not_hold.is_empty(),
             "every committed spell fixture's book must be ingested, got: {:?}",
-            report.not_ingested
+            report.engine_does_not_hold
         );
         assert!(
             report.failures.is_empty(),
@@ -2885,9 +2885,9 @@ mod monster_seam_tests {
             report.failures
         );
         assert!(
-            report.not_ingested.is_empty(),
+            report.engine_does_not_hold.is_empty(),
             "every committed monster fixture's book must be ingested, got: {:?}",
-            report.not_ingested
+            report.engine_does_not_hold
         );
         assert_eq!(report.cleared.len(), report.fixtures_total);
     }
@@ -2994,9 +2994,9 @@ mod monster_seam_tests {
             report.failures
         );
         assert!(
-            report.not_ingested.is_empty(),
+            report.engine_does_not_hold.is_empty(),
             "every committed monster_sla fixture's book must be ingested, got: {:?}",
-            report.not_ingested
+            report.engine_does_not_hold
         );
     }
 
@@ -3476,13 +3476,13 @@ fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
         let registry_book = monster_registry_book(&fixture.book);
         let Some(monster_book) = MONSTER_BOOKS.iter().find(|b| b.corpus_book == registry_book)
         else {
-            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            engine_does_not_hold.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
         };
         let Some(record) = monster_book.monster_ability_resolve(&fixture.record_key) else {
@@ -3570,7 +3570,7 @@ fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
         cleared.insert(fixture.unit_id.clone());
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 /// The second sub-seam's half of [`run_bar_check`] — `kind=monster_ability`
@@ -3587,13 +3587,13 @@ fn run_monster_ability_formula_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
         let registry_book = monster_registry_book(&fixture.book);
         let Some(monster_book) = MONSTER_BOOKS.iter().find(|b| b.corpus_book == registry_book)
         else {
-            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            engine_does_not_hold.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
         };
         let Some(record) = monster_book.monster_ability_resolve(&fixture.record_key) else {
@@ -3680,7 +3680,7 @@ fn run_monster_ability_formula_bar_check(repo_root: &Path) -> BarCheckReport {
         cleared.insert(fixture.unit_id.clone());
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 
@@ -4003,7 +4003,7 @@ fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
         // Unlike `run_companion_bar_check` (whose own comment explains why it
@@ -4017,7 +4017,7 @@ fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
         // records is `bestiary`, the exact one-alias gap that function
         // states.
         let Some(book) = companion_book(monster_registry_book(&fixture.book)) else {
-            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            engine_does_not_hold.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
         };
         let Some(record) = book.companion_resolve(&fixture.record_key) else {
@@ -4111,7 +4111,7 @@ fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 /// A companion ABILITY's save DC, stated entirely on its own `DESC:` token —
@@ -4276,7 +4276,7 @@ fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
         // Joined on the inventory's book id directly, same choice
@@ -4285,7 +4285,7 @@ fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
         // `companion_chassis::COMPANION_BOOKS`'s own `corpus_book` spelling
         // with no `bestiary` -> `beastiary` alias needed.
         let Some(book) = companion_book(&fixture.book) else {
-            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            engine_does_not_hold.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
         };
         let Some(record) = book.companion_ability_resolve(&fixture.record_key) else {
@@ -4400,7 +4400,7 @@ fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 // ------------------------------------------------------------------------------------------
@@ -4534,7 +4534,7 @@ fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
         let Some(record) = crate::rules_core::pilot_compute::class_feature_grant_consumer::class_feature_record_tokens()
@@ -4609,7 +4609,7 @@ fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 /// One `kind=companion` fixture row. A sibling top-level `companion_entries`
@@ -4697,7 +4697,7 @@ fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
         // Joined on the INVENTORY's book id straight through, deliberately
@@ -4707,12 +4707,12 @@ fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
         // damage token and one states the refused `max(0,STR)` shape), and
         // adding an untested mapping for a population that does not exist
         // would be a guess. If a later round DOES pin a `bestiary` companion,
-        // this lands in `not_ingested` and
+        // this lands in `engine_does_not_hold` and
         // `run_companion_bar_check_clears_every_committed_companion_fixture`
-        // fails on its `not_ingested.is_empty()` assertion -- loudly, which is
+        // fails on its `engine_does_not_hold.is_empty()` assertion -- loudly, which is
         // the right failure mode for a spelling this seam has never exercised.
         let Some(book) = companion_book(&fixture.book) else {
-            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            engine_does_not_hold.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
         };
         // Resolved by `.key` (the corpus `KEY:` identity), never by `.name` --
@@ -4801,7 +4801,7 @@ fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 #[cfg(test)]
@@ -4990,9 +4990,9 @@ mod companion_seam_tests {
             "the committed fixture must carry at least one companion_entries row"
         );
         assert!(
-            report.not_ingested.is_empty(),
+            report.engine_does_not_hold.is_empty(),
             "every committed companion fixture's book must be registered, got: {:?}",
-            report.not_ingested
+            report.engine_does_not_hold
         );
         assert!(
             report.failures.is_empty(),
@@ -5273,9 +5273,9 @@ mod companion_skill_seam_tests {
             "the committed fixture must carry at least one companion_skill_entries row"
         );
         assert!(
-            report.not_ingested.is_empty(),
+            report.engine_does_not_hold.is_empty(),
             "every committed companion_skill fixture's book must be registered, got: {:?}",
-            report.not_ingested
+            report.engine_does_not_hold
         );
         assert!(
             report.failures.is_empty(),
@@ -5594,9 +5594,9 @@ mod companion_save_dc_seam_tests {
             "the committed fixture must carry at least one companion_save_dc_entries row"
         );
         assert!(
-            report.not_ingested.is_empty(),
+            report.engine_does_not_hold.is_empty(),
             "every committed companion_save_dc fixture's book must be registered, got: {:?}",
-            report.not_ingested
+            report.engine_does_not_hold
         );
         assert!(
             report.failures.is_empty(),
@@ -5874,7 +5874,7 @@ fn run_race_trait_formula_bar_check(repo_root: &Path) -> BarCheckReport {
 
     let mut cleared = BTreeSet::new();
     let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let not_ingested: BTreeMap<String, String> = BTreeMap::new();
+    let engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     let evaluator = PcgenFormulaEvaluator;
 
@@ -5971,7 +5971,7 @@ fn run_race_trait_formula_bar_check(repo_root: &Path) -> BarCheckReport {
         }
     }
 
-    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
 #[cfg(test)]
@@ -5995,7 +5995,7 @@ mod race_trait_formula_bar_check_tests {
             "every committed race_trait_formula fixture must clear: {:?}",
             report.failures
         );
-        assert!(report.not_ingested.is_empty());
+        assert!(report.engine_does_not_hold.is_empty());
         assert_eq!(report.fixtures_total, 3, "3 Undine alternate-trait records are fixture-pinned");
         assert_eq!(report.cleared.len(), 3);
     }

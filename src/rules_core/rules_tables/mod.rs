@@ -239,7 +239,7 @@ pub enum RuleSetId {
     /// **This rule set compiles the book's `companion` family and nothing
     /// else.** B2's 782 `monster` / `monster_ability` units belong to the
     /// monster lane (`decisions.md §46`); registering this rule set moves them
-    /// from `not-started` to `not-ingested`, which states the engine's real
+    /// from `not-started` to `engine-does-not-hold`, which states the engine's real
     /// relationship to the book more precisely and claims nothing about them.
     B2,
     /// Bestiary 3. SD-29 Epic 5 extend, round 5 (monster lane;

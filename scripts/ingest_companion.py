@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generic ingest of `Kind::Companion`'s enumerated-but-not-ingested units into
+"""Generic ingest of `Kind::Companion`'s enumerated-but-engine-does-not-hold units into
 `data/corpus/<book>/companion/*.json` (SD-32 `decisions.md §20`).
 
 **Why this is a separate lever from `companion_chassis.rs`/
@@ -31,7 +31,7 @@ Confirmed by direct measurement (not assumed): of the 769 `companion`
 769th (`bestiary:companion:pseudodragon_tail`) is a rendering-side gap
 (`engine_book` resolution), not a missing corpus record, and this script's
 generic per-unit ingest covers it identically -- it does not special-case
-any of these categories, it transcribes every `status: not-ingested`
+any of these categories, it transcribes every `status: engine-does-not-hold`
 `companion` unit's own row.
 
 **Generic, not per-book** (`decisions.md §17`): resolves each unit's own
@@ -203,11 +203,11 @@ def load_units() -> list[dict]:
     with open(INVENTORY_PATH, encoding="utf-8") as fh:
         doc = json.load(fh)
     units = doc["units"] if isinstance(doc, dict) and "units" in doc else doc
-    # `status == "not-ingested"` only -- companion, unlike wave 1's `ability`,
+    # `status == "engine-does-not-hold"` only -- companion, unlike wave 1's `ability`,
     # already has ~900 records shipped through `companion_chassis.rs`. This
     # script must never touch those; re-writing an already-`grounded`/
     # `fixture-verified` unit's file would destroy a real verification stamp.
-    return [u for u in units if u.get("kind") == "companion" and u.get("status") == "not-ingested"]
+    return [u for u in units if u.get("kind") == "companion" and u.get("status") == "engine-does-not-hold"]
 
 
 def existing_slugs_by_book(root_repo: str, units: list[dict]) -> dict[str, set[str]]:
@@ -234,7 +234,7 @@ def existing_citations_by_book(root_repo: str, books: set[str]) -> dict[str, set
     **Why this exists (SD-32 T9-onboarding-cause-closure, 2026-08-23).**
     `docs/work-inventory.json`'s `status` field is not updated by this
     script writing a record -- it flips to something other than
-    `"not-ingested"` only when `v06_work_inventory` is rebuilt and re-run.
+    `"engine-does-not-hold"` only when `v06_work_inventory` is rebuilt and re-run.
     A second pass over the same stale inventory (e.g. after a PI-allowlist
     widening) would otherwise re-process units a prior pass already wrote;
     `slugify()`'s collision-avoidance means it would allocate a NEW

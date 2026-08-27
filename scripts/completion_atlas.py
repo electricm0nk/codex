@@ -14,7 +14,7 @@ Every unit lands in exactly one of:
 
 Bucket derivation is keyed on `status` plus `evidence` (not `status` alone --
 `evidence` is what separates A from B from C from D within the single
-`not-ingested` status), reading the *live* inventory rather than any number
+`engine-does-not-hold` status), reading the *live* inventory rather than any number
 carried forward from a prior bundle (`decisions.md §12` L2).
 
 `overlap` is structurally impossible under this implementation: `_bucket_of`
@@ -87,7 +87,7 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'has_no_engine_table')"
         ),
-        # `Kind::Companion => not_ingested("companion_content_has_no_engine_table")`.
+        # `Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table")`.
         "citation": {"file": _ENGINE_SRC, "line": 9658, "must_contain": "has_no_engine_table"},
     },
     "B": {
@@ -97,7 +97,7 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')"
         ),
-        # `not_ingested("class_feature_option_pool_record_not_held_by_engine")`.
+        # `engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine")`.
         "citation": {"file": _ENGINE_SRC, "line": 9382, "must_contain": "not_held_by_engine"},
     },
     "C": {
@@ -107,16 +107,16 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'explanation_id' / 'diagnostic')"
         ),
-        # `not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")`.
+        # `engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")`.
         "citation": {"file": _ENGINE_SRC, "line": 9607, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
         "clears": "per named sub-cause",
-        "evidence_source": "src/bin/v06_work_inventory.rs (status == not-ingested, no other bucket matched)",
-        # The shared `not_ingested` closure that stamps `status: "not-ingested"`
+        "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
+        # The shared `engine_does_not_hold` closure that stamps `status: "engine-does-not-hold"`
         # for every arm that falls through A/B/C -- this IS the D fallthrough.
-        "citation": {"file": _ENGINE_SRC, "line": 8346, "must_contain": "not-ingested"},
+        "citation": {"file": _ENGINE_SRC, "line": 8346, "must_contain": "engine-does-not-hold"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
@@ -182,7 +182,7 @@ def _bucket_of(unit: dict) -> "str | None":
         return "X"
     if status == "not-started":
         return "Z"
-    if status == "not-ingested":
+    if status == "engine-does-not-hold":
         if _A_MARKER in evidence:
             return "A"
         if any(marker in evidence for marker in _B_MARKERS):

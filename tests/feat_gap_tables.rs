@@ -2,7 +2,7 @@
 //! ALREADY-COMPILED book whose hand-authored per-book feat table does not
 //! hold it.
 //!
-//! `docs/work-inventory.json` classifies a `feat` unit `not-ingested`
+//! `docs/work-inventory.json` classifies a `feat` unit `engine-does-not-hold`
 //! (`evidence: "feat_key_absent_from_catalog"`) when the book has a compiled
 //! rule set but `feats_all::all_feat_tables()` holds no record matching the
 //! corpus record's `KEY:` **or** its display name. Closing that population
@@ -48,7 +48,7 @@ fn holds(rule_set: RuleSetId, corpus_key: &str) -> bool {
 }
 
 /// One representative from each of the seven books this lane touches, taken
-/// verbatim from `docs/work-inventory.json`'s `not-ingested` feat population
+/// verbatim from `docs/work-inventory.json`'s `engine-does-not-hold` feat population
 /// (`corpus_key` field) before this lane landed. Pinned by name rather than
 /// by count so a regeneration that silently drops a book fails loudly.
 ///
@@ -87,7 +87,7 @@ const REPRESENTATIVES: &[(RuleSetId, &str)] = &[
     // `Botd2`: monsters) that never had a feat table of their own. Neither
     // record carries `NAMEISPI:YES` (re-derived by direct read of
     // `isi_feats.lst`/`botd2_feats.lst`), unlike `inner_sea_world_guide`'s
-    // remaining 6 `not-ingested` feats, which all do and correctly stay
+    // remaining 6 `engine-does-not-hold` feats, which all do and correctly stay
     // undeliverable (SD-30 contract 53.5).
     (RuleSetId::Isi, "Convincing Persona"),
     (RuleSetId::Botd2, "Demonic Obedience"),
@@ -99,14 +99,14 @@ fn every_gap_lane_representative_is_now_in_the_joined_catalog() {
         REPRESENTATIVES.iter().filter(|(rs, key)| !holds(*rs, key)).collect();
     assert!(
         missing.is_empty(),
-        "these previously `not-ingested` corpus feat records are still absent \
+        "these previously `engine-does-not-hold` corpus feat records are still absent \
          from `all_feat_tables()`: {missing:?}"
     );
 }
 
 /// The full `ce_feats.lst` population (`SD31-E6-F8-001`) — 15 records,
 /// verbatim from `docs/work-inventory.json`'s `feat` units whose
-/// `source_file == "ce_feats.lst"`. All 15 were `not-ingested`
+/// `source_file == "ce_feats.lst"`. All 15 were `engine-does-not-hold`
 /// (`feat_key_absent_from_catalog`) despite `feat_gap_tables.rs` shipping
 /// hand-authored rows for every one of them, because the shipped rows were
 /// filed under `RuleSetId::Crb` — the wrong host. `classify()`'s feat arm
@@ -194,14 +194,14 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
          (deity-name prerequisites redacted in place by the generator's \
          existing blacklist screen, not dropped -- neither book's population \
          is the `.MOD`/`VISIBLE:EXPORT` continuation shape found blocking \
-         `horror_adventures`/`mythic_adventures`, whose own `not-ingested` \
+         `horror_adventures`/`mythic_adventures`, whose own `engine-does-not-hold` \
          feat counts stay at this same 61/199 pin because that population is \
          not real feat content -- see this cycle's own receipt), verbatim \
          from `gen_feat_gap_tables`'s own stdout at the pinned oracle"
     );
 }
 
-/// The single `not-ingested` feat unit this lane leaves standing, and why —
+/// The single `engine-does-not-hold` feat unit this lane leaves standing, and why —
 /// recorded as a named residual rather than folded into a count.
 ///
 /// `uw_feats.lst:164` is
@@ -212,13 +212,13 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
 /// why it surfaces as a unit at all. Emitting a `RuleSetId::Uw` catalog row
 /// for it would ship a second copy of a record whose base belongs to another
 /// book — inventing a UW feat the corpus never declared — so this lane does
-/// not, and the unit stays `not-ingested` with this test as its reason.
+/// not, and the unit stays `engine-does-not-hold` with this test as its reason.
 ///
 /// Closing it honestly means teaching the catalog to represent `.MOD` overlays
 /// as modifications of their base record, which is a mechanism, not a table
 /// row, and therefore outside a proven-path lane.
 #[test]
-fn the_one_not_ingested_feat_unit_this_lane_deliberately_does_not_close() {
+fn the_one_engine_does_not_hold_feat_unit_this_lane_deliberately_does_not_close() {
     assert!(
         !holds(RuleSetId::Uw, "Samurai ~ Mount"),
         "if this record is now in the catalog, a `.MOD` overlay was ingested as \

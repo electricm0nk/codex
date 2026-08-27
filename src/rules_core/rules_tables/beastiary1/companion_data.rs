@@ -15,7 +15,7 @@
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
 //! unreachable (`decisions.md §50`, adopted from the monster lane; §56.1).
-//! These rows keep their `not-ingested` status in
+//! These rows keep their `engine-does-not-hold` status in
 //! `docs/work-inventory.json`, which is where the shortfall is counted; they
 //! are NOT a `reach_gate` `OPEN_FINDINGS` entry, because that list is keyed by
 //! FAMILY and this book's `companions` family does reach a player:
@@ -65,7 +65,7 @@
 //! `BONUS:`, so every modelled field transcribes empty and the card reads as
 //! a name over a page number. What each one DOES state is an `ASPECT:`, which
 //! no chassis in this program models yet -- the disposition is `§61.2`'s:
-//! dropped, named here, left honestly `not-ingested`:
+//! dropped, named here, left honestly `engine-does-not-hold`:
 //!   * `Pseudodragon ~ Tail`
 
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};

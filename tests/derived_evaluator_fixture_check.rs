@@ -368,11 +368,11 @@ fn engine_ingest_cites_the_same_upstream_bytes_the_fixture_was_read_from() {
         BTreeMap::new();
     let mut mismatched: BTreeMap<String, String> = BTreeMap::new();
     let mut compared = 0usize;
-    let mut not_ingested: BTreeSet<String> = BTreeSet::new();
+    let mut engine_does_not_hold: BTreeSet<String> = BTreeSet::new();
 
     for fixture in &fixtures {
         if ingested_equipment_dir(&fixture.book).is_none() {
-            not_ingested.insert(fixture.book.clone());
+            engine_does_not_hold.insert(fixture.book.clone());
             continue;
         }
         let records = provenance_by_book
@@ -418,7 +418,7 @@ fn engine_ingest_cites_the_same_upstream_bytes_the_fixture_was_read_from() {
     eprintln!(
         "upstream anchor: {compared} entries agreed across both provenance recordings; \
          {} not anchored (on the `UNCLEARED` record); {} belong to books with no \
-         ingest at all ({not_ingested:?})",
+         ingest at all ({engine_does_not_hold:?})",
         mismatched.len(),
         fixtures.len() - compared - mismatched.len()
     );
@@ -521,7 +521,7 @@ fn engine_evaluator_output_equals_the_corpus_derived_expected_value() {
     // about which units cleared the bar.
     let report = run_bar_check(&repo_root());
 
-    for book in report.not_ingested.values().collect::<BTreeSet<_>>() {
+    for book in report.engine_does_not_hold.values().collect::<BTreeSet<_>>() {
         assert!(
             !repo_root().join("data").join("corpus").join(book).join("equipment").is_dir(),
             "{book} was skipped as un-ingested, but its equipment corpus exists — the \
@@ -554,7 +554,7 @@ fn engine_evaluator_output_equals_the_corpus_derived_expected_value() {
         report.cleared.len(),
         report.fixtures_total,
         report.failures.len(),
-        report.not_ingested.len()
+        report.engine_does_not_hold.len()
     );
 }
 

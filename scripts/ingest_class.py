@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """SD-32 `decisions.md §20` — generic ingest for `Kind::Class`'s
-enumerated-but-not-ingested units (`docs/work-inventory.json`, 157 units at
+enumerated-but-engine-does-not-hold units (`docs/work-inventory.json`, 157 units at
 `857eb85d0`, all `join_status: no_record`).
 
 **Why `class` is not `ingest_simple_filename_kinds.py`'s sixth kind.** That

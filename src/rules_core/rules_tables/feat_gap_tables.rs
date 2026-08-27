@@ -1,13 +1,13 @@
 //! Corpus `feat` records that belong to an ALREADY-COMPILED book whose
 //! hand-authored per-book feat table does not hold them — the
-//! `not-ingested` population of `docs/work-inventory.json`'s `feat` kind,
+//! `engine-does-not-hold` population of `docs/work-inventory.json`'s `feat` kind,
 //! closed corpus-wide.
 //!
 //! **GENERATED — do not edit by hand.** Regenerate with
 //! `PCGEN_CORPUS_ROOT=<pcgen>/data cargo run --locked --bin gen_feat_gap_tables`.
 //! The generator applies `v06_work_inventory`'s own record predicate for
 //! `Kind::Feat`, so a row here is exactly a row that inventory reported
-//! `not-ingested`.
+//! `engine-does-not-hold`.
 //!
 //! `description` is the record's `DESC:` joined with its `BENEFIT:` when
 //! both are present, and `None` when it carries neither — never a

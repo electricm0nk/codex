@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 import audit_fallback_join_identity as AUD  # noqa: E402
 
 
-def _unit(id_, kind, book, source_file, source_line, corpus_key, status="not-ingested"):
+def _unit(id_, kind, book, source_file, source_line, corpus_key, status="engine-does-not-hold"):
     return {
         "id": id_,
         "kind": kind,

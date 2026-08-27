@@ -58,7 +58,7 @@
 //! `<Archetype> Eidolon ~ …` and `WCEvolution ~ …` records hang off the
 //! summoner's eidolon CLASS feature rather than off any creature row of
 //! `arg_races_companion.lst`. Carried per `decisions.md §50`, named row by row
-//! in `companion_data`'s module doc, and keeping their honest `not-ingested`
+//! in `companion_data`'s module doc, and keeping their honest `engine-does-not-hold`
 //! status in `docs/work-inventory.json`.
 //!
 //! This book is also where the chassis's unmodelled-facet allowlist gained the

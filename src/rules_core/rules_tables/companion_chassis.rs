@@ -39,7 +39,7 @@
 //! the last one, so from round 4 the rule is the monster lane's: **transcribe
 //! the linked subset, drop the orphans, and carry them as an `OPEN_FINDINGS`
 //! entry naming their remedy** (`decisions.md §50`). The dropped rows keep their
-//! honest `not-ingested` status. What is still absolute is the other half: a
+//! honest `engine-does-not-hold` status. What is still absolute is the other half: a
 //! book may never SHIP a row nothing can reach, which
 //! `every_shipped_ability_row_is_owned_by_a_creature_of_its_own_book` pins.
 //!
@@ -398,7 +398,7 @@ impl CompanionBook {
 ///
 /// Round 2's three (`bestiary_5`, `bestiary_6`, `bestiary_2`) were held back
 /// from round 1 because each needs its own `RuleSetId`, whose scope flip moves
-/// several hundred units of OTHER kinds from `not-started` to `not-ingested`.
+/// several hundred units of OTHER kinds from `not-started` to `engine-does-not-hold`.
 ///
 /// **`bestiary` was the last orphan-free book in the corpus** (`decisions.md
 /// §54`), so "every registered book ships every row it owns" stopped being true

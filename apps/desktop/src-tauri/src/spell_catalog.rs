@@ -630,7 +630,7 @@ pub fn build_spell_catalog() -> SpellCatalogResponse {
     // `codex::rules_core::spell_resolver::spell_catalog_rows()`, shared with
     // `v06_work_inventory`'s `spell_levels` map. Those two lists had drifted
     // (five books here, three there), which reported every shipping ARG and
-    // UI spell as `not-ingested`. Reading one registry is what makes that
+    // UI spell as `engine-does-not-hold`. Reading one registry is what makes that
     // divergence unrepresentable; the per-book `map_*_entry` helpers below
     // are retained as the typed proof that each book's own table supplies
     // exactly the fields this DTO claims (see their doc comments and the

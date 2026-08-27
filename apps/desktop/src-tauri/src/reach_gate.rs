@@ -623,15 +623,15 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("bestiary_3", "bestiary_3"),
     // SD-29 Epic 5 extend, round 6 (monster lane). Bestiary 4 carries an 86-unit
     // `race_trait` family too, but this rule set compiles the two monster
-    // families and those units stay `not-ingested`, which is their honest state.
+    // families and those units stay `engine-does-not-hold`, which is their honest state.
     ("bestiary_4", "bestiary_4"),
     // SD-29 Epic 5 extend, round 7 (monster lane). Same again. Inner Sea
     // Bestiary carries a 4-unit `race_trait` family too; this rule set compiles
-    // the two monster families and those units stay `not-ingested`.
+    // the two monster families and those units stay `engine-does-not-hold`.
     ("inner_sea_bestiary", "inner_sea_bestiary"),
     // SD-29 Epic 5 extend, round 9 (monster lane). Inner Sea Gods. The book
     // carries a large `race_trait` family too; this rule set compiles the two
-    // monster families and those units stay `not-ingested`, which is their
+    // monster families and those units stay `engine-does-not-hold`, which is their
     // honest state.
     ("inner_sea_gods", "inner_sea_gods"),
     // SD-29 Epic 7 extend, round 6 (companion lane). Ultimate Wilderness. The

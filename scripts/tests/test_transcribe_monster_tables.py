@@ -13,7 +13,7 @@ root, so any re-attributed unit made the whole transcriber run for that book
 `bestiary`: `ce_abilities_race.lst is not present anywhere under
 .../roleplaying_game/bestiary`) -- which is also why 357 `static`/`derived`
 `monster_ability` units across `bestiary`/`bestiary_2`/`bestiary_3`/`bestiary_4`
-sit `not-ingested` despite their book being fully registered.
+sit `engine-does-not-hold` despite their book being fully registered.
 
 This test proves the fix with a synthetic corpus tree, not the live oracle
 (the live oracle is exercised by actually re-running the transcriber, which is
@@ -156,7 +156,7 @@ class InternalBundleAbilityHopIsResolved(unittest.TestCase):
     into the transcriber -- `transcribe()`'s ownership pass reads only
     `ABILITY:Special Ability|AUTOMATIC|` tokens and the `<Monster> ~
     <Ability>` namespace prefix, neither of which sees this shape, so every
-    ability reachable only through it stayed an orphan and `not-ingested`
+    ability reachable only through it stayed an orphan and `engine-does-not-hold`
     forever regardless of how complete its own prose was).
 
     Shape (real, from `inner_sea_gods`, `support/isg_races_b4.lst:6` /
@@ -231,7 +231,7 @@ class InternalBundleAbilityHopIsResolved(unittest.TestCase):
                     "name": "Test Monster",
                     "source_file": "bb_races.lst",
                     "source_line": 1,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
                 {
                     "book": "bonus_bestiary",
@@ -240,7 +240,7 @@ class InternalBundleAbilityHopIsResolved(unittest.TestCase):
                     "name": "Bundled Ability",
                     "source_file": "bb_abilities.lst",
                     "source_line": 2,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
                 {
                     "book": "bonus_bestiary",
@@ -249,7 +249,7 @@ class InternalBundleAbilityHopIsResolved(unittest.TestCase):
                     "name": "Unrelated Ability",
                     "source_file": "bb_abilities.lst",
                     "source_line": 3,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
             ]
         }
@@ -375,7 +375,7 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
                     "name": "Test Monster",
                     "source_file": "bb_races.lst",
                     "source_line": 1,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
                 {
                     "book": "bonus_bestiary",
@@ -384,7 +384,7 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
                     "name": "Weird Ability",
                     "source_file": "bb_abilities.lst",
                     "source_line": 1,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
                 {
                     "book": "bonus_bestiary",
@@ -393,7 +393,7 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
                     "name": "Fine Ability",
                     "source_file": "bb_abilities.lst",
                     "source_line": 2,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
             ]
         }
@@ -581,7 +581,7 @@ class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
                     "name": "Test Monster",
                     "source_file": "bb_races.lst",
                     "source_line": 1,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
                 {
                     "book": "bonus_bestiary",
@@ -590,7 +590,7 @@ class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
                     "name": "Clean Ability",
                     "source_file": "bb_abilities.lst",
                     "source_line": 1,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
                 {
                     "book": "bonus_bestiary",
@@ -599,7 +599,7 @@ class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
                     "name": f"{self.term} Ability",
                     "source_file": "bb_abilities.lst",
                     "source_line": 2,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
                 {
                     "book": "bonus_bestiary",
@@ -608,7 +608,7 @@ class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
                     "name": "Whisper",
                     "source_file": "bb_abilities.lst",
                     "source_line": 3,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
                 {
                     "book": "bonus_bestiary",
@@ -617,7 +617,7 @@ class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
                     "name": "Guarded",
                     "source_file": "bb_abilities.lst",
                     "source_line": 4,
-                    "status": "not-ingested",
+                    "status": "engine-does-not-hold",
                 },
             ]
         }

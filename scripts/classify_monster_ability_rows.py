@@ -117,7 +117,7 @@ def special_ability_refs(row: list[str]) -> list[str]:
     return refs
 
 
-REMAINING = {"not-started", "not-ingested"}
+REMAINING = {"not-started", "engine-does-not-hold"}
 
 PI_SCREEN_RS = "src/rules_core/pi_screening.rs"
 

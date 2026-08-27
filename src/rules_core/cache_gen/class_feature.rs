@@ -311,7 +311,7 @@ pub fn units_from_inventory_json(json_text: &str) -> Result<Vec<ClassFeatureSour
 /// `"Vigilante"`) -- the SAME population `v06_work_inventory.rs`'s
 /// `corpus_class_names` fact builds (its own doc comment: "Every class
 /// name the corpus declares anywhere, so a class feature of an
-/// un-ingested class ... is reported as a real `not-ingested` gap rather
+/// un-ingested class ... is reported as a real `engine-does-not-hold` gap rather
 /// than as an unclassifiable mystery"), read here from the same
 /// already-committed `docs/work-inventory.json` rather than re-walking
 /// raw PCGen `*_class.lst` files a second time (SD-32 card 11, T2a/T12

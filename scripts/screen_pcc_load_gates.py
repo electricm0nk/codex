@@ -73,7 +73,7 @@ import sys
 INVENTORY = "docs/work-inventory.json"
 CORPUS_DIR = "data/corpus"
 
-REMAINING = {"not-started", "not-ingested"}
+REMAINING = {"not-started", "engine-does-not-hold"}
 
 # A pcc content line: `<TAG>:<path>|<condition>|<condition>...`
 PCC_LOAD = re.compile(r"^[A-Z]+:([^|\t\r\n]+)(.*)$")

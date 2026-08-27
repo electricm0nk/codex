@@ -12,7 +12,7 @@ the first hit:
 
 `classify_unit` itself only reports WHETHER a record was found
 (`join_status`), never WHICH tier resolved it. This script re-runs the same
-three lookups in the same order for every `status == "not-ingested"` unit,
+three lookups in the same order for every `status == "engine-does-not-hold"` unit,
 records which tier answered it, and -- for every unit answered ONLY by tier
 2 or tier 3 -- independently re-opens the matched corpus JSON record from
 disk and checks that it is genuinely the SAME object the unit describes:
@@ -95,7 +95,7 @@ def _resolve_record_path_for_key(corpus_root: str, book: str, kind: str, key: st
 def audit(inventory_path: str, corpus_root: str) -> dict:
     inventory = SL.load_inventory_or_die(inventory_path)
     all_not_done = CL.not_done_population(inventory)
-    units = [u for u in all_not_done if u.get("status") == "not-ingested"]
+    units = [u for u in all_not_done if u.get("status") == "engine-does-not-hold"]
 
     books = {u.get("book") for u in units if u.get("book")}
     corpus_index = SL.build_corpus_index(corpus_root, books)
@@ -223,7 +223,7 @@ def main(argv: list[str] | None = None) -> int:
 
     result = audit(args.inventory, args.corpus_root)
     tc = result["tier_counts"]
-    print(f"population (status == 'not-ingested'): {result['population']}")
+    print(f"population (status == 'engine-does-not-hold'): {result['population']}")
     print(f"  primary match         : {tc['primary']}")
     print(f"  key_index fallback    : {tc['key_index']}")
     print(f"  cross_book fallback   : {tc['cross_book']}")

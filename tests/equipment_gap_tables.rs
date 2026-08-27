@@ -18,7 +18,7 @@ use codex::rules_core::rules_tables::equipment_gap_tables::equipment_gap_rows;
 
 /// The generator's own per-book output, re-derived here from the table rather
 /// than transcribed from its stdout. Each figure is that book's
-/// `not-ingested` `equipment` + `equipment_modifier` unit count in
+/// `engine-does-not-hold` `equipment` + `equipment_modifier` unit count in
 /// `docs/work-inventory.json` at the time this lane landed.
 const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // `SD31-E6-F10-002`, `decisions.md §9`: 3 of CRB's original 335 gap
@@ -48,7 +48,7 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     ("UW", 127),
     // `SD31-E6-F10-003`: 8 further already-compiled books extended into the
     // gap lane, same "no hand-authored table" shape as `UW` above. Each
-    // figure is that book's `not-ingested` `equipment` + `equipment_
+    // figure is that book's `engine-does-not-hold` `equipment` + `equipment_
     // modifier` population net of its own declared-PI exclusions (12
     // corpus-wide this cycle; `inner_sea_races` -1, `inner_sea_world_guide`
     // -7, `bestiary_4` -3, `ultimate_equipment` -1 above) and, for `B2`/
@@ -99,7 +99,7 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     ("BOTD2", 6),
     // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off: two
     // more already-compiled books extended into the gap lane. Both figures
-    // are that book's `not-ingested` equipment population, re-derived
+    // are that book's `engine-does-not-hold` equipment population, re-derived
     // directly against `fresh_inventory.json`, net of the generator's own
     // declared-PI/blacklist screens (0 hits for either book -- confirmed
     // via this generator's own stdout at the pinned oracle).
@@ -111,13 +111,13 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     // silently dropped every one before it ever reached `data/corpus/`.
     // Fixed in `cache_gen::equipment_gap::book_routing`. Separately,
     // `ism_equipmods.lst` was deliberately left out of this book's citation
-    // files on a stale "zero not-ingested equipment units for that file"
-    // claim; re-derived against the pinned oracle, 62 `not-ingested`
+    // files on a stale "zero engine-does-not-hold equipment units for that file"
+    // claim; re-derived against the pinned oracle, 62 `engine-does-not-hold`
     // `equipment_modifier` units cite it. Both fixed together: 6 + 62 = 68.
     ("ISM", 68),
     // SD-32 T9 residual: `adventurers_guide` had no `BOOK_INPUT` entry at
     // all before this cycle -- the single largest un-covered `equipment`
-    // population (115 `not-ingested` units, re-derived against the pinned
+    // population (115 `engine-does-not-hold` units, re-derived against the pinned
     // oracle). 97 of the 115 resolve to a real citation and clear PI
     // screening; the remainder are unresolved citations or PI exclusions,
     // both reported by the generator's own stdout, not fabricated to close
@@ -133,9 +133,9 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     ("AG", 116),
     // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already
     // routed in the compiled catalog) had no `BOOK_INPUT` entry either, but
-    // its real residual (19 `not-ingested` equipment units) turns out to be
+    // its real residual (19 `engine-does-not-hold` equipment units) turns out to be
     // status `unknown`/`ingested-magnitude` in `docs/work-inventory.json`,
-    // not `status == "not-ingested"` -- this generator's own selection
+    // not `status == "engine-does-not-hold"` -- this generator's own selection
     // predicate (see its module doc comment) only covers the latter, so 0
     // rows land here. The config entry is added (harmless, additive) and
     // the real residual is named as a next-cycle item rather than widening
@@ -152,7 +152,7 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
 ];
 
 #[test]
-fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
+fn the_gap_lane_carries_one_row_per_previously_engine_does_not_hold_unit() {
     let total: usize = equipment_gap_rows().count();
     let expected: usize = EXPECTED_PER_BOOK.iter().map(|(_, n)| *n).sum();
     assert_eq!(

@@ -3,7 +3,7 @@
 
 Proves the load-bearing claim: bucket A (8,463 units, `has_no_engine_table`
 evidence) is enumerated **per kind**, with a per-book breakdown, the engine
-surface (the exact `not_ingested(...)` call site in
+surface (the exact `engine_does_not_hold(...)` call site in
 `src/bin/v06_work_inventory.rs`) a real table would replace, and the set of
 books that would reach zero bucket-A once that kind's table exists.
 
@@ -25,7 +25,7 @@ import missing_engine_tables as MET  # noqa: E402
 
 def _unit(id_, kind, book, bucket_a=True):
     evidence = f"{kind}_content_has_no_engine_table" if bucket_a else "grounded"
-    status = "not-ingested" if bucket_a else "grounded"
+    status = "engine-does-not-hold" if bucket_a else "grounded"
     return {"id": id_, "kind": kind, "book": book, "status": status, "evidence": evidence}
 
 

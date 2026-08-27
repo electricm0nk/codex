@@ -13,7 +13,7 @@
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
 //! unreachable (`decisions.md §50`, adopted from the monster lane; §56.1).
-//! These rows keep their `not-ingested` status in
+//! These rows keep their `engine-does-not-hold` status in
 //! `docs/work-inventory.json`, which is where the shortfall is counted; they
 //! are NOT a `reach_gate` `OPEN_FINDINGS` entry, because that list is keyed by
 //! FAMILY and this book's `companions` family does reach a player:
@@ -50,7 +50,7 @@
 //! row's `MONSTERCLASS:` token names -- it states no `SIZE:`, no `MOVE:` and
 //! no natural attacks, so every field this chassis models transcribes empty.
 //! Modelling it is a new record type (a level progression table), not a wider
-//! predicate on this one. Left honestly `not-ingested`; the creature rows that
+//! predicate on this one. Left honestly `engine-does-not-hold`; the creature rows that
 //! name them ship, and carry the token verbatim:
 //!   * `1`
 //!   * `Imp Companion`

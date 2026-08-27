@@ -31,7 +31,7 @@ probe / does not" hides a real difference the census would otherwise erase:
     presence/lookup check, not a magnitude-verifying probe. `monster`,
     `monster_ability`, `companion`.
   * ``no_engine_table`` -- the generator's own verdict arm is an
-    unconditional `not_ingested(...)`, always, for every unit of the kind:
+    unconditional `engine_does_not_hold(...)`, always, for every unit of the kind:
     no engine table exists at all, so no probe of any kind is possible.
     `ability`, `template`, `deity`, `power`, `domain`, `skill`, `language`,
     `trait`.
@@ -197,7 +197,7 @@ PROBE_SURFACE = {
         "probe_functions": [],
         "probe_locations": [f"{GENERATOR_SOURCE}:9553"],
         "positive_evidence_examples": [],
-        "notes": "Unconditional not_ingested('ability_content_has_no_engine_table') -- "
+        "notes": "Unconditional engine_does_not_hold('ability_content_has_no_engine_table') -- "
         "no engine table exists for this kind at all.",
     },
     "template": {
@@ -206,7 +206,7 @@ PROBE_SURFACE = {
         "probe_functions": [],
         "probe_locations": [f"{GENERATOR_SOURCE}:9548"],
         "positive_evidence_examples": [],
-        "notes": "Unconditional not_ingested('template_content_has_no_engine_table').",
+        "notes": "Unconditional engine_does_not_hold('template_content_has_no_engine_table').",
     },
     "deity": {
         "probe_exists": False,
@@ -214,7 +214,7 @@ PROBE_SURFACE = {
         "probe_functions": [],
         "probe_locations": [f"{GENERATOR_SOURCE}:9549"],
         "positive_evidence_examples": [],
-        "notes": "Unconditional not_ingested('deity_content_has_no_engine_table').",
+        "notes": "Unconditional engine_does_not_hold('deity_content_has_no_engine_table').",
     },
     "power": {
         "probe_exists": False,
@@ -222,7 +222,7 @@ PROBE_SURFACE = {
         "probe_functions": [],
         "probe_locations": [f"{GENERATOR_SOURCE}:9550"],
         "positive_evidence_examples": [],
-        "notes": "Unconditional not_ingested('power_content_has_no_engine_table').",
+        "notes": "Unconditional engine_does_not_hold('power_content_has_no_engine_table').",
     },
     "domain": {
         "probe_exists": False,
@@ -230,7 +230,7 @@ PROBE_SURFACE = {
         "probe_functions": [],
         "probe_locations": [f"{GENERATOR_SOURCE}:9551"],
         "positive_evidence_examples": [],
-        "notes": "Unconditional not_ingested('domain_content_has_no_engine_table').",
+        "notes": "Unconditional engine_does_not_hold('domain_content_has_no_engine_table').",
     },
     "skill": {
         "probe_exists": False,
@@ -238,7 +238,7 @@ PROBE_SURFACE = {
         "probe_functions": [],
         "probe_locations": [f"{GENERATOR_SOURCE}:9537"],
         "positive_evidence_examples": [],
-        "notes": "Unconditional not_ingested('skill_content_has_no_engine_table').",
+        "notes": "Unconditional engine_does_not_hold('skill_content_has_no_engine_table').",
     },
     "language": {
         "probe_exists": False,
@@ -246,7 +246,7 @@ PROBE_SURFACE = {
         "probe_functions": [],
         "probe_locations": [f"{GENERATOR_SOURCE}:9552"],
         "positive_evidence_examples": [],
-        "notes": "Unconditional not_ingested('language_content_has_no_engine_table').",
+        "notes": "Unconditional engine_does_not_hold('language_content_has_no_engine_table').",
     },
     "trait": {
         "probe_exists": False,
@@ -254,7 +254,7 @@ PROBE_SURFACE = {
         "probe_functions": [],
         "probe_locations": [f"{GENERATOR_SOURCE}:9554"],
         "positive_evidence_examples": [],
-        "notes": "Unconditional not_ingested('trait_content_has_no_engine_table').",
+        "notes": "Unconditional engine_does_not_hold('trait_content_has_no_engine_table').",
     },
 }
 

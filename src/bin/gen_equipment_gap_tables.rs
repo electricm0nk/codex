@@ -5,7 +5,7 @@
 //! # Why this binary exists
 //!
 //! `docs/work-inventory.json` classifies an `equipment`/`equipment_modifier`
-//! unit as `not-ingested` when the book has a compiled rule set but
+//! unit as `engine-does-not-hold` when the book has a compiled rule set but
 //! `equipment_resolver::equipment_catalog_rows()` holds no row matching the
 //! record's `KEY:` (or, failing that, its display name). Those are real gaps
 //! inside started books — not un-started books — and closing them needs no
@@ -137,7 +137,7 @@ fn screen_record(mut record: ParsedRecord, declared: DeclaredProductIdentity) ->
 }
 
 // SD31-E6-F10-003: short codes for 13 further already-compiled books that
-// carry `not-ingested` equipment/equipment_modifier residue but have no
+// carry `engine-does-not-hold` equipment/equipment_modifier residue but have no
 // hand-authored `equipment_resolver::EQUIPMENT_BOOK_*` constant of their
 // own (none of them has a per-book `equipment_tables` module at all --
 // every one of their catalog rows will come from this gap lane, the same
@@ -176,7 +176,7 @@ const EQUIPMENT_BOOK_BOTD2: &str = "BOTD2";
 const EQUIPMENT_BOOK_ISTEM: &str = "ISTEM";
 const EQUIPMENT_BOOK_ISM: &str = "ISM";
 // SD-32 T9 residual (`decisions.md §20`): `adventurers_guide` had no
-// `BOOK_INPUT` entry at all -- 115 `not-ingested` equipment units, the
+// `BOOK_INPUT` entry at all -- 115 `engine-does-not-hold` equipment units, the
 // single largest un-covered `equipment`-kind population, re-derived
 // against the pinned oracle. Same shape as the arms immediately above:
 // a genuine new-content book, routed in `cache_gen::equipment_gap`'s
@@ -242,10 +242,10 @@ struct BookInput {
     files: &'static [&'static str],
 }
 
-/// Every book that carries at least one `not-ingested` equipment or
+/// Every book that carries at least one `engine-does-not-hold` equipment or
 /// equipment-modifier unit, with the exact files those units come from.
 /// Derived from `docs/work-inventory.json`'s own `source_file` field over the
-/// `status == "not-ingested"` population — not guessed from a directory glob,
+/// `status == "engine-does-not-hold"` population — not guessed from a directory glob,
 /// so a file with no gap is not re-parsed and cannot introduce a row nobody
 /// asked for.
 const BOOK_INPUTS: &[BookInput] = &[
@@ -476,7 +476,7 @@ const BOOK_INPUTS: &[BookInput] = &[
     },
     // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off. Three
     // files per `docs/work-inventory.json`'s own `source_file` field over
-    // this book's `not-ingested` equipment population -- re-derived by
+    // this book's `engine-does-not-hold` equipment population -- re-derived by
     // direct read of `fresh_inventory.json`, not guessed from a directory
     // glob.
     BookInput {
@@ -489,9 +489,9 @@ const BOOK_INPUTS: &[BookInput] = &[
         ],
     },
     // SD-32 T9 residual: the doc comment this replaced ("`ism_equipmods.lst`
-    // is deliberately NOT named here ... zero not-ingested equipment units
+    // is deliberately NOT named here ... zero engine-does-not-hold equipment units
     // for that file") went stale -- re-derived against the pinned oracle,
-    // `docs/work-inventory.json` now carries 62 `not-ingested`
+    // `docs/work-inventory.json` now carries 62 `engine-does-not-hold`
     // `equipment_modifier` units citing `ism_equipmods.lst` (kind, not the
     // `equipment` kind the retired comment checked). Added back in.
     BookInput {
@@ -524,7 +524,7 @@ const BOOK_INPUTS: &[BookInput] = &[
     },
     // SD-32 T9 residual: `ultimate_magic` (`EQUIPMENT_BOOK_UM`, already
     // routed in `equipment_resolver.rs`'s compiled catalog) had no
-    // `BOOK_INPUT` entry -- 19 `not-ingested` equipment units, re-derived
+    // `BOOK_INPUT` entry -- 19 `engine-does-not-hold` equipment units, re-derived
     // against the pinned oracle. `pfs_um_equip_general.lst` is a real
     // Pathfinder Society legality-overlay file cited by some of those
     // units, same shape as `_pfs/pfs_acg_equip.lst` elsewhere in this list.
@@ -907,7 +907,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // `v06_work_inventory`'s `equipment_keys` map does (it inserts
     // `row.key` and nothing else, then asks
     // `s.contains(unit.key) || s.contains(unit.name)`), so this generator's
-    // output set is precisely that classifier's `not-ingested` set. A first
+    // output set is precisely that classifier's `engine-does-not-hold` set. A first
     // pass here inserted row NAMES into the set as well and emitted 741 rows
     // against the inventory's 769 — 28 records suppressed because some other
     // record's display name happened to equal theirs. Caught by differencing
@@ -1055,13 +1055,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         header,
         "//! Corpus equipment and equipment-modifier records that belong to an\n\
          //! ALREADY-COMPILED book whose hand-authored per-book table does not hold\n\
-         //! them — the `not-ingested` population of `docs/work-inventory.json`'s\n\
+         //! them — the `engine-does-not-hold` population of `docs/work-inventory.json`'s\n\
          //! `equipment`/`equipment_modifier` kinds, closed corpus-wide.\n\
          //!\n\
          //! **GENERATED — do not edit by hand.** Regenerate with\n\
          //! `PCGEN_CORPUS_ROOT=<pcgen>/data cargo run --locked --bin gen_equipment_gap_tables`.\n\
          //! The generator applies `v06_work_inventory`'s own record predicate, so a\n\
-         //! row here is exactly a row that inventory reported `not-ingested`.\n\
+         //! row here is exactly a row that inventory reported `engine-does-not-hold`.\n\
          //!\n\
          //! `cost_gp`/`weight_lbs` are `None` when the corpus record carries no such\n\
          //! token, or carries a PCGen formula this table deliberately does not\n\

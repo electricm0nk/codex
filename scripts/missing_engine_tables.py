@@ -8,7 +8,7 @@ given table's absence blocks (SD-34 `AT-34-E1-003`).
         writes artifacts/epic-1-atlas/missing-engine-tables.json
 
 Reads the same `docs/work-inventory.json` `completion_atlas.py` reads and
-selects bucket A the same way it does (`status == not-ingested` and
+selects bucket A the same way it does (`status == engine-does-not-hold` and
 `evidence` containing `has_no_engine_table`) -- not by re-deriving a second,
 divergent definition of the bucket.
 
@@ -16,7 +16,7 @@ For each of the 9 kinds this population actually contains, records:
 
   - `count` -- units of this kind in bucket A
   - `by_book` -- per-book breakdown of that count
-  - `engine_surface` -- the exact `not_ingested(...)` call site in
+  - `engine_surface` -- the exact `engine_does_not_hold(...)` call site in
     `src/bin/v06_work_inventory.rs` a real table would replace (the same
     `file:line:must_contain` citation shape `completion_atlas.py` uses for
     its own bucket definitions -- verified against the live file, not
@@ -50,7 +50,7 @@ ARTIFACT_PATH = os.path.join(
 _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 _A_MARKER = "has_no_engine_table"
 
-# The exact `not_ingested(...)` call site emitting each kind's bucket-A
+# The exact `engine_does_not_hold(...)` call site emitting each kind's bucket-A
 # marker in `_ENGINE_SRC`, as of this cycle's re-verification. This is "the
 # engine surface a table would attach to": the arm a real per-kind table
 # lookup would replace.
@@ -81,7 +81,7 @@ def _load_units() -> list:
 
 
 def _is_bucket_a(unit: dict) -> bool:
-    return unit.get("status") == "not-ingested" and _A_MARKER in (unit.get("evidence") or "")
+    return unit.get("status") == "engine-does-not-hold" and _A_MARKER in (unit.get("evidence") or "")
 
 
 def _read_source_line(rel_path: str, line_no: int) -> "str | None":
@@ -167,7 +167,7 @@ def cmd_check(args) -> int:
 
     artifact = dict(report)
     artifact["re_derive_command"] = "python3 scripts/missing_engine_tables.py --check"
-    artifact["source"] = "docs/work-inventory.json (status == not-ingested, evidence contains 'has_no_engine_table')"
+    artifact["source"] = "docs/work-inventory.json (status == engine-does-not-hold, evidence contains 'has_no_engine_table')"
 
     os.makedirs(os.path.dirname(ARTIFACT_PATH), exist_ok=True)
     with open(ARTIFACT_PATH, "w", encoding="utf-8") as fh:

@@ -47,7 +47,7 @@ pub const SPELL_BOOK_OA: &str = "OA";
 /// fresh off `docs/work-inventory.json` at this cycle's own tip.
 pub const SPELL_BOOK_UC: &str = "UC";
 /// SD31-E6-F10-001: Inner Sea Gods, the ninth book -- the largest
-/// `not-ingested` `spell` book (96 units) with BOTH a compiled `RuleSetId`
+/// `engine-does-not-hold` `spell` book (96 units) with BOTH a compiled `RuleSetId`
 /// (`RuleSetId::Isg`, from SD-29's monster lane) AND a real, dedicated
 /// `isg_spells.lst` corpus file, re-derived fresh off
 /// `docs/work-inventory.json` at this cycle's own tip. (`bestiary`'s 109 and
@@ -57,12 +57,12 @@ pub const SPELL_BOOK_UC: &str = "UC";
 pub const SPELL_BOOK_ISG: &str = "ISG";
 /// SD-31 wave-19 (`ultimate_wilderness` lane): Ultimate Wilderness, the
 /// tenth book -- 61 base spell declarations (`uw_spells.lst`), the whole of
-/// this book's `spell`-kind `not-ingested` population. See
+/// this book's `spell`-kind `engine-does-not-hold` population. See
 /// `src/bin/ingest_ultimate_wilderness_spells.rs` for the ingest path.
 pub const SPELL_BOOK_UW: &str = "UW";
 /// SD-31 wave-24 (`bestiary_6` book-auditor lane): Bestiary 6, the eleventh
 /// book -- both of its 2 base spell declarations (`b6_spells.lst`), the
-/// whole of this book's `spell`-kind `not-ingested` population. See
+/// whole of this book's `spell`-kind `engine-does-not-hold` population. See
 /// `rules_tables::bestiary_6::spell_list`'s doc comment for the two rows'
 /// verbatim reprint inside Ultimate Wilderness's own `uw_spells.lst`.
 pub const SPELL_BOOK_B6: &str = "B6";
@@ -132,7 +132,7 @@ pub const SPELL_BOOK_UMWP: &str = "UMWP";
 /// `v06_work_inventory::gather_engine_facts` inserted **three**
 /// (`core_rulebook`, `advanced_players_guide`, `advanced_class_guide`) —
 /// so every ARG and UI spell already shipping in the catalog was reported
-/// `not-ingested` by the work inventory. That is precisely the
+/// `engine-does-not-hold` by the work inventory. That is precisely the
 /// SD-28-E15 defect `equipment_resolver::equipment_catalog_rows` was built
 /// to close for equipment, reproduced on the spell family; this type
 /// closes it the same way, by leaving no second list to diverge.
@@ -140,7 +140,7 @@ pub const SPELL_BOOK_UMWP: &str = "UMWP";
 /// **SD31-E6-F2-002 widened the chain to six books**, adding Ultimate Magic
 /// -- the structural finding wave 3's spell lane made (the catalog chains
 /// only the books this doc comment names, so every OTHER spell-bearing
-/// book's units are structurally `not-ingested` no matter how much ingest
+/// book's units are structurally `engine-does-not-hold` no matter how much ingest
 /// work runs against them) closed for one real book rather than only
 /// analyzed. See `src/bin/ingest_ultimate_magic_spells.rs` for the ingest
 /// path and `docs/release/SD-31-corpus-closure-grind/progress.md`'s

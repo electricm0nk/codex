@@ -13066,7 +13066,7 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
 //    `modelled_class_books()`, consulted by `Kind::Class`'s verdict arm)
 //    enumerates precisely those five enums -- so even a fully-correct
 //    chassis dispatch added inside `pilot_compute` cannot move a prestige
-//    class off `not-ingested`, because the instrument asks "does some
+//    class off `engine-does-not-hold`, because the instrument asks "does some
 //    registered `ClassId`-family enum name this class" BEFORE it ever asks
 //    whether a real character reaches a delta. That enum registration
 //    lives in `rules_tables/crb/class_tables.rs` (a new sibling enum,
@@ -13078,7 +13078,7 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
 //    JSON records; grepping the pinned `cr_classes.lst` for `^CLASS:`
 //    returns those 11 plus 10 prestige classes, 2 `Ex-`variants, and 5 NPC
 //    classes (Adept/Aristocrat/Commoner/Expert/Warrior) -- all 17 non-base
-//    entries show `not-ingested` in `docs/work-inventory.json` today,
+//    entries show `engine-does-not-hold` in `docs/work-inventory.json` today,
 //    matching the wave brief's figure exactly, and none of them can be
 //    moved from inside this file alone.
 //

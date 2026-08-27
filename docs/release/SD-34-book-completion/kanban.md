@@ -22,7 +22,7 @@ One row per acceptance criterion. **26 rows covering 27 criteria** — the last 
 | 2 | `atlas-fails-closed` | 1 | AT-34-E1-002 | complete | `artifacts/epic-1-atlas/AT-34-E1-002_cycle_receipt.md` |
 | 3 | `missing-tables-and-book-coverage` | 1 | AT-34-E1-003 | complete | `artifacts/epic-1-atlas/AT-34-E1-003_cycle_receipt.md` |
 | 4 | `shape-engine-boundary-stated` | 1 | AT-34-E1-004 | complete | `artifacts/epic-1-atlas/AT-34-E1-004_cycle_receipt.md` |
-| 5 | `rename-not-ingested-field` | 1 | AT-34-E1-005 | not-started | |
+| 5 | `rename-not-ingested-field` | 1 | AT-34-E1-005 | complete | `artifacts/epic-1-atlas/AT-34-E1-005_cycle_receipt.md` |
 | 6 | `figure-provenance-gate` | 1 | AT-34-E1-006 | not-started | |
 | 7 | `corpus-trap-audit-stage` | 1 | AT-34-E1-007 | not-started | |
 | 8 | `build-eight-tables` | 2 | AT-34-E2-001 | not-started | |
