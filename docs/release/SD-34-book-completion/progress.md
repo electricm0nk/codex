@@ -29,10 +29,14 @@ existing real registry, and a new `crb_untabled_class_chassis.rs` module gives t
 classes plus Ex-Barbarian/Ex-Paladin a real, corpus-formula-derived chassis; see the cycle
 log below for a cross-book class-feature attribution side effect this cycle found, reasoned
 through, and self-healed, plus a pre-existing `cargo test --locked --lib` failure this
-cycle's own §6 step 3 run discovered and re-pinned). AT-34-E3-001 itself does not close yet —
-`core_rulebook`'s real, atlas-partitioned bucket B is 995 of 6,701 (`python3
-scripts/completion_atlas.py --book core_rulebook --check`), and six of the nine named
-mechanisms remain. See the cycle log below; `## Open blockers` is empty.
+cycle's own §6 step 3 run discovered and re-pinned); the next cycle cleared
+`deity_content_absent_from_deity_table_in_core_rulebook` (21 of 974 — all 21 `cr_deities.lst`
+records are PI-masked at ingestion; `Kind::Deity`'s `classify()` arm gained the same
+coordinate-fallback resolution the `domain` mechanism already proved, never reading the
+redacted real name). AT-34-E3-001 itself does not close yet — `core_rulebook`'s real,
+atlas-partitioned bucket B is 974 of 6,701 (`python3 scripts/completion_atlas.py --book
+core_rulebook --check`), and five of the nine named mechanisms remain (their populations sum
+to exactly 974 — no unnamed gap). See the cycle log below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -50,6 +54,42 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`deity_content_absent_from_deity_table_in_core_rulebook` mechanism) — one of nine, `decisions.md §14`
+
+**Status: complete (own mechanism only).** Re-derived population at cycle start (`5f0a905fb0`):
+`deity_content_absent_from_deity_table_in_core_rulebook` = **21 of 974** remaining
+`core_rulebook` bucket-B units (atlas-partitioned; matches `decisions.md §14`'s stated 21,
+verified not assumed). All 21 `cr_deities.lst` deity rows carry `NAMEISPI:YES` and are
+PI-masked at ingestion (`data.key`/`data.name` rewritten to `Codex-Named Unit (...)`), so
+`SimpleKindTable::resolve`'s plain key/name lookup never found them even though the corpus
+records physically exist. Fix, exactly mirroring the `domain` mechanism cycle's own pattern:
+`Kind::Deity`'s `classify()` arm now falls back to `SimpleKindTable::resolve_by_coordinate`
+on the record's own stored `"{book}:{source_file}:{source_line}"` coordinate after the
+ordinary resolve fails — never reading, logging, or reconstructing the redacted real deity
+name in any code path, test name, or commit message (`decisions.md §14`'s PI constraint).
+All 21 carry `magnitude_token_count == 0` and a real `DESC:` token, so they land in bucket D
+(`text-complete`), not bucket M — a correct outcome per this criterion's own instruction that
+leaving bucket B for D/M is not a half-fix.
+
+Self-healed inline: this cycle's own line-insertions shifted two hardcoded `file:line`
+citations — `completion_atlas.py`'s bucket-V citation (`10480 -> 10495`) and
+`missing_engine_tables.py`'s `power` citation (`9908 -> 9923`) — both re-derived by grep and
+fixed before this cycle's `--check` runs went green.
+
+`core_rulebook`'s real, atlas-partitioned bucket B: **995 -> 974** (`python3
+scripts/completion_atlas.py --book core_rulebook --check`). Five of the nine named mechanisms
+now remain: `class_feature_option_pool_record_not_held_by_engine` (63),
+`companion_absent_from_core_rulebook_companion_tables` (100), `race_trait_race_not_modelled`
+(132), `class_feature_owner_matched_by_name_but_record_not_held_by_engine` (346 — grown from
+the `decisions.md §14` table's 330 by the `class_absent` cycle's own recorded `+16`
+reattribution side effect), `class_feature_option_pool_record_with_magnitude_not_held_by_engine`
+(333). These five sum to exactly 974 — no unnamed gap. AT-34-E3-001 itself does not close this
+cycle. `## Open blockers` is empty.
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_deity_absent_cycle_receipt.md`.
+
+---
 
 ### Cycle — AT-34-E3-001 (`class_absent_from_ClassId_ALL_and_book_class_id_enums` mechanism) — one of nine, `decisions.md §14`
 

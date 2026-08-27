@@ -9888,20 +9888,35 @@ fn classify(
             engine_book_field.clone(),
             None,
         ),
-        Kind::Deity => simple_kind_verdict(
-            facts.simple_kind_tables.get("deity"),
-            "deity_content",
-            "deity",
-            &engine_book,
-            &unit.key,
-            &unit.name,
-            text_only,
-            has_real_description,
-            wc_class,
-            universal_sheet_modifier,
-            engine_book_field.clone(),
-            None,
-        ),
+        Kind::Deity => {
+            // `AT-34-E3-001`'s `deity` mechanism (21 of 1,006 remaining
+            // `core_rulebook` bucket-B units, `decisions.md §14`): every
+            // `cr_deities.lst` deity row carries `NAMEISPI:YES`, so its
+            // corpus record's `key`/`name` are PI-masked to `Codex-Named
+            // Unit (...)` at ingestion and never match `unit.key`/
+            // `unit.name` (the real, un-masked LST name) even when the
+            // record exists. The coordinate the record's OWN JSON stores
+            // under `rename.coordinate` is
+            // `"{book}:{source_file}:{source_line}"` -- built here from the
+            // unit's own provenance, never from the redacted real name,
+            // and only consulted as a fallback after the ordinary key/name
+            // resolve has already failed. Same pattern as `Kind::Domain`.
+            let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
+            simple_kind_verdict(
+                facts.simple_kind_tables.get("deity"),
+                "deity_content",
+                "deity",
+                &engine_book,
+                &unit.key,
+                &unit.name,
+                text_only,
+                has_real_description,
+                wc_class,
+                universal_sheet_modifier,
+                engine_book_field.clone(),
+                Some(&coordinate),
+            )
+        }
         // `power` (421 units, all `ultimate_psionics`) is Epic 5's, costed
         // from the eight tables' measured build rate -- not built here
         // (`epic-breakdown.md` Epic 2).
@@ -15443,6 +15458,53 @@ mod companion_text_complete_rung_tests {
             verdict.evidence,
             "domain_content_absent_from_domain_table_in_core_rulebook"
         );
+    }
+
+    /// `AT-34-E3-001`'s `deity` mechanism (21 of 1,006 remaining
+    /// `core_rulebook` bucket-B units, `decisions.md §14`): every one of
+    /// the 21 `cr_deities.lst` deity records is PI-masked at ingestion
+    /// (`NAMEISPI:YES` on every deity row) -- its corpus record's `key`/
+    /// `name` are rewritten to `Codex-Named Unit (...)`, so a plain
+    /// key/name `resolve` never finds it even though the record physically
+    /// exists (verified: `data/corpus/core_rulebook/deity/
+    /// codex_named_unit_deity_core_rulebook_cr_deities_lst_14.json` holds
+    /// `Abadar`'s record, keyed by the masked name). `classify` must fall
+    /// back to the record's own stored coordinate, exactly as `Kind::Domain`
+    /// already does, and land this unit OUT of bucket B. All 21 deity
+    /// records carry `magnitude_token_count == 0` and a real `DESC:` token
+    /// (`cr_deities.lst:14`: `DESC:God of cities, wealth, merchants, law`),
+    /// so the held record promotes to `text-complete` (bucket D) under the
+    /// same zero-magnitude-plus-description gate every other simple-kind
+    /// table uses -- never the redacted real name, in any evidence string.
+    #[test]
+    fn a_pi_renamed_deity_record_resolves_by_coordinate_and_leaves_bucket_b() {
+        let facts = facts_with_simple_kind_table("deity");
+        let unit = simple_kind_test_unit(Kind::Deity, "core_rulebook", "cr_deities.lst", 14, "Abadar", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_ne!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(verdict.evidence, "deity_content_table_resolve_returned_a_real_record_with_description");
+        assert!(!verdict.evidence.contains("absent_from_deity_table"));
+        assert!(!verdict.evidence.contains("Abadar"), "evidence must never carry the masked-away real name");
+    }
+
+    /// MONOTONICITY sibling: a genuinely absent coordinate (no corpus
+    /// record at all) must still refuse cleanly as bucket B, never panic
+    /// and never fabricate a hit.
+    #[test]
+    fn a_deity_record_absent_from_the_table_and_with_no_matching_coordinate_stays_bucket_b() {
+        let facts = facts_with_simple_kind_table("deity");
+        let unit = simple_kind_test_unit(
+            Kind::Deity,
+            "core_rulebook",
+            "cr_deities.lst",
+            999999,
+            "___a_deity_key_no_corpus_record_carries___",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "deity_content_absent_from_deity_table_in_core_rulebook");
     }
 
     /// `AT-34-E3-001` bucket B, mechanism 1: `holds_key_inner` has no arm
