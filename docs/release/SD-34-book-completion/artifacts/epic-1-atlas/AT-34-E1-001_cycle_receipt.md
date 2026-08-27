@@ -1,6 +1,6 @@
 # Cycle AT-34-E1-001 — Epic 1 Completion Atlas / AT-34-E1-001
 
-- **Commit SHA:** `<pending — set to the commit that lands this receipt and the files below>`
+- **Commit SHA:** `dc259daf33` (the commit that lands this receipt and the files below, on `tranche/14`)
 - **Files touched:**
   - `scripts/completion_atlas.py` (new)
   - `scripts/tests/test_completion_atlas.py` (new)
@@ -63,9 +63,11 @@ overlap 0
 
 ## Build scope verified
 
-- `cargo test --locked --no-run`: exit 0. Ran at HEAD (the commit landing this receipt, once
-  pushed). Full deps/test-binary list built with no compile errors (log tail confirms every
-  `Executable tests/...` line through the last test target, no `error[` lines).
+- `cargo test --locked --no-run`: exit 0. Ran at `ce51884ebb` (parent of `dc259daf33`, before
+  this cycle's Python-only/docs-only commit — no Rust source changed in this cycle, so the
+  build-scope check is unaffected by not re-running post-commit). Full deps/test-binary list
+  built with no compile errors (log tail confirms every `Executable tests/...` line through the
+  last test target, no `error[` lines).
 - Workspace scope: full root workspace (`cargo test --locked --no-run` from repo root).
 - `apps/desktop/src-tauri`: **not run.** This cycle touched only `scripts/` (Python) and
   `docs/` — no Rust source, no desktop-crate surface. Per `workflow-instruction.md §2.5`,
