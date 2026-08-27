@@ -23,7 +23,7 @@ print(len(cr))"
 Matches the filing cycle's own after-figure exactly. Confirmed unchanged before doing anything
 else.
 
-- **Commit SHA:** `<filled after commit, see below>`
+- **Commit SHA:** `3ab29e930af4e1ffe182e8d1cb4d6d8827af02a2`
 - **Files touched:**
   - `src/rules_core/rules_tables/companion_chassis.rs` — one new, committed, passing
     regression test: `companion_absent_28_sub_causes_are_named_and_sum_exactly`. No production
@@ -118,9 +118,9 @@ Re-derive command (same as above): `python3 -c "import json; d=json.load(open('d
   pre-existing + 1 new).
 - Full `cargo test --lib` (workspace lib target): **2,875 passed, 0 failed, 14 ignored.**
 - **Build scope verified:** `cargo test --locked --no-run` (workspace, all bin/test targets)
-  exits 0 at this cycle's HEAD. `apps/desktop/src-tauri` (separate cargo workspace) also run
-  explicitly this cycle: `cargo test --locked --no-run` — see build-scope row below for its
-  exit code, filled after the background run this cycle started completes.
+  exits 0 at this cycle's HEAD (`3ab29e930a`). `apps/desktop/src-tauri` (separate cargo
+  workspace) also run explicitly this cycle: `cargo test --locked --no-run` exits 0 too
+  (`CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop`).
 - Identifier audit: `OK_NO_BUNDLE_TAGS`.
 - Wired-integration audit: `OK_NO_TOKENS`.
 - `git status --porcelain` before this cycle's only write confirmed a clean working tree except
