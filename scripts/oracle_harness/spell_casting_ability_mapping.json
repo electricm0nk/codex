@@ -1,0 +1,275 @@
+{
+  "derived_from": "PCGEN_REPO_DIR (resolved at run time, never hardcoded) -- data/pathfinder/paizo/roleplaying_game/*/*_classes.lst CLASS: lines carrying a SPELLSTAT: token. Re-derive: python3 scripts/oracle_harness/derive_spell_casting_ability_mapping.py",
+  "pcgen_oracle_sha_at_derivation": "7f818006e371188e5717fd18d74d18a420747fc6",
+  "class_count": 36,
+  "mapping": {
+    "Adept": "Wisdom",
+    "Alchemist": "Intelligence",
+    "Antipaladin": "Charisma",
+    "Arcanist": "Intelligence",
+    "Bard": "Charisma",
+    "Bloodrager": "Charisma",
+    "Cleric": "Wisdom",
+    "Couatl Outsider": "Charisma",
+    "Druid": "Wisdom",
+    "Guardian Naga": "Charisma",
+    "Hunter": "Wisdom",
+    "Inquisitor": "Wisdom",
+    "Investigator": "Intelligence",
+    "Kineticist": "Constitution",
+    "Magus": "Intelligence",
+    "Medium": "Charisma",
+    "Mesmerist": "Charisma",
+    "Occultist": "Intelligence",
+    "Oracle": "Charisma",
+    "Paladin": "Charisma",
+    "Psychic": "Intelligence",
+    "Psychic Detective": "Intelligence",
+    "Ranger": "Wisdom",
+    "Red Mantis Assassin": "Charisma",
+    "Shaman": "Wisdom",
+    "Skald": "Charisma",
+    "Sorcerer": "Charisma",
+    "Sorcerer/Cleric (Arcane)": "Charisma",
+    "Spirit Naga": "Charisma",
+    "Spiritualist": "Wisdom",
+    "Summoner": "Charisma",
+    "VCabalist": "Intelligence",
+    "VWarlock": "Intelligence",
+    "Warpriest": "Wisdom",
+    "Witch": "Intelligence",
+    "Wizard": "Intelligence"
+  },
+  "sources": {
+    "Adept": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Alchemist": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Antipaladin": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Arcanist": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Bard": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Bloodrager": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Cleric": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Couatl Outsider": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/bestiary/b1_classes_race.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Druid": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Guardian Naga": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/bestiary/b1_classes_race.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Hunter": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Inquisitor": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Investigator": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Kineticist": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+        "spellstat": "CON"
+      }
+    ],
+    "Magus": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/ultimate_magic/um_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Medium": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Mesmerist": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Occultist": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Oracle": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Paladin": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Psychic": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Psychic Detective": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Ranger": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Red Mantis Assassin": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/adventurers_guide/ag_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Shaman": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Skald": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Sorcerer": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Sorcerer/Cleric (Arcane)": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_essentials/ce_classes_race.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Spirit Naga": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/bestiary/b1_classes_race.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "Spiritualist": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Summoner": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        "spellstat": "CHA"
+      }
+    ],
+    "VCabalist": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "VWarlock": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Warpriest": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        "spellstat": "WIS"
+      }
+    ],
+    "Witch": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        "spellstat": "INT"
+      }
+    ],
+    "Wizard": [
+      {
+        "file": "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+        "spellstat": "INT"
+      }
+    ]
+  },
+  "cross_check_against_engine_casting_ability_for_class": {
+    "note": "src/rules_core/spellbook.rs::casting_ability_for_class (private, 7 classes: wizard/cleric/druid/ranger/sorcerer/bard/paladin -> Intelligence/Wisdom/Wisdom/Wisdom/Charisma/Charisma/Charisma) cross-checked against this mapping's Wizard/Cleric/Druid/Ranger/Sorcerer/Bard/Paladin entries.",
+    "engine_seven_class_map": {
+      "Wizard": "Intelligence",
+      "Cleric": "Wisdom",
+      "Druid": "Wisdom",
+      "Ranger": "Wisdom",
+      "Sorcerer": "Charisma",
+      "Bard": "Charisma",
+      "Paladin": "Charisma"
+    },
+    "agrees": true
+  },
+  "multi_declaration_disagreements": []
+}

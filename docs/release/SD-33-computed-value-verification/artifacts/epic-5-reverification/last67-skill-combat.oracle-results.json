@@ -1,0 +1,18 @@
+{
+  "results": [
+    {"unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy", "ours": 4, "oracle": 4, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:crystal_mask_detection", "ours": 10, "oracle": 10, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:crystal_mask_discernment", "ours": 10, "oracle": 10, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:crystal_mask_dread", "ours": 10, "oracle": 10, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection", "ours": 9, "oracle": 9, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft", "ours": 10, "oracle": 10, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision", "ours": 1, "oracle": 1, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:meld_stone_alchemist", "ours": 8, "oracle": 8, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator", "ours": 8, "oracle": 8, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon", "ours": 10, "oracle": 10, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness", "ours": 10, "oracle": 10, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider", "ours": 20, "oracle": 20, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:ring_self_sufficiency", "ours": 10, "oracle": 10, "verdict": "agree"},
+    {"unit_id": "ultimate_psionics:equipment:third_eye_aware", "ours": 10, "oracle": 10, "verdict": "agree"}
+  ]
+}

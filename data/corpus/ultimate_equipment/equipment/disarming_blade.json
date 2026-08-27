@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Dueling ~ Melee.Special Ability ~ Enhancement Cost|17800.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "SPROP",
+        "value": "Following a successful disarm attempt with the weapon, the wielder can move the disarmed weapon 5 feet in any direction as a swift action."
       }
     ],
     "weight_lbs": null

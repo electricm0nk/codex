@@ -60,6 +60,76 @@ use crate::rules_core::rules_tables::crb::equipment_tables::{equipment_tables, E
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::source_content::SourcePackageContent;
 
+/// Resolves a record's own `EQMOD:` token into the `equipment_modifier`
+/// corpus records it references, across the whole loaded corpus.
+///
+/// SD-33 remediation wave 4 (`AT-33-E5-003`): the modifier a base item's
+/// `EQMOD:` token names frequently lives in a *different* book than the
+/// base item itself — e.g. Core Rulebook's own `Special Ability ~ +N ~
+/// Armor` family, referenced by name from `inner_sea_races`/
+/// `advanced_class_guide`/... items, or Ultimate Equipment's `Special
+/// Ability ~ Martyring ~ Armor`, referenced from `inner_sea_races`. This
+/// is why every caller must pass the FULL loaded corpus (every book the
+/// resolution needs), not just the base item's own book.
+///
+/// PCGen's real `EQMOD:` grammar (confirmed against every real corpus
+/// value this cycle read): `.` separates independently-attached
+/// modifier instances (e.g. `A.B.C`); within one instance, `|` either
+/// separates the modifier's own key from a trailing numeric parameter
+/// (`Special Ability ~ Enhancement Cost|12600` — a cost override, not
+/// itself a resolvable key) or lists alternative modifier keys for one
+/// slot (`Material ~ Leather|Material ~ Steel`). Both shapes are handled
+/// the same way here: every `|`-segment of every `.`-instance is tried
+/// as a candidate modifier key via [`equipment_id_resolve`]. A candidate
+/// that is not itself a real corpus key (a bare numeric parameter, or an
+/// alternative this specific record did not take) simply fails to
+/// resolve and is dropped — never fabricated, never guessed. This is
+/// safe against double-counting: confirmed directly against every real
+/// corpus record this cycle's own fix consumes that a non-`+N`/
+/// enhancement modifier (a material, a cosmetic special quality) never
+/// carries a `COMBAT|AC`/`VAR` chain of its own, so resolving extra,
+/// non-enhancement candidates from the same instance contributes 0.
+pub fn eqmod_referenced_records<'a>(
+    record: &EquipmentRecord,
+    rule_set: RuleSetId,
+    corpus: &'a SourcePackageContent,
+) -> Vec<&'a EquipmentRecord> {
+    // SD-33 remediation wave 6 (`AT-33-E5-003`'s escalated `rending_claw_
+    // blades` blocker): a record can carry MORE THAN ONE `EQMOD:` token --
+    // its own line's token, plus a further one `enrich_equipment_raw_
+    // tokens.rs`'s `.MOD`-fold APPENDS (never merges) when a separate
+    // `<record_key>.MOD` row elsewhere in the LST also attaches an
+    // `EQMOD:`. Confirmed against the real committed corpus record
+    // (`data/corpus/advanced_race_guide/equipment/rending_claw_blades.json`,
+    // two `EQMOD` entries in `raw_tokens`). The prior `.find()` read only
+    // the first, so a record whose *own* line already carried an `EQMOD:`
+    // (however trivial -- `Material ~ Steel` here has no bonus chain of
+    // its own) silently never inspected the richer, `.MOD`-folded token at
+    // all. Every `EQMOD:` token is now scanned; each is independently safe
+    // by the same "non-key candidates simply fail to resolve" discipline
+    // documented above.
+    let eqmod_values: Vec<&str> =
+        record.tokens.iter().filter(|t| t.key == "EQMOD").map(|t| t.value.as_str()).collect();
+    if eqmod_values.is_empty() {
+        return Vec::new();
+    }
+    let mut resolved = Vec::new();
+    for eqmod_value in eqmod_values {
+        for instance in eqmod_value.split('.') {
+            for candidate in instance.split('|') {
+                let candidate = candidate.trim();
+                if candidate.is_empty() {
+                    continue;
+                }
+                if let Some((modifier_record, _table_cell)) = equipment_id_resolve(candidate, rule_set, corpus) {
+                    resolved.push(modifier_record);
+                }
+            }
+        }
+    }
+    resolved
+}
+
 /// Per-category stat contribution shared across every
 /// `equipment_effects/<category>.rs` file. `None` means the category's
 /// resolver has not populated that field (either because the underlying
@@ -236,10 +306,19 @@ pub fn compute_equipment_effects(
         // derived from which resolver(s) actually matched (confirmed unused
         // for branching anywhere downstream -- `apps/desktop`'s own wire
         // type treats it as a plain string) rather than the gate itself.
-        let effect = resolve_category_effect(record);
+        let effect = resolve_category_effect(record, RuleSetId::Crb, corpus);
         let skill_bonus = general::compute_general_effect(record);
         let ability_bonus = magic_items::compute_magic_items_effect(record);
-        let weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);
+        let mut weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);
+        // SD-33 remediation wave 6 (`AT-33-E5-003`'s escalated
+        // `rending_claw_blades` blocker): fold the record's own `EQMOD:`-
+        // referenced modifier records' weapon enhancement into the total,
+        // mirroring `resolve_category_effect`'s already-shipped AC-
+        // dimension pattern (wave 4) -- see
+        // `equipmods::apply_eqmod_weapon_enhancement_bonus`'s own doc
+        // comment.
+        let weapon_eqmod_records = eqmod_referenced_records(record, RuleSetId::Crb, corpus);
+        equipmods::apply_eqmod_weapon_enhancement_bonus(&mut weapon_enhancement_bonus, &weapon_eqmod_records);
         let spell_resistance_bonus = equipmods::resolve_spell_resistance_bonus(record);
         let has_arms_armor_effect = effect.armor_class_bonus.is_some()
             || effect.max_dex.is_some()
@@ -372,8 +451,8 @@ fn resolve_weapon_to_hit_bonus(
             if bonus.natural_attack_only && !weapon_is_natural_attack {
                 continue;
             }
-            if bonus.affects.contains("TOHIT") {
-                total += bonus.bonus;
+            if let Some(tohit) = bonus.tohit_bonus {
+                total += tohit;
             }
         }
     }
@@ -481,8 +560,122 @@ fn is_weapon_record(record: &EquipmentRecord) -> bool {
 /// `equipmods` record), so it's safe to call unconditionally rather than
 /// gating on a category lookup first (see `compute_equipment_effects`'s own
 /// comment on this).
-fn resolve_category_effect(record: &EquipmentRecord) -> EquipmentStatEffect {
-    arms_armor::compute_arms_armor_effect(record)
+///
+/// SD-33 remediation wave 4 (`AT-33-E5-003`): also resolves `record`'s own
+/// `EQMOD:`-referenced modifier records (across the whole `corpus`, see
+/// `eqmod_referenced_records`'s own doc comment) and sums their real
+/// `COMBAT|AC` contribution in -- a magic armor/shield item's enhancement
+/// bonus lives on that separate record, never on the base item's own
+/// chain (see `arms_armor::apply_eqmod_armor_class_bonus`'s own doc
+/// comment for the confirmed real-corpus evidence).
+fn resolve_category_effect(
+    record: &EquipmentRecord,
+    rule_set: RuleSetId,
+    corpus: &SourcePackageContent,
+) -> EquipmentStatEffect {
+    let mut effect = arms_armor::compute_arms_armor_effect(record);
+    let eqmod_records = eqmod_referenced_records(record, rule_set, corpus);
+    arms_armor::apply_eqmod_armor_class_bonus(&mut effect, &eqmod_records);
+    effect
+}
+
+/// Resolves an item's real base `WT:` token divided by every
+/// `BONUS:EQM|WEIGHTDIV|<n>` chain carried by its `EQMOD:`-referenced
+/// modifier records (SD-33 remediation wave 6, `eqm-modifier-final`
+/// lane, `AT-33-E5-002` -- the `EQM|WEIGHTDIV` shape had no resolver at
+/// all before this cycle, confirmed absent by
+/// `grep -rn "WEIGHTDIV" src/rules_core/`). Real corpus example:
+/// Advanced Race Guide's `Material ~ Darkleaf Cloth ~ Clothing`,
+/// `BONUS:EQM|WEIGHTDIV|2` -- confirmed live against the pinned PCGen
+/// oracle this cycle: an `Outfit (Explorer's)`-shaped host (`WT:8`)
+/// with this modifier's real `KEY:` baked into its own item line
+/// exports `EQ.MERGELOC.x.WT=4`.
+///
+/// Multiple attached instances compound by successive division (each
+/// divides the running weight, not the base weight independently) --
+/// this cycle's population only ever carries one instance, so that
+/// choice is unexercised by any real corpus record and stated here as
+/// the documented behavior, not proven by a corpus example.
+///
+/// Returns `None` when the item carries no `WT:` token, or resolves to
+/// no `EQMOD:`-referenced modifier carrying this chain -- honest
+/// absence, never a fabricated weight.
+pub fn resolve_eqm_weightdiv_effect(item_id: &str, corpus: &SourcePackageContent) -> Option<f32> {
+    let (record, _table_cell) = equipment_id_resolve(item_id, RuleSetId::Crb, corpus)?;
+    let base_weight: f32 = record
+        .tokens
+        .iter()
+        .find(|token| token.key == "WT")
+        .and_then(|token| token.value.parse().ok())?;
+    let eqmod_records = eqmod_referenced_records(record, RuleSetId::Crb, corpus);
+    let divisors: Vec<f32> = eqmod_records
+        .iter()
+        .filter_map(|modifier| {
+            modifier.bonus_chains.iter().find_map(|bonus| {
+                let qualifiers = &bonus.qualifiers;
+                if qualifiers.len() >= 3 && qualifiers[0] == "EQM" && qualifiers[1] == "WEIGHTDIV" {
+                    qualifiers[2].parse::<f32>().ok()
+                } else {
+                    None
+                }
+            })
+        })
+        .collect();
+    if divisors.is_empty() {
+        return None;
+    }
+    Some(
+        divisors
+            .iter()
+            .fold(base_weight, |acc, divisor| if *divisor != 0.0 { acc / divisor } else { acc }),
+    )
+}
+
+#[cfg(test)]
+mod eqm_weightdiv_tests {
+    use super::*;
+    use crate::pcgen_import::ir_converter::convert_equipment_record;
+    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::rules_core::source_content::SourceRef;
+
+    fn corpus_from(text: &str, source_file: &str) -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries(source_file, text);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: source_file.to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("advanced_race_guide", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    /// Real verbatim tokens: `KEY:Outfit (Explorer's)` (`WT:8`,
+    /// `core_rulebook/cr_equip_general.lst`) with `EQMOD:Material ~
+    /// Darkleaf Cloth ~ Clothing` baked in, plus the real modifier record
+    /// (`advanced_race_guide/arg_equipmods.lst`, `BONUS:EQM|WEIGHTDIV|2`)
+    /// -- the pair the live oracle confirmed this cycle (`WT:8` -> `4`).
+    #[test]
+    fn weightdiv_halves_a_real_hosts_weight() {
+        let text = "\
+Outfit (Explorer's) Darkleaf\tKEY:Outfit ~ Darkleaf Test\tTYPE:Goods.Clothing.Resizable.Starting\tCOST:10\tWT:8\tEQMOD:Material ~ Darkleaf Cloth ~ Clothing\n\
+Darkleaf Cloth\tKEY:Material ~ Darkleaf Cloth ~ Clothing\tTYPE:BaseMaterial.MasterworkQuality.Cloth.Clothing\tCOST:500\tBONUS:EQM|WEIGHTDIV|2\n";
+        let corpus = corpus_from(text, "arg_equip_general.lst");
+
+        let weight = resolve_eqm_weightdiv_effect("Outfit ~ Darkleaf Test", &corpus);
+
+        assert_eq!(weight, Some(4.0), "8 lbs divided by WEIGHTDIV:2 must be 4");
+    }
+
+    #[test]
+    fn a_host_with_no_eqmod_yields_none_not_a_fabricated_weight() {
+        let text = "Outfit (Explorer's)\tKEY:Outfit (Base) Test\tTYPE:Goods.Clothing\tCOST:10\tWT:8\n";
+        let corpus = corpus_from(text, "cr_equip_general.lst");
+
+        let weight = resolve_eqm_weightdiv_effect("Outfit (Base) Test", &corpus);
+
+        assert_eq!(weight, None, "no EQMOD attached means no WEIGHTDIV chain to apply -- honest None");
+    }
 }
 
 #[cfg(test)]
@@ -793,6 +986,104 @@ Keen (ARG)\tKEY:Special Ability ~ Keen ~ Weapon (ARG)\tTYPE:Weapon\tCOST:0\tBONU
         assert_eq!(effects.attack_bonus_delta, Some(1), "a non-CRB weapon modifier must still apply");
         assert_eq!(effects.per_item[0].to_hit_bonus, Some(1));
     }
+
+    /// SD-33 remediation wave 4 (`AT-33-E5-003`): end-to-end proof that
+    /// `compute_equipment_effects` itself (not just
+    /// `arms_armor::apply_eqmod_armor_class_bonus` in isolation) resolves
+    /// a base item's `EQMOD:`-referenced modifier record ACROSS THE
+    /// WHOLE CORPUS and sums its real `COMBAT|AC` contribution -- real
+    /// verbatim tokens from `inner_sea_races:equipment:armor_of_grim_
+    /// triumph` (base) and Core Rulebook's own `Special Ability ~ +1 ~
+    /// Armor` (the modifier, in a DIFFERENT source line, proving
+    /// resolution is not book-scoped). Before this fix,
+    /// `item.armor_class_bonus` was `Some(6)` (the base item's own chain
+    /// alone) -- a real, confirmed disagreement against the pinned
+    /// oracle's `7` (`AT-33-E5-003.combined-oracle-results.json`).
+    #[test]
+    fn eqmod_referenced_modifier_sums_across_the_whole_corpus() {
+        let text = "\
+Armor of Grim Triumph\tKEY:Armor of Grim Triumph\tTYPE:Armor.Magic.Medium.ArmorProfMedium.Suit.Specific\tCOST:250\tWT:40\tACCHECK:-4\tEQMOD:Special Ability ~ Enhancement Cost|12600.Special Ability ~ +1 ~ Armor.Special Quality ~ Spikes ~ Armor.Material ~ Steel\tMAXDEX:3\tSPELLFAILURE:25\tBONUS:COMBAT|AC|6|TYPE=Armor\n\
++1 (Enhancement to Armor)\tKEY:Special Ability ~ +1 ~ Armor\tTYPE:Armor\tPLUS:1\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\n\
+Armor Spikes\tKEY:Special Quality ~ Spikes ~ Armor\tTYPE:Armor\tCOST:50\n";
+        let corpus = arg_corpus(text, "isr_equip_arms_armor.lst");
+        let equipped_items = vec![equipped("Armor of Grim Triumph")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.per_item.len(), 1);
+        assert_eq!(
+            effects.per_item[0].armor_class_bonus,
+            Some(7),
+            "base item's own 6 plus the EQMOD-referenced +1 Armor modifier's own separate chain"
+        );
+        assert_eq!(effects.armor_class_delta, 7);
+    }
+
+    /// SD-33 remediation wave 6 (`AT-33-E5-003`'s escalated blocker,
+    /// `rending_claw_blades`): end-to-end proof of the shape the corpus-
+    /// extraction fix (`fbc945f198`) newly surfaced. Real verbatim tokens
+    /// from `advanced_race_guide:equipment:rending_claw_blades`'s own
+    /// post-fix corpus record (`data/corpus/advanced_race_guide/equipment/
+    /// rending_claw_blades.json`) and Core Rulebook's own `Special Ability
+    /// ~ +1 ~ Weapon` (already proven in isolation by
+    /// `equipmods::tests::plus_one_weapon_enhancement_yields_a_real_
+    /// damage_tohit_bonus`).
+    ///
+    /// Two distinct gaps, both real, both closed by this cycle:
+    ///
+    /// 1. The base record itself carries TWO separate `EQMOD:` tokens
+    ///    (one from its own line, `Material ~ Steel`; a second folded in
+    ///    from a `.MOD` row citing `Keen`/`+1`/`Material ~ Steel` --
+    ///    `enrich_equipment_raw_tokens.rs`'s fold appends rather than
+    ///    merges, confirmed against the real committed JSON). Before this
+    ///    fix, `eqmod_referenced_records` read only the FIRST `EQMOD:`
+    ///    token (`.find()`), so the richer, `.MOD`-folded token -- the one
+    ///    that actually names the `+1` modifier -- was never even
+    ///    inspected, regardless of any weapon-dimension gap.
+    /// 2. `compute_equipment_effects`'s weapon path summed only the base
+    ///    record's own `raw_bonus_chains` (`TOHIT` only, per its own real
+    ///    chain) into `weapon_enhancement_bonus`, unlike the AC dimension,
+    ///    which already folds `EQMOD:`-referenced records in
+    ///    (`resolve_category_effect`). The `+1 Weapon` modifier's own
+    ///    `DAMAGE` contribution was never reachable at all.
+    ///
+    /// Before this fix: `tohit_bonus` matches the oracle (`Some(1)`,
+    /// TOHIT already resolves), `damage_bonus` is `None` against the
+    /// oracle's real `MAGICDAMAGE=+1` -- the exact
+    /// `AT-33-E5-003.combined-oracle-results.json` disagreement (`ours=0
+    /// oracle=1`, dimension `DAMAGE`).
+    #[test]
+    fn eqmod_referenced_modifier_sums_into_weapon_enhancement_bonus_across_two_eqmod_tokens() {
+        let text = "\
+Rending Claw Blades\tKEY:Rending Claw Blades\tTYPE:Weapon.Resizable.Light.Melee.Slashing.Finesseable\tCOST:305\tWT:2\tCRITMULT:x2\tCRITRANGE:1\tDAMAGE:1d4\tEQMOD:Material ~ Steel\tEQMOD:Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon.Material ~ Steel\tWIELD:Light\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\n\
++1 (Enhancement to Weapon)\tKEY:Special Ability ~ +1 ~ Weapon\tTYPE:Weapon\tPLUS:1\tCOST:0\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\n\
+Keen\tKEY:Special Ability ~ Keen ~ Weapon\tTYPE:Weapon\tCOST:0\n\
+Material Steel\tKEY:Material ~ Steel\tTYPE:Weapon\tCOST:0\n";
+        let corpus = arg_corpus(text, "arg_equip_arms_armor.lst");
+        let equipped_items = vec![equipped("Rending Claw Blades")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.per_item.len(), 1);
+        let bonus = effects.per_item[0]
+            .weapon_enhancement_bonus
+            .as_ref()
+            .expect("the base record's own TOHIT chain alone already makes this Some");
+        assert_eq!(
+            bonus.tohit_bonus,
+            Some(1),
+            "base TOHIT|1 and the +1 modifier's own TOHIT|1 are the SAME TYPE=Enhancement bonus -- \
+             Pathfinder's same-type stacking rule takes the higher, not the sum (max(1, 1) = 1); \
+             live-oracle-confirmed MAGICHIT=+1, never +2"
+        );
+        assert_eq!(
+            bonus.damage_bonus,
+            Some(1),
+            "the EQMOD-referenced +1 Weapon modifier's own separate DAMAGE chain must fold in -- \
+             this is the real rending_claw_blades disagreement (ours=0 oracle=1, dimension DAMAGE); \
+             base contributes no DAMAGE chain at all, so the modifier's 1 is simply the result"
+        );
+    }
 }
 
 /// SD-31 intelligent-item resolver (operator ruling 2026-08-19) end-to-end
@@ -950,7 +1241,8 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
             .as_ref()
             .expect("the Amulet of Mighty Fists chain must now resolve to a real bonus");
         assert!(bonus.natural_attack_only, "the Amulet of Mighty Fists family scopes to natural attacks only");
-        assert_eq!(bonus.bonus, 1);
+        assert_eq!(bonus.tohit_bonus, Some(1));
+        assert_eq!(bonus.damage_bonus, Some(1));
     }
 
     /// `SD31-W18-INTEGRATE-001` (adversarial review, `OPEN-ISSUES.md` row

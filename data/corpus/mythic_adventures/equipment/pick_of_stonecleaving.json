@@ -11,6 +11,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Adamantine ~ Weapon.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "SPROP",
+        "value": "deals an additional 2d6 points of damage to unattended objects. If the wielder expends one use of mythic power when making such an attack, the pick bypasses the object's hardness and deals 4d6 additional damage instead of 2d6."
       }
     ],
     "weight_lbs": null

@@ -8433,7 +8433,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_vanara_flat_override_race_trait(input, &mut explanations);
     explain_samsaran_flat_override_race_trait(input, &mut explanations);
     explain_nagaji_flat_override_race_trait(input, &ability_modifiers, &mut explanations);
-
+    explain_undine_formula_race_trait(input, &ability_modifiers, &mut explanations);
 
     explain_selected_alternate_racial_traits(input, &mut explanations, &mut diagnostics);
 
@@ -9877,17 +9877,23 @@ mod race_ids_with_a_magnitude_consumer_tests {
         );
     }
 
-    /// The union is exactly the 18 races this module has ANY seam for --
+    /// The union is exactly the 19 races this module has ANY seam for --
     /// the 16 pre-SD31-W27-RACETRAIT-001 races plus Samsaran and Nagaji,
     /// each now backed by a real `explain_<race>_flat_override_race_trait`
-    /// seam, not a hand-copied name.
+    /// seam, not a hand-copied name, plus Skinwalker (SD-33 Epic 6,
+    /// 2026-08-26): `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s own 2 new
+    /// rows (Werebear-Kin/Wereshark-Kin's `~ Animal-Minded`) are read
+    /// straight into this union the SAME way Strix/Grippli/Goblin already
+    /// are -- a narrow, measured slice of the race's alternates, not a
+    /// full-coverage claim (that stricter bar is
+    /// `FLAT_OVERRIDE_RACE_TRAIT_RACES`'s own, this table makes none).
     #[test]
-    fn the_union_is_exactly_the_eighteen_seamed_races() {
+    fn the_union_is_exactly_the_nineteen_seamed_races() {
         let races = race_ids_with_a_magnitude_consumer();
         let expected: std::collections::BTreeSet<&str> = [
             "dwarf", "elf", "gillman", "gnome", "goblin", "grippli", "half-elf", "half-orc",
             "halfling", "hobgoblin", "human", "kobold", "nagaji", "rougarou", "samsaran",
-            "strix", "svirfneblin", "vanara",
+            "skinwalker", "strix", "svirfneblin", "vanara",
         ]
         .into_iter()
         .collect();
@@ -9897,7 +9903,7 @@ mod race_ids_with_a_magnitude_consumer_tests {
     /// A race with no seam at all must NOT appear in the set. Nagaji moved
     /// OUT of this list as of SD31-W27-RACETRAIT-001 (it now has a real
     /// flat-override seam, pinned by
-    /// `the_union_is_exactly_the_eighteen_seamed_races` above); Aasimar and
+    /// `the_union_is_exactly_the_nineteen_seamed_races` above); Aasimar and
     /// Vishkanya remain genuinely unseamed and stay here as the negative
     /// control this test exists to prove can still fail.
     #[test]
@@ -11213,6 +11219,291 @@ fn explain_nagaji_flat_override_race_trait(
     }
 }
 
+// -------------------------------------------------------------------------------------------
+// SD31-W26-RACETRAIT-001 — the race-trait FORMULA compute seam, folded into SD-33 per
+// `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` row 365's remediation
+// path (a): the seam + fixtures are real, correct, reusable work (reviewer-confirmed); only
+// the race-level `FORMULA_RACE_TRAIT_RACES` doneness-credit const from the original branch was
+// the gaming vector, and it is deliberately NOT ported here — this seam is wired unconditionally
+// (below, next to the other race seam calls) but `race_ids_with_a_magnitude_consumer` is left
+// untouched, banking 0 board-credit units per the operator's own instruction.
+// -------------------------------------------------------------------------------------------
+//
+// The flat-override seam above handles literal, unconditional magnitudes (`MOVE:Walk,30`, a
+// fixed `DAMAGESIZE`). `formula_interpreter` (`OPERATOR-RULINGS-2026-08-21.md` §20) built a real
+// evaluator for the PCGen `BONUS:VAR`/`DEFINE` arithmetic grammar; this block is a consumer of
+// it: Undine's three selectable alternate racial traits (replacing the racial-default Spell-Like
+// Ability trait) each state a real formula over total character level (`TL`) and one ability
+// modifier.
+//
+// **The formula text is the single source of truth for BOTH the compute path and its own fixture
+// gate**: [`UNDINE_RACE_TRAIT_FORMULAS`] is read by [`explain_undine_formula_race_trait`] below
+// AND by `derived_evaluator_fixture_check::run_race_trait_formula_bar_check` (a separate crate
+// module) — a transcription regression in this table therefore fails the SAME gate whether it
+// corrupts the value a player sees or the value the bar check verifies.
+//
+// Re-verified against this repo's own independently re-ingested corpus records
+// (`data/corpus/advanced_race_guide/race_trait/undine/undine_{acid_breath,nereid_fascination,
+// ooze_breath}.json`'s `raw_bonus_chains`) at fold time — all nine formula strings match the
+// transcription below byte-for-byte, including Ooze Breath's genuinely-as-written
+// `min(floor((TL+1/2)),5)` (not `(TL+1)/2`), confirming the branch's transcription was faithful
+// upstream arithmetic, not a typo.
+const UNDINE_RACE_ID: &str = "race:undine";
+const UNDINE_ACID_BREATH_TRAIT_KEY: &str = "Undine ~ Acid Breath";
+const UNDINE_NEREID_FASCINATION_TRAIT_KEY: &str = "Undine ~ Nereid Fascination";
+const UNDINE_OOZE_BREATH_TRAIT_KEY: &str = "Undine ~ Ooze Breath";
+
+/// `(unit_id, formula_field_name, raw_formula)` — the exact `BONUS:VAR` formula text transcribed
+/// verbatim from the pinned oracle, never hand-duplicated elsewhere in this file. See the section
+/// doc above for why this table is the shared source of truth for both compute and gate.
+pub(crate) const UNDINE_RACE_TRAIT_FORMULAS: &[(&str, &str, &str)] = &[
+    ("advanced_race_guide:race_trait:undine_acid_breath", "Undine_AcidBreath_Times", "1"),
+    (
+        "advanced_race_guide:race_trait:undine_acid_breath",
+        "Undine_AcidBreath_Dice",
+        "min(floor((TL+1)/2),5)",
+    ),
+    ("advanced_race_guide:race_trait:undine_acid_breath", "Undine_AcidBreath_DC", "10+(TL/2)+CON"),
+    (
+        "advanced_race_guide:race_trait:undine_nereid_fascination",
+        "Undine_NereidFascination_Times",
+        "1",
+    ),
+    (
+        "advanced_race_guide:race_trait:undine_nereid_fascination",
+        "Undine_NereidFascination_Duration",
+        "max((TL/2),1)",
+    ),
+    (
+        "advanced_race_guide:race_trait:undine_nereid_fascination",
+        "Undine_NereidFascination_DC",
+        "10+(TL/2)+CHA",
+    ),
+    ("advanced_race_guide:race_trait:undine_ooze_breath", "Undine_OozeBreath_Times", "1"),
+    (
+        "advanced_race_guide:race_trait:undine_ooze_breath",
+        "Undine_OozeBreath_Dice",
+        "min(floor((TL+1/2)),5)",
+    ),
+    ("advanced_race_guide:race_trait:undine_ooze_breath", "Undine_OozeBreath_DC", "10+(TL/2)+CON"),
+];
+
+/// Looks up one formula's raw text from [`UNDINE_RACE_TRAIT_FORMULAS`] by its field name. Panics
+/// on a missing field — every field this function is ever called with is a literal named
+/// directly below, so a mismatch is a coding error in this file, not a runtime corpus condition.
+fn undine_formula(field: &str) -> &'static str {
+    UNDINE_RACE_TRAIT_FORMULAS
+        .iter()
+        .find(|(_, f, _)| *f == field)
+        .unwrap_or_else(|| panic!("UNDINE_RACE_TRAIT_FORMULAS carries no field named {field:?}"))
+        .2
+}
+
+/// Undine (Advanced Race Guide): three selectable alternate racial traits, each replacing the
+/// racial-default Spell-Like Ability trait, each stating a real PCGen arithmetic formula over
+/// total character level and one ability modifier. Ruling §18 (option pools show ONLY VALID
+/// CHOICES): these three are mutually exclusive with each other and with the default — this
+/// function computes a magnitude ONLY for the alternate the player actually selected
+/// (`selected_alternate_trait_keys`, the same `RACE_ALTERNATE_TRAIT_CHOICE_ID` mechanism
+/// Gillman's Throwback and Vanara's Tree Stranger already use above); an unselected alternate
+/// produces no record at all, never a zero or a placeholder.
+fn explain_undine_formula_race_trait(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if input.chosen.race_id != UNDINE_RACE_ID {
+        return;
+    }
+    use formula_reproduction_harness::FormulaEvaluator as _;
+    let evaluator = formula_interpreter::PcgenFormulaEvaluator;
+
+    let total_level: i64 = input.chosen.class_levels.iter().map(|c| i64::from(c.level)).sum();
+    let mut vars: std::collections::BTreeMap<String, i64> = std::collections::BTreeMap::new();
+    vars.insert("TL".to_owned(), total_level);
+    vars.insert("CON".to_owned(), i64::from(ability_modifiers.constitution));
+    vars.insert("CHA".to_owned(), i64::from(ability_modifiers.charisma));
+
+    let selected = selected_alternate_trait_keys(input);
+
+    let eval = |field: &str| -> Option<i16> {
+        evaluator.evaluate(undine_formula(field), &vars).ok().and_then(|v| i16::try_from(v).ok())
+    };
+
+    if selected.iter().any(|k| k == UNDINE_ACID_BREATH_TRAIT_KEY) {
+        if let (Some(times), Some(dice), Some(dc)) =
+            (eval("Undine_AcidBreath_Times"), eval("Undine_AcidBreath_Dice"), eval("Undine_AcidBreath_DC"))
+        {
+            explanations.push(ComputationExplanation {
+                id: "race.undine.alternate_trait.acid_breath".to_owned(),
+                value: dice,
+                detail: format!(
+                    "Undine alternate racial trait — Acid Breath (Advanced Race Guide p.174): a \
+                     {times}/day 5-ft cone breath weapon dealing {dice}d8 acid damage, Reflex DC \
+                     {dc} for half (arg_abilities_race.lst:776 \
+                     BONUS:VAR|Undine_AcidBreath_Dice|min(floor((TL+1)/2),5), \
+                     BONUS:VAR|Undine_AcidBreath_DC|10+(TL/2)+CON, evaluated at total character \
+                     level {total_level} and Constitution modifier \
+                     {con:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     `derived_evaluator_fixture_check`'s race_trait_formula bar)",
+                    con = ability_modifiers.constitution,
+                ),
+            });
+        }
+    }
+
+    if selected.iter().any(|k| k == UNDINE_NEREID_FASCINATION_TRAIT_KEY) {
+        if let (Some(times), Some(duration), Some(dc)) = (
+            eval("Undine_NereidFascination_Times"),
+            eval("Undine_NereidFascination_Duration"),
+            eval("Undine_NereidFascination_DC"),
+        ) {
+            explanations.push(ComputationExplanation {
+                id: "race.undine.alternate_trait.nereid_fascination".to_owned(),
+                value: duration,
+                detail: format!(
+                    "Undine alternate racial trait — Nereid Fascination (Advanced Race Guide \
+                     p.175): {times}/day as a standard action, a 20-ft-radius aura fascinates \
+                     humanoids within it for {duration} rounds, Will DC {dc} negates \
+                     (arg_abilities_race.lst:781 \
+                     BONUS:VAR|Undine_NereidFascination_Duration|max((TL/2),1), \
+                     BONUS:VAR|Undine_NereidFascination_DC|10+(TL/2)+CHA, evaluated at total \
+                     character level {total_level} and Charisma modifier \
+                     {cha:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     `derived_evaluator_fixture_check`'s race_trait_formula bar)",
+                    cha = ability_modifiers.charisma,
+                ),
+            });
+        }
+    }
+
+    if selected.iter().any(|k| k == UNDINE_OOZE_BREATH_TRAIT_KEY) {
+        if let (Some(times), Some(dice), Some(dc)) =
+            (eval("Undine_OozeBreath_Times"), eval("Undine_OozeBreath_Dice"), eval("Undine_OozeBreath_DC"))
+        {
+            explanations.push(ComputationExplanation {
+                id: "race.undine.alternate_trait.ooze_breath".to_owned(),
+                value: dice,
+                detail: format!(
+                    "Undine alternate racial trait — Ooze Breath (Advanced Race Guide p.175): a \
+                     {times}/day 5-ft cone breath weapon dealing {dice}d4 acid damage and \
+                     sickening for 3 rounds, Reflex DC {dc} halves and negates sickened \
+                     (arg_abilities_race.lst:782 \
+                     BONUS:VAR|Undine_OozeBreath_Dice|min(floor((TL+1/2)),5), \
+                     BONUS:VAR|Undine_OozeBreath_DC|10+(TL/2)+CON, evaluated at total character \
+                     level {total_level} and Constitution modifier \
+                     {con:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                     `derived_evaluator_fixture_check`'s race_trait_formula bar). This \
+                     record's `Dice` formula really is `TL+1/2`, not `(TL+1)/2` — real upstream \
+                     PCGen arithmetic, transcribed faithfully rather than \"corrected\" to match \
+                     Acid Breath's shape",
+                    con = ability_modifiers.constitution,
+                ),
+            });
+        }
+    }
+}
+
+#[cfg(test)]
+mod formula_race_trait_tests {
+    use super::compute_pilot_base_chassis;
+    use super::{race_alternate_trait_selection_id, RACE_ALTERNATE_TRAIT_CHOICE_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// `constitution:14` (modifier +2) and `charisma:8` (modifier -1) come straight from the
+    /// shared fixture; only race, level, and the selected alternate trait are overridden.
+    fn undine_input(level: u8, alternates: &[&str]) -> CharacterInput {
+        let text = FIGHTER_LEVEL_1_FIXTURE
+            .replace("race_id=race:human", "race_id=race:undine")
+            .replace("class_level=class:fighter:1", &format!("class_level=class:fighter:{level}"));
+        let loaded = load_character_input_fixture(&text);
+        assert!(loaded.diagnostics.is_empty(), "undine fixture should load cleanly: {:?}", loaded.diagnostics);
+        let mut input =
+            loaded.character_input.expect("valid fixture should produce a character input record");
+        for key in alternates {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: RACE_ALTERNATE_TRAIT_CHOICE_ID.to_owned(),
+                selection_id: race_alternate_trait_selection_id(key),
+            });
+        }
+        input
+    }
+
+    /// Level 5, Constitution modifier +2 (score 14): Dice = min(floor(6/2),5) = 3, DC =
+    /// trunc(10 + 2.5 + 2) = 14.
+    #[test]
+    fn undine_acid_breath_computes_the_real_formula_at_level_5() {
+        let computation = compute_pilot_base_chassis(&undine_input(5, &["Undine ~ Acid Breath"]));
+        let record = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.undine.alternate_trait.acid_breath")
+            .expect("undine with Acid Breath selected must produce an explanation");
+        assert_eq!(record.value, 3, "Dice = min(floor((5+1)/2),5) = 3");
+        assert!(record.detail.contains("DC 14"), "DC = trunc(10 + 5/2 + 2) = 14: {}", record.detail);
+        assert!(record.detail.contains("3d8"));
+    }
+
+    /// Level 5, Charisma modifier -1 (score 8): Duration = trunc(max(2.5,1)) = 2, DC =
+    /// trunc(10 + 2.5 - 1) = 11.
+    #[test]
+    fn undine_nereid_fascination_computes_the_real_formula_at_level_5() {
+        let computation =
+            compute_pilot_base_chassis(&undine_input(5, &["Undine ~ Nereid Fascination"]));
+        let record = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.undine.alternate_trait.nereid_fascination")
+            .expect("undine with Nereid Fascination selected must produce an explanation");
+        assert_eq!(record.value, 2, "Duration = trunc(max(5/2,1)) = 2");
+        assert!(record.detail.contains("DC 11"), "DC = trunc(10 + 5/2 - 1) = 11: {}", record.detail);
+    }
+
+    /// Level 5, Constitution modifier +2: Dice = min(floor(5+0.5),5) = 5 (the `TL+1/2`, not
+    /// `(TL+1)/2`, shape — one dice higher than Acid Breath's at this exact level, confirming
+    /// the two formulas are not accidentally identical in this seam).
+    #[test]
+    fn undine_ooze_breath_computes_its_own_distinct_formula_at_level_5() {
+        let computation = compute_pilot_base_chassis(&undine_input(5, &["Undine ~ Ooze Breath"]));
+        let record = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.undine.alternate_trait.ooze_breath")
+            .expect("undine with Ooze Breath selected must produce an explanation");
+        assert_eq!(record.value, 5, "Dice = min(floor(5+1/2),5) = 5");
+        assert!(record.detail.contains("DC 14"));
+        assert!(record.detail.contains("5d4"));
+    }
+
+    /// Selecting none of the three alternates (the racial-default Spell-Like Ability trait
+    /// applies instead) must produce NONE of the three records — never a zero, never a
+    /// placeholder (Ruling §18).
+    #[test]
+    fn no_alternate_selected_produces_no_formula_record() {
+        let computation = compute_pilot_base_chassis(&undine_input(5, &[]));
+        assert!(
+            !computation.explanations.iter().any(|e| e.id.starts_with("race.undine.alternate_trait.")),
+            "no formula record should appear when no Undine alternate trait is selected"
+        );
+    }
+
+    /// A race outside this seam (Human, the fixture's own default) gets no stray record from it.
+    #[test]
+    fn a_race_outside_undine_gets_no_record_from_this_seam() {
+        let loaded = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let input = loaded.character_input.expect("fixture should load");
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation.explanations.iter().any(|e| e.id.starts_with("race.undine.")),
+            "no stray Undine record should appear for Human"
+        );
+    }
+}
+
 #[cfg(test)]
 mod flat_override_race_trait_tests {
     use super::compute_pilot_base_chassis;
@@ -11864,6 +12155,21 @@ const ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES: &[(&str, &str, i16, i16, i16)] = &
     // are not.
     ("Strix ~ Frightening", "race:strix", 0, 2, 0),
     ("Strix ~ Wing-Clipped", "race:strix", 2, 0, 0),
+    // SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker
+    // heritage lane (2026-08-26). Of the 9 kins' `~ Animal-Minded`
+    // replacement rows (all `TraitRole::Alternate`, independently
+    // selectable), exactly these 2 land a `BONUS:SKILL` on one of this
+    // table's three tracked skills:
+    // `skinwalker_abilities_race_subrace.lst`'s Werebear-Kin row is
+    // `BONUS:SKILL|Climb|2|TYPE=Racial` (plus a `BONUS:VAR|WildEmpathy|2`
+    // this table does not track) and Wereshark-Kin's is
+    // `BONUS:SKILL|Swim|2|TYPE=Racial`. The other 7 kins land on
+    // Fly/Perception/Stealth/Survival/Perception-at-night, none of which
+    // this table computes a total for, so they contribute nothing here --
+    // same "engine is narrow, not the content" shape this const's own doc
+    // comment already states for ARG.
+    ("Werebear-Kin ~ Animal-Minded", "race:skinwalker", 2, 0, 0),
+    ("Wereshark-Kin ~ Animal-Minded", "race:skinwalker", 0, 0, 2),
 ];
 
 /// The Climb / Intimidate / Swim racial bonus this character's chosen
@@ -37281,6 +37587,23 @@ fn monk_maneuver_training_cmb_bonus(level: u8) -> i16 {
     level - (level * 3 / 4)
 }
 
+/// Monk AC Bonus's level-4+ dodge-bonus progression (PF1 Core Rulebook Monk
+/// class table, AC Bonus feature): "starting at 4th level, she gains a
+/// further +1 dodge bonus to her AC and CMD... every four levels
+/// thereafter... this bonus increases by a further +1." `+0` below level 4,
+/// `+1` at 4-7, `+2` at 8-11, `+3` at 12-15, `+4` at 16-19, `+5` at 20 —
+/// confirmed against the real pinned PCGen oracle
+/// (`core_rulebook:class_feature:monk_ac_bonus`, L20 Human Monk: real
+/// export `7` = Wisdom-to-AC `2` + this progression's `5`;
+/// `AT-33-E5-remainder-charbuild_cycle_receipt.md`).
+fn monk_ac_bonus_dodge_progression(level: u8) -> i16 {
+    if level < 4 {
+        0
+    } else {
+        1 + i16::from((level - 4) / 4)
+    }
+}
+
 /// Monk High Jump's flat bonus on Acrobatics checks made to jump:
 /// `HighJumpBonus = HighJumpLVL = MonkLVL` -- verified against
 /// `BONUS:SITUATION|Acrobatics=When Jumping|HighJumpBonus`.
@@ -37515,23 +37838,27 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Grounded (3/6): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
-    // any, to her AC" — only a positive Wisdom modifier is added, never subtracted
-    // here for a negative Wisdom modifier. This grounds only the flat value at the
-    // supported level; it grounds no level-4+ dodge-bonus progression and no
-    // "unarmored and unencumbered" runtime state-check engine (no such engine
-    // exists anywhere in this codebase yet), so the value is asserted
-    // unconditionally on the deterministic Human Monk fixture, which is by
-    // construction unarmored.
-    let ac_bonus = ability_modifiers.wisdom.max(0);
+    // Grounded (3/6): AC Bonus (Wisdom-to-AC + level-4+ dodge progression). PF1:
+    // "she adds her Wisdom bonus, if any, to her AC" (only a positive Wisdom
+    // modifier is added, never subtracted for a negative Wisdom modifier) "and
+    // starting at 4th level, she gains a further +1 dodge bonus... every four
+    // levels thereafter... increases by a further +1" (`monk_ac_bonus_dodge_progression`,
+    // AT-33-E5-003 fix — confirmed against the real pinned PCGen oracle:
+    // `core_rulebook:class_feature:monk_ac_bonus` at L20 exports `7`, not the
+    // Wisdom-only component alone). This still grounds no "unarmored and
+    // unencumbered" runtime state-check engine (no such engine exists anywhere
+    // in this codebase yet), so the value is asserted unconditionally on the
+    // deterministic Human Monk fixture, which is by construction unarmored.
+    let ac_bonus_dodge = monk_ac_bonus_dodge_progression(level);
+    let ac_bonus = ability_modifiers.wisdom.max(0) + ac_bonus_dodge;
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.ac_bonus".to_owned(),
         value: ac_bonus,
         detail: format!(
             "Monk level {level} AC Bonus: Wisdom bonus (if positive) added to AC and CMD while \
-             unarmored and unencumbered = max({}, 0) = {ac_bonus}. This grounds only the flat \
-             Wisdom-to-AC value at this level, not the level-4+ dodge-bonus progression, and not \
-             an \"unarmored and unencumbered\" runtime state-check engine (none exists in this \
+             unarmored and unencumbered = max({}, 0), plus the level-4+ dodge-bonus progression \
+             ({ac_bonus_dodge} at this level) = {ac_bonus}. This still grounds no \
+             \"unarmored and unencumbered\" runtime state-check engine (none exists in this \
              codebase yet); the value is asserted unconditionally on the deterministic Human Monk \
              fixture, which is by construction unarmored",
             ability_modifiers.wisdom
@@ -68518,9 +68845,10 @@ mod bloodrager_damage_reduction_tests {
 #[cfg(test)]
 mod monk_task36_feature_tests {
     use super::{
-        build_pilot_headless_receipt, monk_fast_movement_bonus_feet,
-        monk_high_jump_acrobatics_bonus, monk_maneuver_training_cmb_bonus,
-        monk_wholeness_of_body_healing, CharacterClassLevel, CharacterInput, MONK_CLASS_ID,
+        build_pilot_headless_receipt, monk_ac_bonus_dodge_progression,
+        monk_fast_movement_bonus_feet, monk_high_jump_acrobatics_bonus,
+        monk_maneuver_training_cmb_bonus, monk_wholeness_of_body_healing, CharacterClassLevel,
+        CharacterInput, MONK_CLASS_ID,
     };
     use crate::rules_core::character_input::load_character_input_fixture;
 
@@ -68575,6 +68903,49 @@ mod monk_task36_feature_tests {
         assert_eq!(monk_high_jump_acrobatics_bonus(12), 12);
         assert_eq!(monk_wholeness_of_body_healing(7), 7);
         assert_eq!(monk_wholeness_of_body_healing(12), 12);
+    }
+
+    /// AC Bonus's level-4+ dodge-bonus progression: `+0` below level 4,
+    /// stepping `+1` every four levels starting at 4, reaching `+5` at 20 —
+    /// the real PF1 Monk class table, confirmed against the pinned PCGen
+    /// oracle's real export for a level-20 Monk
+    /// (`core_rulebook:class_feature:monk_ac_bonus`,
+    /// `AT-33-E5-remainder-charbuild_cycle_receipt.md`: oracle `7` at WIS-
+    /// mod `2`, i.e. dodge component `5` at level 20).
+    #[test]
+    fn ac_bonus_dodge_progression_steps_every_four_levels_from_four() {
+        assert_eq!(monk_ac_bonus_dodge_progression(1), 0);
+        assert_eq!(monk_ac_bonus_dodge_progression(3), 0);
+        assert_eq!(monk_ac_bonus_dodge_progression(4), 1);
+        assert_eq!(monk_ac_bonus_dodge_progression(7), 1);
+        assert_eq!(monk_ac_bonus_dodge_progression(8), 2);
+        assert_eq!(monk_ac_bonus_dodge_progression(11), 2);
+        assert_eq!(monk_ac_bonus_dodge_progression(12), 3);
+        assert_eq!(monk_ac_bonus_dodge_progression(15), 3);
+        assert_eq!(monk_ac_bonus_dodge_progression(16), 4);
+        assert_eq!(monk_ac_bonus_dodge_progression(19), 4);
+        assert_eq!(monk_ac_bonus_dodge_progression(20), 5);
+    }
+
+    /// The dispatched `class_chassis.monk.ac_bonus` value carries the
+    /// dodge progression on top of whatever this fixture's own Wisdom
+    /// modifier contributes -- isolating the dodge delta so this test does
+    /// not depend on the fixture's specific ability scores.
+    #[test]
+    fn dispatched_ac_bonus_carries_the_dodge_progression_on_top_of_wisdom() {
+        let wisdom_only = value(1, "class_chassis.monk.ac_bonus").expect("grounded at level 1");
+        assert_eq!(
+            value(4, "class_chassis.monk.ac_bonus"),
+            Some(wisdom_only + 1)
+        );
+        assert_eq!(
+            value(8, "class_chassis.monk.ac_bonus"),
+            Some(wisdom_only + 2)
+        );
+        assert_eq!(
+            value(20, "class_chassis.monk.ac_bonus"),
+            Some(wisdom_only + 5)
+        );
     }
 
     /// Every gate read off the corpus's own grant lines: 3/3/5/7. Each

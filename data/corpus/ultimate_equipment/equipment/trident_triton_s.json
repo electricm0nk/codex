@@ -19,6 +19,30 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Triton's Trident"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Bane ~ Weapon|Monstrous Humanoid Bane.Special Ability ~ Enhancement Cost|15060.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=3|Hydraulic Push"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=1|Hydraulic Torrent"
+      },
+      {
+        "key": "SPROP",
+        "value": "CMB for either Hydraulic Push or Hydraulic Torrent is +6"
       }
     ],
     "weight_lbs": null

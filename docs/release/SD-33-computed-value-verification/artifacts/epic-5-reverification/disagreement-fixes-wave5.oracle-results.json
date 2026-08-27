@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_class_guide:equipment:full_plate_of_the_corpse",
+      "ours": 11,
+      "oracle": 11,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:field_plate",
+      "ours": 7,
+      "oracle": 7,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_world_guide:equipment:stoneplate",
+      "ours": 9,
+      "oracle": 9,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:snakeskin_tunic",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    }
+  ]
+}

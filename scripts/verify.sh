@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1083,6 +1083,58 @@ run_shape_coverage_standing_gate() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: denominator-gate
+#
+# Runs `scripts/denominator_gate.py --check` -- `AT-33-E1-004`
+# (`docs/release/SD-33-computed-value-verification/epic-breakdown.md`),
+# enforcing `decisions.md` §2: a percentage reported without its
+# denominator stated in the same construct (the same line) fails the
+# build. Default target is this bundle's own generated evidence
+# (`artifacts/**/*_cycle_receipt.md` + `progress.md`) -- deliberately not
+# this bundle's planning prose (out of this criterion's write scope) and
+# not every prior bundle's receipts (261 files, unaudited, a separate
+# task). `DENOMINATOR_GATE_PATHS` (space-separated globs) overrides the
+# default, matching the `${VAR:-default}` shape `VERIFY_LOG_DIR` and
+# `PREFLIGHT_DISK_MIN_FREE_GB` already use -- this is how a deliberately-
+# malformed receipt is proven to fail this exact stage without permanently
+# committing a violation (see `AT-33-E1-004`'s cycle receipt for the live
+# transcript). Cheap (stdlib re/glob, no build, no network) -- placed in
+# BOTH stage sets next to shape-coverage-standing-gate, the same
+# live-check-with-an-exit-code reasoning that stage carries.
+# ---------------------------------------------------------------------------
+
+run_denominator_gate() {
+    stage_start "denominator-gate — python3 scripts/denominator_gate.py --check"
+    local log="$LOG_DIR/denominator-gate.log"
+    local script="$REPO_ROOT/scripts/denominator_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail denominator-gate "script missing at scripts/denominator_gate.py"
+        return
+    fi
+
+    local -a paths=()
+    if [[ -n "${DENOMINATOR_GATE_PATHS:-}" ]]; then
+        # shellcheck disable=SC2206
+        paths=( ${DENOMINATOR_GATE_PATHS} )
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check "${paths[@]}" ) >"$log" 2>&1
+    local status=$?
+
+    local checked violations
+    checked=$(sed -n 's/^files_checked=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    violations=$(sed -n 's/^violations=\([0-9]*\)$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail denominator-gate "violations=${violations:-?} of files_checked=${checked:-?} — $log"
+        return
+    fi
+
+    stage_pass denominator-gate "files_checked=${checked:-?} violations=0"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: reachability-audit
 #
 # Runs `scripts/reachability_audit.py` against the live `docs/work-inventory.json`
@@ -1945,6 +1997,7 @@ for stage in "${SELECTED[@]}"; do
         supersession-gate-selftest) run_supersession_gate_selftest ;;
         shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
         shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
+        denominator-gate)    run_denominator_gate ;;
         pi-sweep)            run_pi_sweep ;;
         declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;

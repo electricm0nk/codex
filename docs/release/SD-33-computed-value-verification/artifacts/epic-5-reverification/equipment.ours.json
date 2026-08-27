@@ -1,0 +1,46 @@
+{
+  "ultimate_equipment:equipment:belt_of_mighty_hurling_greater": [
+    "belt_mighty_hurling_greater.STAT.0.SCORE",
+    20
+  ],
+  "ultimate_equipment:equipment:belt_of_mighty_hurling_lesser": [
+    "belt_mighty_hurling_lesser.STAT.0.SCORE",
+    18
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_cha_2": [
+    "headband_cha_2.STAT.5.SCORE",
+    10
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_cha_4": [
+    "headband_cha_4.STAT.5.SCORE",
+    12
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_cha_6": [
+    "headband_cha_6.STAT.5.SCORE",
+    14
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_int_2": [
+    "headband_int_2.STAT.3.SCORE",
+    12
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_int_4": [
+    "headband_int_4.STAT.3.SCORE",
+    14
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_int_6": [
+    "headband_int_6.STAT.3.SCORE",
+    16
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_wis_2": [
+    "headband_wis_2.STAT.4.SCORE",
+    12
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_wis_4": [
+    "headband_wis_4.STAT.4.SCORE",
+    14
+  ],
+  "ultimate_equipment:equipment:shifter_s_headband_wis_6": [
+    "headband_wis_6.STAT.4.SCORE",
+    16
+  ]
+}

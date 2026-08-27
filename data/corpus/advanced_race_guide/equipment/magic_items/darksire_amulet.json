@@ -6,7 +6,24 @@
     "description": "When worn by a tiefling with cold, electricity, or fire resistance, increases that resistance by 5. Provides a +4 insight bonus on Diplomacy skill checks made to influence evil outsiders.",
     "key": "Darksire Amulet",
     "name": "Darksire Amulet",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Tiefling_FiendishResistance_Bonus",
+          "5",
+          "PRERACE:1,Tiefling"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Diplomacy=influence evil outsiders",
+          "4",
+          "TYPE=Insight"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "TYPE",

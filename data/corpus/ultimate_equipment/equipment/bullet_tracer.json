@@ -7,7 +7,36 @@
     "key": "Bullet (Tracer)",
     "name": "Bullet (Tracer)",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "FirearmGear.Ammo.Ammunition.Resizable.FirearmBullet"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tracer Bullet"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|99.Special Ability ~ +1 ~ Ammunition"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "SPROP",
+        "value": "No damage but outlines target as per Faerie Fire with -2 AC for 1d4 rounds."
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

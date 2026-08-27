@@ -15,6 +15,14 @@
           "TYPE=Shield",
           "PREVAREQ:DisableShieldBonus,0"
         ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "4",
+          "PREWEAPONPROF:1,Shieldbash"
+        ]
       }
     ],
     "raw_tokens": [
@@ -73,6 +81,10 @@
       {
         "key": "SPELLFAILURE",
         "value": "5"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.ShieldBash.Resizable"
       }
     ],
     "weight": 6.0

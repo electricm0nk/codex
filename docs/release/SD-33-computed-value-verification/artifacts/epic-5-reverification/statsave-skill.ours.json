@@ -1,0 +1,147 @@
+{
+  "advanced_class_guide:equipment:hunter_s_sight": {
+    "oracle_key": "hunter_s_sight.SKILL.MISC",
+    "ours": -2,
+    "engine_raw_skill_field": "Perception"
+  },
+  "advanced_class_guide:equipment:ring_of_eloquence": {
+    "oracle_key": "ring_of_eloquence.SKILL.MISC",
+    "ours": 2,
+    "engine_raw_skill_field": "Bluff,Diplomacy,Intimidate,Perform (Oratory)"
+  },
+  "advanced_players_guide:equipment:fork_of_the_forgotten_one": {
+    "oracle_key": "fork_of_the_forgotten_one.SKILL.MISC",
+    "ours": 10,
+    "engine_raw_skill_field": "Diplomacy,Intimidate"
+  },
+  "advanced_players_guide:equipment:ring_of_maniacal_devices": {
+    "oracle_key": "ring_of_maniacal_devices.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Craft (Traps),Disable Device"
+  },
+  "advanced_race_guide:equipment:cloak_of_the_diplomat": {
+    "oracle_key": "cloak_of_the_diplomat.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Diplomacy,Sense Motive"
+  },
+  "advanced_race_guide:equipment:ring_of_the_sophisticate": {
+    "oracle_key": "ring_of_the_sophisticate.SKILL.MISC",
+    "ours": 4,
+    "engine_raw_skill_field": "Sense Motive,Knowledge (Local)"
+  },
+  "book_of_the_damned_volume_2:equipment:demon_senses": {
+    "oracle_key": "demon_senses.SKILL.MISC",
+    "ours": 8,
+    "engine_raw_skill_field": "Perception"
+  },
+  "core_rulebook:equipment:circlet_of_persuasion": {
+    "oracle_key": "circlet_of_persuasion.SKILL.MISC",
+    "ours": 3,
+    "engine_raw_skill_field": "Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device"
+  },
+  "core_rulebook:equipment:gloves_of_swimming_and_climbing": {
+    "oracle_key": "gloves_of_swimming_and_climbing.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Swim,Climb"
+  },
+  "inner_sea_gods:equipment:besmara_s_bicorne": {
+    "oracle_key": "besmara_s_bicorne.SKILL.MISC",
+    "ours": 2,
+    "engine_raw_skill_field": "Acrobatics,Climb"
+  },
+  "inner_sea_gods:equipment:besmara_s_tricorne": {
+    "oracle_key": "besmara_s_tricorne.SKILL.MISC",
+    "ours": 2,
+    "engine_raw_skill_field": "Profession (Sailor),Swim"
+  },
+  "inner_sea_gods:equipment:deadeye_s_spotter_ring": {
+    "oracle_key": "deadeye_s_spotter_ring.SKILL.MISC",
+    "ours": 2,
+    "engine_raw_skill_field": "Perception,Survival"
+  },
+  "inner_sea_races:equipment:scarf_of_glorious_histories": {
+    "oracle_key": "scarf_of_glorious_histories.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Intimidate,Perform (dance)"
+  },
+  "ultimate_equipment:equipment:bracelet_of_bargaining": {
+    "oracle_key": "bracelet_of_bargaining.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Bluff,Diplomacy,Sense Motive"
+  },
+  "ultimate_equipment:equipment:cloak_of_the_diplomat": {
+    "oracle_key": "cloak_of_the_diplomat.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Diplomacy,Sense Motive"
+  },
+  "ultimate_equipment:equipment:heritage_book": {
+    "oracle_key": "heritage_book.SKILL.MISC",
+    "ours": 2,
+    "engine_raw_skill_field": "Knowledge (Nobility)"
+  },
+  "ultimate_equipment:equipment:judge_s_wig": {
+    "oracle_key": "judge_s_wig.SKILL.MISC",
+    "ours": 4,
+    "engine_raw_skill_field": "Diplomacy,Intimidate"
+  },
+  "ultimate_equipment:equipment:juggler_s_kit": {
+    "oracle_key": "juggler_s_kit.SKILL.MISC",
+    "ours": 1,
+    "engine_raw_skill_field": "Perform (Act),Perform (Comedy)"
+  },
+  "ultimate_equipment:equipment:mask_of_ugliness": {
+    "oracle_key": "mask_of_ugliness.SKILL.MISC",
+    "ours": -4,
+    "engine_raw_skill_field": "Bluff,Diplomacy"
+  },
+  "ultimate_equipment:equipment:musical_staff": {
+    "oracle_key": "musical_staff.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Perform (String Instruments),Perform (Wind Instruments)"
+  },
+  "ultimate_equipment:equipment:pirate_s_eye_patch": {
+    "oracle_key": "pirate_s_eye_patch.SKILL.MISC",
+    "ours": 2,
+    "engine_raw_skill_field": "Swim,Climb"
+  },
+  "ultimate_equipment:equipment:pliant_gloves": {
+    "oracle_key": "pliant_gloves.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Escape Artist,Acrobatics"
+  },
+  "ultimate_equipment:equipment:ring_of_maniacal_devices": {
+    "oracle_key": "ring_of_maniacal_devices.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Craft (Traps),Disable Device"
+  },
+  "ultimate_equipment:equipment:ring_of_the_ecclesiarch": {
+    "oracle_key": "ring_of_the_ecclesiarch.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Diplomacy,Knowledge (Religion)"
+  },
+  "ultimate_equipment:equipment:ring_of_the_sophisticate": {
+    "oracle_key": "ring_of_the_sophisticate.SKILL.MISC",
+    "ours": 4,
+    "engine_raw_skill_field": "Sense Motive,Knowledge (Local)"
+  },
+  "ultimate_equipment:equipment:rod_beguiling": {
+    "oracle_key": "rod_beguiling.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Bluff,Sleight of Hand"
+  },
+  "ultimate_equipment:equipment:suzerain_scepter": {
+    "oracle_key": "suzerain_scepter.SKILL.MISC",
+    "ours": 5,
+    "engine_raw_skill_field": "Knowledge (Nobility),Diplomacy"
+  },
+  "ultimate_psionics:equipment:eyes_of_expanded_vision": {
+    "oracle_key": "eyes_of_expanded_vision.SKILL.MISC",
+    "ours": 1,
+    "engine_raw_skill_field": "Perception"
+  },
+  "ultimate_psionics:equipment:third_eye_aware": {
+    "oracle_key": "third_eye_aware.SKILL.MISC",
+    "ours": 10,
+    "engine_raw_skill_field": "Perception"
+  }
+}

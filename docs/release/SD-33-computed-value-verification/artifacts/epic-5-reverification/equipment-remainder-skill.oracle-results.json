@@ -1,0 +1,430 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_players_guide:equipment:alchemist_s_lab_portable",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_players_guide:equipment:cauldron_of_brewing",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:halfling_jugglesticks",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:living_garments",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "advanced_race_guide:equipment:training_harness",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:alchemist_s_lab",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:boots_of_elvenkind",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:climber_s_kit",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_elvenkind",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:cloak_of_the_bat",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:disguise_kit",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:eyes_of_the_eagle",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:goggles_of_minute_seeing",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:healer_s_kit",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_pale_green_prism",
+      "ours": 1,
+      "oracle": null,
+      "verdict": "unverifiable"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:lens_of_detection",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_climbing",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_climbing_improved",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_swimming",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ring_of_swimming_improved",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:robe_of_eyes",
+      "ours": 10,
+      "oracle": 10,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "core_rulebook:equipment:vest_of_escape",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:featherscale_cloak",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:great_barghest_hero_cloak",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_serene_contortions",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:robe_of_the_master_of_masters",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:silent_blade_vest",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:wayfinder_of_zephyrs",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "occult_adventures:equipment:caduceus_rod",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:aquatic_cummerbund",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bell_net",
+      "ours": -2,
+      "oracle": -2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:boots_of_the_mastodon",
+      "ours": -2,
+      "oracle": -2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bracers_of_the_glib_entertainer",
+      "ours": 5,
+      "oracle": null,
+      "verdict": "unverifiable"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cackling_hag_s_blouse",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:claws_of_the_ice_bear",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:crown_of_conquest",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:dead_man_s_headband",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:eyes_of_keen_sight",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:filter_hood",
+      "ours": -2,
+      "oracle": -2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gambler_s_kit_cheating",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gloves_of_larceny",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_counterspelling",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_stupidity",
+      "ours": -2,
+      "oracle": null,
+      "verdict": "unverifiable"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:healer_s_gloves",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:horsemaster_s_saddle",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:horsemaster_s_saddle_mount",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:hunter_s_band",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:inquisitor_s_monocle",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:lenses_of_detection",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:lion_cloak",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:mask_of_a_thousand_tomes",
+      "ours": 10,
+      "oracle": null,
+      "verdict": "unverifiable"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:maw_of_the_wyrm",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:needles_of_fleshgraving",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:prestidigitator_s_cloak",
+      "ours": 8,
+      "oracle": 8,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_tactical_precision",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_the_sea_strider",
+      "ours": 16,
+      "oracle": 16,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_escape",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_sapling",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:rod_trap_stealer_s",
+      "ours": 4,
+      "oracle": 4,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:scholar_s_ring",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:seducer_s_bane",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:serpent_belt",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:serpent_belt_greater",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:staff_of_accompaniment",
+      "ours": 2,
+      "oracle": null,
+      "verdict": "unverifiable"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:stalker_s_mask",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:survival_kit_masterwork",
+      "ours": 2,
+      "oracle": 2,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:trapspringer_s_gloves",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:veterinarian_s_kit",
+      "ours": 1,
+      "oracle": 1,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:xorn_robe",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    },
+    {
+      "unit_id": "ultimate_wilderness:equipment:guiding_scarab",
+      "ours": 5,
+      "oracle": 5,
+      "verdict": "agree"
+    }
+  ]
+}

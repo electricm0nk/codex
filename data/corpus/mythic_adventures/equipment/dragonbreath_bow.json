@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Flaming Burst ~ Weapon.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "SPROP",
+        "value": "A mythic wielder can expend one use of mythic power when drawing back the bow to create an arrow of pure flame. This flame arrow acts as a ranged touch attack that can target only creatures within the first range increment of the bow. When it hits its target, this flame arrow deals 3d10+2 points of fire damage. This damage stacks with the bow's flaming burst special ability."
       }
     ],
     "weight_lbs": null

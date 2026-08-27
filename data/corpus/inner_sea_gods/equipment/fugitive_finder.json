@@ -6,7 +6,15 @@
     "description": null,
     "key": "Fugitive Finder",
     "name": "Fugitive Finder",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "MOVEADD",
+          "TYPE.Walk",
+          "10"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +23,26 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "DESC",
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": null

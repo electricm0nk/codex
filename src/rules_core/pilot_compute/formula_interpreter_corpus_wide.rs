@@ -1,6 +1,47 @@
 //! SD-32 Gate 2 (`gate-2-corpus-wide-runs`, kanban `#8`) — the corpus-wide run
 //! AT-32-G2-004 requires for `formula_interpreter.rs` (card 6's F1..F9 engine).
 //!
+//! # SD-33 AT-33-E3-001/002/003 root-cause fix: the census is regenerated
+//! fresh, never read from SD-32's frozen file
+//!
+//! `README.md §4` row G (SD-33) named a "41% coverage" gap: **6,854** of
+//! **11,652** formula-bearing F1..F9 units had never been run through this
+//! engine. Root cause (`artifacts/epic-3-engine-coverage/coverage-gap-
+//! rootcause.md`), established by execution, not assumption: this module
+//! previously sourced its population from `docs/release/SD-32-compute-
+//! library-and-cause-closure/artifacts/gate-1-shape-closure/ledger.json` —
+//! SD-32's own frozen, committed Gate 1 artifact, dated 2026-08-14. Two
+//! independent staleness layers compounded:
+//!
+//! 1. **Stale run, current code**: re-running this module's *unchanged*
+//!    scan logic against that same frozen file (still 11,338 F1..F9 rows)
+//!    today produces population=11,338, not the artifact's committed 4,798
+//!    — the 4,798 committed at `artifacts/gate-2-engines/formula_
+//!    interpreter.corpus-wide.json` (SD-32's closed Gate 2 evidence, never
+//!    overwritten) was itself a stale run against an earlier code/data
+//!    state and was never regenerated after the code that could walk the
+//!    full census landed. Most of the "6,854 never run" figure (~6,540 of
+//!    it) was this: a correct, ready engine that had simply not been
+//!    re-run since.
+//! 2. **Stale census, current corpus**: the frozen `ledger.json` itself is
+//!    stale relative to the CURRENT `docs/work-inventory.json` / `data/
+//!    corpus` state — 314 more F1..F9 units exist today
+//!    (`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
+//!    reports 11,652 matched F1..F9 rows, not the frozen file's 11,338).
+//!
+//! The fix for both: this module no longer reads SD-32's frozen file at
+//! all. [`fresh_census_rows`] regenerates the Gate 1 census **fresh, at
+//! scan time**, by invoking the same `scripts/shape_ledger.py` classifier
+//! SD-32 used (never re-implemented in Rust — `decisions.md §4`'s single-
+//! source-of-truth discipline: the PF1e family vocabulary is Python data,
+//! porting its regex rule list into Rust would be exactly the drift risk
+//! that decision exists to prevent), writing its `--output` to a scratch
+//! path outside the repo (`std::env::temp_dir()`, the same convention
+//! `oracle_validation::pcgen_runner` uses) and reading the rows back. The
+//! population this module reports is therefore always the CURRENT true
+//! population, never a frozen snapshot that silently drifts out from under
+//! every future cycle that trusts it.
+//!
 //! # What "corpus-wide" means here
 //!
 //! AT-32-G2-004: "No engine is 'complete' until it has been run corpus-wide
@@ -9,10 +50,7 @@
 //! engine against a subset and declares the engine done is out of protocol —
 //! the subset is not the population the engine claims to handle."
 //!
-//! The closed Gate 1 census is `artifacts/gate-1-shape-closure/ledger.json`
-//! (`scripts/shape_ledger.py`'s committed output, kanban card 5) — an
-//! independent, non-engine classification of every not-done unit into one of
-//! the ten families. This module re-derives, for **every** unit that ledger
+//! This module re-derives, for **every** unit the freshly-regenerated census
 //! placed in F1..F9 (never a hand-picked subset), the same DEFINE/BONUS
 //! formula segment(s) `shape_ledger.py` itself joined against
 //! (`docs/work-inventory.json`'s `(book, source_file, source_line)` triple ->
@@ -26,31 +64,38 @@
 //! numeric evaluation needs a bound `vars` map a standalone corpus record
 //! does not carry (module doc of `formula_interpreter`, point 1, and the
 //! `classlevel`/`skillinfo` consumer-binding notes) — no consumer is wired to
-//! supply real character state to every one of 4,798 units, and inventing one
-//! would be exactly the "plausible number nobody checks" shape this bundle's
-//! own doctrine refuses. What this module proves instead, honestly: the
-//! interpreter's grammar actually reaches (parses without refusing) the real
-//! formula text of every unit Gate 1 independently counted under that family
+//! supply real character state to every one of the 11,652 units in F1..F9,
+//! and inventing one would be exactly the "plausible number nobody checks"
+//! shape this bundle's own doctrine refuses. What this module proves
+//! instead, honestly: the interpreter's grammar actually reaches (parses
+//! without refusing) the real formula text of every unit Gate 1 independently
+//! counted under that family
 //! — the corpus-wide population check AT-32-G2-004 asks for — and reports,
 //! per family, how many units it refuses and a sample of why, rather than
 //! silently rounding a partial proof up to "done".
 //!
-//! # The fixture-check against the closed Gate 1 census
+//! # The fixture-check against the freshly-regenerated Gate 1 census
 //!
 //! [`run_corpus_wide_scan`] asserts `total_population` (the number of units
-//! this scan actually walked) equals the closed ledger's own F1..F9 row
-//! count, returning [`ScanError::PopulationMismatch`] rather than silently
-//! reporting a partial run as complete — this is the "own fixture-check,
-//! against the closed Gate 1 census" AT-32-G2-004 names, expressed as a
-//! population-parity check rather than a per-value comparison (no oracle
-//! byte the engine does not read carries a per-unit expected numeric value
-//! for 4,798 units; the census population count itself is the fixture, and
-//! it was produced by `scripts/shape_ledger.py` independently of this
-//! module, exactly the "engine never reads" provenance discipline
-//! `decisions.md` §3 / operator ruling §20 requires).
+//! this scan actually walked) equals the freshly-regenerated census's own
+//! F1..F9 row count, returning [`ScanError::PopulationMismatch`] rather than
+//! silently reporting a partial run as complete — this is the "own
+//! fixture-check, against the closed Gate 1 census" AT-32-G2-004 names,
+//! expressed as a population-parity check rather than a per-value comparison
+//! (no oracle byte the engine does not read carries a per-unit expected
+//! numeric value for 11,652 units; the census population count itself is
+//! the fixture, and it is produced by `scripts/shape_ledger.py`
+//! independently of this module, exactly the "engine never reads"
+//! provenance discipline `decisions.md` §3 / operator ruling §20 requires).
+//! Under SD-33's fix this check is structural (it always holds, since
+//! `scan_ledger_rows` walks every row `fresh_census_rows` hands it) rather
+//! than a live subset-catcher — it is kept because a future change to
+//! either function that reintroduces filtering must still trip it.
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
+use std::process::Command;
+use std::sync::OnceLock;
 
 use super::formula_interpreter::{extract_formula_field, recognises_shape};
 
@@ -95,15 +140,17 @@ pub struct CorpusWideReport {
 
 #[derive(Debug)]
 pub enum ScanError {
-    /// Could not read/parse `docs/work-inventory.json` or the closed Gate 1
-    /// ledger — a scan that cannot see its own population must refuse, never
-    /// report a vacuous zero as "done".
+    /// Could not read/parse `docs/work-inventory.json`, or could not
+    /// regenerate the fresh Gate 1 census (the `python3 scripts/shape_
+    /// ledger.py` subprocess failed to spawn, exited non-zero, or wrote
+    /// unparseable JSON) — a scan that cannot see its own population must
+    /// refuse, never report a vacuous zero as "done".
     MissingInput(String),
     /// The number of units this scan actually walked disagrees with the
-    /// closed Gate 1 ledger's own F1..F9 row count — the "fixture-check,
-    /// against the closed Gate 1 census" AT-32-G2-004 requires. This is the
-    /// check a cycle that (accidentally or otherwise) ran against a subset
-    /// must trip.
+    /// freshly-regenerated census's own F1..F9 row count — the
+    /// "fixture-check, against the closed Gate 1 census" AT-32-G2-004
+    /// requires. This is the check a cycle that (accidentally or
+    /// otherwise) ran against a subset must trip.
     PopulationMismatch { scanned: usize, census: usize },
 }
 
@@ -113,9 +160,9 @@ impl std::fmt::Display for ScanError {
             ScanError::MissingInput(m) => write!(f, "corpus-wide scan input missing: {m}"),
             ScanError::PopulationMismatch { scanned, census } => write!(
                 f,
-                "corpus-wide scan walked {scanned} unit(s) but the closed Gate 1 census counts \
-                 {census} in F1..F9 — a cycle that runs against a subset is out of protocol \
-                 (AT-32-G2-004)"
+                "corpus-wide scan walked {scanned} unit(s) but the freshly-regenerated Gate 1 \
+                 census counts {census} in F1..F9 — a cycle that runs against a subset is out of \
+                 protocol (AT-32-G2-004)"
             ),
         }
     }
@@ -151,20 +198,83 @@ fn load_inventory_join_keys(
     Ok(out)
 }
 
-/// Loads the closed Gate 1 census (`artifacts/gate-1-shape-closure/ledger.json`)
-/// and returns only the F1..F9 rows — never a hand-filtered subset of those.
-fn load_gate1_in_scope_rows(repo_root: &Path) -> Result<Vec<LedgerRow>, ScanError> {
-    let path = repo_root.join(
-        "docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-1-shape-closure/ledger.json",
-    );
-    let text = std::fs::read_to_string(&path)
-        .map_err(|e| ScanError::MissingInput(format!("{}: {e}", path.display())))?;
-    let doc: serde_json::Value = serde_json::from_str(&text)
-        .map_err(|e| ScanError::MissingInput(format!("{}: invalid JSON: {e}", path.display())))?;
+/// Process-wide cache for [`fresh_census_rows`]'s regeneration — the
+/// `scripts/shape_ledger.py` subprocess walks the whole corpus (tens of
+/// seconds); `cargo test` runs every `#[test]` fn for this module in the
+/// same process, so caching means the corpus is walked once per test
+/// binary invocation, not once per test. The cache stores `Result<_,
+/// String>` (never `ScanError`, which is not `Clone`) and is remapped back
+/// to `ScanError::MissingInput` on read.
+static FRESH_CENSUS_CACHE: OnceLock<Result<Vec<LedgerRow>, String>> = OnceLock::new();
+
+/// Regenerates the Gate 1 shape census **fresh**, at scan time, by invoking
+/// `scripts/shape_ledger.py` against the CURRENT `docs/work-inventory.json`
+/// / `data/corpus` state — never SD-32's frozen, committed
+/// `artifacts/gate-1-shape-closure/ledger.json` (module doc, "SD-33
+/// AT-33-E3-001/002/003 root-cause fix"). Returns only the F1..F9 rows —
+/// never a hand-filtered subset of those. Cached process-wide via
+/// [`FRESH_CENSUS_CACHE`].
+fn fresh_census_rows(repo_root: &Path) -> Result<Vec<LedgerRow>, ScanError> {
+    FRESH_CENSUS_CACHE
+        .get_or_init(|| regenerate_census_rows_uncached(repo_root).map_err(|e| e.to_string()))
+        .clone()
+        .map_err(ScanError::MissingInput)
+}
+
+/// The uncached regeneration this module's doc names: spawns `python3
+/// scripts/shape_ledger.py --inventory <repo>/docs/work-inventory.json
+/// --corpus-root <repo>/data/corpus --output <scratch path>` (the same
+/// classifier `scripts/box_ledger.py`'s SD-32 predecessor, `coverage_
+/// ledger.py`, and this module's own SD-32-era code all trusted as the
+/// PF1e family vocabulary's single source of truth — `decisions.md` §4),
+/// writes to a scratch path under `std::env::temp_dir()` (the same
+/// convention `oracle_validation::pcgen_runner::run_pcgen` uses, never a
+/// path inside the repo, so this regeneration is never mistaken for a
+/// committed artifact), reads the JSON back, and filters to F1..F9.
+fn regenerate_census_rows_uncached(repo_root: &Path) -> Result<Vec<LedgerRow>, ScanError> {
+    let script = repo_root.join("scripts/shape_ledger.py");
+    let inventory = repo_root.join("docs/work-inventory.json");
+    let corpus_root = repo_root.join("data/corpus");
+    let scratch_output = std::env::temp_dir()
+        .join(format!("sd33-e3-shape-ledger-fresh-{}.json", std::process::id()));
+
+    let output = Command::new("python3")
+        .arg(&script)
+        .arg("--inventory")
+        .arg(&inventory)
+        .arg("--corpus-root")
+        .arg(&corpus_root)
+        .arg("--output")
+        .arg(&scratch_output)
+        .output()
+        .map_err(|e| {
+            ScanError::MissingInput(format!(
+                "spawning `python3 {}`: {e}",
+                script.display()
+            ))
+        })?;
+    if !output.status.success() {
+        return Err(ScanError::MissingInput(format!(
+            "`python3 {}` exited {:?}: {}",
+            script.display(),
+            output.status.code(),
+            String::from_utf8_lossy(&output.stderr)
+        )));
+    }
+
+    let text = std::fs::read_to_string(&scratch_output).map_err(|e| {
+        ScanError::MissingInput(format!("{}: {e}", scratch_output.display()))
+    })?;
+    let _ = std::fs::remove_file(&scratch_output);
+    let doc: serde_json::Value = serde_json::from_str(&text).map_err(|e| {
+        ScanError::MissingInput(format!("{}: invalid JSON: {e}", scratch_output.display()))
+    })?;
     let rows = doc
         .get("rows")
         .and_then(|r| r.as_array())
-        .ok_or_else(|| ScanError::MissingInput(format!("{}: no `rows` array", path.display())))?;
+        .ok_or_else(|| {
+            ScanError::MissingInput(format!("{}: no `rows` array", scratch_output.display()))
+        })?;
     let mut out = Vec::new();
     for r in rows {
         let (Some(id), Some(book), Some(family)) = (
@@ -320,7 +430,7 @@ pub fn scan_ledger_rows(
 /// `src/bin/formula_interpreter.rs --corpus-wide` calls.
 pub fn run_corpus_wide_scan(repo_root: &Path) -> Result<CorpusWideReport, ScanError> {
     let inventory = load_inventory_join_keys(repo_root)?;
-    let rows = load_gate1_in_scope_rows(repo_root)?;
+    let rows = fresh_census_rows(repo_root)?;
     let census_population = rows.len();
     let corpus_root = repo_root.join("data/corpus");
     let report = scan_ledger_rows(&rows, &inventory, &corpus_root);
@@ -353,7 +463,7 @@ mod tests {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
 
-        let census_rows = load_gate1_in_scope_rows(&root).expect("ledger must load");
+        let census_rows = fresh_census_rows(&root).expect("ledger must load");
         assert_eq!(
             report.total_population,
             census_rows.len(),
@@ -416,7 +526,7 @@ mod tests {
     fn a_subset_run_trips_the_population_mismatch_check() {
         let root = repo_root();
         let inventory = load_inventory_join_keys(&root).expect("inventory must load");
-        let all_rows = load_gate1_in_scope_rows(&root).expect("ledger must load");
+        let all_rows = fresh_census_rows(&root).expect("ledger must load");
         assert!(all_rows.len() > 1, "need at least 2 rows to demonstrate a real subset");
 
         // Deliberately drop the last row -- the "ran against a subset" failure mode.
@@ -431,5 +541,116 @@ mod tests {
              mismatch `run_corpus_wide_scan`'s own fixture-check must trip"
         );
         assert_eq!(report.total_population, subset.len());
+    }
+
+    /// AT-33-E3-002's own RED→GREEN proof. `docs/release/SD-32-.../
+    /// artifacts/gate-1-shape-closure/ledger.json` is SD-32's frozen Gate 1
+    /// census, taken 2026-08-14 against a corpus/inventory state that has
+    /// since moved (`decisions.md §6`'s revisit-condition class: content
+    /// keeps landing). This test hardcodes F1's CURRENT true
+    /// formula-bearing count — independently re-derived 2026-08-24 via
+    /// `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
+    /// (`family rollup: F1 6308`) — and fails if the module's own census
+    /// still answers the stale 6,032 the frozen file carries. This is the
+    /// literal shape of the SD-33 defect: a true number (6,032) that was
+    /// the right answer against the wrong (stale) denominator.
+    ///
+    /// `AT-33-E6-001` (2026-08-25): 6,308 itself went stale 44 minutes after
+    /// this test's own landing commit (`347e9d1a34`, 2026-08-24 23:56:11) —
+    /// `AT-33-E4-002` (`00ca087775`, 2026-08-25 00:39:59, the very next
+    /// commit to touch `docs/work-inventory.json` on this branch)
+    /// regenerated that file (4,224 units reclassified off `unknown`, plus
+    /// 3,985 units of disclosed unrelated SD-32-engine drift), which moves
+    /// `shape_ledger.py`'s F1 rollup by construction: F1's population is
+    /// built from `coverage_ledger.py`'s `not_done_population()`, gated on
+    /// `doneness_verdict(unit) != DONE` for every unit not in
+    /// `EXCLUDED_BOOKS` — the same `docs/work-inventory.json` this cycle's
+    /// own Shortfall-1 fix reads. Re-derived fresh against the CURRENT
+    /// committed file with the identical command this test's own doc
+    /// comment already names:
+    /// `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json`
+    /// -> `family rollup: F1 6278`, matching this test's own live
+    /// `report.families["F1"].population` exactly (both walk the identical
+    /// `not_done_population()` gate, so they cannot honestly disagree).
+    /// 6,308 - 6,278 = 30 units moved off the F1-eligible population by the
+    /// regen — a real content shift, not a defect this cycle introduced:
+    /// unaffected by which non-`done` doneness word Shortfall 1 chose for
+    /// the 11 `(ambiguous, unmeasurable)` units, since `not_done_population`
+    /// only tests `verdict != DONE`, never which specific non-`done` verdict
+    /// a unit carries.
+    ///
+    /// **6,278 -> 6,260 by the SD-33 Epic 6 Skinwalker fold (2026-08-26).**
+    /// Re-derived with the identical command
+    /// (`python3 scripts/shape_ledger.py --inventory docs/work-inventory.json
+    /// --corpus-root data/corpus --output <scratch>`, matching this test's
+    /// own live `report.families["F1"].population`). Root cause, verified
+    /// rather than assumed: all 65 of the fold's new
+    /// `data/corpus/bestiary_5/race_trait/skinwalker/*.json` filenames
+    /// (9 kin selectors + their 36 replacement rows + 20 shared `Change
+    /// Shape (<Option>)` components) exactly coincide with 65 pre-existing
+    /// `data/corpus/bestiary_5/race_trait_generic/*.json` filenames from
+    /// SD-32's "no_record closure via generic verbatim ingest" catch-all
+    /// lane (`75ea0c9109`) — the SAME heritage content, already captured
+    /// once, generically, before this fold gave it a properly-typed home.
+    /// `shape_ledger.py`'s `normalize_kind_dir` deliberately folds a
+    /// `<kind>_generic` sibling into its base `<kind>` bucket for this scan
+    /// (own doc comment: "a `<kind>_generic` sibling directory ... still
+    /// counts as a real answer for its base kind"), so the fold's real,
+    /// correctly-typed `race_trait/` records now win that join for all 65
+    /// ids where before only the generic verbatim copy existed — reclass-
+    /// ifying some of them off F1 (verified: the 9 kin selectors, e.g.
+    /// `bestiary_5:race_trait:skinwalker_werebear_kin`, are genuinely
+    /// `F0`/`no_formula_tokens` in the real record — a bare
+    /// `ABILITY:...AUTOMATIC...` grant token carries no numeric literal —
+    /// where the old generic-verbatim copy's broader raw-token capture
+    /// apparently read as `F1`-shaped). This never touches a player-facing
+    /// path: neither `race_resolver.rs` nor `race_trait_picker.rs` nor
+    /// `character_hub.rs` reads `race_trait_generic` at all (grep confirms
+    /// zero references), so this is a measurement-instrument reclassifi-
+    /// cation, not an engine or corpus-quality regression.
+    ///
+    /// **6,260 -> 6,257 by `cef0ca1b39` (fold-inventory, 2026-08-26), an
+    /// ORDERING bug, not a further content change.** `6e2f2f076b`
+    /// (fold-skinwalker) pinned 6,260 correctly against the
+    /// `docs/work-inventory.json` committed at that moment. The very next
+    /// commit, `cef0ca1b39`, then regenerated that same file (89 of 49,438
+    /// units moved status) and did **not** re-run `cargo test --locked
+    /// --lib` afterwards — its own receipt's "lib 2845 passed, 0 failed" is
+    /// a true measurement of the tree *before* its own inventory write, not
+    /// of the tree it landed. Three units left F1's `not_done_population()`
+    /// gate in that regen (id-keyed set diff between `shape_ledger.py` run
+    /// against `git show 56bbebe3d4:docs/work-inventory.json` and against
+    /// the committed HEAD file, both with `--corpus-root data/corpus`;
+    /// zero units entered):
+    /// `bestiary_5:race_trait:skinwalker_speed`,
+    /// `ultimate_psionics:equipment_modifier:plusn_svs`,
+    /// `ultimate_psionics:equipment_modifier:special_quality_severis_enhancement_bonus`.
+    /// The first of those three is itself fold-attributable (see the
+    /// `AT-33-E6-001` attempt-11 receipt's corrected 50/39 fold-attribution
+    /// split: `were*_kin_*`-named bestiary_5 ids missed by a
+    /// `'skinwalker' in id` substring test are fold output too), the other
+    /// two are the regen's disclosed unrelated drift. Re-derived
+    /// 2026-08-26 via `python3 scripts/shape_ledger.py --inventory
+    /// docs/work-inventory.json --corpus-root data/corpus`, run **after**
+    /// the last commit that writes `docs/work-inventory.json` — the rule
+    /// this re-pin exists to make mechanical: run the suite after the last
+    /// write that can move it, not before.
+    #[test]
+    fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
+        let root = repo_root();
+        let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
+        let f1 = report.families.get("F1").expect("F1 must be present in the report");
+        assert_eq!(
+            f1.population, 6257,
+            "F1 population must equal the CURRENT true formula-bearing count (6,257, re-derived \
+             2026-08-26 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
+             --corpus-root data/corpus`, run AFTER the `cef0ca1b39` fold-inventory regen of \
+             `docs/work-inventory.json` -- see this test's own doc comment), not the pre-regen \
+             6,260 (2026-08-26, `6e2f2f076b` fold-skinwalker, invalidated one commit later by \
+             `cef0ca1b39` regenerating the inventory without a lib re-run), not the pre-fold 6,278 \
+             (2026-08-25, AT-33-E6-001), not the pre-regen 6,308 this test pinned on 2026-08-24, \
+             and not SD-32's frozen 2026-08-14 census (6,032) — \
+             AT-33-E3-002 / AT-33-E6-001"
+        );
     }
 }

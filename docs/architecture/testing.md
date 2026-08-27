@@ -1,7 +1,7 @@
 # Testing
 
 > Scope: the full verification command set for this repo, test conventions, the fixture grammar, and how to run corpus-gated tests — this file doubles as the "how do I verify my change" runbook.
-> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for the new §"The derived-evaluator fixture seam" section only; every other section still carries its 2026-07-22 tranche/5-3 (SD-25 closure) verification and is unchanged.
+> Last verified: **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the new §"SD-33 additions: `box_ledger.py`, the `denominator-gate`/`corpus-sweep` stages, and the L20-per-class pilot-build probes" section; the 2026-08-19 `tranche/11` pass for §"The derived-evaluator fixture seam" (SD-31 wave 15) still stands; every other section still carries its 2026-07-22 tranche/5-3 (SD-25 closure) verification and is unchanged.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Quick reference: what to run for a given change
@@ -88,6 +88,46 @@ All `jsonschema`-based validators (`validate_manifest.py`, `emit_channel_index.p
 - **Per-suite non-execution check on `root-full`.** The stage derives the expected `tests/*.rs` suite set from the filesystem and diffs it against the `Running tests/<name>.rs` lines cargo's own log actually produced (`comm -23`), failing by name if any suite present in `tests/` never ran — a floor on the aggregate pass/binary count cannot catch one suite silently dropping out while another appears in the same run. Mutation-tested 2026-08-10 by disabling `tests/sd24_release_notes_structure.rs` via a temporary `Cargo.toml` `[[test]] test = false` block: the stage FAILED naming that suite, then passed again once reverted.
 
 `scripts/reclaim.sh` (dry-run by default; `--apply` deletes) reclaims abandoned `CARGO_TARGET_DIR`s, stale `verify.sh` log dirs, merged worktrees, and merged/gone branches — see the script's own `--help` for full safety-guard detail (never touches an in-use target dir, an uncommitted/unpushed worktree, this repo's own checkout, or the `pcgen` oracle). As of 2026-08-10 it also runs unattended via cron: `0 */4 * * * /home/ubuntu/workspace/repos/codex/scripts/reclaim.sh --apply >> /home/ubuntu/workspace/reclaim-cron.log 2>&1` in the `ubuntu` user's crontab (installed alongside the pre-existing dashboard/heartbeat/usage-tick entries, none of which were touched), because disk exhaustion was this program's second-largest recorded incident cluster (6 `disk-full` + 2 `disk-pressure` events, `docs/retro/events/*.jsonl`) and the reclaim script previously only ran when a human remembered to invoke it. Verified to run correctly under a cron-like environment (`env -i HOME=... PATH=/usr/bin:/bin bash scripts/reclaim.sh` — minimal `PATH`, no TTY, no login shell) before being installed.
+
+### SD-33 additions: `box_ledger.py`, the `denominator-gate`/`corpus-sweep` stages, and the L20-per-class pilot-build probes
+
+`scripts/box_ledger.py --check` proves — structurally, not by assertion —
+that a bundle's own "box" (a named, complete partition of
+`docs/work-inventory.json`'s full unit population, committed as a fenced
+` ```json ledger ` block inside the bundle's `THE-BOX.md`) actually covers
+every unit exactly once. It reads the group definitions from the committed
+markdown and the live population from `docs/work-inventory.json` directly
+(never from the file's own `totals.units` field), and fails closed on four
+conditions: `uncovered != 0` (a unit in zero groups), `overlap != 0` (a unit
+in more than one group), an oracle-results file (the `run.py`/`compare.py`
+shape above) carrying a `"disagree"` verdict, or an `unverifiable` unit
+dispositioned `done`. `docs/release/SD-33-computed-value-verification/THE-BOX.md`
+is SD-33's own instance — each SD-N bundle that uses this pattern builds its
+own box rather than citing a predecessor's.
+
+`scripts/verify.sh`'s **`denominator-gate`** stage
+(`python3 scripts/denominator_gate.py --check`) scans a bundle's own
+markdown documents for a figure written without a same-construct
+denominator (a bare "100%" or an "N of M" pair whose M is a different
+population than the one being reported) — catching this class of defect in
+package docs and cycle receipts before they land, not only in code. The
+**`corpus-sweep`** stage
+(`cargo run --locked --bin corpus_literal_sweep`) is the corpus-literal
+byte-equality sweep described in
+[corpus-ingest.md](./corpus-ingest.md)'s §"`raw_tokens` enrichment and the
+corpus-literal sweep's own closure builder".
+
+`scripts/oracle_harness/charbuild_remainder_generate.py` (see
+[homebrew-and-oracle.md](./homebrew-and-oracle.md)) generates one **L20**
+`.pcg` fixture per source class and one **L1** `.pcg` per race, each with
+every ability score fixed at 14, for the full-character-build unit
+population that per-item/per-record fixtures cannot reach (class-feature
+chains, race-trait chains, and other level- or race-scoped magnitudes) —
+amortizing many `class_feature` units per PCGen JVM start rather than
+spinning up a fresh build per unit. The paired `src/bin/e5_*_ours.rs`
+binaries read the engine's own compute path for the same population and
+emit the `ours` half `run.py` compares against the pinned oracle's real
+export of these same fixtures.
 
 ## Test conventions
 

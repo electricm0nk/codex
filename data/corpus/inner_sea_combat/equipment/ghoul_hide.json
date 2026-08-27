@@ -15,6 +15,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Armor"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Combat"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "ISC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
       }
     ],
     "weight_lbs": null

@@ -15,6 +15,62 @@
       {
         "key": "EQMOD",
         "value": "Material ~ Steel.Material ~ Wood"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Greater Hushing Arrow"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0.05"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|1001"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint illusion"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|527 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, Heighten Spell, silence"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "This +1 arrow makes no sound on release or as it flies through the air. A creature struck by a greater hushing arrow must succeed at a DC 16 Will save or be affected by silence (as the spell) for 5 rounds. The silence effect is not triggered by arrows that miss or those that strike an inanimate object."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
       }
     ],
     "weight_lbs": null

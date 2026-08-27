@@ -6,7 +6,15 @@
     "description": null,
     "key": "Scimitar of the Spellthief",
     "name": "Scimitar of the Spellthief",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Spellcraft,Use Magic Device",
+          "2"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +23,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Heartseeker ~ Melee.Special Ability ~ Keen ~ Weapon.Special Ability ~ Enhancement Cost|75800.Special Ability ~ +1 ~ Weapon.Special Ability ~ Spellstealing ~ Melee"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      },
+      {
+        "key": "SPROP",
+        "value": "Reveals magical auras by touch."
       }
     ],
     "weight_lbs": null

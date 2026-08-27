@@ -19,6 +19,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Bane ~ Weapon|Spellcaster Bane.Special Ability ~ +3 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "SPROP",
+        "value": "The enhanced end acts as a bane weapon against any creature with the ability to cast spells or use spelllike abilities. As a standard action, the wielder can strike the unenhanced end against the ground while expending one use of mythic power to produce an antimagic field centered on the staff. This effect has a duration of 2 hours. Anyone striking the staff against the ground a second time dismisses the effect. The antimagic field remains in effect if the staff is dropped or disarmed. The staff retains its enhancement bonus and extra damage against spellcasters inside any antimagic field."
       }
     ],
     "weight_lbs": null

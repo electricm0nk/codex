@@ -6,7 +6,16 @@
     "description": null,
     "key": "Red Stalker Armor",
     "name": "Red Stalker Armor",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Bluff=Feint",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +24,30 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.253"
+      },
+      {
+        "key": "DESC",
+        "value": "This dark red +1 leather armor is modeled after the armor worn by the Blood Watch guards in the home city of the Red Mantis assassins. Vented and airy, the armor is suitable for wearing in dense jungles, humid rainforests, and other formidable environments. The wearer gains a +5 competence bonus on Bluff checks to feint."
       }
     ],
     "weight_lbs": null

@@ -1,7 +1,7 @@
 # Corpus Ingest
 
 > Scope: how real PCGen corpus files (`.pcc` entry files + `.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: **2026-08-18 against `tranche/11`** for §"Provenance is per-FIELD, not per-record" (SD-31 wave 14, `SD31-W14-INTEGRATE-001`); prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle) — parsing-pipeline sections (Stage 1-6) re-verified structurally only; the cache-layer additions are documented in [rules-data-tables.md](./rules-data-tables.md)
+> Last verified: **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the new §"`raw_tokens` enrichment and the corpus-literal sweep's own closure builder" section; the 2026-08-18 `tranche/11` pass for §"Provenance is per-FIELD, not per-record" (SD-31 wave 14, `SD31-W14-INTEGRATE-001`) still stands; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle) — parsing-pipeline sections (Stage 1-6) re-verified structurally only; the cache-layer additions are documented in [rules-data-tables.md](./rules-data-tables.md)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -339,6 +339,61 @@ repair_is_durable.rs` makes that a red gate rather than a silent regression,
 and the standing rule until the generators are taught the shape is: **after
 running either equipment cache generator, re-run
 `cargo run --locked --bin repair_lst_provenance` before committing.**
+
+## `raw_tokens` enrichment and the corpus-literal sweep's own closure builder (SD-33)
+
+Every book's equipment codegen pipeline evolved independently (CRB reads a
+hand-curated static table; APG/ACG/Bestiary use their own pre-compiled
+tables with a `weight` field name instead of CRB's `weight_lbs`; ARG/PU
+parse raw LST directly) — but every Shape B v1 equipment record, regardless
+of pipeline, already carries an exact citation back to its real PCGen LST
+source line (`source.path` + `source.line`, a `lst_token`-kind source).
+`src/bin/enrich_equipment_raw_tokens.rs` uses that citation directly: it
+re-parses the cited raw LST file, finds the record whose header line matches
+`source.line`, and adds `raw_tokens`/`raw_bonus_chains` keys onto the
+on-disk JSON's `data` object — without touching any other field. It
+deliberately operates on raw `serde_json::Value`, never a typed Rust struct:
+an earlier version deserialized into a typed cache struct and re-serialized
+the whole record, silently dropping every field that struct didn't know
+about (APG/ACG/Bestiary's `weight`, PU's `equip_type`/`plus` — a real,
+caught-before-commit data loss). Records whose `source.kind` is not
+`lst_token` (a `web_second_source` or `same_book_fallback` record — no raw
+LST line to enrich from) are left untouched and counted separately, not
+treated as an error.
+
+`src/rules_core/corpus_literal_sweep.rs` (see above, "the closure, not the
+base row alone, is the correct comparand") is the independent verifier that
+byte-compares those populated `raw_tokens` against its own `.MOD`-chain
+closure derived from the pinned oracle. Two real defects in the sweep's own
+closure builder, not in the enriched data, were found and fixed once
+`enrich_equipment_raw_tokens.rs` populated `raw_tokens` corpus-wide and gave
+the sweep something non-vacuous to check:
+
+1. **`copy_base_row` resolved a `.COPY=` base by walking the whole book in
+   `std::fs::read_dir`'s own unsorted, filesystem-order-dependent order**
+   (affected 9 of 10 mismatching records). A same-named-but-structurally-
+   different row (e.g. a weapon-proficiency-list definition carrying only
+   `TYPE:`, no `COST:`/`WT:`/`DAMAGE:`) living in a *separate* file in the
+   same book could win the old book-wide "first match" race ahead of the
+   real base row that lives in the *same* file as the citing `.COPY=` row.
+   Fixed: `copy_base_row` now checks the citing record's own file first,
+   always, falling back to the rest of the book (sorted, for determinism —
+   matching `wiring_class::build_mod_index`'s existing precedent) only when
+   no same-file base exists.
+2. **`compare_tokens`'s blacklist-rescreen exemption unconditionally
+   excluded `DESC`** (1 of 10 mismatching records). PI screening on `DESC`
+   applies independently of whether a record's own `license`/`pi_field`
+   declare a redaction — so an undeclared-but-correctly-redacted `DESC:`
+   token (protecting real PI the same mechanism already protects elsewhere)
+   was reported as a false mismatch. Fixed: the exemption now covers `DESC`
+   too, checked after the `codex_generated_name` branch rather than folded
+   into it.
+
+Neither fix touches `data/corpus/**` or `enrich_equipment_raw_tokens.rs` —
+both hand-checked records' `raw_tokens` were already byte-correct; the
+defect was entirely in the sweep's own reconstruction of the comparand.
+`cargo run --locked --bin corpus_literal_sweep` is a `scripts/verify.sh`
+stage (`corpus-sweep`); see [testing.md](./testing.md).
 
 See [rules-data-tables.md](./rules-data-tables.md) for what happens
 downstream once a corpus record is projected: transcribing its values

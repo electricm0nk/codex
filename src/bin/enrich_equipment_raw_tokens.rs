@@ -144,6 +144,11 @@ fn find_equipment_json_files(book_dir: &Path) -> Vec<PathBuf> {
 
 enum Outcome {
     Enriched,
+    /// `ENRICH_FORCE_MOD_REFRESH=1` only: an already-enriched record whose
+    /// closure changed once `.MOD`-attached rows are also folded in --
+    /// distinct from `Enriched` (never-enriched-before) purely for
+    /// reporting; the on-disk write path is identical.
+    Refreshed,
     NoLstCitation,
     AlreadyEnriched,
     CitationMiss(String),
@@ -155,12 +160,27 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
     let text = fs::read_to_string(path).unwrap_or_else(|e| panic!("read {path:?}: {e}"));
     let mut root: Value = serde_json::from_str(&text).unwrap_or_else(|e| panic!("parse {path:?} as JSON: {e}"));
 
+    // `SD33-R6-CORPUS-EXTRACTION`: when `ENRICH_FORCE_MOD_REFRESH=1`, an
+    // already-enriched record is NOT skipped outright -- its existing
+    // `raw_tokens`/`raw_bonus_chains` are compared against what this run's
+    // (now `.MOD`-aware) closure would produce, below, and only overwritten
+    // if the two genuinely differ. Off by default (unset or any other
+    // value): identical to the tool's original, always-skip-if-present
+    // behavior, so a normal run over the whole corpus stays a cheap no-op
+    // for the >99% of records this fix does not touch.
+    let force_mod_refresh = env::var("ENRICH_FORCE_MOD_REFRESH").as_deref() == Ok("1");
+    let existing_raw_tokens;
+    let existing_raw_bonus_chains;
     {
         let data = root.get("data").unwrap_or_else(|| panic!("{path:?}: no top-level \"data\" object"));
-        if data.get("raw_tokens").is_some() || data.get("raw_bonus_chains").is_some() {
+        let had_raw_tokens = data.get("raw_tokens").is_some() || data.get("raw_bonus_chains").is_some();
+        if had_raw_tokens && !force_mod_refresh {
             return Outcome::AlreadyEnriched;
         }
+        existing_raw_tokens = data.get("raw_tokens").cloned();
+        existing_raw_bonus_chains = data.get("raw_bonus_chains").cloned();
     }
+    let was_already_enriched = existing_raw_tokens.is_some() || existing_raw_bonus_chains.is_some();
 
     let source = root["source"].clone();
     if source.get("kind").and_then(Value::as_str) != Some("lst_token") {
@@ -248,13 +268,55 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         all_bonus_chains.extend(base_record.bonus_chains_on_line(base_line));
     }
 
+    // `SD33-R6-CORPUS-EXTRACTION` (AT-33-E5-003's escalated blocker): fold in
+    // a separate `<record_key>.MOD` row -- PCGen applies a `.MOD` row to an
+    // ALREADY-NAMED identity (matched by name; `record_key` is already that
+    // identity, whether it came from a plain row or a `.COPY=` creation)
+    // wherever else in the file it appears, adding/overriding fields. This
+    // is a DIFFERENT inheritance shape than `.COPY=` above: a `.COPY=` row
+    // points AT its base; a `.MOD` row is pointed AT by its target's own
+    // identity, and can appear anywhere -- before or after, same file.
+    // `parse_equipment_entries` never folds this in structurally: a `.MOD`
+    // row's own column-0 text (e.g. "Rending Claw Blades.MOD") never equals
+    // the identity it targets, so `extract_record_name` (which strips only
+    // `.COPY=`) leaves it as its own, unrelated-looking entry. Root-caused
+    // on the real corpus (`advanced_race_guide:equipment:rending_claw_blades`,
+    // `arg_equip_arms_armor.lst:27` `.MOD`-attached to the `:54` `.COPY=`
+    // row's created identity) and confirmed systemic on a full-corpus scan:
+    // 139 of 391 `.MOD`-targeted equipment/equipment_modifier records across
+    // 9 books carry an EQMOD or BONUS reference their citation's closure
+    // never captured before this fix
+    // (`docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/corpus-extraction-fix.oracle-results.json`).
+    let mod_target = format!("{record_key}.MOD");
+    let mod_record = parsed
+        .entries
+        .iter()
+        .find(|r| r.header_raw_line.split('\t').next().unwrap_or("").trim() == mod_target);
+    if let Some(mod_record) = mod_record {
+        let mod_line = mod_record.header_line_number;
+        let mod_line_text = lst_text.lines().nth(mod_line.saturating_sub(1)).unwrap_or("");
+        let mod_tokens = mod_record.tokens_on_line(mod_line);
+        for token in &mod_tokens {
+            let rendered = format!("{}:{}", token.key, token.value);
+            if !mod_line_text.contains(&rendered) {
+                return Outcome::MergedEntryMismatch(format!(
+                    "{lst_rel_path}:{line} (record_key={record_key:?}): .MOD row \
+                     {mod_target:?} token {rendered:?} not byte-present on its own line \
+                     {mod_line} -- refusing to ship an unprovable .MOD merge"
+                ));
+            }
+        }
+        all_tokens.extend(mod_tokens);
+        all_bonus_chains.extend(mod_record.bonus_chains_on_line(mod_line));
+    }
+
     // PI screen, over the WHOLE closure (cited line + inherited `.COPY=`
-    // base line, when one was folded in above) -- SD-30 `§52.3`/`§53.5`,
-    // mirrors `enrich_monster_ability_raw_tokens.rs`'s identical closure-wide
-    // read. A name cannot be redacted (decisions.md §50.3): drop the whole
-    // enrichment rather than ship a `raw_tokens` array whose byte-identity
-    // to the corpus would betray a name the generator already excluded from
-    // `description`/`name`.
+    // base line + a folded-in `.MOD` row, when either was folded in above)
+    // -- SD-30 `§52.3`/`§53.5`, mirrors `enrich_monster_ability_raw_tokens.rs`'s
+    // identical closure-wide read. A name cannot be redacted (decisions.md
+    // §50.3): drop the whole enrichment rather than ship a `raw_tokens`
+    // array whose byte-identity to the corpus would betray a name the
+    // generator already excluded from `description`/`name`.
     let mut declared = declared_pi_on_line(cited_line_text);
     if let Some(base_identity) = copy_base_identity(cited_line_text)
         && let Some(base_record) = find_copy_base(&parsed.entries, base_identity)
@@ -263,6 +325,13 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         let base_declared = declared_pi_on_line(base_line_text);
         declared.name = declared.name || base_declared.name;
         declared.description = declared.description || base_declared.description;
+    }
+    if let Some(mod_record) = mod_record {
+        let mod_line_text =
+            lst_text.lines().nth(mod_record.header_line_number.saturating_sub(1)).unwrap_or("");
+        let mod_declared = declared_pi_on_line(mod_line_text);
+        declared.name = declared.name || mod_declared.name;
+        declared.description = declared.description || mod_declared.description;
     }
     if declared.name {
         return Outcome::DroppedPi(format!(
@@ -311,20 +380,104 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         })
         .collect();
 
+    let new_raw_tokens = Value::Array(raw_tokens);
+    let new_raw_bonus_chains = Value::Array(raw_bonus_chains);
+
+    if was_already_enriched
+        && existing_raw_tokens.as_ref() == Some(&new_raw_tokens)
+        && existing_raw_bonus_chains.as_ref() == Some(&new_raw_bonus_chains)
+    {
+        // Force-refresh mode recomputed the full closure and it is
+        // byte-identical to what was already on disk -- this record's
+        // `.MOD` row (if any) added nothing new; leave the file untouched
+        // rather than rewrite it to the same content.
+        return Outcome::AlreadyEnriched;
+    }
+
     let data_obj = root
         .get_mut("data")
         .and_then(Value::as_object_mut)
         .expect("\"data\" must be a JSON object");
-    data_obj.insert("raw_tokens".to_string(), Value::Array(raw_tokens));
-    data_obj.insert("raw_bonus_chains".to_string(), Value::Array(raw_bonus_chains));
+    data_obj.insert("raw_tokens".to_string(), new_raw_tokens);
+    data_obj.insert("raw_bonus_chains".to_string(), new_raw_bonus_chains);
 
     let new_json = serde_json::to_string_pretty(&root).expect("serialize enriched record");
     fs::write(path, new_json + "\n").unwrap_or_else(|e| panic!("write {path:?}: {e}"));
-    Outcome::Enriched
+    if was_already_enriched {
+        Outcome::Refreshed
+    } else {
+        Outcome::Enriched
+    }
 }
 
 fn main() {
     let data_root = pcgen_data_root();
+
+    // `SD33-R6-CORPUS-EXTRACTION`: `ENRICH_TARGET_LIST=<path>` processes
+    // EXACTLY the newline-separated corpus JSON paths in that file (still
+    // via `enrich_one`, so `ENRICH_FORCE_MOD_REFRESH=1` must also be set for
+    // an already-enriched target to actually be re-examined -- this flag
+    // only narrows WHICH files are visited, not the enrich-vs-skip
+    // decision) instead of a full corpus sweep. This exists so the
+    // `.MOD`-fold fix's diagnosed blast radius (a known, bounded set of
+    // records) can be regenerated WITHOUT also re-parsing and re-walking
+    // every one of the corpus's ~7,800 other already-enriched
+    // equipment/equipment_modifier records -- a full sweep re-parses each
+    // cited LST file once per citing record (`parse_equipment_entries` has
+    // no cross-call cache), which is minutes-to-tens-of-minutes for a
+    // handful of high-fan-in files (1,556 core_rulebook records alone cite
+    // one 1,619-line file) and, worse, would ALSO silently re-apply any
+    // OTHER already-fixed enrichment behavior (e.g. the `.COPY=` base-fold,
+    // `SD31-E6-F6-001`) to every record that predates it -- a real, separate
+    // defect this run confirmed still exists on some pre-existing records,
+    // and out of this fix's scope to touch.
+    if let Ok(list_path) = env::var("ENRICH_TARGET_LIST") {
+        let contents = fs::read_to_string(&list_path)
+            .unwrap_or_else(|e| panic!("read ENRICH_TARGET_LIST {list_path:?}: {e}"));
+        let mut enriched = 0u32;
+        let mut refreshed = 0u32;
+        let mut unchanged = 0u32;
+        let mut other: Vec<String> = Vec::new();
+        for line in contents.lines() {
+            let line = line.trim();
+            if line.is_empty() {
+                continue;
+            }
+            let path = PathBuf::from(line);
+            match enrich_one(&path, &data_root) {
+                Outcome::Enriched => {
+                    enriched += 1;
+                    eprintln!("ENRICHED   {line}");
+                }
+                Outcome::Refreshed => {
+                    refreshed += 1;
+                    eprintln!("REFRESHED  {line}");
+                }
+                Outcome::AlreadyEnriched => {
+                    unchanged += 1;
+                    eprintln!("UNCHANGED  {line}");
+                }
+                other_outcome => {
+                    let msg = match other_outcome {
+                        Outcome::NoLstCitation => "NoLstCitation".to_string(),
+                        Outcome::CitationMiss(m) => format!("CitationMiss: {m}"),
+                        Outcome::MergedEntryMismatch(m) => format!("MergedEntryMismatch: {m}"),
+                        Outcome::DroppedPi(m) => format!("DroppedPi: {m}"),
+                        Outcome::Enriched | Outcome::Refreshed | Outcome::AlreadyEnriched => unreachable!(),
+                    };
+                    eprintln!("OTHER      {line}: {msg}");
+                    other.push(format!("{line}: {msg}"));
+                }
+            }
+        }
+        eprintln!(
+            "\nenrich_equipment_raw_tokens (targeted): {enriched} enriched, {refreshed} refreshed, \
+             {unchanged} unchanged (closure already matched), {} other",
+            other.len()
+        );
+        return;
+    }
+
     let corpus_root = PathBuf::from("data/corpus");
     let books = [
         "core_rulebook",
@@ -394,12 +547,14 @@ fn main() {
     ];
 
     let mut total_enriched = 0u32;
+    let mut total_refreshed = 0u32;
     let mut total_no_citation = 0u32;
     let mut total_already = 0u32;
     let mut total_dropped_pi = 0u32;
     let mut misses: Vec<String> = Vec::new();
     let mut merged_entry_mismatches: Vec<String> = Vec::new();
     let mut dropped_pi: Vec<String> = Vec::new();
+    let mut refreshed_files: Vec<String> = Vec::new();
 
     for book in books {
         let book_dir = corpus_root.join(book);
@@ -413,6 +568,11 @@ fn main() {
                 Outcome::Enriched => {
                     total_enriched += 1;
                     book_enriched += 1;
+                }
+                Outcome::Refreshed => {
+                    total_refreshed += 1;
+                    book_enriched += 1;
+                    refreshed_files.push(file.display().to_string());
                 }
                 Outcome::NoLstCitation => total_no_citation += 1,
                 Outcome::AlreadyEnriched => total_already += 1,
@@ -430,10 +590,16 @@ fn main() {
     }
 
     eprintln!(
-        "\nenrich_equipment_raw_tokens: {total_enriched} enriched, {total_no_citation} no-LST-citation (untouched), {total_already} already-enriched, {total_dropped_pi} skipped (declared NAMEISPI:YES), {} citation misses, {} merged-entry mismatches (left un-enriched)",
+        "\nenrich_equipment_raw_tokens: {total_enriched} enriched, {total_refreshed} refreshed (ENRICH_FORCE_MOD_REFRESH), {total_no_citation} no-LST-citation (untouched), {total_already} already-enriched, {total_dropped_pi} skipped (declared NAMEISPI:YES), {} citation misses, {} merged-entry mismatches (left un-enriched)",
         misses.len(),
         merged_entry_mismatches.len()
     );
+    if !refreshed_files.is_empty() {
+        eprintln!("\nRefreshed (already-enriched, closure changed once .MOD rows are folded in):");
+        for f in &refreshed_files {
+            eprintln!("  {f}");
+        }
+    }
     if !misses.is_empty() {
         eprintln!("\nCitation misses (not enriched, real gaps to investigate):");
         for miss in &misses {
@@ -665,5 +831,60 @@ mod pi_screen_tests {
 
         let written: Value = serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
         assert!(written["data"]["raw_tokens"].is_null(), "raw_tokens must not be written for a declared NAMEISPI:YES record");
+    }
+
+    /// **SD-33 remediation wave 6, `AT-33-E5-003`'s escalated blocker.** Real
+    /// corpus reproduction of `advanced_race_guide:equipment:rending_claw_blades`
+    /// (`arg_equip_arms_armor.lst:27`/`:34`/`:54`, pinned oracle
+    /// `7f818006e371188e5717fd18d74d18a420747fc6`): the cited line (54) is a
+    /// bare `.COPY=` row creating the identity "Rending Claw Blades"; a
+    /// SEPARATE row elsewhere in the file, `Rending Claw Blades.MOD` (line
+    /// 27, BEFORE the base item's own line in source order), adds an
+    /// `EQMOD:` reference (`Keen`/`+1` Weapon Special Abilities) that the
+    /// cited line's own closure (cited line + `.COPY=` base) never states.
+    /// `parse_equipment_entries` opens `.MOD` rows as their OWN entry
+    /// (`extract_record_name` only strips `.COPY=`, not `.MOD`) so nothing
+    /// upstream folds this in structurally -- confirmed on a full-corpus
+    /// scan to also drop for 139 of 391 `.MOD`-targeted records across 9
+    /// books, not just this one.
+    #[test]
+    fn enrich_one_folds_in_a_dot_mod_row_targeting_the_copy_created_identity() {
+        let scratch = Scratch::new("dot_mod_fold");
+        scratch.write_lst(
+            "Rending Claw Blades.MOD\t\tEQMOD:Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon\t\tSOURCEPAGE:p.95\n\
+             \n\
+             Claw Blades (Catfolk)\t\tKEY:Claw Blades (Catfolk)\t\tCOST:305\tWT:2\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\n\
+             \n\
+             Claw Blades (Catfolk).COPY=Rending Claw Blades\n",
+        );
+        let json = r#"{
+  "completeness": "full",
+  "data": { "key": "Rending Claw Blades", "name": "Rending Claw Blades", "category": "ArmsArmor", "cost_gp": 305.0, "weight_lbs": 2.0, "description": null },
+  "source": { "kind": "lst_token", "path": "pathfinder/paizo/campaign_setting/x_book/x_equip.lst", "line": 5, "record_key": "Rending Claw Blades", "sha256": "x" },
+  "license": "OGL", "pi_field": null, "pi_marker": null,
+  "population": "in_scope", "wiring_class": "static", "wiring_class_signals": [], "ingested_at": "2026-01-01T00:00:00Z"
+}"#;
+        let path = scratch.write_json("rending_claw_blades.json", json);
+
+        let outcome = enrich_one(&path, &scratch.data_root);
+        assert!(matches!(outcome, Outcome::Enriched), "expected Enriched, got a different outcome");
+
+        let written: Value = serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
+        let raw_tokens = written["data"]["raw_tokens"].as_array().unwrap();
+        let eqmod = raw_tokens
+            .iter()
+            .find(|t| t["key"] == "EQMOD" && t["value"] == "Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon");
+        assert!(
+            eqmod.is_some(),
+            "the .MOD row's EQMOD (Keen + +1 Weapon Special Abilities) must be folded into raw_tokens, \
+             not silently dropped -- raw_tokens was: {raw_tokens:?}"
+        );
+        // The `.COPY=` base's own BONUS chain must still be present too --
+        // this fix must ADD the `.MOD` closure, not replace the existing one.
+        let bonus_chains = written["data"]["raw_bonus_chains"].as_array().unwrap();
+        assert!(
+            bonus_chains.iter().any(|b| b["qualifiers"] == json!(["WEAPON", "TOHIT", "1", "TYPE=Enhancement"])),
+            "the pre-existing `.COPY=` base BONUS chain must survive the .MOD fold-in: {bonus_chains:?}"
+        );
     }
 }

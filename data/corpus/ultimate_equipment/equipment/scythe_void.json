@@ -19,6 +19,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Void Scythe"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Brilliant Energy ~ Weapon.Special Ability ~ Enhancement Cost|95300.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.163"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wielder can channel negative energy into the scythe to bestow negative levels."
       }
     ],
     "weight_lbs": null

@@ -1,0 +1,147 @@
+{
+  "by_class": {
+    "Bard": {
+      "pcg": "fixture-spell-pcg/bard.pcg",
+      "unit_ids": [
+        "advanced_players_guide:spell:beguiling_gift",
+        "advanced_players_guide:spell:fool_s_forbiddance",
+        "advanced_players_guide:spell:jester_s_jaunt",
+        "advanced_players_guide:spell:reviving_finale",
+        "advanced_players_guide:spell:sift"
+      ],
+      "count": 5,
+      "collisions": []
+    },
+    "Cleric": {
+      "pcg": "fixture-spell-pcg/cleric.pcg",
+      "unit_ids": [
+        "advanced_players_guide:spell:grace",
+        "advanced_players_guide:spell:nap_stack",
+        "advanced_players_guide:spell:rest_eternal",
+        "core_rulebook:spell:atonement",
+        "core_rulebook:spell:bless_water",
+        "core_rulebook:spell:curse_water",
+        "core_rulebook:spell:guidance",
+        "core_rulebook:spell:hallow",
+        "core_rulebook:spell:imbue_with_spell_ability",
+        "core_rulebook:spell:magic_stone",
+        "core_rulebook:spell:mark_of_justice",
+        "core_rulebook:spell:miracle",
+        "core_rulebook:spell:poison",
+        "core_rulebook:spell:remove_blindness_deafness",
+        "core_rulebook:spell:remove_disease",
+        "core_rulebook:spell:restoration",
+        "core_rulebook:spell:restoration_greater",
+        "core_rulebook:spell:restoration_lesser",
+        "core_rulebook:spell:unhallow",
+        "core_rulebook:spell:virtue",
+        "core_rulebook:spell:word_of_recall"
+      ],
+      "count": 21,
+      "collisions": []
+    },
+    "Druid": {
+      "pcg": "fixture-spell-pcg/druid.pcg",
+      "unit_ids": [
+        "advanced_players_guide:spell:nature_s_exile",
+        "advanced_players_guide:spell:swarm_skin",
+        "advanced_players_guide:spell:threefold_aspect",
+        "core_rulebook:spell:awaken",
+        "core_rulebook:spell:know_direction",
+        "core_rulebook:spell:reincarnate",
+        "core_rulebook:spell:spellstaff",
+        "core_rulebook:spell:transport_via_plants"
+      ],
+      "count": 8,
+      "collisions": []
+    },
+    "Paladin": {
+      "pcg": "fixture-spell-pcg/paladin.pcg",
+      "unit_ids": [
+        "advanced_players_guide:spell:fire_of_vengeance",
+        "advanced_players_guide:spell:hero_s_defiance",
+        "advanced_players_guide:spell:holy_whisper",
+        "core_rulebook:spell:heal_mount"
+      ],
+      "count": 4,
+      "collisions": []
+    },
+    "Ranger": {
+      "pcg": "fixture-spell-pcg/ranger.pcg",
+      "unit_ids": [
+        "advanced_players_guide:spell:residual_tracking",
+        "advanced_players_guide:spell:venomous_bolt"
+      ],
+      "count": 2,
+      "collisions": []
+    },
+    "Wizard": {
+      "pcg": "fixture-spell-pcg/wizard.pcg",
+      "unit_ids": [
+        "advanced_class_guide:spell:memorize_page",
+        "advanced_class_guide:spell:mirror_polish",
+        "advanced_class_guide:spell:stricken_heart",
+        "advanced_class_guide:spell:thunderstomp_greater",
+        "advanced_class_guide:spell:time_shudder",
+        "advanced_class_guide:spell:wave_shield",
+        "advanced_players_guide:spell:accelerate_poison",
+        "advanced_players_guide:spell:blood_biography",
+        "advanced_players_guide:spell:create_treasure_map",
+        "advanced_players_guide:spell:hydraulic_torrent",
+        "advanced_players_guide:spell:sculpt_corpse",
+        "core_rulebook:spell:arcane_mark",
+        "core_rulebook:spell:bestow_curse",
+        "core_rulebook:spell:clone",
+        "core_rulebook:spell:color_spray",
+        "core_rulebook:spell:contact_other_plane",
+        "core_rulebook:spell:contagion",
+        "core_rulebook:spell:continual_flame",
+        "core_rulebook:spell:control_weather",
+        "core_rulebook:spell:demand",
+        "core_rulebook:spell:detect_scrying",
+        "core_rulebook:spell:discern_location",
+        "core_rulebook:spell:dream",
+        "core_rulebook:spell:endure_elements",
+        "core_rulebook:spell:explosive_runes",
+        "core_rulebook:spell:freedom",
+        "core_rulebook:spell:ghoul_touch",
+        "core_rulebook:spell:gust_of_wind",
+        "core_rulebook:spell:imprisonment",
+        "core_rulebook:spell:instant_summons",
+        "core_rulebook:spell:irresistible_dance",
+        "core_rulebook:spell:legend_lore",
+        "core_rulebook:spell:limited_wish",
+        "core_rulebook:spell:mage_s_lucubration",
+        "core_rulebook:spell:mnemonic_enhancer",
+        "core_rulebook:spell:permanency",
+        "core_rulebook:spell:phantom_trap",
+        "core_rulebook:spell:planar_binding",
+        "core_rulebook:spell:planar_binding_greater",
+        "core_rulebook:spell:plane_shift",
+        "core_rulebook:spell:prestidigitation",
+        "core_rulebook:spell:prismatic_spray",
+        "core_rulebook:spell:refuge",
+        "core_rulebook:spell:remove_curse",
+        "core_rulebook:spell:resistance",
+        "core_rulebook:spell:secret_page",
+        "core_rulebook:spell:sending",
+        "core_rulebook:spell:shades",
+        "core_rulebook:spell:shadow_conjuration",
+        "core_rulebook:spell:shadow_conjuration_greater",
+        "core_rulebook:spell:shadow_evocation",
+        "core_rulebook:spell:shadow_evocation_greater",
+        "core_rulebook:spell:simulacrum",
+        "core_rulebook:spell:symbol_of_stunning",
+        "core_rulebook:spell:teleport_greater",
+        "core_rulebook:spell:temporal_stasis",
+        "core_rulebook:spell:time_stop",
+        "core_rulebook:spell:true_strike",
+        "core_rulebook:spell:waves_of_exhaustion",
+        "core_rulebook:spell:waves_of_fatigue"
+      ],
+      "count": 60,
+      "collisions": []
+    }
+  },
+  "unit_count": 100
+}

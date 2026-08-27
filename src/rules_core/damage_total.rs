@@ -187,6 +187,87 @@ fn damage_dice_token(record: &EquipmentRecord) -> Option<DiceExpression> {
         .and_then(|token| DiceExpression::parse(&token.value))
 }
 
+/// The Pathfinder RPG single-die weapon-damage-size progression table
+/// (CRB p.187's weapon-size-change note; the same table `BONUS:
+/// EQMWEAPON|DAMAGESIZE` steps along -- real corpus example: Core
+/// Rulebook's `Special Quality ~ Spikes ~ Shieldbash` (Shield Spikes),
+/// `BONUS:EQMWEAPON|DAMAGESIZE|1`, confirmed live against the pinned
+/// PCGen oracle this cycle stepping a `DAMAGE:1d4` shield-bash host to
+/// `1d6`). Covers only the single-die steps every real corpus
+/// `DAMAGESIZE` chain this cycle read actually uses -- `step_single_die`
+/// returns `None` for a multi-die base or an out-of-table step rather
+/// than fabricate a die past what this table proves.
+const SINGLE_DIE_STEP_TABLE: [u8; 8] = [1, 2, 3, 4, 6, 8, 10, 12];
+
+/// Steps a single-die `DiceExpression` up (positive `steps`) or down
+/// (negative) `SINGLE_DIE_STEP_TABLE`'s progression. `None` for a
+/// multi-die base (`count != 1`), a base die size not in the table, or a
+/// step that would land outside it -- never a fabricated die.
+pub fn step_single_die(base: DiceExpression, steps: i32) -> Option<DiceExpression> {
+    if base.count != 1 {
+        return None;
+    }
+    let idx = SINGLE_DIE_STEP_TABLE.iter().position(|&d| d == base.die_size)? as i32;
+    let new_idx = idx + steps;
+    if new_idx < 0 {
+        return None;
+    }
+    SINGLE_DIE_STEP_TABLE
+        .get(new_idx as usize)
+        .map(|&die_size| DiceExpression { count: 1, die_size })
+}
+
+fn eqmweapon_damagesize_chain_value(record: &EquipmentRecord) -> i32 {
+    record
+        .bonus_chains
+        .iter()
+        .filter_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() >= 3 && qualifiers[0] == "EQMWEAPON" && qualifiers[1] == "DAMAGESIZE" {
+                qualifiers[2].parse::<i32>().ok()
+            } else {
+                None
+            }
+        })
+        .sum()
+}
+
+/// Resolves a weapon's real base damage die (`resolve_base_damage_dice`)
+/// stepped by every `BONUS:EQMWEAPON|DAMAGESIZE|<n>` chain carried by its
+/// `EQMOD:`-referenced modifier records (SD-33 remediation wave 6,
+/// `eqm-modifier-final` lane, `AT-33-E5-002` -- this shape had no
+/// resolver at all before this cycle, confirmed absent by
+/// `grep -rn "DAMAGESIZE" src/rules_core/equipment_effects*.rs
+/// src/rules_core/damage_total.rs` returning nothing). The die-STEP
+/// analogue of `resolve_weapon_enhancement_modifier`'s scalar bonus.
+///
+/// Returns `None` when the item has no base dice, carries no
+/// `DAMAGESIZE` chain (a real "no step to apply" case a caller should
+/// distinguish from a covered step by first calling
+/// `resolve_base_damage_dice`), or the step lands outside
+/// `step_single_die`'s covered table -- honest absence, never a
+/// fabricated die.
+pub fn resolve_eqmweapon_damagesize_effect(
+    weapon_item_id: &str,
+    corpus: &SourcePackageContent,
+) -> Option<DiceExpression> {
+    let (record, _table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let base = damage_dice_token(record)?;
+    let eqmod_records = crate::rules_core::equipment_effects::eqmod_referenced_records(
+        record,
+        RuleSetId::Crb,
+        corpus,
+    );
+    let steps: i32 = eqmod_records
+        .iter()
+        .map(|modifier| eqmweapon_damagesize_chain_value(modifier))
+        .sum();
+    if steps == 0 {
+        return None;
+    }
+    step_single_die(base, steps)
+}
+
 /// Which of PF1's three `WIELD:` corpus categories a weapon record
 /// carries — governs how much of the wielder's STR modifier applies to
 /// its damage roll (CRB p.187, "Strength Bonus"): `Light` and
@@ -386,11 +467,11 @@ pub fn resolve_weapon_enhancement_modifier(
         if bonus.natural_attack_only && !weapon_is_natural_attack {
             continue;
         }
-        if bonus.affects.contains("TOHIT") {
-            attack_bonus += bonus.bonus;
+        if let Some(tohit) = bonus.tohit_bonus {
+            attack_bonus += tohit;
         }
-        if bonus.affects.contains("DAMAGE") {
-            damage_bonus += bonus.bonus;
+        if let Some(damage) = bonus.damage_bonus {
+            damage_bonus += damage;
         }
     }
 
@@ -1183,5 +1264,88 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
             None,
             "a non-numeric value signals a formula, not a constant"
         );
+    }
+}
+
+/// SD-33 remediation wave 6 (`eqm-modifier-final` lane, `AT-33-E5-002`):
+/// the `EQMWEAPON|DAMAGESIZE` shape's own tests -- a genuinely unhandled
+/// shape before this cycle (confirmed absent by
+/// `grep -rn "DAMAGESIZE" src/rules_core/equipment_effects*.rs
+/// src/rules_core/damage_total.rs` returning nothing pre-cycle).
+#[cfg(test)]
+mod eqmweapon_damagesize_tests {
+    use super::*;
+    use crate::pcgen_import::ir_converter::convert_equipment_record;
+    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::rules_core::source_content::SourceRef;
+
+    fn corpus_from(text: &str) -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
+        assert!(result.diagnostics.is_empty(), "{:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: "cr_equip_arms_armor.lst".to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    #[test]
+    fn single_die_step_table_covers_the_real_progression() {
+        assert_eq!(
+            step_single_die(DiceExpression { count: 1, die_size: 4 }, 1),
+            Some(DiceExpression { count: 1, die_size: 6 }),
+            "1d4 stepped up one must be 1d6"
+        );
+        assert_eq!(
+            step_single_die(DiceExpression { count: 1, die_size: 6 }, -1),
+            Some(DiceExpression { count: 1, die_size: 4 }),
+            "1d6 stepped down one must be 1d4"
+        );
+        assert_eq!(
+            step_single_die(DiceExpression { count: 1, die_size: 12 }, 1),
+            None,
+            "stepping past the table's top must be honest None, not a fabricated die"
+        );
+        assert_eq!(
+            step_single_die(DiceExpression { count: 2, die_size: 6 }, 1),
+            None,
+            "a multi-die base (2d6) is outside this table's covered cases"
+        );
+    }
+
+    /// Real verbatim tokens: `KEY:Heavy Wooden Shield (Base)`'s own
+    /// `DAMAGE:1d4` shield-bash token (`core_rulebook/
+    /// cr_equip_arms_armor.lst`) with `EQMOD:Special Quality ~ Spikes ~
+    /// Shieldbash` baked in, plus the real modifier record
+    /// (`cr_equipmods.lst`, `BONUS:EQMWEAPON|DAMAGESIZE|1`) -- the exact
+    /// pair the live oracle confirmed this cycle (`WEAPON.0.DAMAGE`
+    /// `1d4` -> `1d6+3`, the `+3` being the wielder's own STR modifier,
+    /// not part of this die-size effect).
+    #[test]
+    fn damagesize_steps_a_real_shieldbash_hosts_die() {
+        let text = "\
+Heavy Wooden Shield Spiked\tKEY:Shield ~ Spiked Test\tTYPE:Shield.Heavy.Weapon.Resizable.Melee.ShieldBash.Close\tCOST:7\tWT:10\tACCHECK:-2\tCRITMULT:x2\tCRITRANGE:1\tDAMAGE:1d4\tWIELD:OneHanded\tSIZE:M\tSPELLFAILURE:15\tEQMOD:Special Quality ~ Spikes ~ Shieldbash\n\
+Shield Spikes\tKEY:Special Quality ~ Spikes ~ Shieldbash\tTYPE:Shieldbash\tCOST:0\tBONUS:EQMWEAPON|DAMAGESIZE|1\n";
+        let corpus = corpus_from(text);
+
+        let stepped = resolve_eqmweapon_damagesize_effect("Shield ~ Spiked Test", &corpus);
+
+        assert_eq!(
+            stepped,
+            Some(DiceExpression { count: 1, die_size: 6 }),
+            "the shield's own 1d4 base stepped by DAMAGESIZE:1 must be 1d6"
+        );
+    }
+
+    #[test]
+    fn a_host_with_no_eqmod_yields_none_not_a_fabricated_step() {
+        let text = "Heavy Wooden Shield\tKEY:Shield ~ Base Test\tTYPE:Shield.Heavy.Weapon.Melee.ShieldBash\tCOST:7\tWT:10\tACCHECK:-2\tCRITMULT:x2\tCRITRANGE:1\tDAMAGE:1d4\tWIELD:OneHanded\tSIZE:M\n";
+        let corpus = corpus_from(text);
+
+        let stepped = resolve_eqmweapon_damagesize_effect("Shield ~ Base Test", &corpus);
+
+        assert_eq!(stepped, None, "no EQMOD attached means no DAMAGESIZE chain to apply -- honest None");
     }
 }

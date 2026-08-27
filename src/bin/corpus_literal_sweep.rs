@@ -201,7 +201,7 @@ fn main() -> ExitCode {
             // unprovable, not because it is wrong but because the closure
             // never looked at the row that states it.
             let resolved_copy_base = copy_base_identity(&base_row)
-                .and_then(|identity| sweep.copy_base_row(book, identity));
+                .and_then(|identity| sweep.copy_base_row(book, &corpus_file, identity));
             let closure =
                 token_closure(&base_row, &record.identities, &mod_index, resolved_copy_base.as_deref());
             findings.extend(compare_tokens(record, &closure, &book_tokens, &mut sweep.tally));
@@ -695,33 +695,76 @@ impl Sweep {
     }
 
     /// Resolves a `.COPY=` row's base identity (the string before
-    /// `.COPY=`) to the PLAIN (non-`.COPY=`) row that declares it, scanning
-    /// every `.lst` file in the book — the identical `KEY:`-token-or-bare-
-    /// name resolution `gen_equipment_gap_tables.rs`'s own `collect_base_
-    /// fields` uses for the SAME relationship, so a `.COPY=` row's shipped
-    /// inherited fields and this check's own closure agree on what "the
-    /// base" means. `None` when no plain row states that identity — never
-    /// fabricated, and a `.COPY=` row is never itself matched (mirrors the
-    /// generator's own "at most one hop" rule).
-    fn copy_base_row(&mut self, book_dir: &str, base_identity: &str) -> Option<String> {
-        for path in lst_files(&self.corpus_root.join(book_dir)) {
-            let Some(lines) = self.lines(&path) else { continue };
-            for line in lines {
-                let fields: Vec<&str> = line.split('\t').collect();
-                let Some(first) = fields.first() else { continue };
-                let first = first.trim();
-                if first.is_empty() || first.contains(".COPY=") {
-                    continue;
-                }
-                let key_token =
-                    fields.iter().find_map(|f| f.trim().strip_prefix("KEY:"));
-                let matches = match key_token {
-                    Some(key) => key == base_identity,
-                    None => first == base_identity,
-                };
-                if matches {
-                    return Some(line.clone());
-                }
+    /// `.COPY=`) to the PLAIN (non-`.COPY=`) row that declares it — the
+    /// identical `KEY:`-token-or-bare-name resolution
+    /// `gen_equipment_gap_tables.rs`'s own `collect_base_fields` uses for
+    /// the SAME relationship, so a `.COPY=` row's shipped inherited fields
+    /// and this check's own closure agree on what "the base" means. `None`
+    /// when no plain row states that identity — never fabricated, and a
+    /// `.COPY=` row is never itself matched (mirrors the generator's own
+    /// "at most one hop" rule).
+    ///
+    /// **Same-file first, always** (`SD33-R9-CORPUS-SWEEP`, real corpus
+    /// reproduction: `ultimate_equipment/equipment/hellscourge.json`,
+    /// `ue_equip_arms_armor.lst:496` `Scorpion Whip.COPY=Hellscourge`). A
+    /// bare weapon name is not a unique identity across a book's OWN files
+    /// — `ue_profs_weapon.lst:79` also declares a plain `Scorpion Whip` row
+    /// (a weapon-PROFICIENCY definition, `TYPE:` only, no `COST:`/`WT:`/
+    /// `DAMAGE:`/…), a structurally different PCGen record kind that
+    /// happens to share the bare name. Scanning the whole book in
+    /// `std::fs::read_dir`'s own (unsorted, filesystem-order-dependent)
+    /// walk let that unrelated proficiency row win the "first match" race
+    /// on this checkout, silently EXCLUDING the real equipment base row
+    /// (`ue_equip_arms_armor.lst:349`, same file as the citing `.COPY=`
+    /// row) from the closure — the independent enricher this sweep checks
+    /// against (`enrich_equipment_raw_tokens.rs::find_copy_base`) never has
+    /// this failure mode because it only ever parses the ONE cited `.lst`
+    /// file, never the whole book. Checking the citing record's own file
+    /// FIRST makes the two tools agree by construction whenever an
+    /// unambiguous same-file base exists (the common case, confirmed for
+    /// every one of this defect's 9 real corpus instances by hand against
+    /// the pinned oracle bytes) — this is a **superset** of the previous
+    /// behavior, not a narrowing: a same-file match, when one exists, is
+    /// always at least as correct as an unsorted book-wide first-match, and
+    /// every book file (own file included) is still eligible, so a record
+    /// with no same-file base still resolves exactly as before via the
+    /// (now sorted, so deterministic) book-wide fallback below.
+    fn copy_base_row(&mut self, book_dir: &str, own_file: &Path, base_identity: &str) -> Option<String> {
+        if let Some(line) = self.copy_base_row_in_file(own_file, base_identity) {
+            return Some(line);
+        }
+        let mut files = lst_files(&self.corpus_root.join(book_dir));
+        files.sort();
+        for path in files {
+            if path.as_path() == own_file {
+                continue; // already checked above
+            }
+            if let Some(line) = self.copy_base_row_in_file(&path, base_identity) {
+                return Some(line);
+            }
+        }
+        None
+    }
+
+    /// One file's own plain rows only — the shared search `copy_base_row`
+    /// runs first against the citing record's own file, then (sorted, for
+    /// determinism) against the rest of the book.
+    fn copy_base_row_in_file(&mut self, path: &Path, base_identity: &str) -> Option<String> {
+        let lines = self.lines(path)?.clone();
+        for line in &lines {
+            let fields: Vec<&str> = line.split('\t').collect();
+            let Some(first) = fields.first() else { continue };
+            let first = first.trim();
+            if first.is_empty() || first.contains(".COPY=") {
+                continue;
+            }
+            let key_token = fields.iter().find_map(|f| f.trim().strip_prefix("KEY:"));
+            let matches = match key_token {
+                Some(key) => key == base_identity,
+                None => first == base_identity,
+            };
+            if matches {
+                return Some(line.clone());
             }
         }
         None
@@ -1026,5 +1069,94 @@ mod short_book_of_tests {
             }
         }
         assert!(checked > 0, "no race/race_trait records found under {}", corpus_root.display());
+    }
+}
+
+/// **`SD33-R9-CORPUS-SWEEP`, mutation proof against the real production
+/// function.** Real corpus reproduction of
+/// `ultimate_equipment/equipment/hellscourge.json`: `ue_equip_arms_armor.lst`
+/// (the citing `.COPY=` row's own file) also carries the correct, full
+/// "Scorpion Whip" equipment base row, while a SEPARATE file in the same
+/// book, `ue_profs_weapon.lst` (a weapon-proficiency list, a different
+/// PCGen record kind), carries an unrelated, minimal "Scorpion Whip" row
+/// under the identical bare name. `std::fs::read_dir`'s own (unsorted)
+/// order let the wrong file win the old "first match across the whole
+/// book" walk on the real checkout; deliberately naming the decoy file so
+/// it sorts BEFORE the citing file (`a_decoy...` < `z_own...`) reproduces
+/// that failure mode independently of any one filesystem's real
+/// `read_dir` order, so this test is not flaky the way trusting real
+/// `read_dir` order would be.
+#[cfg(test)]
+mod copy_base_row_tests {
+    use super::Sweep;
+    use std::fs;
+    use std::path::PathBuf;
+
+    struct Scratch {
+        book_dir: PathBuf,
+    }
+
+    impl Scratch {
+        fn new(name: &str) -> Self {
+            let base = std::env::temp_dir()
+                .join(format!("codex_corpus_literal_sweep_copy_base_{name}_{}", std::process::id()));
+            let _ = fs::remove_dir_all(&base);
+            let book_dir = base.join("book");
+            fs::create_dir_all(&book_dir).unwrap();
+            Scratch { book_dir }
+        }
+
+        fn write(&self, file_name: &str, contents: &str) -> PathBuf {
+            let path = self.book_dir.join(file_name);
+            fs::write(&path, contents).unwrap();
+            path
+        }
+    }
+
+    impl Drop for Scratch {
+        fn drop(&mut self) {
+            let _ = fs::remove_dir_all(self.book_dir.parent().unwrap());
+        }
+    }
+
+    #[test]
+    fn copy_base_row_prefers_the_citing_records_own_file_over_a_same_named_decoy_elsewhere_in_the_book() {
+        let scratch = Scratch::new("prefers_own_file");
+        // Sorts BEFORE the citing file below, and is what the pre-fix
+        // book-wide-first-match walk would have returned.
+        scratch.write("a_decoy_profs_weapon.lst", "Scorpion Whip\tTYPE:Exotic.Melee.Light.Slashing\n");
+        let own_file = scratch.write(
+            "z_own_equip_arms_armor.lst",
+            "Scorpion Whip\tPROFICIENCY:WEAPON|Scorpion Whip\tCOST:5\tWT:3\tCRITMULT:x2\tDAMAGE:1d4\n\
+             Scorpion Whip.COPY=Hellscourge\n",
+        );
+
+        let mut sweep = Sweep::new(scratch.book_dir.parent().unwrap().to_path_buf());
+        let resolved = sweep.copy_base_row("book", &own_file, "Scorpion Whip");
+
+        assert_eq!(
+            resolved.as_deref(),
+            Some("Scorpion Whip\tPROFICIENCY:WEAPON|Scorpion Whip\tCOST:5\tWT:3\tCRITMULT:x2\tDAMAGE:1d4"),
+            "must resolve to the real equipment row in the citing record's OWN file, not the \
+             decoy weapon-proficiency row in a different file, regardless of directory scan order"
+        );
+    }
+
+    #[test]
+    fn copy_base_row_still_falls_back_to_the_rest_of_the_book_when_no_same_file_base_exists() {
+        let scratch = Scratch::new("falls_back");
+        let base_file = scratch.write("elsewhere.lst", "Widget\tCOST:9\tWT:1\n");
+        let own_file = scratch.write("citing.lst", "Widget.COPY=Gizmo\n");
+
+        let mut sweep = Sweep::new(scratch.book_dir.parent().unwrap().to_path_buf());
+        let resolved = sweep.copy_base_row("book", &own_file, "Widget");
+
+        assert_eq!(
+            resolved.as_deref(),
+            Some("Widget\tCOST:9\tWT:1"),
+            "a record with no same-file base must still resolve via the book-wide fallback, \
+             exactly as before this fix"
+        );
+        let _ = base_file; // keep the write alive/named for readability
     }
 }

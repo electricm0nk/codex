@@ -6,7 +6,15 @@
     "description": null,
     "key": "Kimle Coat",
     "name": "Kimle Coat",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Swim",
+          "5"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +23,30 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.252"
+      },
+      {
+        "key": "DESC",
+        "value": "This +1 leather armor is made of kimlé and resembles a snug light coat with a tattered lower fringe in the shape of trailing seaweed. The wearer of a kimlé coat gains a +5 bonus on Swim checks. Once per day, the wearer can breathe water for 1 minute."
       }
     ],
     "weight_lbs": null

@@ -7,7 +7,24 @@
     "key": "Purging Falcata",
     "name": "Purging Falcata",
     "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Combat"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "ISC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-17T12:09:37Z",

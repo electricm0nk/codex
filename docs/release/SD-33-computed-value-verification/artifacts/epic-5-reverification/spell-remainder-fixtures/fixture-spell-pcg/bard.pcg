@@ -1,0 +1,62 @@
+PCGVERSION:2.0
+
+# System Information
+CAMPAIGN:Core Rulebook
+CAMPAIGN:Advanced Player's Guide
+CAMPAIGN:Advanced Class Guide
+CAMPAIGN:Advanced Race Guide
+CAMPAIGN:Ultimate Combat
+CAMPAIGN:Ultimate Equipment
+CAMPAIGN:Ultimate Magic
+CAMPAIGN:Ultimate Intrigue
+CAMPAIGN:Ultimate Wilderness
+CAMPAIGN:Occult Adventures
+CAMPAIGN:Bestiary
+CAMPAIGN:Bestiary 2
+CAMPAIGN:Bestiary 3
+VERSION:6.09.08.RC1
+GAMEMODE:Pathfinder_RPG
+CHARACTERTYPE:PC
+PURCHASEPOINTS:N
+AUTOSPELLS:N
+
+# Character Bio
+CHARACTERNAME:E5 Spell Batch Bard
+PLAYERNAME:sd-33-e5-fixture
+
+# Character Attributes
+# AT-33-E5-003 harness fix: all THREE possible casting-ability stats
+# (INT/WIS/CHA) are pinned to 18, matching `fixture_verified_oracle_probe.rs`'s
+# own `SPELL_PROBE_ABILITY_SCORE=18` used uniformly for whichever ability
+# `casting_ability_for_class` (`src/rules_core/spellbook.rs`) selects for the
+# class being probed. This cycle found WIS was left at 10 -- correct by
+# accident for Wizard/Bard/Paladin/Sorcerer (INT/CHA-cast) but wrong for
+# Cleric/Druid/Ranger (WIS-cast), producing a uniform ours-oracle=4 DC
+# delta (the un-applied +4 WIS modifier) for every Cleric/Druid/Ranger
+# spell that grants a save -- 103 of 103 AT-33-E5-001 "disagreements" this
+# cycle, all traced to this one line, none a real engine defect.
+STAT:STR|SCORE:10
+STAT:DEX|SCORE:10
+STAT:CON|SCORE:10
+STAT:INT|SCORE:18
+STAT:WIS|SCORE:18
+STAT:CHA|SCORE:18
+ALIGN:LN
+RACE:Human
+
+# Character Class(es)
+CLASS:Bard|LEVEL:20|SKILLPOOL:0
+
+# Character Experience
+EXPERIENCE:0
+EXPERIENCETABLE:Medium
+
+# Character Spells Information
+SPELLNAME:Beguiling Gift|TIMES:1|CLASS:Bard|BOOK:Known Spells|SPELLLEVEL:1|SOURCE:[TYPE:CLASS|NAME:Bard]
+SPELLNAME:Fool's Forbiddance|TIMES:1|CLASS:Bard|BOOK:Known Spells|SPELLLEVEL:6|SOURCE:[TYPE:CLASS|NAME:Bard]
+SPELLNAME:Jester's Jaunt|TIMES:1|CLASS:Bard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Bard]
+SPELLNAME:Reviving Finale|TIMES:1|CLASS:Bard|BOOK:Known Spells|SPELLLEVEL:3|SOURCE:[TYPE:CLASS|NAME:Bard]
+SPELLNAME:Sift|TIMES:1|CLASS:Bard|BOOK:Known Spells|SPELLLEVEL:0|SOURCE:[TYPE:CLASS|NAME:Bard]
+
+# Character Equipment
+MONEY:0

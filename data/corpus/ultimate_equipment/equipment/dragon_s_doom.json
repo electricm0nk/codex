@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Bane ~ Weapon|Dragon Bane.Special Ability ~ Enhancement Cost|40300.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "SPROP",
+        "value": "Head glows when a creature of the dragon type is within 100 ft of the weapon. 3/day, can ignore dragon's DR."
       }
     ],
     "weight_lbs": null

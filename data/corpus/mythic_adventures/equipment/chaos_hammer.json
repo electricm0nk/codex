@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Anarchic ~ Weapon.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "SPROP",
+        "value": "can strike the ground to create the effects of the chaos hammer spell (Will DC 16, CL 9th) that bursts out from the warhammer's wielder. A mythic creature wielding this weapon can expend one use of mythic power to activate this ability without using up its daily use."
       }
     ],
     "weight_lbs": null

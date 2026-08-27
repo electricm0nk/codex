@@ -1,7 +1,7 @@
 ---
 canonical: true
 owner: god-emporer
-status: planning-ready pending §6 launch gates
+status: planning-ready
 bundle_id: SD-33
 date: 2026-08-24
 companion_to: ./README.md
@@ -27,7 +27,7 @@ A wrong magnitude is indistinguishable from a right one by inspection. It render
 ## 2. What SD-33 promises
 
 1. A **verification harness** capable of stating, per unit, whether our computed value **agrees with an oracle** — and, where it cannot, saying so as a first-class outcome rather than silence.
-2. **Engine coverage closed to 100%** of the formula-bearing population: the 6,854 units never run through an engine, run.
+2. **Engine coverage closed to 100% of the 6,854-unit formula-bearing population** never run through an engine — every one of those units run.
 3. The **4,224 `unknown`-status units** classified — no unit left in a bucket whose name means "we did not look".
 4. The **8,330 units blessed by fixture or literal check** re-examined against the oracle.
 5. **Two mechanisms, built as code with exit codes** — `THE-BOX.md` plus its enforcing tool, and the denominator gate. Not prose in a §12 lessons list.
@@ -64,20 +64,20 @@ Re-derived at `1d6ae1e72b`, 2026-08-24, `PCGEN_ORACLE_SHA=7f818006e371188e5717fd
 |---|---|---|---|
 | 1 | **Instruments** — `THE-BOX.md` + its enforcing tool, the denominator gate, and the probe-surface enumeration | launch gates | — |
 | 2 | **Oracle harness** — timeboxed PCGen headless spike; fallback named up front | Epic 1 | Epic 3, Epic 4 |
-| 3 | **Engine-coverage closure** — the 6,854 units, 41% → 100% | Epic 1 | Epic 2, Epic 4 |
+| 3 | **Engine-coverage closure** — 6,854 units move corpus-wide coverage from 41% (4,798 of 11,652) to 100% (11,652 of 11,652) | Epic 1 | Epic 2, Epic 4 |
 | 4 | **Unknown-status classification** — the 4,224 | Epic 1 | Epic 2, Epic 3 |
 | 5 | **Re-verification** — the 8,330 fixture/literal-blessed units against the oracle | Epic 2 | — |
 | 6 | **Closure epilogue** | Epics 1–5 all `complete` | — |
 
-**Epics 2, 3 and 4 are write-disjoint and run concurrently** — verified file-touch sets in `workflow-instruction.md §3`/`§4`. That is why the oracle spike being uncertain does not stall the bundle: coverage and classification advance regardless.
+**Epics 2, 3 and 4 are write-disjoint except `THE-BOX.md`, which is append-only under §5** and run concurrently — verified file-touch sets in `workflow-instruction.md §3`/`§4`. That is why the oracle spike being uncertain does not stall the bundle: coverage and classification advance regardless.
 
 ## 6. Launch gates
 
-Open at authoring time. Full detail in `README.md §9` and `technical-requirements.md §1`:
+All three **passed 2026-08-25**. Full detail in `README.md §9` and `technical-requirements.md §1`:
 
-1. SD-32's closure PR merged to `develop`.
+1. SD-32's closure PR merged to `develop` — PR #376 MERGED, `origin/develop` = `f53b8e32da`.
 2. **SD-32's own instrument debt closed inside SD-32** — not imported here.
-3. `tranche/13` cut from `develop` and pushed.
+3. `tranche/13` cut from `develop` and pushed — `origin/tranche/13` = `f652db7ac7`.
 
 ## 7. The bundle's own standing hazard
 

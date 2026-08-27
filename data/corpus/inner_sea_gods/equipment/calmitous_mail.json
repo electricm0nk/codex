@@ -6,7 +6,16 @@
     "description": null,
     "key": "Calmitous Mail",
     "name": "Calmitous Mail",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "1",
+          "TYPE=Luck"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +24,30 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "DESC",
+        "value": "This style of +1 chain shirt is decorated with small agates, and was first created by followers of the halfling goddess of mischief and battle. The wearer gains a +1 luck bonus on all saving throws."
       }
     ],
     "weight_lbs": null

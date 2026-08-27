@@ -1,0 +1,991 @@
+{
+ "results": [
+  {
+   "unit_id": "advanced_class_guide:equipment:cape_of_daring_deeds",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "advanced_players_guide:equipment:fork_of_the_forgotten_one",
+   "ours": 10,
+   "oracle": 10,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Intimidate\"), declared_bonus=10, engine_raw_skill_field='Diplomacy,Intimidate'"
+  },
+  {
+   "unit_id": "advanced_players_guide:equipment:ring_of_maniacal_devices",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Craft (Traps) (first named of \"Craft (Traps),Disable Device\"), declared_bonus=5, engine_raw_skill_field='Craft (Traps),Disable Device'"
+  },
+  {
+   "unit_id": "advanced_players_guide:equipment:spindle_of_perfect_knowledge",
+   "ours": 14,
+   "oracle": 14,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:cloak_of_fangs",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:cloak_of_the_diplomat",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Sense Motive\"), declared_bonus=5, engine_raw_skill_field='Diplomacy,Sense Motive'"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:dilettante_s_outfit",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:elixir_of_darksight",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: VISION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a VISION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:gloves_of_elvenkind",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:half_orc_disguise_kit",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:mask_of_stony_demeanor",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:ring_of_the_sophisticate",
+   "ours": 4,
+   "oracle": 4,
+   "verdict": "agree",
+   "note": "target_skill=Sense Motive (first named of \"Sense Motive,Knowledge (Local)\"), declared_bonus=4, engine_raw_skill_field='Sense Motive,Knowledge (Local)'"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:star_charts",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "advanced_race_guide:equipment:whip_training",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "bestiary:equipment:heartstone_night_hag",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_2",
+   "ours": 16,
+   "oracle": 16,
+   "verdict": "agree",
+   "note": "target_ability=DEX (first named of \"DEX,CON\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_4",
+   "ours": 18,
+   "oracle": 18,
+   "verdict": "agree",
+   "note": "target_ability=DEX (first named of \"DEX,CON\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_6",
+   "ours": 20,
+   "oracle": 20,
+   "verdict": "agree",
+   "note": "target_ability=DEX (first named of \"DEX,CON\"), declared_bonus=6"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_2",
+   "ours": 18,
+   "oracle": 18,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,CON\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_4",
+   "ours": 20,
+   "oracle": 20,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,CON\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_6",
+   "ours": 22,
+   "oracle": 22,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,CON\"), declared_bonus=6"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_2",
+   "ours": 18,
+   "oracle": 18,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,DEX\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_4",
+   "ours": 20,
+   "oracle": 20,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,DEX\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_6",
+   "ours": 22,
+   "oracle": 22,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,DEX\"), declared_bonus=6"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_2",
+   "ours": 18,
+   "oracle": 18,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,DEX,CON\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_4",
+   "ours": 20,
+   "oracle": 20,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,DEX,CON\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_6",
+   "ours": 22,
+   "oracle": 22,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,DEX,CON\"), declared_bonus=6"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:boots_of_striding_and_springing",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: POSTMOVEADD+SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a POSTMOVEADD+SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:circlet_of_persuasion",
+   "ours": 3,
+   "oracle": 3,
+   "verdict": "agree",
+   "note": "target_skill=Bluff (first named of \"Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device\"), declared_bonus=3, engine_raw_skill_field='Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device'"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:gloves_of_swimming_and_climbing",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Swim (first named of \"Swim,Climb\"), declared_bonus=5, engine_raw_skill_field='Swim,Climb'"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:hand_of_glory",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SLOTS -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SLOTS qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_2",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,CHA\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_4",
+   "ours": 14,
+   "oracle": 14,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,CHA\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_6",
+   "ours": 16,
+   "oracle": 16,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,CHA\"), declared_bonus=6"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_2",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,WIS\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_4",
+   "ours": 14,
+   "oracle": 14,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,WIS\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_6",
+   "ours": 16,
+   "oracle": 16,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,WIS\"), declared_bonus=6"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_2",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=WIS (first named of \"WIS,CHA\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_4",
+   "ours": 14,
+   "oracle": 14,
+   "verdict": "agree",
+   "note": "target_ability=WIS (first named of \"WIS,CHA\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_6",
+   "ours": 16,
+   "oracle": 16,
+   "verdict": "agree",
+   "note": "target_ability=WIS (first named of \"WIS,CHA\"), declared_bonus=6"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_2",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_4",
+   "ours": 14,
+   "oracle": 14,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_6",
+   "ours": 16,
+   "oracle": 16,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=6"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:helm_of_comprehend_languages_and_read_magic",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:horseshoes_of_speed",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: POSTMOVEADD -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a POSTMOVEADD qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_deep_red_sphere",
+   "ours": 16,
+   "oracle": 16,
+   "verdict": "agree",
+   "note": "target_ability=DEX (first named of \"DEX\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_incandescent_blue_sphere",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=WIS (first named of \"WIS\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_pale_blue_rhomboid",
+   "ours": 18,
+   "oracle": 18,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_pink_and_green_sphere",
+   "ours": 10,
+   "oracle": 10,
+   "verdict": "agree",
+   "note": "target_ability=CHA (first named of \"CHA\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_pink_rhomboid",
+   "ours": 16,
+   "oracle": 16,
+   "verdict": "agree",
+   "note": "target_ability=CON (first named of \"CON\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ioun_stone_scarlet_and_blue_sphere",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_i",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SLOTS -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SLOTS qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_ii",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SLOTS -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SLOTS qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_iii",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SLOTS -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SLOTS qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_iv",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SLOTS -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SLOTS qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_v",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SLOTS -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SLOTS qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_vi",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SLOTS -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SLOTS qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:necklace_of_fireballs_vii",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SLOTS -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SLOTS qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_jumping",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_jumping_improved",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_wizardry_i",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLCASTMULT -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLCASTMULT qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_wizardry_ii",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLCASTMULT -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLCASTMULT qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_wizardry_iii",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLCASTMULT -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLCASTMULT qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:ring_of_wizardry_iv",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLCASTMULT -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLCASTMULT qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:robe_of_stars",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:rod_splendor",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=CHA (first named of \"CHA\"), declared_bonus=4"
+  },
+  {
+   "unit_id": "core_rulebook:equipment:staff_of_the_magi",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: MISC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a MISC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "horror_adventures:equipment:pain_ward_of_the_ostiarius",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: HP -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a HP qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:besmara_s_bicorne",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Acrobatics (first named of \"Acrobatics,Climb\"), declared_bonus=2, engine_raw_skill_field='Acrobatics,Climb'"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:besmara_s_tricorne",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Profession (Sailor) (first named of \"Profession (Sailor),Swim\"), declared_bonus=2, engine_raw_skill_field='Profession (Sailor),Swim'"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:deadeye_s_spotter_ring",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Perception (first named of \"Perception,Survival\"), declared_bonus=2, engine_raw_skill_field='Perception,Survival'"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:gray_gambler_s_hat",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: DC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a DC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:hero_s_release_pendant",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:mask_of_cutting_flash",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "inner_sea_gods:equipment:tankard_of_the_drunken_hero",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "monster_codex:equipment:hunter_s_nose_ring",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_1",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_2",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_3",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_4",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "mythic_adventures:equipment:cape_of_free_will_5",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "occult_adventures:equipment:lucky_horseshoe",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:area_map",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:belt_of_fallen_heroes",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:book_of_letters",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:bracelet_of_bargaining",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Bluff (first named of \"Bluff,Diplomacy,Sense Motive\"), declared_bonus=5, engine_raw_skill_field='Bluff,Diplomacy,Sense Motive'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:burglar_boots_major",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:burglar_boots_minor",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cassock_of_the_clergy",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLCAST -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLCAST qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cat_s_eye_crown",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: VISION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a VISION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cloak_of_fangs",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:cloak_of_the_diplomat",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Sense Motive\"), declared_bonus=5, engine_raw_skill_field='Diplomacy,Sense Motive'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:darklands_goggles",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:forger_s_kit",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:gauntlets_of_fumbling",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=DEX (first named of \"DEX\"), declared_bonus=-2"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:glyphbane_gloves",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:goggles_of_elvenkind",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:headband_of_fortune_s_favor",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:headband_of_mental_resilience",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT,WIS,CHA\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:heavyload_belt",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: LOADMULT -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a LOADMULT qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:heritage_book",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Knowledge (Nobility) (first named of \"Knowledge (Nobility)\"), declared_bonus=2, engine_raw_skill_field='Knowledge (Nobility)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:judge_s_wig",
+   "ours": 4,
+   "oracle": 4,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Intimidate\"), declared_bonus=4, engine_raw_skill_field='Diplomacy,Intimidate'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:juggler_s_kit",
+   "ours": 1,
+   "oracle": 1,
+   "verdict": "agree",
+   "note": "target_skill=Perform (Act) (first named of \"Perform (Act),Perform (Comedy)\"), declared_bonus=1, engine_raw_skill_field='Perform (Act),Perform (Comedy)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mask_of_stony_demeanor",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mask_of_ugliness",
+   "ours": -4,
+   "oracle": -4,
+   "verdict": "agree",
+   "note": "target_skill=Bluff (first named of \"Bluff,Diplomacy\"), declared_bonus=-4, engine_raw_skill_field='Bluff,Diplomacy'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:medusa_mask",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: DC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a DC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mock_armor",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:monkey_belt_greater",
+   "ours": 18,
+   "oracle": 18,
+   "verdict": "agree",
+   "note": "target_ability=STR (first named of \"STR,DEX\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:mummer_s_ruff",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:musical_staff",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Perform (String Instruments) (first named of \"Perform (String Instruments),Perform (Wind Instruments)\"), declared_bonus=5, engine_raw_skill_field='Perform (String Instruments),Perform (Wind Instruments)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:pauldrons_of_the_jackass",
+   "ours": 10,
+   "oracle": 10,
+   "verdict": "agree",
+   "note": "target_ability=DEX (first named of \"DEX\"), declared_bonus=-4"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:pirate_s_eye_patch",
+   "ours": 2,
+   "oracle": 2,
+   "verdict": "agree",
+   "note": "target_skill=Swim (first named of \"Swim,Climb\"), declared_bonus=2, engine_raw_skill_field='Swim,Climb'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:plague_rat_belt_greater",
+   "ours": 16,
+   "oracle": 16,
+   "verdict": "agree",
+   "note": "target_ability=DEX (first named of \"DEX,CON\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:pliant_gloves",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Escape Artist (first named of \"Escape Artist,Acrobatics\"), declared_bonus=5, engine_raw_skill_field='Escape Artist,Acrobatics'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_clumsiness",
+   "ours": 10,
+   "oracle": 10,
+   "verdict": "agree",
+   "note": "target_ability=DEX (first named of \"DEX\"), declared_bonus=-4"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_maniacal_devices",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Craft (Traps) (first named of \"Craft (Traps),Disable Device\"), declared_bonus=5, engine_raw_skill_field='Craft (Traps),Disable Device'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_devouring",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: MISC+SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a MISC+SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_knowledge_i",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLKNOWN -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLKNOWN qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_knowledge_ii",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLKNOWN -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLKNOWN qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_knowledge_iii",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLKNOWN -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLKNOWN qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_spell_knowledge_iv",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SPELLKNOWN -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SPELLKNOWN qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_the_ecclesiarch",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Diplomacy (first named of \"Diplomacy,Knowledge (Religion)\"), declared_bonus=5, engine_raw_skill_field='Diplomacy,Knowledge (Religion)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:ring_of_the_sophisticate",
+   "ours": 4,
+   "oracle": 4,
+   "verdict": "agree",
+   "note": "target_skill=Sense Motive (first named of \"Sense Motive,Knowledge (Local)\"), declared_bonus=4, engine_raw_skill_field='Sense Motive,Knowledge (Local)'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:rod_balance",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:rod_beguiling",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Bluff (first named of \"Bluff,Sleight of Hand\"), declared_bonus=5, engine_raw_skill_field='Bluff,Sleight of Hand'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:spectacles_of_understanding",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:staff_of_mithral_might",
+   "ours": 12,
+   "oracle": 12,
+   "verdict": "agree",
+   "note": "target_ability=INT (first named of \"INT\"), declared_bonus=2"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:staff_of_travel",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: POSTMOVEADD -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a POSTMOVEADD qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:stone_of_weight_loadstone",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: MOVEMULT -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a MOVEMULT qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:suzerain_scepter",
+   "ours": 5,
+   "oracle": 5,
+   "verdict": "agree",
+   "note": "target_skill=Knowledge (Nobility) (first named of \"Knowledge (Nobility),Diplomacy\"), declared_bonus=5, engine_raw_skill_field='Knowledge (Nobility),Diplomacy'"
+  },
+  {
+   "unit_id": "ultimate_equipment:equipment:wyvern_cloak",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:boots_of_skating",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: MOVEADD -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a MOVEADD qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_knowledge",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: ABILITYPOOL -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a ABILITYPOOL qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:crystal_mask_mindarmor",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SAVE -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SAVE qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_clairsentience",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: DC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a DC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_metacreativity",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: DC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a DC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_psychokinesis",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: DC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a DC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_psychometabolism",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: DC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a DC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_psychoportation",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: DC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a DC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:psionatrix_telepathy",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: DC -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a DC qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  },
+  {
+   "unit_id": "ultimate_psionics:equipment:third_eye_gather",
+   "ours": null,
+   "oracle": null,
+   "verdict": "unverifiable",
+   "reason": "no_probe_surface (shape: SITUATION -- src/rules_core/equipment_effects.rs compute_equipment_effects dispatches only general::compute_general_effect [SKILL], magic_items::compute_magic_items_effect [STAT], equipmods::compute_equipmods_effect/resolve_spell_resistance_bonus [WEAPON+TYPE=Enhancement/SR], and the arms_armor ACCHECK/MAXDEX/SPELLFAILURE/BONUS:COMBAT|AC fields -- none of these read a SITUATION qualifier; grepped confirmed zero matches for this shape across src/rules_core/equipment_effects/*.rs)"
+  }
+ ]
+}

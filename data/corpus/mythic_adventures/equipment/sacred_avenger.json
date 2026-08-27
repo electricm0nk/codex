@@ -11,6 +11,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cold Iron.Special Ability ~ +3 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "SPROP",
+        "value": "This +3 cold iron longsword becomes a +5 holy defiantUE cold iron longsword in the hands of a paladin or a lawful good mythic creature. If the creature wielding this weapon is a paladin with mythic tiers, she can also grant the weapon the brilliant energy special ability on command. Dismissing the brilliant energy ability is a free action. When wielded by a paladin or a lawful good mythic creature, this weapon provides spell resistance equal to 5 + the character's paladin class level (if any) + the character's mythic tier (if any) to the wielder and anyone within 10 feet of her. It also enables the wielder to use mythic greater dispel magic once per round as a standard action, with a caster level equal to either the wielder's paladin class level or double her mythic tier, whichever is higher. Mythic greater dispel magic functions as greater dispel magic including the benefits of the mythic dispel magic spell, but when the wielder dispels a spell, she heals 1d6 points of damage for every spell level of the dispelled spell instead of healing 1d4 points of damage."
       }
     ],
     "weight_lbs": null

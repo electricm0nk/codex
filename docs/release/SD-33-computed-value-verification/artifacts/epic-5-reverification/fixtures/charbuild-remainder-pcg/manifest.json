@@ -1,0 +1,283 @@
+[
+  {
+    "kind": "class",
+    "group": "bloodrager",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-bloodrager.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "slayer",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-slayer.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "paladin",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-paladin.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "barbarian",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-barbarian.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "ranger",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-ranger.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "rogue",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-rogue.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "ninja",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-ninja.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "samurai",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-samurai.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "investigator",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-investigator.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "inquisitor",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-inquisitor.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "druid",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-druid.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "monk",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-monk.pcg"
+  },
+  {
+    "kind": "class",
+    "group": "unchained_rogue",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/class-unchained_rogue.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:catfolk",
+    "race_key": "Catfolk",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-catfolk.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:dhampir",
+    "race_key": "Dhampir",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-dhampir.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:drow",
+    "race_key": "Drow",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-drow.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:duergar",
+    "race_key": "Duergar",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-duergar.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:dwarf",
+    "race_key": "Dwarf",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-dwarf.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:elf",
+    "race_key": "Elf",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-elf.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:fetchling",
+    "race_key": "Fetchling",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-fetchling.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:gillman",
+    "race_key": "Gillman",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-gillman.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:gnome",
+    "race_key": "Gnome",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-gnome.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:goblin",
+    "race_key": "Goblin",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-goblin.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:grippli",
+    "race_key": "Grippli",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-grippli.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:half_elf",
+    "race_key": "Half-Elf",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-half_elf.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:half_orc",
+    "race_key": "Half-Orc",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-half_orc.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:halfling",
+    "race_key": "Halfling",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-halfling.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:hobgoblin",
+    "race_key": "Hobgoblin",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-hobgoblin.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:human",
+    "race_key": "Human",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-human.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:ifrit",
+    "race_key": "Ifrit",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-ifrit.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:kobold",
+    "race_key": "Kobold",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-kobold.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:merfolk",
+    "race_key": "Merfolk",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-merfolk.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:orc",
+    "race_key": "Orc",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-orc.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:oread",
+    "race_key": "Oread",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-oread.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:ratfolk",
+    "race_key": "Ratfolk",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-ratfolk.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:strix",
+    "race_key": "Strix",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-strix.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:suli",
+    "race_key": "Suli",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-suli.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:svirfneblin",
+    "race_key": "Svirfneblin",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-svirfneblin.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:sylph",
+    "race_key": "Sylph",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-sylph.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:tengu",
+    "race_key": "Tengu",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-tengu.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:undine",
+    "race_key": "Undine",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-undine.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:vanara",
+    "race_key": "Vanara",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-vanara.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "advanced_race_guide:race:vishkanya",
+    "race_key": "Vishkanya",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-vishkanya.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "bestiary_4:race:kitsune",
+    "race_key": "Kitsune",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-kitsune.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "bestiary_4:race:nagaji",
+    "race_key": "Nagaji",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-nagaji.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "bestiary_4:race:samsaran",
+    "race_key": "Samsaran",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-samsaran.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "bestiary_4:race:wayang",
+    "race_key": "Wayang",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-wayang.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "bestiary_5:race:skinwalker",
+    "race_key": "Skinwalker",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-skinwalker.pcg"
+  },
+  {
+    "kind": "race",
+    "unit_id": "bestiary_6:race:rougarou",
+    "race_key": "Rougarou",
+    "pcg_path": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0e74dc1e-ba9-3/docs/release/SD-33-computed-value-verification/artifacts/epic-5-reverification/fixtures/charbuild-remainder-pcg/race-rougarou.pcg"
+  }
+]

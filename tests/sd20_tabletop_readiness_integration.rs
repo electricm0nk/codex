@@ -1525,8 +1525,8 @@ fn epic_probe_equipment_effects_are_real_but_not_reflected_in_corpus_derived() {
         .weapon_enhancement_bonus
         .as_ref()
         .expect("masterwork weapon quality must carry a real weapon-enhancement bonus");
-    assert_eq!(enhancement.affects, "TOHIT");
-    assert_eq!(enhancement.bonus, 1);
+    assert_eq!(enhancement.tohit_bonus, Some(1));
+    assert_eq!(enhancement.damage_bonus, None);
 }
 
 /// Epic 6 (damage total): the fixture's Longsword, exercising

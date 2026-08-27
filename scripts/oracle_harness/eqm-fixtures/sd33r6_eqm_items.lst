@@ -1,0 +1,5 @@
+SOURCELONG:SD-33 Remediation Wave 6 EQM Test	SOURCESHORT:SD33R6	SOURCEDATE:2026-08-25
+
+SD33R6 Leather Dragonhide	KEY:SD33R6 ~ Leather Dragonhide	TYPE:Armor.Light	COST:10	WT:15	ACCHECK:0	MAXDEX:6	SPELLFAILURE:10	BONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0	EQMOD:Material ~ Dragonhide
+SD33R6 Shield Spiked	KEY:SD33R6 ~ Shield Spiked	TYPE:Shield.Heavy.Weapon.Resizable.Melee.ShieldBash.Close.Weapon Group Close.Nonmetal	PROFICIENCY:SHIELD|Shield (Heavy)	COST:7	WT:10	ACCHECK:-2	CRITMULT:x2	CRITRANGE:1	DAMAGE:1d4	WIELD:OneHanded	SIZE:M	SPELLFAILURE:15	EQMOD:Special Quality ~ Spikes ~ Shieldbash
+SD33R6 Outfit Darkleaf	KEY:SD33R6 ~ Outfit Darkleaf	TYPE:Goods.Clothing.Resizable.Starting	COST:10	WT:8	EQMOD:Material ~ Darkleaf Cloth ~ Clothing

@@ -1,0 +1,102 @@
+{
+  "results": [
+    {
+      "unit_id": "advanced_race_guide:equipment:rending_claw_blades",
+      "ours": 0,
+      "oracle": 1,
+      "verdict": "disagree",
+      "dimension": "DAMAGE",
+      "note": "SD-33 remediation wave 6 (sd33-r6-corpus-extraction): the corpus-extraction gap this unit was originally escalated for is FIXED -- data/corpus/advanced_race_guide/equipment/rending_claw_blades.json's raw_tokens now carries the .MOD-attached EQMOD reference ('EQMOD: Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon.Material ~ Steel'), src/bin/enrich_equipment_raw_tokens.rs now folds in a <record_key>.MOD row wherever it appears in the cited LST file, not just a .COPY= base. CONFIRMED STILL disagree, ours=0, because a SEPARATE, narrower defect remains: compute_equipment_effects's weapon path (src/rules_core/equipment_effects.rs, around 'let weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);') only reads the resolved item's OWN bonus_chains -- it never resolves the item's EQMOD:-referenced modifier records and sums THEIR compute_equipmods_effect result in, unlike resolve_category_effect's already-shipped AC path (arms_armor::apply_eqmod_armor_class_bonus + eqmod_referenced_records, wave 4, commit abc72f75ec). Proven live this cycle: a scratch integration test (compute_equipment_effects against the real, now-fixed on-disk corpus record, single equipped selection, no fixture) prints 'weapon_enhancement_bonus = Some(WeaponEnhancementBonus { tohit_bonus: Some(1), damage_bonus: None, ... })' -- tohit_bonus matches the oracle's own MAGICHIT=+1 exactly (unchanged, always agreed), damage_bonus stays None because the '+1 ~ Weapon'/'Keen' EQMOD-referenced records' own BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement chain is never summed in. Fix design (not implemented this cycle -- out of this lane's granted write scope, src/rules_core/ with 4 sibling lanes concurrently running): widen the weapon_enhancement_bonus assembly in compute_equipment_effects to also fold in eqmod_referenced_records(record, RuleSetId::Crb, corpus).iter().map(equipmods::compute_equipmods_effect), merging tohit_bonus/damage_bonus by Option-sum, matching the AC path's already-proven pattern. This is a small, well-precedented, one-cycle fix, not a new large blocker."
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:blade_of_three_fancies",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "STALE REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real BONUS:SKILL chain for this record. compute_equipment_effects now computes Some(SkillCheckBonus { skill: \"TYPE.Perform\", bonus: 4 }) for it (proven live this cycle against the real on-disk record, no fixture). Still recorded unverifiable because no live PCGen oracle export exists for this specific skill-bonus dimension -- capturing one is a genuine, real next step for whichever lane owns the literal-verified skill-shaped population (row 17), not this lane's mandate (corpus extraction only). NOT a fabricated verdict: ours is reported as the real computed value, oracle is honestly None."
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:golden_judge_s_breastplate",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "STALE REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real BONUS:SKILL chain for this record. compute_equipment_effects now computes Some(SkillCheckBonus { skill: \"Sense Motive\", bonus: 4 }) for it (proven live this cycle against the real on-disk record, no fixture). Still recorded unverifiable because no live PCGen oracle export exists for this specific skill-bonus dimension -- capturing one is a genuine, real next step for whichever lane owns the literal-verified skill-shaped population (row 17), not this lane's mandate (corpus extraction only). NOT a fabricated verdict: ours is reported as the real computed value, oracle is honestly None."
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:kimle_coat",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "STALE REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real BONUS:SKILL chain for this record. compute_equipment_effects now computes Some(SkillCheckBonus { skill: \"Swim\", bonus: 5 }) for it (proven live this cycle against the real on-disk record, no fixture). Still recorded unverifiable because no live PCGen oracle export exists for this specific skill-bonus dimension -- capturing one is a genuine, real next step for whichever lane owns the literal-verified skill-shaped population (row 17), not this lane's mandate (corpus extraction only). NOT a fabricated verdict: ours is reported as the real computed value, oracle is honestly None."
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:calmitous_mail",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:SAVE|ALL|1|TYPE=Luck') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:forgefather_s_sledge",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:VAR|FireResistanceBonus|1|TYPE=Base') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:fugitive_finder",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:MOVEADD|TYPE.Walk|10') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:lucky_drunk_s_mail",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:SAVE|ALL|1|TYPE=Luck') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    },
+    {
+      "unit_id": "inner_sea_gods:equipment:red_stalker_armor",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('BONUS:SITUATION|Bluff=Feint|5|TYPE=Competence') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:arrow_hushing",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('EQMOD:Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|501') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:arrow_hushing_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('EQMOD:Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|1001') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bolt_hushing",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('EQMOD:Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|501') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:bolt_hushing_greater",
+      "ours": null,
+      "oracle": null,
+      "verdict": "unverifiable",
+      "reason": "REASON CORRECTED (SD-33 remediation wave 6, sd33-r6-corpus-extraction): the prior 'no_bonus_chain: raw_bonus_chains is empty' reason is no longer true -- the corpus-extraction .MOD-fold fix populated a real chain ('EQMOD:Special Ability ~ +1 ~ Ammunition.Special Ability ~ Enhancement Cost|1001') for this record. Re-verified live this cycle (compute_equipment_effects against the real, now-fixed on-disk record): still no comparable ours value, because no resolver in equipment_effects/{arms_armor,general,magic_items,equipmods}.rs matches this chain's shape (a SAVE/VAR/MOVEADD/SITUATION bonus, or an ammunition EQMOD, none of which any current resolver reads). Corrected reason: 'no_resolver', not 'no_bonus_chain' -- an honest, re-verified absence, not a fabricated zero."
+    }
+  ],
+  "meta": {
+    "lane": "sd33-r6-corpus-extraction",
+    "scope": "Re-run of the 13 (of 139 corpus-extraction-fix-affected) unit_ids that already had a row in AT-33-E5-003.combined-oracle-results.json, against the real, post-fix, regenerated on-disk corpus. The other 126 of 139 fixed records were never previously rowed at all (out of Epic 5's still-unexamined 39 + the broader unexamined population) and are out of this lane's mandate to newly examine -- named here for completeness, not rowed.",
+    "command": "python3 /path/to/find_overlap.py cross-referencing mod_gap_results.json's 139 changed unit_ids against AT-33-E5-003.combined-oracle-results.json's unit_id set; per-row 'ours' values from a scratch compute_equipment_effects integration test against the real on-disk corpus (written, run, then deleted -- not committed, per this lane's corpus-extraction-only write scope).",
+    "denominator": "13 of 8,291 previously-examined units overlap with the 139-record blast radius"
+  }
+}

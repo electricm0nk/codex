@@ -1,0 +1,831 @@
+[
+ {
+  "unit_id": "advanced_players_guide:equipment:spindle_of_perfect_knowledge",
+  "book": "advanced_players_guide",
+  "key": "Spindle of Perfect Knowledge",
+  "ability_field": "INT,WIS,CHA",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Spindle of Perfect Knowledge",
+     "2"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,WIS,CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_2",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (DEX/CON) +2",
+  "ability_field": "DEX,CON",
+  "target_ability": "DEX",
+  "ability_index": 1,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "DEX,CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_4",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (DEX/CON) +4",
+  "ability_field": "DEX,CON",
+  "target_ability": "DEX",
+  "ability_index": 1,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "DEX,CON",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_6",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (DEX/CON) +6",
+  "ability_field": "DEX,CON",
+  "target_ability": "DEX",
+  "ability_index": 1,
+  "declared_bonus": 6,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "DEX,CON",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_2",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (STR/CON) +2",
+  "ability_field": "STR,CON",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_4",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (STR/CON) +4",
+  "ability_field": "STR,CON",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,CON",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_6",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (STR/CON) +6",
+  "ability_field": "STR,CON",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 6,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,CON",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_2",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (STR/DEX) +2",
+  "ability_field": "STR,DEX",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,DEX",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_4",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (STR/DEX) +4",
+  "ability_field": "STR,DEX",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,DEX",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_6",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Might (STR/DEX) +6",
+  "ability_field": "STR,DEX",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 6,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,DEX",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_2",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Perfection +2",
+  "ability_field": "STR,DEX,CON",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,DEX,CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_4",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Perfection +4",
+  "ability_field": "STR,DEX,CON",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,DEX,CON",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_6",
+  "book": "core_rulebook",
+  "key": "Belt of Physical Perfection +6",
+  "ability_field": "STR,DEX,CON",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 6,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,DEX,CON",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_2",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (INT/CHA) +2",
+  "ability_field": "INT,CHA",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "1"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_4",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (INT/CHA) +4",
+  "ability_field": "INT,CHA",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "2"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_6",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (INT/CHA) +6",
+  "ability_field": "INT,CHA",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 6,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "3"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,CHA",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_2",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (INT/WIS) +2",
+  "ability_field": "INT,WIS",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "1"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,WIS",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_4",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (INT/WIS) +4",
+  "ability_field": "INT,WIS",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "2"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,WIS",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_6",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (INT/WIS) +6",
+  "ability_field": "INT,WIS",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 6,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "3"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,WIS",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_2",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (WIS/CHA) +2",
+  "ability_field": "WIS,CHA",
+  "target_ability": "WIS",
+  "ability_index": 4,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "WIS,CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_4",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (WIS/CHA) +4",
+  "ability_field": "WIS,CHA",
+  "target_ability": "WIS",
+  "ability_index": 4,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "WIS,CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_6",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Prowess (WIS/CHA) +6",
+  "ability_field": "WIS,CHA",
+  "target_ability": "WIS",
+  "ability_index": 4,
+  "declared_bonus": 6,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "WIS,CHA",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_2",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Superiority +2",
+  "ability_field": "INT,WIS,CHA",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "1"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,WIS,CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_4",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Superiority +4",
+  "ability_field": "INT,WIS,CHA",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "2"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,WIS,CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_6",
+  "book": "core_rulebook",
+  "key": "Headband of Mental Superiority +6",
+  "ability_field": "INT,WIS,CHA",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 6,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Headband of Intellect Skill Choice",
+     "3"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,WIS,CHA",
+     "6",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_deep_red_sphere",
+  "book": "core_rulebook",
+  "key": "Ioun Stone (Deep red Sphere)",
+  "ability_field": "DEX",
+  "target_ability": "DEX",
+  "ability_index": 1,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "DEX",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_incandescent_blue_sphere",
+  "book": "core_rulebook",
+  "key": "Ioun Stone (Incandescent blue Sphere)",
+  "ability_field": "WIS",
+  "target_ability": "WIS",
+  "ability_index": 4,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "WIS",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_pale_blue_rhomboid",
+  "book": "core_rulebook",
+  "key": "Ioun Stone (Pale blue Rhomboid)",
+  "ability_field": "STR",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_pink_and_green_sphere",
+  "book": "core_rulebook",
+  "key": "Ioun Stone (Pink and green Sphere)",
+  "ability_field": "CHA",
+  "target_ability": "CHA",
+  "ability_index": 5,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_pink_rhomboid",
+  "book": "core_rulebook",
+  "key": "Ioun Stone (Pink Rhomboid)",
+  "ability_field": "CON",
+  "target_ability": "CON",
+  "ability_index": 2,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:ioun_stone_scarlet_and_blue_sphere",
+  "book": "core_rulebook",
+  "key": "Ioun Stone (Scarlet and blue Sphere)",
+  "ability_field": "INT",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "ABILITYPOOL",
+     "Scarlet and blue Sphere Ioun Stone Skill Choice",
+     "1"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "INT",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "core_rulebook:equipment:rod_splendor",
+  "book": "core_rulebook",
+  "key": "Rod (Splendor)",
+  "ability_field": "CHA",
+  "target_ability": "CHA",
+  "ability_index": 5,
+  "declared_bonus": 4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "CHA",
+     "4",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:gauntlets_of_fumbling",
+  "book": "ultimate_equipment",
+  "key": "Gauntlets of Fumbling",
+  "ability_field": "DEX",
+  "target_ability": "DEX",
+  "ability_index": 1,
+  "declared_bonus": -2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "DEX",
+     "-2"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:headband_of_mental_resilience",
+  "book": "ultimate_equipment",
+  "key": "Headband of Mental Resilience",
+  "ability_field": "INT,WIS,CHA",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "INT,WIS,CHA",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:monkey_belt_greater",
+  "book": "ultimate_equipment",
+  "key": "Monkey Belt (Greater)",
+  "ability_field": "STR,DEX",
+  "target_ability": "STR",
+  "ability_index": 0,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "STR,DEX",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:pauldrons_of_the_jackass",
+  "book": "ultimate_equipment",
+  "key": "Pauldrons of the Jackass",
+  "ability_field": "DEX",
+  "target_ability": "DEX",
+  "ability_index": 1,
+  "declared_bonus": -4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "MOVEADD",
+     "TYPE.All",
+     "-10"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "DEX",
+     "-4"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:plague_rat_belt_greater",
+  "book": "ultimate_equipment",
+  "key": "Plague Rat Belt (Greater)",
+  "ability_field": "DEX,CON",
+  "target_ability": "DEX",
+  "ability_index": 1,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "DEX,CON",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:ring_of_clumsiness",
+  "book": "ultimate_equipment",
+  "key": "Ring of Clumsiness",
+  "ability_field": "DEX",
+  "target_ability": "DEX",
+  "ability_index": 1,
+  "declared_bonus": -4,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "MISC",
+     "SPELLFAILURE",
+     "20"
+    ]
+   },
+   {
+    "qualifiers": [
+     "STAT",
+     "DEX",
+     "-4"
+    ]
+   }
+  ]
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:staff_of_mithral_might",
+  "book": "ultimate_equipment",
+  "key": "Staff of Mithral Might",
+  "ability_field": "INT",
+  "target_ability": "INT",
+  "ability_index": 3,
+  "declared_bonus": 2,
+  "full_raw_bonus_chains": [
+   {
+    "qualifiers": [
+     "STAT",
+     "INT",
+     "2",
+     "TYPE=Enhancement"
+    ]
+   }
+  ]
+ }
+]

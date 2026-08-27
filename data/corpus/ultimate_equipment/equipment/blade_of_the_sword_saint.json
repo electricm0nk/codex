@@ -6,8 +6,74 @@
     "description": null,
     "key": "Blade of the Sword-Saint",
     "name": "Blade of the Sword-Saint",
-    "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "WIELDCATEGORY",
+          "-1",
+          "PREVARGTEQ:KatanaExoticUse,1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Katana"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.EasternWeapon.Eastern.Melee.Exotic.Slashing.Deadly.OneHanded.Sword.BladeHeavy.Tengu"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "3"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Ki Intensifying ~ Melee.Special Ability ~ Enhancement Cost|75300.Special Ability ~ +3 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can be employed as though the wielder were unarmed.|PREVARGTEQ:MonkLVL,1"
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

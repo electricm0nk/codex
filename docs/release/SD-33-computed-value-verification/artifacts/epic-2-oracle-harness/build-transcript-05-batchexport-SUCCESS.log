@@ -1,0 +1,123 @@
+Parallel Configuration Cache is an incubating feature.
+Calculating task graph as no cached configuration is available for tasks: run --args=-s run-settings -E /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/computed-values.txt.ftl -c /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/fixtures/pf1_fighter_l1.pcg -o /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/pf1_fighter_l1.computed.txt
+> Task :PCGen-base:processResources NO-SOURCE
+> Task :PCGen-Formula:jjtree UP-TO-DATE
+> Task :downloadJavaFXLocal UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :PCGen-Formula:processResources NO-SOURCE
+> Task :PCGen-base:compileJava UP-TO-DATE
+> Task :copyMasterSheets UP-TO-DATE
+> Task :PCGen-base:classes UP-TO-DATE
+> Task :PCGen-Formula:javacc UP-TO-DATE
+> Task :PCGen-base:jar UP-TO-DATE
+> Task :extractJavaFXLocal UP-TO-DATE
+> Task :PCGen-Formula:compileJava UP-TO-DATE
+> Task :PCGen-Formula:classes UP-TO-DATE
+> Task :PCGen-Formula:jar UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :jarGroupingPlugins UP-TO-DATE
+> Task :jarJepCommandsPlugins UP-TO-DATE
+> Task :jarBonusPlugins UP-TO-DATE
+> Task :jarConverterPlugins UP-TO-DATE
+> Task :jarPrimitivePlugins UP-TO-DATE
+> Task :jarExportPlugins UP-TO-DATE
+> Task :jarFunctionPlugins UP-TO-DATE
+> Task :jarPrePlugins UP-TO-DATE
+> Task :jarModifierPlugins UP-TO-DATE
+> Task :jarLstPlugins UP-TO-DATE
+> Task :jarQualifierPlugins UP-TO-DATE
+> Task :jarAllPlugins UP-TO-DATE
+> Task :jar UP-TO-DATE
+> Task :converterJar UP-TO-DATE
+> Task :startScripts UP-TO-DATE
+> Task :distTar SKIPPED
+> Task :distZip SKIPPED
+> Task :assemble UP-TO-DATE
+
+> Task :run
+2026-08-25T03:50:16.214796037 INFO main Main:105 Starting PCGen v6.09.08.RC1
+2026-08-25T03:50:17.332928595 INFO main LanguageBundle:134 Initialising language bundle with locale en.
+2026-08-25T03:50:20.462493411 INFO main BatchExporter:117 Started export of /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/fixtures/pf1_fighter_l1.pcg using /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/computed-values.txt.ftl to /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/pf1_fighter_l1.computed.txt
+2026-08-25T03:50:20.499541748 INFO main BatchExporter:122 Loading sources [Core Rulebook] using game mode Pathfinder_RPG
+2026-08-25T03:50:20.541750683 INFO main SourceFileLoader:507 Loading game Pathfinder_RPG and sources [Core Rulebook].
+2026-08-25T03:50:26.943976067 LSTERROR main LstUtils:145 Illegal FACT subtoken 'IsOrc' 'True' for pcgen.core.PCTemplate IsOrc (Source: file:/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/pcgen-oracle-checkout/data/pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_templates.lst )
+2026-08-25T03:50:26.944813767 LSTERROR main LstUtils:145 Failed in parsing typeStr: FACT IsOrc|True for pcgen.core.PCTemplate IsOrc
+2026-08-25T03:50:26.945377796 LSTERROR main LstUtils:145 Illegal Token 'FACT' 'IsOrc|True' for pcgen.core.PCTemplate IsOrc in file:/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/pcgen-oracle-checkout/data/pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_templates.lst
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+2026-08-25T03:50:32.375966694 INFO main CharacterManager:193 Loaded character SD33 E2 Fighter - /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_13e796f5-f34-5/docs/release/SD-33-computed-value-verification/artifacts/epic-2-oracle-harness/fixtures/pf1_fighter_l1.pcg
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+BUILD SUCCESSFUL in 21s
+26 actionable tasks: 1 executed, 25 up-to-date
+Configuration cache entry stored.

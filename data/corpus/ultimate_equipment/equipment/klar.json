@@ -45,6 +45,22 @@
       {
         "key": "SPELLFAILURE",
         "value": "5"
+      },
+      {
+        "key": "COST",
+        "value": "12"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.31"
       }
     ],
     "weight_lbs": 6.0

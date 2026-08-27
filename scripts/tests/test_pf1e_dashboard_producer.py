@@ -64,7 +64,7 @@ STATUS_WORDS = (
     "deferred-with-reason",
     "not-ingested",
     "not-started",
-    "unknown",
+    "unmeasurable",
 )
 
 
@@ -133,6 +133,37 @@ class DonenessVerdictGridTest(unittest.TestCase):
             producer.doneness_verdict("ambiguous", "fixture-verified", "spell"),
             producer.DONENESS_HELD,
         )
+
+    def test_ambiguous_unmeasurable_is_unmeasurable(self):
+        """`AT-33-E6-001` (2026-08-25): the real, live cell -- 11 of 49,438
+        `docs/work-inventory.json` units carry exactly this pair after
+        `AT-33-E4-002` renamed the 318 genuinely-irreducible units'
+        `status` from `unknown` to `unmeasurable` without updating this
+        table's checked-first branch, which crashed `cargo test --locked
+        --lib` (a real shell-out through `shape_ledger.py` ->
+        `coverage_ledger.py` -> here) on every one of the 11. Checked first,
+        ahead of the `ambiguous` branch's own status list, so the
+        wiring-class classifier's separate failure never masks the honest
+        "this instrument cannot classify this unit" verdict."""
+        self.assertEqual(
+            producer.doneness_verdict("ambiguous", "unmeasurable", "spell"),
+            producer.DONENESS_UNMEASURABLE,
+        )
+
+    def test_unknown_is_still_accepted_as_unmeasurables_legacy_spelling(self):
+        """`unknown` is `unmeasurable`'s pre-`AT-33-E4-002` name. No live
+        unit carries it any more (`STATUS_VOCABULARY` in
+        `src/bin/v06_work_inventory.rs` dropped it), but an older, already-
+        generated `work-inventory.json` snapshot legitimately can -- this
+        function's whole design is "never silently reinterpret a status
+        word", so both spellings must keep resolving identically rather
+        than the old one starting to raise the day the rename landed."""
+        for wiring_class in producer.WIRING_CLASS_VALUES:
+            self.assertEqual(
+                producer.doneness_verdict(wiring_class, "unknown", "spell"),
+                producer.doneness_verdict(wiring_class, "unmeasurable", "spell"),
+                f"wiring_class={wiring_class!r}: 'unknown' and 'unmeasurable' must agree",
+            )
 
     def test_static_literal_verified_is_done(self):
         """Control: the ORIGINAL done rung (SD-32 decisions.md §2) still

@@ -15,6 +15,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Corrosive ~ Weapon.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Combat"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "ISC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
       }
     ],
     "weight_lbs": null

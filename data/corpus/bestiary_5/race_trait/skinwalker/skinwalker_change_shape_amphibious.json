@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-26T19:37:17Z",
+  "data": {
+    "key": "Skinwalker ~ Change Shape (Amphibious)",
+    "name": "Change Shape (Amphibious)",
+    "race_key": "Skinwalker",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Skinwalker Racial Trait"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Skinwalker ~ Change Shape (Amphibious)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Skinwalker Racial Trait"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Skinwalker_ChangeShape_ActivateAmphibious|0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Amphibious|PREVARGTEQ:Skinwalker_ChangeShape_ActivateAmphibious,1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|Skinwalker_ChangeShape_ActivateAmphibious|1|TYPE=Boolean"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/skinwalker/skinwalker_abilities_race_subrace.lst",
+    "sha256": "a5b5c3f65d28e5a01b935ffc2a177752184be170e340fdddc14cdbf3ba6c3b27",
+    "line": 234,
+    "record_key": "Skinwalker ~ Change Shape (Amphibious)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
+}

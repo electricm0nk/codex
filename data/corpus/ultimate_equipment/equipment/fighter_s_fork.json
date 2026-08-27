@@ -15,6 +15,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|7300.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can be commanded to lengthen or shorten its haft"
       }
     ],
     "weight_lbs": null

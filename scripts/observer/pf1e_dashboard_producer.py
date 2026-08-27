@@ -3699,10 +3699,13 @@ WIRING_SUMMARY_SCHEMA = 13
 # (`grounded`, `text-complete`, or `ingested-magnitude`) under an unresolved
 # wiring class is `held`, never `done` (SD-29 decisions.md §46.4 -- `held`
 # is deliberately not `done`).
-# `unmeasurable` is reserved for `status == "unknown"`, where the record
-# itself gives no evidence at all regardless of wiring_class -- the honest
-# bucket for "this instrument cannot classify this unit", a work item against
-# the INSTRUMENTS, never folded into coverage in either direction.
+# `unmeasurable` (the doneness verdict) is reserved for `status in ("unknown",
+# "unmeasurable")` (the STATUS_VOCABULARY word, renamed from `unknown` by
+# `AT-33-E4-002`, 2026-08-25 -- see `_doneness_verdict_uncapped`'s own
+# checked-first branch), where the record itself gives no evidence at all
+# regardless of wiring_class -- the honest bucket for "this instrument cannot
+# classify this unit", a work item against the INSTRUMENTS, never folded into
+# coverage in either direction.
 DONENESS_DONE = "done"
 DONENESS_HELD = "held"
 DONENESS_IN_PROGRESS = "in-progress"
@@ -3955,10 +3958,32 @@ def _doneness_verdict_uncapped(wiring_class: str, status: str) -> str:
         return DONENESS_DEFERRED
     if status in ("not-ingested", "not-started"):
         return DONENESS_NOT_STARTED
-    # An `unknown` status cannot be measured against any bar, classifiable or
-    # not -- checked first, ahead of both the ambiguous check and the
-    # per-class rules below.
-    if status == "unknown":
+    # An `unknown`/`unmeasurable` status cannot be measured against any bar,
+    # classifiable or not -- checked first, ahead of both the ambiguous check
+    # and the per-class rules below. `AT-33-E4-002` (2026-08-25) renamed the
+    # STATUS_VOCABULARY word itself from `unknown` to `unmeasurable` (the 318
+    # genuinely-irreducible units keep this exact disposition, only the
+    # string changed, "so the status string itself stops reading as 'nobody
+    # looked'" -- that commit's own message) but this one call site, and only
+    # this one, was never updated to match: `unknown` no longer appears
+    # anywhere in `STATUS_VOCABULARY`
+    # (`src/bin/v06_work_inventory.rs`) or in any real
+    # `docs/work-inventory.json` unit, so this branch alone had gone
+    # unreachable for every live unit -- including the 11
+    # `('ambiguous', 'unmeasurable')` units the `ambiguous` branch below
+    # raises `ValueError` on, and the 310 `('display', 'unmeasurable')` units
+    # that silently fall through the `display` branch's catch-all into
+    # `in-progress` instead of the honest `unmeasurable` -- both populations
+    # re-derived live:
+    # `python3 -c "import json,collections;u=json.load(open('docs/work-inventory.json'))['units'];print(collections.Counter((x.get('wiring_class'),x.get('status')) for x in u if x.get('status')=='unmeasurable'))"`
+    # -> `Counter({('display', 'unmeasurable'): 310, ('ambiguous', 'unmeasurable'): 11})`.
+    # `unknown` is kept alongside `unmeasurable` rather than replaced outright
+    # -- a frozen/older `work-inventory.json` snapshot generated before this
+    # rename (e.g. an archived receipt's embedded fixture) still legitimately
+    # carries the old word, and this function's whole design is "never
+    # silently reinterpret a status word", not "assume every caller regenerated
+    # today".
+    if status in ("unknown", "unmeasurable"):
         return DONENESS_UNMEASURABLE
     # `ambiguous` wiring_class is a classifier failure on the CONSUMER side --
     # the determinator could not tell how the unit is wired in, so there is no

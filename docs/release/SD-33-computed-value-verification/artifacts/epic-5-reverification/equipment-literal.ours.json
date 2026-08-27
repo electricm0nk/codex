@@ -1,0 +1,86 @@
+{
+  "ultimate_equipment:equipment:anaconda_s_coils": [
+    "anaconda_s_coils.STAT.0.SCORE",
+    18
+  ],
+  "ultimate_equipment:equipment:belt_of_thunderous_charging": [
+    "belt_of_thunderous_charging.STAT.0.SCORE",
+    18
+  ],
+  "ultimate_equipment:equipment:belt_of_the_weasel": [
+    "belt_of_the_weasel.STAT.1.SCORE",
+    16
+  ],
+  "ultimate_equipment:equipment:cord_of_stubborn_resolve": [
+    "cord_of_stubborn_resolve.STAT.2.SCORE",
+    16
+  ],
+  "ultimate_equipment:equipment:elemental_earth_belt": [
+    "elemental_earth_belt.STAT.2.SCORE",
+    18
+  ],
+  "ultimate_equipment:equipment:gorgon_belt": [
+    "gorgon_belt.STAT.0.SCORE",
+    20
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_cha_2": [
+    "headband_of_aerial_agility_cha_2.STAT.5.SCORE",
+    10
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_cha_4": [
+    "headband_of_aerial_agility_cha_4.STAT.5.SCORE",
+    12
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_cha_6": [
+    "headband_of_aerial_agility_cha_6.STAT.5.SCORE",
+    14
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_int_2": [
+    "headband_of_aerial_agility_int_2.STAT.3.SCORE",
+    12
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_int_4": [
+    "headband_of_aerial_agility_int_4.STAT.3.SCORE",
+    14
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_int_6": [
+    "headband_of_aerial_agility_int_6.STAT.3.SCORE",
+    16
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_wis_2": [
+    "headband_of_aerial_agility_wis_2.STAT.4.SCORE",
+    12
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_wis_4": [
+    "headband_of_aerial_agility_wis_4.STAT.4.SCORE",
+    14
+  ],
+  "ultimate_equipment:equipment:headband_of_aerial_agility_wis_6": [
+    "headband_of_aerial_agility_wis_6.STAT.4.SCORE",
+    16
+  ],
+  "ultimate_equipment:equipment:headband_of_ponderous_recollection": [
+    "headband_of_ponderous_recollection.STAT.3.SCORE",
+    12
+  ],
+  "ultimate_equipment:equipment:headband_of_unshakeable_resolve": [
+    "headband_of_unshakeable_resolve.STAT.4.SCORE",
+    12
+  ],
+  "ultimate_equipment:equipment:minotaur_belt": [
+    "minotaur_belt.STAT.0.SCORE",
+    18
+  ],
+  "ultimate_equipment:equipment:monkey_belt": [
+    "monkey_belt.STAT.1.SCORE",
+    16
+  ],
+  "ultimate_equipment:equipment:plague_rat_belt": [
+    "plague_rat_belt.STAT.2.SCORE",
+    16
+  ],
+  "ultimate_equipment:equipment:shadowform_belt": [
+    "shadowform_belt.STAT.1.SCORE",
+    20
+  ]
+}

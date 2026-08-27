@@ -543,6 +543,25 @@ pub fn load_race_corpus(roots: &[BookCorpusRoot<'_>]) -> RaceCorpus {
 /// A record that already has a readable gate is not re-roled — `Dwarf ~
 /// Saltbeard` names `Saltbeard ~ Dwarf ~ Greed` *both* ways (direct grant and
 /// positive `PREFACT`), and the flag reading is the more specific one.
+///
+/// **This is deliberately absolute, not merely the common case.** SD-33 Epic
+/// 6 (2026-08-26) investigated widening the re-role to also cover a record
+/// that is a grant target AND independently sets its own
+/// `sets_replace_flags` — Skinwalker's 36 kin replacement rows are exactly
+/// that shape, since each carries a genuine `FACT:Skinwalker_Replace<Trait>
+/// |True` of its own, unlike every other dependent row in the corpus
+/// (`Feral ~ Languages`, `Throwback ~ Gillman ~ Type/Speed`, ...), none of
+/// which carries a `FACT:` and so never contended for a role in the first
+/// place. **That widening was reverted**: Monster Codex's `Oversized Goblin
+/// ~ Ability Scores`/`~ Size` are the pre-existing counter-example — both
+/// are named by `Oversized Goblin`'s own `ABILITY:...AUTOMATIC...` grant AND
+/// carry their own `FACT:Goblin_ReplaceAbilityScores`/`ReplaceSize`, and
+/// both are deliberately `Alternate` today (independently offered menu
+/// rows, counted in the "8 Monster Codex" figure the tests above cite) —
+/// proof this corpus's real, shipped design is "a record's own flag always
+/// wins," full stop, not "being granted wins when both apply." Skinwalker's
+/// 36 replacement rows follow the identical rule: `Alternate`, same as
+/// `Oversized Goblin`'s two, not demoted.
 fn link_automatic_grants(records: &mut [RaceTraitRecord]) {
     let known: BTreeSet<String> = records.iter().map(|r| r.data.key.clone()).collect();
     let mut granted_by: BTreeMap<String, String> = BTreeMap::new();
@@ -1799,6 +1818,80 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Tiefling ~ Oni-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
     ("Tiefling ~ Qlippoth-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
     ("Tiefling ~ Rakshasa-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+
+    // ================= Skinwalker (Bestiary 5) =================
+    // SD-33 Epic 6 fold (2026-08-26), recovering SD31-E6-F4-005's lost
+    // wave-11 lane: 9 kin selectors plus their 36 replacement rows, all 45
+    // `TraitRole::Alternate` -- **unlike** Core Essentials' Aasimar/Tiefling
+    // heritages just above, whose 48 replacement rows are `FlagGranted` (no
+    // `FACT:` token of their own; the flag lives on the selector alone),
+    // Skinwalker's oracle genuinely places a `FACT:Skinwalker_Replace<Trait>
+    // |True` token on EACH replacement row too, so `classify()` correctly
+    // reads all 45 as `Alternate` by the same generic rule that reads every
+    // other row here, and `link_automatic_grants` does not demote them for
+    // also being a grant target -- Monster Codex's `Oversized Goblin ~
+    // Ability Scores`/`~ Size` are the pre-existing proof that a record's
+    // own flag always wins (see that function's own doc comment). Values
+    // are `RaceTraitCacheData::sets_replace_flags` read verbatim off
+    // `data/corpus/bestiary_5/race_trait/skinwalker/`, and
+    // `the_alternate_trait_flag_table_matches_the_corpus_for_every_alternate`
+    // re-derives all 45 from those records rather than trusting this block.
+    // Every kin's own 4 flag names are the SAME 4 (`Skinwalker_Replace
+    // AbilityScores`/`AnimalMinded`/`ChangeShape`/`SpellLikeAbility`) --
+    // PCGen scopes the names to the race, not the heritage, since only one
+    // kin can ever be active on one character.
+    //
+    // The book's other 20 records are deliberately absent: they are the
+    // shared, gate-free `Change Shape (<Option>)` component records every
+    // kin's own `Change Shape` replacement row TYPE-pool-references, never
+    // a player-facing standalone choice; see this module's own
+    // `no_corpus_trait_is_left_without_a_readable_gate` test for why
+    // `classify()` correctly leaves them `Unclassified`.
+    ("Skinwalker ~ Werebat-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Skinwalker ~ Werebear-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Skinwalker ~ Wereboar-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Skinwalker ~ Werecrocodile-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Skinwalker ~ Wereraptor-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Skinwalker ~ Wererat-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Skinwalker ~ Wereshark-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Skinwalker ~ Weretiger-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Skinwalker ~ Werewolf-Kin", &["Skinwalker_ReplaceAbilityScores", "Skinwalker_ReplaceAnimalMinded", "Skinwalker_ReplaceChangeShape", "Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Werebat-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Werebat-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Werebat-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Werebat-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Werebear-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Werebear-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Werebear-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Werebear-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Wereboar-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Wereboar-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Wereboar-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Wereboar-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Werecrocodile-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Werecrocodile-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Werecrocodile-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Werecrocodile-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Wereraptor-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Wereraptor-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Wereraptor-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Wereraptor-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Wererat-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Wererat-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Wererat-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Wererat-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Wereshark-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Wereshark-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Wereshark-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Wereshark-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Weretiger-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Weretiger-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Weretiger-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Weretiger-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
+    ("Werewolf-Kin ~ Ability Scores", &["Skinwalker_ReplaceAbilityScores"]),
+    ("Werewolf-Kin ~ Animal-Minded", &["Skinwalker_ReplaceAnimalMinded"]),
+    ("Werewolf-Kin ~ Change Shape", &["Skinwalker_ReplaceChangeShape"]),
+    ("Werewolf-Kin ~ Spell-Like Ability", &["Skinwalker_ReplaceSpellLikeAbility"]),
 ];
 
 /// The `<Race>_Replace<Trait>` flags a set of selected alternate racial traits
@@ -2386,6 +2479,43 @@ mod tests {
                 ("Human", "Human ~ Tribalistic Languages"),
                 ("Orc", "Orc"),
                 ("Goblin", "Oversized Goblin"),
+                // SD-33 Epic 6 fold (2026-08-26): the 20 Skinwalker `Change
+                // Shape (<Option>)` component records the folded heritage
+                // batch adds. Each is a `VISIBLE:NO` mechanical helper
+                // (`DEFINE`/internal-`ABILITY`/`TEMPBONUS` only) with no
+                // `PREFACT`/`PREABILITY` gate of its own -- every kin's own
+                // `Change Shape` replacement row reaches its options through
+                // a TYPE pool (`ABILITY:Skinwalker Racial
+                // Trait|AUTOMATIC|TYPE=Skinwalker Change Shape <Kin>`), which
+                // is a real, resolvable grant path (the same shape
+                // `race_trait_picker`'s Change Shape UI already reads for
+                // every other race) but not one `classify()`/
+                // `link_automatic_grants` read -- see the `Unclassified`
+                // count's own comment in
+                // `the_whole_corpus_classifies_into_the_four_roles_with_no_leftovers`.
+                // A different kind of residue than the three named above:
+                // not a data gap, a TYPE-pool grant this classifier does not
+                // model, the `Oversized Goblin` shape at a larger scale.
+                ("Skinwalker", "Skinwalker ~ Change Shape (Amphibious)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Base Speed Bonus)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Bite)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Charisma)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Climb Speed 20 Feet)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Climb Speed 30 Feet)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Distraction)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Endurance)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Ferocity)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Fly Speed Bonus)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Gore)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Hoof)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Perception Bonus)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Reduce Falling Damage)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Saves)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Scent)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (See In Darkness)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Swim Speed)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Talon)"),
+                ("Skinwalker", "Skinwalker ~ Change Shape (Wisdom)"),
                 ("Suli", "Suli ~ Trusted Mediator"),
             ]
         );
@@ -2448,8 +2578,17 @@ mod tests {
             }
         }
         assert_eq!(
-            redacted, 34,
-            "Inner Sea Races' 25 PI-redacted records + Core Essentials' 9, counted on disk. \
+            redacted, 42,
+            "Inner Sea Races' 25 PI-redacted records + Core Essentials' 9 + SD-33 Epic 6's \
+             folded Skinwalker heritage batch's 8 (2026-08-26), counted on disk. Skinwalker's \
+             8 are the same `heritage row and its Ability Scores replacement row carry the \
+             same prose, hitting twice` shape Core Essentials' Tiefling heritages already show \
+             below: `Werebear-Kin`/`Wereboar-Kin`/`Werecrocodile-Kin`/`Weretiger-Kin`'s own \
+             selector row and each one's `~ Ability Scores` replacement row (4 kins x 2 rows), \
+             all four `DESCISPI:YES` in the pinned oracle -- the other five kins (Werebat, \
+             Wererat, Wereshark, Werewolf, Wereraptor) carry no `DESCISPI:` declaration and hit \
+             0 blacklist terms. \
+             Inner Sea Races' 25 PI-redacted records + Core Essentials' 9. \
              ISR's 22 -> 25 by a sibling SD-32 card-11 T2b lane's stale-regen fix \
              (2026-08-22): `Catfolk ~ Jungle Stalker`, `Ratfolk ~ Market Dweller` and \
              `Suli ~ Trusted Mediator` (the row this module's own \
@@ -2538,7 +2677,20 @@ mod tests {
         // Brawler, Vanara ~ Risky Troublemaker, Vishkanya ~ Deceptive,
         // Wayang ~ In the Shadows) -- Vishkanya ~ Deceptive's own dependent
         // row is `FlagGranted`, counted below instead.
-        assert_eq!(count(TraitRole::Alternate), 370);
+        // 370 -> 415 by SD-33 Epic 6 fold (2026-08-26), recovering
+        // SD31-E6-F4-005's lost wave-11 lane: Skinwalker's 9 kin selectors
+        // plus their 36 replacement rows, all 45 `Alternate` because every
+        // one carries a genuine, per-row `FACT:Skinwalker_Replace<Trait>
+        // |True` token in the pinned oracle -- a different shape from
+        // Aasimar/Tiefling, whose replacement rows carry no `FACT:` token of
+        // their own at all (flag lives on the selector alone; see the
+        // 48-vs-16 comment above). `link_automatic_grants` does NOT demote
+        // these to `FlagGranted` even though each is also a grant target --
+        // Monster Codex's `Oversized Goblin ~ Ability Scores`/`~ Size` are
+        // the pre-existing proof that a record's own flag always wins over
+        // being granted, in this corpus's real, shipped design (see that
+        // function's own doc comment).
+        assert_eq!(count(TraitRole::Alternate), 415);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -2598,7 +2750,12 @@ mod tests {
         // the same 9-alternate batch (re-derive:
         // `unclassified_traits()`/`alternate_traits()` diffed against the
         // 9 new ISR alternates' own `ABILITY:...AUTOMATIC...` tokens names
-        // the second).
+        // the second). Unmoved by SD-33 Epic 6's Skinwalker fold
+        // (2026-08-26): its 36 kin replacement rows carry their own
+        // `FACT:Skinwalker_Replace<Trait>|True` and stay `Alternate`, same
+        // as Monster Codex's `Oversized Goblin ~ Ability Scores`/`~ Size`
+        // precedent (see `link_automatic_grants`'s own doc comment); counted
+        // above instead.
         assert_eq!(count(TraitRole::FlagGranted), 78);
         // `Oversized Goblin`, `Human ~ Tribalistic Languages` and (added by a
         // sibling SD-32 card-11 T2b lane's `inner_sea_races` stale-regen fix,
@@ -2625,10 +2782,24 @@ mod tests {
         // resolved by `adopted_race_choose_selectors`/
         // `crate::rules_core::trait_pool::resolve_adopted_race_options`, not
         // by this classifier.
-        assert_eq!(count(TraitRole::Unclassified), 24);
+        // 24 -> 44 by SD-33 Epic 6 fold (2026-08-26): the 20 new Skinwalker
+        // `Change Shape (<Option>)` component records (Bite, Claw/Talon,
+        // Gore, Hoof, Scent, ...). Each kin's own `Change Shape` replacement
+        // row pool-references its options by TYPE
+        // (`ABILITY:Skinwalker Racial Trait|AUTOMATIC|TYPE=Skinwalker Change
+        // Shape <Kin>`), not by exact KEY -- `link_automatic_grants` only
+        // promotes an exact-KEY match (see the 58-record comment above), so
+        // a TYPE pool reference does not promote these to `FlagGranted`.
+        // They carry no gate of their own either (`VISIBLE:NO` mechanical
+        // helpers, no `PREFACT`/`PREABILITY`), so `classify()` alone leaves
+        // them here -- reachable through the same `TYPE=` pool resolution
+        // `race_trait_picker`'s Change Shape UI already reads for every
+        // other race's identical shape, just not through this module's own
+        // grant-linking pass.
+        assert_eq!(count(TraitRole::Unclassified), 44);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            845,
+            910,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2655,7 +2826,12 @@ mod tests {
              Parentage` CHOOSE-pool members (Unclassified: Drow, Dwarf, Elf, Gnome, \
              Grippli, Halfling, Orc; `decisions.md §16` item 2, 2026-08-23; 824 -> 831) \
              + `decisions.md §25` cycle 2's 14 Adopted-Race selector records (Unclassified: \
-             bestiary_2 7, bestiary_3 5, bestiary_5 1, bestiary_6 1; 2026-08-23; 831 -> 845)"
+             bestiary_2 7, bestiary_3 5, bestiary_5 1, bestiary_6 1; 2026-08-23; 831 -> 845) \
+             + SD-33 Epic 6's fold of SD31-E6-F4-005's lost wave-11 Skinwalker heritage lane \
+             (2026-08-26): 45 Alternate (9 kin selectors + their 36 replacement rows) + 20 \
+             Unclassified (the shared `Change Shape (<Option>)` component records the kin \
+             `Change Shape` rows TYPE-pool-reference; see the `Alternate`/`Unclassified` \
+             assertions' own comments above) = 65 (845 -> 910)"
         );
     }
 
@@ -2863,7 +3039,22 @@ mod tests {
         // Wayang against the flag set already present before them). Every
         // flag is claimed by its own race's standard row, so the
         // orphan-flag assertion above still does not move.
-        assert_eq!(all_flags.len(), 144);
+        //
+        // SD-33 Epic 6 fold (2026-08-26) moved this 144 -> 148: the folded
+        // Skinwalker heritage batch's 4 brand-new `Skinwalker_Replace*`
+        // flags (AbilityScores, AnimalMinded, ChangeShape,
+        // SpellLikeAbility) -- shared across all 9 kins (each kin's own
+        // selector and its 4 replacement rows all name the SAME 4 flags,
+        // not 9 distinct sets, since PCGen scopes the names to the race, not
+        // the heritage), all in Skinwalker's own new namespace, none
+        // colliding with any earlier race's. Every one is claimed by
+        // Skinwalker's own pre-existing standard row (`ingest_races.rs`'s
+        // SD-31 Epic 1 follow-on batch wrote the `!PREFACT:1,ABILITIES,
+        // Skinwalker_Replace<Trait>=True` gates on `Skinwalker ~ Ability
+        // Scores`/`~ Animal-Minded`/`~ Change Shape`/`~ Spell-Like Ability`
+        // from the same chassis file), so the orphan-flag assertion above
+        // still does not move.
+        assert_eq!(all_flags.len(), 148);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -2886,7 +3077,7 @@ mod tests {
         }
         assert_eq!(
             checked,
-            370,
+            415,
             "153 ARG + 8 Monster Codex (the original 4 -- Duergar's Ironskinned/Twilight-\
              Touched, Goblin's the two Oversized replacement rows -- plus SD-32 card-11 T2b's \
              4 Ratfolk alternates, 2026-08-23: Cheek Pouches/Cleanliness/Lab Rat/Surface \
@@ -2907,7 +3098,11 @@ mod tests {
              `decisions.md` 53): Inner Sea Races' \
              `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's own declaration that the \
              record NAME is Product Identity, and a name cannot be redacted -- so the row is \
-             dropped, not screened."
+             dropped, not screened. \
+             + SD-33 Epic 6's 45 folded Skinwalker heritage records (2026-08-26): 9 kin \
+             selectors + their 36 replacement rows, all `TraitRole::Alternate` (see the \
+             `Skinwalker` section comment on `ALTERNATE_TRAIT_REPLACE_FLAGS`); every one \
+             resolves with no inert flag, same as the other 370."
         );
     }
 
@@ -3129,7 +3324,7 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            370,
+            415,
             "153 ARG + 8 Monster Codex (4 original + SD-32 card-11 T2b's 4 Ratfolk \
              alternates, 2026-08-23) + 1 APG + 76 Inner Sea Races (67 pre-existing + 9 from \
              a sibling SD-32 card-11 T2b lane's stale-regen fix, 2026-08-22) + \
@@ -3137,7 +3332,9 @@ mod tests {
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6) + \
              SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
              SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on 4-race chassis batch) \
-             selectable alternates"
+             selectable alternates + SD-33 Epic 6's 45 folded Skinwalker heritage records \
+             (2026-08-26: 9 kin selectors + their 36 replacement rows -- see the table's own \
+             `Skinwalker` section comment for why all 45, not just the 9, are `Alternate` here)"
         );
         assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
         for (key, flags) in ALTERNATE_TRAIT_REPLACE_FLAGS {
@@ -3178,7 +3375,11 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 370);
+        // 370 -> 415 by SD-33 Epic 6's fold (2026-08-26): Skinwalker's 45
+        // folded heritage records (see `ALTERNATE_TRAIT_REPLACE_FLAGS`'s own
+        // `Skinwalker` section comment for why all 45, not just the 9 kin
+        // selectors, are `Alternate` here).
+        assert_eq!(selectable_alternate_trait_keys().len(), 415);
     }
 
     #[test]

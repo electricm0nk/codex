@@ -1,0 +1,289 @@
+{
+  "results": [
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 4,
+          "ours": 4,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 7,
+          "ours": 7,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 7,
+      "ours": 7,
+      "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph",
+      "verdict": "agree"
+    },
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 4,
+          "ours": 4,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 7,
+          "ours": 7,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 7,
+      "ours": 7,
+      "unit_id": "inner_sea_races:equipment:coat_of_shells",
+      "verdict": "agree"
+    },
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 1,
+          "ours": 1,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 5,
+          "ours": 5,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "inner_sea_races:equipment:gnome_scrap_armor",
+      "verdict": "agree"
+    },
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 5,
+          "ours": 5,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 8,
+          "ours": 8,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 8,
+      "ours": 8,
+      "unit_id": "inner_sea_races:equipment:hallowed_chain",
+      "verdict": "agree"
+    },
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 5,
+          "ours": 5,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 9,
+          "ours": 9,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 9,
+      "ours": 9,
+      "unit_id": "inner_sea_races:equipment:hallowed_chain_greater",
+      "verdict": "agree"
+    },
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 3,
+          "ours": 3,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 5,
+          "ours": 5,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph",
+      "verdict": "agree"
+    },
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 2,
+          "ours": 2,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 6,
+          "ours": 6,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 6,
+      "ours": 6,
+      "unit_id": "inner_sea_races:equipment:mail_of_sly_steps",
+      "verdict": "agree"
+    },
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 3,
+          "ours": 3,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 11,
+          "ours": 11,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 11,
+      "ours": 11,
+      "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:hero_s_hauberk",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_cold",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_desert",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_forest",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_jungle",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_mountain",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_plains",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_swamp",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_underground",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_urban",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_water",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 5,
+      "ours": 5,
+      "unit_id": "advanced_class_guide:equipment:tireless_tracking_hide",
+      "verdict": "agree"
+    },
+    {
+      "oracle": 0,
+      "ours": 0,
+      "unit_id": "advanced_race_guide:equipment:sea_knife",
+      "verdict": "agree"
+    },
+    {
+      "multi_shape_note": "unit carries 2 independently-examined magnitude/bonus-chain shapes (multi-token equipment record); merged verdict is the worst of the 2 per-shape verdicts, per AT-33-E5-finalize-wave3's duplicate-unit_id root-cause rule (never last-writer-wins)",
+      "multi_shape_sources": [
+        {
+          "lane": "var-bonus-shape",
+          "oracle": 0,
+          "ours": 0,
+          "reason": null,
+          "verdict": "agree"
+        },
+        {
+          "lane": "combat-weapon-shape",
+          "oracle": 6,
+          "ours": 6,
+          "reason": null,
+          "verdict": "agree"
+        }
+      ],
+      "oracle": 6,
+      "ours": 6,
+      "unit_id": "ultimate_intrigue:equipment:diviner_s_blight",
+      "verdict": "agree"
+    }
+  ]
+}

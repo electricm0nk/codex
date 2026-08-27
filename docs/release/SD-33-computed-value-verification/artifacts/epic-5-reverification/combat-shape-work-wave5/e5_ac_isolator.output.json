@@ -1,0 +1,845 @@
+{
+  "items": [
+    {
+      "book": "advanced_class_guide",
+      "key": "Full Plate of the Corpse",
+      "ours": 11,
+      "slug": "full_plate_of_the_corpse",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:full_plate_of_the_corpse"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Hero's Hauberk",
+      "ours": 5,
+      "slug": "hero_s_hauberk",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:hero_s_hauberk"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Cold)",
+      "ours": 5,
+      "slug": "stalking_armor_cold",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_cold"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Desert)",
+      "ours": 5,
+      "slug": "stalking_armor_desert",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_desert"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Forest)",
+      "ours": 5,
+      "slug": "stalking_armor_forest",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_forest"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Jungle)",
+      "ours": 5,
+      "slug": "stalking_armor_jungle",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_jungle"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Mountain)",
+      "ours": 5,
+      "slug": "stalking_armor_mountain",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_mountain"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Plains)",
+      "ours": 5,
+      "slug": "stalking_armor_plains",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_plains"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Swamp)",
+      "ours": 5,
+      "slug": "stalking_armor_swamp",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_swamp"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Underground)",
+      "ours": 5,
+      "slug": "stalking_armor_underground",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_underground"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Urban)",
+      "ours": 5,
+      "slug": "stalking_armor_urban",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_urban"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Stalking Armor (Water)",
+      "ours": 5,
+      "slug": "stalking_armor_water",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:stalking_armor_water"
+    },
+    {
+      "book": "advanced_class_guide",
+      "key": "Tireless Tracking Hide",
+      "ours": 5,
+      "slug": "tireless_tracking_hide",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "advanced_class_guide:equipment:tireless_tracking_hide"
+    },
+    {
+      "book": "advanced_race_guide",
+      "key": "Sea-Knife",
+      "ours": null,
+      "slug": "sea_knife",
+      "types": [],
+      "unit_id": "advanced_race_guide:equipment:sea_knife"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +1",
+      "ours": 1,
+      "slug": "amulet_of_natural_armor_1",
+      "types": [
+        "NaturalArmorEnhancement"
+      ],
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_1"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +2",
+      "ours": 2,
+      "slug": "amulet_of_natural_armor_2",
+      "types": [
+        "NaturalArmorEnhancement"
+      ],
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_2"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +3",
+      "ours": 3,
+      "slug": "amulet_of_natural_armor_3",
+      "types": [
+        "NaturalArmorEnhancement"
+      ],
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_3"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +4",
+      "ours": 4,
+      "slug": "amulet_of_natural_armor_4",
+      "types": [
+        "NaturalArmorEnhancement"
+      ],
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_4"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Amulet of Natural Armor +5",
+      "ours": 5,
+      "slug": "amulet_of_natural_armor_5",
+      "types": [
+        "NaturalArmorEnhancement"
+      ],
+      "unit_id": "core_rulebook:equipment:amulet_of_natural_armor_5"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +1",
+      "ours": 1,
+      "slug": "bracers_of_armor_1",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_1"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +2",
+      "ours": 2,
+      "slug": "bracers_of_armor_2",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_2"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +3",
+      "ours": 3,
+      "slug": "bracers_of_armor_3",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_3"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +4",
+      "ours": 4,
+      "slug": "bracers_of_armor_4",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_4"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +5",
+      "ours": 5,
+      "slug": "bracers_of_armor_5",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_5"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +6",
+      "ours": 6,
+      "slug": "bracers_of_armor_6",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_6"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +7",
+      "ours": 7,
+      "slug": "bracers_of_armor_7",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_7"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Bracers of Armor +8",
+      "ours": 8,
+      "slug": "bracers_of_armor_8",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "core_rulebook:equipment:bracers_of_armor_8"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Ioun Stone (Dusty rose Prism)",
+      "ours": 1,
+      "slug": "ioun_stone_dusty_rose_prism",
+      "types": [
+        "Insight"
+      ],
+      "unit_id": "core_rulebook:equipment:ioun_stone_dusty_rose_prism"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Ring of Force Shield",
+      "ours": 2,
+      "slug": "ring_of_force_shield",
+      "types": [
+        "Shield"
+      ],
+      "unit_id": "core_rulebook:equipment:ring_of_force_shield"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Ring of Protection +1",
+      "ours": 1,
+      "slug": "ring_of_protection_1",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "core_rulebook:equipment:ring_of_protection_1"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Ring of Protection +2",
+      "ours": 2,
+      "slug": "ring_of_protection_2",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "core_rulebook:equipment:ring_of_protection_2"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Ring of Protection +3",
+      "ours": 3,
+      "slug": "ring_of_protection_3",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "core_rulebook:equipment:ring_of_protection_3"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Ring of Protection +4",
+      "ours": 4,
+      "slug": "ring_of_protection_4",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "core_rulebook:equipment:ring_of_protection_4"
+    },
+    {
+      "book": "core_rulebook",
+      "key": "Ring of Protection +5",
+      "ours": 5,
+      "slug": "ring_of_protection_5",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "core_rulebook:equipment:ring_of_protection_5"
+    },
+    {
+      "book": "inner_sea_gods",
+      "key": "Knight-Inheritor's Ring",
+      "ours": 1,
+      "slug": "knight_inheritor_s_ring",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "inner_sea_gods:equipment:knight_inheritor_s_ring"
+    },
+    {
+      "book": "inner_sea_gods",
+      "key": "Profane Seal Signet",
+      "ours": 1,
+      "slug": "profane_seal_signet",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "inner_sea_gods:equipment:profane_seal_signet"
+    },
+    {
+      "book": "inner_sea_gods",
+      "key": "Red Hound Ring",
+      "ours": 1,
+      "slug": "red_hound_ring",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "inner_sea_gods:equipment:red_hound_ring"
+    },
+    {
+      "book": "inner_sea_gods",
+      "key": "Ring Of Seven Lovely Colors",
+      "ours": 1,
+      "slug": "ring_of_seven_lovely_colors",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "inner_sea_gods:equipment:ring_of_seven_lovely_colors"
+    },
+    {
+      "book": "inner_sea_gods",
+      "key": "Ring Of Unquenchable Passions",
+      "ours": 1,
+      "slug": "ring_of_unquenchable_passions",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "inner_sea_gods:equipment:ring_of_unquenchable_passions"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Armor of Grim Triumph",
+      "ours": 7,
+      "slug": "armor_of_grim_triumph",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:armor_of_grim_triumph"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Coat of Shells",
+      "ours": 7,
+      "slug": "coat_of_shells",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:coat_of_shells"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Gnome Scrap Armor",
+      "ours": 5,
+      "slug": "gnome_scrap_armor",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:gnome_scrap_armor"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Goblin Plate",
+      "ours": 10,
+      "slug": "goblin_plate",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:goblin_plate"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Hallowed Chain",
+      "ours": 8,
+      "slug": "hallowed_chain",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:hallowed_chain"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Hallowed Chain (Greater)",
+      "ours": 9,
+      "slug": "hallowed_chain_greater",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:hallowed_chain_greater"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Hide of Grim Triumph",
+      "ours": 5,
+      "slug": "hide_of_grim_triumph",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:hide_of_grim_triumph"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Mail of Sly Steps",
+      "ours": 6,
+      "slug": "mail_of_sly_steps",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:mail_of_sly_steps"
+    },
+    {
+      "book": "inner_sea_races",
+      "key": "Panoply of the Fierani Knight",
+      "ours": 11,
+      "slug": "panoply_of_the_fierani_knight",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "inner_sea_races:equipment:panoply_of_the_fierani_knight"
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "key": "Field Plate",
+      "ours": 7,
+      "slug": "field_plate",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "inner_sea_world_guide:equipment:field_plate"
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "key": "Klar (as Shield)",
+      "ours": 1,
+      "slug": "klar_as_shield",
+      "types": [
+        "Shield"
+      ],
+      "unit_id": "inner_sea_world_guide:equipment:klar_as_shield"
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "key": "Leaf Armor",
+      "ours": 3,
+      "slug": "leaf_armor",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "inner_sea_world_guide:equipment:leaf_armor"
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "key": "Stoneplate",
+      "ours": 9,
+      "slug": "stoneplate",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "inner_sea_world_guide:equipment:stoneplate"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Bracers of Defenselessness",
+      "ours": -5,
+      "slug": "bracers_of_defenselessness",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_equipment:equipment:bracers_of_defenselessness"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Cape of Bravado",
+      "ours": 1,
+      "slug": "cape_of_bravado",
+      "types": [
+        "Insight"
+      ],
+      "unit_id": "ultimate_equipment:equipment:cape_of_bravado"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Guardian Gorget",
+      "ours": 2,
+      "slug": "guardian_gorget",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_equipment:equipment:guardian_gorget"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Jingasa of the Fortunate Soldier",
+      "ours": 1,
+      "slug": "jingasa_of_the_fortunate_soldier",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "ultimate_equipment:equipment:jingasa_of_the_fortunate_soldier"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Dark Naga)",
+      "ours": 4,
+      "slug": "naga_scale_bindi_dark_naga",
+      "types": [
+        "UNTYPED"
+      ],
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_dark_naga"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Guardian Naga)",
+      "ours": 4,
+      "slug": "naga_scale_bindi_guardian_naga",
+      "types": [
+        "UNTYPED"
+      ],
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_guardian_naga"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Lunar Naga)",
+      "ours": 4,
+      "slug": "naga_scale_bindi_lunar_naga",
+      "types": [
+        "UNTYPED"
+      ],
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_lunar_naga"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Royal Naga)",
+      "ours": 4,
+      "slug": "naga_scale_bindi_royal_naga",
+      "types": [
+        "UNTYPED"
+      ],
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_royal_naga"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Spirit Naga)",
+      "ours": 4,
+      "slug": "naga_scale_bindi_spirit_naga",
+      "types": [
+        "UNTYPED"
+      ],
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_spirit_naga"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Naga-Scale Bindi (Water Naga)",
+      "ours": 4,
+      "slug": "naga_scale_bindi_water_naga",
+      "types": [
+        "UNTYPED"
+      ],
+      "unit_id": "ultimate_equipment:equipment:naga_scale_bindi_water_naga"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Snakeskin Tunic",
+      "ours": 1,
+      "slug": "snakeskin_tunic",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_equipment:equipment:snakeskin_tunic"
+    },
+    {
+      "book": "ultimate_equipment",
+      "key": "Vambraces of Defense",
+      "ours": 1,
+      "slug": "vambraces_of_defense",
+      "types": [
+        "Deflection"
+      ],
+      "unit_id": "ultimate_equipment:equipment:vambraces_of_defense"
+    },
+    {
+      "book": "ultimate_intrigue",
+      "key": "Diviner's Blight",
+      "ours": 6,
+      "slug": "diviner_s_blight",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "ultimate_intrigue:equipment:diviner_s_blight"
+    },
+    {
+      "book": "ultimate_magic",
+      "key": "Scroll Shield",
+      "ours": 1,
+      "slug": "scroll_shield",
+      "types": [
+        "Shield"
+      ],
+      "unit_id": "ultimate_magic:equipment:scroll_shield"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Goggles of Far Sight",
+      "ours": -1,
+      "slug": "goggles_of_far_sight",
+      "types": [
+        "UNTYPED"
+      ],
+      "unit_id": "ultimate_psionics:equipment:goggles_of_far_sight"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Improved Mind Armor (Heavy)",
+      "ours": 9,
+      "slug": "improved_mind_armor_heavy",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_heavy"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Improved Mind Armor (Light)",
+      "ours": 4,
+      "slug": "improved_mind_armor_light",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_light"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Improved Mind Armor (Medium)",
+      "ours": 6,
+      "slug": "improved_mind_armor_medium",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_psionics:equipment:improved_mind_armor_medium"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Leather of Confined Spaces",
+      "ours": 5,
+      "slug": "leather_of_confined_spaces",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "ultimate_psionics:equipment:leather_of_confined_spaces"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Mind Armor (Heavy)",
+      "ours": 7,
+      "slug": "mind_armor_heavy",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_psionics:equipment:mind_armor_heavy"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Mind Armor (Light)",
+      "ours": 4,
+      "slug": "mind_armor_light",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_psionics:equipment:mind_armor_light"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Mind Armor (Medium)",
+      "ours": 6,
+      "slug": "mind_armor_medium",
+      "types": [
+        "Armor"
+      ],
+      "unit_id": "ultimate_psionics:equipment:mind_armor_medium"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Mind Shield",
+      "ours": 2,
+      "slug": "mind_shield",
+      "types": [
+        "Shield"
+      ],
+      "unit_id": "ultimate_psionics:equipment:mind_shield"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Mind Shield (Heavy)",
+      "ours": 2,
+      "slug": "mind_shield_heavy",
+      "types": [
+        "Shield"
+      ],
+      "unit_id": "ultimate_psionics:equipment:mind_shield_heavy"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Mind Shield (Tower)",
+      "ours": 4,
+      "slug": "mind_shield_tower",
+      "types": [
+        "Shield"
+      ],
+      "unit_id": "ultimate_psionics:equipment:mind_shield_tower"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Plate of the Juggernaut",
+      "ours": 11,
+      "slug": "plate_of_the_juggernaut",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "ultimate_psionics:equipment:plate_of_the_juggernaut"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Psychoactive Skin (Defender)",
+      "ours": null,
+      "slug": "psychoactive_skin_defender",
+      "types": [],
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_defender"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Psychoactive Skin (Hero)",
+      "ours": null,
+      "slug": "psychoactive_skin_hero",
+      "types": [],
+      "unit_id": "ultimate_psionics:equipment:psychoactive_skin_hero"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Shadow Shirt",
+      "ours": 6,
+      "slug": "shadow_shirt",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "ultimate_psionics:equipment:shadow_shirt"
+    },
+    {
+      "book": "ultimate_psionics",
+      "key": "Skinwalker's Leather",
+      "ours": 5,
+      "slug": "skinwalker_s_leather",
+      "types": [
+        "Armor",
+        "ArmorEnhancement"
+      ],
+      "unit_id": "ultimate_psionics:equipment:skinwalker_s_leather"
+    }
+  ]
+}

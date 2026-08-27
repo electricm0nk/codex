@@ -661,16 +661,43 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
     // moment `class_feature_pool_catalog::REGISTERED_POOL_GROUPS` widened to
     // include "Rage Power" -- both now correctly reach `text-complete` via
     // the new reference catalog, which is exactly the class of record this
-    // test's own doc comment says should NOT stay `not-ingested`. Re-picked
-    // from "Discovery", a pool this catalog still does not register, so the
-    // fixture's assumption ("no catalog exists for the individual options")
-    // is true again. If a future wave registers "Discovery" too, THIS
-    // fixture will need re-picking the same way -- that is a feature of this
-    // test, not a flaw: it is meant to go red the moment its assumption
-    // stops holding, exactly as it did here.
+    // test's own doc comment says should NOT stay `not-ingested`.
+    //
+    // RE-PICKED a second time (`AT-33-E6-001`, 2026-08-25, root-caused not
+    // assumed): the "Discovery" pick above went stale too, but NOT from any
+    // code change -- `class_feature_pool_catalog.rs` (the module deciding
+    // this) is byte-identical to the `tranche/13` cut (`git log
+    // f652db7ac7..HEAD -- src/rules_core/class_feature_pool_catalog.rs` is
+    // EMPTY). The committed `docs/work-inventory.json` this test reads was
+    // simply stale: it predated the SD-32 T12 cycle's own widening of
+    // `is_registered_pool_group` to accept every `" ~ "`-qualified group,
+    // gated on the render-and-refuse safety checks alone (see that module's
+    // own doc comment) -- "Discovery" was never re-excluded, it was already
+    // admitted and the file just hadn't been regenerated to show it until
+    // this bundle's Epic 4 cycle (`AT-33-E4-002`) regenerated it against
+    // current code, surfacing this as disclosed "unrelated drift" in that
+    // cycle's own receipt. Both `discovery_*` ids now correctly reach
+    // `text-complete` (their prose is real, complete, and renders clean --
+    // confirmed by hand against `data/corpus/advanced_players_guide/
+    // class_feature/discovery/`), so they no longer fit this test's fixture
+    // requirement either. Re-picked to two Bloodrager bloodline internal
+    // chassis records whose corpus `description` is `null` (not merely
+    // absent prose but no DESC token at all -- `data/corpus/
+    // advanced_class_guide/class_feature/{aberrant,abyssal}_bloodrager_
+    // bloodline/*_bonus_spells.json`): `class_feature_pool_catalog`'s own
+    // `has_real_description` gate structurally can never admit a `null`
+    // description, so this pick cannot go stale the same way the prose-only
+    // "Discovery"/"Rage Power" picks did. Owner resolves via the SAME third
+    // fallback ("Bloodrager Bloodline", `bloodrager`) `CLASS_FEATURE_POOLS`
+    // already registers, the identical mechanism the prior comment below
+    // describes for "Discovery"/`alchemist` -- confirmed live, not assumed:
+    // both ids already carry the OWNED-branch evidence string below. If a
+    // future wave teaches `class_feature_pool_catalog` to serve a `null`
+    // description too, THIS fixture will need re-picking the same way --
+    // that remains a feature of this test, not a flaw.
     for id in [
-        "advanced_players_guide:class_feature:discovery_combine_extracts",
-        "advanced_players_guide:class_feature:discovery_concentrate_poison",
+        "advanced_class_guide:class_feature:aberrant_bloodrager_bloodline_bonus_spells",
+        "advanced_class_guide:class_feature:abyssal_bloodrager_bloodline_bonus_spells",
     ] {
         let unit = units.iter().find(|u| u["id"] == id).unwrap_or_else(|| panic!("{id} missing from inventory"));
         assert_eq!(unit["magnitude_token_count"], 0, "{id}: fixture assumption changed, re-check");
@@ -678,20 +705,21 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
             unit["status"], "not-ingested",
             "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine must be not-ingested, not unknown or text-complete"
         );
-        // RE-PICKED, wave 29 integration (as the prior comment predicted):
-        // `classify()` gained a THIRD owner-resolution fallback,
-        // `class_feature_owner_via_pool_catalog`, which now resolves
-        // "Discovery" to "alchemist" via `CLASS_FEATURE_POOLS` (it was
-        // previously unresolvable by any fallback, landing this record on
-        // the "no owner at all" branch). `status` is UNCHANGED (still
-        // `not-ingested` -- the fallback can never manufacture
-        // `text-complete`/`grounded` on its own, proven by
-        // `class_feature_consumer_delta_tests::
+        // Owner resolves via `classify()`'s third owner-resolution fallback,
+        // `class_feature_owner_via_pool_catalog`: "Bloodrager Bloodline" is
+        // a registered `CLASS_FEATURE_POOLS` entry resolving to
+        // `bloodrager` (a modelled class), matching this group's own
+        // "Aberrant"/"Abyssal " qualifier-stripped suffix -- the identical
+        // mechanism wave 29 originally proved for "Discovery" -> `alchemist`
+        // (`class_feature_owner_via_pool_catalog`'s own history, this file's
+        // prior revision). `status` is `not-ingested`, not `text-complete`,
+        // because the fallback can never manufacture a holds-check result on
+        // its own (`class_feature_consumer_delta_tests::
         // a_pool_catalog_recovered_owner_can_never_ground_a_record_even_with_a_matching_explanation_id`
-        // in `src/bin/v06_work_inventory.rs`); the wave-29 guarded regen now
-        // carries the OWNED-branch evidence string, the same "owner
-        // resolved but pool catalog does not hold it" evidence the OWNED
-        // "Rogue Talent" case already carries.
+        // in `src/bin/v06_work_inventory.rs`) and this record's own `null`
+        // description fails `class_feature_pool_catalog`'s `has_real_
+        // description` gate outright -- so it carries the same OWNED-branch
+        // evidence string the "Rogue Talent"/former "Discovery" cases do.
         assert_eq!(
             unit["evidence"],
             "class_feature_owner_matched_by_name_but_record_not_held_by_engine"

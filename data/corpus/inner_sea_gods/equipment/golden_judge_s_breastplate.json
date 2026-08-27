@@ -6,7 +6,16 @@
     "description": null,
     "key": "Golden Judge's Breastplate",
     "name": "Golden Judge's Breastplate",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Sense Motive",
+          "4",
+          "TYPE=Competence"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +24,34 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic"
+      },
+      {
+        "key": "WT",
+        "value": "30"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.251"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Golden Judge's Breastplate|TIMES=1|CASTERLEVEL=3|Command|Peacebond,11"
+      },
+      {
+        "key": "DESC",
+        "value": "This gold-colored +1 breastplate has a large, ornate symbol of a vault key on one side of the chest. The wearer gains a +4 competence bonus on Sense Motive checks. The wearer can use Command and Peacebond each once per day."
       }
     ],
     "weight_lbs": null

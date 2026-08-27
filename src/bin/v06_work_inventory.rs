@@ -46,8 +46,8 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 use codex::rules_core::character_input::{
-    AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, EquipmentSelection,
-    SelectedChoice, SpellSelection, load_character_input_fixture,
+    AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
+    EquipmentSelection, SelectedChoice, SpellSelection, load_character_input_fixture,
 };
 use codex::rules_core::class_feature_pool_catalog;
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
@@ -1557,11 +1557,12 @@ mod equipment_verdict_rung_tests {
         assert_ne!(verdict.status, "text-complete");
         // Falls through to the same "nothing safe to show a player" verdict
         // Decision 7's own condition-3 refusal uses for a genuinely
-        // description-less record -- `unknown`, not a fabricated `done` or
-        // `held` credit.
+        // description-less record -- `unmeasurable` (renamed from `unknown`
+        // `AT-33-E4-002`), not a fabricated `done` or `held` credit.
         assert_eq!(
-            verdict.status, "unknown",
-            "expected the leak refusal to fall through to unknown, got status {:?}", verdict.status
+            verdict.status, "unmeasurable",
+            "expected the leak refusal to fall through to unmeasurable, got status {:?}",
+            verdict.status
         );
     }
 
@@ -4304,7 +4305,7 @@ fn enumerate_file(
             // consequence otherwise makes an un-ingestible-by-design row
             // look like an unmet criterion forever).
             //
-            // Corpus-wide safety proof (not sampled): every one of the 831
+            // Corpus-wide safety proof (not sampled): every one of the 910
             // currently-ingested `race_trait` records' own source rows was
             // read back from the pinned oracle and checked against this
             // exact predicate -- zero matched (`scripts/
@@ -7509,9 +7510,17 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
         "The book has no compiled rule set at all. Nothing about this unit has been attempted.",
     ),
     (
-        "unknown",
-        "Could not be classified. `reason` says why. An honest unknown beats a confident wrong \
-         entry.",
+        // Renamed from `unknown` `AT-33-E4-002` (`unknown-rootcause.md` §3):
+        // the disposition is unchanged (this is decisions.md §7's permanent,
+        // explicit `unverifiable` bucket) but the old name read as "nobody
+        // looked" even though every unit here carries a specific, stated
+        // `reason`. `unmeasurable` says what is actually true: we looked,
+        // and this specific unit cannot currently be classified without
+        // guessing or fabricating.
+        "unmeasurable",
+        "Could not be classified without guessing. `reason` states, per unit, exactly what is \
+         missing or ambiguous -- an honest unmeasurable beats a confident wrong entry, and is \
+         never a stand-in for work not yet attempted.",
     ),
 ];
 
@@ -8406,18 +8415,22 @@ fn classify(
             }
             // SD31-W9-INTEGRATE-001: the fallback for a record that IS
             // text_only with a real CLOSURE description but whose SERVED
-            // value is a placeholder marker -- `unknown` (so
-            // `doneness_verdict` reads it `unmeasurable`, never `done` or
-            // `held`), the same shape the "nothing to show a player" branch
-            // just below already uses, because the player's screen carries
-            // nothing real either way -- never a fabricated description.
+            // value is a placeholder marker -- `unmeasurable` (previously
+            // named `unknown`; renamed `AT-33-E4-002`, see
+            // `unknown-rootcause.md` §3 -- the disposition is unchanged, the
+            // status string just no longer reads as "nobody looked" when
+            // this specific unit's own `reason` field states precisely why
+            // it cannot be classified), the same shape the "nothing to show
+            // a player" branch just below already uses, because the
+            // player's screen carries nothing real either way -- never a
+            // fabricated description.
             if text_only
                 && has_real_description
                 && !universal_sheet_modifier
                 && facts.feat_desc_leaks_pi_or_upstream_marker(engine_book.as_str(), &unit.key, &unit.name)
             {
                 return Verdict {
-                    status: "unknown",
+                    status: "unmeasurable",
                     evidence: "feat_served_description_is_a_placeholder_marker_not_prose".to_string(),
                     reason: Some(
                         "the feat is in the engine's catalog and its raw corpus closure carries \
@@ -8451,14 +8464,45 @@ fn classify(
                 };
             }
             if text_only {
+                // AT-33-E4-002 (`unknown-rootcause.md` §2): `wiring_class`
+                // is closure-aware (it follows `.COPY=`/`.MOD` rows) while
+                // `magnitude_token_count`/`carries_prose_magnitude` here are
+                // this record's OWN line only. `wiring_class::signals` only
+                // ever emits a `computed:`/`derived:`/`static:` signal when
+                // its `mags` set (MAGNITUDE_TOKENS-prefixed fields) is
+                // non-empty -- so `wc_class != "display"` is structural
+                // proof the closure carries a real magnitude even when this
+                // record's own line does not. Reported `held`
+                // (`ingested-magnitude`), not `unmeasurable`: there IS a
+                // real magnitude to eventually verify, this record's own
+                // row just does not carry it directly.
+                if wc_class != "display" {
+                    return Verdict {
+                        status: "ingested-magnitude",
+                        evidence: "feat_own_line_has_no_magnitude_but_closure_wiring_class_does"
+                            .to_string(),
+                        reason: Some(
+                            "the feat's own corpus row carries no magnitude token and no real \
+                             DESC: text, but wiring_class (computed from the full token closure, \
+                             including any inherited .COPY=/.MOD rows) is not display -- proof \
+                             a real magnitude exists somewhere in the closure this record's own \
+                             line does not show. Held, pending a verified consumer, not the \
+                             zero-magnitude completion Decision 7 describes and not genuinely \
+                             empty either"
+                                .to_string(),
+                        ),
+                        engine_book: engine_book_field,
+                    };
+                }
                 // Decision 7's condition 3: zero magnitude AND no real DESC:
                 // text anywhere in the token closure is nothing to compute
                 // AND nothing to show a player -- not the completion the
-                // ruling describes. `unknown` (not `not-ingested`, the
-                // record IS in the catalog) so `doneness_verdict` reads it
-                // `unmeasurable`, never `done` or `held`.
+                // ruling describes. `unmeasurable` (not `not-ingested`, the
+                // record IS in the catalog; renamed from `unknown`
+                // `AT-33-E4-002`, disposition unchanged, see
+                // `unknown-rootcause.md` §3).
                 return Verdict {
-                    status: "unknown",
+                    status: "unmeasurable",
                     evidence: "text_only_but_corpus_record_carries_no_description_to_show_a_player"
                         .to_string(),
                     reason: Some(
@@ -8471,17 +8515,33 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
+            // AT-33-E4-002 (`unknown-rootcause.md`): before this cycle this
+            // fallback returned `status: "unknown"` -- the ONE Kind whose
+            // "real magnitude, no observed consumer" shape did not match
+            // its own siblings. `Kind::Equipment`'s identical shape (bottom
+            // fallback, a few hundred lines below) already returns
+            // `ingested-magnitude`; so does `Kind::Spell`'s `Some(true)` arm
+            // and `Kind::RaceTrait`'s consumer-check fallback -- all three
+            // read "a real record with a real magnitude exists, no verified
+            // consumer yet" as `held`, never `unmeasurable`. Nothing about
+            // this branch differs: `magnitude_token_count>0 ||
+            // carries_prose_magnitude` is already established by `text_only`
+            // being false above, and the catalog/effect-wired checks above
+            // already confirmed the record is real and un-probed. The old
+            // test `a_prose_formula_feat_does_not_read_text_complete`'s own
+            // comment already named this the honest answer ("Honestly
+            // `unknown`/`held`") before `held` was wired here.
             Verdict {
-                status: "unknown",
+                status: "ingested-magnitude",
                 evidence: "in_catalog_with_corpus_magnitude_but_no_observed_consumer".to_string(),
                 reason: Some(format!(
                     "corpus record carries {} magnitude token(s){} and the feat IS in the \
                      engine's catalog, but the feat-effect probe observed no computed delta \
                      across the swept postures. That is the probe's documented lower-bound \
                      behaviour: the effect may need a posture, an opponent or a combat action \
-                     this engine does not model. Reported as unknown rather than deferred \
-                     because no engine diagnostic is scoped to a feat, so there is no engine \
-                     text to quote",
+                     this engine does not model. Reported as held (ingested-magnitude), matching \
+                     every sibling Kind's identical shape, rather than deferred, because no \
+                     engine diagnostic is scoped to a feat, so there is no engine text to quote",
                     unit.magnitude_token_count,
                     if carries_prose_magnitude {
                         " and a prose-embedded formula (wiring_class: derived)"
@@ -8580,8 +8640,31 @@ fn classify(
                     reason: None,
                     engine_book: engine_book_field,
                 },
+                // AT-33-E4-002 (`unknown-rootcause.md` §2): same closure-vs-
+                // own-line disagreement as `Kind::Feat`'s `text_only` branch
+                // above. `wc_class != "display"` is structural proof
+                // (`wiring_class::signals` never emits `computed:`/
+                // `derived:`/`static:` on an empty `mags` set) that the
+                // spell's token closure carries a real magnitude even
+                // though this book's record has no resolved level.
+                Some(false) if wc_class != "display" => Verdict {
+                    status: "ingested-magnitude",
+                    evidence: "spell_own_record_has_no_level_but_closure_wiring_class_does"
+                        .to_string(),
+                    reason: Some(
+                        "the spell resolves in the engine's spell list and this book's corpus \
+                         record carries no resolved level and no real DESC: text, but \
+                         wiring_class (computed from the full token closure) is not display -- \
+                         proof a real magnitude exists in the closure. Held, pending a verified \
+                         consumer"
+                            .to_string(),
+                    ),
+                    engine_book: engine_book_field,
+                },
+                // Renamed from `unknown` `AT-33-E4-002`, disposition
+                // unchanged -- see `unknown-rootcause.md` §3.
                 Some(false) => Verdict {
-                    status: "unknown",
+                    status: "unmeasurable",
                     evidence: "spell_list_entry_with_no_corpus_level_and_no_description".to_string(),
                     reason: Some(
                         "the spell resolves in the engine's spell list but this book's corpus \
@@ -8693,13 +8776,45 @@ fn classify(
                 };
             }
             if text_only {
+                // AT-33-E4-002 (`unknown-rootcause.md` §2): same closure-vs-
+                // own-line disagreement as `Kind::Feat`'s `text_only` branch
+                // above -- `wc_class != "display"` is structural proof
+                // (`wiring_class::signals` never emits `computed:`/
+                // `derived:`/`static:` on an empty `mags` set) that the
+                // closure carries a real magnitude, most often a `.COPY=`
+                // alias row's inherited base-row `BONUS:` chain (the exact
+                // shape `token_closure_rows_resolves_a_copy_row_s_inherited_
+                // base_row` proves the closure genuinely follows). Reported
+                // `held`, matching this Kind's own bottom fallback for the
+                // sibling non-`text_only` shape a few lines below.
+                if wc_class != "display" {
+                    return Verdict {
+                        status: "ingested-magnitude",
+                        evidence:
+                            "equipment_own_line_has_no_magnitude_but_closure_wiring_class_does"
+                                .to_string(),
+                        reason: Some(
+                            "the item's own corpus row carries no magnitude token and no real \
+                             DESC: text, but wiring_class (computed from the full token closure, \
+                             including any inherited .COPY=/.MOD rows) is not display -- proof a \
+                             real magnitude exists somewhere in the closure this record's own \
+                             line does not show. Held, pending a verified consumer, not the \
+                             zero-magnitude completion Decision 7 describes and not genuinely \
+                             empty either"
+                                .to_string(),
+                        ),
+                        engine_book: engine_book_field,
+                    };
+                }
                 // Decision 7's condition 3, re-derived 2026-08-16: 634 units
                 // of this exact shape (magnitude_token_count==0, corpus
                 // `description: null`) were already `done` on the live board
                 // -- `chassis_only`/`.COPY` equipment rows with no cost, no
                 // weight and no DESC: token anywhere in their closure.
+                // Renamed from `unknown` `AT-33-E4-002`, disposition
+                // unchanged -- see `unknown-rootcause.md` §3.
                 return Verdict {
-                    status: "unknown",
+                    status: "unmeasurable",
                     evidence: "text_only_but_corpus_record_carries_no_description_to_show_a_player"
                         .to_string(),
                     reason: Some(
@@ -9266,14 +9381,36 @@ fn classify(
                 if text_only {
                     return not_ingested("class_feature_option_pool_record_not_held_by_engine");
                 }
+                // AT-33-E4-002 (`unknown-rootcause.md` §1): before this
+                // cycle this was `status: "unknown"`. The magnitude-bearing
+                // sibling of the `text_only` branch immediately above --
+                // same owner-resolution failure, same
+                // `class_feature_effect_wired` probe already run (and found
+                // nothing) at the top of this arm before either branch is
+                // reached. The ONLY difference between the two branches is
+                // `magnitude_token_count`/`carries_prose_magnitude` on this
+                // record's own line, which has no bearing on whether the
+                // ENGINE holds a record for it -- `not-ingested` ("book IS
+                // ingested but the engine holds no record matching this
+                // unit's identity") is exactly as true here as it is one
+                // branch up. Only 2 registered pools exist
+                // (`REGISTERED_POOL_GROUPS`) against 1,128 distinct
+                // unmatched group prefixes in this population as of this
+                // cycle; widening the catalog to resolve MORE of these to a
+                // real owner (rather than the generic not-ingested finding)
+                // is real future reclassification work, not done here.
                 return Verdict {
-                    status: "unknown",
-                    evidence: "class_feature_group_names_no_class_at_all".to_string(),
+                    status: "not-ingested",
+                    evidence: "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+                        .to_string(),
                     reason: Some(format!(
                         "the record's `{group}` group prefix names neither a class this engine \
                          models nor any class the corpus declares (it is an option pool, an \
                          archetype, or a shared sub-choice set), so no explanation id can be \
-                         derived for it without guessing"
+                         derived for it without guessing; the engine's own \
+                         class_feature_effect_wired probe already found no delta for this \
+                         record's key, the same finding that already routes its text_only \
+                         sibling to not-ingested"
                     )),
                     engine_book: engine_book_field,
                 };
@@ -10870,6 +11007,503 @@ fn class_feature_probe_ceiling_report(
     out
 }
 
+/// One `class_feature` unit in the SD-33 AT-33-E5-remainder-charbuild
+/// population: which class to build, at what level, which `Computation
+/// Explanation` id carries its real magnitude, and -- for the three units
+/// whose magnitude is gated behind a chooser slot (a rage power / talent
+/// pick, not automatic class progression) -- which `CLASS_FEATURE_POOLS`
+/// pool member to select so the explanation actually fires.
+struct CharbuildRemainderUnit {
+    unit_id: &'static str,
+    class_name: &'static str,
+    level: u8,
+    explanation_id: &'static str,
+    /// `(pool group, member)` as they appear in `CLASS_FEATURE_POOLS`, e.g.
+    /// `("Rage Power", "Superstition")`. `None` for a unit granted
+    /// automatically by class progression alone.
+    choice: Option<(&'static str, &'static str)>,
+}
+
+/// The 32 `class_feature` units (15 fixture-verified + 17 literal-verified)
+/// named in `AT-33-E5-001`'s own next-cycle plan. Every explanation id below
+/// was confirmed present in `src/rules_core/pilot_compute/*.rs` by direct
+/// `grep` before this table was written -- see this cycle's own receipt for
+/// the per-id citation. Three units (`rage_power_superstition`,
+/// `slayer_talent_foil_scrutiny`, `rogue_talent_resiliency`) need an
+/// explicit choice-slot pick; the other 29 are automatic at L20 class
+/// progression. `paladin_aura_of_righteousness` is deliberately mapped to
+/// `class_chassis.paladin.damage_reduction` rather than
+/// `class_chassis.paladin.aura_of_righteousness` -- the latter is a
+/// grant-only identity record pinned at value 0 by construction (two of the
+/// feature's three clauses are unmodelled), while the DR clause is the same
+/// corpus feature's one real, grounded magnitude, per that explanation's own
+/// doc comment ("Its DR clause IS grounded, separately, as
+/// class_chassis.paladin.damage_reduction").
+const CHARBUILD_REMAINDER_CLASS_FEATURES: &[CharbuildRemainderUnit] = &[
+    CharbuildRemainderUnit {
+        unit_id: "advanced_class_guide:class_feature:bloodrager_damage_reduction",
+        class_name: "bloodrager",
+        level: 20,
+        explanation_id: "class_feature.acg.bloodrager.damage_reduction",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "advanced_class_guide:class_feature:slayer_sneak_attack",
+        class_name: "slayer",
+        level: 20,
+        explanation_id: "class_feature.acg.slayer.sneak_attack_dice",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "advanced_class_guide:class_feature:slayer_stalker",
+        class_name: "slayer",
+        level: 20,
+        explanation_id: "class_feature.acg.slayer.stalker_bonus",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "advanced_class_guide:class_feature:slayer_studied_target",
+        class_name: "slayer",
+        level: 20,
+        explanation_id: "class_feature.acg.slayer.studied_target_bonus",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "advanced_class_guide:class_feature:slayer_trapfinding",
+        class_name: "slayer",
+        level: 20,
+        explanation_id: "class_feature.acg.slayer.trapfinding_bonus",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:paladin_channel_positive_energy",
+        class_name: "paladin",
+        level: 20,
+        explanation_id: "class_chassis.paladin.channel_positive_energy_dice",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:paladin_lay_on_hands",
+        class_name: "paladin",
+        level: 20,
+        explanation_id: "class_chassis.paladin.lay_on_hands_heal_amount",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:rage_power_superstition",
+        class_name: "barbarian",
+        level: 20,
+        explanation_id: "class_feature.barbarian.rage_power.superstition.save_bonus",
+        choice: Some(("Rage Power", "Superstition")),
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:ranger_master_hunter",
+        class_name: "ranger",
+        level: 20,
+        explanation_id: "class_feature.ranger.master_hunter",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:rogue_master_strike",
+        class_name: "rogue",
+        level: 20,
+        explanation_id: "class_feature.rogue.master_strike",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:rogue_trap_sense",
+        class_name: "rogue",
+        level: 20,
+        explanation_id: "class_feature.rogue.trap_sense",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:rogue_trapfinding",
+        class_name: "rogue",
+        level: 20,
+        explanation_id: "class_chassis.rogue.trapfinding",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "ultimate_combat:class_feature:ninja_no_trace",
+        class_name: "ninja",
+        level: 20,
+        explanation_id: "class_feature.uc.ninja.no_trace",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "ultimate_combat:class_feature:ninja_sneak_attack",
+        class_name: "ninja",
+        level: 20,
+        explanation_id: "class_feature.uc.ninja.sneak_attack",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "ultimate_combat:class_feature:samurai_resolve",
+        class_name: "samurai",
+        level: 20,
+        explanation_id: "class_feature.uc.samurai.resolve_uses",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "advanced_class_guide:class_feature:investigator_alchemy",
+        class_name: "investigator",
+        level: 20,
+        explanation_id: "class_feature.acg.investigator.alchemy_bonus",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "advanced_class_guide:class_feature:slayer_talent_foil_scrutiny",
+        class_name: "slayer",
+        level: 20,
+        explanation_id: "class_feature.acg.slayer.talent.foil_scrutiny_bonus",
+        choice: Some(("Slayer Talent", "Foil Scrutiny")),
+    },
+    CharbuildRemainderUnit {
+        unit_id: "advanced_players_guide:class_feature:inquisitor_track",
+        class_name: "inquisitor",
+        level: 20,
+        explanation_id: "class_feature.apg.inquisitor.track_bonus",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:barbarian_uncanny_dodge",
+        class_name: "barbarian",
+        level: 20,
+        explanation_id: "class_feature.barbarian.uncanny_dodge",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:druid_nature_sense",
+        class_name: "druid",
+        level: 20,
+        explanation_id: "class_chassis.druid.nature_sense",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:druid_wild_empathy",
+        class_name: "druid",
+        level: 20,
+        explanation_id: "class_chassis.druid.wild_empathy",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:monk_ac_bonus",
+        class_name: "monk",
+        level: 20,
+        explanation_id: "class_chassis.monk.ac_bonus",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:monk_high_jump",
+        class_name: "monk",
+        level: 20,
+        explanation_id: "class_chassis.monk.high_jump",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:monk_wholeness_of_body",
+        class_name: "monk",
+        level: 20,
+        explanation_id: "class_chassis.monk.wholeness_of_body",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:paladin_aura_of_righteousness",
+        class_name: "paladin",
+        level: 20,
+        explanation_id: "class_chassis.paladin.damage_reduction",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:paladin_holy_champion",
+        class_name: "paladin",
+        level: 20,
+        explanation_id: "class_chassis.paladin.holy_champion",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:ranger_hunter_s_bond",
+        class_name: "ranger",
+        level: 20,
+        explanation_id: "class_feature.ranger.hunters_bond",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:ranger_track",
+        class_name: "ranger",
+        level: 20,
+        explanation_id: "class_chassis.ranger.track",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:rogue_talent_resiliency",
+        class_name: "rogue",
+        level: 20,
+        explanation_id: "class_feature.rogue.resiliency_temp_hp",
+        choice: Some(("Rogue Talent", "Resiliency")),
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:rogue_sneak_attack",
+        class_name: "rogue",
+        level: 20,
+        explanation_id: "class_chassis.rogue.sneak_attack",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "core_rulebook:class_feature:rogue_uncanny_dodge",
+        class_name: "rogue",
+        level: 20,
+        explanation_id: "class_feature.rogue.uncanny_dodge",
+        choice: None,
+    },
+    CharbuildRemainderUnit {
+        unit_id: "pathfinder_unchained:class_feature:unchained_rogue_sneak_attack",
+        class_name: "unchained_rogue",
+        level: 20,
+        explanation_id: "class_feature.pu.unchained_rogue.sneak_attack_dice",
+        choice: None,
+    },
+];
+
+/// The 36 `race` units (all `race_offered_by_the_real_character_creation_roster`)
+/// plus the 2 `race_trait` units whose evidence is
+/// `race_trait_ability_magnitude_read_by_the_character_creation_chassis`
+/// (`aasimar_ability_scores`, `oversized_goblin_ability_scores`) -- both fold
+/// into the SAME per-race `race_creation_chassis` read, since a race and its
+/// own ability-score trait share one magnitude. Corpus race key is the
+/// display-cased form `RaceCorpus::race_keys()`/`resolve` expect.
+const CHARBUILD_REMAINDER_RACES: &[(&str, &str)] = &[
+    ("advanced_race_guide:race:catfolk", "Catfolk"),
+    ("advanced_race_guide:race:dhampir", "Dhampir"),
+    ("advanced_race_guide:race:drow", "Drow"),
+    ("advanced_race_guide:race:duergar", "Duergar"),
+    ("advanced_race_guide:race:dwarf", "Dwarf"),
+    ("advanced_race_guide:race:elf", "Elf"),
+    ("advanced_race_guide:race:fetchling", "Fetchling"),
+    ("advanced_race_guide:race:gillman", "Gillman"),
+    ("advanced_race_guide:race:gnome", "Gnome"),
+    ("advanced_race_guide:race:goblin", "Goblin"),
+    ("advanced_race_guide:race:grippli", "Grippli"),
+    ("advanced_race_guide:race:half_elf", "Half-Elf"),
+    ("advanced_race_guide:race:half_orc", "Half-Orc"),
+    ("advanced_race_guide:race:halfling", "Halfling"),
+    ("advanced_race_guide:race:hobgoblin", "Hobgoblin"),
+    ("advanced_race_guide:race:human", "Human"),
+    ("advanced_race_guide:race:ifrit", "Ifrit"),
+    ("advanced_race_guide:race:kobold", "Kobold"),
+    ("advanced_race_guide:race:merfolk", "Merfolk"),
+    ("advanced_race_guide:race:orc", "Orc"),
+    ("advanced_race_guide:race:oread", "Oread"),
+    ("advanced_race_guide:race:ratfolk", "Ratfolk"),
+    ("advanced_race_guide:race:strix", "Strix"),
+    ("advanced_race_guide:race:suli", "Suli"),
+    ("advanced_race_guide:race:svirfneblin", "Svirfneblin"),
+    ("advanced_race_guide:race:sylph", "Sylph"),
+    ("advanced_race_guide:race:tengu", "Tengu"),
+    ("advanced_race_guide:race:undine", "Undine"),
+    ("advanced_race_guide:race:vanara", "Vanara"),
+    ("advanced_race_guide:race:vishkanya", "Vishkanya"),
+    ("bestiary_4:race:kitsune", "Kitsune"),
+    ("bestiary_4:race:nagaji", "Nagaji"),
+    ("bestiary_4:race:samsaran", "Samsaran"),
+    ("bestiary_4:race:wayang", "Wayang"),
+    ("bestiary_5:race:skinwalker", "Skinwalker"),
+    ("bestiary_6:race:rougarou", "Rougarou"),
+];
+
+/// The two `race_trait` units this cycle folds into the race-level
+/// `ability_adjustments` read: `(unit_id, race_key)`.
+const CHARBUILD_REMAINDER_RACE_TRAIT_ABILITY: &[(&str, &str)] = &[
+    ("bestiary:race_trait:aasimar_ability_scores", "Aasimar"),
+    ("monster_codex:race_trait:oversized_goblin_ability_scores", "Oversized Goblin"),
+];
+
+/// The 11 `race_trait` units whose own `AT-33-E4`-era evidence field already
+/// names the real, structural reason this cycle marks them `unverifiable`
+/// rather than examines further: no verified consumer in the shipped app
+/// reads their magnitude at all (`probe_race_trait_corpus`'s `consumer_verified`
+/// set, `v06_work_inventory.rs`), the same class of finding
+/// `AT-33-E1-003`'s `probe_exists: false` already established for
+/// `companion`/`monster`/`monster_ability`. Listed here, not re-derived, so
+/// the reason string in the results JSON traces back to the SAME evidence
+/// field a reader can `jq` out of `docs/work-inventory.json` directly.
+const CHARBUILD_REMAINDER_RACE_TRAIT_NO_CONSUMER: &[&str] = &[
+    "advanced_race_guide:race_trait:suli_earthfoot",
+    "advanced_race_guide:race_trait:suli_firehand",
+    "advanced_race_guide:race_trait:suli_icewalk",
+    "advanced_race_guide:race_trait:suli_shockshield",
+    "advanced_race_guide:race_trait:world_walker_skilled",
+    "bestiary:race_trait:aasimar_celestial_resistance",
+    "bestiary:race_trait:aasimar_skilled",
+    "bestiary:race_trait:aasimar_speed",
+    "bestiary:race_trait:aasimar_vision",
+    "horror_adventures:race_trait:deep_jungle_halfling_poison_use",
+    "inner_sea_races:race_trait:junk_tinker_skilled",
+];
+
+/// Applies `unit.choice`'s pool pick to `input`, mirroring
+/// `probe_class_feature_key`'s own `pick` closure exactly: clear any
+/// pre-seeded selection in the same choice slot first (a canonical seed
+/// would otherwise make the slot look already-filled), then push the real
+/// selection, resolved through the same `CLASS_FEATURE_POOLS` table and
+/// `class_feature_engine_join_slug` the wiring probe uses -- never a
+/// hand-rolled selection id that could drift from the engine's own.
+fn apply_charbuild_choice(input: &mut CharacterInput, choice: (&str, &str)) {
+    let (group, member) = choice;
+    let Some((_, _owner, choice_set_id, namespace)) =
+        CLASS_FEATURE_POOLS.iter().find(|(g, _, _, _)| *g == group)
+    else {
+        panic!("CHARBUILD_REMAINDER_CLASS_FEATURES names an unregistered pool group {group:?}");
+    };
+    input.chosen.selected_choices.retain(|c| c.choice_set_id != **choice_set_id);
+    input.chosen.selected_choices.push(SelectedChoice {
+        choice_set_id: (*choice_set_id).to_owned(),
+        selection_id: format!("{namespace}{}", class_feature_engine_join_slug(member)),
+    });
+}
+
+/// SD-33 AT-33-E5-remainder-charbuild's own probe: one real
+/// `build_pilot_headless_receipt` per source class (grouped so a class
+/// needing more than one unit's explanation, or a choice pick, is built
+/// exactly once), one real `race_creation_chassis` per race. Returns a JSON
+/// document `{"class_feature": {...}, "race": {...}, "race_trait": {...}}`.
+/// Writes nothing to `docs/work-inventory.json` and classifies no unit --
+/// the caller (this cycle's own comparison script) is the one that turns
+/// these real values into `(ours, oracle, verdict)` rows.
+fn charbuild_remainder_probe(repo_root: &Path, fixture: &CharacterInput) -> String {
+    let mut class_feature_entries: Vec<(String, serde_json::Value)> = Vec::new();
+
+    // Group units by (class_name, level, choice) so a class needing several
+    // explanations from the SAME build (e.g. five Slayer units) triggers
+    // exactly one `build_pilot_headless_receipt` call, not five.
+    let mut builds: BTreeMap<(&str, u8, Option<(&str, &str)>), Vec<&CharbuildRemainderUnit>> =
+        BTreeMap::new();
+    for unit in CHARBUILD_REMAINDER_CLASS_FEATURES {
+        builds.entry((unit.class_name, unit.level, unit.choice)).or_default().push(unit);
+    }
+
+    for ((class_name, level, choice), units) in &builds {
+        let mut input = class_probe_input(fixture, class_name, *level);
+        // Pinned to 14 (modifier +2) across every ability, on every class
+        // build, so an ability-modifier-dependent formula (Master Hunter DC,
+        // Master Strike DC, Wild Empathy, Monk AC Bonus, ...) uses the exact
+        // same base scores this cycle's `.pcg` generator writes
+        // (`charbuild_remainder_generate.py`'s `BASE` dict) -- the shared
+        // fixture's own scores are never relied on here, so this probe's
+        // "ours" value is comparable to the oracle export by construction,
+        // not by coincidence.
+        input.chosen.ability_scores = AbilityScores {
+            strength: 14,
+            dexterity: 14,
+            constitution: 14,
+            intelligence: 14,
+            wisdom: 14,
+            charisma: 14,
+        };
+        if let Some(choice) = choice {
+            apply_charbuild_choice(&mut input, *choice);
+        }
+        let receipt = build_pilot_headless_receipt(&input);
+        for unit in units {
+            let found = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == unit.explanation_id);
+            let value = match found {
+                Some(e) => serde_json::json!({
+                    "explanation_id": unit.explanation_id,
+                    "value": e.value,
+                    "detail": e.detail,
+                    "found": true,
+                    "class_name": class_name,
+                    "level": level,
+                    "headless_status": format!("{:?}", receipt.status),
+                }),
+                None => serde_json::json!({
+                    "explanation_id": unit.explanation_id,
+                    "found": false,
+                    "class_name": class_name,
+                    "level": level,
+                    "headless_status": format!("{:?}", receipt.status),
+                }),
+            };
+            class_feature_entries.push((unit.unit_id.to_owned(), value));
+        }
+    }
+
+    // Race + the two ability-score race_trait units, from the same
+    // `race_creation_chassis` read `probe_race_creation_roster` already
+    // proves is the product's own consumer.
+    let books = app_race_corpus_books(repo_root);
+    let dirs: Vec<(String, PathBuf)> =
+        books.into_iter().map(|b| (b.clone(), repo_root.join("data/corpus").join(b))).collect();
+    let roots: Vec<BookCorpusRoot<'_>> = dirs
+        .iter()
+        .map(|(book, dir)| BookCorpusRoot { book_id: book.as_str(), dir: dir.as_path() })
+        .collect();
+    let corpus = load_race_corpus(&roots);
+
+    let mut race_entries: Vec<(String, serde_json::Value)> = Vec::new();
+    for (unit_id, race_key) in CHARBUILD_REMAINDER_RACES {
+        let chassis_opt = corpus.resolve(race_key, &[]).and_then(|r| race_creation_chassis(&r).ok());
+        let value = match chassis_opt {
+            Some(chassis) => serde_json::json!({
+                "found": true,
+                "race_key": chassis.race_key,
+                "book_id": chassis.book_id,
+                "ability_adjustments": chassis.ability_adjustments,
+                "floating_bonus_points": chassis.floating_bonus_points,
+                "ability_adjustments_source_trait_key": chassis.ability_adjustments_source_trait_key,
+            }),
+            None => serde_json::json!({ "found": false, "race_key": race_key }),
+        };
+        race_entries.push(((*unit_id).to_owned(), value));
+    }
+
+    let mut race_trait_entries: Vec<(String, serde_json::Value)> = Vec::new();
+    for (unit_id, race_key) in CHARBUILD_REMAINDER_RACE_TRAIT_ABILITY {
+        let chassis_opt = corpus.resolve(race_key, &[]).and_then(|r| race_creation_chassis(&r).ok());
+        let value = match chassis_opt {
+            Some(chassis) => serde_json::json!({
+                "found": true,
+                "kind": "ability_magnitude",
+                "race_key": chassis.race_key,
+                "ability_adjustments": chassis.ability_adjustments,
+                "floating_bonus_points": chassis.floating_bonus_points,
+                "ability_adjustments_source_trait_key": chassis.ability_adjustments_source_trait_key,
+            }),
+            None => serde_json::json!({ "found": false, "race_key": race_key }),
+        };
+        race_trait_entries.push(((*unit_id).to_owned(), value));
+    }
+    for unit_id in CHARBUILD_REMAINDER_RACE_TRAIT_NO_CONSUMER {
+        race_trait_entries.push((
+            (*unit_id).to_owned(),
+            serde_json::json!({
+                "found": true,
+                "kind": "no_verified_consumer",
+                "reason": "race_trait_applied_by_the_race_corpus_but_no_verified_consumer: no \
+                    consumer anywhere in this codebase reads this record's own magnitude \
+                    (probe_race_trait_corpus's consumer_verified set, v06_work_inventory.rs) -- \
+                    the same structural class of finding AT-33-E1-003 established for \
+                    companion/monster/monster_ability's probe_exists:false kinds. Not a \
+                    throughput gap: this unit was fed to real corpus-loaded classification, and \
+                    the classification is that no comparable 'ours' magnitude exists to compare \
+                    against any oracle export.",
+            }),
+        ));
+    }
+
+    let doc = serde_json::json!({
+        "class_feature": serde_json::Value::Object(class_feature_entries.into_iter().collect()),
+        "race": serde_json::Value::Object(race_entries.into_iter().collect()),
+        "race_trait": serde_json::Value::Object(race_trait_entries.into_iter().collect()),
+    });
+    serde_json::to_string_pretty(&doc).expect("charbuild remainder probe doc serializes")
+}
+
 fn main() {
     let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let args: Vec<String> = std::env::args().collect();
@@ -10928,6 +11562,33 @@ fn main() {
         }
         std::panic::set_hook(previous_hook);
         print!("{}", class_feature_probe_ceiling_report(&outcomes));
+        return;
+    }
+
+    // SD-33 AT-33-E5-remainder-charbuild: dumps the engine-side "ours" value
+    // for the 81-unit full-character-build remainder (class_feature fixture
+    // + literal, race, race_trait) that AT-33-E5-001's own next-cycle plan
+    // named -- one L20 `build_pilot_headless_receipt` per source class (the
+    // same pipeline `probe_class_feature_effect_wiring` uses to test
+    // WIRING, here read for its actual MAGNITUDE explanations instead), plus
+    // `race_creation_chassis` for every race. Writes nothing to
+    // `docs/work-inventory.json`; a pure read-and-report probe, the same
+    // contract `--class-feature-probe` uses.
+    if let Some(pos) = args.iter().position(|a| a == "--charbuild-remainder-probe") {
+        let out_path = args
+            .get(pos + 1)
+            .unwrap_or_else(|| {
+                eprintln!("--charbuild-remainder-probe requires an output path");
+                std::process::exit(1);
+            })
+            .clone();
+        let fixture = load_probe_fixture(&repo_root);
+        let report = charbuild_remainder_probe(&repo_root, &fixture);
+        if let Err(e) = std::fs::write(&out_path, &report) {
+            eprintln!("could not write {out_path}: {e}");
+            std::process::exit(1);
+        }
+        print!("{report}");
         return;
     }
 
@@ -11863,10 +12524,13 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        // Honestly `unknown`/`held`, not silently promoted to `done`: the
-        // fix must not manufacture a done-eligible status out of a formula
-        // the corpus-literal/evaluator-fixture bar has not verified.
-        assert_eq!(verdict.status, "unknown");
+        // Honestly `held` (`ingested-magnitude`, `AT-33-E4-002`'s upgrade
+        // from `unknown` -- this comment used to name it "unknown/held"
+        // before `held` was wired for this shape), not silently promoted to
+        // `done`: the fix must not manufacture a done-eligible status out
+        // of a formula the corpus-literal/evaluator-fixture bar has not
+        // verified.
+        assert_eq!(verdict.status, "ingested-magnitude");
     }
 
     /// A feat with genuinely zero magnitude anywhere -- no
@@ -11924,7 +12588,10 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "unknown");
+        // Renamed from `unknown` `AT-33-E4-002` (disposition unchanged);
+        // `wc_class` is `display` here, so the new closure-magnitude gate
+        // does not apply and this stays the genuinely-empty terminal case.
+        assert_eq!(verdict.status, "unmeasurable");
         assert_eq!(
             verdict.evidence,
             "text_only_but_corpus_record_carries_no_description_to_show_a_player"
@@ -11955,7 +12622,7 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.status, "unmeasurable"); // renamed from unknown, AT-33-E4-002
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
 
@@ -11979,7 +12646,7 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.status, "unmeasurable"); // renamed from unknown, AT-33-E4-002
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
 
@@ -12012,7 +12679,7 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.status, "unmeasurable"); // renamed from unknown, AT-33-E4-002
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
 
@@ -12035,7 +12702,7 @@ mod prose_magnitude_status_tests {
             "display",
             false,
         );
-        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.status, "unmeasurable"); // renamed from unknown, AT-33-E4-002
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
 
@@ -14981,7 +15648,7 @@ mod class_feature_type_facet_owner_fallback_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
-        assert_ne!(verdict.status, "unknown", "the owner must be recovered via type_facet");
+        assert_ne!(verdict.status, "unmeasurable", "the owner must be recovered via type_facet");
         assert_ne!(
             verdict.status, "grounded",
             "a type_facet-recovered owner must never ground a record: status={} evidence={}",
@@ -15043,11 +15710,15 @@ mod class_feature_type_facet_owner_fallback_tests {
     }
 
     /// NEGATIVE CONTROL: without the type_facet fix, a record with no
-    /// class-name signal anywhere still reads `unknown` -- the fallback is
-    /// additive, it does not change behaviour for the genuinely
-    /// unattributable population.
+    /// class-name signal anywhere still reads `not-ingested` -- the
+    /// fallback is additive, it does not change behaviour for the
+    /// genuinely unattributable population. Before `AT-33-E4-002` this
+    /// read `unknown`/`class_feature_group_names_no_class_at_all`; see
+    /// `unknown-rootcause.md` §1 for why the magnitude-bearing shape now
+    /// gets the same `not-ingested` finding its `text_only` sibling
+    /// already had.
     #[test]
-    fn a_record_with_no_class_signal_anywhere_still_reads_unknown() {
+    fn a_record_with_no_class_signal_anywhere_reads_not_ingested() {
         let mut facts = EngineFacts::default();
         facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
         let unit = CorpusUnit {
@@ -15063,8 +15734,11 @@ mod class_feature_type_facet_owner_fallback_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "unknown");
-        assert_eq!(verdict.evidence, "class_feature_group_names_no_class_at_all");
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
     }
 }
 
@@ -17400,9 +18074,9 @@ mod class_feature_consumer_delta_tests {
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_ne!(
-            verdict.status, "unknown",
+            verdict.status, "unmeasurable",
             "a group matching a registered CLASS_FEATURE_POOLS entry must resolve an owner via \
-             the pool-catalog fallback, not fall through to unknown/unmeasurable"
+             the pool-catalog fallback, not fall through to unmeasurable"
         );
         // Exact landing spot: no diagnostic names this synthetic feature and
         // no explanation id exists in `facts`, so it must land the same
@@ -17442,7 +18116,7 @@ mod class_feature_consumer_delta_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
-        assert_ne!(verdict.status, "unknown", "the owner must be recovered via the pool catalog");
+        assert_ne!(verdict.status, "unmeasurable", "the owner must be recovered via the pool catalog");
         assert_ne!(
             verdict.status, "grounded",
             "a pool-catalog-recovered owner must never ground a record: status={} evidence={}",
@@ -17453,15 +18127,16 @@ mod class_feature_consumer_delta_tests {
 
     /// NEGATIVE CONTROL: a group whose text shape does NOT match any
     /// registered pool entry (no suffix, no exact word) must be entirely
-    /// unaffected by this fallback and still read `unknown` -- the fallback
-    /// is additive, not a behaviour change for the genuinely unattributable
-    /// population. Reuses the exact fixture
+    /// unaffected by this fallback and still read `not-ingested` -- the
+    /// fallback is additive, not a behaviour change for the genuinely
+    /// unattributable population. Before `AT-33-E4-002` this read
+    /// `unknown`; see `unknown-rootcause.md` §1. Reuses the exact fixture
     /// `class_feature_type_facet_owner_fallback_tests::
-    /// a_record_with_no_class_signal_anywhere_still_reads_unknown` already
+    /// a_record_with_no_class_signal_anywhere_reads_not_ingested` already
     /// pins ("Domain Power" matches neither "Domain" exactly nor the
     /// `" Domain"` suffix), confirming the two fallbacks agree.
     #[test]
-    fn a_group_shape_matching_no_registered_pool_still_reads_unknown() {
+    fn a_group_shape_matching_no_registered_pool_still_reads_not_ingested() {
         let mut facts = EngineFacts::default();
         facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
         let unit = CorpusUnit {
@@ -17477,8 +18152,11 @@ mod class_feature_consumer_delta_tests {
             visible: true,
         };
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
-        assert_eq!(verdict.status, "unknown");
-        assert_eq!(verdict.evidence, "class_feature_group_names_no_class_at_all");
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
     }
 
     /// NEGATIVE CONTROL, the guard itself: `class_feature_owner_via_pool_catalog`
@@ -17560,7 +18238,11 @@ mod class_feature_consumer_delta_tests {
             if unit["kind"].as_str() != Some("class_feature") {
                 continue;
             }
-            if unit["status"].as_str() != Some("unknown") {
+            // `AT-33-E4-002` renamed the status string from `unknown` to
+            // `unmeasurable` (disposition unchanged) -- see
+            // `unknown-rootcause.md` §3. This filter follows the rename so
+            // the regression lock keeps checking the same real population.
+            if unit["status"].as_str() != Some("unmeasurable") {
                 continue;
             }
             let Some(key) = unit["corpus_key"].as_str() else { continue };

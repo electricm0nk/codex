@@ -19,6 +19,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Heartswood Spear"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Bane ~ Weapon|Undead Bane.Special Ability ~ Enhancement Cost|50300.Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "SPROP",
+        "value": "When swung as a staff, does bludgeoning damage and has Disrupting property."
       }
     ],
     "weight_lbs": null

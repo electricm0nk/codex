@@ -6,7 +6,16 @@
     "description": null,
     "key": "Spider's Fang",
     "name": "Spider's Fang",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Acrobatics=Move Through",
+          "2",
+          "TYPE=Competence"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "EQMOD",
@@ -15,6 +24,18 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Keen ~ Weapon.Special Ability ~ Enhancement Cost|79100.Special Ability ~ +2 ~ Weapon.Special Ability ~ Wounding ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "SPROP",
+        "value": "2/day can poison as per Poison spell (Fort DC 20 negates)."
       }
     ],
     "weight_lbs": null

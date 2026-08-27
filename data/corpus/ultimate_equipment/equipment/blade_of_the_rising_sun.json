@@ -6,8 +6,74 @@
     "description": null,
     "key": "Blade of the Rising Sun",
     "name": "Blade of the Rising Sun",
-    "raw_bonus_chains": [],
-    "raw_tokens": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "WIELDCATEGORY",
+          "-1",
+          "PREVARGTEQ:KatanaExoticUse,1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Katana"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.EasternWeapon.Eastern.Melee.Exotic.Slashing.Deadly.OneHanded.Sword.BladeHeavy.Tengu"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "3"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Bane ~ Weapon|Undead Bane.Special Ability ~ Glorious ~ Melee.Special Ability ~ Enhancement Cost|51800"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      },
+      {
+        "key": "SPROP",
+        "value": "On critical threat, target surrounded by sunlight as per Faerie Fire for 1 turn. Deals 1d6 to undead."
+      }
+    ],
     "weight_lbs": null
   },
   "ingested_at": "2026-08-16T01:34:54Z",

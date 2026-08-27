@@ -19,6 +19,22 @@
       {
         "key": "VISIBLE",
         "value": "YES"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Bloodthirst Dagger"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|60800.Special Ability ~ +2 ~ Weapon.Special Ability ~ Wounding ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.152"
+      },
+      {
+        "key": "SPROP",
+        "value": "Deals an additional +1 point of damage against the target for each bleeding wound the creature possesses (maximum +10)."
       }
     ],
     "weight_lbs": null

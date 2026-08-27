@@ -1,0 +1,380 @@
+[
+ {
+  "unit_id": "advanced_class_guide:equipment:hunter_s_sight",
+  "book": "advanced_class_guide",
+  "key": "Hunter's Sight",
+  "skill_field": "Perception",
+  "target_skill": "Perception",
+  "declared_bonus": -2,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "advanced_class_guide:equipment:ring_of_eloquence",
+  "book": "advanced_class_guide",
+  "key": "Ring of Eloquence",
+  "skill_field": "Bluff,Diplomacy,Intimidate,Perform (Oratory)",
+  "target_skill": "Bluff",
+  "declared_bonus": 2,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "advanced_players_guide:equipment:fork_of_the_forgotten_one",
+  "book": "advanced_players_guide",
+  "key": "Fork of the Forgotten One",
+  "skill_field": "Diplomacy,Intimidate",
+  "target_skill": "Diplomacy",
+  "declared_bonus": 10,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "advanced_players_guide:equipment:ring_of_maniacal_devices",
+  "book": "advanced_players_guide",
+  "key": "Ring of Maniacal Devices",
+  "skill_field": "Craft (Traps),Disable Device",
+  "target_skill": "Craft (Traps)",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "advanced_race_guide:equipment:cloak_of_the_diplomat",
+  "book": "advanced_race_guide",
+  "key": "Cloak of the Diplomat",
+  "skill_field": "Diplomacy,Sense Motive",
+  "target_skill": "Diplomacy",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "advanced_race_guide:equipment:ring_of_the_sophisticate",
+  "book": "advanced_race_guide",
+  "key": "Ring of the Sophisticate",
+  "skill_field": "Sense Motive,Knowledge (Local)",
+  "target_skill": "Sense Motive",
+  "declared_bonus": 4,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "book_of_the_damned_volume_2:equipment:demon_senses",
+  "book": "book_of_the_damned_volume_2",
+  "key": "Demon Senses",
+  "skill_field": "Perception",
+  "target_skill": "Perception",
+  "declared_bonus": 8,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "core_rulebook:equipment:circlet_of_persuasion",
+  "book": "core_rulebook",
+  "key": "Circlet of Persuasion",
+  "skill_field": "Bluff,Diplomacy,Disguise,Handle Animal,Intimidate,Perform (Act),Perform (Comedy),Perform (Dance),Perform (Keyboard Instruments),Perform (Oratory),Perform (Percussion Instruments),Perform (Sing),Perform (String Instruments),Perform (Wind Instruments),Perform (Untrained),Use Magic Device",
+  "target_skill": "Bluff",
+  "declared_bonus": 3,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "core_rulebook:equipment:gloves_of_swimming_and_climbing",
+  "book": "core_rulebook",
+  "key": "Gloves of Swimming and Climbing",
+  "skill_field": "Swim,Climb",
+  "target_skill": "Swim",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "inner_sea_gods:equipment:besmara_s_bicorne",
+  "book": "inner_sea_gods",
+  "key": "Besmara's Bicorne",
+  "skill_field": "Acrobatics,Climb",
+  "target_skill": "Acrobatics",
+  "declared_bonus": 2,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "inner_sea_gods:equipment:besmara_s_tricorne",
+  "book": "inner_sea_gods",
+  "key": "Besmara's Tricorne",
+  "skill_field": "Profession (Sailor),Swim",
+  "target_skill": "Profession (Sailor)",
+  "declared_bonus": 2,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "inner_sea_gods:equipment:deadeye_s_spotter_ring",
+  "book": "inner_sea_gods",
+  "key": "Deadeye's Spotter Ring",
+  "skill_field": "Perception,Survival",
+  "target_skill": "Perception",
+  "declared_bonus": 2,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "inner_sea_races:equipment:scarf_of_glorious_histories",
+  "book": "inner_sea_races",
+  "key": "Scarf of Glorious Histories",
+  "skill_field": "Intimidate,Perform (dance)",
+  "target_skill": "Intimidate",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:bracelet_of_bargaining",
+  "book": "ultimate_equipment",
+  "key": "Bracelet of Bargaining",
+  "skill_field": "Bluff,Diplomacy,Sense Motive",
+  "target_skill": "Bluff",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:cloak_of_the_diplomat",
+  "book": "ultimate_equipment",
+  "key": "Cloak of the Diplomat",
+  "skill_field": "Diplomacy,Sense Motive",
+  "target_skill": "Diplomacy",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:heritage_book",
+  "book": "ultimate_equipment",
+  "key": "Heritage Book",
+  "skill_field": "Knowledge (Nobility)",
+  "target_skill": "Knowledge (Nobility)",
+  "declared_bonus": 2,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:judge_s_wig",
+  "book": "ultimate_equipment",
+  "key": "Judge's Wig",
+  "skill_field": "Diplomacy,Intimidate",
+  "target_skill": "Diplomacy",
+  "declared_bonus": 4,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:juggler_s_kit",
+  "book": "ultimate_equipment",
+  "key": "Juggler's Kit",
+  "skill_field": "Perform (Act),Perform (Comedy)",
+  "target_skill": "Perform (Act)",
+  "declared_bonus": 1,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:mask_of_ugliness",
+  "book": "ultimate_equipment",
+  "key": "Mask of Ugliness",
+  "skill_field": "Bluff,Diplomacy",
+  "target_skill": "Bluff",
+  "declared_bonus": -4,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:musical_staff",
+  "book": "ultimate_equipment",
+  "key": "Musical Staff",
+  "skill_field": "Perform (String Instruments),Perform (Wind Instruments)",
+  "target_skill": "Perform (String Instruments)",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:pirate_s_eye_patch",
+  "book": "ultimate_equipment",
+  "key": "Pirate's Eye Patch",
+  "skill_field": "Swim,Climb",
+  "target_skill": "Swim",
+  "declared_bonus": 2,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:pliant_gloves",
+  "book": "ultimate_equipment",
+  "key": "Pliant Gloves",
+  "skill_field": "Escape Artist,Acrobatics",
+  "target_skill": "Escape Artist",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:ring_of_maniacal_devices",
+  "book": "ultimate_equipment",
+  "key": "Ring of Maniacal Devices",
+  "skill_field": "Craft (Traps),Disable Device",
+  "target_skill": "Craft (Traps)",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:ring_of_the_ecclesiarch",
+  "book": "ultimate_equipment",
+  "key": "Ring of the Ecclesiarch",
+  "skill_field": "Diplomacy,Knowledge (Religion)",
+  "target_skill": "Diplomacy",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:ring_of_the_sophisticate",
+  "book": "ultimate_equipment",
+  "key": "Ring of the Sophisticate",
+  "skill_field": "Sense Motive,Knowledge (Local)",
+  "target_skill": "Sense Motive",
+  "declared_bonus": 4,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:rod_beguiling",
+  "book": "ultimate_equipment",
+  "key": "Rod (Beguiling)",
+  "skill_field": "Bluff,Sleight of Hand",
+  "target_skill": "Bluff",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_equipment:equipment:suzerain_scepter",
+  "book": "ultimate_equipment",
+  "key": "Suzerain Scepter",
+  "skill_field": "Knowledge (Nobility),Diplomacy",
+  "target_skill": "Knowledge (Nobility)",
+  "declared_bonus": 5,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:companion_stone_diplomacy",
+  "book": "ultimate_psionics",
+  "key": "Companion Stone (Diplomacy)",
+  "skill_field": "Diplomacy",
+  "target_skill": "Diplomacy",
+  "declared_bonus": 4,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_detection",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Detection)",
+  "skill_field": "Perception",
+  "target_skill": "Perception",
+  "declared_bonus": 10,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_discernment",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Discernment)",
+  "skill_field": "Sense Motive",
+  "target_skill": "Sense Motive",
+  "declared_bonus": 10,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_dread",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Dread)",
+  "skill_field": "Intimidate",
+  "target_skill": "Intimidate",
+  "declared_bonus": 10,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_insightful_detection",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Insightful Detection)",
+  "skill_field": "Perception",
+  "target_skill": "Perception",
+  "declared_bonus": 9,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:crystal_mask_psionic_craft",
+  "book": "ultimate_psionics",
+  "key": "Crystal Mask (Psionic Craft)",
+  "skill_field": "Spellcraft",
+  "target_skill": "Spellcraft",
+  "declared_bonus": 10,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:eyes_of_expanded_vision",
+  "book": "ultimate_psionics",
+  "key": "Eyes of Expanded Vision",
+  "skill_field": "Perception",
+  "target_skill": "Perception",
+  "declared_bonus": 1,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:meld_stone_alchemist",
+  "book": "ultimate_psionics",
+  "key": "Meld Stone (Alchemist)",
+  "skill_field": "Craft (Alchemy)",
+  "target_skill": "Craft (Alchemy)",
+  "declared_bonus": 8,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:meld_stone_inflitrator",
+  "book": "ultimate_psionics",
+  "key": "Meld Stone (Inflitrator)",
+  "skill_field": "Bluff",
+  "target_skill": "Bluff",
+  "declared_bonus": 8,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:meld_stone_nimble_trickster",
+  "book": "ultimate_psionics",
+  "key": "Meld Stone (Nimble Trickster)",
+  "skill_field": "Escape Artist,Stealth",
+  "target_skill": "Escape Artist",
+  "declared_bonus": 6,
+  "is_complex_multivalue": true
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:psychoactive_skin_chameleon",
+  "book": "ultimate_psionics",
+  "key": "Psychoactive Skin (Chameleon)",
+  "skill_field": "Stealth",
+  "target_skill": "Stealth",
+  "declared_bonus": 10,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:psychoactive_skin_nimbleness",
+  "book": "ultimate_psionics",
+  "key": "Psychoactive Skin (Nimbleness)",
+  "skill_field": "Acrobatics",
+  "target_skill": "Acrobatics",
+  "declared_bonus": 10,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:psychoactive_skin_spider",
+  "book": "ultimate_psionics",
+  "key": "Psychoactive Skin (Spider)",
+  "skill_field": "Climb",
+  "target_skill": "Climb",
+  "declared_bonus": 20,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:ring_self_sufficiency",
+  "book": "ultimate_psionics",
+  "key": "Ring (Self Sufficiency)",
+  "skill_field": "Autohypnosis",
+  "target_skill": "Autohypnosis",
+  "declared_bonus": 10,
+  "is_complex_multivalue": false
+ },
+ {
+  "unit_id": "ultimate_psionics:equipment:third_eye_aware",
+  "book": "ultimate_psionics",
+  "key": "Third Eye (Aware)",
+  "skill_field": "Perception",
+  "target_skill": "Perception",
+  "declared_bonus": 10,
+  "is_complex_multivalue": false
+ }
+]
