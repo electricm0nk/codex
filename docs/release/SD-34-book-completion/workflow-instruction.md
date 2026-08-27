@@ -26,7 +26,7 @@ bundle's copy. States the current dispatch procedure only.
 
 ## 1. Pre-launch checklist
 
-**Run 2026-08-27 at `tranche/14` cut SHA `571307724f6d865d744fb025760ed8ab58a26229`.** Items 1-9, 11, 12 below carry their pasted output. Item 10 (widest build scope + inherited test baseline) is run by its own lane and pasted when it lands; until it is, the bundle is NOT launch-ready. `git fetch origin` first — a stale local `origin/develop` makes item 3 fail falsely.
+**Run 2026-08-27 at `tranche/14` cut SHA `571307724f6d865d744fb025760ed8ab58a26229`.** Items 1-9, 11, 12 below carry their pasted output. Item 10 has run: 600 of 600 targets executed, 7,986 passed of 8,034, 30 of 600 suites failing. **SD-34's inherited baseline is 29 of 599 suites / 46 of 8,034 tests — identical to SD-33's registered set.** The one suite outside it was a mid-rename measurement artifact, re-verified green at HEAD (see item 10). **SD-34 owns 0 failures; all 12 launch items pass.** `git fetch origin` first — a stale local `origin/develop` makes item 3 fail falsely.
 
 1. **Board reachable.** `test -f docs/release/SD-34-book-completion/kanban.md && echo KANBAN_PRESENT`
 
@@ -136,6 +136,42 @@ bundle's copy. States the current dispatch procedure only.
     8,026 by its retrospective §5). Re-derive that set at the
     `tranche/14` cut and record it as SD-34's inherited baseline — **a failure outside that
     set is SD-34's.**
+   **Output:** (run 2026-08-26 22:10–23:10 EDT, `timeout 3600 cargo test --locked --no-fail-fast`,
+   `CARGO_TARGET_DIR=/tmp/cargo-sd34-baseline`; log `/tmp/sd34-baseline-workspace.log`, 38,070 lines)
+   ```
+   cargo test --locked --no-run                    EXIT=0
+   workspace run: 600 targets executed, 7,986 passed of 8,034, 48 failed of 8,034,
+                  30 of 600 suites FAILED   (cargo's own summary: "error: 30 targets failed")
+   apps/desktop/src-tauri                          not reached before the 3600s bound
+
+   ATTRIBUTION vs SD-33's registered 29 of 599 / 46 of 8,034:
+     (a) in SD-33's 29 and still failing ....... 29 of 29
+     (b) in SD-33's 29 but now GREEN ............ 0 of 29
+     (c) failing and NOT in SD-33's 29 ......... 1  -> tests/v06_work_inventory.rs
+                                                      (2 tests of the 48)
+
+   GROUP (c) RESOLVED — a measurement artifact, not an SD-34 regression:
+     both failures asserted the pre-rename literal "not-ingested" against the post-rename
+     value "engine-does-not-hold" (tests/v06_work_inventory.rs:704 and one sibling).
+     AT-34-E1-005's rename commit 0099df7a1e is timestamped 2026-08-26 23:19:39 -0400;
+     this run's last log write is 23:10:52 -0400 — the run measured a tree nine minutes
+     BEFORE the fix landed, mid-rename.
+     Re-derived at HEAD, targeted:
+       $ cargo test --locked --test v06_work_inventory
+       test result: ok. 16 passed; 0 failed; 1 ignored
+     The old literal survives nowhere in tests/, src/, apps/, scripts/ except one
+     deliberately planted RED-proof string in
+     scripts/tests/test_legacy_not_ingested_string_swept.py:98.
+
+   SD-34's recorded inherited baseline: 29 of 599 suites / 46 of 8,034 tests, unchanged
+   from SD-33's. SD-34 owns 0 failures as of this measurement.
+   ```
+
+   **This item is a live instance of `decisions.md §12` L7** — *run the suite after the last write
+   that can move it.* The lane's numbers were true of the tree it ran on and stale nine minutes
+   later. The figure above is therefore marked **measured at the cut, superseded at HEAD**;
+   AT-34-E6-001 re-runs the widest build scope at closure and that run is the binding one.
+
 11. **Artifact directories exist, one per epic.** See `artifacts/README.md`. Each holds a
     `.gitkeep` so the directory survives the commit.
 
