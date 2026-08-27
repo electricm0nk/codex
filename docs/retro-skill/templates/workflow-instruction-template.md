@@ -341,23 +341,53 @@ performs steps 1–9 itself with its own tool calls.
 ```markdown
 # Cycle <cycle-id> — <epic-name> / Criterion <n>
 
-- **Card ID:** t_<hex>
+- **Card ID:** <board-card-id>
 - **Commit SHA:** <sha>
 - **Files touched:** <list>
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS / <violation list>
-- **No-stub-shipping audit result:** OK_NO_TOKENS / OK_NO_NOOP_HANDLERS / OK_NO_MOCK_LEAKS / OK_NO_WOULD_STRINGS / <violation list>
-- **Acceptance criterion:** <verbatim from epic-breakdown.md>
-- **Status:** complete | returned-to-backlog | DISCOVERED-forked
-- **Notes:** <judgment calls, deferred items, audit-exclusion requests>
-- **Discovery forwards:** <list of ## DISCOVERED entries added>
+- **No-stub audit result:** OK_NO_TOKENS / <violation list>
+- **Acceptance criterion:** <verbatim from the epic breakdown>
+- **Figures + their re-derive commands:** <every number, with the command that produced it AND its denominator in the same construct>
+- **Row-count command output:** <the literal output of the count run on THIS cycle's own artifact>
+- **Build scope verified:** <what was run, its result, and the SHA it ran at>
+- **Movement, four buckets:** closure / reclassification / reachability / measurement-correction
+- **Status:** complete | partial | blocked-escalated
+- **Remainder (partial only):** <every remaining item named by sub-cause, with populations that sum exactly to the stated total>
+- **Notes:** <judgment calls>
 - **Next-cycle plan:** <what the next cycle picks up>
 ```
 
+**The four rows that do the work.** A receipt without them is a summary, and a summary is not
+evidence:
+
+- **Figures + commands.** A number with no command beside it is a recollection. A number with no
+  denominator invites the reader to supply their own, and they will supply the wrong one.
+- **Row-count output.** The cycle's `Status` is a mechanical function of this, never a
+  self-assessment of effort. Paste the literal output, not a description of it.
+- **Build scope + its SHA.** Run the widest verification **after the last write in the cycle that
+  can move a figure an assertion depends on**. A green run followed by a regeneration is a true
+  report of a tree that no longer exists.
+- **Movement in four buckets.** Keeps a count that dropped because the *measurement* changed from
+  being reported as work completed. They are not the same thing and conflating them is how a board
+  drifts from reality.
+
+**The three statuses:**
+
+| Status | Meaning | Effect |
+|---|---|---|
+| `complete` | the whole assigned population reached the bar | the card closes |
+| `partial` | part closed, **and every remaining item named by sub-cause with populations that sum exactly** | card stays `in-progress`; the dispatch continues |
+| `blocked-escalated` | needs an operator ruling — a question this cycle may not decide | **pauses the bundle** |
+
+**Needing more cycles is `partial`, never `blocked-escalated`** (`../conduct/blocker-doctrine.md`).
+A `partial` whose sub-causes do not sum to its stated total is a `complete` claim in disguise and
+fails the same way.
+
 ## 8. Self-heal posture
 
-- **Self-healable (resolve inline, exit GREEN):** dirty tree, single-token audit violation,
+- **Self-healable (resolve inline, carry on):** dirty tree, single-token audit violation,
   unrelated test-setup breakage, build-counter out of sync, `## DISCOVERED` duplicates.
-- **Non-self-healable (write `## Open blockers`, exit FAIL):** working tree diverged from the
+- **Non-self-healable (return `blocked-escalated` and write `## Open blockers`):** working tree diverged from the
   bundle branch needing manual rebase; two live cycles on conflicting files; a launch-gate
   dependency not actually merged; `## DISCOVERED` queue > 10 entries; red → green not preserved in
   the cycle receipt; a cycle finds `success: true` from a fake operation, an inline mock in a
@@ -429,7 +459,7 @@ Every bundle's last epic is a Closure Epilogue:
    card is at `complete`. **Never write "complete *or* filed under `## Open blockers`"** — that
    phrasing is the defect the blocker-closure doctrine exists to remove; a gate that can be
    satisfied by writing down that you did not do the work is not a gate. A card at
-   `returned-to-backlog`, `in-progress`, or `DISCOVERED-forked` blocks closure, as does a card
+   `in-progress`, `partial`, or `blocked-escalated` blocks closure, as does a card
    marked `complete` with half of its criterion explicitly deferred.
 
    **If anything is short, this cycle stops here.** Do not write the retrospective, do not sweep,

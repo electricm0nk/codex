@@ -185,7 +185,7 @@ git diff --unified=0 "${BASE_BRANCH}...HEAD" -- <scoped paths> ':!**/__tests__/*
 ```
 
 A single-token violation is self-healable inline (fix, re-audit, continue). A real stub in
-shipping code is **non-self-healable** — exit FAIL with an `## Open blockers` entry in
+shipping code is **non-self-healable** — return `blocked-escalated` with an `## Open blockers` entry in
 `progress.md`, don't silence the gate, don't skip it on a cycle that "looks clean," don't treat
 five green cycles as license to skip the sixth.
 
