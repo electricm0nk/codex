@@ -1,7 +1,7 @@
 # Cycle AT-34-E1-002 — Epic 1 Completion Atlas / AT-34-E1-002
 
-- **Commit SHA:** filled in below at the commit that lands this receipt (see "Notes" if the
-  in-flight SHA differs from the pushed one after rebase).
+- **Commit SHA:** `5289e646dd` (the commit that lands this receipt and the files below, on
+  `tranche/14`, pushed as a fast-forward — no rebase needed).
 - **Files touched:**
   - `scripts/completion_atlas.py` (extended: five new fail-closed conditions + citations)
   - `scripts/tests/test_completion_atlas.py` (extended: 20 new permanent unit tests)
