@@ -693,6 +693,126 @@ def transcribe(book: str) -> str:
                         creature_ability_keys[creature].append(target)
                         changed = True
 
+    # Shape 7, BOOK-WIDE grant (`AT-34-E3-001`, `decisions.md §66`). Shapes 1-6
+    # all attribute ownership from something a CREATURE ROW itself states
+    # (`ABILITY:`, `PRERACE:`, a namespaced `KEY:` prefix, a granting row, a
+    # relay row, an `OUTPUTNAME:`). Core Rulebook's own "Animal Companion"
+    # progression table -- the generic feat pool (`Animal Companion Feat ~
+    # …`), trick/training pool (`Animal Trick ~ …`, `Animal Training ~ …`) and
+    # by-level bonus table (`Animal Companion ~ …`, `Companion ~ …`,
+    # `Companion Stat ~ …`) -- is never claimed by any ONE creature row,
+    # because the corpus states it exactly once, generically, for the whole
+    # `CLASS:Companion` chassis (`cr_classes_companion.lst`) every one of this
+    # book's registered creatures shares (every row here carries
+    # `MONSTERCLASS:Companion:…`). That is a true, corpus-backed fact about
+    # ALL of them, not an invented link to one: PF1's own Animal Companion
+    # rules (CRB p.52-55) grant this identical table to every companion,
+    # regardless of species. `BOOK_WIDE_GRANTS` is an exact, closed key set —
+    # never a prefix heuristic — so a future unrelated orphan can never
+    # silently ride this shape.
+    BOOK_WIDE_GRANTS: dict[str, set[str]] = {
+        "core_rulebook": {
+            "+2 to Dexterity and Constitution",
+            "Animal Companion Feat ~ Acrobatic",
+            "Animal Companion Feat ~ Agile Maneuvers",
+            "Animal Companion Feat ~ Armor Proficiency (Heavy)",
+            "Animal Companion Feat ~ Armor Proficiency (Light)",
+            "Animal Companion Feat ~ Armor Proficiency (Medium)",
+            "Animal Companion Feat ~ Athletic",
+            "Animal Companion Feat ~ Blind-Fight",
+            "Animal Companion Feat ~ Combat Reflexes",
+            "Animal Companion Feat ~ Diehard",
+            "Animal Companion Feat ~ Dodge",
+            "Animal Companion Feat ~ Endurance",
+            "Animal Companion Feat ~ Feat",
+            "Animal Companion Feat ~ GM Feat",
+            "Animal Companion Feat ~ Great Fortitude",
+            "Animal Companion Feat ~ Improved Bull Rush",
+            "Animal Companion Feat ~ Improved Initiative",
+            "Animal Companion Feat ~ Improved Natural Armor",
+            "Animal Companion Feat ~ Improved Natural Attack",
+            "Animal Companion Feat ~ Improved Overrun",
+            "Animal Companion Feat ~ Intimidating Prowess",
+            "Animal Companion Feat ~ Iron Will",
+            "Animal Companion Feat ~ Lightning Reflexes",
+            "Animal Companion Feat ~ Mobility",
+            "Animal Companion Feat ~ Power Attack",
+            "Animal Companion Feat ~ Run",
+            "Animal Companion Feat ~ Skill Focus",
+            "Animal Companion Feat ~ Spring Attack",
+            "Animal Companion Feat ~ Stealthy",
+            "Animal Companion Feat ~ Toughness",
+            "Animal Companion Feat ~ Weapon Finesse",
+            "Animal Companion Feat ~ Weapon Focus",
+            "Animal Companion ~ AC Bonus",
+            "Animal Companion ~ Ability Score Increase",
+            "Animal Companion ~ Bonus Tricks",
+            "Animal Companion ~ Devotion",
+            "Animal Companion ~ Evasion",
+            "Animal Companion ~ Improved Evasion",
+            "Animal Companion ~ Link",
+            "Animal Companion ~ Multiattack",
+            "Animal Companion ~ Share Spells",
+            "Animal Companion ~ Spell Resistance",
+            "Animal Companion ~ Stat Bonus",
+            "Animal Training ~ Combat Training",
+            "Animal Training ~ Fighting",
+            "Animal Training ~ Guarding",
+            "Animal Training ~ Heavy Labor",
+            "Animal Training ~ Hunting",
+            "Animal Training ~ Performance",
+            "Animal Training ~ Riding",
+            "Animal Trick ~ Air Walk",
+            "Animal Trick ~ Attack",
+            "Animal Trick ~ Attack II",
+            "Animal Trick ~ Come",
+            "Animal Trick ~ Defend",
+            "Animal Trick ~ Down",
+            "Animal Trick ~ Fetch",
+            "Animal Trick ~ Guard",
+            "Animal Trick ~ Heel",
+            "Animal Trick ~ Perform",
+            "Animal Trick ~ Seek",
+            "Animal Trick ~ Stay",
+            "Animal Trick ~ Track",
+            "Animal Trick ~ Work",
+            "Base Companion ~ Animal Companion",
+            "Base Companion ~ Special Mount",
+            "Companion Advancement",
+            "Companion Skills",
+            "Companion Stat ~ CHA",
+            "Companion Stat ~ CON",
+            "Companion Stat ~ DEX",
+            "Companion Stat ~ INT",
+            "Companion Stat ~ STR",
+            "Companion Stat ~ WIS",
+            "Companion ~ Ability Score Increase",
+            "Companion ~ Bonus Tricks",
+            "Companion ~ Devotion",
+            "Companion ~ Evasion",
+            "Companion ~ Improved Evasion",
+            "Companion ~ Link",
+            "Companion ~ Multiattack",
+            "Companion ~ Share Spells",
+            "Companion ~ Spell Resistance (AC)",
+            "Companion ~ Spell Resistance (SM)",
+        },
+    }
+    book_wide_applied = 0
+    for key in BOOK_WIDE_GRANTS.get(book, set()):
+        if key not in owners or owners[key]:
+            continue
+        for creature in sorted(creature_keys):
+            owners[key].append(creature)
+            creature_ability_keys[creature].append(key)
+        book_wide_applied += 1
+    if book_wide_applied:
+        print(
+            f"{book}: {book_wide_applied} ability row(s) attributed to ALL "
+            f"{len(creature_keys)} registered creatures (Shape 7, book-wide grant)",
+            file=sys.stderr,
+        )
+
     # Only ability rows WITH an owner are registered.  A row no creature row of
     # this book reaches is a record that would load and never be shown, so it is
     # dropped from the emitted table and named in the module doc below.

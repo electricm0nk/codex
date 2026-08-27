@@ -41,11 +41,22 @@ single root cause on direct per-record inspection — seven distinct sub-shapes 
 populations in that cycle's own receipt, most requiring new cross-cutting engine capabilities
 this program does not yet have; a follow-up cycle then closed the cheapest of those seven, a
 2-unit multi-DESC ingest truncation — see the cycle log below for the full decomposition and
-that cycle's own caught-and-reverted corpus-wide near-miss).
+that cycle's own caught-and-reverted corpus-wide near-miss); the next cycle partially cleared
+`companion_absent_from_core_rulebook_companion_tables` (100 → 28 — `companion_chassis`'s
+transcriber gained a seventh ownership shape, book-wide grant, attributing Core Rulebook's
+generic Animal Companion progression table to all 38 registered creatures at once, a real
+corpus-backed fact rather than an invented per-creature link; the remaining 28 are three named
+sub-causes — 12 zero-content internal plumbing rows, 2 PCGen monster-class definitions, and 14
+master-side familiar-ability-pool rows this book registers no familiar creature to own — see
+the cycle log below).
 AT-34-E3-001 itself does not close yet — `core_rulebook`'s real, atlas-partitioned bucket B is
-966 of 6,701 (`python3 scripts/completion_atlas.py --book core_rulebook --check`), and five of
-the nine named mechanisms remain (their populations sum to exactly 966 — no unnamed gap). See
-the cycle log below; `## Open blockers` is empty.
+894 of 6,701 (`python3 scripts/completion_atlas.py --by-book`, grepped for `core_rulebook`), and
+five of the nine named mechanisms remain (their live populations — 346, 333, 132, 55, 28 — sum
+to exactly 894, no unnamed gap; the `class_feature_owner_matched_by_name…` and `class_feature_
+option_pool_record_with_magnitude…` mechanisms have not yet been picked up by any cycle, and
+their live counts (346, 333) have drifted from `decisions.md §14`'s filed 330/333 — a future
+cycle should re-derive and record why before closing either). See the cycle log below;
+`## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -63,6 +74,85 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism) — one of nine, `decisions.md §14` — partial
+
+**Status: partial (`decisions.md §15`) — this mechanism 100 → 28.**
+
+Population re-derived at HEAD, not transcribed from `decisions.md §14`'s filed figure (which it
+happens to match exactly): group `core_rulebook` units whose `status` is `engine-does-not-hold`
+by `evidence`, take the `companion_absent_from_core_rulebook_companion_tables` group ->
+**100 of 100**.
+
+**The fix.** `crb::companion_data` (the `companion_chassis` extension SD-29 built for this book)
+shipped only 46 of Core Rulebook's 130 ability rows. The other 84 — every generic
+`Animal Companion ~ …` / `Animal Companion Feat ~ …` / `Animal Trick ~ …` / `Animal Training ~
+…` / `Companion Stat ~ …` record — were orphans under `companion_chassis`'s existing six
+ownership shapes, because the corpus states this progression table exactly ONCE for the whole
+`CLASS:Companion` chassis (`cr_classes_companion.lst`) every one of the book's 38 registered
+creatures shares, rather than per-creature. No shape 1-6 (`ABILITY:`-named, `PRERACE:`,
+namespaced-prefix, granted-by, relay, display-name) can attribute an ownership the corpus never
+states per-creature in the first place.
+
+Built **Shape 7, book-wide grant** in `scripts/transcribe_companion_tables.py`: an exact, closed,
+84-key literal set (never a prefix heuristic, so an unrelated future orphan can never silently
+ride it) attributed to ALL 38 of this book's registered creatures at once. This is a real,
+corpus-backed fact, not an invented link — PF1's own Animal Companion rules (CRB p.52-55) grant
+this identical table to every companion regardless of species. Regenerating
+`crb::companion_data` from the widened transcriber ships 72 of the 84 (the ones carrying real
+`TYPE:`/`DESC:`/`BONUS:` content); the other 12 are internal PCGen plumbing rows (`Base
+Companion ~ …`, `Companion ~ …`) with only an `ABILITY:` grant token and no player-facing
+content, correctly caught and dropped by the pre-existing empty-payload screen — the same
+disposition every other book's zero-content row already gets, not a regression.
+
+**TDD.** Regenerating the table immediately RED-failed two of `companion_chassis`'s own
+count-pinned tests for the intended reason: `an_ability_with_no_modelled_facet_still_states_
+its_type_segments` (39 → 93 unmodelled-facet rows — the new Animal-Companion-progression rows
+are feats/tricks/stats, none of which map onto `CompanionAbilityFacet`'s three variants) and
+`a_row_stating_its_text_once_per_condition_carries_every_token_and_promotes_only_the_ungated_
+one` (11 → 13 multi-DESC rows — `Animal Trick ~ Attack` and `Animal Companion Feat ~ Toughness`
+both carry one ungated plus one gated `DESC:` token). Updated both to the new corpus-true
+counts with real explanations (not just bumped numbers), widened one structural
+equality-assertion (`crb_unmodelled == vec!["Crocodile ~ Tail Slap"]`) to a membership+count
+check per the round-7 lesson already in this file's own doc comment (a count assertion ahead of
+a structural one hides the structural one), and added two new named structural assertions for
+the two new multi-DESC rows. GREEN: all 15 `companion_chassis` tests, all 126
+`companion`-scoped lib tests, and the full workspace `cargo test --lib` (2,872 passed, 0 failed,
+14 ignored) all pass. `cargo test --locked --no-run` exits 0.
+
+**`docs/work-inventory.json` regenerated** (sequential with Epic 4 per `workflow-instruction.md
+§3`), using fresh `corpus_literal_sweep`/`derived_evaluator_fixture_check` reports
+(33s / 4s wall time, both CLEAN/0-failed) to satisfy the stamp-loss guard honestly rather than
+`--allow-stamp-loss`. Total corpus population unchanged at 49,438 (no records added or removed
+this cycle — only ownership/placement changed). `completion_atlas.py --check` stays green:
+population=49438 buckets=10 unclassified=0 overlap=0 citation_failures=0.
+
+**Movement, four buckets:** closure 72 (bucket B → DONE-tier: 40 `text-complete`, 29
+`grounded`, 3 `literal-verified`); reclassification 0; reachability 0 (these rows reach the
+player through the SAME `companion_catalog` render path every other `crb::companion_data` row
+already uses — no new wiring beyond table placement); instrument-correction 0.
+
+**Remainder, named by sub-cause, 12 + 2 + 14 = 28:**
+1. **12** zero-content internal PCGen plumbing rows (`Base Companion ~ Animal Companion`/
+   `Special Mount`, `Companion ~ Ability Score Increase`/`Bonus Tricks`/`Devotion`/`Evasion`/
+   `Improved Evasion`/`Link`/`Multiattack`/`Share Spells`/`Spell Resistance (AC)`/`Spell
+   Resistance (SM)`) — only an `ABILITY:` grant token, no `TYPE:`/`DESC:`/`BONUS:`; the
+   empty-payload screen (`decisions.md §63.3`) correctly drops them, same as any other book.
+2. **2** `cr_classes_companion.lst` PCGen monster-class definitions (`Companion`, `Shadow
+   Companion`) — a hit-dice level-progression construct, not a creature and not an ability;
+   modelling it is a genuinely new record type, a standing SD-29 architecture decision
+   (`decisions.md §65.1`) this cycle does not widen.
+3. **14** `ce_abilities_familiar_cr.lst` master-side familiar special-ability-pool rows,
+   reattributed to `core_rulebook` — a real generic Familiar table, but this book registers NO
+   familiar creature (all 38 of its creatures are Animal Companions) for
+   `companion_chassis`'s same-book ownership invariant to attach it to. A pinned unit test
+   (`a_companion_reattributed_to_a_chassis_book_that_does_not_hold_it_is_bucket_b_not_a`,
+   `AT-34-E2-004`) already fixes this shape's intended disposition as "must be truly placed,
+   never reclassified to bucket D" — closing it needs a cross-book ownership shape (Shape 8) or
+   a dedicated master-side ability-pool record type, real future engine capability, not built
+   this cycle.
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_companion_absent_cycle_receipt.md`.
 
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism), Cycle 2 — multi-DESC ingest truncation sub-cause — partial
 

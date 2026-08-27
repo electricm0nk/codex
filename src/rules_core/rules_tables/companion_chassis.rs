@@ -530,15 +530,32 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
     // from Bestiary 1: the corpus says `core_rulebook`, the module says `crb`,
     // and the abbreviation is the older of the two.
     //
-    // 84 of its 170 rows ship — 38 creature rows, 46 ability rows — and the 86
-    // that do not are ONE finding wearing two shapes. The 2 excluded rows are
-    // `cr_classes_companion.lst`'s `Companion` and `Shadow Companion`, PCGen
-    // monster classes. The 84 excluded ability rows are the generic
-    // `Animal Companion ~ …` / `Animal Companion Feat ~ …` / `Animal Trick ~ …`
-    // / `Animal Training ~ …` records — and they are orphans precisely BECAUSE
-    // they belong to that class rather than to any creature. This is the first
-    // registered book whose shortfall is not a per-row accident but a single
-    // missing record type, and it is the largest orphan block the lane has seen.
+    // 156 of its 184 rows ship — 38 creature rows, 118 ability rows — and the
+    // 28 that do not are THREE named remainders (`AT-34-E3-001`, `decisions.md
+    // §66`): 12 zero-content `Base Companion ~ …` / `Companion ~ …` internal
+    // plumbing rows (see below), 2 `cr_classes_companion.lst` rows
+    // (`Companion`, `Shadow Companion`, PCGen monster classes — modelling them
+    // is a new record type, not a wider predicate on this one), and 14
+    // `ce_abilities_familiar_cr.lst` rows reattributed here (the master-side
+    // familiar special-ability pool — no familiar CREATURE is registered
+    // under this book for them to hang from; familiars are drawn from OTHER
+    // books' chassis tables).
+    //
+    // Through `AT-34-E3-001` this was 84 of the 118 ability rows: the generic
+    // `Animal Companion ~ …` / `Animal Companion Feat ~ …` / `Animal Trick ~
+    // …` / `Animal Training ~ …` / `Companion Stat ~ …` records, orphaned
+    // because the corpus states them exactly ONCE for the whole
+    // `CLASS:Companion` chassis every one of this book's 38 creatures shares
+    // (`cr_classes_companion.lst`'s single `Companion` class), rather than
+    // per-creature. Shape 7, book-wide grant (`scripts/transcribe_
+    // companion_tables.py`), attributes each to ALL 38 creatures — a real,
+    // corpus-backed fact (PF1's own Animal Companion rules, CRB p.52-55, grant
+    // this identical table to every companion regardless of species), not an
+    // invented link. 72 of the 84 carry real modelled content and ship; the
+    // other 12 are `Base Companion ~ …` / `Companion ~ …` internal PCGen
+    // plumbing rows that state only an `ABILITY:` grant token (no `TYPE:`, no
+    // `DESC:`, no `BONUS:`) and are dropped by the empty-payload screen like
+    // any other book's zero-content row.
     //
     // No new `RuleSetId` — `RuleSetId::Crb` is the oldest in the enum — so
     // registering this family moved no other kind's status.
@@ -755,7 +772,7 @@ mod tests {
             }
         }
         assert_eq!(
-            unmodelled, 39,
+            unmodelled, 93,
             "expected Inner Sea Intrigue's three ClockworkFamiliarInstalledItem rows, \
              Bestiary 4's two `TYPE:Communicate.SpellLike` rows, Ultimate Wilderness's \
              15 `TYPE:SpecialQuaility` rows -- an UPSTREAM TYPO of the modelled \
@@ -766,9 +783,18 @@ mod tests {
              Rulebook's single `TYPE:NaturalAttack.…` row (round 8, `§65.2`), \
              round 9's three: Advanced Race Guide's two \
              `TYPE:RaceAbility.SpecialAbility` rows and the Advanced Player's \
-             Guide's one `TYPE:SkillChoice` row, and the four APG evolution-choice \
+             Guide's one `TYPE:SkillChoice` row, the four APG evolution-choice \
              rows (`TYPE:EvolutionChoice` x1, `TYPE:TempEvolutionChoice` x3) that \
-             the same re-attribution gave an owner for the first time; \
+             the same re-attribution gave an owner for the first time, and \
+             `AT-34-E3-001`'s 54 Core Rulebook rows -- the book-wide-granted \
+             generic Animal Companion progression table (`decisions.md §66`): \
+             31 `TYPE:AnimalCompanionFeat` feat-pool rows, 14 `TYPE:AnimalTrick` \
+             trick rows, 6 `TYPE:CompStatChoice` by-level stat rows \
+             (`Companion Stat ~ STR/DEX/CON/INT/WIS/CHA`), and 3 \
+             `TYPE:CompChoice`/`TYPE:Special` rows (`+2 to Dexterity and \
+             Constitution`, `Companion Advancement`, `Companion Skills`) -- \
+             none of which is a feat, a special quality, or a special attack \
+             the way `CompanionAbilityFacet` models those concepts; \
              a change here means a book's shape moved"
         );
         // Round 9's three, named so the count above cannot be satisfied by a
@@ -888,10 +914,17 @@ mod tests {
             .filter(|a| a.facet.is_none())
             .map(|a| a.key)
             .collect();
+        // 55 total since `AT-34-E3-001`: round 8's single `Crocodile ~ Tail
+        // Slap` plus the 54 book-wide-granted Animal Companion progression
+        // rows asserted (by count and type_segments breakdown) above.
         assert_eq!(
-            crb_unmodelled,
-            vec!["Crocodile ~ Tail Slap"],
-            "Core Rulebook's unmodelled-facet rows"
+            crb_unmodelled.len(),
+            55,
+            "Core Rulebook's unmodelled-facet rows: {crb_unmodelled:?}"
+        );
+        assert!(
+            crb_unmodelled.contains(&"Crocodile ~ Tail Slap"),
+            "round 8's row must still be among them: {crb_unmodelled:?}"
         );
         let tail_slap = crb
             .companion_ability_resolve("Crocodile ~ Tail Slap")
@@ -963,12 +996,41 @@ mod tests {
             }
         }
         assert_eq!(
-            rows_with_variants, 11,
-            "8 from Ultimate Wilderness plus round 9's 3 from Ultimate Magic. UW's `.lst` has \
-             22 multi-DESC rows and ships 8, because the other 14 are archetype rows this \
-             chassis drops as orphans. The two numbers answering different questions is the \
-             point -- a test pinned to 22 would be asserting a fact about a file, not about \
-             the table"
+            rows_with_variants, 13,
+            "8 from Ultimate Wilderness plus round 9's 3 from Ultimate Magic plus \
+             `AT-34-E3-001`'s 2 from Core Rulebook (`Animal Trick ~ Attack`, `Animal \
+             Companion Feat ~ Toughness` -- both book-wide-granted, `decisions.md §66`). \
+             UW's `.lst` has 22 multi-DESC rows and ships 8, because the other 14 are \
+             archetype rows this chassis drops as orphans. The two numbers answering \
+             different questions is the point -- a test pinned to 22 would be asserting a \
+             fact about a file, not about the table"
+        );
+
+        // `AT-34-E3-001`: Core Rulebook's two multi-DESC rows, named individually for
+        // the same reason Ultimate Magic's are below. Both shapes carry exactly one
+        // UNGATED token plus one gated token, so `description` is `Some` for both --
+        // unlike Ultimate Magic's `Giant Slug Companion ~ Acid`, which has none.
+        let crb_variants = companion_book("core_rulebook").expect("registered book");
+        let attack = crb_variants
+            .companion_ability_resolve("Animal Trick ~ Attack")
+            .expect("Core Rulebook defines it");
+        assert_eq!(attack.description_variants.len(), 2, "Animal Trick ~ Attack");
+        assert!(
+            attack.description.is_some(),
+            "Animal Trick ~ Attack has one ungated DESC: token, which must be promoted"
+        );
+        assert!(
+            attack.description_variants.iter().any(|v| v.conditions.is_empty()),
+            "Animal Trick ~ Attack: the base trick description is stated unconditionally"
+        );
+        let toughness = crb_variants
+            .companion_ability_resolve("Animal Companion Feat ~ Toughness")
+            .expect("Core Rulebook defines it");
+        assert_eq!(toughness.description_variants.len(), 2, "Animal Companion Feat ~ Toughness");
+        assert!(
+            toughness.description.is_some(),
+            "Animal Companion Feat ~ Toughness has one ungated DESC: token, which must be \
+             promoted"
         );
 
         // Round 9: Ultimate Magic is the SECOND book to carry the shape, and
