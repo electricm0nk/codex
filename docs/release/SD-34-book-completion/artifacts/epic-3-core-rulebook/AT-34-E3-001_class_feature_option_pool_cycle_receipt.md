@@ -8,7 +8,7 @@ rows (3, pending a `decisions.md §2` ruling), Domain Power `CLASS_FEATURE_POOLS
 gap (2). This cycle takes the cheapest closable sub-cause — the 3 vacuous placeholder rows —
 files the required atlas defect first, then closes them with a real fix.
 
-- **Commit SHA:** `<filled after commit>` (parent `7b91859b35`).
+- **Commit SHA:** `6040c33306` (parent `7b91859b35`).
 - **Files touched:**
   - `src/rules_core/class_feature_pool_catalog.rs` — new
     `VACUOUS_PLACEHOLDER_CLASS_FEATURES` (a closed, 3-entry named list, never a shape predicate)
@@ -242,7 +242,7 @@ CLASS_FEATURE_POOLS registration gap` (2). `28+13+9+2 = 52` — matches exactly.
   `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop`): `cargo test --locked --no-run` →
   clean, exit 0. Not required by this cycle's own file-touch set (nothing under `apps/desktop/`
   changed) — run anyway for the widest-scope bar (`decisions.md §10`).
-- Run at SHA: `<this cycle's own commit, filled after commit>`.
+- Run at SHA: `6040c33306`.
 
 ## RED → GREEN (TDD)
 
