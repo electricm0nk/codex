@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9809,
+        "line": 9844,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,51 +14,51 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9507,
+        "line": 9542,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 14118,
+      "count": 14121,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9732,
+        "line": 9767,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
-      "count": 4388,
+      "count": 4411,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
       "meaning": "held and computed, never surfaced"
     },
     "D": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8471,
+        "line": 8473,
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2480,
+      "count": 2416,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
     "DONE": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8499,
+        "line": 8501,
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 13750,
+      "count": 13788,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
     "M": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8606,
+        "line": 8608,
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
@@ -69,7 +69,7 @@
     "U": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8558,
+        "line": 8560,
         "must_contain": "unmeasurable"
       },
       "clears": "instrument correction",
@@ -80,7 +80,7 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10445,
+        "line": 10480,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
@@ -91,7 +91,7 @@
     "X": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8518,
+        "line": 8520,
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
@@ -102,7 +102,7 @@
     "Z": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8379,
+        "line": 8381,
         "must_contain": "not-started"
       },
       "clears": "ordinary work",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "79fc41ccd0510c32c771d83711e96d57bd980d6f",
+  "derived_at": "1c4c47911038030c1f52b95b9ce093087bb6e3ec",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -123,38 +123,28 @@
   "sub_causes": {
     "D": {
       "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 294,
-      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 156,
+      "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 153,
       "class_feature_of_unmodelled_corpus_class:adaptive_warrior": 18,
-      "class_feature_of_unmodelled_corpus_class:adept": 23,
       "class_feature_of_unmodelled_corpus_class:aldori_swordlord": 13,
       "class_feature_of_unmodelled_corpus_class:animal": 23,
-      "class_feature_of_unmodelled_corpus_class:arcane_archer": 8,
-      "class_feature_of_unmodelled_corpus_class:arcane_trickster": 8,
       "class_feature_of_unmodelled_corpus_class:argent_dramaturge": 2,
-      "class_feature_of_unmodelled_corpus_class:aristocrat": 2,
       "class_feature_of_unmodelled_corpus_class:asavir": 20,
       "class_feature_of_unmodelled_corpus_class:aspis_agent": 9,
-      "class_feature_of_unmodelled_corpus_class:assassin": 17,
       "class_feature_of_unmodelled_corpus_class:battle_herald": 11,
       "class_feature_of_unmodelled_corpus_class:bellflower_tiller": 7,
       "class_feature_of_unmodelled_corpus_class:body_snatcher": 19,
       "class_feature_of_unmodelled_corpus_class:cerebremancer": 10,
-      "class_feature_of_unmodelled_corpus_class:commoner": 2,
       "class_feature_of_unmodelled_corpus_class:construct": 2,
       "class_feature_of_unmodelled_corpus_class:cyphermage": 17,
       "class_feature_of_unmodelled_corpus_class:dark_tempest": 6,
       "class_feature_of_unmodelled_corpus_class:demoniac": 7,
       "class_feature_of_unmodelled_corpus_class:diabolist": 10,
       "class_feature_of_unmodelled_corpus_class:divine_scion": 46,
-      "class_feature_of_unmodelled_corpus_class:dragon": 6,
-      "class_feature_of_unmodelled_corpus_class:dragon_disciple": 16,
-      "class_feature_of_unmodelled_corpus_class:duelist": 22,
+      "class_feature_of_unmodelled_corpus_class:dragon": 15,
       "class_feature_of_unmodelled_corpus_class:eidolon": 16,
-      "class_feature_of_unmodelled_corpus_class:eldritch_knight": 4,
       "class_feature_of_unmodelled_corpus_class:elocater": 21,
       "class_feature_of_unmodelled_corpus_class:enchanting_courtesan": 12,
       "class_feature_of_unmodelled_corpus_class:evangelist": 5,
-      "class_feature_of_unmodelled_corpus_class:expert": 3,
       "class_feature_of_unmodelled_corpus_class:gifted_blade": 3,
       "class_feature_of_unmodelled_corpus_class:golden_legionnaire": 16,
       "class_feature_of_unmodelled_corpus_class:gray_corsair": 9,
@@ -164,7 +154,7 @@
       "class_feature_of_unmodelled_corpus_class:horizon_walker": 4,
       "class_feature_of_unmodelled_corpus_class:lantern_bearer": 11,
       "class_feature_of_unmodelled_corpus_class:lion_blade": 15,
-      "class_feature_of_unmodelled_corpus_class:loremaster": 6,
+      "class_feature_of_unmodelled_corpus_class:magaambyan_arcanist": 11,
       "class_feature_of_unmodelled_corpus_class:mammoth_rider": 15,
       "class_feature_of_unmodelled_corpus_class:master_chymist": 7,
       "class_feature_of_unmodelled_corpus_class:master_spy": 16,
@@ -172,23 +162,25 @@
       "class_feature_of_unmodelled_corpus_class:metamind": 11,
       "class_feature_of_unmodelled_corpus_class:metamorph": 19,
       "class_feature_of_unmodelled_corpus_class:mystic_archer": 7,
-      "class_feature_of_unmodelled_corpus_class:mystic_theurge": 3,
       "class_feature_of_unmodelled_corpus_class:nature_warden": 14,
       "class_feature_of_unmodelled_corpus_class:ooze": 1,
-      "class_feature_of_unmodelled_corpus_class:pathfinder_chronicler": 14,
       "class_feature_of_unmodelled_corpus_class:pathfinder_delver": 10,
       "class_feature_of_unmodelled_corpus_class:pathfinder_savant": 15,
       "class_feature_of_unmodelled_corpus_class:phantom": 24,
-      "class_feature_of_unmodelled_corpus_class:phrenic_slayer": 31,
+      "class_feature_of_unmodelled_corpus_class:phrenic_slayer": 47,
       "class_feature_of_unmodelled_corpus_class:plant": 9,
       "class_feature_of_unmodelled_corpus_class:psicrystal_imprinter": 14,
+      "class_feature_of_unmodelled_corpus_class:psion_uncarnate": 19,
+      "class_feature_of_unmodelled_corpus_class:psychic_detective": 18,
+      "class_feature_of_unmodelled_corpus_class:psychic_fist": 18,
+      "class_feature_of_unmodelled_corpus_class:psychic_warrior": 18,
       "class_feature_of_unmodelled_corpus_class:pure_legion_enforcer": 15,
       "class_feature_of_unmodelled_corpus_class:pyrokineticist": 13,
       "class_feature_of_unmodelled_corpus_class:rage_prophet": 11,
       "class_feature_of_unmodelled_corpus_class:rivethun_emissary": 9,
+      "class_feature_of_unmodelled_corpus_class:rogue": 1,
       "class_feature_of_unmodelled_corpus_class:sanguine_angel": 17,
       "class_feature_of_unmodelled_corpus_class:sentinel": 1,
-      "class_feature_of_unmodelled_corpus_class:shadowdancer": 16,
       "class_feature_of_unmodelled_corpus_class:sighted_seeker": 25,
       "class_feature_of_unmodelled_corpus_class:soul_archer": 7,
       "class_feature_of_unmodelled_corpus_class:stalwart_defender": 21,
@@ -201,9 +193,8 @@
       "class_feature_of_unmodelled_corpus_class:ulfen_guard": 8,
       "class_feature_of_unmodelled_corpus_class:undead": 13,
       "class_feature_of_unmodelled_corpus_class:war_mind": 17,
-      "class_feature_of_unmodelled_corpus_class:warrior": 44,
       "class_feature_of_unmodelled_corpus_class:westcrown_devil": 11,
-      "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 21,
+      "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 38,
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
       "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 103,
       "race_trait_record_loaded_but_never_applies": 53,

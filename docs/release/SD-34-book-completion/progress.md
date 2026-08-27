@@ -22,13 +22,17 @@ Epic 2 is closed at 4 of 4 (AT-34-E2-001..004). Epic 3 (Core Rulebook to zero) i
 AT-34-E3-001's escalation was cleared by orchestrator ruling (`decisions.md §14`) into nine
 named mechanisms totalling 1,006 of 1,006 — dispatched one per cycle, cheapest-first. Cycle 1
 cleared the `template`/`ability` reattribution mechanism (29 of 1035); the `domain` mechanism
-cycle cleared the smallest (1 of 1,006); this cycle cleared `race_trait_absent_from_race_traits`
-(9 of 1,006 — see the cycle log below for a self-caught correction: the atlas's own
-bucket-B/D partition, not a loose `engine-does-not-hold` status filter, is what proves this
-9-unit closure real). AT-34-E3-001 itself does not close yet — `core_rulebook`'s real,
-atlas-partitioned bucket B is 996 of 6,701 (`python3 scripts/completion_atlas.py --book
-core_rulebook --check`), and seven of the nine named mechanisms remain. See the cycle log
-below; `## Open blockers` is empty.
+cycle cleared the smallest (1 of 1,006); the next cycle cleared `race_trait_absent_from_race_traits`
+(9 of 1,006); this cycle cleared `class_absent_from_ClassId_ALL_and_book_class_id_enums`
+(17 of 1,006 — CRB's ten prestige classes registered from `prestige_class_entry_gate`'s
+existing real registry, and a new `crb_untabled_class_chassis.rs` module gives the five NPC
+classes plus Ex-Barbarian/Ex-Paladin a real, corpus-formula-derived chassis; see the cycle
+log below for a cross-book class-feature attribution side effect this cycle found, reasoned
+through, and self-healed, plus a pre-existing `cargo test --locked --lib` failure this
+cycle's own §6 step 3 run discovered and re-pinned). AT-34-E3-001 itself does not close yet —
+`core_rulebook`'s real, atlas-partitioned bucket B is 995 of 6,701 (`python3
+scripts/completion_atlas.py --book core_rulebook --check`), and six of the nine named
+mechanisms remain. See the cycle log below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -46,6 +50,76 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`class_absent_from_ClassId_ALL_and_book_class_id_enums` mechanism) — one of nine, `decisions.md §14`
+
+**Status: complete (own mechanism only).** Re-derived population at cycle start
+(`ae25d75d7d`): `class_absent_from_ClassId_ALL_and_book_class_id_enums` = **17 of 1,006**
+remaining `core_rulebook` bucket-B units (matches the brief's and `decisions.md §14`'s stated
+figure, verified not assumed). `modelled_class_books()` (`v06_work_inventory.rs`) — the map
+`classify()`'s `Kind::Class` arm consults for "does the engine model a class of this name at
+all" — was scoped to base classes only; CRB's 28 real `CLASS:` records also include 10
+`TYPE:PC.Prestige` classes, 5 `TYPE:Base.NPC` classes, and 2 `TYPE:Base.PC, VISIBLE:NO` `Ex-*`
+variant states (Ex-Barbarian, Ex-Paladin), none registered anywhere. Fix, in two parts: (1)
+the ten prestige classes needed **zero new chassis code** — `prestige_class_entry_gate.rs`
+already carries a real, corpus-derived entry-requirement registry for them (SD-32
+`AT-32-E3-001`), already wired into `compute_class_chassis`, simply never read by
+`modelled_class_books()`; registering from that existing registry respects SD-32's own
+deferral of a FULL prestige-class chassis (six of the ten need caster-level stacking this
+codebase does not have) without reopening it. (2) The seven NPC/`Ex-*` classes needed a
+genuinely new, small chassis — direct read of their corpus `raw_tokens` confirmed every one
+uses the identical `classlevel("APPLIEDAS=NONEPIC")`-based BAB/save formula shape CRB's real
+base classes use, so a new module (`crb_untabled_class_chassis.rs`) evaluates each class's own
+corpus formula string via `PcgenFormulaEvaluator` — the same evaluator `generic_class_chassis.rs`
+already proved against 61 other classes across 14 other books — rather than a hand-typed
+table, and rather than widening that shared module's own book list (its population is
+mirrored byte-for-byte in `apps/desktop/src-tauri`'s separate `class_catalog_generic.rs`).
+Both registrations key `class_books` on the corpus's own **lowercased display name** (a space
+for a multi-word class), never the registry's underscored `class_id` slug — a name-namespace
+mismatch that would otherwise silently defeat `classify()`'s own lookup.
+
+**Discovery 1, reasoned through and self-healed, not silently shipped.** Registering
+common-English-word class names (`warrior`, `assassin`, `expert`, `adept`, `aristocrat`,
+`commoner`) exposed a latent, pre-existing property of `class_feature_owner`'s whole-corpus
+suffix/prefix matching: a shorter, newly-modelled class name can win a match against an
+unrelated compound group text from a DIFFERENT book (e.g. `ultimate_psionics`'s own distinct
+"Adaptive Warrior" class) purely because the true, more specific candidate was never itself a
+`class_books` entry to lose to. Verified this is not new — the identical misattribution
+already existed via the `corpus_class_names` fallback before this cycle (confirmed against the
+committed inventory) — and verified the two statuses that actually matter cannot be falsely
+earned regardless: `grounded` requires an EXACT group==owner match (never suffix/prefix), and
+`text-complete` is gated by a real, owner-independent per-record whitelist
+(`class_feature_pool_catalog_holds`). A cross-check guard was added anyway, restoring identical
+behavior for the genuine collision cases while leaving same-name matches untouched (full
+`cargo test --bin v06_work_inventory` 374/374 and `cargo test --locked --lib` 2,863/2,863 stay
+green). Net, outside `core_rulebook`: 187 units across 8 other books relabel evidence strings
+(19 of them genuine, independently-earned `text-complete` unlocks; none reaches `grounded`
+falsely); reported honestly as this cycle's own reclassification side effect, not folded into
+this mechanism's own count.
+
+**Discovery 2: a stale, pre-existing `cargo test --locked --lib` failure, found by this
+cycle's own §6 step 3 run, not caused by it.** `formula_interpreter_corpus_wide.rs`'s
+F1-population pin (6,257, set by SD-33's own closure) was already RED at this cycle's own
+start SHA `ae25d75d7d` — confirmed by a clean worktree there with ZERO of this cycle's edits,
+reproducing the identical `left: 5563, right: 6257` failure. `docs/work-inventory.json` was
+regenerated four more times after that pin without a `cargo test --locked --lib` re-run
+(the exact "run the suite after the last write that can move it" lesson, recurring across a
+DIFFERENT set of cycles than the ones that lesson already names). Re-pinned to 5,563, verified
+two independent ways (this cycle's own final inventory, and `ae25d75d7d`'s own untouched
+committed copy — both 5,563), logged as a `correction` retro event.
+
+RED→GREEN proven for the registration itself (temporarily zeroing
+`crb_untabled_class_chassis::covered_classes()` reproduced the exact `class_absent...`
+failure for the intended reason, not a panic elsewhere). `docs/work-inventory.json`
+regenerated (guarded path, `CORPUS_LITERAL_SWEEP_REPORT` + `DERIVED_FIXTURE_CHECK_REPORT` set
+from this session's own fresh runs, no `--allow-stamp-loss`): `corpus_literal_sweep`
+`48,708 -> 48,708` examined (delta 0, exact match — this cycle adds no corpus records, CLEAN).
+`core_rulebook` bucket B: `996 -> 995` (not a clean `-17`: `-17` this mechanism, `+16` a
+legitimate same-book, same-word reattribution of `core_rulebook`'s own class_feature records
+for these seven newly-modelled classes onto a DIFFERENT, unowned bucket-B mechanism,
+`class_feature_owner_matched_by_name_but_record_not_held_by_engine`). Ten `BUCKET_DEFINITIONS`
+`file:line` citations in `scripts/completion_atlas.py` re-derived and corrected
+(`citation_failures` `10 -> 0`).
 
 ### Cycle — AT-34-E3-001 (`race_trait_absent_from_race_traits` mechanism) — one of nine, `decisions.md §14`
 

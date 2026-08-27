@@ -217,6 +217,12 @@ pub(crate) mod companion_base_stat_table;
 /// comment. `pub(crate)`: `resolve` is called from `compute_class_chassis` below (same crate);
 /// no `apps/desktop/src-tauri` caller exists yet.
 mod generic_class_chassis;
+/// SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_from_
+/// ClassId_ALL_and_book_class_id_enums`) -- see its own module doc comment.
+/// `pub`: `modelled_class_books()` in `src/bin/v06_work_inventory.rs` (a
+/// separate compilation unit) calls `covered_classes()` directly, the same
+/// visibility shape `untabled_base_class_chassis` already uses.
+pub mod crb_untabled_class_chassis;
 mod domain_power;
 use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
@@ -26972,6 +26978,62 @@ fn compute_class_chassis(
                 "{} ({}) level {} base Will save from \
                  pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
                  class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.will
+            ),
+        });
+        Some((base_attack_bonus, base_saves))
+    } else if let Some(row) =
+        crb_untabled_class_chassis::resolve(&class_level.class_id, class_level.level)
+    {
+        // SD-34 `AT-34-E3-001` (`decisions.md §14`): CRB's five NPC classes
+        // and two `Ex-*` variant states (Adept, Aristocrat, Commoner,
+        // Expert, Warrior, Ex-Barbarian, Ex-Paladin) -- real corpus records
+        // `ClassId::ALL` never carried, evaluated via the class's own
+        // corpus `BONUS:COMBAT|BASEAB`/`BONUS:SAVE` formula strings, same
+        // shape as the `generic_class_chassis`/`untabled_base_class_
+        // chassis` arms above. See `crb_untabled_class_chassis`'s own
+        // module doc for why CRB's ten prestige classes are deliberately
+        // NOT resolved here.
+        let base_attack_bonus = row.base_attack_bonus;
+        let base_saves =
+            BaseSaves { fortitude: row.fort_save, reflex: row.ref_save, will: row.will_save };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_attack_bonus".to_owned(),
+            value: base_attack_bonus,
+            detail: format!(
+                "{} ({}) level {} base attack bonus from \
+                 pilot_compute::crb_untabled_class_chassis::resolve's corpus-derived formula for \
+                 this class: {base_attack_bonus}",
+                row.display_name, class_level.class_id, class_level.level
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.fortitude".to_owned(),
+            value: base_saves.fortitude,
+            detail: format!(
+                "{} ({}) level {} base Fortitude save from \
+                 pilot_compute::crb_untabled_class_chassis::resolve's corpus-derived formula for \
+                 this class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.fortitude
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.reflex".to_owned(),
+            value: base_saves.reflex,
+            detail: format!(
+                "{} ({}) level {} base Reflex save from \
+                 pilot_compute::crb_untabled_class_chassis::resolve's corpus-derived formula for \
+                 this class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.reflex
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.will".to_owned(),
+            value: base_saves.will,
+            detail: format!(
+                "{} ({}) level {} base Will save from \
+                 pilot_compute::crb_untabled_class_chassis::resolve's corpus-derived formula for \
+                 this class: {}",
                 row.display_name, class_level.class_id, class_level.level, base_saves.will
             ),
         });

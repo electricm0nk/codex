@@ -60,6 +60,8 @@ use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis, race_ids_with_a_magnitude_consumer,
 };
 use codex::rules_core::pilot_compute::untabled_base_class_chassis;
+use codex::rules_core::pilot_compute::crb_untabled_class_chassis;
+use codex::rules_core::pilot_compute::prestige_class_entry_gate;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
@@ -9413,7 +9415,40 @@ fn classify(
             // carries the identical safety argument (never a false
             // `grounded`), and is a pure ADDITION after the first two, never
             // a replacement.
-            let Some(owner) = class_feature_owner(&unit.key, facts.class_books.keys())
+            //
+            // SD-34 `AT-34-E3-001` discovery, guarded rather than carried:
+            // `class_feature_owner`'s tie-break picks the LONGEST name in
+            // the CANDIDATE LIST it is given, so when the true, more
+            // specific owner is a real corpus class that simply is not YET
+            // modelled (absent from `facts.class_books`), a SHORTER,
+            // unrelated but modelled class whose name happens to be a
+            // whole-word suffix of the group text can win by default --
+            // e.g. registering CRB's own `"warrior"` here (a short, common
+            // English word) let `"Adaptive Warrior ~ ..."` (`ultimate_
+            // psionics`'s own distinct, still-unmodelled base class,
+            // `"adaptive warrior"` ends with `" warrior"`) resolve to CRB's
+            // unrelated NPC class merely because `"adaptive_warrior"` itself
+            // was never a `class_books` candidate to lose to. Confirmed by
+            // direct comparison against the committed inventory: every
+            // affected record's PRE-existing evidence was already
+            // `class_feature_of_unmodelled_corpus_class:<the correct, more
+            // specific name>`, derived from this exact matcher run against
+            // the WIDER `facts.corpus_class_names` universe a few lines
+            // below -- so the true best match was already known, just not
+            // consulted here. Cross-checking against that same wider
+            // universe before trusting a `class_books` match restores
+            // identical behavior for every such case (a real corpus class that
+            // out-specifies the modelled candidate always wins, exactly as
+            // before) while leaving every genuine same-name match --
+            // including these seven CRB classes' own real `data/corpus/
+            // core_rulebook/class_feature/` records, where the modelled name
+            // IS the corpus's own best match too -- untouched.
+            let modelled_owner = class_feature_owner(&unit.key, facts.class_books.keys());
+            let corpus_wide_owner = class_feature_owner(&unit.key, facts.corpus_class_names.iter());
+            let key_group_owner = modelled_owner.filter(|candidate| {
+                corpus_wide_owner.as_deref().is_none_or(|widest| widest == candidate.as_str())
+            });
+            let Some(owner) = key_group_owner
                 .or_else(|| {
                     class_feature_owner_via_type_facet(
                         unit.type_facet.as_deref(),
@@ -10767,6 +10802,35 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
             ),
         };
         class_books.insert(bare_name, book);
+    }
+    // SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_
+    // from_ClassId_ALL_and_book_class_id_enums`): CRB's ten prestige
+    // classes already have a REAL registration -- `prestige_class_entry_
+    // gate`'s own corpus-derived registry genuinely evaluates their `PRE*`
+    // entry requirements in `compute_class_chassis` (see that module's own
+    // doc comment) -- it was simply never read here either, for the same
+    // reason the 20-class registry above wasn't. This key is the corpus
+    // display name, lowercased AS-IS (never underscore-slugged): `classify`'s
+    // `Kind::Class` arm looks up `unit.name.to_lowercase()`, which for a
+    // multi-word class like "Arcane Archer" is `"arcane archer"` (a space),
+    // not `"arcane_archer"` -- the `class_id` field's own underscore
+    // convention belongs to a different namespace (`pilot_compute`'s
+    // runtime dispatch strings) and must never be substituted here.
+    for req in prestige_class_entry_gate::prestige_class_entry_requirements() {
+        if req.source_book == "core_rulebook" {
+            class_books.insert(req.display_name.to_lowercase(), "core_rulebook");
+        }
+    }
+    // SD-34 `AT-34-E3-001`: CRB's five NPC classes and two `Ex-*` variant
+    // states (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian,
+    // Ex-Paladin) -- real corpus records with real `BONUS:COMBAT|BASEAB`/
+    // `BONUS:SAVE` formulas, now genuinely evaluated by `crb_untabled_
+    // class_chassis::resolve` in `compute_class_chassis`
+    // (`pilot_compute/mod.rs`). Same lowercased-display-name key
+    // convention as the prestige loop just above, for the identical
+    // reason.
+    for meta in crb_untabled_class_chassis::covered_classes() {
+        class_books.insert(meta.display_name.to_lowercase(), "core_rulebook");
     }
     class_books
 }
@@ -16710,6 +16774,96 @@ mod modelled_class_books_registry_tests {
         // than only the loop's abstraction.
         assert_eq!(class_books.get("kineticist"), Some(&"occult_adventures"));
         assert_eq!(class_books.get("vigilante"), Some(&"ultimate_intrigue"));
+    }
+
+    /// SD-34 `AT-34-E3-001` (`decisions.md §14`): CRB's ten prestige classes,
+    /// registered from `prestige_class_entry_gate`'s own real registry.
+    /// Keys are the corpus display name lowercased AS-IS (a space for a
+    /// multi-word class), matching `classify`'s own `unit.name.to_lowercase()`
+    /// lookup -- NOT the registry's underscored `class_id` slug, which is a
+    /// different namespace entirely (see the registration site's own
+    /// comment).
+    #[test]
+    fn all_ten_crb_prestige_classes_are_registered_from_the_entry_gate_registry_itself() {
+        let class_books = modelled_class_books();
+        let crb_prestige: Vec<_> = prestige_class_entry_gate::prestige_class_entry_requirements()
+            .iter()
+            .filter(|req| req.source_book == "core_rulebook")
+            .collect();
+        assert_eq!(crb_prestige.len(), 10, "population drifted; re-run the entry-gate census");
+        for req in &crb_prestige {
+            assert_eq!(
+                class_books.get(req.display_name.to_lowercase().as_str()),
+                Some(&"core_rulebook"),
+                "{} must be registered under its own lowercased display name",
+                req.display_name
+            );
+        }
+        // Spot check a multi-word name explicitly, so a reader sees the
+        // space form (not the registry's own underscored `class_id`).
+        assert_eq!(class_books.get("arcane archer"), Some(&"core_rulebook"));
+        assert_eq!(class_books.get("mystic theurge"), Some(&"core_rulebook"));
+        assert_eq!(class_books.get("arcane_archer"), None, "the class_id underscore slug must never leak in as a key");
+    }
+
+    /// SD-34 `AT-34-E3-001`: CRB's five NPC classes and two `Ex-*` variant
+    /// states, registered from `crb_untabled_class_chassis`'s own
+    /// corpus-derived registry.
+    #[test]
+    fn all_seven_crb_npc_and_ex_classes_are_registered_from_their_own_registry() {
+        let class_books = modelled_class_books();
+        let covered = crb_untabled_class_chassis::covered_classes();
+        assert_eq!(covered.len(), 7, "population drifted; re-check the seven corpus class files");
+        for meta in &covered {
+            assert_eq!(
+                class_books.get(meta.display_name.to_lowercase().as_str()),
+                Some(&"core_rulebook"),
+                "{} must be registered under its own lowercased display name",
+                meta.display_name
+            );
+        }
+        assert_eq!(class_books.get("warrior"), Some(&"core_rulebook"));
+        assert_eq!(class_books.get("ex-barbarian"), Some(&"core_rulebook"));
+    }
+
+    /// The bucket-B closure itself: a `Kind::Class` record for one of these
+    /// 17 CRB classes no longer reports `class_absent_from_ClassId_ALL_and_
+    /// book_class_id_enums` once `modelled_class_books()` registers it --
+    /// it lands on the honest middle evidence instead (no probe observation
+    /// wired for it, which is a different, unowned mechanism), never
+    /// silently promoted to `grounded`.
+    #[test]
+    fn a_previously_absent_crb_class_leaves_this_mechanism_once_registered() {
+        let mut facts = EngineFacts::default();
+        facts.class_books = modelled_class_books();
+        // deliberately NOT inserted into `class_effect_wired`
+        for (name, source_book) in
+            [("Arcane Archer", "core_rulebook"), ("Warrior", "core_rulebook"), ("Ex-Barbarian", "core_rulebook")]
+        {
+            let unit = CorpusUnit {
+                book: source_book.to_string(),
+                source_book: source_book.to_string(),
+                kind: Kind::Class,
+                key: name.to_string(),
+                name: name.to_string(),
+                origin: Origin::Declared,
+                provenance: Provenance { file: "cr_classes.lst".to_string(), line: 1 },
+                magnitude_token_count: 1,
+                type_facet: None,
+                visible: true,
+            };
+            let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+            assert_ne!(
+                verdict.evidence,
+                "class_absent_from_ClassId_ALL_and_book_class_id_enums",
+                "{name} must leave this mechanism now that it is registered"
+            );
+            assert_eq!(
+                verdict.evidence,
+                "class_modelled_but_no_observed_delta_on_the_rendered_snapshot",
+                "{name} is registered but not probe-observed -- a different, unowned mechanism"
+            );
+        }
     }
 
     /// The class-probe's own real compute sweep now finds an attributable
