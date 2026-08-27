@@ -92,6 +92,7 @@
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
-    "computed:tempbonus"
+    "computed:tempbonus",
+    "derived:prose_expr"
   ]
 }

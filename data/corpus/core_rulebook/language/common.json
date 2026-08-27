@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:10Z",
   "data": {
     "key": "Common",
     "name": "Common",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_languages.lst",
-    "sha256": "52673db34716373afac7d7777cbad3253df924f998a63ec53ad57f78a5e4b4b7",
-    "line": 11,
-    "record_key": "Common"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_languages.lst",
+    "record_key": "Common",
+    "sha256": "52673db34716373afac7d7777cbad3253df924f998a63ec53ad57f78a5e4b4b7"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

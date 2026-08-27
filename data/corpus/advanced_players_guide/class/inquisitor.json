@@ -263,7 +263,6 @@
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
-    "derived:bonus",
-    "static:literal_magnitudes_only"
+    "derived:bonus"
   ]
 }

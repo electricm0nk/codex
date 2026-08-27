@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Poison, Inhaled; Fort DC 20; Freq. 1 round (5); Effect 1 Wis damage and 1 Wis drain; Cure 2 consecutive saves",
     "key": "Nightmare Vapor",
     "name": "Nightmare Vapor",
-    "description": "Poison, Inhaled; Fort DC 20; Freq. 1 round (5); Effect 1 Wis damage and 1 Wis drain; Cure 2 consecutive saves",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -29,20 +28,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
-    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
-    "line": 69,
-    "record_key": "Nightmare Vapor"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 69,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "Nightmare Vapor",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your hours of meditation on inner perfection and the nature of strength and speed allows you to focus your thoughts to achieve things your body might not normally be able to do on its own. Select any Strength-based skill. You make checks with that skill using your Wisdom modifier instead of the skill's normal ability score. That skill is always a class skill for you.",
     "key": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_236)",
     "name": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_236)",
-    "description": "Your hours of meditation on inner perfection and the nature of strength and speed allows you to focus your thoughts to achieve things your body might not normally be able to do on its own. Select any Strength-based skill. You make checks with that skill using your Wisdom modifier instead of the skill's normal ability score. That skill is always a class skill for you.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,23 +52,26 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 236,
-    "record_key": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_236)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "advanced_players_guide:apg_abilities.lst:236"
-  }
+    "coordinate": "advanced_players_guide:apg_abilities.lst:236",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 236,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_advanced_players_guide_apg_abilities_lst_236)",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

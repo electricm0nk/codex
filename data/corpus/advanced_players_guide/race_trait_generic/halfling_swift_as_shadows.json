@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Halflings possess incredible stealth even while moving through obstructed areas. Halflings with this racial trait reduce the penalty for using Stealth while moving by 5, and reduce the Stealth check penalty for sniping by 10.",
     "key": "Halfling ~ Swift as Shadows",
     "name": "Swift as Shadows",
-    "description": "Halflings possess incredible stealth even while moving through obstructed areas. Halflings with this racial trait reduce the penalty for using Stealth while moving by 5, and reduce the Stealth check penalty for sniping by 10.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
-    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
-    "line": 99,
-    "record_key": "Halfling ~ Swift as Shadows"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 99,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Halfling ~ Swift as Shadows",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

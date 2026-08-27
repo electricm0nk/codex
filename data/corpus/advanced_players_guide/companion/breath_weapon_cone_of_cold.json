@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:25:21Z",
   "data": {
+    "description": "%1' Cone of Cold %2d%3 cold, DC %4. Breath weapons allow a Reflex save for half damage. %5/day|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponConeColdTimes",
     "key": "Evolution ~ Breath Weapon (Cone of Cold)",
     "name": "Breath Weapon ~ Cone of Cold",
-    "description": "%1' Cone of Cold %2d%3 cold, DC %4. Breath weapons allow a Reflex save for half damage. %5/day|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponConeColdTimes",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -103,22 +103,23 @@
         "key": "ASPECT",
         "value": "Ability Benefit|(%1' Cone of Cold %2d%3 cold, DC %4, %5/day)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponConeColdTimes"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
-    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4",
-    "line": 174,
-    "record_key": "Evolution ~ Breath Weapon (Cone of Cold)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:25:21Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 174,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "record_key": "Evolution ~ Breath Weapon (Cone of Cold)",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

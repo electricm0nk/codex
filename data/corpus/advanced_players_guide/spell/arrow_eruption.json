@@ -81,9 +81,9 @@
     "record_key": "Arrow Eruption",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
-  "wiring_class": "ambiguous",
+  "wiring_class": "derived",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
-    "display:no_magnitude_token"
+    "derived:range_keyword"
   ]
 }

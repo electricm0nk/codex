@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Orcs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidOrc",
     "key": "Favored Enemy ~ Humanoid (Orc)",
     "name": "Humanoid (Orc)",
-    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Orcs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidOrc",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_race.lst",
-    "sha256": "f6ee56352d24d49bc05955f40296ba3db009530a488c78515b64238895f44f48",
     "line": 31,
-    "record_key": "Favored Enemy ~ Humanoid (Orc)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_race.lst",
+    "record_key": "Favored Enemy ~ Humanoid (Orc)",
+    "sha256": "f6ee56352d24d49bc05955f40296ba3db009530a488c78515b64238895f44f48"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

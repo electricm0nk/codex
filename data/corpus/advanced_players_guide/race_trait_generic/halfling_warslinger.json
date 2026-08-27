@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Halflings are experts at the use of the sling. Halflings with this racial trait can reload a sling as a free action. Reloading a sling still requires two hands and provokes attacks of opportunity.",
     "key": "Halfling ~ Warslinger",
     "name": "Warslinger",
-    "description": "Halflings are experts at the use of the sling. Halflings with this racial trait can reload a sling as a free action. Reloading a sling still requires two hands and provokes attacks of opportunity.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
-    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
-    "line": 102,
-    "record_key": "Halfling ~ Warslinger"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 102,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Halfling ~ Warslinger",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

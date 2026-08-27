@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "SPELL ~ Aspect of the Falcon",
     "name": "SPELL ~ Aspect of the Falcon",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -25,20 +24,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 363,
-    "record_key": "SPELL ~ Aspect of the Falcon"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 363,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "SPELL ~ Aspect of the Falcon",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

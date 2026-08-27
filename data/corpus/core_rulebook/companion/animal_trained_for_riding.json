@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:25:21Z",
   "data": {
+    "description": "An animal trained to bear a rider knows the tricks come, heel, and stay. Training an animal for riding takes 3 weeks.",
     "key": "Animal Training ~ Riding",
     "name": "Animal Trained for Riding",
-    "description": "An animal trained to bear a rider knows the tricks come, heel, and stay. Training an animal for riding takes 3 weeks.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -47,22 +47,22 @@
         "key": "SOURCEPAGE",
         "value": "p.98"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
-    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
-    "line": 158,
-    "record_key": "Animal Training ~ Riding"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:25:21Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 158,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Animal Training ~ Riding",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

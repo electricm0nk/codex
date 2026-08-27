@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Having lived outside of traditional elf society for much or all of your life, you know the world can be cruel, dangerous, and unforgiving of the weak. You gain a +1 trait bonus on Fortitude saving throws.",
     "key": "Trait ~ Forlorn",
     "name": "Forlorn",
-    "description": "Having lived outside of traditional elf society for much or all of your life, you know the world can be cruel, dangerous, and unforgiving of the weak. You gain a +1 trait bonus on Fortitude saving throws.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 186,
-    "record_key": "Trait ~ Forlorn"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 186,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Trait ~ Forlorn",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:33:12Z",
   "data": {
     "key": "Ex-Inquisitor",
     "name": "Ex-Inquisitor",
@@ -68,18 +66,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
-    "sha256": "fc0f627d301eca409b7441c5b54fdb452404ea8924163ec1abdad13308fd83db",
-    "line": 87,
-    "record_key": "Ex-Inquisitor"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:33:12Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 87,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+    "record_key": "Ex-Inquisitor",
+    "sha256": "fc0f627d301eca409b7441c5b54fdb452404ea8924163ec1abdad13308fd83db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

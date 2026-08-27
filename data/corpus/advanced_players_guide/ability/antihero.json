@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You have elected to rely only on your skills and abilities. You do not receive hero points, regardless of the source, and can never benefit from their use. In exchange, you receive a bonus feat at 1st level.",
     "key": "Antihero",
     "name": "Antihero",
-    "description": "You have elected to rely only on your skills and abilities. You do not receive hero points, regardless of the source, and can never benefit from their use. In exchange, you receive a bonus feat at 1st level.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 293,
-    "record_key": "Antihero"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 293,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Antihero",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

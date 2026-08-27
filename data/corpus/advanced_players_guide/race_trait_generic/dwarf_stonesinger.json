@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Some dwarves' affinity with the earth grants them greater powers. Dwarves with this racial trait are treated as 1 level higher when casting spells with the earth descriptor or using granted powers of the Earth domain, the bloodline powers of the earth elemental bloodline, and revelations of the oracle's stone mystery. This ability does not give the dwarf early access to level-based powers; it only affects powers the dwarf could use without this ability.",
     "key": "Dwarf ~ Stonesinger",
     "name": "Stonesinger",
-    "description": "Some dwarves' affinity with the earth grants them greater powers. Dwarves with this racial trait are treated as 1 level higher when casting spells with the earth descriptor or using granted powers of the Earth domain, the bloodline powers of the earth elemental bloodline, and revelations of the oracle's stone mystery. This ability does not give the dwarf early access to level-based powers; it only affects powers the dwarf could use without this ability.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,18 +55,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
-    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
-    "line": 22,
-    "record_key": "Dwarf ~ Stonesinger"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Dwarf ~ Stonesinger",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

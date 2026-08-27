@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Elves know the deep secrets of the wild like no others, especially those of the forests. Elves with this racial trait gain a +1 bonus on Knowledge (nature) and Survival checks. In forest terrain, these bonuses improve to +2.",
     "key": "Elf ~ Woodcraft",
     "name": "Woodcraft",
-    "description": "Elves know the deep secrets of the wild like no others, especially those of the forests. Elves with this racial trait gain a +1 bonus on Knowledge (nature) and Survival checks. In forest terrain, these bonuses improve to +2.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,18 +51,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
-    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
-    "line": 37,
-    "record_key": "Elf ~ Woodcraft"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Elf ~ Woodcraft",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

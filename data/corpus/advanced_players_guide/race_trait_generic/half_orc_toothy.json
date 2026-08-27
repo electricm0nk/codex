@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Some half-orcs' vestigial tusks are massive and sharp, granting a bite attack. This is a primary natural attack that deals 1d4 points of piercing damage.",
     "key": "Half-Orc ~ Toothy",
     "name": "Toothy",
-    "description": "Some half-orcs' vestigial tusks are massive and sharp, granting a bite attack. This is a primary natural attack that deals 1d4 points of piercing damage.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
-    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
-    "line": 87,
-    "record_key": "Half-Orc ~ Toothy"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 87,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Half-Orc ~ Toothy",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

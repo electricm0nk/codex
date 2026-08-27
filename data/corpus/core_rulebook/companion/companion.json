@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:25:21Z",
   "data": {
+    "description": null,
     "key": "Companion",
     "name": "Companion",
-    "description": null,
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "OUTPUTNAME",
@@ -99,22 +99,23 @@
         "key": "FACT",
         "value": "Abb|AC"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes_companion.lst",
-    "sha256": "71833282260577f42c86b839c8465060bfe228030a867ae4dd65ba51489a75fe",
-    "line": 6,
-    "record_key": "Companion"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:25:21Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes_companion.lst",
+    "record_key": "Companion",
+    "sha256": "71833282260577f42c86b839c8465060bfe228030a867ae4dd65ba51489a75fe"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

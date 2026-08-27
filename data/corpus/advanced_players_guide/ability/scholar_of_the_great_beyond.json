@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your great interests as a child did not lie with current events or the mundane-- you have always felt out of place, as if you were born in the wrong era. You gain a +1 trait bonus on Knowledge (History) and Knowledge (Planes) checks, and %1 is always a class skill for you.|%LIST",
     "key": "Trait ~ Scholar of the Great Beyond",
     "name": "Scholar of the Great Beyond",
-    "description": "Your great interests as a child did not lie with current events or the mundane-- you have always felt out of place, as if you were born in the wrong era. You gain a +1 trait bonus on Knowledge (History) and Knowledge (Planes) checks, and %1 is always a class skill for you.|%LIST",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,20 +52,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 36,
-    "record_key": "Trait ~ Scholar of the Great Beyond"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Trait ~ Scholar of the Great Beyond",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

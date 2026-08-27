@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Gnomes. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidGnome",
     "key": "Favored Enemy ~ Humanoid (Gnome)",
     "name": "Humanoid (Gnome)",
-    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Gnomes. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidGnome",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gnome/gnome_abilities_race.lst",
-    "sha256": "aa95c706e39ae8a191f89c092152b6a5a25ab27540dc35f0a8796aa8e67db38f",
     "line": 38,
-    "record_key": "Favored Enemy ~ Humanoid (Gnome)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gnome/gnome_abilities_race.lst",
+    "record_key": "Favored Enemy ~ Humanoid (Gnome)",
+    "sha256": "aa95c706e39ae8a191f89c092152b6a5a25ab27540dc35f0a8796aa8e67db38f"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

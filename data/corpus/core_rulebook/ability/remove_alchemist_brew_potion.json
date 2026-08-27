@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Alchemists receive the Extra Bombs feat at 1st level instead of Brew Potion.",
     "key": "Remove Alchemist Brew Potion",
     "name": "Remove Alchemist Brew Potion",
-    "description": "Alchemists receive the Extra Bombs feat at 1st level instead of Brew Potion.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -29,20 +28,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/_pfs/pfs_cr_abilities.lst",
-    "sha256": "12176a5cd49409c4d2423d869f78c80409c09dfcc2399bf5d39ee6c8c29818f3",
-    "line": 5,
-    "record_key": "Remove Alchemist Brew Potion"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/_pfs/pfs_cr_abilities.lst",
+    "record_key": "Remove Alchemist Brew Potion",
+    "sha256": "12176a5cd49409c4d2423d869f78c80409c09dfcc2399bf5d39ee6c8c29818f3"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

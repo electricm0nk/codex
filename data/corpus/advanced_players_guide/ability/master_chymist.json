@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Master Chymist",
     "name": "Master Chymist",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -21,20 +20,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
-    "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8",
-    "line": 16,
-    "record_key": "Master Chymist"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_globalvar.lst",
+    "record_key": "Master Chymist",
+    "sha256": "dc524c7cab9eebc2c9020a49423fc014c9a05cada1dd0471ed25d268cbec79c8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

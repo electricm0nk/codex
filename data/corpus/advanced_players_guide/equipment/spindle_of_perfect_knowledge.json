@@ -62,8 +62,8 @@
     "record_key": "Spindle of Perfect Knowledge",
     "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

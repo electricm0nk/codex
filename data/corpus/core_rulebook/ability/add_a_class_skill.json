@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "GM awarded PC with 1 class skill.",
     "key": "Add a Class Skill",
     "name": "Add a Class Skill",
-    "description": "GM awarded PC with 1 class skill.",
     "raw_tokens": [
       {
         "key": "SORTKEY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
-    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f",
-    "line": 449,
-    "record_key": "Add a Class Skill"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 449,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst",
+    "record_key": "Add a Class Skill",
+    "sha256": "ab77788e05536453a16a22bef8a5e74c209e536cb5b8cdcdb1130f712cc2402f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
 }

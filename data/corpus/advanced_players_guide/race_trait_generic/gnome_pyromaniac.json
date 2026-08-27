@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Gnomes with this racial trait are treated as one level higher when casting spells with the fire descriptor, using granted powers of the Fire domain, using the bloodline powers of the fire elemental bloodline or the revelations of the oracle's flame mystery, and when determining the damage of alchemist bombs that deal fire damage (this ability does not give gnomes early access to level-based powers, only affecting the powers they could use without this ability). Gnomes with Charisma of 11 or higher also gain the following spell-like abilities: 1/day--dancing lights, flare, prestidigitation, produce flame. The caster level for these effects is equal to the gnome's level; the DCs are Charisma-based.",
     "key": "Gnome ~ Pyromaniac",
     "name": "Pyromaniac",
-    "description": "Gnomes with this racial trait are treated as one level higher when casting spells with the fire descriptor, using granted powers of the Fire domain, using the bloodline powers of the fire elemental bloodline or the revelations of the oracle's flame mystery, and when determining the damage of alchemist bombs that deal fire damage (this ability does not give gnomes early access to level-based powers, only affecting the powers they could use without this ability). Gnomes with Charisma of 11 or higher also gain the following spell-like abilities: 1/day--dancing lights, flare, prestidigitation, produce flame. The caster level for these effects is equal to the gnome's level; the DCs are Charisma-based.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
-    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
-    "line": 50,
-    "record_key": "Gnome ~ Pyromaniac"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 50,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Gnome ~ Pyromaniac",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

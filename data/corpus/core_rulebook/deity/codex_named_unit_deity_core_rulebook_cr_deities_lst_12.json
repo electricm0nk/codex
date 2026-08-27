@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:40Z",
   "data": {
     "key": "Codex-Named Unit (deity_core_rulebook_cr_deities_lst_12)",
     "name": "Codex-Named Unit (deity_core_rulebook_cr_deities_lst_12)",
@@ -36,23 +35,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_deities.lst",
-    "sha256": "f0c2e2ee10529182b0c6413a42044b74c36ed8d52d669931437e28963a92fd0c",
-    "line": 12,
-    "record_key": "Codex-Named Unit (deity_core_rulebook_cr_deities_lst_12)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T14:24:40Z",
   "license": "PI-REDACTED",
   "pi_field": "name",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "core_rulebook:cr_deities.lst:12"
-  }
+    "coordinate": "core_rulebook:cr_deities.lst:12",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_deities.lst",
+    "record_key": "Codex-Named Unit (deity_core_rulebook_cr_deities_lst_12)",
+    "sha256": "f0c2e2ee10529182b0c6413a42044b74c36ed8d52d669931437e28963a92fd0c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

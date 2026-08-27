@@ -87,7 +87,6 @@
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
-    "derived:prose_expr",
-    "display:no_magnitude_token"
+    "derived:prose_expr"
   ]
 }

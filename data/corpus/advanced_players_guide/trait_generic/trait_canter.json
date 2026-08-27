@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:22:49Z",
   "data": {
+    "description": "You grew up among thieves and scoundrels, and their unusual speech patterns and turns of phrase don't phase you in the slightest today as a result. Anyone who attempts to use Bluff to deliver a secret message to you gains a +5 bonus on his Bluff check. When you attempt to intercept a secret message using Sense Motive, you gain a +5 trait bonus on the attempt.",
     "key": "Trait ~ Canter",
     "name": "Canter",
-    "description": "You grew up among thieves and scoundrels, and their unusual speech patterns and turns of phrase don't phase you in the slightest today as a result. Anyone who attempts to use Bluff to deliver a secret message to you gains a +5 bonus on his Bluff check. When you attempt to intercept a secret message using Sense Motive, you gain a +5 trait bonus on the attempt.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 120,
-    "record_key": "Trait ~ Canter"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T18:22:49Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 120,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Trait ~ Canter",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

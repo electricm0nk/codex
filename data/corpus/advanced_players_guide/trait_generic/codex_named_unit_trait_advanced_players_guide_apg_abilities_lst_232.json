@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:22:49Z",
   "data": {
+    "description": "You know that all things pass in time, and are used to having to repeat arguments multiple times to convince even the most stubborn believer. You gain a +2 trait bonus on Diplomacy checks to influence hostile or unfriendly creatures, and if you fail at such an attempt, you may retry it once.",
     "key": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_232)",
     "name": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_232)",
-    "description": "You know that all things pass in time, and are used to having to repeat arguments multiple times to convince even the most stubborn believer. You gain a +2 trait bonus on Diplomacy checks to influence hostile or unfriendly creatures, and if you fail at such an attempt, you may retry it once.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,23 +36,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
-    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0",
-    "line": 232,
-    "record_key": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_232)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T18:22:49Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "advanced_players_guide:apg_abilities.lst:232"
-  }
+    "coordinate": "advanced_players_guide:apg_abilities.lst:232",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 232,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities.lst",
+    "record_key": "Codex-Named Unit (trait_advanced_players_guide_apg_abilities_lst_232)",
+    "sha256": "cd6801105b5c58cc069a49da65453b388503754e3b3731fac1cab813d0fc97a0"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

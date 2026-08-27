@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Half-elves occasionally seek tutoring to help them master the magic in their blood. Half-elves with this racial trait have only one favored class and it must be an arcane spellcasting class. They can use spell trigger and spell completion items for their favored class as if 1 level higher (or as a 1st-level character if they have no levels in that class).",
     "key": "Half-Elf ~ Arcane Training",
     "name": "Arcane Training",
-    "description": "Half-elves occasionally seek tutoring to help them master the magic in their blood. Half-elves with this racial trait have only one favored class and it must be an arcane spellcasting class. They can use spell trigger and spell completion items for their favored class as if 1 level higher (or as a 1st-level character if they have no levels in that class).",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
-    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253",
-    "line": 60,
-    "record_key": "Half-Elf ~ Arcane Training"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 60,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+    "record_key": "Half-Elf ~ Arcane Training",
+    "sha256": "50f01990edfb0f144b0188746acb06ff18ee798b5a699c6a0bf69d2bec4eb253"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }
