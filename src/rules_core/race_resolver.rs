@@ -2458,8 +2458,22 @@ mod tests {
                 // `unclassified_traits()` sorts every other entry here.
                 ("Catfolk", "Adopted Race ~ Catfolk"),
                 ("Dhampir", "Adopted Race ~ Dhampir"),
+                // AT-34-E3-001 (2026-08-27): `core_rulebook`'s own 7 races'
+                // Adopted-Race selectors, never ingested before this cycle
+                // (`ingest_race_traits.rs`'s new `selector_only`
+                // `BookSource`, `decisions.md §14`'s
+                // `race_trait_absent_from_race_traits` mechanism). Same
+                // residue shape as the other 14 above -- gated by their own
+                // `CHOOSE:` pool, not a readable default gate.
+                ("Dwarf", "Adopted Race ~ Dwarf"),
+                ("Elf", "Adopted Race ~ Elf"),
                 ("Fetchling", "Adopted Race ~ Fetchling"),
+                ("Gnome", "Adopted Race ~ Gnome"),
                 ("Grippli", "Adopted Race ~ Grippli"),
+                ("Half-Elf", "Adopted Race ~ Half-Elf"),
+                ("Half-Orc", "Adopted Race ~ Half-Orc"),
+                ("Halfling", "Adopted Race ~ Halfling"),
+                ("Human", "Adopted Race ~ Human"),
                 ("Ifrit", "Adopted Race ~ Ifrit"),
                 ("Oread", "Adopted Race ~ Oread"),
                 ("Ratfolk", "Adopted Race ~ Ratfolk"),
@@ -2476,6 +2490,16 @@ mod tests {
                 ("Gnome", "Gnome"),
                 ("Grippli", "Grippli"),
                 ("Halfling", "Halfling"),
+                // AT-34-E3-001: `cr_abilities_race.lst`'s two Human-ethnicity
+                // placeholder rows, ingested this cycle
+                // (`is_human_ethnicity_placeholder`). `CATEGORY:Background`,
+                // no `PREFACT`/default gate of any kind -- pure flavor
+                // placeholders for "no ethnicity chosen", the same *kind* of
+                // residue as every other unclassified entry here: real,
+                // ingested, visible, and applied by nothing this classifier
+                // reads.
+                ("Human", "Human Ethnicity ~ None"),
+                ("Human", "Human Ethnicity ~ Unknown"),
                 ("Human", "Human ~ Tribalistic Languages"),
                 ("Orc", "Orc"),
                 ("Goblin", "Oversized Goblin"),
@@ -2796,10 +2820,15 @@ mod tests {
         // `race_trait_picker`'s Change Shape UI already reads for every
         // other race's identical shape, just not through this module's own
         // grant-linking pass.
-        assert_eq!(count(TraitRole::Unclassified), 44);
+        // 44 -> 53 by AT-34-E3-001 (2026-08-27): `core_rulebook`'s own 9 new
+        // records (7 Adopted-Race selectors, one per CRB race + 2 Human
+        // Ethnicity placeholders) -- both shapes `Unclassified` for the same
+        // reason as every other Adopted-Race/placeholder row already here:
+        // no readable gate of their own.
+        assert_eq!(count(TraitRole::Unclassified), 53);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            910,
+            919,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2831,7 +2860,9 @@ mod tests {
              (2026-08-26): 45 Alternate (9 kin selectors + their 36 replacement rows) + 20 \
              Unclassified (the shared `Change Shape (<Option>)` component records the kin \
              `Change Shape` rows TYPE-pool-reference; see the `Alternate`/`Unclassified` \
-             assertions' own comments above) = 65 (845 -> 910)"
+             assertions' own comments above) = 65 (845 -> 910) + AT-34-E3-001's 9 \
+             (2026-08-27: `core_rulebook`'s 7 Adopted-Race selectors + 2 Human Ethnicity \
+             placeholders, all Unclassified; 910 -> 919)"
         );
     }
 
@@ -3478,18 +3509,26 @@ mod tests {
     /// bestiary_5 1, bestiary_6 1).
     #[test]
     fn adopted_race_choose_selectors_finds_the_real_fourteen_unit_population() {
+        // Widened to 21, AT-34-E3-001 (2026-08-27): `core_rulebook`'s own 7
+        // races (Dwarf/Elf/Gnome/Half-Elf/Half-Orc/Halfling/Human) now carry
+        // this same selector shape too (`ingest_race_traits.rs`'s new
+        // `selector_only` `BookSource` for `core_rulebook`) -- the test name
+        // is kept for history (`decisions.md §25`'s original 14-unit
+        // population), the assertions below are the corrected 21.
         let corpus = all_books();
         let selectors = adopted_race_choose_selectors(&corpus);
         let races: Vec<&str> = selectors.iter().map(|s| s.adopted_race.as_str()).collect();
         assert_eq!(
             races,
             vec![
-                "Catfolk", "Dhampir", "Fetchling", "Grippli", "Ifrit", "Oread", "Ratfolk", "Rougarou",
-                "Skinwalker", "Suli", "Sylph", "Undine", "Vanara", "Vishkanya",
+                "Catfolk", "Dhampir", "Dwarf", "Elf", "Fetchling", "Gnome", "Grippli", "Half-Elf", "Half-Orc",
+                "Halfling", "Human", "Ifrit", "Oread", "Ratfolk", "Rougarou", "Skinwalker", "Suli", "Sylph",
+                "Undine", "Vanara", "Vishkanya",
             ],
-            "exactly the 14 target races, sorted by key (\"Adopted Race ~ <Race>\")"
+            "exactly the 21 target races (decisions.md §25's original 14 + AT-34-E3-001's 7 \
+             CRB races), sorted by key (\"Adopted Race ~ <Race>\")"
         );
-        assert_eq!(selectors.len(), 14, "decisions.md §25's own population figure");
+        assert_eq!(selectors.len(), 21, "decisions.md §25's 14 + AT-34-E3-001's 7 CRB races");
         for selector in &selectors {
             assert_eq!(selector.key, format!("Adopted Race ~ {}", selector.adopted_race));
             assert_eq!(

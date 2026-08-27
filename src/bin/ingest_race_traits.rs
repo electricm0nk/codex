@@ -103,6 +103,12 @@ use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, Population, RaceTraitCacheData, RawBonusChain, RawToken,
 };
 
+/// AT-34-E3-001 -- the dot-free `TYPE:` value `cr_abilities_race.lst`'s
+/// Human-ethnicity placeholder rows carry (`###Block: Placeholder objects
+/// for no Human Ethnicities or Regional Affinities`). See
+/// `is_human_ethnicity_placeholder`'s own doc comment on [`TraitRow`].
+const HUMAN_ETHNICITY_TYPE: &str = "HumanEthnicity";
+
 /// One book's alternate-racial-trait source file.
 ///
 /// Every field is a *location*, never a behaviour: the parsing, the `DESC:`
@@ -483,6 +489,52 @@ const BOOK_SOURCES: &[BookSource] = &[
         direct_heritage_relatives: &[],
         extra_in_scope_races: &[],
     },
+    // AT-34-E3-001 (`race_trait_absent_from_race_traits`, `decisions.md §14`'s
+    // nine-mechanism split of `core_rulebook`'s bucket B). Core Rulebook's own
+    // 7 races' standard traits are ingested by `ingest_races.rs`, not this
+    // binary -- and that binary's own `is_standard_racial_trait` deliberately
+    // filters OUT each race's `TYPE:AdoptiveRace` "Adopted Race ~ <Race>"
+    // selector row (it is a selector, not a standard trait), so it was never
+    // captured by anything. It is the SAME row shape `decisions.md §25`
+    // already models generically for 14 other races
+    // (`race_resolver::adopted_race_choose_selectors`), just never ingested
+    // for CRB's own 7 -- confirmed by direct read of the pinned oracle: each
+    // of the 7 files below carries exactly one `TYPE:AdoptiveRace` row.
+    // `cr_abilities_race.lst`'s two `Human Ethnicity ~ None`/`~ Unknown`
+    // placeholder rows are a fifth, distinct shape this binary's own
+    // `is_human_ethnicity_placeholder` recognises (`TraitRow`'s own doc
+    // comment) and resolves to race `Human`.
+    //
+    // `selector_only: true` for the identical reason `bestiary_2`/`bestiary_3`/
+    // `bestiary_5`/`bestiary_6` above already use it: all 7 races' standard-
+    // trait content is already shipped, by a different binary, into this SAME
+    // `data/corpus/core_rulebook/race_trait/<race>/` directory --
+    // `clear_own_alternate_trait_files`'s `is_racial_default`-field
+    // discrimination (verified directly: every existing file there carries
+    // `data.is_racial_default: true`) is what makes sharing it safe, exactly
+    // as it already is for `advanced_race_guide`.
+    BookSource {
+        corpus_book: "core_rulebook",
+        lst_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/elf/elf_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/gnome/gnome_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/half_elf/halfelf_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/halfling/halfling_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/human/human_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_race.lst",
+        ],
+        subrace_globalvar_relatives: &[],
+        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/core_rulebook",
+        selector_only: true,
+        // All 7 (Dwarf/Elf/Gnome/Half-Elf/Half-Orc/Halfling/Human) and
+        // "Human" (the ethnicity placeholders' resolved race_key) are already
+        // in `IN_SCOPE_RACES`; no extra entry needed.
+        extra_clear_races: &[],
+        direct_heritage_relatives: &[],
+        extra_in_scope_races: &[],
+    },
 ];
 
 /// The 34 in-scope races (`decisions.md §25.3` plus subsequent SD-31 widenings), spelled exactly as the corpus
@@ -736,6 +788,18 @@ struct TraitRow {
     /// pool is resolved against the separate `Kind::Trait` population, never
     /// against `RaceCorpus::traits_for`, so no chassis is required.
     is_adopted_race_choose_selector: bool,
+    /// AT-34-E3-001 (`race_trait_absent_from_race_traits`, `core_rulebook`'s
+    /// 2-unit remainder after the Adopted-Race selectors). True for the
+    /// `###Block: Placeholder objects for no Human Ethnicities...` shape in
+    /// `cr_abilities_race.lst`: `CATEGORY:Background`, dot-free
+    /// `TYPE:HumanEthnicity`, no `TYPE:<Race> Racial Trait`/`Subrace`
+    /// component and not the Adoptive-Parentage/Adopted-Race shapes either
+    /// (all mutually exclusive, checked in the same order those two already
+    /// are). Not persisted to `RaceTraitCacheData` -- same reasoning as
+    /// `is_adopted_race_choose_selector`'s own doc comment above: nothing
+    /// downstream re-derives this test from the shipped record, it only
+    /// decides `race_key` and admission at ingest time.
+    is_human_ethnicity_placeholder: bool,
     suppressed_by_flag: Option<String>,
     sets_replace_flags: Vec<String>,
     description: Option<String>,
@@ -1344,6 +1408,23 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
             .iter()
             .any(|f| f.key == "CHOOSE" && f.value.trim_start().starts_with(ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX));
 
+    // AT-34-E3-001 (`race_trait_absent_from_race_traits`) -- a fifth row
+    // shape: `cr_abilities_race.lst`'s `###Block: Placeholder objects for no
+    // Human Ethnicities or Regional Affinities`. `CATEGORY:Background`,
+    // dot-free `TYPE:HumanEthnicity`, no `CHOOSE:` at all -- distinct from
+    // both the Adoptive Parentage and Adopted Race shapes above (neither of
+    // which this row matches: no `ADOPTIVE_PARENTAGE_CATEGORY`, no
+    // `TYPE:AdoptiveRace`). `Region ~ None`/`Region ~ Unknown` sit two lines
+    // below this block in the same file and are deliberately NOT matched --
+    // "Region" is not a race name and belongs to a different mechanism
+    // (`race_trait_race_not_modelled`), not this one.
+    let is_human_ethnicity_placeholder = racial_trait_race.is_none()
+        && subrace_race.is_none()
+        && !is_adoptive_parentage_option
+        && !is_adopted_race_choose_selector
+        && type_tokens.iter().any(|t| t == HUMAN_ETHNICITY_TYPE)
+        && parsed.iter().any(|f| f.key == "CATEGORY" && f.value.trim() == "Background");
+
     let race_key = match racial_trait_race.or(subrace_race) {
         Some(race) => race,
         None if is_adoptive_parentage_option => name
@@ -1352,6 +1433,7 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
         None if is_adopted_race_choose_selector => name.clone().unwrap_or_else(|| {
             panic!("line {line_number}: Adopted Race selector row has no display-name field")
         }),
+        None if is_human_ethnicity_placeholder => "Human".to_string(),
         None => return None,
     };
 
@@ -1442,6 +1524,7 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
         is_racial_default,
         is_subrace_selector,
         is_adopted_race_choose_selector,
+        is_human_ethnicity_placeholder,
         suppressed_by_flag,
         sets_replace_flags,
         description: rendered.text,
@@ -1588,10 +1671,21 @@ fn ingest_book(book: &BookSource) {
             // there would re-parse and re-write that content a second time
             // under a different `corpus_book`. Only the exact selector row
             // shape may ever cross a `selector_only` book's filter.
+            //
+            // AT-34-E3-001: `is_human_ethnicity_placeholder` is admitted
+            // alongside the Adopted-Race selector for the identical reason --
+            // it too names a race (`Human`, hardcoded by `parse_row` rather
+            // than read from `IN_SCOPE_RACES`) whose chassis lives in a
+            // DIFFERENT binary's already-shipped records in this same
+            // directory, and `selector_only`'s whole point is to admit
+            // exactly the row shapes that are true even when the ordinary
+            // `in_scope` chassis test would not apply to them.
             let admit = if selector_only {
-                row.is_adopted_race_choose_selector
+                row.is_adopted_race_choose_selector || row.is_human_ethnicity_placeholder
             } else {
-                in_scope.contains(row.race_key.as_str()) || row.is_adopted_race_choose_selector
+                in_scope.contains(row.race_key.as_str())
+                    || row.is_adopted_race_choose_selector
+                    || row.is_human_ethnicity_placeholder
             };
             if admit {
                 rows.push(SourcedRow { row, lst_relative, sha256: sha256.clone() });
@@ -2279,6 +2373,40 @@ mod tests {
     }
 
     #[test]
+    fn human_ethnicity_placeholder_row_resolves_to_human_and_is_admitted() {
+        // AT-34-E3-001: `cr_abilities_race.lst`'s `###Block: Placeholder
+        // objects for no Human Ethnicities or Regional Affinities`, read
+        // directly off the pinned oracle (`:157`). No `TYPE:<Race> Racial
+        // Trait`/`Subrace` component, no Adoptive-Parentage category, no
+        // `TYPE:AdoptiveRace` -- a fifth, distinct row shape, resolved to
+        // race `Human` by `is_human_ethnicity_placeholder` alone (the row
+        // itself never states a race).
+        let row = concat!("None\t", "KEY:Human Ethnicity ~ None\t", "CATEGORY:Background\t", "TYPE:HumanEthnicity",);
+        let parsed = parse_row(157, row).expect("Human Ethnicity placeholder row is not dropped");
+        assert_eq!(parsed.key, "Human Ethnicity ~ None");
+        assert_eq!(parsed.name, "None");
+        assert_eq!(parsed.race_key, "Human");
+        assert!(parsed.is_human_ethnicity_placeholder);
+        assert!(!parsed.is_adopted_race_choose_selector);
+        assert!(!parsed.is_racial_default);
+        assert!(!parsed.is_subrace_selector);
+        assert_eq!(parsed.description, None, "the real oracle row carries no DESC: token at all");
+    }
+
+    #[test]
+    fn a_background_category_row_with_a_different_type_is_not_the_ethnicity_placeholder_shape() {
+        // Guard against a false positive: `Region ~ None`/`Region ~ Unknown`
+        // sit two lines below the Human Ethnicity block in the same file,
+        // same `CATEGORY:Background`, but `TYPE:Region` -- not a race name,
+        // and deliberately NOT matched (it belongs to a different mechanism,
+        // `race_trait_race_not_modelled`, not this one). Carrying no
+        // `TYPE:<Race> Racial Trait`/`Subrace` component either, it is
+        // correctly dropped rather than guessed at.
+        let row = concat!("None\t", "KEY:Region ~ None\t", "CATEGORY:Background\t", "TYPE:Region",);
+        assert!(parse_row(161, row).is_none());
+    }
+
+    #[test]
     fn a_type_adoptiverace_row_with_no_choose_token_is_not_the_selector_shape() {
         // Guard against a false positive: `TYPE:AdoptiveRace` alone, without
         // the `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=` pool token, must
@@ -2701,6 +2829,12 @@ mod tests {
                 ("bestiary_3", 5),
                 ("bestiary_5", 75),
                 ("bestiary_6", 9),
+                // AT-34-E3-001 (2026-08-27): 67 pre-existing `ingest_races.rs`
+                // standard-trait files (`find data/corpus/core_rulebook/
+                // race_trait -name '*.json' | wc -l` before this cycle) + 9
+                // new (7 Adopted-Race selectors, one per CRB race, + 2
+                // `Human Ethnicity ~ None`/`~ Unknown` placeholders) = 76.
+                ("core_rulebook", 76),
             ]
                 .into_iter()
                 .collect();
@@ -2723,8 +2857,18 @@ mod tests {
         // token at all (confirmed: `python3 -c` over the shipped files finds
         // description `None` on all 20, joining the pre-existing
         // Adopted-Race selector's 1).
-        let expected_without_description: BTreeMap<&str, usize> =
-            [("bestiary_2", 7usize), ("bestiary_3", 5), ("bestiary_5", 21), ("bestiary_6", 1)].into_iter().collect();
+        let expected_without_description: BTreeMap<&str, usize> = [
+            ("bestiary_2", 7usize),
+            ("bestiary_3", 5),
+            ("bestiary_5", 21),
+            ("bestiary_6", 1),
+            // AT-34-E3-001: the 7 Adopted-Race selectors (no `DESC:` token in
+            // the pinned oracle, same as every other book's selector row) + 2
+            // Human Ethnicity placeholders (same -- no `DESC:` token either).
+            ("core_rulebook", 9),
+        ]
+        .into_iter()
+        .collect();
 
         let mut total = 0usize;
         for book in BOOK_SOURCES {
@@ -2782,8 +2926,15 @@ mod tests {
         }
         assert_eq!(
             total,
-            734,
-            "569 (see below) + 165 across the four SD-32 `decisions.md §25` cycle-2 \
+            810,
+            "734 (see below) + 76 `core_rulebook` (AT-34-E3-001, 2026-08-27: 67 pre-existing \
+             `ingest_races.rs` standard-trait records this binary shares the directory with but \
+             never writes, PLUS this cycle's own 9 new records -- 7 Adopted-Race selectors, one \
+             per CRB race, plus 2 `Human Ethnicity ~ None`/`~ Unknown` placeholders, both a \
+             `selector_only` `BookSource` the identical shape `bestiary_2`/`_3`/`_5`/`_6` already \
+             use) = 810. \
+             The prior total, 734: \
+             569 (see below) + 165 across the four SD-32 `decisions.md §25` cycle-2 \
              `selector_only` books (bestiary_2 76, bestiary_3 5, bestiary_5 75, bestiary_6 9 -- \
              see the per-book map's own comment: each figure is 14's worth of this binary's own \
              new Adopted-Race selector records (7+5+1+1) PLUS 86 pre-existing `ingest_races.rs` \
@@ -2823,15 +2974,23 @@ mod tests {
     }
 
     #[test]
-    fn selector_only_book_sources_are_exactly_the_four_new_cycle_2_entries() {
+    fn selector_only_book_sources_are_exactly_the_five_named_entries() {
         // SD-32 `decisions.md §25` cycle 2: the four books whose selector rows
         // physically share a file with another tool's already-owned
         // standard-trait content must be `selector_only`, and no PRE-EXISTING
         // book may accidentally flip to `selector_only` (which would silently
         // stop admitting its ordinary in-scope alternate-trait rows).
+        //
+        // Widened to five, AT-34-E3-001 (2026-08-27): `core_rulebook` shares
+        // its own 7 races' `race_trait` directories with `ingest_races.rs`
+        // the identical way `bestiary_2`/`_3`/`_5`/`_6` share theirs with the
+        // same binary -- see the `BookSource` entry's own doc comment.
         let selector_only_books: Vec<&str> =
             BOOK_SOURCES.iter().filter(|b| b.selector_only).map(|b| b.corpus_book).collect();
-        assert_eq!(selector_only_books, vec!["bestiary_2", "bestiary_3", "bestiary_5", "bestiary_6"]);
+        assert_eq!(
+            selector_only_books,
+            vec!["bestiary_2", "bestiary_3", "bestiary_5", "bestiary_6", "core_rulebook"]
+        );
         let non_selector_only_books: Vec<&str> =
             BOOK_SOURCES.iter().filter(|b| !b.selector_only).map(|b| b.corpus_book).collect();
         assert_eq!(

@@ -18,7 +18,7 @@
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 14127,
+      "count": 14118,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
@@ -40,7 +40,7 @@
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2471,
+      "count": 2480,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "ee8d77f7906ae01a31a5b3b919e384bbce05f368",
+  "derived_at": "79fc41ccd0510c32c771d83711e96d57bd980d6f",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -206,7 +206,7 @@
       "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 21,
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
       "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 103,
-      "race_trait_record_loaded_but_never_applies": 44,
+      "race_trait_record_loaded_but_never_applies": 53,
       "skill_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 36,
       "template_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 724,
       "trait_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 4

@@ -21,10 +21,14 @@ not reported here. Epic 1 dispatch underway.
 Epic 2 is closed at 4 of 4 (AT-34-E2-001..004). Epic 3 (Core Rulebook to zero) is underway:
 AT-34-E3-001's escalation was cleared by orchestrator ruling (`decisions.md §14`) into nine
 named mechanisms totalling 1,006 of 1,006 — dispatched one per cycle, cheapest-first. Cycle 1
-cleared the `template`/`ability` reattribution mechanism (29 of 1035); this cycle (the
-`domain` mechanism cycle, below) clears the smallest of the remaining nine (1 of 1,006).
-AT-34-E3-001 itself does not close yet — 1,809 of 6,701 `core_rulebook` units are still bucket
-B, and eight mechanisms remain. See the cycle log below; `## Open blockers` is empty.
+cleared the `template`/`ability` reattribution mechanism (29 of 1035); the `domain` mechanism
+cycle cleared the smallest (1 of 1,006); this cycle cleared `race_trait_absent_from_race_traits`
+(9 of 1,006 — see the cycle log below for a self-caught correction: the atlas's own
+bucket-B/D partition, not a loose `engine-does-not-hold` status filter, is what proves this
+9-unit closure real). AT-34-E3-001 itself does not close yet — `core_rulebook`'s real,
+atlas-partitioned bucket B is 996 of 6,701 (`python3 scripts/completion_atlas.py --book
+core_rulebook --check`), and seven of the nine named mechanisms remain. See the cycle log
+below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -42,6 +46,50 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`race_trait_absent_from_race_traits` mechanism) — one of nine, `decisions.md §14`
+
+**Status: complete (own mechanism only).** Re-derived population at cycle start
+(`79fc41ccd0`): `race_trait_absent_from_race_traits` = **9 of 1,006** remaining
+`core_rulebook` bucket-B units (matches the brief's stated figure, verified not assumed).
+Two row shapes shared the evidence string: 7 `Adopted Race ~ <Race>` selector rows (one per
+CRB race — `decisions.md §25`'s `TYPE:AdoptiveRace` shape, already modelled generically by
+`race_resolver::adopted_race_choose_selectors` for 14 OTHER races but never ingested for
+CRB's own 7, because `ingest_races.rs` deliberately filters the shape out as "not a standard
+trait" and `ingest_race_traits.rs` had no `core_rulebook` `BookSource` at all) and 2
+`Human Ethnicity ~ None`/`~ Unknown` placeholder rows (`cr_abilities_race.lst`'s own
+`###Block: Placeholder objects...`, a fifth row shape `ingest_race_traits.rs`'s parser had
+never recognised — silently `None`, dropped before the scope filter). Fix: a new
+`core_rulebook` `selector_only` `BookSource` (the identical, 4-times-proven pattern
+`bestiary_2`/`_3`/`_5`/`_6` already use — `core_rulebook`'s 67 pre-existing standard-trait
+files in the same directory are protected by `is_racial_default`-field discrimination) plus
+one new row-shape predicate, `TraitRow.is_human_ethnicity_placeholder`, resolving `race_key`
+to `"Human"`. RED→GREEN proven (`human_ethnicity_placeholder_row_resolves_to_human_and_is_admitted`
+plus a negative-case sibling); `ingest_race_traits` 22→24 tests, `race_resolver` 28 tests (3
+pinned corpus-census tests widened to the corrected populations: `adopted_race_choose_selectors`
+14→21, `Unclassified` role 44→53, corpus total 910→919), `v06_work_inventory` 371 tests, all
+green. `docs/work-inventory.json` regenerated (guarded path, `CORPUS_LITERAL_SWEEP_REPORT` +
+`DERIVED_FIXTURE_CHECK_REPORT` set, no `--allow-stamp-loss`): exactly 9 units changed, all
+this cycle's own target. `corpus_literal_sweep`: `48699 -> 48708` examined (delta +9, exact
+match, CLEAN). **Self-caught correction, logged before shipping** (`docs/retro/events/
+sd34-at-34-e3-001.jsonl`): a first-pass check used the same loose `status ==
+"engine-does-not-hold"` python filter Cycle 1 used, which conflates atlas buckets B and D —
+under that filter the 9 units appeared to just move to a different `engine-does-not-hold`
+evidence string with no net change (1,809 -> 1,809). Re-running the atlas's own real
+partition (`completion_atlas.py`'s `_B_MARKERS`) shows the true, correct outcome:
+`core_rulebook` bucket B **`1005 -> 996`**, a clean `-9` — the 9 units' new evidence,
+`race_trait_record_loaded_but_never_applies`, does not contain a B marker and correctly
+lands in bucket D (a genuinely narrower "other engine gap": the record IS now ingested and
+loaded, `RaceCorpus` classifies it `TraitRole::Unclassified`, the same terminal state
+`Oversized Goblin`/`Human ~ Tribalistic Languages`/`Suli ~ Trusted Mediator` already carry).
+`decisions.md §2a`-consistent: B→D is a correct outcome, not a half-fix. No line-citation
+drift (`v06_work_inventory.rs` untouched this cycle). `cargo test --locked --no-run` exits 0
+at the full workspace scope; `apps/desktop/src-tauri` (untouched by this cycle) also verified,
+`--no-run` exits 0.
+
+**AT-34-E3-001 does not close this cycle.** `core_rulebook` bucket B is 996 of 6,701; seven
+of the nine named mechanisms remain (`decisions.md §14`'s table). Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_race_trait_absent_cycle_receipt.md`.
 
 ### Cycle — AT-34-E3-001 (`domain` mechanism) — one of nine, `decisions.md §14`
 
