@@ -17,8 +17,23 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 
 ## Status
 
-**Bundle closed 2026-08-25 (`AT-33-E6-003` part 2 — release notes + version confirm).** All 21
-kanban rows `complete`. Row 21 (`sweep-archdocs-graphify-pr`) transitions `not-started` →
+**Bundle closed 2026-08-26 (`AT-33-E6-001` attempt 12 — the post-fold-fix final-acceptance scan,
+gate PASS).** All **24 of 24** kanban rows `complete` (`grep -c '^| [0-9]' kanban.md` -> 24,
+`grep -c '| complete |' kanban.md` -> 24). The bundle first closed on 2026-08-25 at `1bfb80d7b7`;
+the operator's 2026-08-26 fold ruling re-opened Epic 6 with three fold cards (rows 22-24), attempt
+11 caught one real regression the fold carried (a live F1 count assertion left stale at 6,260
+against a live 6,257 by an inventory regen that landed after the lib suite ran), `fold-fix-repin`
+closed it at `c0f5e9091e`, and attempt 12 re-derived the whole closure independently and found
+nothing short. Re-verified at `c0f5e9091e` in a clean detached worktree: lib **2,845 of 2,845**,
+corpus sweep **0 findings of 48,699 records examined**, rows **1,741 / 6,589 / 8,330** with the
+unexamined set empty both directions and **0 of 8,330** disagree, `unknown` **0 of 49,438**,
+denominator gate **0 violations of 68 files**, no-run **543 of 543**, desktop **548 of 548**,
+inherited failing set **29 of 599** suites / **46 of 8,034** tests with **0 of 29** carrying a
+commit since the cut and **0** failures outside it. Full figures and re-derive commands:
+`artifacts/epic-6-closure/AT-33-E6-001-attempt12_cycle_receipt.md`.
+
+**Prior closure entry, kept for history (`AT-33-E6-003` part 2 — release notes + version
+confirm, 2026-08-25).** Row 21 (`sweep-archdocs-graphify-pr`) transitions `not-started` →
 `complete` this cycle: part 1 (architecture docs, graphify, PR #377) landed in an earlier cycle,
 and this cycle closes part 2 — `release-notes.md` generated for build `0.13.0` (status:
 `generated`), figures re-derived independently in a clean `git worktree add --detach` off
@@ -468,6 +483,99 @@ the widening was landed this cycle, with the same-type-stacking correction (`max
 </details>
 
 ## Cycles
+
+### Cycle sd33-fold-fix-rescan — `AT-33-E6-001` attempt 12, final-acceptance scan **PASS** (row 19)
+
+- **Criterion / card:** `AT-33-E6-001`, kanban row 19 — `in-progress` -> `complete`. This is the
+  bundle's last open card; the board is now **24 of 24** `complete`
+  (`grep -c '^| [0-9]' kanban.md` -> 24, `grep -c '| complete |' kanban.md` -> 24,
+  `grep -cE '\| (in-progress|blocked-escalated|not-started) \|' kanban.md` -> 0).
+- **Scanned HEAD:** `c0f5e9091e81be39dda82eff4b26061fa82557cf` (`origin/tranche/13`), read in a
+  clean `git worktree add --detach` at `.claude/worktrees/sd33-r12-scan`.
+- **Attempt 11's shortfall is closed, and closed the right way.** `python3
+  scripts/shape_ledger.py --inventory docs/work-inventory.json --corpus-root data/corpus` ->
+  **F1 6,257**; the assertion is pinned at **6,257** and re-derived independently by
+  `run_corpus_wide_scan` (Rust) -- two implementations agreeing, not one copied. Still an exact
+  `assert_eq!`: `grep -c '#\[ignore' src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs`
+  -> **0**, and `git diff f652db7ac7..HEAD` on that file removes **0** `assert` lines. The doc
+  comment carries the new figure and the ordering rule. `git log --oneline f652db7ac7..HEAD --
+  docs/work-inventory.json` -> the last write (`cef0ca1b39`) is an **ancestor** of the re-pin, so
+  **0** inventory writes land after it.
+- **Figures, each with its command and denominator:**
+  - `cargo test --locked --lib` -> **2,845 of 2,845** passed, **0** failed, 14 ignored (LIB_EXIT=0)
+  - `cargo run --locked --bin corpus_literal_sweep` -> **48,699** records examined of 51,473 read,
+    **0 findings**, CLEAN (SWEEP_EXIT=0) -- unchanged from attempt 11, so the fold's +65 records
+    are still inside the examined population
+  - `cargo test --locked --no-run` -> exit **0**; `grep -c "Executable tests/"` -> **543**;
+    `ls tests/*.rs | wc -l` -> **543**
+  - `apps/desktop/src-tauri`, own `CARGO_TARGET_DIR`, `cargo test --locked` -> **548 of 548**, 0 failed
+  - `cargo test --locked --no-fail-fast` -> NFF_EXIT=101; every `test result:` line attributed back
+    to its own `Running` line -> **29 of 599** suites fail, carrying **46 of 8,034** executed tests.
+    `for f in <each of the 29>; do git log --oneline f652db7ac7..HEAD -- "$f" | wc -l; done |
+    awk '{s+=$1} END {print s}'` -> **0**. **0** failures outside the inherited set.
+  - Epic 5, derived as a set: rows **1,741 / 6,589 / 8,330**; pop-minus-rows **0** and
+    rows-minus-pop **0**; **0 of 8,330** disagree; **0** duplicate `unit_id`s; **0** reasonless
+    `unverifiable` of 7,519
+  - `python3 scripts/box_ledger.py --check --oracle-results
+    artifacts/epic-5-reverification/AT-33-E5-003.combined-oracle-results.json` ->
+    `uncovered=0 overlap=0 population=49438 oracle_disagreement=0 unverifiable_done=0 stale=False`,
+    exit **0**
+  - `jq '[.units[]|select(.status=="unknown")]|length' docs/work-inventory.json` -> **0** of
+    `jq '.units|length'` -> **49,438**
+  - `python3 scripts/denominator_gate.py --check` -> `files_checked=68 violations=0`
+  - `ls data/corpus/bestiary_5/race_trait/skinwalker/*.json | wc -l` -> **75**; license
+    **OGL 67 / PI-REDACTED 8**, `pi_field` null 67 / `"description"` 8, `data.raw_tokens` empty on
+    **0 of 75**; `grep -c 'DESCISPI:YES'` on the pinned `.lst` -> **8**, matching
+  - `find data/corpus -type d -name race_trait | ... | wc -l` -> **910**, confirming
+    `v06_work_inventory.rs:4308`'s re-pinned figure
+- **Fold quality re-checked past the dispatch's bar.** All **75 of 75** Skinwalker records were
+  tab-split against their own cited oracle line and compared token-for-token: **67** byte-identical,
+  the other **8** differing in exactly one token -- `DESC:<text>` -> `DESC:[redacted PI]`, i.e.
+  precisely the 8 records that declare `pi_field: "description"`. **0 of 75** carry a token the
+  oracle line lacks; **0 of 75** drop one. Two also hand-traced in full
+  (`weretiger_kin_change_shape` 8 of 8 tokens, `wererat_kin_spell_like_ability` 10 of 10). Undine:
+  **3 of 3** entries, 30 sample points, 90 scalar assertions, all executing in this scan's `--lib`
+  run; `scripts/derive_race_trait_formula_fixtures.py` imports only stdlib -- no engine module, no
+  `data/corpus/` read -- and the bar check independently asserts the *shipped*
+  `UNDINE_RACE_TRAIT_FORMULAS` text equals the fixture's oracle-derived text. Not a mirror.
+- **Gates re-proven to still fail, then returned to baseline, with no residue.** Denominator gate:
+  probe planted in its own scanned scope -> `violations=1` naming the line, removed ->
+  `files_checked=68 violations=0`, tree clean. `box_ledger.py`: `disagree` planted on a **scratch
+  copy** -> `oracle_disagreement=1` naming the unit, scratch removed. `corpus_literal_sweep`:
+  probe written **in place inside the detached scan worktree** -- a separate checkout, **no
+  `cp -al`**, the hazard attempt 11 recorded -> 413,289 tokens compared, **1 finding** naming the
+  exact record and token, restored with `git checkout --` -> 413,288 / **0 findings** / CLEAN.
+  `git status --porcelain` empty in the scan worktree **and** in the primary tree's `data/corpus`
+  at every checkpoint.
+- **`## Open blockers`: 0 active of 2 historical** -- both `###` entries sit inside `<details>`
+  blocks and the section's own text records both CLEARED. **Open deferrals: 3, and 0 of 3 defer
+  live DoD scope** (`python3 scripts/retro.py summary --since 2026-08-24 --json` ->
+  `deferrals.open = 3`, each with a revisit condition, each registered as a capability deferral in
+  `forward-scope-register.md`).
+- **Criterion coverage:** `grep -oE 'AT-33-E[0-9]-[0-9]{3}'` over `epic-breakdown.md` and over
+  `kanban.md` return the **identical 21 ids**.
+- **Movement (four buckets):** closure **1** (row 19; the bundle's last card) / reclassification 0 /
+  reachability 0 / instrument-correction **3**.
+- **Instrument corrections, all in shipped closure prose, each re-derived here not copied:**
+  (1) the inherited-debt figure **31 of 599 / 49 of 8,026** -- true at attempt 10, stale since the
+  fold -- corrected to **29 of 599 / 46 of 8,034** in `release-notes.md`,
+  `forward-scope-register.md §D1.1` and the retrospective §5, with the reason named: the fold
+  **fixed** `src/bin/ingest_races.rs` and `tests/sd27_alternate_racial_trait_reachability.rs`
+  outright and the executed denominator grew by 8. A **shrink of inherited debt, not a
+  reclassification** (`workflow-instruction.md §12` row 10). (2) §D1.1's explicit target list drops
+  those two; the remaining 29 were checked against the failing set member by member, not by count.
+  (3) the retrospective's halt narrative amended for the fold re-open: **ten halts**, attempts 1-9
+  plus attempt 11, every one a correct refusal. Also `kanban.md`'s own header said "**21 rows**"
+  against 24 real rows -- corrected, with its re-derive command.
+- **Correction to a prior receipt:** attempt 11's RISK 2 listed `race_resolver.rs:3105`'s "370" as
+  stale prose. It is **not** stale -- 415 - 45 = 370 is exactly the count of the *other* records the
+  sentence refers to, so rewriting it to 415 would make the sentence self-referentially wrong. This
+  scan re-derived it and agrees with `fold-fix-repin`, which had already refused to "fix" it.
+- **Not run:** `scripts/verify.sh` end-to-end -- its `site-dashboard-check` stage hangs on the
+  producer's unbounded `v06_work_inventory` call, root-caused and registered at
+  `forward-scope-register.md §D1.2`. Every load-bearing stage was run directly instead and is
+  reported above.
+- **Receipt:** `artifacts/epic-6-closure/AT-33-E6-001-attempt12_cycle_receipt.md`.
 
 ### Cycle fold-fix-repin — attempt 11's Shortfall 1 closed, one-file re-pin (row 19)
 

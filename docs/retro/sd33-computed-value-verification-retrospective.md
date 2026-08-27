@@ -247,12 +247,19 @@ they are registered in `forward-scope-register.md`.
 
 ## 5. Inherited debt — registered, not vanished
 
-**31 of 599** test suites, carrying **49 of 8,026** executed tests, were proven — not assumed —
-pre-existing at the `tranche/13` cut. Re-derived independently by attempts 8, 9, and 10 (three
-separate cycles, three separate worktrees, the same result each time): every failing target's
+**29 of 599** test suites, carrying **46 of 8,034** executed tests, were proven — not assumed —
+pre-existing at the `tranche/13` cut. Re-derived independently by attempts 8, 9, 10, 11 and 12
+(five cycles, five separate worktrees, the same result each time): every failing target's
 `git log f652db7ac7..HEAD -- <target>` is empty, and the failing set's shape (same targets, same
 per-target pass/fail counts, same order) is byte-identical to a clean run at `f652db7ac7`. **0 of
-31 carry a single commit since the cut.** This bundle verified their inheritance by execution
+29 carry a single commit since the cut.**
+
+**The figure was 31 of 599 / 49 of 8,026 through attempt 10 and is corrected here**, not
+reclassified: the operator's 2026-08-26 fold ruling **fixed** two of the inherited 31 outright
+(`src/bin/ingest_races.rs` and `tests/sd27_alternate_racial_trait_reachability.rs`, both green at
+attempt 12), and the executed denominator grew by the fold's own 8 new cases. Re-derive:
+`cargo test --locked --no-fail-fast`, attributing every `test result:` line back to its own
+`Running` line (`AT-33-E6-001-attempt12_cycle_receipt.md`). This bundle verified their inheritance by execution
 rather than accepting a predecessor's claim of it — see `forward-scope-register.md` for the full
 proof commands and counts, entered there this same cycle per the dispatch instruction.
 
@@ -261,7 +268,11 @@ proof commands and counts, entered there this same cycle per the dispatch instru
 ## What actually closed the bundle
 
 Nine consecutive scan failures, each a real and different shortfall, none deferred and none argued
-around. The tenth attempt passed because the ninth attempt's one shortfall — a tool bug in the
+around. (A tenth followed: the operator's 2026-08-26 fold ruling re-opened Epic 6, attempt 11
+caught a real regression the fold had introduced — a live F1 count assertion left stale at 6,260
+against a live 6,257 by a `docs/work-inventory.json` regen that landed after the lib suite ran —
+and attempt 12 passed once `fold-fix-repin` closed it. **Ten halts is now the count** — attempts
+1-9 plus attempt 11 — and every one of the ten was a correct refusal.) The tenth attempt passed because the ninth attempt's one shortfall — a tool bug in the
 verification instrument itself — was genuinely fixed and re-verified against every route that could
 have produced the same "0 findings" dishonestly. No card in this bundle ever closed by narrowing a
 population, weakening an assertion, or filing a blocker in place of clearing it. Blocker Discipline

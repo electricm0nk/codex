@@ -136,14 +136,21 @@ Re-derive: `python3 scripts/denominator_gate.py --check`
 
 ## Inherited debt — registered, not vanished
 
-**31 of 599 workspace test suites carry 49 of 8,026 executed tests that fail.** All 31 are
-pre-existing at the `tranche/13` cut (`f652db7ac7`): 0 of 31 carry a single commit since the cut
+**29 of 599 workspace test suites carry 46 of 8,034 executed tests that fail.** All 29 are
+pre-existing at the `tranche/13` cut (`f652db7ac7`): 0 of 29 carry a single commit since the cut
 (`for f in <each failing target>; do git log --oneline f652db7ac7..HEAD -- "$f" | wc -l; done |
 awk '{s+=$1} END {print s}'` → `0`), and the failing set and its per-target pass/fail counts are
 byte-identical between a clean run at the cut and this closure's HEAD. Registered at
-`forward-scope-register.md §D1.1`, independently re-derived across three separate final-acceptance
-scans (attempts 8, 9, and 10). A reviewer running the workspace suite should not be surprised by
-this — it was true before SD-33 opened and SD-33 added 0 of these 31 failures.
+`forward-scope-register.md §D1.1`, independently re-derived across five separate final-acceptance
+scans (attempts 8, 9, 10, 11 and 12). A reviewer running the workspace suite should not be
+surprised by this — it was true before SD-33 opened and SD-33 added 0 of these 29 failures.
+
+**31/49/8,026 → 29/46/8,034 by the operator's 2026-08-26 fold ruling**, re-derived by
+`AT-33-E6-001` attempt 12 (`cargo test --locked --no-fail-fast`, attributed back to each
+`Running` line): the Skinwalker fold **fixed** two of the inherited 31 outright
+(`src/bin/ingest_races.rs`, `tests/sd27_alternate_racial_trait_reachability.rs`), and the executed
+denominator grew 8,026 → 8,034 with the fold's own new cases. This is a shrink of inherited debt,
+not a reclassification of it.
 
 `scripts/verify.sh`'s `site-dashboard-check` stage also carries a registered, reproduced-thrice
 defect (no timeout wrapper around its own `v06_work_inventory --summary` call) —
