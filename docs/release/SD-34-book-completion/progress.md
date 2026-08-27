@@ -17,7 +17,7 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**1 of 27 criteria complete. 1 of 26 kanban rows complete.**
+**2 of 27 criteria complete. 2 of 26 kanban rows complete.**
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -35,6 +35,34 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 2 — AT-34-E1-002 — the atlas fails closed on six conditions
+
+**Status: complete.** `scripts/completion_atlas.py` extended in place with the five remaining
+fail-closed conditions on top of AT-34-E1-001's `unclassified`/`overlap` gate: (3) a `DONE`
+unit whose evidence does not support it, (4) a bucket with no named clearing mechanism, (5) a
+`derived_at` SHA that is not an ancestor of `HEAD` (staleness gate), (6) a bucket whose
+definition does not cite the `file:line` that emits the evidence string it keys on, or whose
+citation no longer resolves/matches at `HEAD`.
+
+Live, unmutated: `python3 scripts/completion_atlas.py --check` → `population=49438 buckets=10
+unclassified=0 overlap=0 done_evidence_violations=0 missing_clearing_mechanisms=0
+stale_derived_at=False citation_failures=0`, exit 0. All ten buckets carry a real, verified
+`file:line` citation into `src/bin/v06_work_inventory.rs`.
+
+**Six RED→GREEN mutation proofs, one per condition, in
+`artifacts/epic-1-atlas/fail-closed-proofs.md`.** Notable finding along the way: the naive
+condition-3 design (reuse the A/B/C bucket markers verbatim as "must never appear in DONE
+evidence") would have flagged 245 real, legitimate `DONE` units carrying `explanation_id` —
+confirmed against the live corpus and excluded, with the exclusion documented in code and in
+the proofs file (the same "field name vs. field meaning" trap condition 6 itself targets,
+caught here before it shipped).
+
+38/38 unit tests green (20 new + 18 inherited). Denominator gate against this package:
+`files_checked=15 violations=0`. `cargo test --locked --no-run` exits 0 at the widest
+workspace scope (run at `ceac19da29`); `apps/desktop/src-tauri` not touched, not run.
+`docs/work-inventory.json` untouched — zero movement across all four buckets. Receipt:
+`artifacts/epic-1-atlas/AT-34-E1-002_cycle_receipt.md`.
 
 ### Cycle 1 — AT-34-E1-001 — every unit carries exactly one named remaining-step
 

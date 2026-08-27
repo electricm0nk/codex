@@ -28,13 +28,21 @@ than a silent invariant.
 for any unit whose `(status, evidence)` pair matches nothing below, and
 `--check` fails closed on that -- `AT-34-E1-002` condition 1.
 
-`AT-34-E1-002`'s remaining five fail-closed conditions (a `DONE` unit whose
-evidence does not support it, a bucket with no named clearing mechanism, a
-stale `derived_at`, and the `file:line` evidence citation) are a separate
-criterion and are not implemented by this cycle. `BUCKET_DEFINITIONS`
-below already carries the `clears` and `evidence_source` fields that
-criterion will assert against, so this file does not need to be reshaped
-to add them later.
+`AT-34-E1-002` (this cycle) adds the remaining five fail-closed conditions on
+top of AT-34-E1-001's `unclassified`/`overlap` gate:
+
+    3. a unit in DONE whose evidence does not support it
+    4. a bucket with no named clearing mechanism
+    5. a `derived_at` SHA that is not an ancestor of HEAD (staleness gate)
+    6. a bucket whose definition does not cite the `file:line` that emits
+       the evidence strings it keys on -- or whose citation no longer
+       resolves, or whose cited *line's content* no longer contains the
+       marker (content, not just path/line -- `risks-and-open-questions.md
+       §10`)
+
+Each `BUCKET_DEFINITIONS` entry now carries a `citation` naming the real
+`src/bin/v06_work_inventory.rs` line that emits the marker/status string the
+bucket keys on -- verified against the live file, not assumed.
 """
 
 from __future__ import annotations
@@ -62,11 +70,15 @@ _B_MARKERS = ("not_held_by_engine", "absent_from", "not_modelled")
 # --- bucket C: "held and computed, never surfaced" --------------------------
 _C_MARKERS = ("explanation_id", "diagnostic")
 
+_ENGINE_SRC = "src/bin/v06_work_inventory.rs"
+
 BUCKET_DEFINITIONS = {
     "DONE": {
         "meaning": "nothing remains",
         "clears": "—",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
+        # First `status: "grounded"` literal -- one of the two DONE statuses.
+        "citation": {"file": _ENGINE_SRC, "line": 8374, "must_contain": "grounded"},
     },
     "A": {
         "meaning": "engine has no table for this kind",
@@ -75,6 +87,8 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'has_no_engine_table')"
         ),
+        # `Kind::Companion => not_ingested("companion_content_has_no_engine_table")`.
+        "citation": {"file": _ENGINE_SRC, "line": 9658, "must_contain": "has_no_engine_table"},
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -83,6 +97,8 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')"
         ),
+        # `not_ingested("class_feature_option_pool_record_not_held_by_engine")`.
+        "citation": {"file": _ENGINE_SRC, "line": 9382, "must_contain": "not_held_by_engine"},
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -91,38 +107,61 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'explanation_id' / 'diagnostic')"
         ),
+        # `not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")`.
+        "citation": {"file": _ENGINE_SRC, "line": 9607, "must_contain": "explanation_id"},
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
         "clears": "per named sub-cause",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == not-ingested, no other bucket matched)",
+        # The shared `not_ingested` closure that stamps `status: "not-ingested"`
+        # for every arm that falls through A/B/C -- this IS the D fallthrough.
+        "citation": {"file": _ENGINE_SRC, "line": 8346, "must_contain": "not-ingested"},
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
         "clears": "running the compute path (shape engine)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
+        "citation": {"file": _ENGINE_SRC, "line": 8481, "must_contain": "ingested-magnitude"},
     },
     "V": {
         "meaning": "verified by proxy, never by the oracle",
         "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
+        # `item.verdict.status = "literal-verified";` -- one of the two V statuses.
+        "citation": {"file": _ENGINE_SRC, "line": 10190, "must_contain": "literal-verified"},
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
         "clears": "instrument correction",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
+        "citation": {"file": _ENGINE_SRC, "line": 8433, "must_contain": "unmeasurable"},
     },
     "X": {
         "meaning": "deferred with a stated reason",
         "clears": "revisiting the stated condition",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
+        "citation": {"file": _ENGINE_SRC, "line": 8393, "must_contain": "deferred-with-reason"},
     },
     "Z": {
         "meaning": "not started",
         "clears": "ordinary work",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
+        "citation": {"file": _ENGINE_SRC, "line": 8254, "must_contain": "not-started"},
     },
 }
+
+# Condition 3 (a DONE unit whose evidence does not support it): markers that
+# belong to an UNFINISHED bucket and would never legitimately appear in a
+# DONE unit's evidence string. `explanation_id` is deliberately EXCLUDED --
+# 245 real `DONE` units carry it legitimately (e.g.
+# `explanation_id_observed_and_corpus_record_carries_real_description`),
+# confirmed against the live corpus; including it here would make this its
+# own AT-34-E1-002-condition-6-shaped mistake (a field/substring read as
+# meaning something it does not). Verified empty on the live corpus:
+# `has_no_engine_table`, `not_held_by_engine`, `absent_from`, `not_modelled`,
+# `diagnostic` never appear in a DONE unit's evidence.
+_DONE_VIOLATION_MARKERS = (_A_MARKER,) + _B_MARKERS + ("diagnostic",)
 
 BUCKET_ORDER = ["DONE", "A", "B", "C", "D", "M", "V", "U", "X", "Z"]
 
@@ -207,6 +246,101 @@ def _sub_causes(units: list, bucket: str) -> "collections.Counter | None":
     return c
 
 
+def _done_evidence_is_supported(evidence: "str | None") -> bool:
+    """Condition 3. A DONE unit's evidence must be a real, non-empty string
+    that carries none of `_DONE_VIOLATION_MARKERS` -- a DONE unit whose
+    evidence looks like an unfinished-bucket marker is the atlas silently
+    trusting a field instead of what produced it (`decisions.md §12` L1)."""
+    if not evidence:
+        return False
+    return not any(marker in evidence for marker in _DONE_VIOLATION_MARKERS)
+
+
+def _done_evidence_violations(units: list) -> list:
+    return [
+        unit.get("id")
+        for unit in units
+        if _bucket_of(unit) == "DONE" and not _done_evidence_is_supported(unit.get("evidence"))
+    ]
+
+
+def _missing_clearing_mechanisms(definitions: dict = BUCKET_DEFINITIONS) -> list:
+    """Condition 4. Every bucket must name a mechanism that empties it --
+    `DONE`'s `"—"` counts (it explicitly means "nothing remains"); an empty
+    string or missing field does not."""
+    return [b for b in BUCKET_ORDER if not definitions.get(b, {}).get("clears")]
+
+
+def _read_source_line(rel_path: str, line_no: int) -> "str | None":
+    abs_path = os.path.join(REPO_ROOT, rel_path)
+    try:
+        with open(abs_path, "r", encoding="utf-8") as fh:
+            lines = fh.readlines()
+    except OSError:
+        return None
+    if line_no < 1 or line_no > len(lines):
+        return None
+    return lines[line_no - 1]
+
+
+def _citation_failures(definitions: dict = BUCKET_DEFINITIONS) -> list:
+    """Condition 6. Every bucket must cite the `file:line` that emits the
+    evidence string it keys on, resolvable at HEAD, and the cited LINE's
+    CONTENT must actually contain the claimed marker -- a refactor that
+    moves the code without changing line counts must still trip this
+    (`risks-and-open-questions.md §10`)."""
+    failures = []
+    for b in BUCKET_ORDER:
+        citation = definitions.get(b, {}).get("citation")
+        if not citation:
+            failures.append(f"{b}: no citation")
+            continue
+        line = _read_source_line(citation["file"], citation["line"])
+        if line is None:
+            failures.append(f"{b}: {citation['file']}:{citation['line']} does not resolve")
+            continue
+        if citation["must_contain"] not in line:
+            failures.append(
+                f"{b}: {citation['file']}:{citation['line']} no longer contains "
+                f"'{citation['must_contain']}'"
+            )
+    return failures
+
+
+def _is_ancestor(sha: "str | None") -> bool:
+    if not sha or sha == "unknown":
+        return False
+    try:
+        subprocess.run(
+            ["git", "merge-base", "--is-ancestor", sha, "HEAD"],
+            cwd=REPO_ROOT, check=True, capture_output=True, text=True,
+        )
+        return True
+    except Exception:
+        return False
+
+
+def _staleness_violation(artifact_path: str = ARTIFACT_PATH) -> "str | None":
+    """Condition 5. Reads the artifact ON DISK as it stood BEFORE this run's
+    own write -- checking a freshly-stamped HEAD against itself is trivially
+    true and proves nothing. This checks the PRIOR commit's stamped
+    `derived_at` still resolves as an ancestor of the current HEAD, catching
+    a rebase/force-push/hand-edit that orphaned it."""
+    if not os.path.exists(artifact_path):
+        return None
+    try:
+        with open(artifact_path, "r", encoding="utf-8") as fh:
+            prior = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return None
+    prior_sha = prior.get("derived_at")
+    if prior_sha in (None, "unknown"):
+        return None
+    if not _is_ancestor(prior_sha):
+        return f"derived_at {prior_sha!r} is not an ancestor of HEAD"
+    return None
+
+
 def cmd_check(args) -> int:
     inv = _load_inventory()
     units = inv["units"]
@@ -217,12 +351,31 @@ def cmd_check(args) -> int:
     population = result["examined"]
 
     if args.book is None:
+        # Condition 5 must read the artifact AS COMMITTED, before this run's
+        # own write below replaces it.
+        staleness = _staleness_violation()
+        done_violations = _done_evidence_violations(units)
+        missing_clears = _missing_clearing_mechanisms()
+        citation_failures = _citation_failures()
+
         print(
             f"population={population} buckets={len(BUCKET_ORDER)} "
             f"unclassified={unclassified} overlap={overlap}"
         )
         for b in BUCKET_ORDER:
             print(f"  {b}: {counts.get(b, 0)}")
+        print(f"done_evidence_violations={len(done_violations)}")
+        print(f"missing_clearing_mechanisms={len(missing_clears)}")
+        print(f"stale_derived_at={'True' if staleness else 'False'}")
+        print(f"citation_failures={len(citation_failures)}")
+        if staleness:
+            print(f"  staleness: {staleness}")
+        for uid in done_violations[:20]:
+            print(f"  done_evidence_violation: {uid}")
+        for b in missing_clears:
+            print(f"  missing_clearing_mechanism: {b}")
+        for f in citation_failures:
+            print(f"  citation_failure: {f}")
 
         d_causes = _sub_causes(units, "D")
         u_causes = _sub_causes(units, "U")
@@ -235,11 +388,17 @@ def cmd_check(args) -> int:
                     "meaning": BUCKET_DEFINITIONS[b]["meaning"],
                     "clears": BUCKET_DEFINITIONS[b]["clears"],
                     "evidence_source": BUCKET_DEFINITIONS[b]["evidence_source"],
+                    "citation": BUCKET_DEFINITIONS[b].get("citation"),
                 }
                 for b in BUCKET_ORDER
             },
             "unclassified": unclassified,
             "overlap": overlap,
+            "done_evidence_violations": len(done_violations),
+            "done_evidence_violation_ids": done_violations,
+            "missing_clearing_mechanisms": missing_clears,
+            "citation_failures": citation_failures,
+            "stale_derived_at": bool(staleness),
             "sub_causes": {
                 "D": dict(d_causes.most_common()) if d_causes else {},
                 "U": dict(u_causes.most_common()) if u_causes else {},
@@ -251,7 +410,14 @@ def cmd_check(args) -> int:
             json.dump(artifact, fh, indent=2, sort_keys=True)
             fh.write("\n")
 
-        if unclassified != 0 or overlap != 0:
+        if (
+            unclassified != 0
+            or overlap != 0
+            or done_violations
+            or missing_clears
+            or staleness
+            or citation_failures
+        ):
             return 1
         return 0
 

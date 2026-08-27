@@ -138,6 +138,157 @@ class TestPartition(unittest.TestCase):
         self.assertEqual(result["examined"], 2)
 
 
+class TestDoneEvidenceViolations(unittest.TestCase):
+    """AT-34-E1-002 condition 3: a DONE unit whose evidence does not support it."""
+
+    def test_supported_done_evidence_passes(self):
+        self.assertTrue(CA._done_evidence_is_supported("companion_held_and_corpus_record_carries_real_description"))
+
+    def test_empty_evidence_is_unsupported(self):
+        self.assertFalse(CA._done_evidence_is_supported(""))
+        self.assertFalse(CA._done_evidence_is_supported(None))
+
+    def test_unfinished_bucket_marker_in_done_evidence_is_a_violation(self):
+        # RED->GREEN proof shape: a DONE unit carrying an A-bucket marker is
+        # exactly the mistake condition 3 exists to catch.
+        self.assertFalse(CA._done_evidence_is_supported("has_no_engine_table"))
+        self.assertFalse(CA._done_evidence_is_supported("class_feature_option_pool_record_not_held_by_engine"))
+
+    def test_explanation_id_alone_is_not_flagged(self):
+        # Confirmed against the live corpus: 245 real DONE units legitimately
+        # carry `explanation_id` in their evidence string. Flagging it would
+        # be condition 6's own mistake shape (a substring read as meaning
+        # something it does not) turned inward on condition 3.
+        self.assertTrue(
+            CA._done_evidence_is_supported("explanation_id_observed_and_corpus_record_carries_real_description")
+        )
+
+    def test_done_evidence_violations_finds_mismatched_unit(self):
+        units = [
+            _unit("g1", "grounded", "companion_held_and_corpus_record_carries_real_description"),
+            _unit("g2", "grounded", "has_no_engine_table"),  # planted violation
+        ]
+        self.assertEqual(CA._done_evidence_violations(units), ["g2"])
+
+
+class TestMissingClearingMechanisms(unittest.TestCase):
+    """AT-34-E1-002 condition 4: a bucket with no named clearing mechanism."""
+
+    def test_real_definitions_all_have_clears(self):
+        self.assertEqual(CA._missing_clearing_mechanisms(), [])
+
+    def test_missing_clears_detected(self):
+        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
+        mutated["A"]["clears"] = ""
+        self.assertEqual(CA._missing_clearing_mechanisms(mutated), ["A"])
+
+    def test_absent_clears_key_detected(self):
+        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
+        del mutated["Z"]["clears"]
+        self.assertEqual(CA._missing_clearing_mechanisms(mutated), ["Z"])
+
+
+class TestCitationFailures(unittest.TestCase):
+    """AT-34-E1-002 condition 6: the file:line citation must resolve AND its
+    content must actually contain the claimed marker."""
+
+    def test_real_citations_all_resolve_and_match(self):
+        # This is the live acceptance evidence for condition 6: every
+        # bucket's citation is checked against the real, current
+        # src/bin/v06_work_inventory.rs on disk -- not assumed.
+        self.assertEqual(CA._citation_failures(), [])
+
+    def test_missing_citation_detected(self):
+        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
+        mutated["A"].pop("citation", None)
+        failures = CA._citation_failures(mutated)
+        self.assertEqual(len(failures), 1)
+        self.assertIn("A", failures[0])
+
+    def test_wrong_line_number_detected(self):
+        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
+        mutated["A"]["citation"] = dict(mutated["A"]["citation"])
+        mutated["A"]["citation"]["line"] = 10**9  # out of range
+        failures = CA._citation_failures(mutated)
+        self.assertEqual(len(failures), 1)
+        self.assertIn("does not resolve", failures[0])
+
+    def test_content_mismatch_detected_even_when_line_resolves(self):
+        # The line resolves (it exists) but no longer contains the claimed
+        # marker -- proves this asserts on CONTENT, not just path/line
+        # (risks-and-open-questions.md §10).
+        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
+        mutated["A"]["citation"] = dict(mutated["A"]["citation"])
+        mutated["A"]["citation"]["must_contain"] = "this_marker_definitely_does_not_appear_on_that_line"
+        failures = CA._citation_failures(mutated)
+        self.assertEqual(len(failures), 1)
+        self.assertIn("no longer contains", failures[0])
+
+    def test_nonexistent_file_detected(self):
+        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
+        mutated["A"]["citation"] = {"file": "src/bin/does_not_exist_98765.rs", "line": 1, "must_contain": "x"}
+        failures = CA._citation_failures(mutated)
+        self.assertEqual(len(failures), 1)
+        self.assertIn("does not resolve", failures[0])
+
+
+class TestStalenessGate(unittest.TestCase):
+    """AT-34-E1-002 condition 5: a `derived_at` SHA that is not an ancestor
+    of HEAD."""
+
+    def test_head_is_its_own_ancestor(self):
+        head = CA._head_sha()
+        self.assertTrue(CA._is_ancestor(head))
+
+    def test_ancestor_commit_is_an_ancestor(self):
+        import subprocess
+        parent = subprocess.run(
+            ["git", "rev-parse", "HEAD~1"], cwd=CA.REPO_ROOT,
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        self.assertTrue(CA._is_ancestor(parent))
+
+    def test_bogus_sha_is_not_an_ancestor(self):
+        self.assertFalse(CA._is_ancestor("0000000000000000000000000000000000dead"))
+        self.assertFalse(CA._is_ancestor("unknown"))
+        self.assertFalse(CA._is_ancestor(None))
+        self.assertFalse(CA._is_ancestor(""))
+
+    def test_staleness_violation_none_when_no_artifact(self):
+        self.assertIsNone(CA._staleness_violation("/tmp/does-not-exist-completion-atlas.json"))
+
+    def test_staleness_violation_flags_bogus_prior_sha(self):
+        import json as _json
+        import tempfile
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as fh:
+            _json.dump({"derived_at": "0000000000000000000000000000000000dead"}, fh)
+            path = fh.name
+        try:
+            result = CA._staleness_violation(path)
+            self.assertIsNotNone(result)
+            self.assertIn("not an ancestor", result)
+        finally:
+            os.remove(path)
+
+    def test_staleness_violation_clear_for_real_ancestor(self):
+        import json as _json
+        import tempfile
+        head = CA._head_sha()
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as fh:
+            _json.dump({"derived_at": head}, fh)
+            path = fh.name
+        try:
+            self.assertIsNone(CA._staleness_violation(path))
+        finally:
+            os.remove(path)
+
+    def test_committed_artifact_is_not_stale(self):
+        # Live acceptance evidence: the artifact as currently committed on
+        # disk (before this run's own --check overwrites it) must still be
+        # an ancestor of HEAD.
+        self.assertIsNone(CA._staleness_violation())
+
+
 class TestLiveInventoryCheck(unittest.TestCase):
     """Runs the CLI against the real committed inventory -- the acceptance
     evidence AT-34-E1-001 actually names."""

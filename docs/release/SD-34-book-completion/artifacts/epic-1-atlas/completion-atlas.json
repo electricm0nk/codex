@@ -1,70 +1,125 @@
 {
   "buckets": {
     "A": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9658,
+        "must_contain": "has_no_engine_table"
+      },
       "clears": "building the table (Epic 2)",
       "count": 8463,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'has_no_engine_table')",
       "meaning": "engine has no table for this kind"
     },
     "B": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9382,
+        "must_contain": "not_held_by_engine"
+      },
       "clears": "placing the record (Epic 3/4)",
       "count": 11921,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
     "C": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9607,
+        "must_contain": "explanation_id"
+      },
       "clears": "wiring the display/explanation path (Epic 3)",
       "count": 4388,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
       "meaning": "held and computed, never surfaced"
     },
     "D": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 8346,
+        "must_contain": "not-ingested"
+      },
       "clears": "per named sub-cause",
       "count": 1230,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == not-ingested, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
     "DONE": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 8374,
+        "must_contain": "grounded"
+      },
       "clears": "\u2014",
       "count": 12265,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
     "M": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 8481,
+        "must_contain": "ingested-magnitude"
+      },
       "clears": "running the compute path (shape engine)",
       "count": 2455,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
     "U": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 8433,
+        "must_contain": "unmeasurable"
+      },
       "clears": "instrument correction",
       "count": 321,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
       "meaning": "instrument cannot express a verdict"
     },
     "V": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 10190,
+        "must_contain": "literal-verified"
+      },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
       "count": 8330,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
       "meaning": "verified by proxy, never by the oracle"
     },
     "X": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 8393,
+        "must_contain": "deferred-with-reason"
+      },
       "clears": "revisiting the stated condition",
       "count": 46,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
       "meaning": "deferred with a stated reason"
     },
     "Z": {
+      "citation": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 8254,
+        "must_contain": "not-started"
+      },
       "clears": "ordinary work",
       "count": 19,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
       "meaning": "not started"
     }
   },
-  "derived_at": "ce51884ebbb7ecc27ac94fb9d59a36d00f588625",
+  "citation_failures": [],
+  "derived_at": "ceac19da29608ed042d5463f884366325eb51919",
+  "done_evidence_violation_ids": [],
+  "done_evidence_violations": 0,
+  "missing_clearing_mechanisms": [],
   "overlap": 0,
   "population": 49438,
   "re_derive_command": "python3 scripts/completion_atlas.py --check",
+  "stale_derived_at": false,
   "sub_causes": {
     "D": {
       "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 156,
