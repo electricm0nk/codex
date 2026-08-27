@@ -1,7 +1,6 @@
 # Cycle 12 — Epic 2 (Build eight of the nine tables) / AT-34-E2-004
 
-- **Commit SHA:** (this cycle's commit — filled in a follow-up docs-only commit per this
-  package's own precedent, e.g. `AT-34-E2-001`/`AT-34-E2-003`)
+- **Commit SHA:** `0dd52ccb65`
 - **Files touched:** `src/bin/v06_work_inventory.rs` (wires the seven `AT-34-E2-001` tables plus
   `companion`'s pre-existing SD-29 table into `classify()` for real classification, not just the
   read-only `--epic2-table-transcript` diagnostic), `scripts/completion_atlas.py` (10 bucket
