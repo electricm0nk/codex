@@ -67,8 +67,8 @@ _A_MARKER = "has_no_engine_table"
 # engine surface a table would attach to": the arm a real per-kind table
 # lookup would replace.
 ENGINE_SURFACE_CITATIONS = {
-    "companion": {"line": 10208, "must_contain": "companion_content_has_no_engine_table"},
-    "power": {"line": 10287, "must_contain": "power_content_has_no_engine_table"},
+    "companion": {"line": 10425, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 10504, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

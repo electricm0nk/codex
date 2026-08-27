@@ -650,23 +650,44 @@ mod tests {
     /// not a stale one, and the true, currently-live number — both before
     /// and after this cycle — is 5,445. `scripts/retro.py correction`
     /// records this (`AT-34-E3-001-class_feature_owner_matched-cycle`
-    /// claimed 5,563; actual 5,445). Re-run **after** the last commit that
-    /// writes `docs/work-inventory.json` — the rule this re-pin exists to
-    /// make mechanical, restated for whichever cycle next regenerates the
-    /// file.
+    /// claimed 5,563; actual 5,445).
+    ///
+    /// **5,445 -> 5,402, a REAL movement, not a re-derivation correction
+    /// (SD-34 `AT-34-E3-001` mechanism-3 cycle 3, 2026-08-27).** This
+    /// re-pin's own denominator is `shape_ledger.py`'s "not-done units
+    /// considered" population (27,273 before this cycle), which EXCLUDES
+    /// every unit whose `docs/work-inventory.json` `status` is already a
+    /// done rung -- so a unit leaving bucket B for `DONE` legitimately
+    /// leaves F1's population too, if its own corpus formula happens to be
+    /// F1-shaped. This cycle's own fix (`probe_ranger_favored_enemy_bonus_
+    /// wiring` / `probe_ranger_favored_terrain_bonus_wiring`, `src/bin/
+    /// v06_work_inventory.rs`) grounded exactly 43 `"Favored Enemy/Terrain
+    /// Bonus ~ <type>"` records corpus-wide (42 `core_rulebook` + 1
+    /// `advanced_players_guide`), every one of which carries a bare-literal
+    /// `BONUS:VAR|Favored<Type>|2` token -- F1's own defining shape (a bare
+    /// literal magnitude, no per-level/ability/pool expression). 5445 - 43 =
+    /// 5402, confirmed by re-running `python3 scripts/shape_ledger.py
+    /// --inventory docs/work-inventory.json --corpus-root data/corpus`
+    /// against the regenerated file: F1 = 5402 exactly. Re-run **after** the
+    /// last commit that writes `docs/work-inventory.json` — the rule this
+    /// re-pin exists to make mechanical, restated for whichever cycle next
+    /// regenerates the file.
     #[test]
     fn f1_population_matches_the_current_true_formula_bearing_count_not_the_stale_sd32_census() {
         let root = repo_root();
         let report = run_corpus_wide_scan(&root).expect("corpus-wide scan must succeed");
         let f1 = report.families.get("F1").expect("F1 must be present in the report");
         assert_eq!(
-            f1.population, 5445,
-            "F1 population must equal the CURRENT true formula-bearing count (5,445, re-derived \
+            f1.population, 5402,
+            "F1 population must equal the CURRENT true formula-bearing count (5,402, re-derived \
              2026-08-27 via `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json \
              --corpus-root data/corpus`, run AFTER the last commit that writes \
-             `docs/work-inventory.json` -- see this test's own doc comment), not the previous \
-             cycle's own WRONG 5,563 re-pin (a bad re-derivation, not a stale one -- see this \
-             test's own doc comment and the `AT-34-E3-001-class_feature_owner_matched-cycle` \
+             `docs/work-inventory.json` -- see this test's own doc comment), not the prior \
+             cycle's own true-at-the-time 5,445 (43 Favored Enemy/Terrain Bonus units left \
+             bucket B for DONE this cycle, all F1-shaped -- see this test's own doc comment), \
+             not the previous cycle's own WRONG 5,563 re-pin (a bad re-derivation, not a stale \
+             one -- see this test's own doc comment and the \
+             `AT-34-E3-001-class_feature_owner_matched-cycle` \
              retro correction), not the stale 6,257 pin, not the pre-fold 6,260/6,278, not the \
              pre-regen 6,308 this test pinned on 2026-08-24, and not SD-32's frozen 2026-08-14 \
              census (6,032) — AT-33-E3-002 / AT-33-E6-001 / AT-34-E3-001"

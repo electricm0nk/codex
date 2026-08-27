@@ -101,6 +101,46 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 3) — one of nine, `decisions.md §14` — partial
+
+Continued cycle 2's own work (328 -> 324). Read the corpus directly and confirmed two facts
+before building anything: every one of the 31 `"Favored Enemy Bonus ~ <type>"` corpus records
+(and the 11 `"Favored Terrain Bonus ~ <type>"` siblings) carries an identical shape — no
+description, a `PREABILITY` naming its own base ability, and a flat literal `BONUS:VAR|Favored
+<Type>|2` token — and the engine's own `explain_ranger_level1_chassis_and_class_feature_
+separation` computes that identical flat `+2` regardless of which type string is chosen (an
+OPEN-ENDED recognition, unlike Weapon Training's hardcoded 4-of-52 subset), because the shared
+class-wide bonus it computes IS the same value the corpus's own per-type variable resolves to.
+Built two new probes, `probe_ranger_favored_enemy_bonus_wiring` / `probe_ranger_favored_terrain_
+bonus_wiring` (`src/bin/v06_work_inventory.rs`), mirroring `probe_domain_power_effect_wiring`:
+each of the 31/11 canonical type strings (transcribed verbatim from the corpus's own `PREABILITY`
+token) is selected over the real `compute_pilot_base_chassis` pipeline, and only strings whose
+choice-recognition AND `value == 2` magnitude were BOTH genuinely observed are credited. 43
+corpus-wide records grounded (42 `core_rulebook` + 1 `advanced_players_guide` cross-book side
+effect), 324 -> 282. Investigated `New Arcana` (9 units) and RULED IT OUT: unlike Favored Enemy/
+Terrain, the engine's own doc comment states the specific spell-level choice is "a free chooser
+... not modelled" — no single canonical value exists to credit, so the Favored-Enemy-shaped
+argument does not transfer. **Real instrument-correction discovered and fixed**: 43 of the newly
+grounded records were F1-shaped (bare literal), so `shape_ledger.py`'s F1 population (scoped to
+not-done units) legitimately dropped from cycle 2's own TRUE 5,445 to 5,402 — re-pinned in
+`formula_interpreter_corpus_wide.rs` with a doc comment naming the mechanism, and a retro
+`correction` event filed (this is a real movement this cycle caused, not a bad re-derivation like
+the earlier 5,563 re-pin was). Re-derived and fixed 10 + 2 shifted `file:line` citations in
+`completion_atlas.py`/`missing_engine_tables.py` (`citation_failures=0` on both after). **Flagged,
+not fixed** (out of this mechanism's own scope): `cargo test --locked --test v06_work_inventory`
+fails one pre-existing test on 3 `vacuous_placeholder_row_no_corpus_content_to_render` units — a
+different sibling mechanism's own cycle 3 fix, confirmed present in `docs/work-inventory.json`
+before this cycle touched anything, named for that mechanism's next cycle to pick up. Hit the same
+disk-exhaustion condition an earlier cycle in this same wave documented (`/` at 100%); reclaimed
+40GB by deleting this lane's own two orphaned (no `.reclaim-claim`), already-committed-cycle
+`CARGO_TARGET_DIR`s, which unblocked the workspace `--no-run` re-run; did not additionally reach
+`apps/desktop/src-tauri`'s own full suite this cycle. `core_rulebook` bucket B (atlas-real
+partition) 736 -> 694/6,701 (this mechanism 324 -> 282 of 1,006; 6 mechanisms fully closed, 3
+partially closed — 52/63, 14/100, 282/1006 remain — 1 unstarted at 346). `completion_atlas.py
+--check`, `missing_engine_tables.py --check`, and `denominator_gate.py --check` all re-ran clean
+after the citation fix. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_3.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 4) — one of nine, `decisions.md §14` — partial
 
 Re-derived the 52-unit remainder fresh at HEAD (no code changed) and independently confirmed

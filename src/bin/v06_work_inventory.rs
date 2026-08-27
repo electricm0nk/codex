@@ -5183,6 +5183,31 @@ struct EngineFacts {
     /// never seeds any weapon-training-group choice at all, so the standard
     /// sweep below never observes any of these on its own.
     fighter_weapon_training_wired: BTreeSet<(u8, String)>,
+    /// `AT-34-E3-001` (mechanism 3 continuation, cycle 3): the 31 canonical
+    /// Ranger favored-enemy TYPE strings (`"Aberration"`, `"Humanoid
+    /// (Aquatic)"`, ...) whose own `"class_chassis.ranger.favored_enemy_
+    /// choice"` / `"...favored_enemy_skill_bonus"` explanations were
+    /// genuinely observed via [`probe_ranger_favored_enemy_bonus_wiring`].
+    /// Unlike Domain Power/Weapon Training, `explain_ranger_level1_chassis_
+    /// and_class_feature_separation`'s own favored-enemy recognition is
+    /// OPEN-ENDED (no restricted-list validation, confirmed by reading the
+    /// function directly): the flat `+2` skill/attack-damage magnitude
+    /// computes identically regardless of WHICH string is chosen, so this
+    /// probe is not narrowing a hardcoded subset the way the Fighter one
+    /// does -- it is confirming, per canonical name, that the exact string
+    /// each `"Favored Enemy Bonus ~ <type>"` corpus record's own `PREABILITY`
+    /// names round-trips through the real pipeline and that the resulting
+    /// magnitude matches that record's own literal `BONUS:VAR|...|2` token
+    /// (2, the un-boosted base), never assumed equal without observing it.
+    ranger_favored_enemy_bonus_wired: BTreeSet<String>,
+    /// `AT-34-E3-001` (mechanism 3 continuation, cycle 3): the 11 canonical
+    /// Ranger favored-terrain TYPE strings (`"Cold"`, `"Desert"`, ...) whose
+    /// own `"class_feature.ranger.favored_terrain"` explanation was
+    /// genuinely observed via [`probe_ranger_favored_terrain_bonus_wiring`].
+    /// Same open-ended-recognition discipline as
+    /// `ranger_favored_enemy_bonus_wired` above, gated at ranger level 3
+    /// (Favored Terrain's own real class-table gate) rather than level 1.
+    ranger_favored_terrain_bonus_wired: BTreeSet<String>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -7138,6 +7163,153 @@ fn probe_fighter_weapon_training_wiring(fixture: &CharacterInput) -> BTreeSet<(u
     wired
 }
 
+/// `AT-34-E3-001` (mechanism 3 continuation, cycle 3): the 31 canonical
+/// favored-enemy TYPE strings `"Favored Enemy Bonus ~ <type>"`'s own
+/// `PREABILITY` token names (read directly from `data/corpus/core_rulebook/
+/// class_feature/favored_enemy_bonus/*.json`, never re-derived by
+/// transformation from the corpus key -- two entries, `Humanoid (...)` and
+/// `Outsider (...)`, would not round-trip through a naive strip/replace).
+/// Unlike `probe_fighter_weapon_training_wiring`, `explain_ranger_level1_
+/// chassis_and_class_feature_separation`'s own favored-enemy recognition
+/// (read directly before this probe was written) is OPEN-ENDED: `choice_
+/// selection(input, "choice:ranger_favored_enemy")` is echoed into the
+/// `"class_chassis.ranger.favored_enemy_choice"` detail with no
+/// restricted-list check, and the flat `+2` `"...favored_enemy_skill_bonus"`
+/// magnitude computes identically no matter which string was chosen -- so
+/// this probe is not narrowing a hardcoded subset, it is confirming, PER
+/// canonical name, that the exact string works end-to-end through the real
+/// `compute_pilot_base_chassis` pipeline and that the observed magnitude
+/// equals that record's own literal `BONUS:VAR|Favored<Type>|2` token (the
+/// un-boosted base of 2), never assumed without observing it.
+/// `canonical_seeds_for("ranger")` never seeds `choice:ranger_favored_enemy`
+/// at all (confirmed by grep), so the standard sweep below never observes
+/// any of these on its own.
+fn probe_ranger_favored_enemy_bonus_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    const CANONICAL_FAVORED_ENEMY_TYPES: &[&str] = &[
+        "Aberration",
+        "Animal",
+        "Construct",
+        "Dragon",
+        "Fey",
+        "Humanoid (Aquatic)",
+        "Humanoid (Dwarf)",
+        "Humanoid (Elf)",
+        "Humanoid (Giant)",
+        "Humanoid (Gnoll)",
+        "Humanoid (Gnome)",
+        "Humanoid (Goblinoid)",
+        "Humanoid (Halfling)",
+        "Humanoid (Human)",
+        "Humanoid (Orc)",
+        "Humanoid (Reptilian)",
+        "Magical Beast",
+        "Monstrous Humanoid",
+        "Ooze",
+        "Outsider (Air)",
+        "Outsider (Chaotic)",
+        "Outsider (Earth)",
+        "Outsider (Evil)",
+        "Outsider (Fire)",
+        "Outsider (Good)",
+        "Outsider (Lawful)",
+        "Outsider (Native)",
+        "Outsider (Water)",
+        "Plant",
+        "Undead",
+        "Vermin",
+    ];
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for &type_name in CANONICAL_FAVORED_ENEMY_TYPES {
+        'levels: for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "ranger", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:ranger_favored_enemy");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:ranger_favored_enemy".to_string(),
+                selection_id: type_name.to_string(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            let choice_observed = computation.explanations.iter().any(|e| {
+                e.id == "class_chassis.ranger.favored_enemy_choice"
+                    && e.detail.contains(&format!("-> {type_name}"))
+            });
+            let magnitude_observed = computation.explanations.iter().any(|e| {
+                e.id == "class_chassis.ranger.favored_enemy_skill_bonus" && e.value == 2
+            });
+            if choice_observed && magnitude_observed {
+                wired.insert(type_name.to_string());
+                break 'levels;
+            }
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// `AT-34-E3-001` (mechanism 3 continuation, cycle 3): the same
+/// open-ended-recognition discipline as
+/// [`probe_ranger_favored_enemy_bonus_wiring`] applied to the 11 canonical
+/// favored-terrain TYPE strings `"Favored Terrain Bonus ~ <type>"`'s own
+/// `PREABILITY` token names, gated at ranger level 3 (Favored Terrain's own
+/// real class-table gate, confirmed by reading `explain_ranger_level1_
+/// chassis_and_class_feature_separation` directly) rather than level 1.
+fn probe_ranger_favored_terrain_bonus_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
+    const CANONICAL_FAVORED_TERRAIN_TYPES: &[&str] = &[
+        "Cold",
+        "Desert",
+        "Forest",
+        "Jungle",
+        "Mountain",
+        "Plains",
+        "Plane",
+        "Swamp",
+        "Underground",
+        "Urban",
+        "Water",
+    ];
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for &type_name in CANONICAL_FAVORED_TERRAIN_TYPES {
+        'levels: for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "ranger", level);
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| c.choice_set_id != "choice:ranger_favored_terrain");
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:ranger_favored_terrain".to_string(),
+                selection_id: type_name.to_string(),
+            });
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            let choice_observed = computation.explanations.iter().any(|e| {
+                e.id == "class_chassis.ranger.favored_terrain_choice"
+                    && e.detail.contains(&format!("-> {type_name}"))
+            });
+            let magnitude_observed = computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.ranger.favored_terrain" && e.value == 2);
+            if choice_observed && magnitude_observed {
+                wired.insert(type_name.to_string());
+                break 'levels;
+            }
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -7522,6 +7694,8 @@ fn gather_engine_facts(
         equipment_effect_wired: probe_equipment_effect_wiring(repo_root),
         domain_power_effect_wired: probe_domain_power_effect_wiring(fixture),
         fighter_weapon_training_wired: probe_fighter_weapon_training_wiring(fixture),
+        ranger_favored_enemy_bonus_wired: probe_ranger_favored_enemy_bonus_wiring(fixture),
+        ranger_favored_terrain_bonus_wired: probe_ranger_favored_terrain_bonus_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -9716,6 +9890,49 @@ fn classify(
                             };
                         }
                     }
+                }
+            }
+            // `AT-34-E3-001` (mechanism 3 continuation, cycle 3): `"Favored
+            // Enemy Bonus ~ <type>"` sub-cause, same shape as Domain Power /
+            // Weapon Training above -- `group` here is `"Favored Enemy
+            // Bonus"`, which can never equal `"ranger"`, so `class_feature_
+            // owner` and its fallbacks can never resolve an owner for it and
+            // `class_feature_exact_suffix_grounded`'s `group == owner` guard
+            // would refuse even if one resolved. `probe_ranger_favored_
+            // enemy_bonus_wiring` is the real, separate attribution path --
+            // see its own doc comment for why the recognition it observes is
+            // open-ended (every one of the 31 canonical types round-trips,
+            // unlike Weapon Training's 4-of-52 hardcoded subset) and why
+            // that is still a genuinely-OBSERVED magnitude, not an assumed
+            // one.
+            if group == "Favored Enemy Bonus" {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                if facts.ranger_favored_enemy_bonus_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "ranger_favored_enemy_bonus_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+            }
+            // `AT-34-E3-001` (mechanism 3 continuation, cycle 3): `"Favored
+            // Terrain Bonus ~ <type>"` sub-cause, the Favored Terrain sibling
+            // of the Favored Enemy Bonus check immediately above -- same
+            // open-ended-recognition discipline, gated at ranger level 3 by
+            // `probe_ranger_favored_terrain_bonus_wiring` itself rather than
+            // by this classify() branch.
+            if group == "Favored Terrain Bonus" {
+                let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
+                if facts.ranger_favored_terrain_bonus_wired.contains(feature) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "ranger_favored_terrain_bonus_probe_observed_a_real_computed_magnitude"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
                 }
             }
             // `SD31-W17-CLASSFEATURE-001`: the corpus_key group prefix is
@@ -16590,6 +16807,99 @@ mod class_feature_text_complete_rung_tests {
             1020,
             "Weapon Training 1 Axes",
             1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
+    /// held_by_engine` mechanism, cycle 3, Favored Enemy Bonus sub-cause,
+    /// proof case: `probe_ranger_favored_enemy_bonus_wiring` observed a real
+    /// choice-recognition explanation AND a real `+2` magnitude explanation
+    /// for this exact canonical type on a live Ranger, so the record is
+    /// `grounded` -- never routed to the generic `class_feature_option_pool_
+    /// record_with_magnitude_not_held_by_engine` bucket-B evidence.
+    #[test]
+    fn a_ranger_favored_enemy_bonus_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.ranger_favored_enemy_bonus_wired.insert("Aberration".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1550,
+            "Favored Enemy Bonus ~ Aberration",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "ranger_favored_enemy_bonus_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED `"Favored Enemy Bonus ~ *"` type (the
+    /// probe's own `EngineFacts` set is empty here) is completely unaffected
+    /// -- it still falls through to the pre-existing `engine-does-not-hold`
+    /// finding, unchanged, proving this cycle's fix credits nothing it did
+    /// not actually observe.
+    #[test]
+    fn a_ranger_favored_enemy_bonus_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1550,
+            "Favored Enemy Bonus ~ Aberration",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
+    /// held_by_engine` mechanism, cycle 3, Favored Terrain Bonus sub-cause,
+    /// proof case: the Favored Terrain sibling of the Favored Enemy Bonus
+    /// proof case immediately above.
+    #[test]
+    fn a_ranger_favored_terrain_bonus_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.ranger_favored_terrain_bonus_wired.insert("Cold".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1600,
+            "Favored Terrain Bonus ~ Cold",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "ranger_favored_terrain_bonus_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: an UNPROBED `"Favored Terrain Bonus ~ *"` type is
+    /// completely unaffected, mirroring the Favored Enemy Bonus negative
+    /// control immediately above.
+    #[test]
+    fn a_ranger_favored_terrain_bonus_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1600,
+            "Favored Terrain Bonus ~ Cold",
+            2,
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
