@@ -36,6 +36,39 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle 8 — AT-34-E1-008 — `wiring-class-mismatch` driven to zero, group by group
+
+**Status: in-progress** (this criterion is dispatched as parallel per-book groups; each group
+commits and reports independently). Mechanism, established by group G1 and reused unchanged
+here: `src/bin/restamp_wiring_class.rs` (new in G1's commit) — an additive restamp pass over
+existing on-disk `data/corpus/<book>/**/*.json` records, following this repo's established
+"enrichment pass, never a second generator" pattern (`enrich_*_raw_tokens.rs`). It rewrites
+only the `wiring_class`/`wiring_class_signals` keys when they disagree with a fresh recompute
+via the audit's own `WiringClassIndex`, every other field parsed and re-emitted untouched by
+construction — never a hand-edit, per `decisions.md §13`/`N5`.
+
+**G1** (`54e2d24e83`): `advanced_players_guide` 875→0, `core_rulebook` 798→0. Discovered that
+`gen_book_cache`/`gen_core_rulebook_cache`/`gen_cache_apg` cover only `companion`/`class`
+records' `wiring_class` (255 of 1,673) — the rest (`ability`/`domain`/`skill`/`template`/
+`*_generic`) were ingested by one-off Python scripts predating the real closure determinator
+and cannot ever agree with the audit by re-running them, hence `restamp_wiring_class.rs`.
+Receipt: `artifacts/epic-1-atlas/AT-34-E1-008_G1_cycle_receipt.md`.
+
+**G2** (this cycle, `8df70c2ee4`): `beastiary` 783→0, `ultimate_psionics` 759→0,
+`ultimate_campaign` 152→0 — 1,694 of the group-2 population. Same tool, same posture, run via
+`cargo run --locked --bin restamp_wiring_class -- beastiary ultimate_psionics` then `--
+ultimate_campaign`. Provenance verified per record by `git diff` against HEAD across all 2,494
+changed files: only `wiring_class`/`wiring_class_signals` changed, 0 files added/removed, 0
+provenance-field mismatches. `corpus_literal_sweep`: 48699 examined before → 48699 after (delta
+0, correct — in-place restamp adds no records), 0 findings, CLEAN both runs. Build scope:
+root workspace `cargo test --locked --no-run` exit 0 and `apps/desktop/src-tauri` (separate
+workspace) `cargo test --locked --no-run` exit 0, both run at `8df70c2ee4`. Receipt:
+`artifacts/epic-1-atlas/AT-34-E1-008_G2_cycle_receipt.md`.
+
+Corpus-wide `wiring-class-mismatch` after G1+G2: `5342 - 1694 = 3648` of the original 7015.
+Remaining groups (G3/G4 or however the wave is split) own the rest. AT-34-E1-007's own `exits 0`
+bar closes only once every group lands at 0.
+
 ### Cycle 7 — AT-34-E1-007 — `corpus-trap-audit` is wired into `verify.sh`; blocked on real content it found
 
 **Status: blocked-escalated.** The mechanical deliverable is done: a new `corpus-trap-audit`

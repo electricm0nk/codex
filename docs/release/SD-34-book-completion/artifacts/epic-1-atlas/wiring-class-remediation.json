@@ -29,6 +29,43 @@
       "corpus_literal_sweep_after": 48699,
       "corpus_literal_sweep_delta": 0,
       "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only), so 0 delta is expected and correct per decisions.md §12 L8's own framing (population must grow when records are ADDED -- none were)."
+    },
+    {
+      "group": "G2",
+      "books": [
+        {
+          "book": "beastiary",
+          "wiring_class_mismatch_before": 783,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 1464,
+          "records_scanned": 2500,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- beastiary ultimate_psionics",
+          "provenance_check": "PASS -- all 1464 changed files git-diffed against HEAD; only wiring_class/wiring_class_signals keys changed on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "ultimate_psionics",
+          "wiring_class_mismatch_before": 759,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 860,
+          "records_scanned": 1731,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- beastiary ultimate_psionics",
+          "provenance_check": "PASS -- all 860 changed files git-diffed against HEAD; only wiring_class/wiring_class_signals keys changed on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "ultimate_campaign",
+          "wiring_class_mismatch_before": 152,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 170,
+          "records_scanned": 419,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- ultimate_campaign",
+          "provenance_check": "PASS -- all 170 changed files git-diffed against HEAD; only wiring_class/wiring_class_signals keys changed on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        }
+      ],
+      "commit_sha": "8df70c2ee4",
+      "corpus_literal_sweep_before": 48699,
+      "corpus_literal_sweep_after": 48699,
+      "corpus_literal_sweep_delta": 0,
+      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only, same as G1), so 0 delta is expected and correct per decisions.md §12 L8's own framing (population must grow when records are ADDED -- none were)."
     }
   ]
 }
