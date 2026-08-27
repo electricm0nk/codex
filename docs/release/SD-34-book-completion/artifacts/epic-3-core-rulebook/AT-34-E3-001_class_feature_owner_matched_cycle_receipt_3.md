@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 3)
 
-- **Commit SHA:** (this receipt's own commit — filled below after commit)
+- **Commit SHA:** `0398240942c6a2d7432c2e876a88638c8a9474f4`
 - **Files touched:** this receipt only (`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_3.md`), plus the standing three shared files (`progress.md`, `kanban.md`). No production code shipped changed (one temporary `eprintln!` debug line was added to `src/rules_core/class_feature_pool_catalog.rs` for this cycle's own investigation and reverted before commit — `git diff --stat src/rules_core/class_feature_pool_catalog.rs` is empty at commit time).
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS (the epic-scoped diff against `origin/develop` for this cycle's own committed files carries no new bundle-tag identifiers; the large `sd32_class_ingest`/`sd32_simple_filename_kind_ingest` hits in the full epic-scoped diff are pre-existing `docs/work-inventory.json` data-field values from earlier, already-audited cycles, unchanged by this cycle).
 - **Wired-integration audit result:** OK_NO_TOKENS (no new `STUB`/`MOCK`/`placeholder`/etc. token introduced by this cycle's own commit; pre-existing `placeholder` hits are from earlier cycles' already-audited work, e.g. the `class_feature_option_pool` mechanism's `VACUOUS_PLACEHOLDER_CLASS_FEATURES` naming).
