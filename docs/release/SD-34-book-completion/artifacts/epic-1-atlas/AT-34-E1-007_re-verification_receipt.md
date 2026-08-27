@@ -1,6 +1,6 @@
 # Cycle 7-R — Epic 1 Completion Atlas / AT-34-E1-007 (re-verification after AT-34-E1-008)
 
-- **Commit SHA:** `PLACEHOLDER_SHA`
+- **Commit SHA:** `a47cdbee21`
 - **Files touched:** `scripts/corpus_trap_audit_baseline.py` (new — the per-kind baseline comparator), `scripts/tests/test_corpus_trap_audit_baseline.sh` (new — its detection self-test, 14 cases), `scripts/verify.sh` (`corpus-trap-audit` verdict now per-kind; new `corpus-trap-audit-selftest` stage wired into `ALL_STAGES` and `QUICK_STAGES`), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/AT-34-E1-007_re-verification_receipt.md` (this file), `docs/release/SD-34-book-completion/progress.md`, `docs/release/SD-34-book-completion/kanban.md`, `docs/retro/events/sd34-at-34-e1-007.jsonl`
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS — for this cycle's own added lines and for all three files it touches in `scripts/`. See "Dual audit" below for the epic-wide hits, all of which pre-date this cycle or are removals.
 - **Wired-integration audit result:** OK_NO_TOKENS — same scope, same note.
@@ -195,7 +195,13 @@ was clean before either build started):
 
 - `cargo test --locked --no-run -j2` (full root workspace, `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e1-007`) → **exit 0**
 - `cd apps/desktop/src-tauri && cargo test --locked --no-run -j2` (the separate cargo workspace, `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e1-007-desktop`) → **exit 0**
-- Run at SHA `PLACEHOLDER_SHA` (this cycle's commit; the only Rust-visible input it changes is nothing — the diff is `scripts/` and docs only).
+- Run at SHA `a47cdbee21` (this cycle's commit; it changes no Rust-visible input — the diff is `scripts/` and docs only).
+
+Both `corpus-trap-audit` stages were re-run **after** the push, at `a47cdbee21` with the tree
+clean under `data/corpus/`, `scripts/` and `docs/release/`: `corpus-trap-audit-selftest` PASS
+(14 passed, 0 failed, EXIT=0) and `corpus-trap-audit` PASS (`records_examined=27638`
+`defects[wiring-class-mismatch=0 disabled-line=165 key-differs-from-name=650 mod-record=2117`
+`shared-name-distinct-records=249] traps=407`, EXIT=0).
 
 **Sweeps not run:** no `cargo test` *execution* pass (only `--no-run`), and no full `scripts/verify.sh`
 FULL run. This cycle changes no Rust source, so SD-33's inherited baseline of 29 of 599 suites
