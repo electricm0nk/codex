@@ -101,6 +101,35 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 2) — one of nine, `decisions.md §14` — partial
+
+Re-derived this mechanism's population fresh at HEAD (`251ad7929a`): **346 of 346** still
+`core_rulebook` bucket B under this evidence string, unchanged from the prior cycle. Re-ran the
+prior cycle's own committed regression test
+(`class_feature_owner_matched_but_not_held_346_sub_causes_are_named_and_sum_exactly`) — the same
+exact 7-way, sum-exact partition holds (143 null-description bookkeeping, 121 real engine-effect
+tokens, 67 catalog-served-but-wiring-class-gated, 6 class-level-scaled phrase, 5 dropped pcgen
+args, 3 unregenerated multi-DESC branches, 1 bare percent reference).
+
+Tested one new hypothesis this cycle did not test before: whether any of the 346 is really a
+duplicate enumeration of an already-`DONE` unit under a different corpus key (an atlas defect,
+`decisions.md §2`), sampled on `Arcane Bond ~ Bonded Object` (the `class_specific_level_phrase`
+sub-cause's own cited example). Every sibling unit for that feature (`Arcane Bloodline ~ Arcane
+Bond`, `Arcane Bond ~ Familiar`, `Wizard ~ Arcane Bond`) is independently `engine-does-not-hold`
+— no duplicate exists. Hypothesis falsified, not confirmed: this rules out one candidate
+narrow-fix path rather than opening one.
+
+0 of 346 closed this cycle. Every remaining unit genuinely needs either new engine wiring
+(spellcaster grants, domain spell-list grants, bonus-feat grants, proficiency grants, per-
+character size-bonus effects — each independently scoped, comparable to a single Epic 2 table),
+new ingest work writing a description that does not exist upstream, or an operator-scoped
+ruling on whether a zero-description internal-bookkeeping row can ever satisfy bucket B at all
+(the 143-unit sub-cause). None is a narrow, safely-scoped catalog fix without loosening a
+deliberate Decision-7 render-and-refuse gate or hand-authoring corpus prose outside the guarded
+ingest path. `core_rulebook` bucket B (atlas-real partition) unchanged at 750/6701.
+
+Receipt: `artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt_2.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 2) — one of nine, `decisions.md §14` — partial
 
 Continues the prior cycle's own mechanism (328 -> 324 of 1,006 `core_rulebook` bucket-B units,
