@@ -17,7 +17,7 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**2 of 27 criteria complete. 2 of 26 kanban rows complete.**
+**3 of 27 criteria complete. 3 of 26 kanban rows complete.**
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -35,6 +35,46 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 3 — AT-34-E1-003 — the missing engine tables are enumerated and their book coverage mapped
+
+**Status: complete.** New `scripts/missing_engine_tables.py` re-derives bucket A (`status ==
+not-ingested`, evidence contains `has_no_engine_table`) directly from `docs/work-inventory.json`
+and reports, per kind: unit count, per-book breakdown, the exact `not_ingested(...)`
+engine-surface citation in `v06_work_inventory.rs` a real table would replace, and which books'
+entire bucket-A population zeroes out once that kind's table exists.
+
+`python3 scripts/missing_engine_tables.py --check` → `population=8463 kinds=9
+citation_failures=0`, exit 0. Per-kind: `ability=4337 template=2248 trait=487 deity=459
+power=421 domain=183 skill=149 language=136 companion=43` (sum = 8,463, matching
+`completion_atlas.py`'s committed `buckets.A.count` exactly). Core Rulebook's slice
+(`ability=471 template=262 skill=110 domain=34 language=22 deity=21 companion=14`, summing to
+934 of `core_rulebook`'s 6,701 units) matches `technical-design.md §4` exactly and cross-checks
+against `completion_atlas.py --by-book`'s independently-computed `core_rulebook A=934`.
+`ultimate_campaign`'s slice (`ability=88 trait=154`, summing to 242 of 265 units, 91.3%)
+confirms the epic-breakdown's "almost-single-bucket book" claim, cross-checked the same way.
+
+`zero_bucket_a_books` (books a single kind's table alone would fully clear of bucket A):
+`ability` → `inner_sea_faiths`; `language` → `inner_sea_temples`; `template` →
+`inner_sea_intrigue`, `ultimate_intrigue`; the other 6 kinds → none (every book they touch also
+carries a second bucket-A kind, so both tables are needed).
+
+**Notable finding along the way:** a 10th `Kind::MonsterAbility` match arm in
+`v06_work_inventory.rs` emits the same `has_no_engine_table` marker shape but contributes zero
+live bucket-A units — its 3,806 units are already `text-complete`/`grounded`/verified, with only
+13 `not-ingested` units, all landing in bucket B. Confirmed by reading the corpus data, not the
+code path alone, before concluding the population is genuinely 9 kinds not 10 — the same
+field-name-vs-field-meaning trap `decisions.md §12` L1 names.
+
+12/12 new unit tests green (`scripts.tests.test_missing_engine_tables`), covering per-kind
+counts, non-bucket-A exclusion, `zero_bucket_a_books` derivation, the engine-surface citation
+(including a live re-check against the committed source), and a fail-closed
+`UnknownKindError` for any future kind reaching bucket A with no citation entry. Denominator
+gate against this package: `files_checked=15 violations=0`. `cargo test --locked --no-run`
+exits 0 at `2ec0462736` (Python-only change; no Rust source touched); `apps/desktop/src-tauri`
+not touched, not run. `docs/work-inventory.json` untouched — zero movement across all four
+buckets; this cycle is a reclassification (finer view of the already-fixed bucket-A partition),
+not new closure work. Receipt: `artifacts/epic-1-atlas/AT-34-E1-003_cycle_receipt.md`.
 
 ### Cycle 2 — AT-34-E1-002 — the atlas fails closed on six conditions
 
