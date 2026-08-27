@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:39:33Z",
   "data": {
+    "description": "You can gain the aid of another student. This grants you a +4 circumstance bonus on any skill check, save for Education checks.",
     "key": "Research Aid ~ Secret Society",
     "name": "Research Aid",
-    "description": "You can gain the aid of another student. This grants you a +4 circumstance bonus on any skill check, save for Education checks.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
-    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
-    "line": 183,
-    "record_key": "Research Aid ~ Secret Society"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:39:33Z",
   "license": "PI-REDACTED",
   "pi_field": "raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 183,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Research Aid ~ Secret Society",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
 }

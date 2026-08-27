@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain resistance %1 to an energy type of your choice, chosen when you prepare spells. This resistance can be changed each day.|AbjurationResistanceBonus|PREVARLTEQ:Ability_FlexibleSchool_AbjurationLVL,19",
     "key": "Flexible School Power ~ Abjuration ~ Resistance",
     "name": "Resistance",
-    "description": "You gain resistance %1 to an energy type of your choice, chosen when you prepare spells. This resistance can be changed each day.|AbjurationResistanceBonus|PREVARLTEQ:Ability_FlexibleSchool_AbjurationLVL,19",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,20 +56,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 455,
-    "record_key": "Flexible School Power ~ Abjuration ~ Resistance"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 455,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Flexible School Power ~ Abjuration ~ Resistance",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

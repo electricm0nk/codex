@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You earn the right to undergo a special ritual made available to members of the fleshfores in good standing. It allows you to permanently reduce any ability scoe of your choice by 2 points in order to gain a +2 inherent bonus to any other ability scoe of your choice.",
     "key": "Enhancement ~ Guild",
     "name": "Enhancement",
-    "description": "You earn the right to undergo a special ritual made available to members of the fleshfores in good standing. It allows you to permanently reduce any ability scoe of your choice by 2 points in order to gain a +2 inherent bonus to any other ability scoe of your choice.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
-    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
-    "line": 113,
-    "record_key": "Enhancement ~ Guild"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 113,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Enhancement ~ Guild",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

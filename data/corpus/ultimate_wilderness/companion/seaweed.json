@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:25:21Z",
   "data": {
+    "description": null,
     "key": "Unchained Eidolon Base Form ~ Seaweed",
     "name": "Seaweed",
-    "description": null,
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -39,22 +39,22 @@
         "key": "BONUS",
         "value": "VAR|EidolonFortGood,EidolonReflexGood|1"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
-    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b",
-    "line": 15,
-    "record_key": "Unchained Eidolon Base Form ~ Seaweed"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:25:21Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_companion_pu.lst",
+    "record_key": "Unchained Eidolon Base Form ~ Seaweed",
+    "sha256": "8396c59e3f688574bc389b7f2a30b0bc5ab2a1d6e3c66eee50f824006f16cc1b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "The eidolon's body becomes shadowy and more indistinct. This shadow form grants the eidolon constant concealment (20%% miss chance), and its melee attacks affect incorporeal creatures as if it had the ghost touch weapon property. The eidolon's melee attacks deal only half damage to corporeal creatures.",
     "key": "Evolution ~ Shadow Form",
     "name": "Shadow Form",
-    "description": "The eidolon's body becomes shadowy and more indistinct. This shadow form grants the eidolon constant concealment (20%% miss chance), and its melee attacks affect incorporeal creatures as if it had the ghost touch weapon property. The eidolon's melee attacks deal only half damage to corporeal creatures.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "SOURCEPAGE",
@@ -35,22 +35,22 @@
         "key": "COST",
         "value": "2"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
-    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
-    "line": 108,
-    "record_key": "Evolution ~ Shadow Form"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 108,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "record_key": "Evolution ~ Shadow Form",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

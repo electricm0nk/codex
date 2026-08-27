@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "If 6 additional evolution points are spent, the eidolon instead becomes Huge. The eidolon gains a +8 bonus to Strength, a +4 bonus to Constitution, and a +5 bonus to its natural armor. It takes a -4 penalty to Dexterity. This size change also gives the creature a -2 size penalty to AC and on attack rolls, a +2 bonus on combat maneuver checks and to CMD, a 10-foot reach, a -4 penalty on Fly checks, and a -8 penalty on Stealth checks. If the eidolon has the biped base form, its reach increases to 15 feet instead of 10 feet. Any reach evolutions the eidolon possesses are added to this total. These bonuses and penalties replace, and do not stack with, those gained from becoming Large. The ability increase evolution costs twice as much (4 evolution points) when adding to the Strength or Constitution scores of a Large or Huge eidolon.",
     "key": "Unchained Evolution ~ Huge",
     "name": "Huge",
-    "description": "If 6 additional evolution points are spent, the eidolon instead becomes Huge. The eidolon gains a +8 bonus to Strength, a +4 bonus to Constitution, and a +5 bonus to its natural armor. It takes a -4 penalty to Dexterity. This size change also gives the creature a -2 size penalty to AC and on attack rolls, a +2 bonus on combat maneuver checks and to CMD, a 10-foot reach, a -4 penalty on Fly checks, and a -8 penalty on Stealth checks. If the eidolon has the biped base form, its reach increases to 15 feet instead of 10 feet. Any reach evolutions the eidolon possesses are added to this total. These bonuses and penalties replace, and do not stack with, those gained from becoming Large. The ability increase evolution costs twice as much (4 evolution points) when adding to the Strength or Constitution scores of a Large or Huge eidolon.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -61,18 +59,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 255,
-    "record_key": "Unchained Evolution ~ Huge"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 255,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Evolution ~ Huge",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

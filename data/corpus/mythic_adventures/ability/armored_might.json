@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You treat the armor bonus from your armor as 50%% higher than normal, to maximum increase of %1. For example, if you are 4th tier and wearing +2 breastplate, you treat the armor's +6 armor bonus as +8 (50%% of +6 is +3, limited to +2 by half your tier).|HalfMythicLevel",
     "key": "Mythic Path Ability ~ Armored Might",
     "name": "Armored Might",
-    "description": "You treat the armor bonus from your armor as 50%% higher than normal, to maximum increase of %1. For example, if you are 4th tier and wearing +2 breastplate, you treat the armor's +6 armor bonus as +8 (50%% of +6 is +3, limited to +2 by half your tier).|HalfMythicLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 118,
-    "record_key": "Mythic Path Ability ~ Armored Might"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 118,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Armored Might",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ]
 }

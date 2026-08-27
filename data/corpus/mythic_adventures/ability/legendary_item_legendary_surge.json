@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "All legendary items have a legendary surge ability, similar to a mythic character's surge ability. It can be used only on specific rolls or checks based on the nature or purpose of the legendary item. The legendary surge ability allows the bearer to add the result of a d6 to the appropriate type of roll or check. A mythic bearer can use her surge die type in place of the d6. If she's bonded to the item, she can increase that die type by one step.",
     "key": "Legendary Item ~ Legendary Surge",
     "name": "Legendary Item ~ Legendary Surge",
-    "description": "All legendary items have a legendary surge ability, similar to a mythic character's surge ability. It can be used only on specific rolls or checks based on the nature or purpose of the legendary item. The legendary surge ability allows the bearer to add the result of a d6 to the appropriate type of roll or check. A mythic bearer can use her surge die type in place of the d6. If she's bonded to the item, she can increase that die type by one step.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 622,
-    "record_key": "Legendary Item ~ Legendary Surge"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 622,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Legendary Item ~ Legendary Surge",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

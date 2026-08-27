@@ -127,9 +127,8 @@
     "record_key": "Aluum",
     "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:dr"
+    "static:literal_magnitudes_only"
   ]
 }

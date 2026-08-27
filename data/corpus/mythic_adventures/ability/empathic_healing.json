@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You can expend one use of mythic power to transfer up to %1 points of damage from a touched ally to yourself, healing the target and damaging you. This transferred damage bypasses all effects that reduce or negate hit point damage (such as damage reduction). Alternatively, you can expend two uses of mythic power to transfer an ongoing disease or poison from a touched ally to yourself, which halts ongoing effects on the target from that affliction and requires you to attempt any remaining saves against it. If you're immune to the disease or poison, transferring it to yourself destroys the affliction.|10*MythicLevel",
     "key": "Mythic Path Ability ~ Empathic Healing",
     "name": "Empathic Healing",
-    "description": "You can expend one use of mythic power to transfer up to %1 points of damage from a touched ally to yourself, healing the target and damaging you. This transferred damage bypasses all effects that reduce or negate hit point damage (such as damage reduction). Alternatively, you can expend two uses of mythic power to transfer an ongoing disease or poison from a touched ally to yourself, which halts ongoing effects on the target from that affliction and requires you to attempt any remaining saves against it. If you're immune to the disease or poison, transferring it to yourself destroys the affliction.|10*MythicLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 161,
-    "record_key": "Mythic Path Ability ~ Empathic Healing"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 161,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Empathic Healing",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

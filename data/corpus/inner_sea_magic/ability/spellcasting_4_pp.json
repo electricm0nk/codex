@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:39:33Z",
   "data": {
+    "description": "You can have the following spell cast for you (CL 7): restoration (remove permanent negative levels).",
     "key": "Spellcasting 4 ~ Secret Society",
     "name": "Spellcasting (4 PP)",
-    "description": "You can have the following spell cast for you (CL 7): restoration (remove permanent negative levels).",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
-    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
-    "line": 197,
-    "record_key": "Spellcasting 4 ~ Secret Society"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:39:33Z",
   "license": "PI-REDACTED",
   "pi_field": "raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 197,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Spellcasting 4 ~ Secret Society",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:prose_expr"
+  ]
 }

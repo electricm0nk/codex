@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "The eidolon grows in size, becoming Large. The eidolon gains a +4 bonus to Strength, a +2 bonus to Constitution, and a +2 bonus to its natural armor. It takes a -2 penalty to Dexterity. This size change also gives the creature a -1 size penalty to AC and on attack rolls, a +1 bonus on combat maneuver checks and to CMD, a -2 penalty on Fly checks, and a -4 penalty on Stealth checks. If the eidolon has the biped base form, it also gains a reach of 10 feet. Any reach evolutions the eidolon possesses are added to this total.",
     "key": "Unchained Evolution ~ Large",
     "name": "Large",
-    "description": "The eidolon grows in size, becoming Large. The eidolon gains a +4 bonus to Strength, a +2 bonus to Constitution, and a +2 bonus to its natural armor. It takes a -2 penalty to Dexterity. This size change also gives the creature a -1 size penalty to AC and on attack rolls, a +1 bonus on combat maneuver checks and to CMD, a -2 penalty on Fly checks, and a -4 penalty on Stealth checks. If the eidolon has the biped base form, it also gains a reach of 10 feet. Any reach evolutions the eidolon possesses are added to this total.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,18 +55,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 254,
-    "record_key": "Unchained Evolution ~ Large"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 254,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Evolution ~ Large",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

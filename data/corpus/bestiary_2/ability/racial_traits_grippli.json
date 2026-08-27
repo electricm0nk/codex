@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Racial Traits ~ Grippli",
     "name": "Racial Traits ~ Grippli",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -17,20 +16,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/grippli/grippli_abilities_globalvar.lst",
-    "sha256": "179b15e79d1b76900c61b226564e5b541f3b47c5b39800e6329eeeb09e3322c7",
-    "line": 10,
-    "record_key": "Racial Traits ~ Grippli"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/grippli/grippli_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Grippli",
+    "sha256": "179b15e79d1b76900c61b226564e5b541f3b47c5b39800e6329eeeb09e3322c7"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

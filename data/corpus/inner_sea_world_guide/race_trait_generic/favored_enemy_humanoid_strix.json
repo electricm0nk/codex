@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Strixs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidStrix",
     "key": "Favored Enemy ~ Humanoid (Strix)",
     "name": "Humanoid (Strix)",
-    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Strixs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidStrix",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/strix/strix_abilities_race.lst",
-    "sha256": "2e9ef82fa1a12beb6acdade3eb7a820b182a876ffd3d0624ffcea9216ccff54e",
     "line": 28,
-    "record_key": "Favored Enemy ~ Humanoid (Strix)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/strix/strix_abilities_race.lst",
+    "record_key": "Favored Enemy ~ Humanoid (Strix)",
+    "sha256": "2e9ef82fa1a12beb6acdade3eb7a820b182a876ffd3d0624ffcea9216ccff54e"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

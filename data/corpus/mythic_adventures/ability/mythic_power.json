@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Mythic characters can draw upon a wellspring of power to accomplish amazing deeds and cheat fate. This power is used by a number of different abilities. Each day, you can expend %1 mythic power. This amount is your maximum amount of mythic power. If an ability allows you to regain uses of your mythic power, you can never have more than this amount.|MythicPowerTimes",
     "key": "Mythic Ability ~ Mythic Power",
     "name": "Mythic Power",
-    "description": "Mythic characters can draw upon a wellspring of power to accomplish amazing deeds and cheat fate. This power is used by a number of different abilities. Each day, you can expend %1 mythic power. This amount is your maximum amount of mythic power. If an ability allows you to regain uses of your mythic power, you can never have more than this amount.|MythicPowerTimes",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -61,20 +60,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 57,
-    "record_key": "Mythic Ability ~ Mythic Power"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Ability ~ Mythic Power",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

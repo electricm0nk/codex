@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "When casting arcanist enchantment spells, add %1 to the effective caster level, but only for the purpose of determining duration.|HalfElfArcanistFavClassBonus/3",
     "key": "Half Elf ~ Arcanist ~ Caster Level",
     "name": "Caster Level",
-    "description": "When casting arcanist enchantment spells, add %1 to the effective caster level, but only for the purpose of determining duration.|HalfElfArcanistFavClassBonus/3",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -25,18 +23,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
-    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
-    "line": 319,
-    "record_key": "Half Elf ~ Arcanist ~ Caster Level"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 319,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "record_key": "Half Elf ~ Arcanist ~ Caster Level",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

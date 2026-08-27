@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T15:18:10Z",
   "data": {
     "key": "Common (cannot speak)",
     "name": "Common (cannot speak)",
@@ -12,20 +11,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_languages.lst",
-    "sha256": "024e507fbce3ab6c2888a2d85b220fa40ca7fbb177da15824751b85686bcb3f1",
-    "line": 6,
-    "record_key": "Common (cannot speak)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_languages.lst",
+    "record_key": "Common (cannot speak)",
+    "sha256": "024e507fbce3ab6c2888a2d85b220fa40ca7fbb177da15824751b85686bcb3f1"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

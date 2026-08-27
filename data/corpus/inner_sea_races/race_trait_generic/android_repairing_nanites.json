@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Some androids cannot prompt their nanites to aid them in any endeavor, but instead find that their nanites stitch their wounds together. The first time each day that such an android has taken an amount of damage greater than or equal to %1 (twice her Hit Dice), the nanites automatically activate, without an action. Her circuitry-tattoos glow with light equivalent to that of a torch for 1 round and she heals %1 hit points (a number equal to twice her Hit Dice).|TL*2",
     "key": "Android ~ Repairing Nanites",
     "name": "Repairing Nanites",
-    "description": "Some androids cannot prompt their nanites to aid them in any endeavor, but instead find that their nanites stitch their wounds together. The first time each day that such an android has taken an amount of damage greater than or equal to %1 (twice her Hit Dice), the nanites automatically activate, without an action. Her circuitry-tattoos glow with light equivalent to that of a torch for 1 round and she heals %1 hit points (a number equal to twice her Hit Dice).|TL*2",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
-    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
-    "line": 359,
-    "record_key": "Android ~ Repairing Nanites"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 359,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "record_key": "Android ~ Repairing Nanites",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
 }

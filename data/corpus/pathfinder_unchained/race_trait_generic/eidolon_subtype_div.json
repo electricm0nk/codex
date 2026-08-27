@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Formed of hatred and spite, div eidolons seek to despoil and ruin all things beautiful and joyous. Div eidolons particularly resent having mortal masters, and seek to doom their summoners to existences full of suffering and loss. Each div eidolon has a unique compulsion it must follow-usually something similar to the doru's obsession with secrets-that leads it to bargain its loyalty for something the summoner provides. The div's summoner uses his eidolon's compulsion to entrap and control the eidolon. Still, div eidolons never fully give in, and continue to plot ways they might corrupt that which their masters hold dearest.",
     "key": "Eidolon Subtype ~ Div",
     "name": "Div",
-    "description": "Formed of hatred and spite, div eidolons seek to despoil and ruin all things beautiful and joyous. Div eidolons particularly resent having mortal masters, and seek to doom their summoners to existences full of suffering and loss. Each div eidolon has a unique compulsion it must follow-usually something similar to the doru's obsession with secrets-that leads it to bargain its loyalty for something the summoner provides. The div's summoner uses his eidolon's compulsion to entrap and control the eidolon. Still, div eidolons never fully give in, and continue to plot ways they might corrupt that which their masters hold dearest.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 33,
-    "record_key": "Eidolon Subtype ~ Div"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Eidolon Subtype ~ Div",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

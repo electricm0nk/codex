@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "When a student of perfection wears light armor or no armor, he gains a +%1 dodge bonus to his AC and CMD. He loses these bonuses while immobilized or helpless, wearing medium or heavy armor, or carrying a medium or heavy load.|StudenOfPerfectionACBonus",
     "key": "Student of Perfection ~ AC bonus",
     "name": "AC Bonus",
-    "description": "When a student of perfection wears light armor or no armor, he gains a +%1 dodge bonus to his AC and CMD. He loses these bonuses while immobilized or helpless, wearing medium or heavy armor, or carrying a medium or heavy load.|StudenOfPerfectionACBonus",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 5,
-    "record_key": "Student of Perfection ~ AC bonus"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Student of Perfection ~ AC bonus",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

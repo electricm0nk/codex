@@ -22,8 +22,9 @@
     "record_key": "Barding (Lamellar/Stone/Large)",
     "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
   },
-  "wiring_class": "static",
+  "wiring_class": "computed",
   "wiring_class_signals": [
+    "computed:pre_guard",
     "static:literal_magnitudes_only"
   ]
 }

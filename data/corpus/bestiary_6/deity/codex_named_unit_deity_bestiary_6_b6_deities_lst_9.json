@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:39Z",
   "data": {
     "key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_9)",
     "name": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_9)",
@@ -52,23 +51,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_deities.lst",
-    "sha256": "4efea24653a7d3bd8d418ad934f8b0f1294ff22c4e0c6649460e1bb39a77d8c3",
-    "line": 9,
-    "record_key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_9)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T14:24:39Z",
   "license": "PI-REDACTED",
   "pi_field": "name",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "bestiary_6:b6_deities.lst:9"
-  }
+    "coordinate": "bestiary_6:b6_deities.lst:9",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_deities.lst",
+    "record_key": "Codex-Named Unit (deity_bestiary_6_b6_deities_lst_9)",
+    "sha256": "4efea24653a7d3bd8d418ad934f8b0f1294ff22c4e0c6649460e1bb39a77d8c3"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:11:35Z",
   "data": {
     "key": "Craft (Siege Engine)",
     "name": "Craft (Siege Engine)",
@@ -24,18 +22,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_skills.lst",
-    "sha256": "b92371b758e8bb88a0ed5d9daf5cd8aeac424d52cd998a7483fba7d2b150b206",
-    "line": 6,
-    "record_key": "Craft (Siege Engine)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:11:35Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_skills.lst",
+    "record_key": "Craft (Siege Engine)",
+    "sha256": "b92371b758e8bb88a0ed5d9daf5cd8aeac424d52cd998a7483fba7d2b150b206"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

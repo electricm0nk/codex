@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Four legs and two arms; +4 racial bonus vs trip, +10 untyped bonus to base speed, use weapons and armor as if medium; gain 2 more legs for each +1 RP (additional +4 vs trip per extra pair).",
     "key": "Builder Racial Trait ~ Quadruped",
     "name": "Quadruped",
-    "description": "Four legs and two arms; +4 racial bonus vs trip, +10 untyped bonus to base speed, use weapons and armor as if medium; gain 2 more legs for each +1 RP (additional +4 vs trip per extra pair).",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -61,20 +60,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
-    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
-    "line": 607,
-    "record_key": "Builder Racial Trait ~ Quadruped"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 607,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Quadruped",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
 }

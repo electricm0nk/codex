@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:18Z",
   "data": {
     "key": "Fungoid",
     "name": "Fungoid",
@@ -32,20 +31,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_templates.lst",
-    "sha256": "fe601a343aaca6afdad281ce318825abf7f59f9a593ae84bf9356b7d9cb98967",
-    "line": 8,
-    "record_key": "Fungoid"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_templates.lst",
+    "record_key": "Fungoid",
+    "sha256": "fe601a343aaca6afdad281ce318825abf7f59f9a593ae84bf9356b7d9cb98967"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

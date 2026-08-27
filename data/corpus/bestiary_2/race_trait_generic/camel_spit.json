@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Once per hour, a camel can regurgitate the contents of its stomach, spitting the foul material at a single target within 10 feet.  The target must make a DC %1 Fortitude save or be sickened for 1d4 rounds.|CamelSpitDC",
     "key": "Camel ~ Spit",
     "name": "Camel ~ Spit",
-    "description": "Once per hour, a camel can regurgitate the contents of its stomach, spitting the foul material at a single target within 10 feet.  The target must make a DC %1 Fortitude save or be sickened for 1d4 rounds.|CamelSpitDC",
     "raw_tokens": [
       {
         "key": "TYPE",
@@ -41,18 +39,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 676,
-    "record_key": "Camel ~ Spit"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 676,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Camel ~ Spit",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

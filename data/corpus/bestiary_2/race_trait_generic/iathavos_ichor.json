@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "As long as the iathavos has taken any hit point damage, thick and stringy ropes of black ichor weep from the fissures and folds in its bristly hide.  This ichor extrudes from the creature's body in a writhing nimbus of filaments at a rate of 5 feet per round, to a maximum range equal to its reach (30 feet).  At the start of the iathavos's turn, all creatures in reach of these strands of ichor must make a DC %1 Reflex save or become entangled.  At the start of the iathavos's turn, all creatures entangled by the ichor take 4d6 points of acid damage.  If the qlippoth ends its turn with no hit point damage, the ichor melts away into harmless mist, releasing all entangled creatures.|IathavosIchorDC",
     "key": "Iathavos ~ Ichor",
     "name": "Ichor",
-    "description": "As long as the iathavos has taken any hit point damage, thick and stringy ropes of black ichor weep from the fissures and folds in its bristly hide.  This ichor extrudes from the creature's body in a writhing nimbus of filaments at a rate of 5 feet per round, to a maximum range equal to its reach (30 feet).  At the start of the iathavos's turn, all creatures in reach of these strands of ichor must make a DC %1 Reflex save or become entangled.  At the start of the iathavos's turn, all creatures entangled by the ichor take 4d6 points of acid damage.  If the qlippoth ends its turn with no hit point damage, the ichor melts away into harmless mist, releasing all entangled creatures.|IathavosIchorDC",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1011,
-    "record_key": "Iathavos ~ Ichor"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1011,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Iathavos ~ Ichor",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

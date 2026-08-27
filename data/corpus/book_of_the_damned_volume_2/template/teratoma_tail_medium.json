@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:17Z",
   "data": {
     "key": "Teratoma Tail ~ Medium",
     "name": "Teratoma Tail ~ Medium",
@@ -32,20 +31,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst",
-    "sha256": "07b373534c84464f24a6cfa5278912ea1081076e1739c0486f843d74e65c93d6",
-    "line": 35,
-    "record_key": "Teratoma Tail ~ Medium"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:17Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_templates.lst",
+    "record_key": "Teratoma Tail ~ Medium",
+    "sha256": "07b373534c84464f24a6cfa5278912ea1081076e1739c0486f843d74e65c93d6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "A hydrodaemon can spit at a single target within 20 feet, making a ranged touch attack as a standard action.  A target hit by this spittle must succeed on a DC %1 Will save or fall asleep for 6 rounds.|HydrodaemonSleepSpittleDC",
     "key": "Hydrodaemon ~ Sleep Spittle",
     "name": "Sleep Spittle",
-    "description": "A hydrodaemon can spit at a single target within 20 feet, making a ranged touch attack as a standard action.  A target hit by this spittle must succeed on a DC %1 Will save or fall asleep for 6 rounds.|HydrodaemonSleepSpittleDC",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 295,
-    "record_key": "Hydrodaemon ~ Sleep Spittle"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 295,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Hydrodaemon ~ Sleep Spittle",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

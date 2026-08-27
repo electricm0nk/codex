@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Svetochers take a -1 penalty on saves against effects that deal positive energy damage.",
     "key": "Moroi-Born ~ Weakness",
     "name": "Weakness",
-    "description": "Svetochers take a -1 penalty on saves against effects that deal positive energy damage.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
-    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
-    "line": 44,
-    "record_key": "Moroi-Born ~ Weakness"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "record_key": "Moroi-Born ~ Weakness",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

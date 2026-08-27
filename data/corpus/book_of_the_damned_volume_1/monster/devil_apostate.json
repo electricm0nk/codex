@@ -167,9 +167,8 @@
     "record_key": "Devil (Apostate)",
     "sha256": "7ac566b98c1300b3c9c5d0be1b6940712c130d79ebaddd5efcb2ab223c27c6d6"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:dr"
+    "static:literal_magnitudes_only"
   ]
 }

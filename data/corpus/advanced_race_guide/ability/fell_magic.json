@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "+1 untyped bonus to DC to any Necromancy spells cast; If Wis 11+, SLAs: 1/day - Bleed, Chill Touch, Detect Poison, Touch of Fatigue. CL = Character Level.  Save is Wis-based.",
     "key": "Builder Racial Trait ~ Fell Magic",
     "name": "Fell Magic",
-    "description": "+1 untyped bonus to DC to any Necromancy spells cast; If Wis 11+, SLAs: 1/day - Bleed, Chill Touch, Detect Poison, Touch of Fatigue. CL = Character Level.  Save is Wis-based.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,20 +52,23 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
-    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
-    "line": 337,
-    "record_key": "Builder Racial Trait ~ Fell Magic"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 337,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Fell Magic",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
 }

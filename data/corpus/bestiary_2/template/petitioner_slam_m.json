@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:16Z",
   "data": {
     "key": "Petitioner Slam ~ M",
     "name": "Petitioner Slam ~ M",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
-    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520",
-    "line": 54,
-    "record_key": "Petitioner Slam ~ M"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_templates.lst",
+    "record_key": "Petitioner Slam ~ M",
+    "sha256": "095ffee4537e05c9697ba77c95a59bff521f17327dfacf49338954527624d520"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

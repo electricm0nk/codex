@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Rebuild Rules: Used for on-the-fly gaming. Size increase by one category; AC increase natural armor by +3; Attacks increase dice rolled by 1 step; Ability Scores +4 size bonus to Str and Con, -2 Dex.",
     "key": "Giant Creature (Rebuild Option)",
     "name": "Giant Creature (Rebuild Option)",
-    "description": "Rebuild Rules: Used for on-the-fly gaming. Size increase by one category; AC increase natural armor by +3; Attacks increase dice rolled by 1 step; Ability Scores +4 size bonus to Str and Con, -2 Dex.",
     "raw_tokens": [
       {
         "key": "SORTKEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
     "line": 2262,
-    "record_key": "Giant Creature (Rebuild Option)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Giant Creature (Rebuild Option)",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

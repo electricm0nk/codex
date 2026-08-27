@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Mythic characters advance in power by gaining tiers, each of which grants new abilities. Attaining a new mythic tier requires completing difficult trials within the campaign's story rather than accumulating experience points. Mythic tiers range from 1 to 10. Characters who achieve 10th tier are at the height of mythic power, and are in some respects akin to minor deities.",
     "key": "Mythic Level",
     "name": "Add Mythic Tier",
-    "description": "Mythic characters advance in power by gaining tiers, each of which grants new abilities. Attaining a new mythic tier requires completing difficult trials within the campaign's story rather than accumulating experience points. Mythic tiers range from 1 to 10. Characters who achieve 10th tier are at the height of mythic power, and are in some respects akin to minor deities.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -61,20 +60,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 10,
-    "record_key": "Mythic Level"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Level",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

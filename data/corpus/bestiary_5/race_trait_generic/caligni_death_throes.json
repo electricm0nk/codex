@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "When a caligni is slain, its body combusts in a flash of searing light. All creatures within a 5-foot burst must succeed at a Fortitude save (DC %1) or be dazzled for 1d4 rounds. The corpse left behind is a third of the caligni's size, withered and unrecognizable as the individual. Raise dead and similar spells cast upon these remains restore a caligni as normal.|10+TL/2+CON",
     "key": "Caligni ~ Death Throes",
     "name": "Death Throes",
-    "description": "When a caligni is slain, its body combusts in a flash of searing light. All creatures within a 5-foot burst must succeed at a Fortitude save (DC %1) or be dazzled for 1d4 rounds. The corpse left behind is a third of the caligni's size, withered and unrecognizable as the individual. Raise dead and similar spells cast upon these remains restore a caligni as normal.|10+TL/2+CON",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,18 +27,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
-    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39",
-    "line": 71,
-    "record_key": "Caligni ~ Death Throes"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_race_pc.lst",
+    "record_key": "Caligni ~ Death Throes",
+    "sha256": "7700b754c351b9266695f7be49d176650137e6db0781d1506debfa1e1a13aa39"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

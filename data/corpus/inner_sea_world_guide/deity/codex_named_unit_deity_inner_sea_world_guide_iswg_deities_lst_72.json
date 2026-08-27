@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:41Z",
   "data": {
     "key": "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_72)",
     "name": "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_72)",
@@ -36,23 +35,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_deities.lst",
-    "sha256": "d0340ebfd178023621b0e251a5467fa9237637dd2e29ca9f2422273bb48327b9",
-    "line": 72,
-    "record_key": "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_72)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T14:24:41Z",
   "license": "PI-REDACTED",
   "pi_field": "name",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_world_guide:iswg_deities.lst:72"
-  }
+    "coordinate": "inner_sea_world_guide:iswg_deities.lst:72",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 72,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_deities.lst",
+    "record_key": "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_72)",
+    "sha256": "d0340ebfd178023621b0e251a5467fa9237637dd2e29ca9f2422273bb48327b9"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

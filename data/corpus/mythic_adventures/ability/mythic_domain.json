@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "When determining the effects of your domain's granted powers, you're considered 4 levels higher. This increases the effects of powers you have access to, but doesn't grant you powers at a lower level than normal. Once per day, you can expend one use of mythic power as a standard action to regain the use of all your domain granted powers as if you had rested for 8 hours. If you're an oracle, all aspects of this ability apply to your revelations instead of to domain granted powers. You must have the domain class feature or mystery class feature to select this ability.",
     "key": "Mythic Path Ability ~ Mythic Domain",
     "name": "Mythic Domain",
-    "description": "When determining the effects of your domain's granted powers, you're considered 4 levels higher. This increases the effects of powers you have access to, but doesn't grant you powers at a lower level than normal. Once per day, you can expend one use of mythic power as a standard action to regain the use of all your domain granted powers as if you had rested for 8 hours. If you're an oracle, all aspects of this ability apply to your revelations instead of to domain granted powers. You must have the domain class feature or mystery class feature to select this ability.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,20 +56,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 212,
-    "record_key": "Mythic Path Ability ~ Mythic Domain"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 212,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Mythic Domain",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

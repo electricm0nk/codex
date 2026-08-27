@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Whenever you cast an arcane spell that targets one or more non-mythic creatures, each of those creatures must roll any saving throws against the spell twice and take the lower result. You gain spell resistance %1, but only against arcane spells. Once per round when your spell resistance protects you from a spell cast by an enemy mythic creature, you regain one use of mythic power.|Ability_TrueArchmage_SR",
     "key": "Mythic Path Feature ~ True Archmage",
     "name": "True Archmage",
-    "description": "Whenever you cast an arcane spell that targets one or more non-mythic creatures, each of those creatures must roll any saving throws against the spell twice and take the lower result. You gain spell resistance %1, but only against arcane spells. Once per round when your spell resistance protects you from a spell cast by an enemy mythic creature, you regain one use of mythic power.|Ability_TrueArchmage_SR",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 98,
-    "record_key": "Mythic Path Feature ~ True Archmage"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 98,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Feature ~ True Archmage",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

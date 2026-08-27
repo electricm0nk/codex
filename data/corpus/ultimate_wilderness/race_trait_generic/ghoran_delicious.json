@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Ghorans take a -2 penalty on Escape Artist and combat maneuver checks to escape a grapple against a creature that has a bite attack with the grab ability.",
     "key": "Ghoran ~ Delicious",
     "name": "Delicious",
-    "description": "Ghorans take a -2 penalty on Escape Artist and combat maneuver checks to escape a grapple against a creature that has a bite attack with the grab ability.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -57,18 +55,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
-    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb",
-    "line": 19,
-    "record_key": "Ghoran ~ Delicious"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
+    "record_key": "Ghoran ~ Delicious",
+    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

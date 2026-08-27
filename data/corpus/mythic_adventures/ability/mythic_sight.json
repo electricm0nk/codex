@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "When you take this ability, you gain blindsense out to a range of 30 feet. You can take this ability twice. The second time you take it, you can see illusions and magical deceptions for what they truly are, as if using true seeing. This ability doesn't apply to illusions and magical effects that were cast by other mythic creatures or that are affecting other mythic creatures. If this ability is dispelled, you can resume it as a free action.",
     "key": "Mythic Path Ability ~ Mythic Sight",
     "name": "Mythic Sight",
-    "description": "When you take this ability, you gain blindsense out to a range of 30 feet. You can take this ability twice. The second time you take it, you can see illusions and magical deceptions for what they truly are, as if using true seeing. This ability doesn't apply to illusions and magical effects that were cast by other mythic creatures or that are affecting other mythic creatures. If this ability is dispelled, you can resume it as a free action.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -69,20 +68,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 393,
-    "record_key": "Mythic Path Ability ~ Mythic Sight"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 393,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Mythic Sight",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

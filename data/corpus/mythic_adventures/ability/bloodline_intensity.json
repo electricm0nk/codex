@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your mythic power intensifies your sorcerer bloodline. Select an additional bloodline feat from your bloodline's list of feats. You must meet the prerequisites for that feat. You can also cast each of your bloodline spells once per day without them counting toward the number of spells you can cast per day. You must have the bloodline class feature to select this ability.",
     "key": "Mythic Path Ability ~ Bloodline Intensity",
     "name": "Bloodline Intensity",
-    "description": "Your mythic power intensifies your sorcerer bloodline. Select an additional bloodline feat from your bloodline's list of feats. You must meet the prerequisites for that feat. You can also cast each of your bloodline spells once per day without them counting toward the number of spells you can cast per day. You must have the bloodline class feature to select this ability.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 125,
-    "record_key": "Mythic Path Ability ~ Bloodline Intensity"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 125,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Bloodline Intensity",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

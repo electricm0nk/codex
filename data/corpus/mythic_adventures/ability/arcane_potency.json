@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Choose one of your arcane spellcasting classes. You gain four bonus 1st-level arcane spell slots for that class (like the bonus spells gained from a high ability score). This ability doesn't change your number of spells known. You can select this ability more than once. If you choose the same arcane spellcasting class a second time, you gain four bonus 2nd-level spell slots; if you choose it again, you gain 3rdlevel slots for choosing it a third time, and so on. This ability can't grant you bonus spells for a spell level that you don't have the ability to cast.",
     "key": "Mythic Path Ability ~ Arcane Potency",
     "name": "Arcane Potency",
-    "description": "Choose one of your arcane spellcasting classes. You gain four bonus 1st-level arcane spell slots for that class (like the bonus spells gained from a high ability score). This ability doesn't change your number of spells known. You can select this ability more than once. If you choose the same arcane spellcasting class a second time, you gain four bonus 2nd-level spell slots; if you choose it again, you gain 3rdlevel slots for choosing it a third time, and so on. This ability can't grant you bonus spells for a spell level that you don't have the ability to cast.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 291,
-    "record_key": "Mythic Path Ability ~ Arcane Potency"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 291,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Arcane Potency",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

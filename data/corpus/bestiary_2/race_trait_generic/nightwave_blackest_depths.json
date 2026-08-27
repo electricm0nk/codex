@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "The waters in which a nightwave swims become as chill, dark, and heavy as those in the ocean's deepest reaches.  All waters within 60 feet are completely dark (as deeper darkness), and creatures within this radius take 6d6 points of damage (half cold, half bludgeoning) at the end of their turn each round if they remain in the area at this time.  A DC %1 Fortitude save negates the crushing damage.  Incorporeal creatures and creatures with the aquatic or water subtypes native to deep waters do not take this damage, and freedom of movement protects completely against the damage.  Any magical light effect within this radius at the beginning of the nightwave's turn is dispelled (treat as greater dispel magic).  This effect does not extend out of the water.|NightwaveBlackestDepthsDC",
     "key": "Nightwave ~ Blackest Depths",
     "name": "Blackest Depths",
-    "description": "The waters in which a nightwave swims become as chill, dark, and heavy as those in the ocean's deepest reaches.  All waters within 60 feet are completely dark (as deeper darkness), and creatures within this radius take 6d6 points of damage (half cold, half bludgeoning) at the end of their turn each round if they remain in the area at this time.  A DC %1 Fortitude save negates the crushing damage.  Incorporeal creatures and creatures with the aquatic or water subtypes native to deep waters do not take this damage, and freedom of movement protects completely against the damage.  Any magical light effect within this radius at the beginning of the nightwave's turn is dispelled (treat as greater dispel magic).  This effect does not extend out of the water.|NightwaveBlackestDepthsDC",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 899,
-    "record_key": "Nightwave ~ Blackest Depths"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 899,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Nightwave ~ Blackest Depths",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

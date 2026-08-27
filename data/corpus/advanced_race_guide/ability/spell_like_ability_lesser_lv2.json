@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Lesser ,SLAs: 1/day - 2nd or lower level spell that doesn't attack or deal damage. CL = Character Level.  Cost = spell level (min 1).  Can be taken 3 times.",
     "key": "Builder Racial Trait ~ Spell-Like Ability (Lesser Lvl2)",
     "name": "Spell-Like Ability (Lesser Lv2)",
-    "description": "Lesser ,SLAs: 1/day - 2nd or lower level spell that doesn't attack or deal damage. CL = Character Level.  Cost = spell level (min 1).  Can be taken 3 times.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -61,20 +60,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
-    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
-    "line": 364,
-    "record_key": "Builder Racial Trait ~ Spell-Like Ability (Lesser Lvl2)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 364,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Spell-Like Ability (Lesser Lvl2)",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

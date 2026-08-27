@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "A totem guide can use guidance as a spell-like ability at will as a full-round action, targeting itself or its master. In addition, a totem guide's master can spontaneously cast the following spells while adjacent to the totem guide by sacrificing a spell slot of equal or higher level: detect animals or plants (1st), augury (2nd), helping hand (3rd), divination (4th), commune with nature (5th), and find the path (6th). The totem guide serves as a divine focus for these spells, but costly material components must still be provided.",
     "key": "Totem Guide ~ Spiritual Guidance",
     "name": "Spiritual Guidance",
-    "description": "A totem guide can use guidance as a spell-like ability at will as a full-round action, targeting itself or its master. In addition, a totem guide's master can spontaneously cast the following spells while adjacent to the totem guide by sacrificing a spell slot of equal or higher level: detect animals or plants (1st), augury (2nd), helping hand (3rd), divination (4th), commune with nature (5th), and find the path (6th). The totem guide serves as a divine focus for these spells, but costly material components must still be provided.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,22 +31,22 @@
         "key": "SOURCEPAGE",
         "value": "p.189"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 511,
-    "record_key": "Totem Guide ~ Spiritual Guidance"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 511,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Totem Guide ~ Spiritual Guidance",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
 }

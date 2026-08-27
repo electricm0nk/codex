@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Ghorans have memories encoded in their seeds. They treat all Knowledge skills as class skills.",
     "key": "Ghoran ~ Past-Life Knowledge",
     "name": "Past-Life Knowledge",
-    "description": "Ghorans have memories encoded in their seeds. They treat all Knowledge skills as class skills.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,18 +51,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
-    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb",
-    "line": 23,
-    "record_key": "Ghoran ~ Past-Life Knowledge"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/ghoran/ghoran_abilities_race.lst",
+    "record_key": "Ghoran ~ Past-Life Knowledge",
+    "sha256": "c9ae1ead8fd6b2e74d933e41251e57ea33fc0a9f1a47b2a9e0cf3208f20d34bb"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

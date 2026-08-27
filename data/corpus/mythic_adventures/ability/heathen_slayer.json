@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Pick one deity (or similar entity able to grant divine spells to followers) as your religious rival. You gain a +2 bonus on weapon attack and damage rolls against this deity's followers, as well as a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks attempted against this deity's followers. At 6th tier, these bonuses increase to +4. You can select this ability multiple times. Each time you do, choose an additional deity to be a religious rival.",
     "key": "Mythic Path Ability ~ Heathen Slayer",
     "name": "Heathen Slayer",
-    "description": "Pick one deity (or similar entity able to grant divine spells to followers) as your religious rival. You gain a +2 bonus on weapon attack and damage rolls against this deity's followers, as well as a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks attempted against this deity's followers. At 6th tier, these bonuses increase to +4. You can select this ability multiple times. Each time you do, choose an additional deity to be a religious rival.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,20 +64,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 182,
-    "record_key": "Mythic Path Ability ~ Heathen Slayer"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 182,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Heathen Slayer",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
 }

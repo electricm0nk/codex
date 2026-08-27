@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Add +%1 as a bonus on Knowledge checks you attempt to identify monsters, including checks made to learn any special powers and vulnerabilities. As a free action, you can expend one use of mythic power to telepathically communicate the knowledge you obtain from this check to all allies within 100 feet.|MythicLevel*2",
     "key": "Mythic Path Ability ~ Knowledgeable Guardian",
     "name": "Knowledgeable Guardian",
-    "description": "Add +%1 as a bonus on Knowledge checks you attempt to identify monsters, including checks made to learn any special powers and vulnerabilities. As a free action, you can expend one use of mythic power to telepathically communicate the knowledge you obtain from this check to all allies within 100 feet.|MythicLevel*2",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 195,
-    "record_key": "Mythic Path Ability ~ Knowledgeable Guardian"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 195,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Knowledgeable Guardian",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

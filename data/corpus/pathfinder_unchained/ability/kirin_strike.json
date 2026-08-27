@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "As long as you have at least 1 stamina point in your stamina pool, when you hit a creature you have identified with Kirin StyleUC, you add your Intelligence modifier to melee and ranged attack damage rolls against that creature for the next 24 hours. You still can take a swift action to add twice your Intelligence modifier to damage rolls, but that damage doesn't stack with the damage from this combat trick.",
     "key": "Combat Trick ~ Kirin Strike",
     "name": "Kirin Strike",
-    "description": "As long as you have at least 1 stamina point in your stamina pool, when you hit a creature you have identified with Kirin StyleUC, you add your Intelligence modifier to melee and ranged attack damage rolls against that creature for the next 24 hours. You still can take a swift action to add twice your Intelligence modifier to damage rolls, but that damage doesn't stack with the damage from this combat trick.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,20 +32,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
-    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14",
-    "line": 94,
-    "record_key": "Combat Trick ~ Kirin Strike"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 94,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/support/ability_uc.lst",
+    "record_key": "Combat Trick ~ Kirin Strike",
+    "sha256": "11fe5af3a23ebdf6b90f238bb433207cc58d2f76a5ad62759e2be4ef6b712f14"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
 }

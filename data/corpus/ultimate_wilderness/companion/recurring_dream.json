@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "A figment has a total number of hit points equal to 1/4 of its master's total hit points. If the figment dies, it vanishes, appearing again with 1 hit point after its master awakens from a full night's sleep. If a figment ever strays more than 100 feet from its master or enters an antimagic field, or if a figment's master is unconscious or asleep, the figment disappears until the next time its master prepares spells or regains her spells per day.",
     "key": "Figment ~ Recurring Dream",
     "name": "Recurring Dream",
-    "description": "A figment has a total number of hit points equal to 1/4 of its master's total hit points. If the figment dies, it vanishes, appearing again with 1 hit point after its master awakens from a full night's sleep. If a figment ever strays more than 100 feet from its master or enters an antimagic field, or if a figment's master is unconscious or asleep, the figment disappears until the next time its master prepares spells or regains her spells per day.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -31,22 +31,22 @@
         "key": "SOURCEPAGE",
         "value": "p.211"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
+  "ingested_at": "2026-08-23T15:20:31Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
     "line": 570,
-    "record_key": "Figment ~ Recurring Dream"
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Figment ~ Recurring Dream",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

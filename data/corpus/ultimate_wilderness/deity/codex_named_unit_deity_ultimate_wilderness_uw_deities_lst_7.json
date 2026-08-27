@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:41Z",
   "data": {
     "key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_7)",
     "name": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_7)",
@@ -48,23 +47,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
-    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f",
-    "line": 7,
-    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_7)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T14:24:41Z",
   "license": "PI-REDACTED",
   "pi_field": "name",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "ultimate_wilderness:uw_deities.lst:7"
-  }
+    "coordinate": "ultimate_wilderness:uw_deities.lst:7",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_deities.lst",
+    "record_key": "Codex-Named Unit (deity_ultimate_wilderness_uw_deities_lst_7)",
+    "sha256": "aa5a4376eaf49e6d6c23c2b78003538e51eb5bd0f638c9371387e1a34a435a3f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

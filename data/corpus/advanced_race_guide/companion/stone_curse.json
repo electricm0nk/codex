@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "If an Eidolon with this ability wins a bull rush check by 5 or more and pushes its target into a stone barrier, the target must make a DC %1 Reflex save or be forced into the barrier as if the target had cast meld into stone until the victim makes a successful DC %1 Fortitude save as a full-round action to exit the stone.|10+HD/2+STR",
     "key": "Evolution ~ Stone Curse",
     "name": "Stone Curse",
-    "description": "If an Eidolon with this ability wins a bull rush check by 5 or more and pushes its target into a stone barrier, the target must make a DC %1 Reflex save or be forced into the barrier as if the target had cast meld into stone until the victim makes a successful DC %1 Fortitude save as a full-round action to exit the stone.|10+HD/2+STR",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "KEY",
@@ -39,22 +39,23 @@
         "key": "SOURCEPAGE",
         "value": "p.146"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
-    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
-    "line": 29,
-    "record_key": "Evolution ~ Stone Curse"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "record_key": "Evolution ~ Stone Curse",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
 }

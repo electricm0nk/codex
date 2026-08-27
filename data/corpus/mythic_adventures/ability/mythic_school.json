@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "When determining the effects of your arcane school powers, you're considered 4 levels higher. This increases the effects of powers you have access to, but doesn't grant you powers at a lower level than normal. If you have an arcane school power that can be used multiple times per day, such as blinding ray, you gain +%1 extra uses of that power. You must have the arcane school class feature to select this ability.|HalfMythicLevel",
     "key": "Mythic Path Ability ~ Mythic School",
     "name": "Mythic School",
-    "description": "When determining the effects of your arcane school powers, you're considered 4 levels higher. This increases the effects of powers you have access to, but doesn't grant you powers at a lower level than normal. If you have an arcane school power that can be used multiple times per day, such as blinding ray, you gain +%1 extra uses of that power. You must have the arcane school class feature to select this ability.|HalfMythicLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 218,
-    "record_key": "Mythic Path Ability ~ Mythic School"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 218,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Mythic School",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

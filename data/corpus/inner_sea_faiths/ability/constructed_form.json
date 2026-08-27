@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, as a swift action, you can alter your body to incorporate construct-like features that protect you from physical damage. The transformation is subtle, such as adding metal reinforcements along your bones or small, auxiliary clockwork counterparts to your vital organs. The transformation grants you DR 3/- and lasts for %1 rounds per day. These rounds need not be consecutive. Dismissing the effect is a free action.|TL",
     "key": "Sentinel Boon ~ Brigh ~ Constructed Form",
     "name": "Constructed Form",
-    "description": "If you have performed your daily obedience, as a swift action, you can alter your body to incorporate construct-like features that protect you from physical damage. The transformation is subtle, such as adding metal reinforcements along your bones or small, auxiliary clockwork counterparts to your vital organs. The transformation grants you DR 3/- and lasts for %1 rounds per day. These rounds need not be consecutive. Dismissing the effect is a free action.|TL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
-    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
-    "line": 121,
-    "record_key": "Sentinel Boon ~ Brigh ~ Constructed Form"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 121,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "record_key": "Sentinel Boon ~ Brigh ~ Constructed Form",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

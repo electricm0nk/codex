@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You have a +%1 bonus on critical hit confirmation rolls made while using studied combat.  This bonus does not stack with those gained through Critical Focus and similar effects.|min(5,HalfOrcInvestigatorFavClassBonus/3)",
     "key": "Half-orc ~ Investigator ~ Confirm Crit on Studied Target",
     "name": "Confirm Crit on Studied Target",
-    "description": "You have a +%1 bonus on critical hit confirmation rolls made while using studied combat.  This bonus does not stack with those gained through Critical Focus and similar effects.|min(5,HalfOrcInvestigatorFavClassBonus/3)",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -25,18 +23,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
-    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d",
-    "line": 324,
-    "record_key": "Half-orc ~ Investigator ~ Confirm Crit on Studied Target"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 324,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst",
+    "record_key": "Half-orc ~ Investigator ~ Confirm Crit on Studied Target",
+    "sha256": "f57e4d6123c356c9af9b493e691f7224a98998d8cb76dddf894009af4c84820d"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

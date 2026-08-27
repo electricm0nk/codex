@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can cause one creature within 30 feet to begin drowning, filling its lungs with water. The target of this ability can attempt a Fortitude save (DC %1) to negate the effect. If the target succeeds, it is staggered for 1 round while it gasps for breath. On a failed save, the target immediately begins to suffocate. On the target's next turn, it falls unconscious and is reduced to 0 hit points. One round later, the target drops to -1 hit points and is dying. One round after that, the target dies. Each round, the target can attempt a Fortitude save to end the effect. This ability affects only living creatures that must breathe and cannot breathe underwater. This is a curse effect.|10+TL/2+WIS",
     "key": "Exalted Boon ~ Hanspur ~ River's Depths",
     "name": "River's Depths",
-    "description": "If you have performed your daily obedience, once per day as a standard action, you can cause one creature within 30 feet to begin drowning, filling its lungs with water. The target of this ability can attempt a Fortitude save (DC %1) to negate the effect. If the target succeeds, it is staggered for 1 round while it gasps for breath. On a failed save, the target immediately begins to suffocate. On the target's next turn, it falls unconscious and is reduced to 0 hit points. One round later, the target drops to -1 hit points and is dying. One round after that, the target dies. Each round, the target can attempt a Fortitude save to end the effect. This ability affects only living creatures that must breathe and cannot breathe underwater. This is a curse effect.|10+TL/2+WIS",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
-    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
-    "line": 232,
-    "record_key": "Exalted Boon ~ Hanspur ~ River's Depths"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 232,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "record_key": "Exalted Boon ~ Hanspur ~ River's Depths",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

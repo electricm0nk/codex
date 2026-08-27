@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "[Rogue] The rogue adds %1 to her sneak attack damage when using sneak attack against creatures of the Outsider (Native) type.|GhoranRogueEnemyOutsiderNative/2",
     "key": "Favored Class Bonus Output ~ Ghoran Rogue (Outsider/Native)",
     "name": "Rogue Enemy ~ Outsider (Native)",
-    "description": "[Rogue] The rogue adds %1 to her sneak attack damage when using sneak attack against creatures of the Outsider (Native) type.|GhoranRogueEnemyOutsiderNative/2",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,18 +31,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
-    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284",
-    "line": 276,
-    "record_key": "Favored Class Bonus Output ~ Ghoran Rogue (Outsider/Native)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 276,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+    "record_key": "Favored Class Bonus Output ~ Ghoran Rogue (Outsider/Native)",
+    "sha256": "0c4ae15128009d48586ea7794a6aeae96d492e10d49f8200529fca2dbb801284"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

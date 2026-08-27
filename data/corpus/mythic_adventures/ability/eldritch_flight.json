@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain a bonus on Fly checks equal to your tier. As a standard action, you can expend one use of mythic power to fly (as the fly spell) for a number of minutes equal to your tier. At 6th tier, you instead gain a supernatural fly speed of 60 feet (40 feet if you wear medium or heavy armor, or are carrying a medium or heavy load).",
     "key": "Mythic Path Ability ~ Eldritch Flight",
     "name": "Eldritch Flight",
-    "description": "You gain a bonus on Fly checks equal to your tier. As a standard action, you can expend one use of mythic power to fly (as the fly spell) for a number of minutes equal to your tier. At 6th tier, you instead gain a supernatural fly speed of 60 feet (40 feet if you wear medium or heavy armor, or are carrying a medium or heavy load).",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 317,
-    "record_key": "Mythic Path Ability ~ Eldritch Flight"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 317,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Eldritch Flight",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

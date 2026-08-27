@@ -221,6 +221,6 @@
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
-    "derived:bonus"
+    "derived:spells"
   ]
 }

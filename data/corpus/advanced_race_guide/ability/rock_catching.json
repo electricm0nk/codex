@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Can catch small, medium, or large rocks. 1/round, you can catch a rock (or similarly shaped projectile) that would hit you by making a reflex save to catch it as a free action. The DC is 15 for small, 20 for medium, and 25 for large. If the attack had a magic bonus, add it to the DC. You need to be aware of the attack to use this ability.",
     "key": "Builder Racial Trait ~ Rock Catching",
     "name": "Rock Catching",
-    "description": "Can catch small, medium, or large rocks. 1/round, you can catch a rock (or similarly shaped projectile) that would hit you by making a reflex save to catch it as a free action. The DC is 15 for small, 20 for medium, and 25 for large. If the attack had a magic bonus, add it to the DC. You need to be aware of the attack to use this ability.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
-    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff",
-    "line": 273,
-    "record_key": "Builder Racial Trait ~ Rock Catching"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 273,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_builder.lst",
+    "record_key": "Builder Racial Trait ~ Rock Catching",
+    "sha256": "a028d62d1281055c61ef830d0bbe5aafffa4c33970173c421d936a2d3371b3ff"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

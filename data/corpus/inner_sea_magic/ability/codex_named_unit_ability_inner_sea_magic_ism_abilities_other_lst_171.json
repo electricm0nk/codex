@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "+The next time you receive healing from a magical source, you heal an additional %1 hp.|TL-HD",
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_171)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_171)",
-    "description": "+The next time you receive healing from a magical source, you heal an additional %1 hp.|TL-HD",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,23 +32,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
-    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
-    "line": 171,
-    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_171)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_magic:ism_abilities_other.lst:171"
-  }
+    "coordinate": "inner_sea_magic:ism_abilities_other.lst:171",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 171,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_171)",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

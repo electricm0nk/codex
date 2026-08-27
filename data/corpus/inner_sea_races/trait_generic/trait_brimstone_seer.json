@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T18:22:49Z",
   "data": {
+    "description": "You suffer a -1 penalty on Charisma-based checks, but once per day you gain a flash of insight that allows you to roll twice on a Knowledge skill check or Intelligence check and take the better result. You must choose to use this trait before rolling.",
     "key": "Trait ~ Brimstone Seer",
     "name": "Brimstone Seer",
-    "description": "You suffer a -1 penalty on Charisma-based checks, but once per day you gain a flash of insight that allows you to roll twice on a Knowledge skill check or Intelligence check and take the better result. You must choose to use this trait before rolling.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
-    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
-    "line": 40,
-    "record_key": "Trait ~ Brimstone Seer"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T18:22:49Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 40,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "record_key": "Trait ~ Brimstone Seer",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

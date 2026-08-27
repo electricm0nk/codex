@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, as a standard action, you can alter your own appearance and that of up to four willing creatures within a 30-foot radius as per disguise self. All the creatures disguised appear to be of a single race or creature type; creatures in the group that could not be disguised as that creature type (such as an animal companion in a group of humanoids) cannot be affected by this ability. This effect lasts %1 minutes.|TL*10",
     "key": "Exalted Boon ~ Sivanah ~ Shared Mask",
     "name": "Shared Mask",
-    "description": "If you have performed your daily obedience, as a standard action, you can alter your own appearance and that of up to four willing creatures within a 30-foot radius as per disguise self. All the creatures disguised appear to be of a single race or creature type; creatures in the group that could not be disguised as that creature type (such as an animal companion in a group of humanoids) cannot be affected by this ability. This effect lasts %1 minutes.|TL*10",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
-    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
-    "line": 323,
-    "record_key": "Exalted Boon ~ Sivanah ~ Shared Mask"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 323,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "record_key": "Exalted Boon ~ Sivanah ~ Shared Mask",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

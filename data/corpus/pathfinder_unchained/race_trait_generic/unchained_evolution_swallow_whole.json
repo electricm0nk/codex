@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "The eidolon gains the swallow whole ability, giving it the ability to consume its foes. If the eidolon begins its turn with a creature grappled using its bite attack (see the grab evolution), it can attempt a combat maneuver check to swallow the creature. The creature must be at least one size category smaller than the eidolon. Swallowed creatures take an amount of bludgeoning damage equal to the eidolon's bite damage each round + 1d6 points of damage. A swallowed creature keeps the grappled condition, but can attempt to cut its way free with a light piercing or slashing weapon. The amount of damage needed to cut free is equal to 1/10 the eidolon's total hit points. The eidolon's AC against these attacks is equal to 10 + 1/2 its natural armor bonus. If a swallowed creature cuts its way out, the eidolon loses this ability until it heals this damage. Alternatively, the swallowed creature can attempt to escape the grapple as normal. Success indicates that it has returned to the eidolon's mouth, where it can attempt to escape or can be swallowed again.",
     "key": "Unchained Evolution ~ Swallow Whole",
     "name": "Swallow Whole",
-    "description": "The eidolon gains the swallow whole ability, giving it the ability to consume its foes. If the eidolon begins its turn with a creature grappled using its bite attack (see the grab evolution), it can attempt a combat maneuver check to swallow the creature. The creature must be at least one size category smaller than the eidolon. Swallowed creatures take an amount of bludgeoning damage equal to the eidolon's bite damage each round + 1d6 points of damage. A swallowed creature keeps the grappled condition, but can attempt to cut its way free with a light piercing or slashing weapon. The amount of damage needed to cut free is equal to 1/10 the eidolon's total hit points. The eidolon's AC against these attacks is equal to 10 + 1/2 its natural armor bonus. If a swallowed creature cuts its way out, the eidolon loses this ability until it heals this damage. Alternatively, the swallowed creature can attempt to escape the grapple as normal. Success indicates that it has returned to the eidolon's mouth, where it can attempt to escape or can be swallowed again.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,18 +47,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 247,
-    "record_key": "Unchained Evolution ~ Swallow Whole"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 247,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Evolution ~ Swallow Whole",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

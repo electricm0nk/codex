@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:39:33Z",
   "data": {
+    "description": "You gain a +1 trait bonus on Bluff and Sleight of Hand checks; for the purpose of gambling, these bonuses increase by 1.",
     "key": "Trait ~ Practiced Gambler",
     "name": "Practiced Gambler",
-    "description": "You gain a +1 trait bonus on Bluff and Sleight of Hand checks; for the purpose of gambling, these bonuses increase by 1.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
-    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd",
-    "line": 104,
-    "record_key": "Trait ~ Practiced Gambler"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:39:33Z",
   "license": "PI-REDACTED",
   "pi_field": "raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities.lst",
+    "record_key": "Trait ~ Practiced Gambler",
+    "sha256": "38af17b7b20261b8279fd8411b7bc3b88b8e2d90303c89d03952d93dd3e1f1cd"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Bloodrager",
     "name": "Bloodrager",
-    "description": null,
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -21,20 +20,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_globalvar.lst",
-    "sha256": "445be66ce9de147c9e781bae89358bf9239e53eef86ae4436d27ccaf6248a390",
-    "line": 6,
-    "record_key": "Bloodrager"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_globalvar.lst",
+    "record_key": "Bloodrager",
+    "sha256": "445be66ce9de147c9e781bae89358bf9239e53eef86ae4436d27ccaf6248a390"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You gain the services of a specialized slave of your choice. This boon essentially grants you a temporary cohort for %1 days. Work with your GM tp determine stats for your temporary cohort.|MonasteryFame/5",
     "key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_132)",
     "name": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_132)",
-    "description": "You gain the services of a specialized slave of your choice. This boon essentially grants you a temporary cohort for %1 days. Work with your GM tp determine stats for your temporary cohort.|MonasteryFame/5",
     "raw_tokens": [
       {
         "key": "NAMEISPI",
@@ -49,23 +48,26 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
-    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db",
-    "line": 132,
-    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_132)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "inner_sea_magic:ism_abilities_other.lst:132"
-  }
+    "coordinate": "inner_sea_magic:ism_abilities_other.lst:132",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 132,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_other.lst",
+    "record_key": "Codex-Named Unit (ability_inner_sea_magic_ism_abilities_other_lst_132)",
+    "sha256": "6ea35a2432c9b609f27926d9492f1d85c599eb18e81adf36154ae594b89072db"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:prose_formula_segment"
+  ]
 }

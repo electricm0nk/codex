@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:16:16Z",
   "data": {
+    "description": "You can craft magical tattoos.",
     "key": "Inscribe Magical Tattoo",
     "name": "Inscribe Magical Tattoo",
-    "description": "You can craft magical tattoos.",
     "raw_tokens": [
       {
         "key": "CATEGORY",
@@ -33,20 +32,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_feats.lst",
-    "sha256": "f255f32b2c6894521aee43ebb941009d9cf63e0a34a905a8607bbec5ee203a3c",
-    "line": 13,
-    "record_key": "Inscribe Magical Tattoo"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:16:16Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_feats.lst",
+    "record_key": "Inscribe Magical Tattoo",
+    "sha256": "f255f32b2c6894521aee43ebb941009d9cf63e0a34a905a8607bbec5ee203a3c"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
 }

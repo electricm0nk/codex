@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "As an immediate action, whenever you take hit point damage from a single source (such as a dragon's breath, a spell, or a weapon), you can expend one use of mythic power to reduce the damage you take from that source by %1 (to a minimum of 0 points of damage taken). If you have another ability or effect that reduces damage (such as protection from energy), reduce the damage with the absorb blow ability before applying any other damage-reducing effects. For every 10 points of damage that this ability prevents, for 1 minute you gain DR 1/epic and 5 points of resistance against acid, cold, electricity, fire, and sonic damage. The DR and resistances stack with any other DR and resistances that you have.|MythicLevel*5",
     "key": "Mythic Path Feature ~ Absorb Blow",
     "name": "Absorb Blow",
-    "description": "As an immediate action, whenever you take hit point damage from a single source (such as a dragon's breath, a spell, or a weapon), you can expend one use of mythic power to reduce the damage you take from that source by %1 (to a minimum of 0 points of damage taken). If you have another ability or effect that reduces damage (such as protection from energy), reduce the damage with the absorb blow ability before applying any other damage-reducing effects. For every 10 points of damage that this ability prevents, for 1 minute you gain DR 1/epic and 5 points of resistance against acid, cold, electricity, fire, and sonic damage. The DR and resistances stack with any other DR and resistances that you have.|MythicLevel*5",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -61,20 +60,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 79,
-    "record_key": "Mythic Path Feature ~ Absorb Blow"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 79,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Feature ~ Absorb Blow",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:prose_formula_segment",
+    "derived:tempbonus"
+  ]
 }

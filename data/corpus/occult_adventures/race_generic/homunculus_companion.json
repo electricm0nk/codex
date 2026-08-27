@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:37Z",
   "data": {
+    "description": null,
     "key": "Homunculus Companion",
     "name": "Homunculus Companion",
-    "description": null,
     "raw_tokens": [
       {
         "key": "STARTFEATS",
@@ -93,20 +92,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst",
-    "sha256": "e71f81ae154977c520a7c032dc48145a70bf4aec85e65fa05808ab7816f9114c",
-    "line": 9,
-    "record_key": "Homunculus Companion"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:37Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_races.lst",
+    "record_key": "Homunculus Companion",
+    "sha256": "e71f81ae154977c520a7c032dc48145a70bf4aec85e65fa05808ab7816f9114c"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "When the spiritualist chooses to manifest the phantom in incorporeal form, the phantom appears within 30 feet of the spiritualist as a ghostly apparition. It gains the incorporeal subtype (Pathfinder RPG Bestiary 301), including a deflection bonus to AC equal to its Charisma modif ier. Since it isn't an undead creature, it takes no damage from holy water or positive energy. Unlike other incorporeal creatures, an incorporeal phantom can't attack corporeal creatures, except to deliver touch-attack spells using the deliver touch spell ability. An incorporeal manifested phantom can make slam attacks against other incorporeal creatures as if it were in ectoplasmic form.",
     "key": "Phantom Manifestation ~ Incorporeal",
     "name": "Incorporeal",
-    "description": "When the spiritualist chooses to manifest the phantom in incorporeal form, the phantom appears within 30 feet of the spiritualist as a ghostly apparition. It gains the incorporeal subtype (Pathfinder RPG Bestiary 301), including a deflection bonus to AC equal to its Charisma modif ier. Since it isn't an undead creature, it takes no damage from holy water or positive energy. Unlike other incorporeal creatures, an incorporeal phantom can't attack corporeal creatures, except to deliver touch-attack spells using the deliver touch spell ability. An incorporeal manifested phantom can make slam attacks against other incorporeal creatures as if it were in ectoplasmic form.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -33,18 +31,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
-    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d",
     "line": 36,
-    "record_key": "Phantom Manifestation ~ Incorporeal"
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_race.lst",
+    "record_key": "Phantom Manifestation ~ Incorporeal",
+    "sha256": "215b785952533770f80f1be0ec5a6ee3c085c5c0dcba86f537434c44c06d166d"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

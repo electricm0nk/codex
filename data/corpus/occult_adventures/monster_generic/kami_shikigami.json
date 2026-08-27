@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T13:40:38Z",
   "data": {
+    "description": null,
     "key": "Kami (Shikigami)",
     "name": "Shikigami",
-    "description": null,
     "raw_tokens": [
       {
         "key": "SORTKEY",
@@ -117,20 +116,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/support/oa_races_b3.lst",
-    "sha256": "2de3eb768b4594f12c196c20395a45744ff86438bf706160ac5805bc04c2a8cb",
-    "line": 6,
-    "record_key": "Kami (Shikigami)"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T13:40:38Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/support/oa_races_b3.lst",
+    "record_key": "Kami (Shikigami)",
+    "sha256": "2de3eb768b4594f12c196c20395a45744ff86438bf706160ac5805bc04c2a8cb"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

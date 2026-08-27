@@ -68,8 +68,8 @@
     "record_key": "Constant ~ Magic Weapon",
     "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15"
   },
-  "wiring_class": "static",
+  "wiring_class": "derived",
   "wiring_class_signals": [
-    "static:literal_magnitudes_only"
+    "derived:spells"
   ]
 }

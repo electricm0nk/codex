@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Raw destruction given material substance, demon eidolons form out of the Abyss's stew of soul energy, leading some scholars to speculate that the summoner's arts are related to the magical tampering that gave rise to the first demons. Demon eidolons revel in causing destruction and inflicting suffering, and they will do so for their summoners without question, taking pleasure in whatever havoc they can create. For a demon eidolon, the means justify the ends.",
     "key": "Eidolon Subtype ~ Demon",
     "name": "Demon",
-    "description": "Raw destruction given material substance, demon eidolons form out of the Abyss's stew of soul energy, leading some scholars to speculate that the summoner's arts are related to the magical tampering that gave rise to the first demons. Demon eidolons revel in causing destruction and inflicting suffering, and they will do so for their summoners without question, taking pleasure in whatever havoc they can create. For a demon eidolon, the means justify the ends.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -81,18 +79,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 31,
-    "record_key": "Eidolon Subtype ~ Demon"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Eidolon Subtype ~ Demon",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

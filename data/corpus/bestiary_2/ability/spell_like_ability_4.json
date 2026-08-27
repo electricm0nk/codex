@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Ajibachanas can use comprehend languages three times per day as a spell-like ability (with a caster level equal to the dhampir's character level).",
     "key": "Vetala-Born ~ Spell-Like Ability",
     "name": "Spell-Like Ability",
-    "description": "Ajibachanas can use comprehend languages three times per day as a spell-like ability (with a caster level equal to the dhampir's character level).",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
-    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207",
-    "line": 75,
-    "record_key": "Vetala-Born ~ Spell-Like Ability"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dhampir/dhampir_abilities_subrace.lst",
+    "record_key": "Vetala-Born ~ Spell-Like Ability",
+    "sha256": "71afaf7b793e2ca59120fc8b23853175447b8ebe8ac592cdfcba5e7aab31e207"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "The champion is the pinnacle of skill at arms and armor. No ordinary fighter could hope to match the skill with a blade, a bow, or an axe that surges within a mythic champion. The champion turns aside blows and shatters shields with every movement, all while racing gracefully across the chaotic battlefield. When the screams of fallen foes die down, the champion stands strong and defiant in blood-spattered armor, hefting a weapon and shouting a terrifying war cry.&nl;Role: As a champion, your role is to take the fight to your enemies. Using devastating melee powers, you can crush your enemies before they even have a chance to harm you and your allies. Few can match your skill at arms or your ability to perform amazing feats of strength. The champion abilities allow you to control your foes, move easily around the battlefield, and challenge a large number of foes all at once. The rest of the party can count on you to dominate any melee you charge into.&nl;Classes: While members or nearly any class could be champions, those who focus on melee attacks-- barbarians, cavaliers, fighters, monks, paladins, and rangers--will find the abilities in this path most attractive and useful. However, even magi or rogues could find that the path of the champion is an excellent way to augment their abilities.",
     "key": "Dual Path ~ Champion",
     "name": "Champion",
-    "description": "The champion is the pinnacle of skill at arms and armor. No ordinary fighter could hope to match the skill with a blade, a bow, or an axe that surges within a mythic champion. The champion turns aside blows and shatters shields with every movement, all while racing gracefully across the chaotic battlefield. When the screams of fallen foes die down, the champion stands strong and defiant in blood-spattered armor, hefting a weapon and shouting a terrifying war cry.&nl;Role: As a champion, your role is to take the fight to your enemies. Using devastating melee powers, you can crush your enemies before they even have a chance to harm you and your allies. Few can match your skill at arms or your ability to perform amazing feats of strength. The champion abilities allow you to control your foes, move easily around the battlefield, and challenge a large number of foes all at once. The rest of the party can count on you to dominate any melee you charge into.&nl;Classes: While members or nearly any class could be champions, those who focus on melee attacks-- barbarians, cavaliers, fighters, monks, paladins, and rangers--will find the abilities in this path most attractive and useful. However, even magi or rogues could find that the path of the champion is an excellent way to augment their abilities.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -41,20 +40,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 48,
-    "record_key": "Dual Path ~ Champion"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 48,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Dual Path ~ Champion",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

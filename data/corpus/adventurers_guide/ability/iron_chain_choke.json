@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "When the student of perfection uses his iron chain strike ability, any opponent grappled by him must succeed at a Reflex saving throw (DC %1) or it cannot speak or cast spells with verbal components for 1 round.|10+StudentOfPerfectionLVL+STR",
     "key": "Student of Perfection ~ Iron Chain Choke",
     "name": "Iron Chain Choke",
-    "description": "When the student of perfection uses his iron chain strike ability, any opponent grappled by him must succeed at a Reflex saving throw (DC %1) or it cannot speak or cast spells with verbal components for 1 round.|10+StudentOfPerfectionLVL+STR",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 23,
-    "record_key": "Student of Perfection ~ Iron Chain Choke"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Student of Perfection ~ Iron Chain Choke",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

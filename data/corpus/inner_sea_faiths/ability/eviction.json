@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, once per day as a standard action, you can bar all creatures from passing through a specific door or entrance within 30 feet of your position. This functions as the spell antilife shell, except that it functions on all creatures regardless of their type. This effect lasts %1 rounds. If a creature trying to penetrate the barrier has spell resistance, you must overcome that resistance in order to keep it out. You can use your Hit Dice in place of your caster level on this spell resistance check.|TL",
     "key": "Exalted Boon ~ Alseta ~ Eviction",
     "name": "Eviction",
-    "description": "If you have performed your daily obedience, once per day as a standard action, you can bar all creatures from passing through a specific door or entrance within 30 feet of your position. This functions as the spell antilife shell, except that it functions on all creatures regardless of their type. This effect lasts %1 rounds. If a creature trying to penetrate the barrier has spell resistance, you must overcome that resistance in order to keep it out. You can use your Hit Dice in place of your caster level on this spell resistance check.|TL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
-    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
-    "line": 47,
-    "record_key": "Exalted Boon ~ Alseta ~ Eviction"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 47,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "record_key": "Exalted Boon ~ Alseta ~ Eviction",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

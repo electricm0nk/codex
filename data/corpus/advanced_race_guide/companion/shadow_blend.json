@@ -1,11 +1,11 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:20:31Z",
   "data": {
+    "description": "In any condition of illumination other than bright light, the eidolon disappears into the shadows, giving it concealment (20%% miss chance). If it has the shadow form evolution, it instead gains total concealment (50%% miss chance). The eidolon can suspend or resume this ability as a free action.",
     "key": "Evolution ~ Shadow Blend",
     "name": "Shadow Blend",
-    "description": "In any condition of illumination other than bright light, the eidolon disappears into the shadows, giving it concealment (20%% miss chance). If it has the shadow form evolution, it instead gains total concealment (50%% miss chance). The eidolon can suspend or resume this ability as a free action.",
+    "origin": "declared",
+    "owners": [],
     "raw_tokens": [
       {
         "key": "SOURCEPAGE",
@@ -35,22 +35,22 @@
         "key": "COST",
         "value": "2"
       }
-    ],
-    "origin": "declared",
-    "owners": []
+    ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
-    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
-    "line": 107,
-    "record_key": "Evolution ~ Shadow Blend"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T15:20:31Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 107,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "record_key": "Evolution ~ Shadow Blend",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

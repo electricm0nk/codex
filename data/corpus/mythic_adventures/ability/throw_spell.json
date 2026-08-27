@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "When casting a melee touch spell, you can expend one use of mythic power to throw that spell as a ranged touch attack. The range of this thrown spell is %1 feet. If the spell allows you to make multiple melee touch attacks, you may make any number of the attacks as melee touch attacks and throw the rest as you see fit.|Ability_ThrowSpell_Range",
     "key": "Mythic Path Ability ~ Throw Spell",
     "name": "Throw Spell",
-    "description": "When casting a melee touch spell, you can expend one use of mythic power to throw that spell as a ranged touch attack. The range of this thrown spell is %1 feet. If the spell allows you to make multiple melee touch attacks, you may make any number of the attacks as melee touch attacks and throw the rest as you see fit.|Ability_ThrowSpell_Range",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 271,
-    "record_key": "Mythic Path Ability ~ Throw Spell"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 271,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Throw Spell",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

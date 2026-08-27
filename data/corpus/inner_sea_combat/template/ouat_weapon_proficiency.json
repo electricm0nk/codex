@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:18Z",
   "data": {
     "key": "Ouat Weapon Proficiency",
     "name": "Ouat Weapon Proficiency",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_templates.lst",
-    "sha256": "9dc1553d9563e5d6144aa07c916c76d39d7579d96c164bb5a01ddc9c4e80a581",
-    "line": 3,
-    "record_key": "Ouat Weapon Proficiency"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_templates.lst",
+    "record_key": "Ouat Weapon Proficiency",
+    "sha256": "9dc1553d9563e5d6144aa07c916c76d39d7579d96c164bb5a01ddc9c4e80a581"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

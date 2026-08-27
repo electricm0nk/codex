@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If you have performed your daily obedience, once per day, you can gain %1 temporary hit points, lasting for 1 minute. Activating this ability is an immediate action that can be performed only when you would be brought below 0 hit points, and can be used to prevent you from dying. If you have the resiliency ability from another source, you can activate these abilities separately or as part of the same immediate action.|TL",
     "key": "Evangelist Boon ~ Zyphus ~ Resiliency",
     "name": "Resiliency",
-    "description": "If you have performed your daily obedience, once per day, you can gain %1 temporary hit points, lasting for 1 minute. Activating this ability is an immediate action that can be performed only when you would be brought below 0 hit points, and can be used to prevent you from dying. If you have the resiliency ability from another source, you can activate these abilities separately or as part of the same immediate action.|TL",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -29,20 +28,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
-    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04",
-    "line": 340,
-    "record_key": "Evangelist Boon ~ Zyphus ~ Resiliency"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 340,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_abilities_faith.lst",
+    "record_key": "Evangelist Boon ~ Zyphus ~ Resiliency",
+    "sha256": "e3a3596c61200c9e94e7975a4b1c250cdfb843673360c5ae3f11c00895c44a04"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
 }

@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "If a student of perfection has brawler's flurry, fast movement, flurry of blows, stunning fist, or the unarmed strike class features from previous levels, his class levels in this prestige class stack with those levels when determining the effects of these abilities. Otherwise, a student of perfection gains flurry of blows and unarmed strike as a monk of a level equal to his student of perfection level. Levels in student of perfection count as monk levels for the purposes of feats such as Stunning Fist.",
     "key": "Student of Perfection ~ Martial Artist",
     "name": "Martial Artist",
-    "description": "If a student of perfection has brawler's flurry, fast movement, flurry of blows, stunning fist, or the unarmed strike class features from previous levels, his class levels in this prestige class stack with those levels when determining the effects of these abilities. Otherwise, a student of perfection gains flurry of blows and unarmed strike as a monk of a level equal to his student of perfection level. Levels in student of perfection count as monk levels for the purposes of feats such as Stunning Fist.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -49,20 +48,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 7,
-    "record_key": "Student of Perfection ~ Martial Artist"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Student of Perfection ~ Martial Artist",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

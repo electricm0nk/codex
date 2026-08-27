@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "Serpentine beings of pure chaos, proteans seek to reshape reality. Protean eidolons appreciate creative summoners who often rebuild their forms and make liberal use of the transmogrify spell. Beyond that, protean eidolons are happy to work with their summoners for any purpose, though they are quick to remind their summoners that while they have a mutually beneficial relationship, they are not servants.",
     "key": "Eidolon Subtype ~ Protean",
     "name": "Protean",
-    "description": "Serpentine beings of pure chaos, proteans seek to reshape reality. Protean eidolons appreciate creative summoners who often rebuild their forms and make liberal use of the transmogrify spell. Beyond that, protean eidolons are happy to work with their summoners for any purpose, though they are quick to remind their summoners that while they have a mutually beneficial relationship, they are not servants.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 36,
-    "record_key": "Eidolon Subtype ~ Protean"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Eidolon Subtype ~ Protean",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

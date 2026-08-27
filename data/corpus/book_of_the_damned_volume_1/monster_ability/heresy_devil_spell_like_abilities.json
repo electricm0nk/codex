@@ -56,8 +56,8 @@
     "record_key": "Heresy Devil ~ Spell-Like Abilities",
     "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177"
   },
-  "wiring_class": "display",
+  "wiring_class": "derived",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "derived:spells"
   ]
 }

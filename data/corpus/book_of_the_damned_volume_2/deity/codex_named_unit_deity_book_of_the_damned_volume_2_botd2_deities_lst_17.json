@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:24:39Z",
   "data": {
     "key": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_17)",
     "name": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_17)",
@@ -40,23 +39,24 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_deities.lst",
-    "sha256": "2ebb6b7a58be0b8a166ea336cf71dc61e6261faed7a36c37a233d026ab44c603",
-    "line": 17,
-    "record_key": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_17)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T14:24:39Z",
   "license": "PI-REDACTED",
   "pi_field": "name",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "book_of_the_damned_volume_2:botd2_deities.lst:17"
-  }
+    "coordinate": "book_of_the_damned_volume_2:botd2_deities.lst:17",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_deities.lst",
+    "record_key": "Codex-Named Unit (deity_book_of_the_damned_volume_2_botd2_deities_lst_17)",
+    "sha256": "2ebb6b7a58be0b8a166ea336cf71dc61e6261faed7a36c37a233d026ab44c603"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

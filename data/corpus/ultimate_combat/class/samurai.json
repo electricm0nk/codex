@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:33:12Z",
   "data": {
     "key": "Samurai",
     "name": "Samurai",
@@ -84,18 +82,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_classes.lst",
-    "sha256": "8b9690d6a75f3dab6e26b16bbf58d0d4809a462f7370386d76787cc1ad50b20b",
-    "line": 34,
-    "record_key": "Samurai"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:33:12Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_classes.lst",
+    "record_key": "Samurai",
+    "sha256": "8b9690d6a75f3dab6e26b16bbf58d0d4809a462f7370386d76787cc1ad50b20b"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ]
 }

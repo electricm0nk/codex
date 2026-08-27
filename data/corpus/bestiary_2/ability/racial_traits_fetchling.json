@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Racial Traits ~ Fetchling",
     "name": "Racial Traits ~ Fetchling",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -17,20 +16,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_globalvar.lst",
-    "sha256": "2ca1b6dcb31c1c48905218c9c2a65a42b5bee9cd6254a2baa84996730ea6e01d",
-    "line": 10,
-    "record_key": "Racial Traits ~ Fetchling"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/fetchling/fetchling_abilities_globalvar.lst",
+    "record_key": "Racial Traits ~ Fetchling",
+    "sha256": "2ca1b6dcb31c1c48905218c9c2a65a42b5bee9cd6254a2baa84996730ea6e01d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

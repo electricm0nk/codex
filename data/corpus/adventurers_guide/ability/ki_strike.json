@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "DESC:You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats. As long as you have at least 1 point in your ki pool, you can make a ki strike. Ki Strike allows your unarmed attacks to be treated as|StudentKiStrikePool",
     "key": "Student of Perfection ~ Ki Strike",
     "name": "Ki Strike",
-    "description": "DESC:You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats. As long as you have at least 1 point in your ki pool, you can make a ki strike. Ki Strike allows your unarmed attacks to be treated as|StudentKiStrikePool",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -53,20 +52,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
-    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f",
-    "line": 12,
-    "record_key": "Student of Perfection ~ Ki Strike"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_abilities_pu.lst",
+    "record_key": "Student of Perfection ~ Ki Strike",
+    "sha256": "5ec588e897907d739c5b66f29ef8486385ceb24c1ef86a3d43bdbfd8b0ead09f"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

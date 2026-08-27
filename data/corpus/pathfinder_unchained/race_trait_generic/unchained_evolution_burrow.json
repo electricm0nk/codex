@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "The eidolon grows thick and gnarled claws, allowing it to move through the earth. The eidolon gains a burrow speed equal to 1/2 its base speed. It can use this speed to move through clay, dirt, earth, and sand. It does not leave a hole behind, nor is its passage marked on the surface.",
     "key": "Unchained Evolution ~ Burrow",
     "name": "Burrow",
-    "description": "The eidolon grows thick and gnarled claws, allowing it to move through the earth. The eidolon gains a burrow speed equal to 1/2 its base speed. It can use this speed to move through clay, dirt, earth, and sand. It does not leave a hole behind, nor is its passage marked on the surface.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,18 +43,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
-    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d",
-    "line": 243,
-    "record_key": "Unchained Evolution ~ Burrow"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T12:34:41Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 243,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_race.lst",
+    "record_key": "Unchained Evolution ~ Burrow",
+    "sha256": "700bcd41e1ee925d0a727c86097de8fa37bed2768529e4a750bdb8249c4d8b8d"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

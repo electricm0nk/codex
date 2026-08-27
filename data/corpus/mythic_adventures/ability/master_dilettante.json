@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You are passingly familiar with almost every subject and have dabbled in numerous fields and activities. You gain a +%1 competence bonus on all untrained skill checks. You can attempt all skill checks untrained, even if the skill normally cannot be used untrained.|MythicLevel",
     "key": "Mythic Path Ability ~ Master Dilettante",
     "name": "Master Dilettante",
-    "description": "You are passingly familiar with almost every subject and have dabbled in numerous fields and activities. You gain a +%1 competence bonus on all untrained skill checks. You can attempt all skill checks untrained, even if the skill normally cannot be used untrained.|MythicLevel",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -113,20 +112,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
-    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3",
-    "line": 203,
-    "record_key": "Mythic Path Ability ~ Master Dilettante"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 203,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_abilities.lst",
+    "record_key": "Mythic Path Ability ~ Master Dilettante",
+    "sha256": "dfe32e32b3833afdcba593e8cdc6c841d6893fc59d05adb496f50a5a89d829b3"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:33:12Z",
   "data": {
     "key": "Student of Perfection",
     "name": "Student of Perfection",
@@ -68,18 +66,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_classes_pu.lst",
-    "sha256": "2d530eff79542c0a3cf014ceba7b9bab98012b0484bbdb992a575038e5ac7864",
-    "line": 4,
-    "record_key": "Student of Perfection"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:33:12Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/support/ag_classes_pu.lst",
+    "record_key": "Student of Perfection",
+    "sha256": "2d530eff79542c0a3cf014ceba7b9bab98012b0484bbdb992a575038e5ac7864"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }
