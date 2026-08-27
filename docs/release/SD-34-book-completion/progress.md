@@ -17,7 +17,7 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**3 of 27 criteria complete. 3 of 26 kanban rows complete.**
+**4 of 27 criteria complete. 4 of 26 kanban rows complete.**
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -35,6 +35,37 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 4 — AT-34-E1-004 — the shape-engine boundary is stated as a fact, not an assumption
+
+**Status: complete.** New `scripts/shape_engine_boundary.py` commits, as a self-verifying
+artifact, the fact that a shape engine turns a formula string into a number and does not
+place/attach/display the record — that gate is the engine's own four-condition promotion
+ladder, quoted from the live `src/bin/v06_work_inventory.rs` with its line citation re-checked
+by content on every run, not merely path/line.
+
+`python3 scripts/shape_engine_boundary.py --check` → `magnitude_bearing=26396
+not_held_by_engine=13119 citation_ok=True`, exit 0. Both counts matched
+`technical-design.md §3` / `decisions.md §2a`'s stated figures exactly on the first live
+re-derive against the current `docs/work-inventory.json` — no drift since authoring. The
+promotion ladder's four conditions at `src/bin/v06_work_inventory.rs:9592-9595` were
+independently re-read with `sed -n` and match the exact block those documents quote, anchored
+at line `9595` as they cite.
+
+12/12 new unit tests green (`scripts.tests.test_shape_engine_boundary`), including a genuine
+RED→GREEN mutation proof: the citation check was made to fail for the intended reason (a
+line's live content no longer matching the expected fragment), confirmed it raises
+`StaleCitationError` naming the exact line and mismatch, then confirmed it passes again once
+restored. Denominator gate against this package: `files_checked=15 violations=0`. `cargo test
+--locked --no-run` exits 0 at the widest workspace scope (Python + one generated markdown
+artifact only; no Rust source touched); `apps/desktop/src-tauri` not touched, not run.
+`docs/work-inventory.json` untouched — zero movement across all four buckets; this cycle is a
+read-only, self-verifying statement of an already-established fact.
+
+**Handoff note for AT-34-E1-005:** the new instrument's `not_held_by_engine()` keys on the
+literal string `"not-ingested"`, same as `completion_atlas.py`'s bucket A/B/C/D arms — the
+rename cycle must update it in the same commit or it will silently report
+`not_held_by_engine=0`. Receipt: `artifacts/epic-1-atlas/AT-34-E1-004_cycle_receipt.md`.
 
 ### Cycle 3 — AT-34-E1-003 — the missing engine tables are enumerated and their book coverage mapped
 
