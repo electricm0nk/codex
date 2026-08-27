@@ -17,7 +17,7 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**5 of 27 criteria complete. 5 of 26 kanban rows complete.**
+**6 of 27 criteria complete. 6 of 26 kanban rows complete.**
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -35,6 +35,23 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 6 — AT-34-E1-006 — figure-provenance is a real `verify.sh` stage; denominator-gate default widened
+
+**Status: complete.** Two obligations, one cycle. (1) A new `figure-provenance` stage
+(`scripts/denominator_gate.py --check-provenance`, wired into `verify.sh`'s `ALL_STAGES` and
+`QUICK_STAGES`) fails on a figure — a comma-grouped ≥4-digit number or a bare percentage — stated
+inside a receipt's "Figures + their re-derive commands" section with no re-derive command
+reachable from it on the same line; RED→GREEN mutation-proofed for both an unsourced figure and
+a wrong-command figure (a command naming a script that does not exist), GREEN for a command
+naming a real one. Default population: this package's own 5 receipts + 15 root `.md` docs
+(`files_checked=20 figures_examined=22 violations=0`) — deliberately not SD-33's folder, which
+this bundle may not write to. (2) `denominator-gate`'s `DEFAULT_GLOBS` widened to add SD-34's own
+package (every root `.md`, plus its receipts) alongside SD-33's (unchanged) — a default run now
+reads `files_checked=90 violations=0`, up from 0 SD-34 files before this cycle. Closes
+`workflow-instruction.md §12` row 15 (UNENFORCED at launch) and `decisions.md §3`'s standing
+obligation. 40 of 40 unit tests pass (`scripts/tests/test_denominator_gate.py`). Full details,
+figures, and the mutation-proof transcript: `artifacts/epic-1-atlas/AT-34-E1-006_cycle_receipt.md`.
 
 ### Cycle 5 — AT-34-E1-005 — the `not-ingested` status field is renamed
 

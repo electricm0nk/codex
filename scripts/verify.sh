@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1135,6 +1135,54 @@ run_denominator_gate() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: figure-provenance
+#
+# Runs `scripts/denominator_gate.py --check-provenance` -- `AT-34-E1-006`
+# (`docs/release/SD-34-book-completion/epic-breakdown.md`), enforcing
+# `AGENTS.md` rule 9: a figure with no re-derive command reachable from it
+# is not a figure, it is a recollection. Wired alongside `denominator-gate`
+# in the same script, not as a standalone tool. Default target is this
+# package's own artifacts (`PROVENANCE_DEFAULT_GLOBS` -- deliberately not
+# SD-33's folder, which this bundle may not write to). `FIGURE_PROVENANCE_PATHS`
+# (space-separated globs) overrides the default, the same `${VAR:-default}`
+# shape `DENOMINATOR_GATE_PATHS` already uses. The PASS line states the
+# figure population examined, closing `workflow-instruction.md §12` row 15
+# ("a vacuous pass is not a pass").
+# ---------------------------------------------------------------------------
+
+run_figure_provenance() {
+    stage_start "figure-provenance — python3 scripts/denominator_gate.py --check-provenance"
+    local log="$LOG_DIR/figure-provenance.log"
+    local script="$REPO_ROOT/scripts/denominator_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail figure-provenance "script missing at scripts/denominator_gate.py"
+        return
+    fi
+
+    local -a paths=()
+    if [[ -n "${FIGURE_PROVENANCE_PATHS:-}" ]]; then
+        # shellcheck disable=SC2206
+        paths=( ${FIGURE_PROVENANCE_PATHS} )
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check-provenance "${paths[@]}" ) >"$log" 2>&1
+    local status=$?
+
+    local checked figures violations
+    checked=$(sed -n 's/^files_checked=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    figures=$(sed -n 's/^figures_examined=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    violations=$(sed -n 's/^violations=\([0-9]*\)$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail figure-provenance "violations=${violations:-?} of figures_examined=${figures:-?} (files_checked=${checked:-?}) — $log"
+        return
+    fi
+
+    stage_pass figure-provenance "files_checked=${checked:-?} figures_examined=${figures:-?} violations=0"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: reachability-audit
 #
 # Runs `scripts/reachability_audit.py` against the live `docs/work-inventory.json`
@@ -1998,6 +2046,7 @@ for stage in "${SELECTED[@]}"; do
         shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
         shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
         denominator-gate)    run_denominator_gate ;;
+        figure-provenance)   run_figure_provenance ;;
         pi-sweep)            run_pi_sweep ;;
         declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;

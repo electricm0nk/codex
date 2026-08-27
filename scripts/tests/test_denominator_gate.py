@@ -8,6 +8,7 @@ narrated, the same discipline `test_box_ledger.py`'s and
 `test_probe_surface_census.py`'s mutation proofs use.
 """
 
+import glob
 import io
 import os
 import sys
@@ -213,10 +214,14 @@ class TestDefaultScopeIsCleanOnRealBundle(unittest.TestCase):
     not just a checker that exists)."""
 
     def test_default_globs_currently_clean(self):
+        # AT-34-E1-006 widened DEFAULT_GLOBS to cover both SD-33's folder
+        # (unchanged) and SD-34's own package -- every entry must start
+        # with one of the two, not just the original.
         for pattern in dg.DEFAULT_GLOBS:
             self.assertTrue(
-                pattern.startswith(dg.BUNDLE_DIR),
-                f"default glob escapes the bundle dir: {pattern}",
+                pattern.startswith(dg.BUNDLE_DIR)
+                or pattern.startswith(dg.SD34_BUNDLE_DIR),
+                f"default glob escapes both known bundle dirs: {pattern}",
             )
         out = io.StringIO()
         status = dg.run_check([], out=out)
@@ -262,6 +267,198 @@ class TestDefaultGlobsCoverHeadlinePackageDocs(unittest.TestCase):
         for name in self.EXPECTED_HEADLINE_DOCS:
             full = os.path.join(dg.BUNDLE_DIR, name)
             self.assertIn(full, resolved, f"{name} not in the resolved file set")
+
+
+class TestDefaultGlobsWidenedToSD34(unittest.TestCase):
+    """`AT-34-E1-006`'s second obligation: widen `DEFAULT_GLOBS` from
+    SD-33's folder alone to also cover this package, so a default
+    (no-explicit-path) `--check` run examines every SD-34 `.md` --
+    RED before this cycle (a default run saw zero SD-34 files), GREEN
+    after (`decisions.md §3`)."""
+
+    def test_sd34_bundle_dir_is_the_real_package_folder(self):
+        self.assertTrue(os.path.isdir(dg.SD34_BUNDLE_DIR))
+        self.assertTrue(dg.SD34_BUNDLE_DIR.endswith("SD-34-book-completion"))
+
+    def test_default_run_includes_every_sd34_root_md_file(self):
+        # The literal population named by AT-34-E1-006: every `.md` at
+        # this package's root, resolved the same way `run_check` resolves
+        # any other pattern.
+        real_sd34_md = {
+            p for p in glob.glob(os.path.join(dg.SD34_BUNDLE_DIR, "*.md"))
+        }
+        self.assertGreater(len(real_sd34_md), 0, "no SD-34 .md files found on disk")
+        paths, missing = dg.expand_paths(list(dg.DEFAULT_GLOBS))
+        self.assertEqual(missing, [])
+        resolved = set(paths)
+        not_covered = real_sd34_md - resolved
+        self.assertEqual(
+            not_covered, set(),
+            f"SD-34 root .md file(s) not covered by the widened default: {not_covered}",
+        )
+
+    def test_default_run_files_checked_covers_sd34(self):
+        out = io.StringIO()
+        status = dg.run_check([], out=out)
+        checked = int(
+            [
+                line for line in out.getvalue().splitlines()
+                if line.startswith("files_checked=")
+            ][0].split("=")[1]
+        )
+        real_sd34_md_count = len(
+            glob.glob(os.path.join(dg.SD34_BUNDLE_DIR, "*.md"))
+        )
+        self.assertGreaterEqual(checked, real_sd34_md_count)
+        self.assertEqual(status, 0, out.getvalue())
+
+
+class TestFigureProvenanceGate(unittest.TestCase):
+    """`AT-34-E1-006`'s first obligation: a figure with no re-derive
+    command reachable from it fails; the sourced form, and a form whose
+    command names a real script, both pass. Scoped to a receipt's
+    "Figures + their re-derive commands" section -- see the module-level
+    comment above `FIGURES_SECTION_START_RE` for why the rest of a
+    receipt (its Acceptance-criterion quote, Notes, Next-cycle plan) is
+    out of this check's scope."""
+
+    FIGURES_HEADER = "- **Figures + their re-derive commands:**\n"
+    NEXT_FIELD = "- **Row-count command output:**\n  (n/a for this fixture)\n"
+
+    def test_unsourced_figure_is_a_violation_red(self):
+        text = (
+            self.FIGURES_HEADER
+            + "  - The corpus holds **49,438** units across 37 books.\n"
+            + self.NEXT_FIELD
+        )
+        violations = dg.find_provenance_violations(text, source="fixture.md")
+        self.assertEqual(len(violations), 1)
+        self.assertEqual(violations[0]["reason"], "unsourced")
+        self.assertEqual(violations[0]["line"], 2)
+
+    def test_sourced_figure_passes_green(self):
+        text = (
+            self.FIGURES_HEADER
+            + "  - The corpus holds **49,438** units -- "
+              "`python3 scripts/completion_atlas.py --check`\n"
+            + self.NEXT_FIELD
+        )
+        self.assertEqual(dg.find_provenance_violations(text, source="fixture.md"), [])
+
+    def test_wrong_command_figure_is_a_violation(self):
+        # A command naming a script that does not exist in this tree --
+        # it cannot possibly have produced the figure it sits beside.
+        text = (
+            self.FIGURES_HEADER
+            + "  - The corpus holds **49,438** units -- "
+              "`python3 scripts/does_not_exist_anywhere.py --check`\n"
+            + self.NEXT_FIELD
+        )
+        violations = dg.find_provenance_violations(text, source="fixture.md")
+        self.assertEqual(len(violations), 1)
+        self.assertEqual(violations[0]["reason"], "unresolvable")
+        self.assertEqual(violations[0]["bad_path"], "scripts/does_not_exist_anywhere.py")
+
+    def test_command_naming_a_real_script_passes(self):
+        text = (
+            self.FIGURES_HEADER
+            + "  - The corpus holds **49,438** units -- "
+              "`python3 scripts/denominator_gate.py --check`\n"
+            + self.NEXT_FIELD
+        )
+        self.assertEqual(dg.find_provenance_violations(text, source="fixture.md"), [])
+
+    def test_percentage_figure_also_covered(self):
+        text = (
+            self.FIGURES_HEADER
+            + "  - Recognition rate: 97.9%.\n"
+            + self.NEXT_FIELD
+        )
+        violations = dg.find_provenance_violations(text, source="fixture.md")
+        self.assertEqual(len(violations), 1)
+        self.assertEqual(violations[0]["reason"], "unsourced")
+
+    def test_figures_outside_the_figures_section_are_out_of_scope(self):
+        # A receipt's Notes/Acceptance-criterion prose referencing an
+        # already-sourced figure in passing is not re-flagged -- only the
+        # dedicated Figures section is in scope (see class docstring).
+        text = (
+            "- **Acceptance criterion:** \"...covers **49,438** units...\"\n"
+            + self.FIGURES_HEADER
+            + "  - `population=8463` -- `python3 scripts/missing_engine_tables.py --check`\n"
+            + "- **Notes:**\n"
+            + "  - As stated above, **49,438** units were examined.\n"
+        )
+        self.assertEqual(dg.find_provenance_violations(text, source="fixture.md"), [])
+
+    def test_file_with_no_figures_section_produces_no_violations(self):
+        text = "Just some prose mentioning **49,438** units, no receipt structure.\n"
+        self.assertEqual(dg.find_provenance_violations(text, source="fixture.md"), [])
+
+    def test_run_provenance_check_cli_mutation_proof(self):
+        fd, path = tempfile.mkstemp(suffix="_cycle_receipt.md")
+        os.close(fd)
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(
+                    self.FIGURES_HEADER
+                    + "  - The corpus holds **49,438** units, no command here.\n"
+                    + self.NEXT_FIELD
+                )
+            out = io.StringIO()
+            status = dg.run_provenance_check([path], out=out)
+            self.assertEqual(status, 1, out.getvalue())
+            self.assertIn("VIOLATION", out.getvalue())
+            self.assertIn("figures_examined=1", out.getvalue())
+
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(
+                    self.FIGURES_HEADER
+                    + "  - The corpus holds **49,438** units -- "
+                      "`python3 scripts/completion_atlas.py --check`\n"
+                    + self.NEXT_FIELD
+                )
+            out = io.StringIO()
+            status = dg.run_provenance_check([path], out=out)
+            self.assertEqual(status, 0, out.getvalue())
+            self.assertNotIn("VIOLATION", out.getvalue())
+            self.assertIn("figures_examined=1", out.getvalue())
+            self.assertIn("violations=0", out.getvalue())
+        finally:
+            os.unlink(path)
+
+    def test_missing_explicit_path_exits_2(self):
+        out = io.StringIO()
+        status = dg.run_provenance_check(
+            ["/nonexistent/figure-provenance-missing.md"], out=out
+        )
+        self.assertEqual(status, 2, out.getvalue())
+        self.assertIn("MISSING_PATH", out.getvalue())
+
+
+class TestFigureProvenanceDefaultScope(unittest.TestCase):
+    """The real, committed SD-34 package (receipts + root docs) passes
+    the provenance gate clean today -- the mechanism is proven wired, not
+    just unit-tested in isolation. Deliberately excludes SD-33's folder
+    (`PROVENANCE_DEFAULT_GLOBS` docstring): this bundle may not write
+    there, so the gate this cycle owns cannot default to a scope only a
+    different, forbidden cycle could ever turn green."""
+
+    def test_provenance_default_globs_are_sd34_only(self):
+        for pattern in dg.PROVENANCE_DEFAULT_GLOBS:
+            self.assertTrue(pattern.startswith(dg.SD34_BUNDLE_DIR))
+
+    def test_provenance_default_run_is_clean(self):
+        out = io.StringIO()
+        status = dg.run_provenance_check([], out=out)
+        self.assertEqual(status, 0, out.getvalue())
+        self.assertIn("figures_examined=", out.getvalue())
+        checked_line = [
+            line for line in out.getvalue().splitlines()
+            if line.startswith("figures_examined=")
+        ][0]
+        examined = int(checked_line.split("=")[1])
+        self.assertGreater(examined, 0, "vacuous pass -- zero figures examined")
 
 
 if __name__ == "__main__":
