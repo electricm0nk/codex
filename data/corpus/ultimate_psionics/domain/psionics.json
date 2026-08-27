@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T15:18:11Z",
   "data": {
     "key": "Psionics",
     "name": "Psionics",
@@ -56,20 +55,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_domains_apg.lst",
-    "sha256": "076aa3678ee044c7a623a57747b8c273681b09cd281817d57a18bc616ed46082",
-    "line": 8,
-    "record_key": "Psionics"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T15:18:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_domains_apg.lst",
+    "record_key": "Psionics",
+    "sha256": "076aa3678ee044c7a623a57747b8c273681b09cd281817d57a18bc616ed46082"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

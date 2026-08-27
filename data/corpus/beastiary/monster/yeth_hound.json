@@ -162,8 +162,6 @@
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:choice",
-    "derived:bonus",
-    "derived:dr"
+    "computed:choice"
   ]
 }

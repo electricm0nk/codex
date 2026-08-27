@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:33:12Z",
   "data": {
     "key": "Soul Archer",
     "name": "Soul Archer",
@@ -56,18 +54,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
-    "sha256": "367f64d62290038088c021f5d1b9a259a1eb3bf4002f8886e6fb73132011a1d4",
-    "line": 1159,
-    "record_key": "Soul Archer"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:33:12Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1159,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes.lst",
+    "record_key": "Soul Archer",
+    "sha256": "367f64d62290038088c021f5d1b9a259a1eb3bf4002f8886e6fb73132011a1d4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

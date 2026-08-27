@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:36:05Z",
   "data": {
     "key": "Spirit Naga",
     "name": "Spirit Naga",
@@ -52,18 +50,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_classes_race.lst",
-    "sha256": "3c3a1a97b391c1cc6d4fcb38b1e8cddc0c497b6db20f1d6a720ae0380e07e7ad",
-    "line": 54,
-    "record_key": "Spirit Naga"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:36:05Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_classes_race.lst",
+    "record_key": "Spirit Naga",
+    "sha256": "3c3a1a97b391c1cc6d4fcb38b1e8cddc0c497b6db20f1d6a720ae0380e07e7ad"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

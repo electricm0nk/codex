@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "You are fanatical in your beliefs, ruled by emotion over reason. When you attack a creature that you know worships a different religion than you do, you take a -5 penalty on the attack  roll and a +2 trait bonus on the damage roll with your first attack.",
     "key": "Drawback ~ Zealous",
     "name": "Zealous",
-    "description": "You are fanatical in your beliefs, ruled by emotion over reason. When you attack a creature that you know worships a different religion than you do, you take a -5 penalty on the attack  roll and a +2 trait bonus on the damage roll with your first attack.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,20 +36,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_drawbacks.lst",
-    "sha256": "639ac624d4a49ce7d5125c407a7c6150d20450678d57d92b69577b5ebef2c7c1",
-    "line": 30,
-    "record_key": "Drawback ~ Zealous"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_drawbacks.lst",
+    "record_key": "Drawback ~ Zealous",
+    "sha256": "639ac624d4a49ce7d5125c407a7c6150d20450678d57d92b69577b5ebef2c7c1"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

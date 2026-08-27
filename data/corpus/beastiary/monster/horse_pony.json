@@ -137,8 +137,6 @@
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:pre_guard",
-    "derived:bonus",
-    "derived:cr"
+    "computed:pre_guard"
   ]
 }

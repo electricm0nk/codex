@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Elfs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidElf",
     "key": "Favored Enemy ~ Humanoid (Elf)",
     "name": "Humanoid (Elf)",
-    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Elfs. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidElf",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_abilities_race.lst",
-    "sha256": "c7e61fc9b3213d4d6c074685d5e9e4876ed2dce76f4d225ff23f76224027cc8f",
     "line": 34,
-    "record_key": "Favored Enemy ~ Humanoid (Elf)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_abilities_race.lst",
+    "record_key": "Favored Enemy ~ Humanoid (Elf)",
+    "sha256": "c7e61fc9b3213d4d6c074685d5e9e4876ed2dce76f4d225ff23f76224027cc8f"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

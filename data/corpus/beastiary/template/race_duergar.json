@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:15Z",
   "data": {
     "key": "Race ~ Duergar",
     "name": "Duergar",
@@ -20,20 +19,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_templates.lst",
-    "sha256": "314799d60e5cd6043f881d269ccaea8b2c355e3264642d7f237b989a3ccd0564",
-    "line": 3,
-    "record_key": "Race ~ Duergar"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:15Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_templates.lst",
+    "record_key": "Race ~ Duergar",
+    "sha256": "314799d60e5cd6043f881d269ccaea8b2c355e3264642d7f237b989a3ccd0564"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

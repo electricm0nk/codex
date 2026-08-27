@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": null,
     "key": "Tiefling",
     "name": "Tiefling",
-    "description": null,
     "raw_tokens": [
       {
         "key": "DEFINE",
@@ -13,20 +12,22 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar.lst",
-    "sha256": "0a19c98b85e15a60a963cde1d526bbc31a156daf7bcf130fcadd9dafb65ab274",
-    "line": 10,
-    "record_key": "Tiefling"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar.lst",
+    "record_key": "Tiefling",
+    "sha256": "0a19c98b85e15a60a963cde1d526bbc31a156daf7bcf130fcadd9dafb65ab274"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "static:literal_magnitudes_only"
+  ]
 }

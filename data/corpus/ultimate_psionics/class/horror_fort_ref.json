@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:33:12Z",
   "data": {
     "key": "Horror (Fort/Ref)",
     "name": "Horror (Fort/Ref)",
@@ -76,18 +74,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes_apg.lst",
-    "sha256": "3b5572c412edda76b5584313c6d871f239db9751567220f1bc00748c1981a5ec",
-    "line": 19,
-    "record_key": "Horror (Fort/Ref)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:33:12Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_classes_apg.lst",
+    "record_key": "Horror (Fort/Ref)",
+    "sha256": "3b5572c412edda76b5584313c6d871f239db9751567220f1bc00748c1981a5ec"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

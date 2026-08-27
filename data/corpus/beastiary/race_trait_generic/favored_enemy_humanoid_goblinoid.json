@@ -1,11 +1,9 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-23T12:34:41Z",
   "data": {
+    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Goblinoids. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidGoblinoid",
     "key": "Favored Enemy ~ Humanoid (Goblinoid)",
     "name": "Humanoid (Goblinoid)",
-    "description": "You gain a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against Goblinoids. Likewise, you get a +%1 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.|FavoredHumanoidGoblinoid",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -65,18 +63,20 @@
       }
     ]
   },
+  "ingested_at": "2026-08-23T12:34:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_abilities_race.lst",
-    "sha256": "d06f0378d15b44dbd07d7b6cd1e566dc98a7acaeb4997f0fe1218bda7d4c7402",
     "line": 24,
-    "record_key": "Favored Enemy ~ Humanoid (Goblinoid)"
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_abilities_race.lst",
+    "record_key": "Favored Enemy ~ Humanoid (Goblinoid)",
+    "sha256": "d06f0378d15b44dbd07d7b6cd1e566dc98a7acaeb4997f0fe1218bda7d4c7402"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+    "static:literal_magnitudes_only"
+  ]
 }

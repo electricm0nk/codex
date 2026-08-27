@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T12:36:05Z",
   "data": {
     "key": "Animal",
     "name": "Animal",
@@ -64,18 +62,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_classes_race.lst",
-    "sha256": "7cbdd1a75023e03b29669a66ac49ea3369fcbdbd27eaa17cd8465f24864e4f18",
-    "line": 12,
-    "record_key": "Animal"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_class_ingest"
-  ],
+  "ingested_at": "2026-08-23T12:36:05Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_classes_race.lst",
+    "record_key": "Animal",
+    "sha256": "7cbdd1a75023e03b29669a66ac49ea3369fcbdbd27eaa17cd8465f24864e4f18"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

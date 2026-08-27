@@ -54,8 +54,8 @@
     "record_key": "Phase Spider ~ Ethereal Jaunt",
     "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
   },
-  "wiring_class": "display",
+  "wiring_class": "derived",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "derived:spells"
   ]
 }

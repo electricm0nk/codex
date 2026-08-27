@@ -1,7 +1,6 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-23T16:43:14Z",
   "data": {
     "key": "IsHobgoblin",
     "name": "IsHobgoblin",
@@ -16,20 +15,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/hobgoblin/hobgoblin_templates.lst",
-    "sha256": "c770005d7ebcdd1881979b5c3cf0633801c05a20baebfc206597191e9ae5d6d1",
-    "line": 5,
-    "record_key": "IsHobgoblin"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:sd32_simple_filename_kind_ingest"
-  ],
+  "ingested_at": "2026-08-23T16:43:14Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/hobgoblin/hobgoblin_templates.lst",
+    "record_key": "IsHobgoblin",
+    "sha256": "c770005d7ebcdd1881979b5c3cf0633801c05a20baebfc206597191e9ae5d6d1"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

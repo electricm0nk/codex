@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": true,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "Your ferocity is devastating, sometimes even to your own weapons. Once per day, after successful hitting a foe with a melee weapon, you can add your Strength modifier to the damage roll a second time (your Strength Modifier is not doubled if you are using a two-handed weapon). Doing so has a 25%% chance of giving your weapon the broken condition.",
     "key": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_284)",
     "name": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_284)",
-    "description": "Your ferocity is devastating, sometimes even to your own weapons. Once per day, after successful hitting a foe with a melee weapon, you can add your Strength modifier to the damage roll a second time (your Strength Modifier is not doubled if you are using a two-handed weapon). Doing so has a 25%% chance of giving your weapon the broken condition.",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -37,23 +36,25 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
-    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544",
-    "line": 284,
-    "record_key": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_284)"
-  },
-  "wiring_class": "display",
-  "wiring_class_signals": [
-    "display:no_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "PI-REDACTED",
   "pi_field": "name,raw_tokens",
   "pi_marker": "redacted",
-  "codex_generated_name": true,
+  "population": "in_scope",
   "rename": {
-    "reason": "name_pi_blocked",
-    "coordinate": "ultimate_campaign:uca_abilities_traits.lst:284"
-  }
+    "coordinate": "ultimate_campaign:uca_abilities_traits.lst:284",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 284,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_campaign/uca_abilities_traits.lst",
+    "record_key": "Codex-Named Unit (ability_ultimate_campaign_uca_abilities_traits_lst_284)",
+    "sha256": "677826c33e18d67032266603f90914d6db706f12216c3643770947f2784b5544"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "display:no_magnitude_token"
+  ]
 }

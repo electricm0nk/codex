@@ -1,11 +1,10 @@
 {
-  "population": "in_scope",
+  "codex_generated_name": false,
   "completeness": "full",
-  "ingested_at": "2026-08-23T14:17:00Z",
   "data": {
+    "description": "As a swift action, you can boost your capabilities, gaining one of the follow effects until the end of your next turn: make one additional attack at your highest attack bonus when making a full attack, but all attacks suffer a -2 penalty to attack rolls; increase your speed by a +10 ft. enhancement bonus; give yourself a +2 dodge bonus to AC; or give yourself a +2 resistance bonus on saving throws.  You can use this ability %1 times per day.|MindOverBodyTimes",
     "key": "Discipline Subdomain ~ Mind over Body",
     "name": "Mind over Body",
-    "description": "As a swift action, you can boost your capabilities, gaining one of the follow effects until the end of your next turn: make one additional attack at your highest attack bonus when making a full attack, but all attacks suffer a -2 penalty to attack rolls; increase your speed by a +10 ft. enhancement bonus; give yourself a +2 dodge bonus to AC; or give yourself a +2 resistance bonus on saving throws.  You can use this ability %1 times per day.|MindOverBodyTimes",
     "raw_tokens": [
       {
         "key": "KEY",
@@ -45,20 +44,21 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_um.lst",
-    "sha256": "dbd6f422e0e3106db6759299ddad5770b0038d66d7c34ed615f7838b632fdad3",
-    "line": 19,
-    "record_key": "Discipline Subdomain ~ Mind over Body"
-  },
-  "wiring_class": "static",
-  "wiring_class_signals": [
-    "static:has_magnitude_token"
-  ],
+  "ingested_at": "2026-08-23T14:17:00Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
-  "codex_generated_name": false,
-  "rename": null
+  "population": "in_scope",
+  "rename": null,
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_um.lst",
+    "record_key": "Discipline Subdomain ~ Mind over Body",
+    "sha256": "dbd6f422e0e3106db6759299ddad5770b0038d66d7c34ed615f7838b632fdad3"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }
