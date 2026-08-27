@@ -1,6 +1,6 @@
 # Cycle 7 — Epic 1 Completion Atlas / AT-34-E1-007
 
-- **Commit SHA:** `<filled at commit — see progress.md and kanban.md commit trailer>`
+- **Commit SHA:** `acc649d001` (this cycle's own commit; wiring + receipt + progress/kanban update)
 - **Files touched:** `scripts/verify.sh` (new `corpus-trap-audit` stage, own timeout wrapper, independent population count, wired into `ALL_STAGES` only — FULL scope, matching `corpus-sweep`'s own placement), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/AT-34-E1-007_cycle_receipt.md` (this file), `docs/release/SD-34-book-completion/progress.md` (updated, `## Open blockers` entry added), `docs/release/SD-34-book-completion/kanban.md` (updated)
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
 - **Wired-integration audit result:** OK_NO_TOKENS
