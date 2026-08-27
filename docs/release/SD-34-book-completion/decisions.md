@@ -313,6 +313,43 @@ with a named resolution point, not an unresolved placeholder.
 
 ---
 
+## §13 — AT-34-E1-007's blocker is CLEARED by decomposition, not by narrowing the criterion
+
+**Decision.** The `corpus-trap-audit` stage AT-34-E1-007 wired reports **10,196 defects of 10,603
+findings** against the live corpus, of which **7,015 of 10,196** are `wiring-class-mismatch`
+across **34 of 37** books. The criterion is **not** re-scoped to "the stage exists and is wired".
+The defects are driven to zero, as **AT-34-E1-008**, and AT-34-E1-007 closes when the stage it
+wires genuinely exits 0.
+
+**Reasoning.** The lane offered two dispositions: run the remediation, or rule the criterion
+satisfied independent of whether the corpus is clean. The second is a carve-out — a gate that
+passes because its bar moved, which `../../governance/blocker-closure-doctrine.md` and this
+program's own history both reject. **A large blocker is a sequencing problem, not an exemption.**
+
+The remaining 3,181 of 10,196 (`mod-record` 2,117, `key-differs-from-name` 650,
+`shared-name-distinct-records` 249, `disabled-line` 165) are SD-33's already-verified,
+already-out-of-DoD inherited debt (`forward-scope-register.md` D1.1's `v06_corpus_trap_report`
+target). They stay registered, not absorbed: AT-34-E1-008's bar is `wiring-class-mismatch = 0`,
+with the other four trap kinds reported at their unchanged counts.
+
+**Verified independently before ruling** (not transcribed from the lane): the audit was re-run
+from the orchestrating session — `findings=10603 DEFECT=10196 TRAP=407`,
+`wiring-class-mismatch=7015 of 10196` across 34 books — and the regression history confirmed by
+`git log -1 b32926f2af`, the `SD30-CARRY-001` commit that drove this same check `177 -> 0` on
+2026-08-14. Nothing has run `--audit` between then and now. **That is the cost of an unwired
+gate, and it is the exact thing AT-34-E1-007 exists to end.**
+
+**Consequence.** Epic 1 gains `data/corpus/**` write scope for AT-34-E1-008 only, via the guarded
+generator path (`gen_book_cache`), never hand-edits, never `--allow-stamp-loss` (`§N5`,
+`risks-and-open-questions.md §6`). Precedent and mechanism: `SD30-CARRY-001` (`b32926f2af`) did
+this for 10 books / 177 defects. The PI-and-`raw_tokens` survival check is per record, and
+`corpus_literal_sweep`'s examined-population must move by exactly the record delta (`§12` L8).
+
+**Enforced by:** AT-34-E1-008's per-book zero; AT-34-E1-007's own `exits 0` bar, unchanged;
+AT-34-E6-001's re-run of both at HEAD.
+
+---
+
 ## §12 — Lessons carried in from SD-33's run, each with its enforcing command
 
 **A lesson without a mechanism is a quote.** SD-31's lessons were captured in SD-32's package

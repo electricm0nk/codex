@@ -254,38 +254,37 @@ it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is
 disposition, never a closure path, and no later cycle may proceed past a blocked card on its
 own authority.
 
-### AT-34-E1-007 — corpus-trap-audit's live run is FAIL, and fixing it is outside Epic 1's write scope
+### AT-34-E1-007 — RESOLVED 2026-08-27 by orchestrator ruling (`decisions.md §13`)
 
-**Filed:** Cycle 7, 2026-08-27. **Ruling needed:** how does AT-34-E1-007 close given the stage it
-wires reports a real, substantial, previously-invisible content problem?
+<details>
+<summary>Archived — the blocker as filed, and the ruling that cleared it</summary>
 
-`scripts/verify.sh --only corpus-trap-audit` — now wired, timeout-bounded, population-printed,
-and RED→GREEN-proven correct (see Cycle 7 above and
-`artifacts/epic-1-atlas/AT-34-E1-007_cycle_receipt.md`) — reports **FAIL** against the real
-corpus: `records_examined=27638 defects=10196 traps=407`. `3,181` of those defects are SD-33's
-already-verified, already out-of-DoD inherited debt
-(`forward-scope-register.md D1.1`'s `v06_corpus_trap_report` test target). The remaining `7,015`
-(`wiring-class-mismatch`, across 34 of 37 books) are a **new discovery**: this same check was
-driven to `0` by `SD30-CARRY-001` (`b32926f2af`, 2026-08-14) and has silently regressed since,
-because nothing re-ran `--audit` between then and now.
+The cycle-7 lane filed this asking how AT-34-E1-007 closes when the stage it wires reports
+`records_examined=27638 defects=10196 traps=407` against the live corpus. It offered two
+dispositions: (1) authorize a corpus-regeneration wave, or (2) rule the criterion satisfied by
+the stage's mechanical wiring, independent of whether the corpus is clean.
 
-**Why this cycle cannot clear it itself:** `workflow-instruction.md §3`'s file-touch table grants
-Epic 1 no `data/corpus/**` path at all for AT-34-E1-007 — only `scripts/verify.sh`. The two books
-Epic 3/4 *do* cover (Core Rulebook 798, Ultimate Campaign 152, of the 7,015) leave the other
-32 books' 6,065 defects with no epic in this bundle's plan. `SD30-CARRY-001`'s own precedent
-(re-run `gen_book_cache`-class regeneration per affected book, diff license/PI/`raw_tokens`
-survival, re-audit to confirm) is real and bounded, but scales ~3.4× its own 10-book/177-defect
-scope — a genuine multi-cycle remediation wave, not a fix folded into one wiring criterion.
+**Ruling: option 1. The criterion is not narrowed.** Option 2 is a carve-out — a gate that passes
+because its bar moved — which `../../governance/blocker-closure-doctrine.md` rejects. A large
+blocker is a sequencing problem, not an exemption.
 
-**What is needed:** an operator ruling on one of:
+**Verified independently before ruling**, from the orchestrating session, not transcribed from the
+lane: the audit re-run gives `findings=10603`, `DEFECT=10196 of 10603`, `TRAP=407 of 10603`, and
+`wiring-class-mismatch=7015 of 10196` across **34 of 37** books (largest:
+`advanced_players_guide` 875, `core_rulebook` 798, `beastiary` 783, `ultimate_psionics` 759).
+`git log -1 b32926f2af` confirms `SD30-CARRY-001` drove this same check `177 -> 0` on 2026-08-14;
+nothing has re-run `--audit` since. The remaining `3,181 of 10,196` (`mod-record` 2,117,
+`key-differs-from-name` 650, `shared-name-distinct-records` 249, `disabled-line` 165) are SD-33's
+registered out-of-DoD debt and stay registered, not absorbed.
 
-1. Authorize a dedicated corpus-regeneration wave (its own epic or a cross-epic fold with
-   Epics 3/4) to drive `wiring-class-mismatch` back to 0 across all 34 affected books, after
-   which `corpus-trap-audit` genuinely exits 0 and AT-34-E1-007 closes as literally stated; or
-2. Rule that AT-34-E1-007's Definition of Done is satisfied by "the stage exists, is wired, is
-   timeout-bounded, prints its true population, and its catch mechanism is proven correct" —
-   independent of whether the live corpus is currently clean — with the corpus content itself
-   tracked as separate forward scope (a new register entry, not a carry-out of this criterion).
+**Decomposed into `AT-34-E1-008`** (kanban row 8): drive `wiring-class-mismatch` to zero across all
+34 books via the guarded `gen_book_cache` path, per-record PI/`raw_tokens` survival verified,
+`corpus_literal_sweep` examined-population moving by exactly the record delta. Epic 1 gains
+`data/corpus/**` write scope for that criterion only. AT-34-E1-007's own `exits 0` bar is
+unchanged and it closes when AT-34-E1-008 lands.
 
-Not attempted here: fixing `data/corpus/**` content is outside this criterion's granted write
-scope, and is 3,181 + 7,015 records too large for one cycle regardless of scope.
+The bundle is un-paused. No later epic proceeded past the blocked card while it was open.
+
+</details>
+
+*(no active blockers)*

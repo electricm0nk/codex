@@ -5,7 +5,7 @@ bundle_id: SD-34
 date: 2026-08-26
 ---
 
-# SD-34 Epic Breakdown — 6 epics, 27 criteria
+# SD-34 Epic Breakdown — 6 epics, 28 criteria
 
 Criterion IDs follow the program convention `AT-34-E<epic>-<nnn>`. Every criterion states its
 **evidence obligation** — the command or artifact that proves it.
@@ -143,6 +143,27 @@ corpus-trap-audit` exits 0 and prints the population it examined; RED→GREEN by
 the audit must catch, confirming the catch, removing the probe, and confirming the baseline
 returns to zero. The stage's own timeout wrapper is part of the deliverable — SD-33's register
 D1.2 records a sibling stage that could not bound its own runtime.
+
+### AT-34-E1-008 — `wiring-class-mismatch` is driven to zero across every affected book
+
+AT-34-E1-007 wired the stage; this criterion makes it green. **7,015 of 10,196** defects, across
+**34 of 37** books, in a check `SD30-CARRY-001` drove to `0` on 2026-08-14 and which has silently
+regressed since because nothing re-ran it (`decisions.md §13`).
+
+Per book: re-run the canonical generator (`gen_book_cache`) via the **guarded path only** — never
+a hand-edit of `data/corpus/**`, never `--allow-stamp-loss` — then verify, **per record**, that
+license/PI metadata and `raw_tokens` survived, and re-audit that book to zero.
+
+**Evidence:** `scripts/verify.sh --only corpus-trap-audit` reports `wiring-class-mismatch=0`,
+with the other four inherited trap kinds (`mod-record` 2,117, `key-differs-from-name` 650,
+`shared-name-distinct-records` 249, `disabled-line` 165 at launch) reported at their counts and
+**not** absorbed. Plus `artifacts/epic-1-atlas/wiring-class-remediation.json` — per book: defects
+before, defects after, records regenerated, and the PI/`raw_tokens` survival check result.
+`cargo run --locked --bin corpus_literal_sweep` reports 0 findings and its **examined-population
+moves by exactly the record delta** (`decisions.md §12` L8).
+
+**A record-count change compiles clean while leaving other files' hardcoded assertions red** —
+grep old **and** new counts across `tests/`, `src/`, `apps/`, `scripts/` before committing.
 
 ---
 

@@ -21,6 +21,7 @@ The closure gates, the command that proves each criterion, and the artifact each
 | AT-34-E1-005 | old-string count sweep across `tests/`, `src/`, `apps/`, `scripts/` returning 0 live uses | the rename diff + its RED->GREEN |
 | AT-34-E1-006 | `scripts/verify.sh --only figure-provenance` exits 0; RED->GREEN on an unsourced figure AND on a wrong-command figure; `scripts/verify.sh --only denominator-gate` default run lists every SD-34 `.md` in `files_checked` | the stage, wired into `verify.sh`; the widened `denominator_gate.py` default scope |
 | AT-34-E1-007 | `scripts/verify.sh --only corpus-trap-audit` exits 0 with its population printed; RED->GREEN on a planted trap; the stage bounds its own runtime | the stage, wired into `verify.sh` |
+| AT-34-E1-008 | `scripts/verify.sh --only corpus-trap-audit` reports `wiring-class-mismatch=0`, other four trap kinds reported not absorbed; `corpus_literal_sweep` 0 findings with its examined-population moved by exactly the record delta | `artifacts/epic-1-atlas/wiring-class-remediation.json` |
 | AT-34-E2-001 | per kind: the table holding a named record, OR the counts proving no table is needed | `artifacts/epic-2-tables/` build transcripts |
 | AT-34-E2-002 | per table: a refusal transcript AND a success transcript | `artifacts/epic-2-tables/fail-closed-proofs.md` |
 | AT-34-E2-003 | per table: wall time, lines changed, what dominated, and the spread across the eight | `artifacts/epic-2-tables/table-build-rate.json` |
