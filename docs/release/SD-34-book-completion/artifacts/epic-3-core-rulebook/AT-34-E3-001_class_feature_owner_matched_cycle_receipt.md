@@ -1,7 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism)
 
-- **Commit SHA:** PENDING (filled in a follow-up doc-only commit, same convention as the
-  `race_trait_race_not_modelled` and `class_feature_option_pool` receipts).
+- **Commit SHA:** `f8a230d4f398e49e3288cf51cfe63542342bd934` (parent `0009b7ca2197c44caf30d664f0c71fa1e819389d`).
 - **Files touched:**
   - `src/rules_core/class_feature_pool_catalog.rs` — one new, committed, passing regression
     test: `class_feature_owner_matched_but_not_held_346_sub_causes_are_named_and_sum_exactly`.
