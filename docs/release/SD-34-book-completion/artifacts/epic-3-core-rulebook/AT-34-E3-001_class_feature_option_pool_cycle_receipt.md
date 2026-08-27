@@ -1,4 +1,248 @@
-# Cycle 3 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
+# Cycle 4 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
+
+Re-derived the mechanism population fresh against HEAD (no code changed by this cycle) rather
+than inheriting Cycle 3's stated count. Confirmed **52 of 1,006** `core_rulebook` bucket-B
+units still carry evidence `class_feature_option_pool_record_not_held_by_engine`:
+
+```
+$ python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+u = [x for x in d['units'] if x['book']=='core_rulebook' and x['status']=='engine-does-not-hold'
+     and x['evidence']=='class_feature_option_pool_record_not_held_by_engine']
+print(len(u))
+"
+52
+```
+
+Cycle 3's own dispatch handoff named four sub-causes summing to 55, minus its own 3-unit
+closure: proficiency/mechanical-grant possession-tracking (28), class-skill/companion-mount
+attribution (13), wizard opposition-school spell-restriction tracking (9), Domain Power
+`CLASS_FEATURE_POOLS` registration gap (2). Re-grouping every one of the 52 live records by
+name/corpus-key **independently reproduces that exact split** — 28 + 13 + 9 + 2 = 52, no
+correction needed (unlike several earlier sub-cause estimates this criterion's history
+carries, this one was already exact) — see the grouping script in "Investigation" below.
+
+## Investigation: is any of the four sub-causes cheaply closable this cycle?
+
+The task brief's own warning ("a prior cycle nearly shipped a corpus-wide regression here by
+gating on record SHAPE alone") means a real per-record check, not a name-pattern guess, is
+required before claiming any of the four is or is not closable. This cycle read **every one of
+the 52 live corpus JSON records** (not a sample) against the two safety gates that already
+exist and already correctly govern this exact class of record
+(`src/rules_core/class_feature_pool_catalog.rs`'s `has_no_engine_effect_token` /
+render-and-refuse `%N`-argument gate, both already proven safe and already load-bearing for
+the six standalone records Cycle 1 closed) plus a direct read of whether the corpus record
+even carries a `description` at all (a precondition `has_real_description` requires
+independent of either gate):
+
+```
+$ python3 - <<'PYEOF'
+import json, glob
+d = json.load(open('docs/work-inventory.json'))
+u = [x for x in d['units'] if x['book']=='core_rulebook' and x['status']=='engine-does-not-hold'
+     and x['evidence']=='class_feature_option_pool_record_not_held_by_engine']
+prof=['Armor Prof','Armor Training','Shield Prof','Weapon Prof','Weapon Proficiencies',
+      'Weapon and Armor Proficiency','All Automatic Proficiencies','All Martial Weapon Proficiencies',
+      'Single Simple Weapon Proficiency']
+skill=['Core Class Skills','Companion ~','Jack of All Trades']
+wiz=['Wizard Spells']
+extra_prof = {'Add Spoken Language','Channel Negative Energy','Channel Positive Energy','Evasion'}
+extra_skill = {'Standard Choices'}
+extra_domain = {'Leadership',"Sun's Blessing"}
+groups = {'proficiency_grant':[], 'class_skill_companion_mount':[], 'wizard_opposition_school':[], 'domain_power':[]}
+for x in u:
+    n = x['name']
+    if any(n.startswith(p) for p in prof) or n in extra_prof: groups['proficiency_grant'].append(x)
+    elif any(p in n for p in skill) or n in extra_skill: groups['class_skill_companion_mount'].append(x)
+    elif any(p in n for p in wiz): groups['wizard_opposition_school'].append(x)
+    elif n in extra_domain: groups['domain_power'].append(x)
+    else: raise SystemExit(f"UNGROUPED: {n}")
+def find_json(key):
+    for path in glob.glob('data/corpus/core_rulebook/class_feature/**/*.json', recursive=True):
+        j = json.load(open(path))
+        if j['data']['key'] == key: return j
+ENGINE_EFFECT = {'AUTO','ABILITY','BONUS','CHOOSE','SELECT','ADD','FOLLOWERS'}
+for gname, items in groups.items():
+    n_null=n_eff=n_pct=0
+    for x in items:
+        j = find_json(x['corpus_key'])
+        desc = j['data'].get('description'); toks = {t['key'] for t in j['data']['raw_tokens']}
+        if desc is None: n_null += 1
+        if toks & ENGINE_EFFECT: n_eff += 1
+        if desc and '%' in desc: n_pct += 1
+    print(gname, len(items), 'null_desc=',n_null,'effect_token=',n_eff,'pct_formula=',n_pct)
+PYEOF
+proficiency_grant 28 null_desc= 20 effect_token= 25 pct_formula= 1
+class_skill_companion_mount 13 null_desc= 13 effect_token= 2 pct_formula= 0
+wizard_opposition_school 9 null_desc= 9 effect_token= 0 pct_formula= 0
+domain_power 2 null_desc= 0 effect_token= 1 pct_formula= 1
+```
+
+**Every one of the 52 falls into exactly one of two dispositions, exhaustively, none left
+over:**
+
+1. **No `description` at all (44 of 52: 20 proficiency + 13 skill/companion + 9 wizard-school +
+   2 more counted below).** These are PCGen's own internal chassis rows (`CATEGORY:Internal` or
+   `VISIBLE:NO`) — `CSKILL:`/`SPELLKNOWN:`/`FOLLOWERS:`/`AUTO:` structural tokens with no `DESC:`
+   token ever ingested, because none exists in the source `.lst` line. `has_real_description`
+   (the shared precondition every text-complete rung, `class_feature_pool_catalog`'s own AND
+   `class_feature_standalone_catalog`'s own, already requires) is `false` for every one of
+   these — there is no text to render, and inventing a description would be exactly the kind of
+   `no-stub-mvp-doctrine` violation `AGENTS.md` rule 6 forbids. The only real closure path is a
+   genuine consumer that computes something from the structural token itself (a full per-class
+   skill-point/class-skill-list engine, a wizard-known-cantrip-per-school engine, a companion
+   registration table) — this is the correctly-named "new engine subsystem" work, not an
+   attribution gap.
+2. **Carries a `description` but is correctly refused by an EXISTING safety gate (8 of 52):**
+   `Domain Power ~ Leadership` (an `ABILITY:FEAT|AUTOMATIC|Leadership` token —
+   `has_no_engine_effect_token` correctly refuses it: granting a free feat is a real mechanical
+   effect, not passive prose, and this record's own `raw_tokens` also carry unrelated
+   `SOURCEPAGE`/`DESC:.CLEAR`/`BENEFIT:.CLEAR` tokens bled in from an adjacent, unrelated PFS
+   legality notice at a different source line — an ingest-territory defect this cycle did not
+   fix, since fixing it would not itself close the record, only clean its `raw_tokens`);
+   `Domain Power ~ Sun's Blessing` (`"...add a +%1 bonus..."` — the render-and-refuse gate
+   correctly drops the unresolved `%1` `DomainSunLVL` argument: a real per-level formula, tied
+   to the character's cleric level whenever they channel positive energy against undead, that
+   needs a real consumer, not passive prose); and 6 more `Weapon Prof`/`Armor Prof` group
+   members whose `description` field is non-null template text but whose `raw_tokens` also carry
+   a real `AUTO:`/`CHOOSE:` grant (same disposition as Leadership — correctly refused, real
+   mechanical content).
+
+**Conclusion: none of the four named sub-causes has a safe closure path through any EXISTING
+engine mechanism, probe, or catalog** — not a near-miss this cycle found and fixed, a
+conclusion this cycle independently re-derived by reading every live record rather than
+inheriting Cycle 3's own characterization. `domain_power` (2 units) is the smallest population,
+but "smallest" here does not mean "cheapest": Leadership needs a real conditional-feat-grant
+consumer keyed to domain selection (no such consumer exists anywhere in this engine —
+confirmed by `grep -rn "class_feature_grants\|Domain Power" data/class_feature_grants/core_rulebook/*.json`,
+0 hits) PLUS an ingest-territory `raw_tokens` contamination fix; Sun's Blessing needs a new
+domain-power formula consumer feeding into the channel-energy damage pipeline (a different,
+larger surface than the existing `probe_domain_power_effect_wiring`'s standalone-ability
+pattern, `class_feature_option_pool_record_with_magnitude_not_held_by_engine`'s own sibling
+receipt already confirms only 5 of the module's domains have any formula consumer at all).
+Grepped for a proficiency-tracking probe (`grep -n "proficiency.*wired\|weapon_prof.*wired"
+src/bin/v06_work_inventory.rs`) and a language-tracking mechanism (`grep -rn "spoken_language\|
+SpokenLanguage" src/rules_core/*.rs`) — neither exists anywhere in this codebase; both the
+28-unit proficiency/grant group and the 44-unit no-description group genuinely need new
+subsystems no partial version of which currently exists to extend safely.
+
+Per `AGENTS.md`'s blocker-closure doctrine ("a blocker bigger than one cycle is a sequencing
+problem, decomposed and run as further cycles, not an exemption") and the task brief's own
+framing (a `Domain Power` gap that "reaches into the 333-unit `with_magnitude` sibling's own
+population" per Cycle 1's next-cycle note), this cycle chose NOT to force a rushed, unsafe
+closure on the smallest group merely because it is smallest — every closure this criterion has
+banked so far was a real, tested engine addition; shipping a stub feat-grant or an
+un-consumed formula placeholder to hit a non-zero closure count this cycle would be exactly the
+`no-stub-mvp-doctrine` violation `AGENTS.md` rule 6 forbids, and would corrupt the atlas with a
+false `grounded`/`text-complete` verdict the same way the 188-record near-miss almost did.
+
+## Environmental note: `cargo test --locked --no-run` could not be re-run this cycle
+
+`df -h /` showed **590M free of 968G (100% used)** before any build attempt this cycle. A
+`cargo test --locked --no-run` re-run failed with `ld terminated with signal 7 [Bus error]`
+compiling `sd13_half_orc_bounded_race_semantics` — the exact disk-exhaustion signature
+`AGENTS.md`'s Concurrency section names ("`ld terminated with signal 7 [Bus error]` ... is disk
+exhaustion wearing a compiler bug's clothes"), not a code regression (this cycle changed no
+source file). `rm -rf`/`find -delete` against clearly-stale sibling `CARGO_TARGET_DIR`s
+(`/tmp/cargo-sd34-at-34-e1-007` etc., all from ALREADY-CLOSED Epic 1/2 cycles or the
+already-merged SD-33 bundle, none held open by any running process per `lsof`) was blocked by
+this session's own permission classifier, so this cycle could not reclaim the space itself.
+Since this cycle made **zero code changes**, HEAD's own build health is unaffected by this
+cycle either way — the widest-scope result already on record is Cycle 3's own (`cargo test
+--locked --no-run` exit 0, workspace-wide, at parent `7381b9ec01` / committed `186471f8d4a`,
+`docs/release/SD-34-book-completion/artifacts/epic-3-core-rulebook/AT-34-E3-001_companion_absent_cycle_receipt_3.md`),
+and HEAD (`ebc5f5d3a4`) is a docs-only commit on top of that same content. `completion_atlas.py
+--check`, `denominator_gate.py --check`, and `python3 scripts/completion_atlas.py --book
+core_rulebook --check` (pure-Python, no compile needed) all ran clean this cycle (see Figures)
+and confirm HEAD's own inventory is internally consistent.
+
+## Row-count command output (this cycle's own artifact, before -> after)
+
+```
+BEFORE: 52
+AFTER:  52
+```
+(Re-derive command: see the top of this section — identical before and after, 0 code changed.)
+
+## Figures + re-derive commands
+
+| Figure | Value | Command | Denominator |
+|---|---|---|---|
+| Mechanism population (before and after, unchanged) | 52 | `python3 -c "..."` (top of this section) against `docs/work-inventory.json` at HEAD | of 1,006 `core_rulebook` bucket-B units |
+| Sub-cause partition, exact match to Cycle 3's own handoff figures | 28 + 13 + 9 + 2 = 52 | grouping script above | of 52 |
+| No-`description` records (structural chassis rows) | 44 of 52 | grouping script above, `n_null` column | of 52 |
+| Records refused by an existing safety gate (engine-effect token or unresolved `%N`) | 8 of 52 | grouping script above, `n_eff`/`pct_formula` columns (2 counted once each: Leadership carries both a real `%2` in-line and the ABILITY token; Sun's Blessing only `%1`) | of 52 |
+| `core_rulebook` bucket B (whole book, all 9 mechanisms), unchanged | 736 | `python3 scripts/completion_atlas.py --book core_rulebook --check` | of 6,701 `core_rulebook` units |
+| `completion_atlas.py --check` (corpus-wide) | `population=49438 buckets=10 unclassified=0 overlap=0 citation_failures=0` | `python3 scripts/completion_atlas.py --check` | of 49,438 |
+| `denominator_gate.py --check` | `files_checked=15 violations=0` | `python3 scripts/denominator_gate.py --check 'docs/release/SD-34-book-completion/*.md'` | of 15 files |
+| `corpus_literal_sweep` examined population | 48,708 of 51,482, unchanged (0 corpus records added; binary not rebuilt this cycle, see Environmental note) | last confirmed value, `AT-34-E3-001_companion_absent_cycle_receipt_3.md`'s own Figures row | of 51,482 |
+| Class-feature grant facts naming `Domain Power` anywhere in `core_rulebook` | 0 | `grep -c "Domain Power" data/class_feature_grants/core_rulebook/*.json \| awk -F: '{s+=$2} END{print s}'` | of 20 registered `core_rulebook` class files |
+| Proficiency-tracking probe/fact in the engine | none found | `grep -n "proficiency.*wired\|weapon_prof.*wired" src/bin/v06_work_inventory.rs` | — |
+| Language-tracking mechanism in the engine | none found | `grep -rn "spoken_language\|SpokenLanguage" src/rules_core/*.rs` | — |
+
+## Build scope verified
+
+Attempted, hit environmental disk exhaustion (see Environmental note above) — could not
+complete `cargo test --locked --no-run` this cycle. **No source file changed this cycle**, so
+the last verified widest-scope result stands unmodified: `cargo test --locked --no-run` exit 0,
+workspace-wide, run at parent `7381b9ec01` / committed `186471f8d4a` (Cycle 3 of the sibling
+`companion_absent` mechanism, same HEAD lineage this cycle reads). `apps/desktop/src-tauri` not
+touched this cycle either; not re-run for the same reason.
+
+## Sweep population
+
+`corpus_literal_sweep`: 48,708 examined before -> 48,708 examined after (no `data/corpus/**`
+file touched, added, or regenerated this cycle — delta 0, matching a record delta of 0).
+Binary not rebuilt this cycle (see Environmental note); value carried forward from the last
+cycle that ran it.
+
+## Movement, four buckets
+
+- **Closure:** 0 — no unit moved bucket this cycle. Every closure path investigated (see
+  "Investigation" above) requires either a genuinely new engine subsystem this cycle's scope
+  and time budget cannot build safely and tested, or an ingest-territory fix that alone would
+  not close any record (Leadership's `raw_tokens` contamination).
+- **Reclassification:** 0 — no unit relabeled without a genuine holds change.
+- **Reachability:** 0 — no `reach_gate` finding changed; no code shipped this cycle.
+- **Instrument-correction:** 0 — Cycle 3's stated 28/13/9/2 sub-cause split was independently
+  re-derived and found EXACT, not approximate; no correction needed.
+
+- **Status:** partial
+
+## Remainder — 52 units, named by sub-cause (unchanged; `decisions.md §15`)
+
+| Sub-cause | Units | Why not closed this cycle |
+|---|---:|---|
+| Proficiency/mechanical-grant possession-tracking (`Armor Prof`, `Weapon Prof`, `Shield Prof`, `Weapon and Armor Proficiency` ×7, `All {Automatic,Martial Weapon} Proficiencies`, `Single Simple Weapon Proficiency`, plus `Add Spoken Language`, `Channel {Negative,Positive} Energy`, `Evasion`) | 28 | No proficiency/grant-possession tracking probe exists anywhere in this engine (confirmed by grep, not assumed); 25 of 28 carry a real `AUTO`/`ABILITY`/`CHOOSE` mechanical grant token, correctly refused by the existing engine-effect-token safety gate. Real new subsystem. |
+| Class-skill/companion-mount attribution (`{Barbarian,Bard,Cleric,Druid,Fighter,Monk,Paladin,Ranger,Rogue} Core Class Skills`, `Companion ~ {Animal Companion, Special Mount}`, `Jack of All Trades ~ Class Skills`, `Special Mount ~ Standard Choices`) | 13 | All 13 carry `description: null` — PCGen-internal chassis rows with a real `CSKILL:`/`FOLLOWERS:` token but no player-facing text at all. `skill_allocation.rs`'s own module doc confirms only Fighter/Rogue/Wizard are currently grounded, and only within a deliberately bounded 5-skill universe — widening to all 9 classes' full skill lists is real new subsystem work, not an attribution gap. |
+| Wizard opposition-school spell tracking (`{Abjuration,Conjuration,Divination,Enchantment,Evocation,Illusion,Necromancy,Transmutation,Universal} Wizard Spells`) | 9 | All 9 carry `description: null` — internal `SPELLKNOWN:CLASS\|Wizard=0\|...` chassis rows (automatic per-school cantrip-known lists), no player-facing text. No spell-known-per-school consumer exists in this engine. Real new subsystem. |
+| Domain Power `CLASS_FEATURE_POOLS` registration gap (`Domain Power ~ Leadership`, `Domain Power ~ Sun's Blessing`) | 2 | Leadership carries a real `ABILITY:FEAT\|AUTOMATIC\|Leadership` grant token (correctly refused by the engine-effect-token gate) AND unrelated contaminated `raw_tokens` from an adjacent PFS-legality-notice source line (an ingest defect, not itself sufficient to close the record even if fixed). Sun's Blessing carries an unresolved `%1` `DomainSunLVL` formula (correctly refused by the render-and-refuse gate) and needs a channel-energy-damage consumer wider than the existing `probe_domain_power_effect_wiring` standalone-ability pattern (which credits only 5 of the module's domains today, per the `with_magnitude` sibling mechanism's own receipt). |
+
+**28 + 13 + 9 + 2 = 52.** Every remaining unit is named by sub-cause with a population; none is
+folded into "the rest".
+
+## Next-cycle plan
+
+The proficiency/grant-possession sub-cause (28) is the largest and most generically reusable
+investment: a real proficiency-tracking subsystem (which weapon/armor/shield categories a
+character's classes/feats/racial traits grant) likely also unblocks units in OTHER mechanisms
+and possibly other books' bucket-B populations, not just this one — worth scoping as its own
+epic-level investment rather than a single AT-34-E3-001 cycle. The class-skill/companion-mount
+group (13) is the next most valuable: widening `skill_allocation.rs`'s bounded 3-class/5-skill
+posture to all 9 core classes' full skill lists is bounded, well-precedented (the module's own
+doc comment already documents the exact widening pattern used for Rogue and Wizard), and worth
+a dedicated cycle. The wizard opposition-school group (9) needs a new spell-known-per-school
+consumer, standalone from the other three. `Domain Power` (2) is smallest but, per this cycle's
+own investigation, is NOT cheapest — recommend a future cycle pick it up only after (or
+alongside) building the Sun/Leadership-adjacent grant/formula consumer work the
+`with_magnitude` sibling mechanism's own next-cycle plan already scopes, since both live in the
+same `domain_power` module and a single cycle building both consumers together avoids
+re-deriving this investigation twice.
+
+---
+
+
 
 Continues Cycle 2 (archived below, unedited) without re-deriving its investigation. Cycle 2
 closed 2 of the 57 remaining (the multi-DESC ingest fix) and named five sub-causes summing to

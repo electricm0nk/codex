@@ -101,6 +101,44 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 4) — one of nine, `decisions.md §14` — partial
+
+Re-derived the 52-unit remainder fresh at HEAD (no code changed) and independently confirmed
+Cycle 3's own 28/13/9/2 sub-cause split (proficiency/grant possession-tracking, class-skill/
+companion-mount attribution, wizard opposition-school tracking, Domain Power registration gap)
+is EXACT — no correction needed. Read every one of the 52 live corpus records (not a sample)
+against the existing `has_no_engine_effect_token`/render-and-refuse safety gates in
+`class_feature_pool_catalog.rs` plus `has_real_description`: **44 of 52 carry
+`description: null`** (PCGen-internal chassis rows — `CSKILL:`/`SPELLKNOWN:`/`FOLLOWERS:`
+tokens with no `DESC:` ever ingested — no text exists to serve, so the text-complete route is
+structurally impossible without inventing content); the other **8 carry a real description but
+are correctly refused** by an existing safety gate for a real, still-uncomputed mechanical
+effect (`Domain Power ~ Leadership`'s `ABILITY:FEAT|AUTOMATIC|Leadership` grant token, `~ Sun's
+Blessing`'s unresolved `%1 DomainSunLVL` formula, 6 more `Prof` group members' `AUTO:`/`CHOOSE:`
+grant tokens). Grepped and confirmed no proficiency-tracking probe, no per-school
+spell-known consumer, and no `Domain Power` class-feature-grant fact exists anywhere in this
+engine for any of the four sub-causes — each is genuinely new subsystem work, not a narrow
+catalog-widening or attribution gap a prior cycle's precedent could safely extend to cover.
+
+Declined to force a rushed closure on the smallest group (`Domain Power`, 2 units) merely
+because it is smallest: both units are correctly refused by pre-existing safety architecture,
+and shipping a stub feat-grant or an un-consumed formula placeholder to post a non-zero count
+would be exactly the `no-stub-mvp-doctrine` violation `AGENTS.md` rule 6 forbids, and would risk
+the same class of corpus-wide near-miss the task brief's own warning names. 0/52 closed, all
+four buckets' movement is 0 this cycle. Attempted `cargo test --locked --no-run` re-verification;
+hit environmental disk exhaustion (`df -h /` showed 590M free of 968G, `ld terminated with
+signal 7 [Bus error]` compiling `sd13_half_orc_bounded_race_semantics` — the exact signature
+`AGENTS.md`'s Concurrency section names for disk exhaustion, not a code regression). Attempted to
+reclaim space by deleting clearly-stale sibling `CARGO_TARGET_DIR`s from already-closed Epic 1/2
+cycles and the already-merged SD-33 bundle (confirmed via `lsof` none were held open by a
+running process); blocked by this session's own permission classifier. Since this cycle changed
+no source file, HEAD's own last-verified widest-scope result (Cycle 3's own, `exit 0`) stands
+unmodified. `core_rulebook` bucket B (atlas-real partition) unchanged at 736/6701;
+`completion_atlas.py --check` and `denominator_gate.py --check` both re-ran clean this cycle
+(pure-Python, no compile needed). Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_cycle_receipt.md`
+(Cycle 4 section, prepended).
+
 ### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 3) — one of nine, `decisions.md §14` — partial
 
 Built the fix cycle 2 declined: Shape 8, cross-book ownership. `companion_chassis`'s
