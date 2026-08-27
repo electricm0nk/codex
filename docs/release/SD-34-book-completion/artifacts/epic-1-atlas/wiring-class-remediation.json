@@ -66,6 +66,61 @@
       "corpus_literal_sweep_after": 48699,
       "corpus_literal_sweep_delta": 0,
       "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only, same as G1), so 0 delta is expected and correct per decisions.md §12 L8's own framing (population must grow when records are ADDED -- none were)."
+    },
+    {
+      "group": "G3",
+      "books": [
+        {
+          "book": "ultimate_magic",
+          "wiring_class_mismatch_before": 437,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 557,
+          "records_scanned": 3069,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- ultimate_magic",
+          "provenance_check": "PASS -- all 3069 records byte-diffed (before/after) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed, 557 files changed"
+        },
+        {
+          "book": "bestiary_3",
+          "wiring_class_mismatch_before": 363,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 479,
+          "records_scanned": 1363,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_3 horror_adventures bestiary_4 inner_sea_gods",
+          "provenance_check": "PASS -- all 1363 records byte-diffed (before/after) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed, 479 files changed"
+        },
+        {
+          "book": "horror_adventures",
+          "wiring_class_mismatch_before": 354,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 429,
+          "records_scanned": 1454,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_3 horror_adventures bestiary_4 inner_sea_gods",
+          "provenance_check": "PASS -- all 1454 records byte-diffed (before/after) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed, 429 files changed"
+        },
+        {
+          "book": "bestiary_4",
+          "wiring_class_mismatch_before": 348,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 529,
+          "records_scanned": 1528,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_3 horror_adventures bestiary_4 inner_sea_gods",
+          "provenance_check": "PASS -- all 1528 records byte-diffed (before/after) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed, 529 files changed"
+        },
+        {
+          "book": "inner_sea_gods",
+          "wiring_class_mismatch_before": 292,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 621,
+          "records_scanned": 1501,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_3 horror_adventures bestiary_4 inner_sea_gods",
+          "provenance_check": "PASS -- all 1501 records byte-diffed (before/after) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed, 621 files changed"
+        }
+      ],
+      "commit_sha": "0e9140d838",
+      "corpus_literal_sweep_before": 48699,
+      "corpus_literal_sweep_after": 48699,
+      "corpus_literal_sweep_delta": 0,
+      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only, same as G1/G2), so 0 delta is expected and correct per decisions.md §12 L8's own framing (population must grow when records are ADDED -- none were)."
     }
   ]
 }
