@@ -65,6 +65,12 @@ pub struct SimpleKindTable {
     pub kind: String,
     pub dir: &'static str,
     records: BTreeMap<(String, String), SimpleKindRecord>,
+    /// `"{book}:{source_file}:{source_line}"` -> `(book, key)`, populated
+    /// ONLY for records whose own JSON carries a `rename.coordinate`
+    /// (PI-masked records -- `decisions.md §14`). Never built from a
+    /// derived or guessed coordinate, only the one the record's own
+    /// ingestion already wrote down.
+    by_coordinate: BTreeMap<String, (String, String)>,
 }
 
 impl SimpleKindTable {
@@ -73,6 +79,17 @@ impl SimpleKindTable {
     /// (`AT-34-E2-002`).
     pub fn resolve(&self, book: &str, key: &str) -> Option<&SimpleKindRecord> {
         self.records.get(&(book.to_string(), key.to_string()))
+    }
+
+    /// The real record for a present `"{book}:{source_file}:{source_line}"`
+    /// coordinate, or `None` -- the PI-safe lookup path for a record whose
+    /// `key`/`name` were masked at ingestion (`decisions.md §14`: match on
+    /// the record's already-stored coordinates, never the redacted real
+    /// name). Returns the SAME masked-key record `resolve` would, never a
+    /// fabricated one.
+    pub fn resolve_by_coordinate(&self, coordinate: &str) -> Option<&SimpleKindRecord> {
+        let (book, key) = self.by_coordinate.get(coordinate)?;
+        self.records.get(&(book.clone(), key.clone()))
     }
 
     pub fn len(&self) -> usize {
@@ -95,10 +112,20 @@ impl SimpleKindTable {
 /// `kind_dir_for` themselves first.
 pub fn load_simple_kind_table(repo_root: &Path, kind: &str) -> SimpleKindTable {
     let dir = match kind_dir_for(kind) {
-        Some(d) => d,
-        None => return SimpleKindTable { kind: kind.to_string(), dir: "", records: BTreeMap::new() },
+        Some(d) => {
+            d
+        }
+        None => {
+            return SimpleKindTable {
+                kind: kind.to_string(),
+                dir: "",
+                records: BTreeMap::new(),
+                by_coordinate: BTreeMap::new(),
+            }
+        }
     };
     let mut records = BTreeMap::new();
+    let mut by_coordinate = BTreeMap::new();
     let corpus_root = repo_root.join("data/corpus");
     if let Ok(book_dirs) = std::fs::read_dir(&corpus_root) {
         for book_entry in book_dirs.flatten() {
@@ -123,6 +150,9 @@ pub fn load_simple_kind_table(repo_root: &Path, kind: &str) -> SimpleKindTable {
                 let raw_token_count = data["raw_tokens"].as_array().map(|a| a.len()).unwrap_or(0);
                 let source_path = v["source"]["path"].as_str().unwrap_or_default().to_string();
                 let source_line = v["source"]["line"].as_u64().unwrap_or(0);
+                if let Some(coordinate) = v["rename"]["coordinate"].as_str() {
+                    by_coordinate.insert(coordinate.to_string(), (book.clone(), key.to_string()));
+                }
                 records.insert(
                     (book.clone(), key.to_string()),
                     SimpleKindRecord {
@@ -138,7 +168,7 @@ pub fn load_simple_kind_table(repo_root: &Path, kind: &str) -> SimpleKindTable {
             }
         }
     }
-    SimpleKindTable { kind: kind.to_string(), dir, records }
+    SimpleKindTable { kind: kind.to_string(), dir, records, by_coordinate }
 }
 
 /// One transcript line per kind for `--epic2-table-transcript`: the table's
@@ -233,6 +263,35 @@ mod tests {
     kind_holds_named_record!(domain_table_holds_battle_spirit, "domain", "advanced_class_guide", "Battle (Spirit)");
     kind_holds_named_record!(skill_table_holds_craft_rope, "skill", "bestiary_2", "Craft (Rope)");
     kind_holds_named_record!(language_table_holds_xenophobic, "language", "advanced_race_guide", "Xenophobic");
+
+    /// `AT-34-E3-001` (`domain`, 1 unit): `Death (Pharasma)` at
+    /// `cr_domains.lst:46` is PI-redacted at ingestion (the domain's own
+    /// name embeds the deity `Pharasma`) -- its corpus record's `key`/`name`
+    /// are rewritten to `Codex-Named Unit (...)`, so a plain `resolve` by
+    /// the record's REAL corpus name (what `docs/work-inventory.json`'s
+    /// unit carries as `corpus_key`) never finds it, even though the
+    /// record physically exists. `resolve_by_coordinate` matches on the
+    /// record's own stored `(book, source_file, source_line)` instead --
+    /// never reading, logging, or reconstructing the redacted real name --
+    /// and returns the SAME masked-key record.
+    #[test]
+    fn domain_table_resolves_a_pi_renamed_record_by_coordinate_not_by_the_real_name() {
+        let table = load_simple_kind_table(&repo_root(), "domain");
+        assert!(
+            table.resolve("core_rulebook", "Death (Pharasma)").is_none(),
+            "the real corpus_key must NOT resolve directly -- the record's own JSON key is masked"
+        );
+        let record = table
+            .resolve_by_coordinate("core_rulebook:cr_domains.lst:46")
+            .unwrap_or_else(|| panic!("domain: expected cr_domains.lst:46 to resolve by coordinate"));
+        assert_eq!(record.book, "core_rulebook");
+        assert_eq!(record.source_path, "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst");
+        assert_eq!(record.source_line, 46);
+        assert!(record.key.starts_with("Codex-Named Unit ("), "must keep the masked key, never the real name");
+
+        // A coordinate no record carries is refused, never fabricated.
+        assert!(table.resolve_by_coordinate("core_rulebook:cr_domains.lst:9999").is_none());
+    }
 
     /// Every one of the seven directories the population claims to be
     /// non-empty (`decisions.md §3`'s per-kind population) really is, at

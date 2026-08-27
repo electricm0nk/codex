@@ -19,9 +19,12 @@ not reported here. Epic 1 dispatch underway.
 
 **12 of 27 criteria complete. 12 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
 Epic 2 is closed at 4 of 4 (AT-34-E2-001..004). Epic 3 (Core Rulebook to zero) is underway:
-AT-34-E3-001 (row 13) ran one cycle, cleared one of its eleven mechanisms (29 of 1035 bucket-B
-units), and escalated the remaining ten for further per-mechanism cycles — see Cycle 13 and
-`## Open blockers` below.
+AT-34-E3-001's escalation was cleared by orchestrator ruling (`decisions.md §14`) into nine
+named mechanisms totalling 1,006 of 1,006 — dispatched one per cycle, cheapest-first. Cycle 1
+cleared the `template`/`ability` reattribution mechanism (29 of 1035); this cycle (the
+`domain` mechanism cycle, below) clears the smallest of the remaining nine (1 of 1,006).
+AT-34-E3-001 itself does not close yet — 1,809 of 6,701 `core_rulebook` units are still bucket
+B, and eight mechanisms remain. See the cycle log below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -39,6 +42,35 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`domain` mechanism) — one of nine, `decisions.md §14`
+
+**Status: complete (own mechanism only).** Re-derived population at cycle start:
+`domain_content_absent_from_domain_table_in_core_rulebook` = **1 of 1,006** remaining
+`core_rulebook` bucket-B units (matches `decisions.md §14`'s table). Root cause re-derived,
+not assumed from the prior cycle's now-stale escalation text: the corpus record for `Death
+(Pharasma)` at `cr_domains.lst:46` already exists (landed by the already-committed
+`AT-34-E1-008`), but its `key`/`name` are PI-masked to `Codex-Named Unit (...)` because the
+domain's own name embeds the deity `Pharasma`, so the classifier's key/name lookup could
+never find it. Fix: `SimpleKindTable::resolve_by_coordinate`, a new PI-safe fallback that
+matches on the record's own stored `(book, source_file, source_line)` — never the redacted
+real name — wired only at `Kind::Domain`'s call site (the other six simple-kind-table kinds
+are untouched, `None` passed, byte-identical pre-fix behaviour). RED→GREEN proven with two new
+unit tests plus the full `v06_work_inventory` (371 passed) and `simple_kind_tables` (12
+passed) suites. `docs/work-inventory.json` regenerated with `CORPUS_LITERAL_SWEEP_REPORT` +
+`DERIVED_FIXTURE_CHECK_REPORT` set (no `--allow-stamp-loss`): exactly 2 of 49,438 units
+changed — this cycle's own target (`core_rulebook:domain:death_pharasma`, B→M) and one
+side-effect unit in a different book/mechanism (`advanced_players_guide:domain:
+souls_pharasma_subdomain`, reported honestly, not claimed as this cycle's scope).
+`core_rulebook` bucket B: `1810 -> 1809`. `corpus_literal_sweep`: `48699 -> 48699`, delta 0
+(no corpus file touched). This cycle's own edits shifted 8 of `completion_atlas.py`'s ten
+`BUCKET_DEFINITIONS` line citations — re-derived by `grep -n` against `git show HEAD:...` and
+fixed in the same cycle (`citation_failures` `8 -> 0`). `cargo test --locked --no-run` exits 0
+at the full workspace scope; `apps/desktop/src-tauri` not touched, not run.
+
+**AT-34-E3-001 does not close this cycle.** Bucket B for `core_rulebook` is 1,809 of 6,701;
+eight of the nine named mechanisms remain (`decisions.md §14`'s table). Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_domain_cycle_receipt.md`.
 
 ### Cycle 13 — AT-34-E3-001 — bucket B closes: records reach their tables
 

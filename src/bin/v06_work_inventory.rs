@@ -8264,8 +8264,23 @@ fn simple_kind_verdict(
     wc_class: &str,
     universal_sheet_modifier: bool,
     engine_book_field: Option<String>,
+    // `AT-34-E3-001`'s `domain` mechanism (`decisions.md §14`): a record
+    // whose own `key`/`name` are PI-masked at ingestion (the real name is
+    // Product Identity) can never be found by `resolve(key)`/`resolve(name)`
+    // even though it physically exists. `Some("{book}:{source_file}:
+    // {source_line}")` lets `held` fall back to the record's own stored
+    // coordinate -- never the redacted real name. Only the `Domain` call
+    // site passes `Some(..)`; every other kind passes `None` and is
+    // byte-identical to its pre-fix behaviour.
+    coordinate: Option<&str>,
 ) -> Verdict {
-    let held = table.and_then(|t| t.resolve(engine_book, key).or_else(|| t.resolve(engine_book, name))).is_some();
+    let held = table
+        .and_then(|t| {
+            t.resolve(engine_book, key)
+                .or_else(|| t.resolve(engine_book, name))
+                .or_else(|| coordinate.and_then(|c| t.resolve_by_coordinate(c)))
+        })
+        .is_some();
     if !held {
         return Verdict {
             status: "engine-does-not-hold",
@@ -9816,6 +9831,7 @@ fn classify(
             wc_class,
             universal_sheet_modifier,
             engine_book_field.clone(),
+            None,
         ),
         // SD-32 `decisions.md §17`: the five kinds landed through
         // `SIMPLE_FILENAME_KINDS` (see `file_kind`'s doc comment). `template`
@@ -9835,6 +9851,7 @@ fn classify(
             wc_class,
             universal_sheet_modifier,
             engine_book_field.clone(),
+            None,
         ),
         Kind::Deity => simple_kind_verdict(
             facts.simple_kind_tables.get("deity"),
@@ -9848,24 +9865,39 @@ fn classify(
             wc_class,
             universal_sheet_modifier,
             engine_book_field.clone(),
+            None,
         ),
         // `power` (421 units, all `ultimate_psionics`) is Epic 5's, costed
         // from the eight tables' measured build rate -- not built here
         // (`epic-breakdown.md` Epic 2).
         Kind::Power => engine_does_not_hold("power_content_has_no_engine_table"),
-        Kind::Domain => simple_kind_verdict(
-            facts.simple_kind_tables.get("domain"),
-            "domain_content",
-            "domain",
-            &engine_book,
-            &unit.key,
-            &unit.name,
-            text_only,
-            has_real_description,
-            wc_class,
-            universal_sheet_modifier,
-            engine_book_field.clone(),
-        ),
+        Kind::Domain => {
+            // `AT-34-E3-001`'s `domain` mechanism (`decisions.md §14`): a
+            // domain whose own name embeds a deity (e.g. `Death
+            // (Pharasma)`) is PI-masked at ingestion, so its corpus
+            // record's `key`/`name` never match `unit.key`/`unit.name`
+            // (the real, un-masked LST name) even when the record exists.
+            // The coordinate the record's OWN JSON stores under
+            // `rename.coordinate` is `"{book}:{source_file}:{source_line}"`
+            // -- built here from the unit's own provenance, never from the
+            // redacted real name, and only consulted as a fallback after
+            // the ordinary key/name resolve has already failed.
+            let coordinate = format!("{engine_book}:{}:{}", unit.provenance.file, unit.provenance.line);
+            simple_kind_verdict(
+                facts.simple_kind_tables.get("domain"),
+                "domain_content",
+                "domain",
+                &engine_book,
+                &unit.key,
+                &unit.name,
+                text_only,
+                has_real_description,
+                wc_class,
+                universal_sheet_modifier,
+                engine_book_field.clone(),
+                Some(&coordinate),
+            )
+        }
         Kind::Language => simple_kind_verdict(
             facts.simple_kind_tables.get("language"),
             "language_content",
@@ -9878,6 +9910,7 @@ fn classify(
             wc_class,
             universal_sheet_modifier,
             engine_book_field.clone(),
+            None,
         ),
         Kind::Ability => simple_kind_verdict(
             facts.simple_kind_tables.get("ability"),
@@ -9891,6 +9924,7 @@ fn classify(
             wc_class,
             universal_sheet_modifier,
             engine_book_field.clone(),
+            None,
         ),
         // `trait`'s corpus records live under `trait_generic/`, not
         // `trait/` -- `simple_kind_tables::kind_dir_for` resolves that; the
@@ -9908,6 +9942,7 @@ fn classify(
             wc_class,
             universal_sheet_modifier,
             engine_book_field.clone(),
+            None,
         ),
     }
 }
@@ -15286,6 +15321,63 @@ mod companion_text_complete_rung_tests {
         assert_eq!(
             verdict.evidence,
             "trait_content_table_resolve_returned_a_real_record_with_description"
+        );
+    }
+
+    /// `AT-34-E3-001`'s `domain` mechanism (1 of 1,006 remaining
+    /// `core_rulebook` bucket-B units, `decisions.md §14`): `Death
+    /// (Pharasma)` at `cr_domains.lst:46` HAS a real corpus record --
+    /// `data/corpus/core_rulebook/domain/
+    /// codex_named_unit_domain_core_rulebook_cr_domains_lst_46.json` --
+    /// but its `key`/`name` are PI-masked to `Codex-Named Unit (...)`
+    /// because the domain's own name embeds the deity `Pharasma`, so a
+    /// plain key/name `resolve` never finds it even though the record
+    /// physically exists. `classify` must fall back to the record's own
+    /// stored coordinate (`decisions.md §14`'s PI-safe match: book +
+    /// source_file + source_line, never the redacted real name) and land
+    /// this unit OUT of bucket B -- `ingested-magnitude` (bucket M), since
+    /// the unit carries a real magnitude token and this table is a lookup,
+    /// not a compute path (`decisions.md §2a`).
+    #[test]
+    fn a_pi_renamed_domain_record_resolves_by_coordinate_and_leaves_bucket_b() {
+        let facts = facts_with_simple_kind_table("domain");
+        let unit = simple_kind_test_unit(
+            Kind::Domain,
+            "core_rulebook",
+            "cr_domains.lst",
+            46,
+            "Death (Pharasma)",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_ne!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(
+            verdict.evidence,
+            "domain_content_table_holds_record_magnitude_not_yet_computed"
+        );
+        assert!(!verdict.evidence.contains("absent_from_domain_table"));
+    }
+
+    /// MONOTONICITY sibling: a genuinely absent coordinate (no corpus
+    /// record at all) must still refuse cleanly as bucket B, never panic
+    /// and never fabricate a hit.
+    #[test]
+    fn a_domain_record_absent_from_the_table_and_with_no_matching_coordinate_stays_bucket_b() {
+        let facts = facts_with_simple_kind_table("domain");
+        let unit = simple_kind_test_unit(
+            Kind::Domain,
+            "core_rulebook",
+            "cr_domains.lst",
+            999999,
+            "___a_domain_key_no_corpus_record_carries___",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "domain_content_absent_from_domain_table_in_core_rulebook"
         );
     }
 
