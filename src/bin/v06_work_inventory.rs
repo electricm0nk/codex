@@ -57,7 +57,8 @@ use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
-    compute_pilot_base_chassis, race_ids_with_a_magnitude_consumer,
+    compute_pilot_base_chassis, fighter_weapon_training_canonical_catalog,
+    race_ids_with_a_magnitude_consumer,
 };
 use codex::rules_core::pilot_compute::untabled_base_class_chassis;
 use codex::rules_core::pilot_compute::crb_untabled_class_chassis;
@@ -5174,6 +5175,14 @@ struct EngineFacts {
     /// selects each catalog domain in turn specifically so a genuinely-wired
     /// domain is never conflated with one the catalog merely lists.
     domain_power_effect_wired: BTreeSet<String>,
+    /// `AT-34-E3-001` (mechanism 3 continuation): `(tier, corpus group-name
+    /// suffix)` pairs whose own `"class_feature.fighter.weapon_training..."`
+    /// explanation id was genuinely observed via
+    /// [`probe_fighter_weapon_training_wiring`]. Same discipline as
+    /// `domain_power_effect_wired` above: `canonical_seeds_for("fighter")`
+    /// never seeds any weapon-training-group choice at all, so the standard
+    /// sweep below never observes any of these on its own.
+    fighter_weapon_training_wired: BTreeSet<(u8, String)>,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -7073,6 +7082,62 @@ fn probe_domain_power_effect_wiring(fixture: &CharacterInput) -> BTreeSet<String
     wired
 }
 
+/// `AT-34-E3-001` (`decisions.md §14`, mechanism 3 continuation): the same
+/// live-computation discipline `probe_domain_power_effect_wiring` uses,
+/// applied to `"Weapon Training <tier> <group>"` corpus records. Two facts
+/// established by DIRECT READING before this probe was written (never
+/// assumed): `fighter_weapon_training_attack_bonus` (`pilot_compute/mod.rs`)
+/// hardcodes exactly ONE canonical group per tier -- every other one of the
+/// corpus's 13 weapon groups returns 0 and emits no explanation, by design
+/// -- and `canonical_seeds_for("fighter")` never seeds ANY
+/// `choice:fighter_weapon_training_group*` selection at all, so the
+/// standard per-class sweep that fills `EngineFacts::explanation_ids` never
+/// observes even tier 1's own canonical selection. This probe selects each
+/// of `fighter_weapon_training_canonical_catalog`'s own 4 hardcoded
+/// (tier, group, choice id, selection) tuples explicitly, over the SAME
+/// real `compute_pilot_base_chassis` pipeline every other probe in this
+/// file uses, and keeps only the `(tier, group)` pairs whose own
+/// explanation id was genuinely observed -- so a genuinely-wired tier/group
+/// pair can never be conflated with one of the other 48 (13 groups * 4
+/// tiers - 4) this engine simply never computes.
+fn probe_fighter_weapon_training_wiring(fixture: &CharacterInput) -> BTreeSet<(u8, String)> {
+    let mut wired = BTreeSet::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    let catalog = fighter_weapon_training_canonical_catalog();
+    let all_choice_ids: BTreeSet<&str> = catalog.iter().map(|(_, _, id, _, _)| *id).collect();
+    for (tier, group_suffix, _choice_id, _selection, explanation_id) in catalog {
+        'levels: for &level in SWEEP_LEVELS {
+            let mut input = class_sweep_input(fixture, "fighter", level);
+            // Selecting all 4 canonical (tier, group) pairs at once is safe: each
+            // tier's own `choice_selection` lookup is independent, and this
+            // mirrors a real character who trained all 4 canonical groups as
+            // they became available -- never an artificial combination the real
+            // pipeline could not otherwise reach.
+            input
+                .chosen
+                .selected_choices
+                .retain(|c| !all_choice_ids.contains(c.choice_set_id.as_str()));
+            for (_, _, other_choice_id, other_selection, _) in catalog {
+                input.chosen.selected_choices.push(SelectedChoice {
+                    choice_set_id: other_choice_id.to_string(),
+                    selection_id: other_selection.to_string(),
+                });
+            }
+            let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                compute_pilot_base_chassis(&input)
+            }));
+            let Ok(computation) = outcome else { continue };
+            if computation.explanations.iter().any(|e| e.id == explanation_id) {
+                wired.insert((tier, group_suffix.to_string()));
+                break 'levels;
+            }
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
 /// The probe's ceiling, printed by `--class-probe`: which modelled classes it
 /// legitimately reaches and, for every one it does not, the reason it refused.
 /// Grounding no unit, moving no number -- the instrument reporting on itself.
@@ -7456,6 +7521,7 @@ fn gather_engine_facts(
         feat_effect_wired: probe_feat_effect_wiring(fixture),
         equipment_effect_wired: probe_equipment_effect_wiring(repo_root),
         domain_power_effect_wired: probe_domain_power_effect_wiring(fixture),
+        fighter_weapon_training_wired: probe_fighter_weapon_training_wiring(fixture),
         spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
             fixture, repo_root,
         )),
@@ -9617,6 +9683,39 @@ fn classify(
                         reason: None,
                         engine_book: engine_book_field,
                     };
+                }
+            }
+            // `AT-34-E3-001` (mechanism 3 continuation): `"Weapon Training
+            // <tier> <group>"` sub-cause, same shape as the Domain Power
+            // check above -- this corpus key carries no class name at all
+            // (`group` here is the WHOLE key, since it has no `" ~ "`
+            // separator to split on), so `class_feature_owner` and its two
+            // fallbacks below can never resolve an owner, and even if a
+            // future widening resolved one, `class_feature_exact_suffix_
+            // grounded`'s own `group == owner` guard would still refuse
+            // ("weapon training 1 blades heavy" can never equal "fighter").
+            // `probe_fighter_weapon_training_wiring` is the real, separate
+            // attribution path -- see its own doc comment for why it can
+            // only ever credit the engine's 4 hardcoded canonical
+            // (tier, group) pairs, never the other 48 of this book's 52
+            // weapon-training records.
+            if let Some(rest) = unit.key.strip_prefix("Weapon Training ") {
+                if let Some((tier_str, group_suffix)) = rest.split_once(' ') {
+                    if let Ok(tier) = tier_str.parse::<u8>() {
+                        if facts
+                            .fighter_weapon_training_wired
+                            .contains(&(tier, group_suffix.to_string()))
+                        {
+                            return Verdict {
+                                status: "grounded",
+                                evidence:
+                                    "fighter_weapon_training_probe_observed_a_real_computed_magnitude"
+                                        .to_string(),
+                                reason: None,
+                                engine_book: engine_book_field,
+                            };
+                        }
+                    }
                 }
             }
             // `SD31-W17-CLASSFEATURE-001`: the corpus_key group prefix is
@@ -16437,6 +16536,60 @@ mod class_feature_text_complete_rung_tests {
         let facts = EngineFacts::default();
         let unit =
             class_feature_unit("core_rulebook", "cr_abilities_class.lst", 700, "Domain Power ~ Acid Dart", 2);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_option_pool_record_with_magnitude_not_held_by_engine"
+        );
+    }
+
+    /// `AT-34-E3-001` `class_feature_option_pool_record_with_magnitude_not_
+    /// held_by_engine` mechanism, Weapon Training sub-cause, proof case:
+    /// `probe_fighter_weapon_training_wiring` observed a real explanation
+    /// id for this exact `(tier, group)` pair (a live Fighter genuinely
+    /// computes tier-1 Weapon Training for the canonical Heavy Blades
+    /// group), so the record is `grounded` -- never routed to the generic
+    /// `class_feature_option_pool_record_with_magnitude_not_held_by_engine`
+    /// bucket-B evidence its 51 sibling `"Weapon Training <tier> <group>"`
+    /// records still get.
+    #[test]
+    fn a_fighter_weapon_training_record_the_probe_observed_reaches_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.fighter_weapon_training_wired.insert((1, "Blades Heavy".to_string()));
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1020,
+            "Weapon Training 1 Blades Heavy",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "fighter_weapon_training_probe_observed_a_real_computed_magnitude"
+        );
+    }
+
+    /// NEGATIVE CONTROL: a magnitude-bearing `"Weapon Training <tier>
+    /// <group>"` record whose group is NOT one of the engine's 4 hardcoded
+    /// canonical (tier, group) pairs (`fighter_weapon_training_attack_
+    /// bonus`'s own doc: only Heavy Blades/Bows/Polearms/Hammers, at their
+    /// own specific tier, are ever computed) is completely unaffected by
+    /// this cycle's fix -- the probe never observes a delta for it, so it
+    /// still falls through to the pre-existing `engine-does-not-hold`
+    /// finding, unchanged.
+    #[test]
+    fn a_fighter_weapon_training_record_the_probe_never_observed_is_unaffected() {
+        let facts = EngineFacts::default();
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1020,
+            "Weapon Training 1 Axes",
+            1,
+        );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_eq!(verdict.status, "engine-does-not-hold");
         assert_eq!(

@@ -8041,6 +8041,55 @@ const POLEARMS_GROUP_SELECTION: &str = "group:polearms";
 const FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID: &str = "choice:fighter_weapon_training_group_4";
 const HAMMERS_GROUP_SELECTION: &str = "group:hammers";
 
+/// `AT-34-E3-001` (`decisions.md §14`, mechanism 3: `class_feature_option_pool_
+/// record_with_magnitude_not_held_by_engine`): read-only bridge exposing
+/// `fighter_weapon_training_attack_bonus`'s own 4 hardcoded canonical
+/// (tier, group) pairs to `v06_work_inventory`'s live-computation probe,
+/// mirroring `domain_power::domain_power_probe_catalog`'s own shape. No
+/// behavior change to the weapon-training computation itself -- every
+/// tuple's own choice id and selection literal is the SAME constant the
+/// real computation already reads above, never a re-typed copy.
+///
+/// Each tuple is `(tier, corpus group-name suffix, choice id, canonical
+/// selection, explanation id)`. The corpus group-name suffix is the exact
+/// text following `"Weapon Training <tier> "` in this book's own corpus
+/// key (`"Weapon Training 1 Blades Heavy"`, `"Weapon Training 2 Bows"`,
+/// `"Weapon Training 3 Pole Arms"`, `"Weapon Training 4 Hammers"` --
+/// confirmed live against `docs/work-inventory.json`), never a guess.
+pub fn fighter_weapon_training_canonical_catalog()
+-> [(u8, &'static str, &'static str, &'static str, &'static str); 4] {
+    [
+        (
+            1,
+            "Blades Heavy",
+            FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID,
+            HEAVY_BLADES_GROUP_SELECTION,
+            "class_feature.fighter.weapon_training",
+        ),
+        (
+            2,
+            "Bows",
+            FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID,
+            BOWS_GROUP_SELECTION,
+            "class_feature.fighter.weapon_training_group_2",
+        ),
+        (
+            3,
+            "Pole Arms",
+            FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID,
+            POLEARMS_GROUP_SELECTION,
+            "class_feature.fighter.weapon_training_group_3",
+        ),
+        (
+            4,
+            "Hammers",
+            FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID,
+            HAMMERS_GROUP_SELECTION,
+            "class_feature.fighter.weapon_training_group_4",
+        ),
+    ]
+}
+
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
 // armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
 // bonus by 1. Grounded from cr_abilities_class.lst Fighter armor training; not

@@ -101,6 +101,36 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism, cycle 2) — one of nine, `decisions.md §14` — partial
+
+Continues the prior cycle's own mechanism (328 -> 324 of 1,006 `core_rulebook` bucket-B units,
+re-derived fresh, not quoted). Investigated the `Domain Base` sub-cause (33 units) the prior
+cycle flagged: the domain save-DC formula is genuinely computable (generic across all 33
+domains, zero new per-domain content needed) but genuinely never CONSUMED anywhere in the real
+`compute_pilot_base_chassis` pipeline — no enemy-facing domain power is modelled yet, and the
+DC only matters to a save-requiring power — so a probe would have shipped an unobserved claim;
+left named as next-cycle work rather than force-closed. Closed the `Weapon Training <tier>
+<group>` sub-cause's 4 canonical records instead: `fighter_weapon_training_attack_bonus`
+(`pilot_compute/mod.rs`) hardcodes exactly one canonical weapon group per training tier, and
+`canonical_seeds_for("fighter")` never seeds any weapon-training-group choice at all, so the
+standard per-class sweep never observed even tier 1's own canonical selection. New
+`probe_fighter_weapon_training_wiring` (`v06_work_inventory.rs`), mirroring
+`probe_domain_power_effect_wiring`'s own shape, selects the engine's own 4 hardcoded canonical
+`(tier, group)` pairs over the real compute pipeline and grounds only what it genuinely
+observes; a new read-only `pilot_compute::fighter_weapon_training_canonical_catalog()` bridge
+exposes those 4 pairs without duplicating or changing any existing constant. `Weapon Training
+{1 Blades Heavy, 2 Bows, 3 Pole Arms, 4 Hammers}` -> `DONE`; the other 48 of 52 weapon-training
+records need real new per-group arithmetic (a generic computation, not an attribution fix) and
+stay named, not closed. `core_rulebook` bucket B (all 9 mechanisms) 754 -> 750 of 6,701.
+`completion_atlas.py`/`missing_engine_tables.py` citation drift (10 hardcoded `file:line`s
+across both files, this cycle's own ~90-line net insertion) re-derived and fixed;
+`citation_failures=0` on both `--check` gates after. No wrong prior claim found (no `correction`
+retro event). `apps/desktop/src-tauri`: 522 passed, 26 failed — confirmed pre-existing,
+unaffected (identical count to the prior cycle's own independent confirmation). AT-34-E3-001
+does not close this cycle — the mechanism itself does not close this cycle either; 8 remaining
+sub-causes named with populations summing exactly to 324. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_with_magnitude_cycle_receipt_2.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 3) — one of nine, `decisions.md §14` — partial
 
 **Status: partial — this mechanism 55 → 52 of 1,006** (`core_rulebook`; 3 closed this cycle).
