@@ -6,7 +6,7 @@ smallest of the nine (1 of 1,006 remaining `core_rulebook` bucket-B units at cyc
 It does **not** close AT-34-E3-001 itself — eight other mechanisms remain, each its own
 cycle (`decisions.md §14`'s table).
 
-- **Commit SHA:** (set after commit — see `git log -1 --format=%H`)
+- **Commit SHA:** `6eab21d761`
 - **Files touched:**
   - `src/rules_core/rules_tables/simple_kind_tables.rs` — `SimpleKindTable::
     resolve_by_coordinate`, a new `by_coordinate` index built from each
