@@ -1,0 +1,221 @@
+{
+  "kinds": {
+    "ability": {
+      "by_book": {
+        "advanced_class_guide": 109,
+        "advanced_players_guide": 123,
+        "advanced_race_guide": 352,
+        "adventurers_guide": 137,
+        "bestiary": 30,
+        "bestiary_2": 28,
+        "bestiary_3": 5,
+        "bestiary_4": 9,
+        "bestiary_5": 2,
+        "bestiary_6": 1,
+        "book_of_the_damned_volume_2": 2,
+        "core_rulebook": 471,
+        "horror_adventures": 551,
+        "inner_sea_combat": 4,
+        "inner_sea_faiths": 187,
+        "inner_sea_gods": 387,
+        "inner_sea_magic": 147,
+        "inner_sea_races": 8,
+        "inner_sea_world_guide": 67,
+        "monster_codex": 2,
+        "mythic_adventures": 416,
+        "pathfinder_unchained": 365,
+        "ultimate_campaign": 88,
+        "ultimate_combat": 7,
+        "ultimate_equipment": 46,
+        "ultimate_magic": 511,
+        "ultimate_psionics": 281,
+        "ultimate_wilderness": 1
+      },
+      "count": 4337,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9690,
+        "must_contain": "ability_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": [
+        "inner_sea_faiths"
+      ]
+    },
+    "companion": {
+      "by_book": {
+        "bestiary": 28,
+        "core_rulebook": 14,
+        "ultimate_magic": 1
+      },
+      "count": 43,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9658,
+        "must_contain": "companion_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": []
+    },
+    "deity": {
+      "by_book": {
+        "bestiary_6": 22,
+        "book_of_the_damned_volume_2": 48,
+        "core_rulebook": 21,
+        "inner_sea_gods": 296,
+        "inner_sea_world_guide": 63,
+        "ultimate_wilderness": 9
+      },
+      "count": 459,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9686,
+        "must_contain": "deity_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": []
+    },
+    "domain": {
+      "by_book": {
+        "advanced_class_guide": 10,
+        "advanced_players_guide": 71,
+        "bestiary_4": 3,
+        "bestiary_6": 11,
+        "core_rulebook": 34,
+        "horror_adventures": 4,
+        "inner_sea_gods": 21,
+        "inner_sea_world_guide": 6,
+        "ultimate_magic": 13,
+        "ultimate_psionics": 4,
+        "ultimate_wilderness": 6
+      },
+      "count": 183,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9688,
+        "must_contain": "domain_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": []
+    },
+    "language": {
+      "by_book": {
+        "advanced_race_guide": 2,
+        "bestiary": 14,
+        "bestiary_2": 6,
+        "bestiary_3": 24,
+        "bestiary_4": 26,
+        "bestiary_5": 3,
+        "bestiary_6": 1,
+        "core_rulebook": 22,
+        "horror_adventures": 2,
+        "inner_sea_races": 4,
+        "inner_sea_temples": 1,
+        "inner_sea_world_guide": 18,
+        "monster_codex": 2,
+        "occult_adventures": 1,
+        "ultimate_psionics": 5,
+        "ultimate_wilderness": 5
+      },
+      "count": 136,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9689,
+        "must_contain": "language_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": [
+        "inner_sea_temples"
+      ]
+    },
+    "power": {
+      "by_book": {
+        "ultimate_psionics": 421
+      },
+      "count": 421,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9687,
+        "must_contain": "power_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": []
+    },
+    "skill": {
+      "by_book": {
+        "bestiary_2": 1,
+        "bestiary_4": 1,
+        "core_rulebook": 110,
+        "inner_sea_bestiary": 4,
+        "inner_sea_magic": 1,
+        "pathfinder_unchained": 24,
+        "ultimate_combat": 2,
+        "ultimate_equipment": 1,
+        "ultimate_psionics": 5
+      },
+      "count": 149,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9674,
+        "must_contain": "skill_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": []
+    },
+    "template": {
+      "by_book": {
+        "advanced_class_guide": 22,
+        "advanced_players_guide": 38,
+        "advanced_race_guide": 50,
+        "adventurers_guide": 10,
+        "bestiary": 1050,
+        "bestiary_2": 149,
+        "bestiary_3": 63,
+        "bestiary_4": 183,
+        "bestiary_5": 23,
+        "bestiary_6": 9,
+        "book_of_the_damned_volume_2": 52,
+        "core_rulebook": 262,
+        "horror_adventures": 28,
+        "inner_sea_bestiary": 4,
+        "inner_sea_combat": 1,
+        "inner_sea_gods": 3,
+        "inner_sea_intrigue": 6,
+        "inner_sea_magic": 3,
+        "inner_sea_races": 9,
+        "inner_sea_world_guide": 84,
+        "mythic_adventures": 15,
+        "occult_adventures": 4,
+        "pathfinder_unchained": 12,
+        "ultimate_combat": 7,
+        "ultimate_equipment": 4,
+        "ultimate_intrigue": 4,
+        "ultimate_magic": 23,
+        "ultimate_psionics": 104,
+        "ultimate_wilderness": 26
+      },
+      "count": 2248,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9685,
+        "must_contain": "template_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": [
+        "inner_sea_intrigue",
+        "ultimate_intrigue"
+      ]
+    },
+    "trait": {
+      "by_book": {
+        "advanced_players_guide": 90,
+        "inner_sea_gods": 115,
+        "inner_sea_races": 96,
+        "ultimate_campaign": 154,
+        "ultimate_psionics": 32
+      },
+      "count": 487,
+      "engine_surface": {
+        "file": "src/bin/v06_work_inventory.rs",
+        "line": 9691,
+        "must_contain": "trait_content_has_no_engine_table"
+      },
+      "zero_bucket_a_books": []
+    }
+  },
+  "population": 8463,
+  "re_derive_command": "python3 scripts/missing_engine_tables.py --check",
+  "source": "docs/work-inventory.json (status == not-ingested, evidence contains 'has_no_engine_table')"
+}
