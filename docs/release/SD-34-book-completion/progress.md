@@ -101,6 +101,34 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 3) — one of nine, `decisions.md §14` — partial
+
+Built the fix cycle 2 declined: Shape 8, cross-book ownership. `companion_chassis`'s
+`CompanionAbilityRecord` gained a `cross_book_owners: &[(&str, &str)]` field, and the
+transcriber's Shape 8 pass (an exact closed key set, mirroring Shape 7's `BOOK_WIDE_GRANTS`)
+attributes the 14 `ce_abilities_familiar_cr.lst` rows to all 11 `beastiary` familiar creatures
+(Bat, Cat, Hawk, Lizard, Monkey, Owl, Rat, Raven, Toad, Viper, Weasel) — real, already-registered
+creatures under a DIFFERENT book, because Core Rulebook states the Familiar ability rules while
+Bestiary states the familiar stat blocks, a real split the source material itself makes. Both
+ownership-invariant tests widened to require a cross-book grant to resolve in a genuinely
+DIFFERENT registered book (never the ability's own — no same-book escape hatch). Verified against
+ALL 16 currently-registered companion books, not just `core_rulebook`: every one regenerated this
+cycle, and 15 of the 16 diffs to nothing but the new field's `&[]` insertion line.
+
+Mechanism: 28 → 14 (12 zero-content + 2 class rows remain, both re-confirmed rather than
+inherited). The 12 zero-content plumbing rows are a genuine THIRD no-content shape distinct from
+atlas defects 1 and 2 — recorded as atlas defect 3 (461 of 51,482 corpus-wide, `KEY`/`CATEGORY`/
+`ABILITY:`-only rows with no `TYPE:`/`DESC:`/`BONUS:`) rather than silently left as a bare
+bucket-B count, per this cycle's mandate — but NOT reclassified, since a shape-only
+reclassification here risks the same 188-record near-miss defect 1's own cycle already caught.
+`docs/work-inventory.json` regenerated; the ONLY 14 units it moved are this mechanism's own
+familiar-pool rows (11 `text-complete`, 2 `grounded`, 1 `literal-verified`). Corpus-wide bucket B
+12,202 → 12,188. `cargo test --lib` 2,878/2,878; `cargo test --bin v06_work_inventory` 387/387;
+`cargo test --locked --no-run` exits 0 for the workspace AND `apps/desktop/src-tauri` (separate
+cargo workspace, run explicitly). AT-34-E3-001 itself stays open — the other eight mechanisms
+remain other cycles' scope. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_companion_absent_cycle_receipt_3.md`.
+
 ### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism, cycle 2) — one of nine, `decisions.md §14` — partial
 
 Re-derived this mechanism's population fresh at HEAD (`251ad7929a`): **346 of 346** still

@@ -284,11 +284,26 @@ pub struct CompanionAbilityRecord {
     /// scores — see [`StatAdjustment`].
     pub stat_adjustments: &'static [StatAdjustment],
     pub source_page: Option<&'static str>,
-    /// Every creature in this book whose row, `PRERACE:` gate or namespaced key
-    /// claims this ability. Non-empty for every registered book's every row —
-    /// a row no creature owns is dropped by the transcriber and carried as an
-    /// `OPEN_FINDINGS` entry instead (`decisions.md §50`, §56.1).
+    /// Every creature IN THIS BOOK whose row, `PRERACE:` gate or namespaced
+    /// key claims this ability. A row owned only cross-book (see
+    /// [`cross_book_owners`](Self::cross_book_owners)) carries this empty —
+    /// see that field's own doc for when that is legitimate rather than an
+    /// orphan.
     pub owners: &'static [&'static str],
+    /// Shape 8, cross-book ownership (`AT-34-E3-001`, `decisions.md §67`):
+    /// every `(owner_book, creature_key)` pair naming a creature that owns
+    /// this ability but is registered under a DIFFERENT book than this
+    /// ability's own. Real for a genuine split the source books themselves
+    /// state — Core Rulebook states the Familiar special-ability rules
+    /// (Magic chapter) while Bestiary states the familiar creature stat
+    /// blocks (Bat, Cat, ...) — never a same-book laziness shortcut: the
+    /// invariant test below refuses an entry whose `owner_book` equals this
+    /// ability's own book. Empty for every ordinary same-book-owned or
+    /// dropped row, which is every row registered before this field existed.
+    /// A row with BOTH `owners` and `cross_book_owners` non-empty is legal
+    /// (multiple ownership shapes may name the same ability) but does not
+    /// occur among currently-registered books.
+    pub cross_book_owners: &'static [(&'static str, &'static str)],
     /// The abilities-`.lst` basename this record was read from. Carried per row
     /// because [`source_line`](Self::source_line) is only meaningful together
     /// with its file: Bestiary 3 is the first book whose ability rows come from
@@ -685,9 +700,9 @@ mod tests {
             }
             for ability in book.companion_abilities {
                 assert!(
-                    !ability.owners.is_empty(),
-                    "{}: {} ({}) is owned by no creature row and would load without ever \
-                     being shown",
+                    !ability.owners.is_empty() || !ability.cross_book_owners.is_empty(),
+                    "{}: {} ({}) is owned by no creature row (same-book or cross-book) and \
+                     would load without ever being shown",
                     book.corpus_book,
                     ability.name,
                     ability.key
@@ -699,6 +714,36 @@ mod tests {
                     assert!(
                         companion.ability_keys.contains(&ability.key),
                         "{}: {} claims owner {owner:?}, which does not name it back",
+                        book.corpus_book,
+                        ability.key
+                    );
+                }
+                // Shape 8: a cross-book owner must resolve in a DIFFERENT,
+                // currently-registered book — never this ability's own book
+                // (that would be same-book laziness riding the escape hatch
+                // this invariant exists to prevent) and never a fabricated
+                // book id or creature key.
+                for (owner_book, owner_key) in ability.cross_book_owners {
+                    assert_ne!(
+                        *owner_book,
+                        book.corpus_book,
+                        "{}: {} names a cross-book owner in its OWN book — this belongs in \
+                         `owners`, not `cross_book_owners`",
+                        book.corpus_book,
+                        ability.key
+                    );
+                    let owner_book_entry = companion_book(owner_book).unwrap_or_else(|| {
+                        panic!(
+                            "{}: {} names cross-book owner_book {owner_book:?}, which is not \
+                             a registered companion book",
+                            book.corpus_book,
+                            ability.key
+                        )
+                    });
+                    assert!(
+                        owner_book_entry.companion_resolve(owner_key).is_some(),
+                        "{}: {} names cross-book owner {owner_key:?} in {owner_book:?}, which \
+                         does not register that creature",
                         book.corpus_book,
                         ability.key
                     );
@@ -1190,8 +1235,9 @@ mod tests {
             let creature_keys: Vec<&str> = book.companions.iter().map(|c| c.key).collect();
             for ability in book.companion_abilities {
                 assert!(
-                    !ability.owners.is_empty(),
-                    "{}: {} ships with no owner — it would load and never be shown",
+                    !ability.owners.is_empty() || !ability.cross_book_owners.is_empty(),
+                    "{}: {} ships with no owner (same-book or cross-book) — it would load \
+                     and never be shown",
                     book.corpus_book,
                     ability.key
                 );
@@ -1405,7 +1451,7 @@ mod tests {
     /// directions_for_every_book` enforces corpus-wide above — rather than
     /// a narrower same-book fix this cycle could safely take instead.
     #[test]
-    fn companion_absent_28_sub_causes_are_named_and_sum_exactly() {
+    fn companion_absent_14_sub_causes_are_named_and_sum_exactly() {
         let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
         let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
             .expect("docs/work-inventory.json is readable");
@@ -1422,7 +1468,12 @@ mod tests {
             })
             .map(|u| u["corpus_key"].as_str().unwrap_or_default().to_string())
             .collect();
-        assert_eq!(mechanism_keys.len(), 28, "mechanism population drifted from 28");
+        assert_eq!(
+            mechanism_keys.len(),
+            14,
+            "mechanism population drifted from 14 (this cycle closed the 14 familiar-pool \
+             rows via Shape 8 cross-book ownership; 12 zero-content + 2 class rows remain)"
+        );
 
         const ZERO_CONTENT: [&str; 12] = [
             "Base Companion ~ Animal Companion",
@@ -1439,27 +1490,6 @@ mod tests {
             "Companion ~ Spell Resistance (SM)",
         ];
         const CLASS_ROWS: [&str; 2] = ["Companion", "Shadow Companion"];
-        const FAMILIAR_POOL: [&str; 14] = [
-            "Familiar Alertness Choice ~ Alertness Active",
-            "Familiar Alertness Choice ~ Alertness Inactive",
-            "Familiar ~ Alertness",
-            "Familiar ~ Deliver Touch Spells",
-            "Familiar ~ Empathic Link",
-            "Familiar ~ Improved Evasion",
-            "Familiar ~ Intelligence Score",
-            "Familiar ~ Natural Armor Bonus",
-            "Familiar ~ Scry on Familiar",
-            "Familiar ~ Share Spells",
-            "Familiar ~ Speak One Language",
-            "Familiar ~ Speak with Animals of Its Kind",
-            "Familiar ~ Speak with Master",
-            "Familiar ~ Spell Resistance",
-        ];
-        // The 11 familiar creatures PF1's own Familiars table (CRB p.52-55)
-        // shares this ability pool across -- already registered, just under
-        // a different book, which is this test's cross-book proof below.
-        const FAMILIAR_CREATURES: [&str; 11] =
-            ["bat", "cat", "hawk", "lizard", "monkey", "owl", "rat", "raven", "toad", "viper", "weasel"];
 
         let companion_dir = repo_root.join("data/corpus/core_rulebook/companion");
         let mut companion_docs: Vec<Value> = Vec::new();
@@ -1503,48 +1533,86 @@ mod tests {
                     "{key}: expected a `cr_classes_companion.lst` CLASS row, found {path:?}"
                 );
                 *reasons.entry("monster_class_definition_not_a_creature_or_ability").or_default() += 1;
-            } else if FAMILIAR_POOL.contains(&key.as_str()) {
-                let owners_empty =
-                    data["owners"].as_array().map(|a| a.is_empty()).unwrap_or(true);
-                assert!(owners_empty, "{key}: expected genuinely unowned in this book");
-                *reasons
-                    .entry("familiar_ability_pool_true_owner_registered_under_a_different_book")
-                    .or_default() += 1;
             } else {
-                panic!("{key}: not accounted for by any named sub-cause -- 28 must equal 12+2+14");
+                panic!("{key}: not accounted for by any named sub-cause -- 14 must equal 12+2");
             }
-        }
-
-        // The cross-book proof: every one of the 11 familiar creatures this
-        // ability pool describes already ships, under `beastiary`, not
-        // `core_rulebook` -- so the 14 orphans are a real cross-book fact,
-        // never a "no such creature exists" gap a same-book fix could close.
-        let beastiary_dir = repo_root.join("data/corpus/beastiary/companion");
-        for name in FAMILIAR_CREATURES {
-            let path = beastiary_dir.join(format!("{name}.json"));
-            assert!(
-                path.exists(),
-                "beastiary:companion:{name} should already be a registered creature \
-                 (proves the familiar-pool orphans are cross-book, not creature-absent)"
-            );
         }
 
         for (reason, count) in &reasons {
             eprintln!("AT-34-E3-001 companion_absent sub-cause: {count} | {reason}");
         }
         let total: u32 = reasons.values().sum();
-        assert_eq!(total, 28);
+        assert_eq!(total, 14);
         assert_eq!(reasons.get("zero_content_internal_plumbing").copied().unwrap_or(0), 12);
         assert_eq!(
             reasons.get("monster_class_definition_not_a_creature_or_ability").copied().unwrap_or(0),
             2
         );
-        assert_eq!(
-            reasons
-                .get("familiar_ability_pool_true_owner_registered_under_a_different_book")
-                .copied()
-                .unwrap_or(0),
-            14
-        );
+    }
+
+    /// This cycle's own build: the 14 familiar-pool rows two prior cycles
+    /// named but declined to close (`AT-34-E3-001_companion_absent_cycle_
+    /// receipt.md`, `_2.md`) are now SHIPPED under `core_rulebook`, owned
+    /// via Shape 8 cross-book ownership rather than a fabricated same-book
+    /// link -- each resolves to one of the 11 familiar creatures PF1's own
+    /// Familiars table (CRB p.52-55) shares this ability pool across, all
+    /// already registered under `beastiary`.
+    #[test]
+    fn familiar_ability_pool_closed_via_shape_8_cross_book_ownership() {
+        const FAMILIAR_POOL: [&str; 14] = [
+            "Familiar Alertness Choice ~ Alertness Active",
+            "Familiar Alertness Choice ~ Alertness Inactive",
+            "Familiar ~ Alertness",
+            "Familiar ~ Deliver Touch Spells",
+            "Familiar ~ Empathic Link",
+            "Familiar ~ Improved Evasion",
+            "Familiar ~ Intelligence Score",
+            "Familiar ~ Natural Armor Bonus",
+            "Familiar ~ Scry on Familiar",
+            "Familiar ~ Share Spells",
+            "Familiar ~ Speak One Language",
+            "Familiar ~ Speak with Animals of Its Kind",
+            "Familiar ~ Speak with Master",
+            "Familiar ~ Spell Resistance",
+        ];
+        const FAMILIAR_CREATURES: [&str; 11] = [
+            "Bat", "Cat", "Hawk", "Lizard", "Monkey", "Owl", "Rat", "Raven", "Toad", "Viper",
+            "Weasel",
+        ];
+
+        let crb = companion_book("core_rulebook").expect("core_rulebook is registered");
+        let beastiary = companion_book("beastiary").expect("beastiary is registered");
+
+        for key in FAMILIAR_POOL {
+            let ability = crb
+                .companion_ability_resolve(key)
+                .unwrap_or_else(|| panic!("{key} should now be shipped under core_rulebook"));
+            assert!(
+                ability.owners.is_empty(),
+                "{key}: no same-book owner exists (core_rulebook registers no familiar \
+                 creature) -- ownership must be entirely cross-book"
+            );
+            let owned_creatures: Vec<&str> =
+                ability.cross_book_owners.iter().map(|(_, k)| *k).collect();
+            for creature in FAMILIAR_CREATURES {
+                assert!(
+                    owned_creatures.contains(&creature),
+                    "{key}: expected cross-book owner {creature:?}, found {owned_creatures:?}"
+                );
+                assert!(
+                    beastiary.companion_resolve(creature).is_some(),
+                    "{creature}: must actually be a registered beastiary creature"
+                );
+            }
+            assert_eq!(
+                ability.cross_book_owners.len(),
+                11,
+                "{key}: expected exactly the 11 familiar creatures, found {:?}",
+                ability.cross_book_owners
+            );
+            for (owner_book, _) in ability.cross_book_owners {
+                assert_eq!(*owner_book, "beastiary");
+            }
+        }
     }
 }

@@ -93,6 +93,13 @@ def rust_opt(value: str | None) -> str:
     return f"Some({rust_str(value)})" if value is not None else "None"
 
 
+def rust_pair_slice(pairs: list[tuple[str, str]]) -> str:
+    """Emit `&[(&str, &str)]` for Shape 8 cross-book ownership grants."""
+    if not pairs:
+        return "&[]"
+    return "&[" + ", ".join(f"({rust_str(a)}, {rust_str(b)})" for a, b in pairs) + "]"
+
+
 def rust_slice(values: list[str]) -> str:
     return "&[" + ", ".join(rust_str(v) for v in values) + "]"
 
@@ -813,6 +820,87 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
+    # Shape 8, CROSS-BOOK ownership (`AT-34-E3-001`, `decisions.md §67`). Every
+    # shape above (1-7) attributes an ability to a creature registered under
+    # THIS SAME book. Core Rulebook's `ce_abilities_familiar_cr.lst` pool is a
+    # real exception the source material itself creates: the ability rules
+    # (Magic chapter) are stated in Core Rulebook while the 11 familiar
+    # creature stat blocks are stated in Bestiary (`ce_races_familiar_cr.lst`
+    # declares `SOURCELONG:Bestiary`) -- two real halves of one PF1 mechanic,
+    # split across two real books, neither row misattributed.
+    #
+    # `CROSS_BOOK_GRANTS` is an exact, closed key set exactly like
+    # `BOOK_WIDE_GRANTS` above -- never a prefix or shape heuristic -- and each
+    # entry additionally names its owner book and the EXACT closed set of
+    # owner creature keys, so a future unrelated orphan can never silently
+    # ride this shape. Applied only to keys still unowned after shapes 1-7 (an
+    # ability already owned some other way is never re-attributed here).
+    CROSS_BOOK_GRANTS: dict[str, dict[str, tuple[str, tuple[str, ...]]]] = {
+        "core_rulebook": {
+            key: (
+                "beastiary",
+                (
+                    "Bat", "Cat", "Hawk", "Lizard", "Monkey", "Owl", "Rat", "Raven",
+                    "Toad", "Viper", "Weasel",
+                ),
+            )
+            for key in (
+                "Familiar Alertness Choice ~ Alertness Active",
+                "Familiar Alertness Choice ~ Alertness Inactive",
+                "Familiar ~ Alertness",
+                "Familiar ~ Deliver Touch Spells",
+                "Familiar ~ Empathic Link",
+                "Familiar ~ Improved Evasion",
+                "Familiar ~ Intelligence Score",
+                "Familiar ~ Natural Armor Bonus",
+                "Familiar ~ Scry on Familiar",
+                "Familiar ~ Share Spells",
+                "Familiar ~ Speak One Language",
+                "Familiar ~ Speak with Animals of Its Kind",
+                "Familiar ~ Speak with Master",
+                "Familiar ~ Spell Resistance",
+            )
+        },
+    }
+    # Keyed the same as `owners` -- every ability key, most mapping to `[]`.
+    cross_book_owners: dict[str, list[tuple[str, str]]] = {u["corpus_key"]: [] for u in abilities}
+    cross_book_applied = 0
+    for key, (owner_book, owner_creatures) in CROSS_BOOK_GRANTS.get(book, {}).items():
+        if key not in owners or owners[key]:
+            continue
+        # Verify each named creature is a REAL, currently-registered creature
+        # of the owner book -- read directly from that book's own ingested
+        # corpus, never assumed from this closed list alone. A grant naming a
+        # creature the owner book does not register is a defect in this
+        # table, not a fact about the corpus, and must fail closed.
+        owner_dir = os.path.join("data", "corpus", owner_book, "companion")
+        registered: set[str] = set()
+        if os.path.isdir(owner_dir):
+            for fname in os.listdir(owner_dir):
+                if not fname.endswith(".json"):
+                    continue
+                with open(os.path.join(owner_dir, fname), encoding="utf-8") as fh:
+                    doc = json.load(fh)
+                corpus_key = doc.get("data", {}).get("corpus_key")
+                if corpus_key:
+                    registered.add(corpus_key)
+        missing = [c for c in owner_creatures if c not in registered]
+        if missing:
+            raise SystemExit(
+                f"{book}: Shape 8 cross-book grant for {key!r} names {missing} which "
+                f"{owner_book} does not register at {owner_dir} -- widen or fix the grant"
+            )
+        for creature in owner_creatures:
+            cross_book_owners[key].append((owner_book, creature))
+        cross_book_applied += 1
+    if cross_book_applied:
+        print(
+            f"{book}: {cross_book_applied} ability row(s) attributed via Shape 8 "
+            f"cross-book ownership to {len(next(iter(CROSS_BOOK_GRANTS.get(book, {}).values()))[1])} "
+            "creature(s) of another registered book",
+            file=sys.stderr,
+        )
+
     # Only ability rows WITH an owner are registered.  A row no creature row of
     # this book reaches is a record that would load and never be shown, so it is
     # dropped from the emitted table and named in the module doc below.
@@ -880,6 +968,7 @@ def transcribe(book: str) -> str:
         abilities = [u for u in abilities if u["corpus_key"] not in dropped]
         for key in dropped:
             owners.pop(key, None)
+            cross_book_owners.pop(key, None)
         for creature_key, keys in creature_ability_keys.items():
             creature_ability_keys[creature_key] = [k for k in keys if k not in dropped]
         print(
@@ -939,6 +1028,7 @@ def transcribe(book: str) -> str:
         abilities = [u for u in abilities if u["corpus_key"] not in delta_keys]
         for key in delta_keys:
             owners.pop(key, None)
+            cross_book_owners.pop(key, None)
         # A creature must never name a record this table does not define --
         # `companion_chassis`'s `the_chassis_link_resolves_in_both_directions_
         # for_every_book` asserts exactly that, in both directions.
@@ -950,7 +1040,7 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
-    orphans = sorted(k for k, v in owners.items() if not v)
+    orphans = sorted(k for k, v in owners.items() if not v and not cross_book_owners.get(k))
     orphan_keys = set(orphans)
     if orphans:
         abilities = [u for u in abilities if u["corpus_key"] not in orphan_keys]
@@ -1002,6 +1092,7 @@ def transcribe(book: str) -> str:
         abilities = [u for u in abilities if u["corpus_key"] not in empty_keys]
         for key in empty_keys:
             owners.pop(key, None)
+            cross_book_owners.pop(key, None)
         # Same both-directions obligation the delta screen carries: a creature
         # must never name a record this table does not define.
         for creature_key, keys in creature_ability_keys.items():
@@ -1354,6 +1445,10 @@ def transcribe(book: str) -> str:
         )
         out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
         out.append(f"        owners: {rust_slice(owners[unit['corpus_key']])},")
+        out.append(
+            "        cross_book_owners: "
+            f"{rust_pair_slice(cross_book_owners.get(unit['corpus_key'], []))},"
+        )
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")

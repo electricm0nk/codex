@@ -16165,6 +16165,7 @@ mod companion_text_complete_rung_tests {
             stat_adjustments: &[],
             source_page: None,
             owners: &[],
+            cross_book_owners: &[],
             source_file: "x.lst",
             source_line: 1,
         };

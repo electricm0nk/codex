@@ -96,6 +96,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.78"),
         owners: &["Companion (Imp)"],
+        cross_book_owners: &[],
         source_file: "botd1_abilities_companion.lst",
         source_line: 8,
     },

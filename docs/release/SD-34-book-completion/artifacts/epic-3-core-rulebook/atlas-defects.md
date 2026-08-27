@@ -125,3 +125,65 @@ and should not be read as one.
   recovering un-captured content is a corpus-extraction capability this bundle has not built.
 
 **Retro event:** `docs/retro/events/sd34-orchestrator-verify.jsonl`.
+
+## 3. "Grant-token-only" rows are a THIRD no-content shape, distinct from defects 1 and 2, and are 461 of 51,482
+
+**Discovered:** AT-34-E3-001, `companion_absent_from_core_rulebook_companion_tables` mechanism,
+cycle 3 (this cycle's own build of Shape 8 cross-book ownership for the 14 familiar-pool rows).
+The mechanism-specific direction for this cycle required recording this shape here before ever
+calling it excluded-by-design, rather than silently leaving it as a bare bucket-B count.
+
+**What the corpus actually holds.** The 12 `Base Companion ~ …` / `Companion ~ …` rows this
+cycle did NOT close (`Base Companion ~ Animal Companion`, `Base Companion ~ Special Mount`,
+`Companion ~ Ability Score Increase`/`Bonus Tricks`/`Devotion`/`Evasion`/`Improved Evasion`/
+`Link`/`Multiattack`/`Share Spells`/`Spell Resistance (AC)`/`Spell Resistance (SM)`) carry
+`description: null` and a `raw_tokens` set of exactly `KEY`, `CATEGORY`, and one-or-more
+`ABILITY:` grant tokens — **no `TYPE:`, no `DESC:`, no `BONUS:`**. `Base Companion ~ Animal
+Companion` (`cr_abilities_companion.lst:46`) is the clearest example: it carries **eleven**
+separate `ABILITY:Companion Class Feature|AUTOMATIC|…` tokens, each routing to a real,
+separately-shipped ability (`Animal Companion ~ AC Bonus`, `~ Stat Bonus`, `~ Bonus Tricks`,
+...) — this row is PCGen's internal dispatch plumbing for the Animal Companion class feature,
+not a rules statement with content of its own.
+
+**Why this is a THIRD shape, not defect 1 or defect 2 again.** Defect 2's own query
+(`description is null AND raw_tokens ⊆ {KEY, CATEGORY, TYPE}`) does **not** match these 12
+rows — they carry no `TYPE:` token at all, and they carry `ABILITY:` tokens defect 2's query
+never looks for. Re-derived corpus-wide with the actual predicate this shape needs
+(`description` null AND at least one `ABILITY:` token AND no `TYPE:`/`DESC:`/`BONUS:` token):
+
+```bash
+python3 - <<'PY'
+import json, glob, collections
+vac = collections.Counter()
+total = 0
+for f in glob.glob('data/corpus/*/*/**/*.json', recursive=True):
+    if f.endswith('LICENSE.json'): continue
+    d = json.load(open(f)); data = d.get('data') or {}
+    raw = data.get('raw_tokens') or []
+    keys = [t.get('key') for t in raw if isinstance(t, dict)]
+    if 'ABILITY' in keys and not any(k in ('TYPE', 'DESC', 'BONUS') for k in keys):
+        total += 1; vac[f.split('/')[2]] += 1
+print(total, 'of 51,482'); print(vac.most_common())
+PY
+```
+
+**461 of 51,482** corpus records, across at least 26 books — `advanced_players_guide` 136,
+`bestiary_4` 63, `beastiary` 48, `ultimate_psionics` 31, `core_rulebook` 31 (of which this
+mechanism's 12 are one sub-set; the other 19 are `core_rulebook` rows of other `kind`s, e.g.
+`race_trait`/`class_feature`, out of this mechanism's scope). Not sampled exhaustively this
+cycle — the population is stated, the per-record disposition is not.
+
+**Disposition — not settled here, same discipline as defect 2.** These rows are real PCGen
+plumbing (every one this cycle checked routes to real, separately-shipped content, unlike
+defect 2's meaning-1 menu placeholders which route to nothing) — they are closer to a
+DIFFERENT verdict shape than either "deferred with a stated reason" (bucket `X`) or "real
+content not yet held" (bucket B's own predicted meaning), because there is genuinely no rules
+text for this specific row to carry; its only job is to fan out to rows that DO carry text and
+that already ship. None of the ten buckets names "this record's job is dispatch, not content."
+Reclassifying by shape alone here risks the exact near-miss defect 1's own investigation
+recorded (188 unrelated records promoted before being caught pre-commit) without a per-record,
+corpus-wide check this cycle does not have time to run safely. Left `engine-does-not-hold`
+(bucket B) for this mechanism's 12 core_rulebook rows rather than force a shape-based
+reclassification through on trust.
+
+**Retro event:** `docs/retro/events/sd34-at-34-e3-001.jsonl`, `deferral`.
