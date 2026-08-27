@@ -1,6 +1,6 @@
 # Cycle 1 — Epic 2 (Build eight of the nine tables) / AT-34-E2-001
 
-- **Commit SHA:** (filled below, after commit)
+- **Commit SHA:** 052a9182bf9666d7eaf757104034e040e72f6add
 - **Files touched:** `src/rules_core/rules_tables/simple_kind_tables.rs` (new), `src/rules_core/rules_tables/mod.rs`, `src/bin/v06_work_inventory.rs`, `docs/release/SD-34-book-completion/artifacts/epic-2-tables/AT-34-E2-001_table_transcript.txt` (new), this receipt
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
 - **Wired-integration audit result:** OK_NO_TOKENS
