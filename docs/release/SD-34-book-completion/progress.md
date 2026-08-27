@@ -17,8 +17,8 @@ Live cycle-by-cycle record. Cycles **prepend** their entry (newest first) and up
 Item 10 (widest build scope + inherited test baseline) is a separate lane's obligation and is
 not reported here. Epic 1 dispatch underway.
 
-**11 of 27 criteria complete. 11 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
-Epic 2 has landed its first three criteria (AT-34-E2-001, AT-34-E2-002, AT-34-E2-003).
+**12 of 27 criteria complete. 12 of 27 kanban rows complete.** Epic 1 is closed at 8 of 8;
+Epic 2 is closed at 4 of 4 (AT-34-E2-001..004). Epic 3 (Core Rulebook to zero) is next.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -36,6 +36,50 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle 12 — AT-34-E2-004 — bucket A reaches zero for both vehicle books
+
+**Status: complete. Epic 2 closes (4 of 4).** Wires `AT-34-E2-001`'s seven `simple_kind_tables`
+resolvers (plus `companion`'s pre-existing SD-29 table) into `classify()`'s real per-unit verdict
+— before this cycle they were only exercised read-only via `--epic2-table-transcript`. Held +
+zero-magnitude + real description + `display` wiring class + not a universal sheet modifier →
+`text-complete`; held + real magnitude → `ingested-magnitude` (bucket M, never `grounded` — a
+lookup table computes nothing, `decisions.md §2a`); not held → bucket B
+(`<kind>_absent_from_<dir>_table_in_<book>`), never bucket A.
+
+`python3 scripts/completion_atlas.py --book core_rulebook --check` → `A: 0` (was 934).
+`--book ultimate_campaign --check` → `A: 0` (was 242). Corpus-wide bucket A: `8463 → 449`
+(`power`=421, Epic 5's; `companion`=28, a `bestiary`-only residual, unrelated to either vehicle
+book).
+
+**Discovery, fixed this cycle:** 14 `core_rulebook` `companion` units (the `Familiar ~ …` shape,
+`ce_abilities_familiar_cr.lst`) were routed through a retired `core_essentials` companion
+registry and reported bucket A even though `core_rulebook` genuinely has a companion table — the
+general re-attribution widening (`decisions.md §9`) only re-homes a unit when the destination
+table *holds* it, and these rows are deliberately excluded by `crb::companion_data` (no creature
+row owns them). Fixed with a narrow `Kind::Companion` guard reporting bucket B under the correct
+book instead. Retro `correction` event: `docs/retro/events/sd34-at-34-e2-004.jsonl`.
+
+**Discovery, flagged NOT fixed (Epic 3's to run down):** 29 more `core_rulebook` units (7
+`ability` + 22 `template`) show the identical misattribution shape, but `holds_key_inner` has no
+match arm for those kinds at all, so the general widening never even attempts a re-home. They are
+correctly off bucket A (land in B) but may be reporting the wrong book. Named in the receipt so
+`AT-34-E3-001` ("bucket B closes … mechanism named") does not rediscover it from scratch.
+
+**Instrument-correction:** this cycle's edit to `v06_work_inventory.rs` shifted every later line
+in the file, breaking all 10 of `completion_atlas.py`'s bucket citations and all 9 of
+`missing_engine_tables.py`'s kind citations (both fail closed on the mismatch, as designed) —
+both re-pinned against the real file; `missing_engine_tables.py`'s `ENGINE_SURFACE_CITATIONS`
+also dropped the 7 entries whose marker text no longer exists anywhere in the source. Both
+scripts' pinned-figure tests (`test_completion_atlas.py`, `test_missing_engine_tables.py`)
+re-derived against the new live population; all 50 of their tests (38 + 12) pass.
+
+`docs/work-inventory.json` regenerated at HEAD (`CORPUS_LITERAL_SWEEP_REPORT` +
+`DERIVED_FIXTURE_CHECK_REPORT` supplied so the stamp-loss guard did not need `--allow-stamp-loss`,
+never used). Corpus-wide bucket movement: `DONE +1479` (`12265→13744`), `A -8014` (`8463→449`),
+`B +2497`, `D +1019`, `M +2016`, `V +1003`; `C`/`U`/`X`/`Z` unchanged. `corpus_literal_sweep`:
+`48699 → 48699`, delta 0 (no corpus files touched). Full receipt:
+`artifacts/epic-2-tables/AT-34-E2-004_cycle_receipt.md`.
 
 ### Cycle 11 — AT-34-E2-003 — the measured build rate is recorded
 

@@ -301,10 +301,22 @@ class TestLiveInventoryCheck(unittest.TestCase):
         self.assertEqual(result["examined"], inv["totals"]["units"])
 
     def test_bucket_a_matches_named_population(self):
-        # decisions.md / epic-breakdown.md: bucket A is 8,463 units.
+        # `AT-34-E2-004`: bucket A was 8,463 units before Epic 2 built the
+        # eight tables; building them (`AT-34-E2-001`) and wiring the real
+        # classification (`AT-34-E2-004`) reduces it to the two kinds Epic 2
+        # deliberately does not close -- `power` (421, all `ultimate_psionics`,
+        # costed for Epic 5) and the 28 `bestiary`-book `companion` units
+        # whose REPORTED book itself carries no chassis registration at all
+        # (as opposed to the `core_rulebook`/`ultimate_campaign` shape this
+        # criterion fixed, where the reported book DOES have a table).
+        # Re-derive: `python3 -c "import json; from collections import
+        # Counter; inv=json.load(open('docs/work-inventory.json')); c=Counter();
+        # [c.update([u['kind']]) for u in inv['units'] if 'has_no_engine_table'
+        # in (u.get('evidence') or '')]; print(c)"` -> `{'power': 421,
+        # 'companion': 28}`.
         inv = CA._load_inventory()
         result = CA.partition(inv["units"])
-        self.assertEqual(result["counts"].get("A", 0), 8463)
+        self.assertEqual(result["counts"].get("A", 0), 449)
 
     def test_bucket_u_matches_named_population(self):
         inv = CA._load_inventory()

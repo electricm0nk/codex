@@ -3,29 +3,29 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9658,
+        "line": 9772,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
-      "count": 8463,
+      "count": 449,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'has_no_engine_table')",
       "meaning": "engine has no table for this kind"
     },
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9382,
+        "line": 9470,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 11921,
+      "count": 14418,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9607,
+        "line": 9695,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -36,40 +36,40 @@
     "D": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8346,
+        "line": 8434,
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 1230,
+      "count": 2249,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
     "DONE": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8374,
+        "line": 8462,
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 12265,
+      "count": 13744,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
     "M": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8481,
+        "line": 8569,
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
-      "count": 2455,
+      "count": 4471,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
     "U": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8433,
+        "line": 8521,
         "must_contain": "unmeasurable"
       },
       "clears": "instrument correction",
@@ -80,18 +80,18 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10190,
+        "line": 10388,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
-      "count": 8330,
+      "count": 9333,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
       "meaning": "verified by proxy, never by the oracle"
     },
     "X": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8393,
+        "line": 8481,
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
@@ -102,7 +102,7 @@
     "Z": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8254,
+        "line": 8342,
         "must_contain": "not-started"
       },
       "clears": "ordinary work",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "0d9fcc8ec89abe3f1608a59886a83c2ba6e918bc",
+  "derived_at": "1bc9884acf86b53a2b409aa21101df53988aa95b",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -122,6 +122,7 @@
   "stale_derived_at": false,
   "sub_causes": {
     "D": {
+      "ability_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 294,
       "class_feature_no_dedicated_magnitude_id_matched_the_record_slug": 156,
       "class_feature_of_unmodelled_corpus_class:adaptive_warrior": 18,
       "class_feature_of_unmodelled_corpus_class:adept": 23,
@@ -203,7 +204,12 @@
       "class_feature_of_unmodelled_corpus_class:warrior": 44,
       "class_feature_of_unmodelled_corpus_class:westcrown_devil": 11,
       "class_modelled_but_no_observed_delta_on_the_rendered_snapshot": 21,
-      "race_trait_record_loaded_but_never_applies": 44
+      "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
+      "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 92,
+      "race_trait_record_loaded_but_never_applies": 44,
+      "skill_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 36,
+      "template_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 513,
+      "trait_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 4
     },
     "U": {
       "feat_served_description_is_a_placeholder_marker_not_prose": 51,

@@ -4,15 +4,27 @@ with its book coverage, so no future bundle has to re-derive which books a
 given table's absence blocks (SD-34 `AT-34-E1-003`).
 
     python3 scripts/missing_engine_tables.py --check
-        -> population=8463 kinds=9   (exit 0)
+        -> population=449 kinds=2   (exit 0)
         writes artifacts/epic-1-atlas/missing-engine-tables.json
+
+**Updated `AT-34-E2-004`:** building the seven `simple_kind_tables` and
+wiring them into `classify()` for real (`AT-34-E2-001`/`AT-34-E2-004`) moved
+`skill`/`template`/`deity`/`domain`/`language`/`ability`/`trait` off bucket A
+for good -- none of those seven kinds' `classify()` arms can emit the
+`has_no_engine_table` marker any more (a table miss now reports `absent_from`,
+bucket B), so their `ENGINE_SURFACE_CITATIONS` entries are retired rather than
+left pointing at a marker the source no longer contains anywhere. Only
+`companion` (28 `bestiary`-book units whose REPORTED book itself has no
+chassis registration at all -- a different shape from the
+`core_rulebook`/`ultimate_campaign` misattribution this cycle fixed) and
+`power` (421, all `ultimate_psionics`, Epic 5's to cost and build) remain.
 
 Reads the same `docs/work-inventory.json` `completion_atlas.py` reads and
 selects bucket A the same way it does (`status == engine-does-not-hold` and
 `evidence` containing `has_no_engine_table`) -- not by re-deriving a second,
 divergent definition of the bucket.
 
-For each of the 9 kinds this population actually contains, records:
+For each of the 2 kinds this population actually contains, records:
 
   - `count` -- units of this kind in bucket A
   - `by_book` -- per-book breakdown of that count
@@ -55,15 +67,8 @@ _A_MARKER = "has_no_engine_table"
 # engine surface a table would attach to": the arm a real per-kind table
 # lookup would replace.
 ENGINE_SURFACE_CITATIONS = {
-    "companion": {"line": 9658, "must_contain": "companion_content_has_no_engine_table"},
-    "skill": {"line": 9674, "must_contain": "skill_content_has_no_engine_table"},
-    "template": {"line": 9685, "must_contain": "template_content_has_no_engine_table"},
-    "deity": {"line": 9686, "must_contain": "deity_content_has_no_engine_table"},
-    "power": {"line": 9687, "must_contain": "power_content_has_no_engine_table"},
-    "domain": {"line": 9688, "must_contain": "domain_content_has_no_engine_table"},
-    "language": {"line": 9689, "must_contain": "language_content_has_no_engine_table"},
-    "ability": {"line": 9690, "must_contain": "ability_content_has_no_engine_table"},
-    "trait": {"line": 9691, "must_contain": "trait_content_has_no_engine_table"},
+    "companion": {"line": 9772, "must_contain": "companion_content_has_no_engine_table"},
+    "power": {"line": 9833, "must_contain": "power_content_has_no_engine_table"},
 }
 
 

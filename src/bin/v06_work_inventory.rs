@@ -66,6 +66,7 @@ use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
 use codex::rules_core::rules_tables::companion_chassis;
 use codex::rules_core::rules_tables::monster_chassis;
+use codex::rules_core::rules_tables::simple_kind_tables;
 use codex::rules_core::rules_tables::simple_kind_tables::{load_simple_kind_table, transcript_line, SEVEN_KIND_DIRS};
 use codex::rules_core::rules_tables::crb::{
     bard_spell_list as crb_bard_spell_list, class_tables::ClassId,
@@ -5072,6 +5073,14 @@ struct EngineFacts {
     /// with the number silently deleted. Base `companions` creature rows carry
     /// no `DESC:` token at all, so only `companion_abilities` populates this.
     chassis_companion_unresolved_desc_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// `AT-34-E2-001`'s seven new engine tables (`ability`, `template`,
+    /// `trait`, `deity`, `domain`, `skill`, `language`), keyed by kind name
+    /// (`simple_kind_tables::SEVEN_KIND_DIRS`'s own keys), loaded once from
+    /// the live corpus tree exactly as `simple_kind_tables::load_simple_kind_table`
+    /// itself does for `--epic2-table-transcript`. `companion` (Epic 2's
+    /// eighth kind) is not here -- its table is `chassis_companion_keys`
+    /// above, built in SD-29.
+    simple_kind_tables: BTreeMap<&'static str, simple_kind_tables::SimpleKindTable>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
     /// Every modelled class the class consumer-delta probe OBSERVED producing
@@ -7275,6 +7284,17 @@ fn gather_engine_facts(
         );
     }
 
+    // `AT-34-E2-001`'s seven new engine tables, loaded once here so the
+    // per-unit classify() arms below do a map lookup rather than a fresh
+    // corpus directory walk per unit. Keyed by kind name, mirroring
+    // `SEVEN_KIND_DIRS` exactly -- `companion` stays out (its table is
+    // `chassis_companion_keys`, built in SD-29).
+    let mut simple_kind_tables_by_kind: BTreeMap<&'static str, simple_kind_tables::SimpleKindTable> =
+        BTreeMap::new();
+    for (kind, _dir) in SEVEN_KIND_DIRS {
+        simple_kind_tables_by_kind.insert(kind, load_simple_kind_table(repo_root, kind));
+    }
+
     let class_books = modelled_class_books();
 
     let race_names: BTreeSet<String> =
@@ -7339,6 +7359,7 @@ fn gather_engine_facts(
         chassis_monster_ability_unresolved_desc_keys,
         chassis_companion_keys,
         chassis_companion_unresolved_desc_keys,
+        simple_kind_tables: simple_kind_tables_by_kind,
         class_books,
         class_effect_wired,
         // Filled by `main` after corpus enumeration: the probe's key
@@ -8191,6 +8212,72 @@ fn companion_ability_desc_leaks_unresolved_argument(
 /// records throughout, never `computed`/`static`/`derived` ones.
 fn is_display_wiring_class_for_promotion(wc_class: &str) -> bool {
     wc_class == "display"
+}
+
+/// Shared verdict logic for Epic 2's seven simple-kind tables
+/// (`ability`/`template`/`trait`/`deity`/`domain`/`skill`/`language`,
+/// `AT-34-E2-001`/`simple_kind_tables::load_simple_kind_table`). An absent
+/// record is bucket B (`AT-34-E3-001`'s to close, not this cycle's):
+/// `<kind_label>_absent_from_<dir>_table_in_<book>`. A record the table
+/// HOLDS is promoted to `text-complete` under the SAME gate every other
+/// kind's zero-magnitude promotion in this file uses (`text_only` +
+/// `has_real_description` + `display` wiring class + not a universal sheet
+/// modifier); a held record that carries a real magnitude is
+/// `ingested-magnitude` (bucket M) rather than `grounded` -- `decisions.md
+/// §2a`: this table is a corpus lookup, not a compute path, so it cannot
+/// itself ground a magnitude-bearing record, only report that the magnitude
+/// is now reachable and waiting on the compute path Epic 3/5 will run. A
+/// held record that is neither (structurally excluded from both gates --
+/// e.g. a universal-sheet-modifier zero-magnitude record) falls to bucket D,
+/// honestly, rather than being forced into either shape.
+fn simple_kind_verdict(
+    table: Option<&simple_kind_tables::SimpleKindTable>,
+    kind_label: &str,
+    dir: &str,
+    engine_book: &str,
+    key: &str,
+    name: &str,
+    text_only: bool,
+    has_real_description: bool,
+    wc_class: &str,
+    universal_sheet_modifier: bool,
+    engine_book_field: Option<String>,
+) -> Verdict {
+    let held = table.and_then(|t| t.resolve(engine_book, key).or_else(|| t.resolve(engine_book, name))).is_some();
+    if !held {
+        return Verdict {
+            status: "engine-does-not-hold",
+            evidence: format!("{kind_label}_absent_from_{dir}_table_in_{engine_book}"),
+            reason: None,
+            engine_book: engine_book_field,
+        };
+    }
+    if text_only
+        && has_real_description
+        && is_display_wiring_class_for_promotion(wc_class)
+        && !universal_sheet_modifier
+    {
+        return Verdict {
+            status: "text-complete",
+            evidence: format!("{kind_label}_table_resolve_returned_a_real_record_with_description"),
+            reason: None,
+            engine_book: engine_book_field,
+        };
+    }
+    if !text_only {
+        return Verdict {
+            status: "ingested-magnitude",
+            evidence: format!("{kind_label}_table_holds_record_magnitude_not_yet_computed"),
+            reason: None,
+            engine_book: engine_book_field,
+        };
+    }
+    Verdict {
+        status: "engine-does-not-hold",
+        evidence: format!("{kind_label}_table_holds_zero_magnitude_record_pending_wiring_class_review"),
+        reason: None,
+        engine_book: engine_book_field,
+    }
 }
 
 /// `wc_class` (`WiringClass::id()`: `"display"`/`"static"`/`"derived"`/
@@ -9656,6 +9743,32 @@ fn classify(
             }
             engine_does_not_hold_owned(format!("companion_absent_from_{engine_book}_companion_tables"))
         }
+        // `AT-34-E2-004`: a companion record whose OWN engine_book (the
+        // `source_book`-derived rule set -- e.g. `core_essentials`, a
+        // registry RETIRED by `SD31-CE-COMPANION-001`) carries no chassis
+        // registration at all, but whose REPORTED book (`unit.book`) does.
+        // The general reattribution widening above only fires when the
+        // destination table observably HOLDS the record (`decisions.md §9`),
+        // which is right for a genuine cross-book credit -- but a handful of
+        // `core_rulebook`-reported companion rows (the `Familiar ~ …` set:
+        // `crb::companion_data`'s own "NOT transcribed" list, ability rows
+        // no creature row of this book owns) are real, named, DELIBERATELY
+        // excluded content, not held anywhere. Without this arm they report
+        // `companion_content_has_no_engine_table` (bucket A, "no table for
+        // this kind") purely because the routing landed on a retired
+        // registry -- wrong, since `core_rulebook` HAS a companion table and
+        // simply does not hold this row. Reported under the SAME
+        // `<book>_absent_from_<book>_companion_tables` evidence shape the
+        // registry-driven arm above already emits (bucket B), never A.
+        Kind::Companion
+            if unit.book != engine_book
+                && facts.chassis_companion_keys.contains_key(unit.book.as_str()) =>
+        {
+            engine_does_not_hold_owned(format!(
+                "companion_absent_from_{book}_companion_tables",
+                book = unit.book
+            ))
+        }
         Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table"),
         // SD28-E15 (2026-08-09): no engine table exists for monster
         // sub-abilities (natural attacks, special qualities/attacks,
@@ -9665,31 +9778,115 @@ fn classify(
         // in the wrong kind before this cycle; real content with no
         // engine table now, honestly reported as such.
         Kind::MonsterAbility => engine_does_not_hold("monster_ability_has_no_engine_table"),
-        // SD-32 card 15 (`decisions.md §12b`): the per-skill definition
-        // table (`KEYSTAT:`/`ACHECK:`/class-skill `BONUS:` rows) has no
-        // engine table -- `src/rules_core/skill_allocation.rs` is
-        // skill-POINT allocation, not a per-skill data source ingesting
-        // these corpus rows. Real, newly-visible content with no engine
-        // table yet, honestly reported as such -- same shape as
-        // `Kind::Companion`/`Kind::MonsterAbility` above.
-        Kind::Skill => engine_does_not_hold("skill_content_has_no_engine_table"),
+        // `AT-34-E2-001`'s seven new engine tables (`simple_kind_tables`),
+        // wired for real classification here (`AT-34-E2-004`) rather than
+        // only exercised read-only through `--epic2-table-transcript`. See
+        // `simple_kind_verdict`'s own doc comment for the promotion rule.
+        Kind::Skill => simple_kind_verdict(
+            facts.simple_kind_tables.get("skill"),
+            "skill_content",
+            "skill",
+            &engine_book,
+            &unit.key,
+            &unit.name,
+            text_only,
+            has_real_description,
+            wc_class,
+            universal_sheet_modifier,
+            engine_book_field.clone(),
+        ),
         // SD-32 `decisions.md §17`: the five kinds landed through
-        // `SIMPLE_FILENAME_KINDS` (see `file_kind`'s doc comment) -- none
-        // has an engine table yet, same honest-uningested shape as
-        // `Kind::Skill`/`Kind::Companion`/`Kind::MonsterAbility` above. This
-        // arm, required by Rust's exhaustive match over `Kind`, is the ONE
-        // per-kind line a genuinely new kind of this shape still needs
-        // beyond the `SIMPLE_FILENAME_KINDS` data row -- and it is
-        // deliberately not a blanket wildcard default, so a kind that DOES
-        // later gain an engine table cannot silently keep reporting
-        // engine-does-not-hold by falling through an unattended `_ => ...` arm.
-        Kind::Template => engine_does_not_hold("template_content_has_no_engine_table"),
-        Kind::Deity => engine_does_not_hold("deity_content_has_no_engine_table"),
+        // `SIMPLE_FILENAME_KINDS` (see `file_kind`'s doc comment). `template`
+        // now has its own engine table (`AT-34-E2-001`); this arm, required
+        // by Rust's exhaustive match over `Kind`, is the ONE per-kind line a
+        // genuinely new kind of this shape still needs beyond the
+        // `SIMPLE_FILENAME_KINDS` data row.
+        Kind::Template => simple_kind_verdict(
+            facts.simple_kind_tables.get("template"),
+            "template_content",
+            "template",
+            &engine_book,
+            &unit.key,
+            &unit.name,
+            text_only,
+            has_real_description,
+            wc_class,
+            universal_sheet_modifier,
+            engine_book_field.clone(),
+        ),
+        Kind::Deity => simple_kind_verdict(
+            facts.simple_kind_tables.get("deity"),
+            "deity_content",
+            "deity",
+            &engine_book,
+            &unit.key,
+            &unit.name,
+            text_only,
+            has_real_description,
+            wc_class,
+            universal_sheet_modifier,
+            engine_book_field.clone(),
+        ),
+        // `power` (421 units, all `ultimate_psionics`) is Epic 5's, costed
+        // from the eight tables' measured build rate -- not built here
+        // (`epic-breakdown.md` Epic 2).
         Kind::Power => engine_does_not_hold("power_content_has_no_engine_table"),
-        Kind::Domain => engine_does_not_hold("domain_content_has_no_engine_table"),
-        Kind::Language => engine_does_not_hold("language_content_has_no_engine_table"),
-        Kind::Ability => engine_does_not_hold("ability_content_has_no_engine_table"),
-        Kind::Trait => engine_does_not_hold("trait_content_has_no_engine_table"),
+        Kind::Domain => simple_kind_verdict(
+            facts.simple_kind_tables.get("domain"),
+            "domain_content",
+            "domain",
+            &engine_book,
+            &unit.key,
+            &unit.name,
+            text_only,
+            has_real_description,
+            wc_class,
+            universal_sheet_modifier,
+            engine_book_field.clone(),
+        ),
+        Kind::Language => simple_kind_verdict(
+            facts.simple_kind_tables.get("language"),
+            "language_content",
+            "language",
+            &engine_book,
+            &unit.key,
+            &unit.name,
+            text_only,
+            has_real_description,
+            wc_class,
+            universal_sheet_modifier,
+            engine_book_field.clone(),
+        ),
+        Kind::Ability => simple_kind_verdict(
+            facts.simple_kind_tables.get("ability"),
+            "ability_content",
+            "ability",
+            &engine_book,
+            &unit.key,
+            &unit.name,
+            text_only,
+            has_real_description,
+            wc_class,
+            universal_sheet_modifier,
+            engine_book_field.clone(),
+        ),
+        // `trait`'s corpus records live under `trait_generic/`, not
+        // `trait/` -- `simple_kind_tables::kind_dir_for` resolves that; the
+        // evidence string keeps the `trait` kind name (`dir` argument is
+        // display-only, for a receipt reader), never the directory.
+        Kind::Trait => simple_kind_verdict(
+            facts.simple_kind_tables.get("trait"),
+            "trait_content",
+            "trait_generic",
+            &engine_book,
+            &unit.key,
+            &unit.name,
+            text_only,
+            has_real_description,
+            wc_class,
+            universal_sheet_modifier,
+            engine_book_field.clone(),
+        ),
     }
 }
 
@@ -14877,6 +15074,197 @@ mod companion_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.evidence, "companion_content_has_no_engine_table");
+    }
+
+    /// `AT-34-E2-004`: the `Familiar ~ …` shape -- a companion row whose
+    /// `source_book` resolves to a chassis-less rule set (`core_essentials`,
+    /// retired by `SD31-CE-COMPANION-001`) but whose reported `book`
+    /// (`core_rulebook`) DOES have a companion table. Before this cycle this
+    /// fell all the way to `companion_content_has_no_engine_table` (bucket
+    /// A, "no table for this kind") even though `core_rulebook` genuinely
+    /// has one -- it simply does not hold this row. Must land in bucket B
+    /// (`absent_from`), never bucket A.
+    #[test]
+    fn a_companion_reattributed_to_a_chassis_book_that_does_not_hold_it_is_bucket_b_not_a() {
+        let facts = facts_holding("core_rulebook", "Some Other Companion Row");
+        let mut unit = companion_unit(
+            "core_essentials",
+            "ce_abilities_familiar_cr.lst",
+            1,
+            "Familiar ~ Alertness",
+            0,
+        );
+        unit.book = "core_rulebook".to_string();
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "companion_absent_from_core_rulebook_companion_tables");
+        assert!(!verdict.evidence.contains("has_no_engine_table"));
+    }
+
+    /// Sibling proof: when the reported `book` ALSO has no chassis
+    /// registration (the ordinary case this arm must not disturb), the
+    /// original `has_no_engine_table` fallback still fires.
+    #[test]
+    fn a_companion_reattributed_to_a_book_with_no_chassis_table_stays_bucket_a() {
+        let facts = EngineFacts::default();
+        let mut unit = companion_unit(
+            "core_essentials",
+            "ce_abilities_familiar_cr.lst",
+            1,
+            "Familiar ~ Alertness",
+            0,
+        );
+        unit.book = "some_other_unregistered_book".to_string();
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "companion_content_has_no_engine_table");
+    }
+
+    // -----------------------------------------------------------------
+    // `AT-34-E2-004`: the seven Epic 2 simple-kind tables, wired into
+    // classify() for real. Built from the LIVE corpus, exactly as
+    // `simple_kind_tables.rs`'s own tests are -- no fabricated in-memory
+    // fixture exists for `SimpleKindTable` (it has no public constructor
+    // other than `load_simple_kind_table`), so these are integration-shaped
+    // proofs against the real repo tree, the same discipline
+    // `race_creation_roster`'s probe-backed tests already use.
+    // -----------------------------------------------------------------
+
+    fn simple_kind_test_unit(
+        kind: Kind,
+        book: &str,
+        file: &str,
+        line: usize,
+        key: &str,
+        magnitude_token_count: usize,
+    ) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    fn facts_with_simple_kind_table(kind: &'static str) -> EngineFacts {
+        let mut facts = EngineFacts::default();
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        facts.simple_kind_tables.insert(kind, load_simple_kind_table(&repo_root, kind));
+        facts
+    }
+
+    /// A zero-magnitude, real-description, `display`-class record the
+    /// `ability` table holds is `text-complete`, never `has_no_engine_table`.
+    #[test]
+    fn a_held_zero_magnitude_ability_record_promotes_to_text_complete() {
+        let facts = facts_with_simple_kind_table("ability");
+        let unit = simple_kind_test_unit(
+            Kind::Ability,
+            "advanced_class_guide",
+            "acg_abilities.lst",
+            1,
+            "Aberrant Bloodline",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "ability_content_table_resolve_returned_a_real_record_with_description"
+        );
+        assert!(!verdict.evidence.contains("has_no_engine_table"));
+    }
+
+    /// The SAME held record, but carrying a real magnitude token: the table
+    /// is a lookup, not a compute path (`decisions.md §2a`), so this must
+    /// land `ingested-magnitude` (bucket M), never `grounded`/`text-complete`.
+    #[test]
+    fn a_held_ability_record_with_a_real_magnitude_is_ingested_magnitude_not_grounded() {
+        let facts = facts_with_simple_kind_table("ability");
+        let unit = simple_kind_test_unit(
+            Kind::Ability,
+            "advanced_class_guide",
+            "acg_abilities.lst",
+            1,
+            "Aberrant Bloodline",
+            2,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(
+            verdict.evidence,
+            "ability_content_table_holds_record_magnitude_not_yet_computed"
+        );
+    }
+
+    /// A key the table genuinely does not hold is bucket B
+    /// (`absent_from`), not bucket A -- the table exists, this row is not
+    /// in it.
+    #[test]
+    fn an_ability_record_absent_from_the_table_is_bucket_b_not_a() {
+        let facts = facts_with_simple_kind_table("ability");
+        let unit = simple_kind_test_unit(
+            Kind::Ability,
+            "advanced_class_guide",
+            "acg_abilities.lst",
+            1,
+            "___a_key_no_corpus_record_carries___",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(
+            verdict.evidence,
+            "ability_content_absent_from_ability_table_in_advanced_class_guide"
+        );
+        assert!(!verdict.evidence.contains("has_no_engine_table"));
+    }
+
+    /// `EngineFacts::default()` carries no `simple_kind_tables` entry at
+    /// all (the map has never been populated) -- must still refuse cleanly
+    /// as bucket B, never panic and never bucket A.
+    #[test]
+    fn an_ability_record_with_no_table_loaded_at_all_is_bucket_b_not_a_and_does_not_panic() {
+        let facts = EngineFacts::default();
+        let unit = simple_kind_test_unit(
+            Kind::Ability,
+            "advanced_class_guide",
+            "acg_abilities.lst",
+            1,
+            "Aberrant Bloodline",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert!(!verdict.evidence.contains("has_no_engine_table"));
+    }
+
+    /// `trait`'s corpus directory is `trait_generic`, not `trait`
+    /// (`simple_kind_tables.rs`'s own hazard) -- proves the SAME promotion
+    /// works through that directory-name mismatch.
+    #[test]
+    fn a_held_trait_record_through_the_trait_generic_directory_promotes_to_text_complete() {
+        let facts = facts_with_simple_kind_table("trait");
+        let unit = simple_kind_test_unit(
+            Kind::Trait,
+            "advanced_players_guide",
+            "apg_abilities_race.lst",
+            1,
+            "Trait ~ Adopted",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "trait_content_table_resolve_returned_a_real_record_with_description"
+        );
     }
 
     /// PROVE THE RUNG CAN FAIL, case 4 (SD31-D7-PROSE-004, Decision 7
