@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`deity_content_absent_from_deity_table_in_core_rulebook` mechanism)
 
-- **Commit SHA:** `<filled after commit>`
+- **Commit SHA:** `9934711054e0eabda678065c4b9b5eb8d006aa0d`
   (parent `5f0a905fb001287bcd5045827cfe0156aa403688`)
 - **Files touched:**
   - `src/bin/v06_work_inventory.rs` — `Kind::Deity`'s `classify()` arm gains
@@ -183,7 +183,7 @@ reattribution landing on this unowned mechanism; not this cycle's change),
   `cargo test --locked --no-run` in that directory with its own
   `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop` — clean, exit 0,
   zero `error` lines.
-- Run at SHA: `<filled after commit>`.
+- Run at SHA: `9934711054e0eabda678065c4b9b5eb8d006aa0d`.
 
 ## Sweep population
 
