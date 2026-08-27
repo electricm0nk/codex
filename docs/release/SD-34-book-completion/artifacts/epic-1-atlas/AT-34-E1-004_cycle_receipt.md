@@ -1,6 +1,6 @@
 # Cycle 4 — Epic 1 Completion Atlas / AT-34-E1-004
 
-- **Commit SHA:** `PENDING` (filled after commit, see progress.md/kanban.md updates in the same commit)
+- **Commit SHA:** `4d69afd6e4`
 - **Files touched:** `scripts/shape_engine_boundary.py` (new), `scripts/tests/test_shape_engine_boundary.py` (new), `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/shape-engine-boundary.md` (new, generated)
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
 - **Wired-integration audit result:** OK_NO_TOKENS
