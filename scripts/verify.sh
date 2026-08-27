@@ -107,7 +107,7 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
 QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
@@ -1905,6 +1905,96 @@ run_corpus_sweep() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: corpus-trap-audit
+#
+# Runs `v06_corpus_trap_report --audit --json` -- `AT-34-E1-007`
+# (`docs/release/SD-34-book-completion/epic-breakdown.md`), closing a gap
+# `forward-scope-register.md` C1.8 carried unclosed through SD-31, SD-32,
+# and SD-33: this cross-checks every already-ingested `data/corpus/**`
+# record's `wiring_class` and citation against a fresh re-derivation from
+# the real PCGen `.lst` source it cites, catching drift a stale cache
+# value cannot self-report. FULL only (needs the real PCGen corpus,
+# `PCGEN_CORPUS_ROOT`), placed next to `corpus-sweep`, same dependency and
+# the same "fail loudly, never skip" posture on an absent corpus.
+#
+# **Own timeout wrapper is part of this stage's deliverable**
+# (`epic-breakdown.md`'s AT-34-E1-007 evidence, citing
+# `forward-scope-register.md D1.2`: a sibling stage,
+# `site-dashboard-check`, hung for two full 600s producer timeouts with
+# *no* wrapper in either `verify.sh` or the script it called, across three
+# separate diffs, before anyone noticed). `CORPUS_TRAP_AUDIT_TIMEOUT_S`
+# overrides the default, the same `${VAR:-default}` shape every other
+# tunable in this file already uses.
+#
+# **Population is computed independently of the binary's own output**, the
+# same reasoning `corpus-sweep`'s own independent `examined`/`tokens`
+# parse and `pi-sweep`'s CLEAN-token guard already carry: this stage's
+# `find`-based count of every `data/corpus/<book>/<kind>/*.json` file
+# mirrors `audit_ingested_cache`'s own book/kind/record walk
+# (`src/pcgen_import/corpus_traps.rs`) exactly -- a vacuous PASS naming no
+# population fails the stage (`workflow-instruction.md §12` row 15).
+# ---------------------------------------------------------------------------
+
+run_corpus_trap_audit() {
+    local timeout_s="${CORPUS_TRAP_AUDIT_TIMEOUT_S:-300}"
+    stage_start "corpus-trap-audit — timeout ${timeout_s}s cargo run --locked --bin v06_corpus_trap_report -- --audit --json"
+    local log="$LOG_DIR/corpus-trap-audit.log"
+
+    # Independent population count: same 3-level book/kind/record walk
+    # `audit_ingested_cache` performs, computed here rather than trusted
+    # from the binary's own report.
+    local population
+    population=$(find "$REPO_ROOT/data/corpus" -mindepth 3 -maxdepth 3 -type f -name '*.json' 2>/dev/null | wc -l | tr -d ' ')
+
+    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" cargo run --locked --quiet -j "$JOBS" --bin v06_corpus_trap_report -- --audit --json ) >"$log" 2>&1
+    local status=$?
+
+    if (( status == 124 )); then
+        stage_fail corpus-trap-audit "timed out after ${timeout_s}s bounding its own runtime; population=${population:-?} not fully examined — $log"
+        return
+    fi
+    if (( status == 1 )); then
+        stage_fail corpus-trap-audit "usage/IO error (exit 1) — corpus absent or PCGEN_CORPUS_ROOT misconfigured, not a skip — $log"
+        return
+    fi
+
+    local tally
+    tally=$(python3 - "$log" <<'PYEOF'
+import json, sys
+path = sys.argv[1]
+try:
+    with open(path, encoding="utf-8", errors="replace") as f:
+        lines = [ln for ln in f if ln.lstrip().startswith('{"findings"')]
+    if not lines:
+        print("PARSE_ERROR=no findings line in log")
+        raise SystemExit
+    data = json.loads(lines[-1])
+    findings = data["findings"]
+    defects = sum(1 for x in findings if x.get("severity") == "DEFECT")
+    traps = sum(1 for x in findings if x.get("severity") == "TRAP")
+    print(f"defects={defects} traps={traps}")
+except Exception as e:
+    print(f"PARSE_ERROR={e}")
+PYEOF
+)
+    local defects traps
+    defects=$(sed -n 's/^defects=\([0-9]*\).*$/\1/p' <<<"$tally")
+    traps=$(sed -n 's/.*traps=\([0-9]*\)$/\1/p' <<<"$tally")
+
+    if [[ "$tally" == PARSE_ERROR=* || -z "$defects" ]]; then
+        stage_fail corpus-trap-audit "could not parse --json output (${tally:-no output}) — $log"
+        return
+    fi
+
+    if (( status != 0 )); then
+        stage_fail corpus-trap-audit "records_examined=${population:-?} defects=${defects} traps=${traps} (exit $status) — $log"
+        return
+    fi
+
+    stage_pass corpus-trap-audit "records_examined=${population:-?} defects=0 traps=${traps}"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: supersession-gate
 #
 # Runs `scripts/supersession_register_gate.py` against the committed
@@ -2054,6 +2144,7 @@ for stage in "${SELECTED[@]}"; do
         driver-selftest)     run_driver_selftest ;;
         corpus-sweep-selftest) run_corpus_sweep_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
+        corpus-trap-audit)   run_corpus_trap_audit ;;
         supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;

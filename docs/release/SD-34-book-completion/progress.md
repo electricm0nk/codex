@@ -36,6 +36,32 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 
 ## Cycle log
 
+### Cycle 7 — AT-34-E1-007 — `corpus-trap-audit` is wired into `verify.sh`; blocked on real content it found
+
+**Status: blocked-escalated.** The mechanical deliverable is done: a new `corpus-trap-audit`
+stage (`cargo run --locked --bin v06_corpus_trap_report -- --audit --json`) is wired into
+`verify.sh`'s `ALL_STAGES` (FULL scope, next to `corpus-sweep`), bounds its own runtime with a
+`timeout` wrapper (closing `forward-scope-register.md D1.2`'s gap), and computes its population
+independently of the binary's own output (`27,638` records, a `find`-based 3-level walk matching
+`audit_ingested_cache`'s own traversal). RED→GREEN proved live: one real record's `wiring_class`
+field was flipped, the stage's defect count moved exactly `10196 → 10197` naming that record, the
+mutation was reverted via `git checkout --` (confirmed byte-identical to the pre-mutation file),
+and the count returned to `10196`.
+
+**That `10196` is the block.** Run for real against the live corpus, the stage is FAIL, not PASS:
+`records_examined=27638 defects=10196 traps=407`. Of the 10,196 defects, 3,181 match four tests
+already in `tests/v06_corpus_trap_report.rs` that SD-33's `forward-scope-register.md D1.1`
+already verified as pre-existing, out-of-DoD debt. The other 7,015 (`wiring-class-mismatch`) are
+a **new discovery**: this exact check was last driven to 0 by `SD30-CARRY-001` (`b32926f2af`,
+2026-08-14) and has silently regressed across 34 of 37 books since, because nothing has run
+`--audit` in `verify.sh` between then and now — the precise gap this criterion exists to close.
+Fixing it needs `data/corpus/**` write scope Epic 1's file-touch table does not grant, and scales
+~3.4× `SD30-CARRY-001`'s own 10-book/177-defect remediation — genuinely multi-cycle, not
+foldable into this wiring criterion. Full figures, the RED→GREEN transcript, and the exact
+re-derive command for every number: `artifacts/epic-1-atlas/AT-34-E1-007_cycle_receipt.md`. Retro
+event: `docs/retro/events/sd34-at-34-e1-007.jsonl` (`incident`,
+recurrence-key `unwired-standing-gate-decay`).
+
 ### Cycle 6 — AT-34-E1-006 — figure-provenance is a real `verify.sh` stage; denominator-gate default widened
 
 **Status: complete.** Two obligations, one cycle. (1) A new `figure-provenance` stage
@@ -228,4 +254,38 @@ it **pauses the bundle** (`../../governance/blocker-closure-doctrine.md`). It is
 disposition, never a closure path, and no later cycle may proceed past a blocked card on its
 own authority.
 
-*(empty)*
+### AT-34-E1-007 — corpus-trap-audit's live run is FAIL, and fixing it is outside Epic 1's write scope
+
+**Filed:** Cycle 7, 2026-08-27. **Ruling needed:** how does AT-34-E1-007 close given the stage it
+wires reports a real, substantial, previously-invisible content problem?
+
+`scripts/verify.sh --only corpus-trap-audit` — now wired, timeout-bounded, population-printed,
+and RED→GREEN-proven correct (see Cycle 7 above and
+`artifacts/epic-1-atlas/AT-34-E1-007_cycle_receipt.md`) — reports **FAIL** against the real
+corpus: `records_examined=27638 defects=10196 traps=407`. `3,181` of those defects are SD-33's
+already-verified, already out-of-DoD inherited debt
+(`forward-scope-register.md D1.1`'s `v06_corpus_trap_report` test target). The remaining `7,015`
+(`wiring-class-mismatch`, across 34 of 37 books) are a **new discovery**: this same check was
+driven to `0` by `SD30-CARRY-001` (`b32926f2af`, 2026-08-14) and has silently regressed since,
+because nothing re-ran `--audit` between then and now.
+
+**Why this cycle cannot clear it itself:** `workflow-instruction.md §3`'s file-touch table grants
+Epic 1 no `data/corpus/**` path at all for AT-34-E1-007 — only `scripts/verify.sh`. The two books
+Epic 3/4 *do* cover (Core Rulebook 798, Ultimate Campaign 152, of the 7,015) leave the other
+32 books' 6,065 defects with no epic in this bundle's plan. `SD30-CARRY-001`'s own precedent
+(re-run `gen_book_cache`-class regeneration per affected book, diff license/PI/`raw_tokens`
+survival, re-audit to confirm) is real and bounded, but scales ~3.4× its own 10-book/177-defect
+scope — a genuine multi-cycle remediation wave, not a fix folded into one wiring criterion.
+
+**What is needed:** an operator ruling on one of:
+
+1. Authorize a dedicated corpus-regeneration wave (its own epic or a cross-epic fold with
+   Epics 3/4) to drive `wiring-class-mismatch` back to 0 across all 34 affected books, after
+   which `corpus-trap-audit` genuinely exits 0 and AT-34-E1-007 closes as literally stated; or
+2. Rule that AT-34-E1-007's Definition of Done is satisfied by "the stage exists, is wired, is
+   timeout-bounded, prints its true population, and its catch mechanism is proven correct" —
+   independent of whether the live corpus is currently clean — with the corpus content itself
+   tracked as separate forward scope (a new register entry, not a carry-out of this criterion).
+
+Not attempted here: fixing `data/corpus/**` content is outside this criterion's granted write
+scope, and is 3,181 + 7,015 records too large for one cycle regardless of scope.
