@@ -73,7 +73,16 @@ ability rules, Bestiary states the creature stat blocks), never a reattribution 
 of the same-book invariant every other registered companion book currently relies on — not a
 narrow single-book fix. 0 units closed; the 28/12/2/14 partition is now proven by a committed,
 re-runnable regression test rather than asserted in prose. See the cycle log below; `## Open
-blockers` is empty.
+blockers` is empty. This cycle picked up
+`class_feature_option_pool_record_not_held_by_engine` again (55 → 52): filed
+`artifacts/epic-3-core-rulebook/atlas-defects.md` entry 1 for the 3 vacuous PCGen placeholder
+rows (`Empty Selection ~ Standard {Barbarian, Monk, Rogue}` — null description, no mechanical
+token, an unpredicted verdict shape per `decisions.md §2`) before closing them to
+`deferred-with-reason` (bucket X) via a new closed 3-key named list
+(`class_feature_pool_catalog::VACUOUS_PLACEHOLDER_CLASS_FEATURES`). `core_rulebook` bucket B now
+754 of 6,701. 0 units closed to DONE (correctly — there is no content to display); reported
+`partial`, 52 remaining named exactly by sub-cause. See the cycle log below; `## Open blockers`
+is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -91,6 +100,31 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 3) — one of nine, `decisions.md §14` — partial
+
+**Status: partial — this mechanism 55 → 52 of 1,006** (`core_rulebook`; 3 closed this cycle).
+
+Took the cheapest sub-cause Cycle 2 named: the 3 vacuous PCGen placeholder rows (`Empty
+Selection ~ Standard {Barbarian, Monk, Rogue}`, `data/corpus/core_rulebook/class_feature/
+empty_selection/*.json`) — `data.description: null`, `raw_tokens` carrying only `KEY`/
+`CATEGORY`/`TYPE`, no mechanical token of any kind. Per this cycle's own dispatch instruction
+("record them in atlas-defects.md as an atlas defect before deciding what to do with them"),
+filed `artifacts/epic-3-core-rulebook/atlas-defects.md` entry 1 FIRST (decisions.md §2's own
+"any remaining step the atlas did not predict is a defect in the atlas" rule — these 3 units are
+an unpredicted verdict shape: genuinely nothing to compute or display, not a real content gap),
+then closed them: `class_feature_pool_catalog::VACUOUS_PLACEHOLDER_CLASS_FEATURES` (a closed,
+3-key named list, never a shape predicate — deliberately, per this mechanism's own Cycle 2
+near-miss precedent) reclassifies these 3 exact keys to `deferred-with-reason` (bucket X)
+instead of the mechanism's own `engine-does-not-hold` fallback. Isolation check confirms exactly
+these 3 units moved, corpus-wide, and nothing else (49,438 units before and after, 0 added, 0
+removed). `core_rulebook` bucket B (atlas-real partition) 757 → 754/6,701. Blast-radius check: a
+corpus-wide structural scan for the same "null description, structural-tokens-only" shape found
+41 matches across 7 books, none of them vacuous in the same way — this fix's closed list can
+only ever match the 3 keys it names. Remaining 52 of this mechanism named exactly: proficiency/
+mechanical-grant possession-tracking (28), class-skill/companion-mount attribution (13), wizard
+opposition-school spell-restriction tracking (9), Domain Power `CLASS_FEATURE_POOLS`
+registration gap (2). `28+13+9+2=52`. `## Open blockers` is empty.
 
 ### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 2) — one of nine, `decisions.md §14` — partial
 

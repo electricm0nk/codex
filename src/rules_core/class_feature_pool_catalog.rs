@@ -654,6 +654,58 @@ pub fn load_standalone_class_feature_catalog(repo_root: &Path) -> Vec<PoolCatalo
     load_class_feature_catalog(repo_root, is_standalone_class_feature)
 }
 
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism, vacuous-placeholder sub-cause, `atlas-defects.md` — an
+/// unpredicted verdict shape decisions.md §2 requires logging before
+/// deciding disposition). PCGen's own `_abilities_class.lst` source carries
+/// three `CATEGORY:Class` rows whose ENTIRE content is a `KEY`, a
+/// `CATEGORY`, and a `TYPE` token — no `DESC:`, no
+/// `AUTO:`/`ABILITY:`/`BONUS:`/`CHOOSE:`, no mechanical token of any kind
+/// (`data.description` is JSON `null`, `data.raw_tokens` has exactly 3
+/// entries). These are PCGen's own "no selection" placeholder rows for a
+/// `CHOOSE` menu's default entry (the record's own `class` field is
+/// literally `"Empty Selection"`, PCGen's own convention name) — not a
+/// Pathfinder rules feature at all, so there is genuinely nothing to
+/// compute and nothing to display, and the corpus itself proves it
+/// (verified by
+/// `vacuous_placeholder_rows_are_genuinely_empty_in_the_committed_corpus`
+/// below, over the live `data/corpus/` files, not merely asserted here).
+///
+/// A hardcoded, closed list — never a shape-matched predicate — is
+/// deliberate: this mechanism's own Cycle 2 receipt records a near-miss
+/// where gating a sibling rung on record SHAPE ALONE (rather than a
+/// proven, closed set) would have promoted 188 unrelated corpus-wide
+/// records before being caught and reverted pre-commit. A corpus-wide
+/// structural scan for "description null, raw_tokens ⊆ {KEY, CATEGORY,
+/// TYPE}" independently confirmed 41 matches spanning 6 other books (witch
+/// hex sub-features, uncanny-dodge trackers, BWBI wondrous-item slots,
+/// ...) that are NOT vacuous — this table can only ever match the 3 exact
+/// keys named here, none of those 41.
+pub const VACUOUS_PLACEHOLDER_CLASS_FEATURES: &[(&str, &str)] = &[
+    (
+        "Empty Selection ~ Standard Barbarian",
+        "PCGen's own CHOOSE-menu \"no selection\" placeholder row for the Barbarian class; no DESC, no mechanical token; not a Pathfinder rules feature.",
+    ),
+    (
+        "Empty Selection ~ Standard Monk",
+        "PCGen's own CHOOSE-menu \"no selection\" placeholder row for the Monk class; no DESC, no mechanical token; not a Pathfinder rules feature.",
+    ),
+    (
+        "Empty Selection ~ Standard Rogue",
+        "PCGen's own CHOOSE-menu \"no selection\" placeholder row for the Rogue class; no DESC, no mechanical token; not a Pathfinder rules feature.",
+    ),
+];
+
+/// Looks up [`VACUOUS_PLACEHOLDER_CLASS_FEATURES`] by key, returning the
+/// stated reason when it matches. `v06_work_inventory.rs`'s `Kind::
+/// ClassFeature` arm consults this immediately before its final
+/// `class_feature_option_pool_record_not_held_by_engine` fallback, exactly
+/// mirroring `uca_feat_tables::DEFERRED_WITH_REASON`'s established named-
+/// list pattern (never a live shape scan) for the identical reason.
+pub fn vacuous_placeholder_reason(key: &str) -> Option<&'static str> {
+    VACUOUS_PLACEHOLDER_CLASS_FEATURES.iter().find(|(k, _)| *k == key).map(|(_, reason)| *reason)
+}
+
 /// `(book, key) -> description` for every entry the catalog holds — the
 /// shape `v06_work_inventory.rs`'s `EngineFacts` (and `Kind::ClassFeature`'s
 /// classify arm) actually consults, mirroring `feat_served_descriptions`'
@@ -668,6 +720,62 @@ mod tests {
 
     fn repo_root() -> PathBuf {
         PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    /// Proves `VACUOUS_PLACEHOLDER_CLASS_FEATURES`' own claim against the
+    /// REAL, committed corpus — not merely asserted in a doc comment. RED
+    /// if the corpus ever gains real content for one of these keys (a
+    /// genuine PCGen data update), which is exactly when this table must
+    /// be revisited (`decisions.md §2`'s "cleared by revisiting the stated
+    /// condition"). Also RED if a fourth `empty_selection/*.json` file
+    /// ever appears uncovered by the table.
+    #[test]
+    fn vacuous_placeholder_rows_are_genuinely_empty_in_the_committed_corpus() {
+        let dir = repo_root().join("data/corpus/core_rulebook/class_feature/empty_selection");
+        let mut found = std::collections::BTreeSet::new();
+        for entry in std::fs::read_dir(&dir).expect("empty_selection/ dir exists") {
+            let entry = entry.expect("readable dir entry");
+            let text = std::fs::read_to_string(entry.path()).expect("readable corpus json");
+            let json: Value = serde_json::from_str(&text).expect("valid corpus json");
+            let key = json["data"]["key"].as_str().expect("data.key present").to_string();
+            assert!(
+                VACUOUS_PLACEHOLDER_CLASS_FEATURES.iter().any(|(k, _)| *k == key),
+                "unexpected key under empty_selection/, not covered by the closed list: {key}"
+            );
+            assert!(
+                json["data"]["description"].is_null(),
+                "{key} now carries a real description -- revisit this table, decisions.md §2"
+            );
+            let token_keys: std::collections::BTreeSet<&str> = json["data"]["raw_tokens"]
+                .as_array()
+                .expect("raw_tokens is an array")
+                .iter()
+                .map(|t| t["key"].as_str().expect("token key present"))
+                .collect();
+            assert_eq!(
+                token_keys,
+                std::collections::BTreeSet::from(["KEY", "CATEGORY", "TYPE"]),
+                "{key} carries a token beyond the placeholder's structural KEY/CATEGORY/TYPE -- \
+                 revisit this table, decisions.md §2"
+            );
+            found.insert(key);
+        }
+        assert_eq!(
+            found.len(),
+            VACUOUS_PLACEHOLDER_CLASS_FEATURES.len(),
+            "every key in VACUOUS_PLACEHOLDER_CLASS_FEATURES must have exactly one corpus file, \
+             and vice versa"
+        );
+    }
+
+    #[test]
+    fn vacuous_placeholder_reason_matches_only_the_named_three_keys() {
+        for (key, _) in VACUOUS_PLACEHOLDER_CLASS_FEATURES {
+            assert!(vacuous_placeholder_reason(key).is_some());
+        }
+        assert!(vacuous_placeholder_reason("Timeless Body").is_none());
+        assert!(vacuous_placeholder_reason("Channel Negative Energy").is_none());
+        assert!(vacuous_placeholder_reason("Empty Selection ~ Standard Fighter").is_none());
     }
 
     #[test]

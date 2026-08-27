@@ -9783,6 +9783,26 @@ fn classify(
                         engine_book: engine_book_field,
                     };
                 }
+                // AT-34-E3-001 vacuous-placeholder sub-cause
+                // (`class_feature_pool_catalog::VACUOUS_PLACEHOLDER_CLASS_
+                // FEATURES`' own doc comment carries the full argument):
+                // asked immediately before the mechanism's own fallback
+                // below, for the 3 PCGen "no selection" CHOOSE-menu
+                // placeholder rows this branch would otherwise misreport as
+                // an engine gap. A closed, named-key lookup -- never a
+                // shape predicate -- so it can only ever match these exact
+                // 3 keys, none of this branch's other members.
+                if let Some(reason) =
+                    class_feature_pool_catalog::vacuous_placeholder_reason(&unit.key)
+                {
+                    return Verdict {
+                        status: "deferred-with-reason",
+                        evidence: "vacuous_placeholder_row_no_corpus_content_to_render"
+                            .to_string(),
+                        reason: Some(reason.to_string()),
+                        engine_book: engine_book_field,
+                    };
+                }
                 if text_only {
                     return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");
                 }
@@ -16716,6 +16736,58 @@ mod class_feature_text_complete_rung_tests {
              status={} evidence={}",
             verdict.status, verdict.evidence
         );
+    }
+
+    /// `AT-34-E3-001` vacuous-placeholder sub-cause: PCGen's own "no
+    /// selection" CHOOSE-menu default row for the Barbarian class --
+    /// `description: null`, no mechanical token, `class` field literally
+    /// `"Empty Selection"` -- must reach `deferred-with-reason`, never the
+    /// mechanism's own `engine-does-not-hold` fallback. Confirms this
+    /// PROOF FAILS before the fix (the intended-reason RED): before
+    /// `class_feature_pool_catalog::vacuous_placeholder_reason` was
+    /// consulted, this exact unit fell through to
+    /// `class_feature_option_pool_record_not_held_by_engine` -- reported
+    /// as an engine gap for a record that carries no content to gap on.
+    #[test]
+    fn a_vacuous_empty_selection_placeholder_row_is_deferred_not_reported_as_a_gap() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("barbarian".to_string(), "core_rulebook");
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            129,
+            "Empty Selection ~ Standard Barbarian",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(
+            verdict.status, "deferred-with-reason",
+            "expected the vacuous-placeholder rung, got status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(verdict.evidence, "vacuous_placeholder_row_no_corpus_content_to_render");
+        assert!(verdict.reason.is_some(), "deferred-with-reason must carry a stated reason");
+    }
+
+    /// Control case: a Monk/Rogue class feature that merely SHARES the same
+    /// owner-resolution shape (suffix-matches a modelled class) but is a
+    /// real, non-placeholder record must be UNAFFECTED -- the vacuous rung
+    /// is a closed, named-key lookup, never a shape predicate, so it must
+    /// not fire here.
+    #[test]
+    fn a_real_class_feature_sharing_the_suffix_match_shape_is_unaffected_by_the_vacuous_rung() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("monk".to_string(), "core_rulebook");
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            200,
+            "Flurry of Blows ~ Standard Monk",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), true, false, "computed", false);
+        assert_ne!(verdict.status, "deferred-with-reason");
+        assert_ne!(verdict.evidence, "vacuous_placeholder_row_no_corpus_content_to_render");
     }
 }
 
