@@ -5,8 +5,7 @@ closed 6 of the original 63 and named all 57 remaining across seven sub-causes
 (28+10+9+3+3+2+2). This cycle takes the cheapest of those seven — sub-cause 8, the
 multi-`DESC:` ingest truncation (2 units) — and closes it.
 
-- **Commit SHA:** `PENDING` (parent `85ceae50aa`) — filled in the follow-up commit per this
-  package's own established two-commit convention (fix, then a doc-only SHA-fill).
+- **Commit SHA:** `f98c6abddc` (parent `85ceae50aa`).
 - **Files touched:**
   - `src/rules_core/cache_gen/class_feature.rs` — `desc_value` now joins a record's DESC
     segments into one description when doing so is safe (a genuine sequential continuation,
@@ -216,7 +215,7 @@ in its own next-cycle plan), `wizard opposition-school spell-restriction trackin
 - `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly):
   `cargo test --locked --no-run` with its own
   `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop` — clean, exit 0.
-- Run at SHA: `PENDING` (filled in the follow-up commit).
+- Run at SHA: `f98c6abddc`.
 
 ## Sweep population
 
