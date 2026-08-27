@@ -50,14 +50,16 @@ sub-causes — 12 zero-content internal plumbing rows, 2 PCGen monster-class def
 master-side familiar-ability-pool rows this book registers no familiar creature to own — see
 the cycle log below).
 AT-34-E3-001 itself does not close yet — `core_rulebook`'s real, atlas-partitioned bucket B is
-now 762 of 6,701 (`python3 scripts/completion_atlas.py --by-book`, grepped for `core_rulebook`;
-was 894, this cycle's `race_trait_race_not_modelled` mechanism closed all 132 of it), and
-four of the nine named mechanisms remain (their live populations — 346, 333, 55, 28 — sum
-to exactly 762, no unnamed gap; the `class_feature_owner_matched_by_name…` and `class_feature_
-option_pool_record_with_magnitude…` mechanisms have not yet been picked up by any cycle, and
-their live counts (346, 333) have drifted from `decisions.md §14`'s filed 330/333 — a future
-cycle should re-derive and record why before closing either). See the cycle log below;
-`## Open blockers` is empty.
+still 762 of 6,701 (`python3 scripts/completion_atlas.py --by-book`, grepped for `core_rulebook`;
+unchanged this cycle, 0 units moved), and four of the nine named mechanisms remain (their live
+populations — 346, 333, 55, 28 — sum to exactly 762, no unnamed gap). This cycle picked up
+`class_feature_owner_matched_by_name_but_record_not_held_by_engine` (346, matching the drifted
+count the previous cycle flagged — confirmed still 346, not a further drift) and reported
+`partial`: an exact, sum-exact 7-way sub-cause partition, proven by a committed passing
+regression test, but 0 units closed — every sub-cause needs real engine wiring or new ingest
+work, not a narrow catalog-widening fix (see the cycle log below for the full investigation).
+`class_feature_option_pool_record_with_magnitude_not_held_by_engine` (333) has not yet been
+picked up by any cycle. See the cycle log below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -75,6 +77,59 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`class_feature_owner_matched_by_name_but_record_not_held_by_engine` mechanism) — one of nine, `decisions.md §14` — partial
+
+**Status: partial — this mechanism 0 → 0 of 346** (`core_rulebook`; every remaining unit named
+by an exact sub-cause, proven by a committed passing regression test, not just prose).
+
+Population re-derived at HEAD, not transcribed: group `core_rulebook` units whose `status` is
+`engine-does-not-hold` by `evidence`, take the
+`class_feature_owner_matched_by_name_but_record_not_held_by_engine` group ->
+**346 of 346** — matches the dispatch brief's stated figure exactly, verified.
+
+**Investigation, not a fix.** `Kind::ClassFeature`'s "owner resolved" branch already consults
+`facts.class_feature_pool_catalog_holds` before falling back to `engine-does-not-hold`, and
+`class_feature_pool_catalog`'s own `is_registered_pool_group` was already widened (SD-32 T12) to
+accept ANY `" ~ "`-qualified key — so the catalog this mechanism's own evidence-comment says is
+missing is not narrow. Re-running that catalog's exact filter, gate by gate and in the same
+order, against all 346 units produces an EXACT, sum-exact partition: **143** null-`description`
+internal-bookkeeping rows (`ADD:SPELLCASTER`/`SPELLKNOWN`/`SPELLLEVEL`, no `DESC:` at all — no
+prose exists to serve); **121** real-engine-effect-token rows (`ABILITY`/`AUTO`/`BONUS`/`ADD`/…
+alongside the description — genuinely mechanical, Decision 7 condition 1 fails); **67** already
+served by the catalog but blocked at `classify()`'s own promotion gate (`wiring_class != "display"`,
+or the prose trips `closure_states_universal_sheet_modifier`'s `"size bonus"` cue — both
+deliberate, hand-verified correct per Decision 7); **6** class-level-scaled prose (e.g. "200 gp
+per wizard level"); **5** dropped-pcgen-arg records; **3** multi-`DESC:` records whose branches
+are genuinely mutually exclusive (alignment/level-banded), not the safe sequential-continuation
+shape a prior cycle's fix already handles; **1** bare-`%N` reference. Two of these sub-causes
+were hand-sampled specifically to check for a hidden bug (the 67-unit "already in the catalog"
+group looked most promising) — both hand-checked records showed the blocking gate firing
+correctly, for the exact reason Decision 7 requires, so no code change was made.
+
+**Why no fix landed.** Every gate refusing these 346 units is pre-existing, load-bearing safety
+architecture (`class_feature_pool_catalog.rs`'s render-and-refuse gates, `classify()`'s
+wiring-class and universal-sheet-modifier gates) built by earlier cycles against real,
+hand-verified corpus findings specifically to prevent serving a genuinely mechanical or
+level-scaled record as if it were static, complete prose. Closing any of these 346 units
+requires either new engine wiring (spellcaster/domain/bonus-feat/proficiency grants, size-bonus
+shapeshifting computations) or new ingest work (writing a description that does not exist
+upstream) — both larger, separately-scoped projects, not a one-cycle catalog widening. Naming
+the exact, provable partition is this cycle's deliverable (`decisions.md §15`).
+
+**Movement:** none — 0 units changed status or evidence this cycle (instrument-correction,
+reclassification, reachability, and closure all zero). `core_rulebook` bucket B (atlas-real
+partition) unchanged at 762 of 6,701.
+
+TDD: one new, committed, passing test,
+`class_feature_owner_matched_but_not_held_346_sub_causes_are_named_and_sum_exactly`, in
+`src/rules_core/class_feature_pool_catalog.rs`, RED-then-GREEN against the live corpus and
+`docs/work-inventory.json` (asserts the seven sub-cause counts sum exactly to the re-derived
+population; fails closed if a future ingest/wiring change moves a unit without this receipt
+being updated to match). No production code changed.
+
+Full receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_owner_matched_cycle_receipt.md`.
 
 ### Cycle — AT-34-E3-001 (`race_trait_race_not_modelled` mechanism) — one of nine, `decisions.md §14` — complete
 

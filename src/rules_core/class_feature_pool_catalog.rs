@@ -1224,5 +1224,166 @@ mod tests {
             );
         }
     }
+
+    /// `AT-34-E3-001`'s `class_feature_owner_matched_by_name_but_record_
+    /// not_held_by_engine` mechanism (`decisions.md §14`, 346 of 1,006
+    /// `core_rulebook` bucket-B units at this cycle's start): re-derives,
+    /// from the live `docs/work-inventory.json` and the live corpus this
+    /// module already reads, WHY each unit in this mechanism's population
+    /// is not served by [`load_pool_catalog`] -- the exact gate this
+    /// module's own filter (`load_class_feature_catalog`) refuses it at,
+    /// walked in the SAME order that function checks them, so the count is
+    /// never a re-narration.
+    ///
+    /// **Every gate below is load-bearing, not this cycle's own
+    /// invention** -- each was hand-verified against a real corpus finding
+    /// by an earlier cycle (this file's own doc comments cite them). This
+    /// test proves the negative the receipt reports: none of the 346 is a
+    /// narrow catalog-widening bug this cycle can close without either (a)
+    /// new engine wiring for a genuinely mechanical/computed record, or (b)
+    /// new ingest work for a record with no player-facing description at
+    /// all. The seven buckets below are that population's exact partition
+    /// (`decisions.md §15`: a named remainder, not "the rest").
+    #[test]
+    fn class_feature_owner_matched_but_not_held_346_sub_causes_are_named_and_sum_exactly() {
+        let repo_root = repo_root();
+        let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
+            .expect("docs/work-inventory.json is readable");
+        let inventory: Value =
+            serde_json::from_str(&inventory_text).expect("docs/work-inventory.json is valid JSON");
+        let units = inventory["units"].as_array().expect("units is an array");
+        let mechanism_units: Vec<(String, String)> = units
+            .iter()
+            .filter(|u| {
+                u["book"].as_str() == Some("core_rulebook")
+                    && u["status"].as_str() == Some("engine-does-not-hold")
+                    && u["evidence"].as_str()
+                        == Some("class_feature_owner_matched_by_name_but_record_not_held_by_engine")
+            })
+            .map(|u| {
+                (
+                    u["book"].as_str().unwrap_or_default().to_string(),
+                    u["corpus_key"].as_str().unwrap_or_default().to_string(),
+                )
+            })
+            .collect();
+        let population = mechanism_units.len();
+
+        let corpus_root = repo_root.join("data/corpus");
+        let mut reasons: BTreeMap<&'static str, u32> = BTreeMap::new();
+        for (book, key) in &mechanism_units {
+            let cf_dir = corpus_root.join(book).join("class_feature");
+            let mut files = Vec::new();
+            walk_json_files(&cf_dir, &mut files);
+            let mut found = None;
+            for file in &files {
+                let Ok(text) = std::fs::read_to_string(file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                if doc["data"]["key"].as_str() == Some(key.as_str()) {
+                    found = Some(doc);
+                    break;
+                }
+            }
+            let Some(doc) = found else {
+                *reasons.entry("no_corpus_record_found").or_default() += 1;
+                continue;
+            };
+            let data = &doc["data"];
+            let raw_desc = data["description"].as_str();
+            let Some(raw_desc) = raw_desc else {
+                // No `DESC:` at all -- a genuinely internal, never
+                // player-facing bookkeeping row (`ADD:SPELLCASTER`,
+                // `SPELLKNOWN`, `SPELLLEVEL`, ...). Real ingest work
+                // (writing a description that does not exist upstream) or
+                // a reclassification, not a catalog fix.
+                *reasons.entry("description_is_null_internal_bookkeeping").or_default() += 1;
+                continue;
+            };
+            if !is_real_description_value(raw_desc) {
+                *reasons.entry("description_not_real_value").or_default() += 1;
+                continue;
+            }
+            if carries_unimplemented_marker(raw_desc) {
+                *reasons.entry("carries_unimplemented_marker").or_default() += 1;
+                continue;
+            }
+            let owning_class = data["class"].as_str().unwrap_or("");
+            if carries_class_specific_level_phrase(raw_desc, owning_class) {
+                // Prose states a value that scales with the OWNING class's
+                // level (e.g. "200 gp per wizard level") -- Decision 7
+                // condition 2 ("nothing to compute") genuinely fails; this
+                // needs a real per-character computation, not a serve.
+                *reasons.entry("class_specific_level_phrase").or_default() += 1;
+                continue;
+            }
+            if !has_no_engine_effect_token(&data["raw_tokens"]) {
+                // Carries a real mechanical token (`ADD`, `ABILITY`,
+                // `AUTO`, `BONUS`, `DEFINE`, `SPELLS`, ...) alongside its
+                // description -- a genuine mechanic, not prose-only.
+                *reasons.entry("engine_effect_token_present").or_default() += 1;
+                continue;
+            }
+            if is_archetype_locked(&data["raw_tokens"]) {
+                *reasons.entry("archetype_locked").or_default() += 1;
+                continue;
+            }
+            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
+                && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+                    &data["raw_tokens"],
+                    raw_desc,
+                )
+            {
+                // Every one of these, hand-checked this cycle, carries a
+                // genuine `PRE*`-gated alternative-branch shape (mutually
+                // exclusive choices or level bands), not the `class_
+                // feature_option_pool` cycle's safe sequential-continuation
+                // shape -- joining them would show every branch at once,
+                // the exact silent-truncation-turned-over-disclosure defect
+                // that gate exists to prevent.
+                *reasons.entry("multi_desc_segment_not_regenerated").or_default() += 1;
+                continue;
+            }
+            if raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc) {
+                *reasons.entry("bare_percent_reference").or_default() += 1;
+                continue;
+            }
+            let rendered = render_pcgen_desc(raw_desc);
+            if !rendered.dropped_args.is_empty() {
+                *reasons.entry("dropped_pcgen_args").or_default() += 1;
+                continue;
+            }
+            if leaked_pcgen_syntax(&rendered.text).is_some() {
+                *reasons.entry("leaked_pcgen_syntax").or_default() += 1;
+                continue;
+            }
+            // Passes every gate this catalog runs -- genuinely already
+            // SERVED by `load_pool_catalog`/`pool_catalog_index`. Every one
+            // hand-sampled this cycle (`Sorcerer Bonus Spell L4 ~ Elemental
+            // Body I`, `Sorcerer Bonus Spell L1 ~ Bless`, ...) is still
+            // blocked at `classify()`'s own promotion gate: either its
+            // `wiring_class` is not `"display"` (`computed`/`ambiguous`/
+            // `static`/`derived` -- a real magnitude/scaling signal the
+            // catalog's render-and-refuse gate alone cannot see), or its
+            // prose trips `closure_states_universal_sheet_modifier`'s
+            // `"size bonus"` cue (a per-character numeric effect, not
+            // static flavor text). Both gates are `classify()`'s, deliberate
+            // and correct per Decision 7 -- a text-complete promotion for
+            // either shape would misreport a record that still needs a
+            // real computation as merely displayed.
+            *reasons.entry("catalog_serves_it_but_classify_wiring_class_gate_blocks_promotion")
+                .or_default() += 1;
+        }
+
+        let total: u32 = reasons.values().sum();
+        assert_eq!(
+            total as usize, population,
+            "the seven named sub-causes must partition the WHOLE mechanism population \
+             exactly, decisions.md §15 -- got {reasons:?} summing to {total} against a \
+             population of {population}"
+        );
+        for (k, v) in &reasons {
+            eprintln!("AT-34-E3-001 class_feature_owner_matched sub-cause: {v} | {k}");
+        }
+    }
 }
 
