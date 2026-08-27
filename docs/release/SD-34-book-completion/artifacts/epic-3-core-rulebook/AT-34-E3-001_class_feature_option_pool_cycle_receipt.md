@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism)
 
-- **Commit SHA:** (filled after commit — see git log; parent `9e380e2ce6`)
+- **Commit SHA:** `8e7aecc855` (parent `9e380e2ce6`)
 - **Files touched:**
   - `src/rules_core/class_feature_pool_catalog.rs` — refactored the shared
     walk-and-render pipeline behind `load_pool_catalog` into
@@ -269,7 +269,7 @@ mechanism that turned out not to be homogeneous).
 - `apps/desktop/src-tauri` (separate cargo workspace, tested explicitly):
   `cargo test --locked --no-run` in that directory with its own
   `CARGO_TARGET_DIR=/tmp/cargo-sd34-at-34-e3-001-desktop` — clean, exit 0.
-- Run at SHA: this cycle's own HEAD (see commit SHA above).
+- Run at SHA: `8e7aecc855`.
 
 ## Sweep population
 
