@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-24T03:51:47Z",
+  "ingested_at": "2026-08-27T14:53:22Z",
   "data": {
     "key": "Octopus Wild Shape ~ Poison",
     "name": "Poison",
     "class": "Octopus Wild Shape",
-    "description": "Bite-injury; save Fort DC 13; frequency 1/round for 6 rounds; effect 1 Str; cure 1 save.",
+    "description": "Bite-injury; save Fort DC 13; frequency 1/round for 6 rounds; effect 1 Str; cure 1 save. Calling upon the venomous powers of natural predators, you infect the subject with a horrible poison by making a successful melee touch attack. This poison deals 1d3 Constitution damage per round for 6 rounds. Poisoned creatures can make a Fortitude save each round to negate the damage and end the affliction.|PRERULE:1,DisplayFullSpell",
     "raw_tokens": [
       {
         "key": "KEY",

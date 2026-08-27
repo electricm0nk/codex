@@ -297,23 +297,66 @@ fn has_no_engine_effect_token(raw_tokens: &Value) -> bool {
 /// (e.g. `Rage Power ~ Elemental Blood (Greater)`'s real oracle row: `DESC:
 /// While raging, the barbarian gains` followed by four separate `DESC:
 /// ...a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1` / `...a swim
-/// speed of 60 feet.|PREVAREQ:BloodRage Cold,1` / ... segments). The
-/// upstream ingestion this module reads (`cache_gen::class_feature`,
-/// outside this module's file territory) keeps only the FIRST `DESC:`
-/// token's text as `data.description` -- for most such records that first
-/// segment already carries an unresolvable `%N` (caught by the existing
-/// render-and-refuse gate) or a real engine-effect token (caught by
-/// [`has_no_engine_effect_token`]), but `Elemental Blood, Greater`'s lead-in
-/// clause is a plain, syntax-clean sentence FRAGMENT with neither -- it
-/// rendered "While raging, the barbarian gains" verbatim on a live character
-/// sheet, a truncated sentence with no missing-`%N`/leaked-syntax signal at
-/// all. Refused structurally here: any record whose row carries more than
+/// speed of 60 feet.|PREVAREQ:BloodRage Cold,1` / ... segments).
+///
+/// Refused structurally here: any record whose row carries more than
 /// one `DESC:` field is, by construction, showing only a fragment of what
 /// the oracle actually states, regardless of whether that fragment happens
-/// to read as a complete sentence.
+/// to read as a complete sentence -- UNLESS [`shipped_description_is_the_
+/// already_regenerated_safe_multi_desc_join`] proves this specific
+/// record's shipped `data.description` has already been caught up (see
+/// that function's own doc comment for why the proof, not just the shape,
+/// gates the exception).
 fn raw_tokens_carry_more_than_one_desc_segment(raw_tokens: &Value) -> bool {
     let Some(tokens) = raw_tokens.as_array() else { return false };
     tokens.iter().filter(|t| t.get("key").and_then(|k| k.as_str()) == Some("DESC")).count() > 1
+}
+
+/// The `AT-34-E3-001 class_feature_option_pool` cycle's own narrow fix,
+/// sub-cause 8: `Martial Weapon Proficiency Output` (standalone) and
+/// `Octopus Wild Shape ~ Poison` (pool) each carry a genuine sequential
+/// DESC continuation with no mechanical reason for the split -- unlike
+/// `Rage Power ~ Elemental Blood (Greater)`'s PREVAREQ-gated alternative
+/// branches, joining every segment IS this record's real, complete
+/// description. `cache_gen::class_feature::generate`'s own `desc_value`
+/// (a different file, this package's disjoint-file-touch convention) now
+/// performs that join at ingest time for exactly this safe shape, so a
+/// record whose `data.description` has been regenerated since carries the
+/// FULL joined text already.
+///
+/// **Why this function re-derives the join instead of trusting the shape
+/// alone.** Corpus-wide, many OTHER multi-DESC records share the same
+/// "no PREVAREQ/PREVARGTEQ gate" shape but have NOT been regenerated --
+/// their shipped `data.description` is still the stale, first-segment-only
+/// value the old `desc_value` produced. Gating on shape alone (relaxing
+/// [`raw_tokens_carry_more_than_one_desc_segment`] to skip every
+/// ungated multi-DESC row) was tried and reverted: it silently served
+/// ~186 other records' stale, truncated `data.description` across
+/// multiple books and mechanisms this cycle does not own -- exactly the
+/// silent-truncation defect this module exists to prevent, reopened at
+/// corpus scale. Re-deriving the expected join from `raw_tokens` directly
+/// and requiring it to match the ALREADY-SHIPPED `data.description` proves
+/// ingest has actually caught up for this one record; every other
+/// not-yet-regenerated record fails the equality check and stays refused,
+/// unchanged from before this cycle.
+fn shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+    raw_tokens: &Value,
+    shipped_description: &str,
+) -> bool {
+    let Some(tokens) = raw_tokens.as_array() else { return false };
+    let segments: Vec<&str> = tokens
+        .iter()
+        .filter(|t| t.get("key").and_then(|k| k.as_str()) == Some("DESC"))
+        .filter_map(|t| t.get("value").and_then(|v| v.as_str()))
+        .collect();
+    if segments.len() <= 1 {
+        return false;
+    }
+    if segments[1..].iter().any(|s| s.contains("PREVAREQ") || s.contains("PREVARGTEQ")) {
+        return false;
+    }
+    let expected_join = segments.iter().map(|s| s.trim()).collect::<Vec<_>>().join(" ");
+    expected_join == shipped_description
 }
 
 /// A gap in `render_pcgen_desc`'s own `dropped_args` reporting, found while
@@ -533,7 +576,9 @@ fn load_class_feature_catalog(
             if is_archetype_locked(&data["raw_tokens"]) {
                 continue;
             }
-            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"]) {
+            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
+                && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(&data["raw_tokens"], raw_desc)
+            {
                 continue;
             }
             if raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc) {
@@ -885,10 +930,41 @@ mod tests {
         let entries = load_pool_catalog(&repo_root());
         assert!(
             !entries.iter().any(|e| e.key == "Rage Power ~ Elemental Blood (Greater)"),
-            "a record whose row carries more than one DESC: field must never reach the catalog \
-             (only the first segment is ingested, which can be a syntax-clean sentence fragment)"
+            "a record whose row carries a PREVAREQ/PREVARGTEQ-gated choice-branch DESC segment \
+             must never reach the catalog (only one branch applies per character; joining all \
+             of them would show every alternative as if simultaneously true)"
         );
         assert!(entries.iter().any(|e| e.book == "advanced_class_guide" && e.pool_group == "Rage Power"));
+    }
+
+    /// `AT-34-E3-001 class_feature_option_pool` cycle, sub-cause 8: the SAFE
+    /// multi-DESC shape (no PREVAREQ/PREVARGTEQ gate on any segment beyond
+    /// the first) must reach the catalog now that `cache_gen::class_
+    /// feature::generate` joins it into `data.description` directly --
+    /// `Martial Weapon Proficiency Output` and `Octopus Wild Shape ~
+    /// Poison` are the two real corpus records this closes.
+    #[test]
+    fn a_safe_multi_desc_continuation_reaches_the_standalone_catalog() {
+        let entries = load_standalone_class_feature_catalog(&repo_root());
+        let martial = entries
+            .iter()
+            .find(|e| e.key == "Martial Weapon Proficiency Output")
+            .expect("Martial Weapon Proficiency Output must reach the standalone catalog");
+        assert!(martial.description.contains("You understand how to use your martial weapons"));
+        assert!(martial.description.contains("You make attack rolls with all your martial weapons"));
+        assert!(!martial.description.contains('|'), "no pipe-arg tail may leak into prose");
+    }
+
+    #[test]
+    fn a_safe_multi_desc_continuation_with_a_display_condition_tail_reaches_the_pool_catalog() {
+        let entries = load_pool_catalog(&repo_root());
+        let poison = entries
+            .iter()
+            .find(|e| e.key == "Octopus Wild Shape ~ Poison")
+            .expect("Octopus Wild Shape ~ Poison must reach the pool catalog");
+        assert!(poison.description.starts_with("Bite-injury"));
+        assert!(poison.description.contains("Calling upon the venomous powers"));
+        assert!(!poison.description.contains('|'), "the |PRERULE:... tail must not leak into prose");
     }
 
     #[test]
@@ -907,6 +983,32 @@ mod tests {
             {"key": "SOURCEPAGE", "value": "p.2"},
         ]);
         assert!(!raw_tokens_carry_more_than_one_desc_segment(&unrelated_repeat));
+    }
+
+    #[test]
+    fn shipped_description_is_the_already_regenerated_safe_multi_desc_join_requires_an_exact_match() {
+        let two_plain = serde_json::json!([
+            {"key": "DESC", "value": "a"},
+            {"key": "DESC", "value": "b"},
+        ]);
+        // Not yet regenerated: shipped description is still just the first
+        // segment -- stays refused.
+        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(&two_plain, "a"));
+        // Regenerated: shipped description is the full safe join.
+        assert!(shipped_description_is_the_already_regenerated_safe_multi_desc_join(&two_plain, "a b"));
+        // A choice-branch-gated row never has a safe join, regardless of
+        // what the shipped description says.
+        let choice_gated = serde_json::json!([
+            {"key": "DESC", "value": "While raging, the barbarian gains"},
+            {"key": "DESC", "value": " a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1"},
+        ]);
+        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+            &choice_gated,
+            "While raging, the barbarian gains a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1"
+        ));
+        // A single-DESC row has nothing to join.
+        let one = serde_json::json!([{"key": "DESC", "value": "a"}]);
+        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(&one, "a"));
     }
 
     /// No served description leaks unresolved PCGen syntax onto the screen

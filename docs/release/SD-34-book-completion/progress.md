@@ -34,15 +34,17 @@ cycle's own §6 step 3 run discovered and re-pinned); the next cycle cleared
 records are PI-masked at ingestion; `Kind::Deity`'s `classify()` arm gained the same
 coordinate-fallback resolution the `domain` mechanism already proved, never reading the
 redacted real name); the next cycle partially cleared
-`class_feature_option_pool_record_not_held_by_engine` (63 → 57 of 968 — a new
+`class_feature_option_pool_record_not_held_by_engine` (63 → 57 → 55 of 968 — a new
 `class_feature_pool_catalog::load_standalone_class_feature_catalog` closes six genuinely
 prose-only, mechanically-inert standalone features; the remaining 57 turned out NOT to be a
 single root cause on direct per-record inspection — seven distinct sub-shapes named with
 populations in that cycle's own receipt, most requiring new cross-cutting engine capabilities
-this program does not yet have — see the cycle log below for the full decomposition).
+this program does not yet have; a follow-up cycle then closed the cheapest of those seven, a
+2-unit multi-DESC ingest truncation — see the cycle log below for the full decomposition and
+that cycle's own caught-and-reverted corpus-wide near-miss).
 AT-34-E3-001 itself does not close yet — `core_rulebook`'s real, atlas-partitioned bucket B is
-968 of 6,701 (`python3 scripts/completion_atlas.py --book core_rulebook --check`), and five of
-the nine named mechanisms remain (their populations sum to exactly 968 — no unnamed gap). See
+966 of 6,701 (`python3 scripts/completion_atlas.py --book core_rulebook --check`), and five of
+the nine named mechanisms remain (their populations sum to exactly 966 — no unnamed gap). See
 the cycle log below; `## Open blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
@@ -61,6 +63,47 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism), Cycle 2 — multi-DESC ingest truncation sub-cause — partial
+
+**Status: partial (`decisions.md §15`) — this mechanism 57 → 55.** Continues the prior cycle
+(below) without re-deriving its investigation; takes the cheapest of its seven named
+sub-causes, the multi-`DESC:` ingest truncation (2 units: `Martial Weapon Proficiency Output`,
+`Octopus Wild Shape ~ Poison`).
+
+`cache_gen::class_feature::generate`'s `desc_value` now joins a record's DESC segments when
+safe (no `PREVAREQ`/`PREVARGTEQ` choice-branch gate on any segment beyond the first), instead
+of always keeping only the first — `Rage Power ~ Elemental Blood (Greater)`'s own regression
+test is unchanged, byte-identical. Regenerated the 2 named corpus records via the guarded
+`--coordinates` path (18,043-unit corpus untouched elsewhere).
+
+**Discovery, caught and reverted before commit:** the first version of `class_feature_pool_
+catalog.rs`'s companion gate fix relaxed the multi-DESC refusal on SHAPE alone, which silently
+promoted **188** OTHER corpus records across multiple books and mechanisms this cycle does not
+own — their `data.description` was still the OLD, stale, first-segment-only value, so relaxing
+the gate served that truncated text as `text-complete`. Caught by diffing the regenerated
+`docs/work-inventory.json` against the committed baseline before commit. Fixed by requiring an
+ingest-freshness PROOF instead of the shape alone: the gate now recomputes the expected safe
+join directly from `raw_tokens` and only admits a record when that join EQUALS the
+already-shipped `data.description`. Re-running the regeneration with the corrected gate
+confirmed exactly 2 changes, both intended. Retro `near_miss` event:
+`docs/retro/events/sd34-at-34-e3-001.jsonl`.
+
+`core_rulebook` bucket B: `968 → 966` (`completion_atlas.py --book core_rulebook --check`).
+Sibling mechanisms confirmed unmoved: `class_feature_owner_matched_by_name_but_record_not_
+held_by_engine` 346, `class_feature_option_pool_record_with_magnitude_not_held_by_engine` 333,
+`companion_absent_from_core_rulebook_companion_tables` 100, `race_trait_race_not_modelled` 132
+— `55+346+333+100+132=966`, matches exactly. Corpus-wide population unchanged at 49,438 (2
+reclassified, 0 added/removed). `corpus_literal_sweep`: `48708 → 48708`, delta 0 (2 already-
+existing corpus files edited in place, none added/removed). Full receipt (Cycle 2 section,
+prepended above Cycle 1's own unedited content):
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_class_feature_option_pool_cycle_receipt.md`.
+
+Remainder, named by sub-cause (Cycle 1's own five unclosed, unchanged, summing to 55):
+proficiency/mechanical-grant possession-tracking (28), class-skill/companion-mount attribution
+(13), wizard opposition-school tracking (9), vacuous placeholders pending a `decisions.md §2`
+ruling (3), Domain Power `CLASS_FEATURE_POOLS` registration gap shared with the 333-unit
+`with_magnitude` sibling mechanism (2). `28+13+9+3+2=55`.
 
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_not_held_by_engine` mechanism) — one of nine, `decisions.md §14` — partial closure, further decomposed
 
