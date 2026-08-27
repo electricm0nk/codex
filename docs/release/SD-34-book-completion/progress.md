@@ -62,7 +62,18 @@ cycle picked up `class_feature_option_pool_record_with_magnitude_not_held_by_eng
 (`domain_power::domain_power_probe_catalog` + a new `probe_domain_power_effect_wiring`), closing
 the exactly 5 units the engine genuinely computes (Good/War/Strength/Destruction/Glory's own
 granted powers) and reported `partial` — a sum-exact, 129-group sub-cause partition for the
-remaining 328 (see the cycle log below). See the cycle log below; `## Open blockers` is empty.
+remaining 328 (see the cycle log below). This cycle re-derived (not inherited) the judgement on
+`companion_absent_from_core_rulebook_companion_tables`'s 28-unit remainder per its own dispatch
+instruction ("re-derive rather than inherit; take a narrower fix if one closes them") and
+confirmed it correct with new corpus evidence: the 14 familiar-pool rows' true owners (11
+familiar creatures) already ship as registered `CompanionRecord`s under `beastiary`, not
+`core_rulebook` — a real cross-book split baked into the actual books (Core Rulebook states the
+ability rules, Bestiary states the creature stat blocks), never a reattribution bug or a
+"no such creature" gap. Closing it needs Shape 8 (cross-book ownership), a corpus-wide widening
+of the same-book invariant every other registered companion book currently relies on — not a
+narrow single-book fix. 0 units closed; the 28/12/2/14 partition is now proven by a committed,
+re-runnable regression test rather than asserted in prose. See the cycle log below; `## Open
+blockers` is empty.
 
 Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 (`content-unit-inventory.md` carries the re-derive command for each):
@@ -80,6 +91,53 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism, cycle 2) — one of nine, `decisions.md §14` — partial
+
+**Status: partial — this mechanism unchanged at 28 of 28 remaining** (`core_rulebook`; 0 closed
+this cycle).
+
+This cycle's dispatch instruction, verbatim: "16 of your 28 are cross-book-owned rows (14
+familiar ability-pool, 2 monster-class) that a prior cycle judged to need a new record type;
+re-derive that judgement rather than inheriting it — if a narrower fix closes them, take it."
+Re-derived the population first (28, matching the filing cycle's own after-figure exactly),
+then investigated both sub-causes from the raw corpus rather than trusting the prior receipt's
+framing.
+
+The 2 monster-class rows (`Companion`, `Shadow Companion`, `cr_classes_companion.lst:6`/`:15`):
+confirmed `VISIBLE:NO`, no `SIZE:`/`MOVE:`/`NATURALATTACKS:` — a hit-dice level-progression
+table, a genuinely different record shape `companion_chassis` has no field for. Judgement
+confirmed correct.
+
+The 14 familiar-ability-pool rows (`ce_abilities_familiar_cr.lst`): this is where re-deriving
+produced NEW evidence. `ce_abilities_familiar_cr.lst` (the orphaned ability rows) declares
+`SOURCELONG:Core Rulebook`, correctly filed under `core_rulebook` by `decisions.md §9`'s
+reattribution. But `ce_races_familiar_cr.lst` — the file that actually DECLARES the 11 familiar
+creatures this pool describes (Bat, Cat, Hawk, Lizard, Monkey, Owl, Rat, Raven, Toad, Viper,
+Weasel; PF1's own Familiars table, CRB p.52-55) — declares `SOURCELONG:Bestiary`, so the SAME
+reattribution rule correctly files THOSE rows under `beastiary` instead. Verified directly
+against the live ingested corpus: all 11 already exist as registered `CompanionRecord`s at
+`data/corpus/beastiary/companion/{bat,cat,hawk,lizard,monkey,owl,rat,raven,toad,viper,weasel}.json`.
+This is not a reattribution bug and not a "no such creature exists" gap — it is a real split
+baked into the actual books (Core Rulebook states the ability rules, Bestiary states the
+creature stat blocks). Closing it needs Shape 8 (cross-book ownership), a corpus-wide widening
+of `companion_chassis`'s `every_shipped_ability_row_is_owned_by_a_creature_of_its_own_book`
+invariant that every one of the 9 currently-registered companion books relies on — not a
+narrow, single-book fix this cycle's scope covers. **Judgement confirmed correct, now with
+corpus proof instead of assertion; no narrower fix exists.**
+
+Built a new, committed regression test rather than leaving this as prose that decays:
+`companion_chassis::tests::companion_absent_28_sub_causes_are_named_and_sum_exactly`
+re-derives the 28-unit population from live `docs/work-inventory.json`, partitions it into the
+exact 12/2/14 sub-cause split against the live ingested corpus, and additionally asserts all 11
+familiar creatures already exist under `beastiary` (the cross-book proof). `cargo test --lib
+rules_core::rules_tables::companion_chassis` — 16/16 pass; full `cargo test --lib` — 2,875
+passed, 0 failed, 14 ignored. `docs/work-inventory.json` untouched this cycle (no unit moved),
+so `completion_atlas.py --check` and the denominator gate are unchanged: `citation_failures=0`,
+`violations=0`. No `v06_work_inventory.rs` line shifted — no atlas citation drift risk this
+cycle. See `artifacts/epic-3-core-rulebook/AT-34-E3-001_companion_absent_cycle_receipt_2.md`
+for full figures and build-scope verification (workspace + `apps/desktop/src-tauri`, both
+`cargo test --locked --no-run` exit 0).
 
 ### Cycle — AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism) — one of nine, `decisions.md §14` — partial
 

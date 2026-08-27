@@ -616,6 +616,9 @@ pub fn companion_book(corpus_book: &str) -> Option<&'static CompanionBook> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use serde_json::Value;
+    use std::collections::BTreeMap;
+    use std::path::PathBuf;
 
     /// A book registered twice, or a book whose tables were wired to another
     /// book's statics, is a copy-paste defect the registry cannot otherwise see.
@@ -1375,6 +1378,173 @@ mod tests {
         assert!(
             refusal.is_none(),
             "a fabricated key must never resolve to a companion record, real or defaulted"
+        );
+    }
+
+    /// `AT-34-E3-001`'s `companion_absent_from_core_rulebook_companion_tables`
+    /// mechanism (`decisions.md §14`): re-derives, from the live
+    /// `docs/work-inventory.json` and the live ingested corpus this module
+    /// already reads, WHY each of this cycle's 28-unit remainder is not
+    /// owned -- a committed, re-runnable proof rather than a one-off
+    /// investigation that decays.
+    ///
+    /// This cycle's own contribution (not inherited from the filing cycle's
+    /// receipt): the familiar-pool sub-cause is checked against the LIVE
+    /// corpus rather than asserted by name, and the test additionally PROVES
+    /// the true owner of each of those 14 rows -- one of 11 familiar
+    /// creatures PF1's own Familiar rules (CRB p.52-55) grant this identical
+    /// ability table to -- is a creature the corpus DOES register, just
+    /// under `beastiary` rather than `core_rulebook` (`ce_races_familiar_
+    /// cr.lst` declares `SOURCELONG:Bestiary`, so `decisions.md §9`
+    /// re-attribution correctly files it there, while `ce_abilities_
+    /// familiar_cr.lst`'s ability POOL declares `SOURCELONG:Core Rulebook`
+    /// and correctly files here — a genuine cross-book split baked into the
+    /// real books, not a reattribution bug). That is the corpus-backed
+    /// reason this needs Shape 8 (cross-book ownership) — a real widening
+    /// of the resolution invariant `the_chassis_link_resolves_in_both_
+    /// directions_for_every_book` enforces corpus-wide above — rather than
+    /// a narrower same-book fix this cycle could safely take instead.
+    #[test]
+    fn companion_absent_28_sub_causes_are_named_and_sum_exactly() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let inventory_text = std::fs::read_to_string(repo_root.join("docs/work-inventory.json"))
+            .expect("docs/work-inventory.json is readable");
+        let inventory: Value = serde_json::from_str(&inventory_text)
+            .expect("docs/work-inventory.json is valid JSON");
+        let units = inventory["units"].as_array().expect("units is an array");
+        let mechanism_keys: Vec<String> = units
+            .iter()
+            .filter(|u| {
+                u["book"].as_str() == Some("core_rulebook")
+                    && u["status"].as_str() == Some("engine-does-not-hold")
+                    && u["evidence"].as_str()
+                        == Some("companion_absent_from_core_rulebook_companion_tables")
+            })
+            .map(|u| u["corpus_key"].as_str().unwrap_or_default().to_string())
+            .collect();
+        assert_eq!(mechanism_keys.len(), 28, "mechanism population drifted from 28");
+
+        const ZERO_CONTENT: [&str; 12] = [
+            "Base Companion ~ Animal Companion",
+            "Base Companion ~ Special Mount",
+            "Companion ~ Ability Score Increase",
+            "Companion ~ Bonus Tricks",
+            "Companion ~ Devotion",
+            "Companion ~ Evasion",
+            "Companion ~ Improved Evasion",
+            "Companion ~ Link",
+            "Companion ~ Multiattack",
+            "Companion ~ Share Spells",
+            "Companion ~ Spell Resistance (AC)",
+            "Companion ~ Spell Resistance (SM)",
+        ];
+        const CLASS_ROWS: [&str; 2] = ["Companion", "Shadow Companion"];
+        const FAMILIAR_POOL: [&str; 14] = [
+            "Familiar Alertness Choice ~ Alertness Active",
+            "Familiar Alertness Choice ~ Alertness Inactive",
+            "Familiar ~ Alertness",
+            "Familiar ~ Deliver Touch Spells",
+            "Familiar ~ Empathic Link",
+            "Familiar ~ Improved Evasion",
+            "Familiar ~ Intelligence Score",
+            "Familiar ~ Natural Armor Bonus",
+            "Familiar ~ Scry on Familiar",
+            "Familiar ~ Share Spells",
+            "Familiar ~ Speak One Language",
+            "Familiar ~ Speak with Animals of Its Kind",
+            "Familiar ~ Speak with Master",
+            "Familiar ~ Spell Resistance",
+        ];
+        // The 11 familiar creatures PF1's own Familiars table (CRB p.52-55)
+        // shares this ability pool across -- already registered, just under
+        // a different book, which is this test's cross-book proof below.
+        const FAMILIAR_CREATURES: [&str; 11] =
+            ["bat", "cat", "hawk", "lizard", "monkey", "owl", "rat", "raven", "toad", "viper", "weasel"];
+
+        let companion_dir = repo_root.join("data/corpus/core_rulebook/companion");
+        let mut companion_docs: Vec<Value> = Vec::new();
+        for entry in std::fs::read_dir(&companion_dir)
+            .unwrap_or_else(|e| panic!("{}: {e}", companion_dir.display()))
+        {
+            let path = entry.expect("readable dir entry").path();
+            if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let text = std::fs::read_to_string(&path).expect("readable json file");
+            let doc: Value = serde_json::from_str(&text).expect("valid json");
+            companion_docs.push(doc);
+        }
+        let find_by_key = |key: &str| -> &Value {
+            companion_docs
+                .iter()
+                .find(|d| d["data"]["key"].as_str() == Some(key))
+                .unwrap_or_else(|| panic!("{key}: no corpus record found under {}", companion_dir.display()))
+        };
+
+        let mut reasons: BTreeMap<&'static str, u32> = BTreeMap::new();
+        for key in &mechanism_keys {
+            let doc = find_by_key(key);
+            let data = &doc["data"];
+            if ZERO_CONTENT.contains(&key.as_str()) {
+                let raw = data["raw_tokens"].as_array().expect("raw_tokens is an array");
+                let has_modelled_token = raw.iter().any(|t| {
+                    matches!(t["key"].as_str(), Some("TYPE") | Some("DESC") | Some("BONUS"))
+                });
+                assert!(
+                    !has_modelled_token,
+                    "{key}: expected zero-content (ABILITY grant only), but a modelled \
+                     token is present -- this row may no longer belong in this sub-cause"
+                );
+                *reasons.entry("zero_content_internal_plumbing").or_default() += 1;
+            } else if CLASS_ROWS.contains(&key.as_str()) {
+                let path = doc["source"]["path"].as_str().unwrap_or("");
+                assert!(
+                    path.ends_with("cr_classes_companion.lst"),
+                    "{key}: expected a `cr_classes_companion.lst` CLASS row, found {path:?}"
+                );
+                *reasons.entry("monster_class_definition_not_a_creature_or_ability").or_default() += 1;
+            } else if FAMILIAR_POOL.contains(&key.as_str()) {
+                let owners_empty =
+                    data["owners"].as_array().map(|a| a.is_empty()).unwrap_or(true);
+                assert!(owners_empty, "{key}: expected genuinely unowned in this book");
+                *reasons
+                    .entry("familiar_ability_pool_true_owner_registered_under_a_different_book")
+                    .or_default() += 1;
+            } else {
+                panic!("{key}: not accounted for by any named sub-cause -- 28 must equal 12+2+14");
+            }
+        }
+
+        // The cross-book proof: every one of the 11 familiar creatures this
+        // ability pool describes already ships, under `beastiary`, not
+        // `core_rulebook` -- so the 14 orphans are a real cross-book fact,
+        // never a "no such creature exists" gap a same-book fix could close.
+        let beastiary_dir = repo_root.join("data/corpus/beastiary/companion");
+        for name in FAMILIAR_CREATURES {
+            let path = beastiary_dir.join(format!("{name}.json"));
+            assert!(
+                path.exists(),
+                "beastiary:companion:{name} should already be a registered creature \
+                 (proves the familiar-pool orphans are cross-book, not creature-absent)"
+            );
+        }
+
+        for (reason, count) in &reasons {
+            eprintln!("AT-34-E3-001 companion_absent sub-cause: {count} | {reason}");
+        }
+        let total: u32 = reasons.values().sum();
+        assert_eq!(total, 28);
+        assert_eq!(reasons.get("zero_content_internal_plumbing").copied().unwrap_or(0), 12);
+        assert_eq!(
+            reasons.get("monster_class_definition_not_a_creature_or_ability").copied().unwrap_or(0),
+            2
+        );
+        assert_eq!(
+            reasons
+                .get("familiar_ability_pool_true_owner_registered_under_a_different_book")
+                .copied()
+                .unwrap_or(0),
+            14
         );
     }
 }
