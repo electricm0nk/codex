@@ -1,9 +1,7 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`race_trait_absent_from_race_traits` mechanism)
 
-- **Commit SHA:** PENDING — filled by a same-cycle follow-up docs commit after this
-  substantive commit lands (same two-commit pattern as
-  `AT-34-E3-001_domain_cycle_receipt.md`, whose own SHA was filled the identical way,
-  commit `79fc41ccd0`). Parent SHA: `79fc41ccd0510c32c771d83711e96d57bd980d6f`.
+- **Commit SHA:** `ae25d75d7de8858bdb6bacf384e432d538de2fc5` (parent
+  `79fc41ccd0510c32c771d83711e96d57bd980d6f`)
 - **Files touched:**
   - `src/bin/ingest_race_traits.rs` (new `TraitRow.is_human_ethnicity_placeholder` field,
     new fifth row shape recognised in `parse_row`, new `core_rulebook` `selector_only`
