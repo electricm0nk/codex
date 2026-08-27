@@ -1,6 +1,6 @@
 {
   "criterion": "AT-34-E1-008",
-  "description": "Per-book wiring-class-mismatch remediation rows, one group per commit. Population and command per docs/release/SD-34-book-completion/decisions.md §13. Regenerate via `cargo run --locked --bin v06_corpus_trap_report -- --audit --json` and filter findings where trap==\"wiring-class-mismatch\" and severity==\"DEFECT\", grouped by the book segment of `file`.",
+  "description": "Per-book wiring-class-mismatch remediation rows, one group per commit. Population and command per docs/release/SD-34-book-completion/decisions.md \u00a713. Regenerate via `cargo run --locked --bin v06_corpus_trap_report -- --audit --json` and filter findings where trap==\"wiring-class-mismatch\" and severity==\"DEFECT\", grouped by the book segment of `file`.",
   "groups": [
     {
       "group": "G1",
@@ -28,7 +28,7 @@
       "corpus_literal_sweep_before": 48699,
       "corpus_literal_sweep_after": 48699,
       "corpus_literal_sweep_delta": 0,
-      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only), so 0 delta is expected and correct per decisions.md §12 L8's own framing (population must grow when records are ADDED -- none were)."
+      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only), so 0 delta is expected and correct per decisions.md \u00a712 L8's own framing (population must grow when records are ADDED -- none were)."
     },
     {
       "group": "G2",
@@ -65,7 +65,7 @@
       "corpus_literal_sweep_before": 48699,
       "corpus_literal_sweep_after": 48699,
       "corpus_literal_sweep_delta": 0,
-      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only, same as G1), so 0 delta is expected and correct per decisions.md §12 L8's own framing (population must grow when records are ADDED -- none were)."
+      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only, same as G1), so 0 delta is expected and correct per decisions.md \u00a712 L8's own framing (population must grow when records are ADDED -- none were)."
     },
     {
       "group": "G3",
@@ -120,7 +120,233 @@
       "corpus_literal_sweep_before": 48699,
       "corpus_literal_sweep_after": 48699,
       "corpus_literal_sweep_delta": 0,
-      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only, same as G1/G2), so 0 delta is expected and correct per decisions.md §12 L8's own framing (population must grow when records are ADDED -- none were)."
+      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only, same as G1/G2), so 0 delta is expected and correct per decisions.md \u00a712 L8's own framing (population must grow when records are ADDED -- none were)."
+    },
+    {
+      "group": "G4",
+      "books": [
+        {
+          "book": "bestiary_2",
+          "wiring_class_mismatch_before": 216,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 494,
+          "records_scanned": 1381,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 494 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "ultimate_wilderness",
+          "wiring_class_mismatch_before": 216,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 417,
+          "records_scanned": 951,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 417 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "advanced_race_guide",
+          "wiring_class_mismatch_before": 185,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 431,
+          "records_scanned": 676,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 431 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "mythic_adventures",
+          "wiring_class_mismatch_before": 168,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 198,
+          "records_scanned": 1242,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 198 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "advanced_class_guide",
+          "wiring_class_mismatch_before": 167,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 217,
+          "records_scanned": 832,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 217 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "adventurers_guide",
+          "wiring_class_mismatch_before": 138,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 167,
+          "records_scanned": 420,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 167 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "inner_sea_magic",
+          "wiring_class_mismatch_before": 124,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 127,
+          "records_scanned": 206,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 127 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "pathfinder_unchained",
+          "wiring_class_mismatch_before": 86,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 132,
+          "records_scanned": 664,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 132 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "inner_sea_races",
+          "wiring_class_mismatch_before": 85,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 102,
+          "records_scanned": 438,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 102 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "inner_sea_faiths",
+          "wiring_class_mismatch_before": 83,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 85,
+          "records_scanned": 191,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 85 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "bestiary_5",
+          "wiring_class_mismatch_before": 66,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 137,
+          "records_scanned": 269,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 137 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "ultimate_combat",
+          "wiring_class_mismatch_before": 65,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 71,
+          "records_scanned": 410,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 71 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "inner_sea_bestiary",
+          "wiring_class_mismatch_before": 57,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 63,
+          "records_scanned": 242,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 63 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "book_of_the_damned_volume_2",
+          "wiring_class_mismatch_before": 48,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 107,
+          "records_scanned": 145,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 107 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "ultimate_equipment",
+          "wiring_class_mismatch_before": 36,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 41,
+          "records_scanned": 1476,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 41 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "book_of_the_damned_volume_1",
+          "wiring_class_mismatch_before": 30,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 35,
+          "records_scanned": 80,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 35 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "inner_sea_world_guide",
+          "wiring_class_mismatch_before": 28,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 202,
+          "records_scanned": 441,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 202 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "ultimate_intrigue",
+          "wiring_class_mismatch_before": 17,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 24,
+          "records_scanned": 227,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 24 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "bonus_bestiary",
+          "wiring_class_mismatch_before": 13,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 17,
+          "records_scanned": 34,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 17 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "occult_adventures",
+          "wiring_class_mismatch_before": 13,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 42,
+          "records_scanned": 1844,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 42 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "inner_sea_intrigue",
+          "wiring_class_mismatch_before": 4,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 10,
+          "records_scanned": 90,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 10 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "monster_codex",
+          "wiring_class_mismatch_before": 4,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 13,
+          "records_scanned": 128,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 13 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "bestiary_6",
+          "wiring_class_mismatch_before": 3,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 48,
+          "records_scanned": 90,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 48 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        },
+        {
+          "book": "inner_sea_combat",
+          "wiring_class_mismatch_before": 2,
+          "wiring_class_mismatch_after": 0,
+          "records_regenerated": 14,
+          "records_scanned": 113,
+          "mechanism": "cargo run --locked --bin restamp_wiring_class -- bestiary_2 ultimate_wilderness advanced_race_guide mythic_adventures advanced_class_guide adventurers_guide inner_sea_magic pathfinder_unchained inner_sea_races inner_sea_faiths bestiary_5 ultimate_combat inner_sea_bestiary book_of_the_damned_volume_2 ultimate_equipment book_of_the_damned_volume_1 inner_sea_world_guide ultimate_intrigue bonus_bestiary occult_adventures inner_sea_intrigue monster_codex bestiary_6 inner_sea_combat",
+          "provenance_check": "PASS -- all 14 changed records diffed old-vs-new (git show HEAD~1 vs working tree) on data/source/license/pi_field/pi_marker/codex_generated_name/rename/population/completeness; 0 mismatches, 0 files added/removed"
+        }
+      ],
+      "commit_sha": "e519f4ea45",
+      "corpus_literal_sweep_before": 48699,
+      "corpus_literal_sweep_after": 48699,
+      "corpus_literal_sweep_delta": 0,
+      "corpus_literal_sweep_note": "0 records added or removed by this group (in-place field restamp only, same as G1-G3), so 0 delta is expected and correct per decisions.md \u00a712 L8's own framing (population must grow when records are ADDED -- none were)."
     }
   ]
 }
