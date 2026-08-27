@@ -1,6 +1,6 @@
 # Cycle — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`race_trait_race_not_modelled` mechanism)
 
-- **Commit SHA:** `<filled after commit>` (parent `a510cbfcf35166dde5f2ce641ac79efde9bc2f00`)
+- **Commit SHA:** `04377a287dbf7fbb627d71b49ea80499033c886b` (parent `a510cbfcf35166dde5f2ce641ac79efde9bc2f00`)
 - **Files touched:**
   - `src/bin/v06_work_inventory.rs` (`Kind::RaceTrait`'s classify() arm gained a generic-table
     fallback; `EngineFacts` gained a `race_trait_generic_table` field; `gather_engine_facts` loads
