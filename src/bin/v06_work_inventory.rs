@@ -5145,6 +5145,16 @@ struct EngineFacts {
     /// [`probe_reachable_race_traits`] for why a probe pinned to this table
     /// under-reports the product by eleven races.
     race_trait_ids: BTreeSet<String>,
+    /// `AT-34-E3-001`'s `race_trait_race_not_modelled` mechanism
+    /// (`decisions.md §14`): the `race_trait_generic/` sibling directory
+    /// SD-32's `ingest_race_trait_generic.py` already populated -- a
+    /// generic, book-agnostic table over the SAME `SimpleKindTable` shape
+    /// `simple_kind_tables::SEVEN_KIND_DIRS` uses, loaded via
+    /// `load_simple_kind_table_for_dir` because `race_trait` is not one of
+    /// the seven Epic 2 kinds. Consulted only as a FALLBACK, after the
+    /// race-modelled checks below have already failed to place a unit --
+    /// nothing here can demote a unit those checks already ground.
+    race_trait_generic_table: simple_kind_tables::SimpleKindTable,
     /// Every race trait the app's loaded race corpus can APPLY to a player,
     /// by `(<lst basename>, <line>)` -> corpus book, and every record that
     /// load found at all. See [`probe_race_trait_corpus`].
@@ -7344,6 +7354,8 @@ fn gather_engine_facts(
         .map(|t| format!("{}.{}", race_name(t.race_id), slug(t.trait_name)))
         .collect();
     let race_trait_probe = probe_race_trait_corpus(repo_root);
+    let race_trait_generic_table =
+        simple_kind_tables::load_simple_kind_table_for_dir(repo_root, "race_trait_generic", "race_trait_generic");
     let race_creation_roster = probe_race_creation_roster(repo_root);
     let race_magnitude_consumer_races: BTreeSet<String> =
         race_ids_with_a_magnitude_consumer().iter().map(|r| r.to_lowercase()).collect();
@@ -7409,6 +7421,7 @@ fn gather_engine_facts(
         race_creation_roster,
         race_magnitude_consumer_races,
         race_trait_ids,
+        race_trait_generic_table,
         race_trait_probe,
         explanation_ids,
         diagnostics,
@@ -9343,6 +9356,99 @@ fn classify(
             }
             if modelled_race_of_race_trait(&unit.key, &facts.race_names).is_some() {
                 return engine_does_not_hold("race_trait_absent_from_race_traits");
+            }
+            // `AT-34-E3-001`'s `race_trait_race_not_modelled` mechanism
+            // (`decisions.md §14`, 132 of 1,006 `core_rulebook` bucket-B
+            // units at this cycle's start). Every check above requires the
+            // unit's own KEY to embed one of `RaceId::ALL`'s seven CRB race
+            // names -- but a real, non-empty slice of this population
+            // never named a race at all: shared CHOOSE-pool entries
+            // (`+2 Strength`, `Favored Enemy ~ Humanoid (Gnome)`), pool-
+            // bookkeeping rows (`No Race Trait Available`, `Remove Excess
+            // Points from Pool`), placeholder rows (`Region ~ None`), and a
+            // cross-book spell-like-ability definitions library
+            // (`Racial SLA ~ <name>`, `SERVESAS:ABILITY=Spell-Like
+            // Ability|<name>`, consumed by OTHER books' races via
+            // `ABILITY:...|AUTOMATIC|<key>` -- confirmed against the pinned
+            // oracle: `Racial SLA ~ Aid` is granted by `blood_of_angels`'s
+            // Aasimar variant trait, never by any `core_rulebook` race).
+            // None of that is a defect in `modelled_race_of_race_trait` --
+            // it is a real population this classifier never placed
+            // anywhere at all.
+            //
+            // SD-32's `ingest_race_trait_generic.py` already transcribed
+            // every one of these rows, book-agnostically, into a SIBLING
+            // corpus directory (`race_trait_generic/`, exactly the
+            // `trait_generic/` shape `trait` already uses) -- "measurable,
+            // not (yet) engine-reachable through the race picker", in that
+            // script's own words. This fallback is what makes the record
+            // REACHABLE BY THE ENGINE'S OWN FACTS (bucket B's bar,
+            // `decisions.md §2`: "placing the record"), reusing the exact
+            // `simple_kind_verdict` promotion ladder every one of Epic 2's
+            // eight kinds already runs -- never a new ladder, never a
+            // demotion of anything the checks above already grounded
+            // (consulted only here, last).
+            //
+            // **Two book keys, not one.** `ingest_race_trait_generic.py`
+            // (its own docstring, "Generic, not per-book") files each
+            // record under a directory named for the unit's REPORTING
+            // attribution (`unit.book` -- resolved off `core_essentials` by
+            // `resolve_true_book_for_core_essentials`, `SD31-ATTRIB-001`),
+            // falling back to `core_essentials` when that attribution is
+            // absent. `engine_book` above is resolved off `unit.source_book`
+            // instead (the directory `enumerate_book` physically walked) --
+            // the SAME two-book split the primary rung's own comment
+            // documents at length for exactly this kind. For a record
+            // walked under `core_essentials` but reported under a book with
+            // its own compiled rule set (`Favored Enemy ~ Humanoid
+            // (Gnome)`, walked from `core_essentials/races/gnome/`,
+            // reported as `core_rulebook`), `engine_book` resolves to
+            // `"core_essentials"` while the generic table's own directory
+            // is `core_rulebook` -- a genuine miss on the first key, not a
+            // truly-absent record. Retried on `unit.book` before falling
+            // through, never instead of the first (any book whose
+            // `source_book` and `book` already agree, which is most of
+            // them, is unaffected -- the retry only ever finds a record the
+            // first lookup missed, it can never disagree with a HELD
+            // first-lookup result).
+            let generic = simple_kind_verdict(
+                Some(&facts.race_trait_generic_table),
+                "race_trait_generic",
+                "race_trait_generic",
+                &engine_book,
+                &unit.key,
+                &unit.name,
+                text_only,
+                has_real_description,
+                wc_class,
+                universal_sheet_modifier,
+                engine_book_field.clone(),
+                None,
+            );
+            let generic_absent = generic.status == "engine-does-not-hold"
+                && generic.evidence.contains("_absent_from_race_trait_generic_table_in_");
+            let generic = if generic_absent && unit.book != engine_book {
+                simple_kind_verdict(
+                    Some(&facts.race_trait_generic_table),
+                    "race_trait_generic",
+                    "race_trait_generic",
+                    &unit.book,
+                    &unit.key,
+                    &unit.name,
+                    text_only,
+                    has_real_description,
+                    wc_class,
+                    universal_sheet_modifier,
+                    engine_book_field.clone(),
+                    None,
+                )
+            } else {
+                generic
+            };
+            if !(generic.status == "engine-does-not-hold"
+                && generic.evidence.contains("_absent_from_race_trait_generic_table_in_"))
+            {
+                return generic;
             }
             engine_does_not_hold("race_trait_race_not_modelled")
         }
@@ -14868,6 +14974,156 @@ mod race_trait_grounding_tests {
         // SD31-W12-INTEGRATE-001: same fallthrough consumer-verification
         // requirement as the sibling tests above.
         assert_eq!(verdict.status, "ingested-magnitude");
+    }
+
+    // -----------------------------------------------------------------
+    // `AT-34-E3-001`'s `race_trait_race_not_modelled` mechanism
+    // (`decisions.md §14`): a `race_trait` unit whose key names no
+    // `RaceId::ALL` race at all -- SD-32's `race_trait_generic/` sibling
+    // directory is the fallback table (`load_simple_kind_table_for_dir`).
+    // -----------------------------------------------------------------
+
+    fn core_rulebook_race_trait_unit(file: &str, line: usize, key: &str, magnitude_token_count: usize) -> CorpusUnit {
+        CorpusUnit {
+            book: "core_rulebook".to_string(),
+            source_book: "core_rulebook".to_string(),
+            kind: Kind::RaceTrait,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// **RED half, proven against the real corpus.** `Racial SLA ~ Aid`
+    /// (`cr_abilities_race.lst:245`) names no `RaceId::ALL` race in its key
+    /// at all -- it is a cross-book spell-like-ability definitions library
+    /// entry, granted to a player only by OTHER books' races (`blood_of_
+    /// angels`'s Aasimar variant trait, confirmed against the pinned
+    /// oracle). With the generic table empty (the pre-fix state, and what
+    /// `EngineFacts::default()` still models), classify() has nowhere left
+    /// to place it and must fall all the way to `race_trait_race_not_
+    /// modelled` -- proving the new rung really can fail, not just pass by
+    /// construction (`decisions.md §1(a)`).
+    #[test]
+    fn without_the_generic_table_a_cross_book_sla_library_row_falls_to_race_not_modelled() {
+        let facts = EngineFacts::default();
+        let unit = core_rulebook_race_trait_unit("cr_abilities_race.lst", 245, "Racial SLA ~ Aid", 3);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "race_trait_race_not_modelled");
+    }
+
+    /// **GREEN half, against the REAL `race_trait_generic/` corpus SD-32
+    /// already transcribed.** The exact same unit now resolves: the
+    /// generic table holds a real, magnitude-bearing record (`BONUS:VAR`
+    /// tokens), so bucket B's bar (`decisions.md §2`: "placing the
+    /// record") is met and the verdict moves to `ingested-magnitude` --
+    /// bucket M, an honest reclassification, not a fabricated `done`.
+    #[test]
+    fn a_real_cross_book_sla_library_row_is_placed_by_the_generic_table() {
+        let facts = EngineFacts {
+            race_trait_generic_table: simple_kind_tables::load_simple_kind_table_for_dir(
+                &probe_root(),
+                "race_trait_generic",
+                "race_trait_generic",
+            ),
+            ..Default::default()
+        };
+        let unit = core_rulebook_race_trait_unit("cr_abilities_race.lst", 245, "Racial SLA ~ Aid", 3);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(verdict.evidence, "race_trait_generic_table_holds_record_magnitude_not_yet_computed");
+    }
+
+    /// The zero-magnitude sibling shape (`No Race Trait Available`,
+    /// `Remove Excess Points from Pool`) -- held by the generic table, no
+    /// magnitude at all, `text_only` -- must land on the SAME
+    /// `_pending_wiring_class_review` evidence every one of Epic 2's eight
+    /// kinds already uses for this exact posture, never `engine-does-not-
+    /// hold: race_trait_race_not_modelled` (a materially different claim).
+    #[test]
+    fn a_real_zero_magnitude_pool_bookkeeping_row_is_placed_not_left_race_not_modelled() {
+        let facts = EngineFacts {
+            race_trait_generic_table: simple_kind_tables::load_simple_kind_table_for_dir(
+                &probe_root(),
+                "race_trait_generic",
+                "race_trait_generic",
+            ),
+            ..Default::default()
+        };
+        let unit = core_rulebook_race_trait_unit("cr_abilities_race.lst", 12, "No Race Trait Available", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(verdict.evidence, "race_trait_race_not_modelled");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_generic_table_holds_zero_magnitude_record_pending_wiring_class_review"
+        );
+    }
+
+    /// A unit whose race truly is un-ingested anywhere (no `race_trait_
+    /// generic/` record either) must still fall to `race_trait_race_not_
+    /// modelled` -- the generic-table fallback places real records, it does
+    /// not fabricate one for a key the corpus never carried at all.
+    #[test]
+    fn a_key_absent_from_the_generic_table_too_still_falls_to_race_not_modelled() {
+        let facts = EngineFacts {
+            race_trait_generic_table: simple_kind_tables::load_simple_kind_table_for_dir(
+                &probe_root(),
+                "race_trait_generic",
+                "race_trait_generic",
+            ),
+            ..Default::default()
+        };
+        let unit = core_rulebook_race_trait_unit(
+            "cr_abilities_race.lst",
+            9999,
+            "___a_key_no_corpus_record_carries___",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(verdict.status, "engine-does-not-hold");
+        assert_eq!(verdict.evidence, "race_trait_race_not_modelled");
+    }
+
+    /// **The real corpus's own two-book-key hazard, caught before
+    /// regeneration would have shipped 4 unmoved units.** `Favored Enemy ~
+    /// Humanoid (Gnome)` (`gnome_abilities_race.lst:38`) is walked from
+    /// `core_essentials/races/gnome/`, so `source_book` is `core_essentials`
+    /// -- `engine_book` resolves to `"core_essentials"` (its own compiled
+    /// rule set, SD-29). But `ingest_race_trait_generic.py` files the
+    /// record under the unit's REPORTING attribution, `unit.book`, which is
+    /// `core_rulebook` here. The first lookup (on `engine_book`) must miss;
+    /// the retry (on `unit.book`) must find the real record and place it.
+    #[test]
+    fn a_record_walked_from_core_essentials_but_reported_under_core_rulebook_is_found_by_the_book_retry() {
+        let facts = EngineFacts {
+            race_trait_generic_table: simple_kind_tables::load_simple_kind_table_for_dir(
+                &probe_root(),
+                "race_trait_generic",
+                "race_trait_generic",
+            ),
+            ..Default::default()
+        };
+        let unit = CorpusUnit {
+            book: "core_rulebook".to_string(),
+            source_book: "core_essentials".to_string(),
+            kind: Kind::RaceTrait,
+            key: "Favored Enemy ~ Humanoid (Gnome)".to_string(),
+            name: "Humanoid (Gnome)".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "gnome_abilities_race.lst".to_string(), line: 38 },
+            magnitude_token_count: 2,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "static", false);
+        assert_ne!(verdict.evidence, "race_trait_race_not_modelled");
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(verdict.evidence, "race_trait_generic_table_holds_record_magnitude_not_yet_computed");
     }
 }
 

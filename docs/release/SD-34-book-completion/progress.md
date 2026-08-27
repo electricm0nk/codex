@@ -50,9 +50,10 @@ sub-causes — 12 zero-content internal plumbing rows, 2 PCGen monster-class def
 master-side familiar-ability-pool rows this book registers no familiar creature to own — see
 the cycle log below).
 AT-34-E3-001 itself does not close yet — `core_rulebook`'s real, atlas-partitioned bucket B is
-894 of 6,701 (`python3 scripts/completion_atlas.py --by-book`, grepped for `core_rulebook`), and
-five of the nine named mechanisms remain (their live populations — 346, 333, 132, 55, 28 — sum
-to exactly 894, no unnamed gap; the `class_feature_owner_matched_by_name…` and `class_feature_
+now 762 of 6,701 (`python3 scripts/completion_atlas.py --by-book`, grepped for `core_rulebook`;
+was 894, this cycle's `race_trait_race_not_modelled` mechanism closed all 132 of it), and
+four of the nine named mechanisms remain (their live populations — 346, 333, 55, 28 — sum
+to exactly 762, no unnamed gap; the `class_feature_owner_matched_by_name…` and `class_feature_
 option_pool_record_with_magnitude…` mechanisms have not yet been picked up by any cycle, and
 their live counts (346, 333) have drifted from `decisions.md §14`'s filed 330/333 — a future
 cycle should re-derive and record why before closing either). See the cycle log below;
@@ -74,6 +75,64 @@ Baseline at authoring, measured against `origin/develop` `ea2b3396f2`
 | Shape-engine feedstock still unheld by the engine | 13,119 of 26,396 |
 
 ## Cycle log
+
+### Cycle — AT-34-E3-001 (`race_trait_race_not_modelled` mechanism) — one of nine, `decisions.md §14` — complete
+
+**Status: complete — this mechanism 132 → 0** (`core_rulebook`; corpus-wide side effect,
+1,413 → 90, since the fix is a generic engine change, not a `core_rulebook` special case).
+
+Population re-derived at HEAD, not transcribed: group `core_rulebook` units whose `status` is
+`engine-does-not-hold` by `evidence`, take the `race_trait_race_not_modelled` group ->
+**132 of 132** — matches the dispatch brief's stated figure exactly, verified.
+
+**Root cause.** `Kind::RaceTrait`'s classifier requires a unit's key to embed one of
+`RaceId::ALL`'s seven compiled CRB race names. All 132 genuinely name no race at all: 118
+`Racial SLA ~ <name>` rows (`cr_abilities_race.lst`'s cross-book spell-like-ability definitions
+library — confirmed via the pinned oracle that no `core_rulebook` race references these keys at
+all, but `blood_of_angels`'s Aasimar variant trait does), 6 `+2 <Ability>` ability-score-bonus
+CHOOSE-pool entries, 4 `Favored Enemy ~ Humanoid (<Race>)` Ranger class-feature option-pool rows
+duplicated under each race's own file, and 4 pool-bookkeeping/placeholder rows (`No Race Trait
+Available`, `Remove Excess Points from Pool`, `Region ~ None`/`~ Unknown`). None of that is a
+matcher defect — it is a real population the classifier never had anywhere to place, because the
+shared premise (every `race_trait` unit's key names a race) is false for these rows.
+
+**The fix, built generically.** SD-32's `ingest_race_trait_generic.py` had already transcribed
+every one of these rows, book-agnostically, into `data/corpus/<book>/race_trait_generic/*.json`
+— "measurable, not (yet) engine-reachable," in that script's own words. `classify()` never
+consulted that table. Added `simple_kind_tables::load_simple_kind_table_for_dir` (factored out
+of the existing `load_simple_kind_table`, since `race_trait` is not one of Epic 2's eight
+kinds), loaded it into `EngineFacts`, and consulted it as `Kind::RaceTrait`'s LAST fallback,
+reusing `simple_kind_verdict` — the identical promotion ladder all eight Epic 2 kinds already
+run — verbatim. A real second hazard caught by actually regenerating and counting the artifact
+rather than trusting the unit tests alone: the generic table is keyed by the unit's REPORTING
+attribution (`unit.book`), while `classify()`'s own `engine_book` local is resolved off
+`unit.source_book` — for 4 units walked from `core_essentials/races/<race>/` but reported as
+`core_rulebook`, the first lookup missed; a retry on `unit.book` (only when the two differ and
+the first lookup is a genuine absence) found the real record. Fixed in the same cycle.
+
+**Movement:** reclassification only, this book — 129 to `ingested-magnitude` (bucket M), 3 to
+`..._pending_wiring_class_review` (bucket D). Corpus-wide (same generic fix, other books'
+scope, reported honestly as a side effect, not claimed as this cycle's own work): 708 more to M,
+199 more to D, 416 promoted to `text-complete` (DONE) via the SAME zero-magnitude-real-
+description-display-wiring-class rule every other Epic-2 kind's rung already applies. 90 of
+1,413 remain corpus-wide — other books' own residual shapes, out of scope for this cycle.
+
+TDD: 6 new unit tests in `race_trait_grounding_tests` (RED against an empty generic table,
+GREEN against the real corpus, plus the two-book-key regression), 1 new unit test in
+`simple_kind_tables::tests`. 10 of `completion_atlas.py`'s `BUCKET_DEFINITIONS` `file:line`
+citations shifted and were re-derived and fixed in the same cycle
+(`citation_failures=0` after). `cargo test --locked --no-run` exits 0 at the widest workspace
+scope. `docs/work-inventory.json` regenerated with `CORPUS_LITERAL_SWEEP_REPORT`/
+`DERIVED_FIXTURE_CHECK_REPORT` set from this session's own fresh runs (`corpus_literal_sweep`:
+48,708 of 51,482, unchanged, CLEAN; `derived_evaluator_fixture_check`: 1,839 of 2,580, 0
+failed, unchanged) — no `--allow-stamp-loss`. Receipt:
+`artifacts/epic-3-core-rulebook/AT-34-E3-001_race_trait_race_not_modelled_cycle_receipt.md`.
+
+**Note:** `box_ledger.py --check` (SD-33's inherited, read-only partition) exits 1 both before
+and after this cycle — pre-existing since prior AT-34-E3-001 mechanism cycles, tracked against
+the frozen `THE-BOX.md` snapshot SD-34 does not own. This cycle's own effect is an improvement
+(`uncovered` 21,221 → 20,097), not a regression; the check's structural invariants
+(`overlap=0`, `population=49438`) hold both before and after.
 
 ### Cycle — AT-34-E3-001 (`companion_absent_from_core_rulebook_companion_tables` mechanism) — one of nine, `decisions.md §14` — partial
 

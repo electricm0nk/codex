@@ -112,9 +112,7 @@ impl SimpleKindTable {
 /// `kind_dir_for` themselves first.
 pub fn load_simple_kind_table(repo_root: &Path, kind: &str) -> SimpleKindTable {
     let dir = match kind_dir_for(kind) {
-        Some(d) => {
-            d
-        }
+        Some(d) => d,
         None => {
             return SimpleKindTable {
                 kind: kind.to_string(),
@@ -124,6 +122,26 @@ pub fn load_simple_kind_table(repo_root: &Path, kind: &str) -> SimpleKindTable {
             }
         }
     };
+    load_simple_kind_table_for_dir(repo_root, kind, dir)
+}
+
+/// The same load as [`load_simple_kind_table`], but for a caller who already
+/// knows the corpus directory name and is not one of `SEVEN_KIND_DIRS`'s own
+/// kinds -- `AT-34-E3-001`'s `race_trait_race_not_modelled` mechanism
+/// (`decisions.md §14`): `race_trait` is not an `Epic 2` kind (its curated
+/// table is built by the Rust ingesters, `ingest_race_traits.rs` et al.,
+/// under `race_trait/`), but SD-32's `ingest_race_trait_generic.py` already
+/// populated a SIBLING directory, `race_trait_generic/`, book-agnostically,
+/// exactly the way `trait`'s own corpus lives under `trait_generic/` rather
+/// than `trait/`. `kind_dir_for` deliberately stays untouched (it is
+/// `SEVEN_KIND_DIRS`'s own resolver, and `race_trait` is not one of the
+/// seven) -- this function lets `race_trait`'s classify() arm reuse the
+/// IDENTICAL load/resolve/verdict logic without widening that table.
+pub fn load_simple_kind_table_for_dir(
+    repo_root: &Path,
+    kind: &str,
+    dir: &'static str,
+) -> SimpleKindTable {
     let mut records = BTreeMap::new();
     let mut by_coordinate = BTreeMap::new();
     let corpus_root = repo_root.join("data/corpus");
@@ -302,5 +320,27 @@ mod tests {
             let table = load_simple_kind_table(&repo_root(), kind);
             assert!(!table.is_empty(), "{kind}: table loaded zero records -- directory resolution regressed");
         }
+    }
+
+    /// `AT-34-E3-001`'s `race_trait_race_not_modelled` mechanism
+    /// (`decisions.md §14`): `race_trait` is not one of `SEVEN_KIND_DIRS`'s
+    /// own kinds, so `load_simple_kind_table_for_dir` is the entry point --
+    /// confirming it resolves the SAME `race_trait_generic/` sibling
+    /// directory SD-32's `ingest_race_trait_generic.py` already populated,
+    /// the identical shape `trait_generic/` already proves for `trait`.
+    #[test]
+    fn race_trait_generic_table_resolves_the_sibling_directory_not_race_trait_itself() {
+        let table = load_simple_kind_table_for_dir(&repo_root(), "race_trait_generic", "race_trait_generic");
+        assert!(!table.is_empty(), "race_trait_generic table loaded zero records -- directory resolution regressed");
+        let record = table
+            .resolve("core_rulebook", "Racial SLA ~ Aid")
+            .unwrap_or_else(|| panic!("expected \"Racial SLA ~ Aid\" in core_rulebook to be HELD"));
+        assert_eq!(record.book, "core_rulebook");
+        assert_eq!(record.key, "Racial SLA ~ Aid");
+
+        // The GREEN half's mirror: a genuinely absent key is refused, not
+        // fabricated (AT-34-E2-002's rule, carried into this new loader).
+        let refusal = table.resolve("core_rulebook", "___a_key_no_corpus_record_carries___");
+        assert!(refusal.is_none(), "a fabricated key must never resolve");
     }
 }

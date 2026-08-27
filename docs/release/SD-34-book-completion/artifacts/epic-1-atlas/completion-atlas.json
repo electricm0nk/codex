@@ -3,7 +3,7 @@
     "A": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9891,
+        "line": 9997,
         "must_contain": "has_no_engine_table"
       },
       "clears": "building the table (Epic 2)",
@@ -14,18 +14,18 @@
     "B": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9589,
+        "line": 9695,
         "must_contain": "not_held_by_engine"
       },
       "clears": "placing the record (Epic 3/4)",
-      "count": 13537,
+      "count": 12214,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
     "C": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 9814,
+        "line": 9920,
         "must_contain": "explanation_id"
       },
       "clears": "wiring the display/explanation path (Epic 3)",
@@ -36,40 +36,40 @@
     "D": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8492,
+        "line": 8505,
         "must_contain": "engine-does-not-hold"
       },
       "clears": "per named sub-cause",
-      "count": 2824,
+      "count": 3023,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
     "DONE": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8520,
+        "line": 8533,
         "must_contain": "grounded"
       },
       "clears": "\u2014",
-      "count": 13952,
+      "count": 14368,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete})",
       "meaning": "nothing remains"
     },
     "M": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8627,
+        "line": 8640,
         "must_contain": "ingested-magnitude"
       },
       "clears": "running the compute path (shape engine)",
-      "count": 4520,
+      "count": 5076,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
     "U": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8579,
+        "line": 8592,
         "must_contain": "unmeasurable"
       },
       "clears": "instrument correction",
@@ -80,18 +80,18 @@
     "V": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 10542,
+        "line": 10648,
         "must_contain": "literal-verified"
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
-      "count": 9359,
+      "count": 9511,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
       "meaning": "verified by proxy, never by the oracle"
     },
     "X": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8539,
+        "line": 8552,
         "must_contain": "deferred-with-reason"
       },
       "clears": "revisiting the stated condition",
@@ -102,7 +102,7 @@
     "Z": {
       "citation": {
         "file": "src/bin/v06_work_inventory.rs",
-        "line": 8400,
+        "line": 8413,
         "must_contain": "not-started"
       },
       "clears": "ordinary work",
@@ -112,7 +112,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "99ae33d007c4091001562865eabecef949b64d5a",
+  "derived_at": "a510cbfcf35166dde5f2ce641ac79efde9bc2f00",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
@@ -198,6 +198,7 @@
       "deity_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 408,
       "domain_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 80,
       "language_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 103,
+      "race_trait_generic_table_holds_zero_magnitude_record_pending_wiring_class_review": 199,
       "race_trait_record_loaded_but_never_applies": 53,
       "skill_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 36,
       "template_content_table_holds_zero_magnitude_record_pending_wiring_class_review": 724,
