@@ -356,6 +356,12 @@ git diff --name-only <epic-2-close-sha>..HEAD -- src/ scripts/ > /tmp/e3_touched
 grep -Ff /tmp/e3_touched.txt <(printf 'src/rules_core/\nsrc/bin/\ndocs/work-inventory.json\n') && echo OVERLAP || echo DISJOINT
 ```
 
+**Decided 2026-08-27, after Epic 2 closed: OVERLAP → SEQUENTIAL, Core Rulebook first.** §3's
+declared file-touch sets for Epics 3 and 4 both contain `src/rules_core/` and `src/bin/`, so
+file-level disjointness is not provable before Epic 3 has written anything; the rule is that
+unless it is *proven* disjoint they run sequentially. Epic 4 therefore reads `docs/work-inventory.json`
+rather than writing it, and no worktree isolation is needed.
+
 `OVERLAP` → sequential, Core Rulebook first (the default). `DISJOINT` at the **file** level (not
 the directory level) → Epic 4 may run in a worktree in parallel, reading a pinned inventory copy.
 Directory-level disjointness is not enough; the check must resolve to real file paths.
