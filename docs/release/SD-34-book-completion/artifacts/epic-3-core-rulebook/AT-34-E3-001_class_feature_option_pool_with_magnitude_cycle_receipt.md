@@ -1,6 +1,6 @@
 # Cycle 1 — Epic 3 (Core Rulebook to zero) / AT-34-E3-001 (`class_feature_option_pool_record_with_magnitude_not_held_by_engine` mechanism)
 
-- **Commit SHA:** `<filled by follow-up commit>` (parent `aaec01730c`)
+- **Commit SHA:** `9a0d75a9b7` (parent `aaec01730c`)
 - **Acceptance criterion (verbatim, `epic-breakdown.md`):** "**970** Core Rulebook units whose
   table exists but which are not in it. Evidence: the atlas reporting bucket B at zero for
   `core_rulebook`, and the mechanism that placed them named — by mechanism, not per record."
